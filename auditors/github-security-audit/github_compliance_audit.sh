@@ -5,7 +5,7 @@
 #
 # Repository collection runs inside GNU parallel (or xargs), which invokes the
 # exported functions from a fresh shell. ShellCheck cannot see those call sites.
-# shellcheck disable=SC2317
+# shellcheck disable=SC2317,SC2329
 
 set -euo pipefail
 
