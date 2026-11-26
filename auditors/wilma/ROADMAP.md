@@ -1,0 +1,1045 @@
+# Wilma Security Feature Roadmap
+
+This document tracks Wilma's reboot as an AWS Bedrock Security Posture Assessment tool. The historical 1.x public package line is treated as legacy pre-reboot history; the active beta line starts at `0.2.x`.
+
+**Last Updated:** 2026-05-11
+**Version:** 0.2.0 beta reboot
+
+---
+
+## 0.2.0 Reboot Foundation
+
+**Goal:** make Wilma answer "Are you using AWS Bedrock securely?" with an auditor-friendly posture assessment.
+
+- [x] Rename public positioning to AWS Bedrock Security Posture Assessment
+- [x] Reset project metadata to `0.2.0` beta
+- [x] Introduce Bedrock Security Indicators as the top-level scorecard
+- [x] Add Bedrock Security Posture Score
+- [x] Add Assessment Confidence and blind spot reporting
+- [x] Add versioned JSON assessment schema
+- [x] Add framework mapping layer for OWASP LLM Top 10, NIST AI RMF, NIST 800-53, AWS guidance, and AIUC-1
+- [x] Add report-only manual evidence checklist for organizational evidence
+- [x] Add `--explain` as the auditor-oriented explanation mode
+- [x] Keep `--learn` as a compatibility alias
+- [x] Add local terminal-only `--yabba-dabba-doo` presentation mode
+- [x] Fix aggregation so Agents, Guardrails, Knowledge Bases, and Fine-Tuning findings reach the main report
+
+## 0.3.x Planned Focus
+
+- [ ] Replace inferred framework mappings with explicit per-check mappings
+- [ ] Emit standardized pass, fail, warning, not applicable, and insufficient evidence results from every check
+- [ ] Add first-class insufficient-evidence findings for missing IAM permissions and inaccessible APIs
+- [ ] Add evidence IDs and stable check IDs for audit traceability
+- [ ] Add `--evidence-file` support for optional manual evidence tracking
+- [ ] Add HTML report export once the schema stabilizes
+- [ ] Add SARIF export for GitHub Security and security tooling ingestion
+
+## 1.0.0 Stabilization Criteria
+
+- [ ] Stable assessment schema with migration notes
+- [ ] Explicit mappings for every automated check
+- [ ] Full pass/fail/unknown coverage for Bedrock Security Indicators
+- [ ] Clear AWS permission policy for high-confidence assessments
+- [ ] Test coverage for scoring, confidence, framework mappings, and representative AWS evidence flows
+- [ ] PyPI release hygiene completed for legacy 1.x packages
+
+---
+
+## Current Coverage Analysis
+
+### ✅ Implemented (Latest)
+- ✅ **Test Infrastructure** - Comprehensive test suite with Moto + MagicMock
+- ✅ **CI/CD Automation** - GitHub Actions for testing & PyPI publishing
+- ✅ **Utility Functions** - PII detection, prompt injection scanning, ARN parsing
+- ✅ **Knowledge Bases (RAG)** - 100% COMPLETE (12 of 12 security checks)
+  - 2,237 lines of production code
+  - S3 bucket security (public access, encryption, versioning)
+  - Vector store security (OpenSearch, Aurora, RDS encryption)
+  - PII pattern detection in configurations
+  - Prompt injection pattern detection
+  - IAM role permission validation
+  - CloudWatch logging validation
+  - Chunking configuration, tagging compliance, embedding model access
+  - Test Status: 25 of 25 tests passing
+- ✅ **Agents Security** - 100% COMPLETE (10 of 10 security checks)
+  - 1,838 lines of production code, 36 tests (100% passing)
+  - Action confirmation, guardrails, service roles, Lambda security
+  - KB access, memory encryption, tagging, PII detection
+  - Prompt injection patterns, CloudWatch logging
+- ✅ **Guardrails Security** - 100% COMPLETE (11 of 11 security checks)
+  - 1,196 lines of production code
+  - Strength configuration, automated reasoning, content filter coverage
+  - PII filters, topic filters, word filters, guardrail coverage
+  - Version management, KMS encryption, tagging, contextual grounding
+- Basic IAM permission checks (bedrock:* wildcards)
+- Custom model encryption validation
+- VPC endpoint validation (bedrock-runtime)
+- Model invocation logging checks
+- Resource tagging compliance
+
+- ✅ **Fine-Tuning Security** - 100% COMPLETE (11 of 11 security checks)
+  - 1,169 lines of production code
+  - Training data bucket security (public access, encryption, versioning)
+  - PII detection in training data (pattern-based scanning)
+  - Model data replay risk assessment
+  - VPC isolation for training jobs
+  - CloudWatch logging validation
+  - Output model encryption, access logging, IAM roles
+  - Custom model tagging, data source validation, model card documentation
+- Basic IAM permission checks (bedrock:* wildcards)
+- Custom model encryption validation
+- VPC endpoint validation (bedrock-runtime)
+- Model invocation logging checks
+- Resource tagging compliance
+
+### ❌ Major Gaps Remaining
+- **Flows Orchestration:** 0% coverage (not yet implemented)
+- **Model Evaluation:** 0% coverage (not yet implemented)
+- **Cross-Service Integrations:** 0% coverage (not yet implemented)
+
+### 📊 Framework Coverage (Latest)
+- **OWASP LLM Top 10 2025:** 80% (8 of 10 categories - LLM01, LLM02, LLM03, LLM04, LLM06, LLM07, LLM08, LLM09)
+- **MITRE ATLAS:** 60% (Poison Training Data, Backdoor ML Model, LLM Prompt Injection, Evade ML Model, ML Supply Chain)
+- **AWS Bedrock Features:** 90% (Foundation Models + Knowledge Bases + Agents + Guardrails + Fine-Tuning)
+- **Priority 1 Modules:** 100% COMPLETE ✨ (4 of 4 - Knowledge Bases, Agents, Guardrails, Fine-Tuning all done!)
+
+---
+
+## Priority 1: CRITICAL - Must Implement First
+
+### 1.1 AWS Bedrock Agents Security Module ✅ COMPLETE
+**File:** `src/wilma/checks/agents.py`
+**Status:** ✅ 100% Complete (10 of 10 checks implemented)
+**Effort:** Completed in single session
+**OWASP:** LLM01 (Prompt Injection), LLM08 (Excessive Agency)
+**MITRE ATLAS:** Evade ML Model, LLM Prompt Injection
+**Issues Closed:** #4, #29-#38
+
+#### Implemented Security Checks:
+
+**1. Action Confirmation Validation** ✅ (Issue #29, Risk 9/10)
+- [x] Verify `requireConfirmation=ENABLED` for mutating operations
+- [x] Detect direct Lambda execution without human approval
+- [x] Validate action group executor configuration (RETURN_CONTROL vs LAMBDA)
+- [x] Create CRITICAL findings for autonomous execution risks
+- **Implemented:** `check_agent_action_confirmation()` - 125 lines, 6 tests
+
+**2. Guardrail Configuration Enforcement** ✅ (Issue #30, Risk 9/10)
+- [x] Check if agents have guardrails attached
+- [x] Verify guardrail strength settings (HIGH vs MEDIUM vs LOW)
+- [x] Detect agents without prompt attack protection
+- [x] Cross-reference guardrail existence via bedrock.get_guardrail()
+- [x] Create CRITICAL findings for missing guardrails
+- **Implemented:** `check_agent_guardrails()` - 180 lines, 5 tests
+
+**3. Service Role Permission Audits** ✅ (Issue #31, Risk 8/10)
+- [x] Detect overly permissive service roles (AdministratorAccess, PowerUserAccess)
+- [x] Validate least privilege IAM policies
+- [x] Scan for wildcard permissions (Action:*, bedrock:*, bedrock-agent:*)
+- [x] Analyze both attached and inline policies
+- **Implemented:** `check_agent_service_roles()` + `_analyze_agent_iam_policies()` - 185 lines, 5 tests
+
+**4. Lambda Function Security** ✅ (Issue #32, Risk 8/10)
+- [x] Validate Lambda function permissions (least privilege)
+- [x] Detect public Lambda invocation access (Principal: "*")
+- [x] Check for missing agent-specific SourceArn restrictions
+- [x] Scan environment variables for secrets (API keys, tokens)
+- [x] Validate Lambda resource-based policies
+- **Implemented:** `check_agent_lambda_permissions()` + `_analyze_lambda_security()` - 425 lines, 7 tests
+
+**5. Knowledge Base Access Validation** ✅ (Issue #34, Risk 7/10)
+- [x] Detect cross-account knowledge base access
+- [x] Validate KB associations and access controls
+- [x] Check for missing/non-existent KB references
+- [x] Extract and compare account IDs from ARNs
+- **Implemented:** `check_agent_knowledge_base_access()` - 185 lines, 5 tests
+
+**6. Memory Encryption Verification** ✅ (Issue #33, Risk 7/10)
+- [x] Check if agent session data has encryption at rest
+- [x] Validate memory configuration (enabledMemoryTypes, storageDays)
+- [x] Flag agents with memory enabled for KMS verification
+- [x] Provide compliance guidance (HIPAA, PCI-DSS, FedRAMP)
+- **Implemented:** `check_agent_memory_encryption()` - 105 lines
+
+**7. Resource Tagging Compliance** ✅ (Issue #35, Risk 5/10)
+- [x] Validate presence of required governance tags
+- [x] Check for Environment, Owner, DataClassification tags
+- [x] Create LOW findings for missing tags
+- [x] Provide FinOps and AWS Well-Architected guidance
+- **Implemented:** `check_agent_tags()` - 95 lines
+
+**8. PII Detection in Metadata** ✅ (Issue #36, Risk 6/10)
+- [x] Scan agent names, descriptions, instructions for PII
+- [x] Detect SSN, credit cards, emails, phone numbers, AWS access keys
+- [x] Risk escalation for sensitive PII types (HIGH for SSN/credit cards)
+- [x] GDPR Art. 32, HIPAA, PCI-DSS compliance
+- **Implemented:** `check_agent_pii_in_names()` - 125 lines
+
+**9. Prompt Injection Pattern Scanning** ✅ (Issue #37, Risk 8/10)
+- [x] Scan for 24 known prompt injection patterns
+- [x] Detect empty/weak instructions (< 20 characters)
+- [x] Smart filtering for legitimate uses ("you must only" vs "you must")
+- [x] Check for security guidance keywords
+- **Implemented:** `check_agent_prompt_injection_patterns()` - 145 lines, 6 tests
+
+**10. CloudWatch Logging Validation** ✅ (Issue #38, Risk 7/10)
+- [x] Verify CloudWatch log groups exist (/aws/vendedlogs/bedrock/agent/)
+- [x] Validate log retention policies (90+ days recommended)
+- [x] Check KMS encryption for logs
+- [x] SOC 2, ISO 27001, GDPR Art. 30 compliance
+- **Implemented:** `check_agent_logging()` - 150 lines
+
+**Module Statistics:**
+- 📝 1,838 lines of production code
+- ✅ 36 test cases (100% passing)
+- 🎯 OWASP LLM01 & LLM08 fully addressed
+- 🔒 Addresses #1 attack vector for 2025
+
+---
+
+### 1.2 Knowledge Bases (RAG) Security Module ✅ COMPLETE
+**File:** `src/wilma/checks/knowledge_bases.py`
+**Status:** ✅ 100% Complete (12 of 12 checks implemented)
+**Effort:** Completed in earlier versions
+**OWASP:** LLM03 (Supply Chain), LLM06 (Sensitive Info Disclosure), LLM07 (Vector/Embedding Weaknesses)
+**MITRE ATLAS:** AML.T0020 (Poison Training Data), ML Supply Chain Compromise
+**Test Status:** 25 of 25 tests passing
+
+#### Implemented Security Checks:
+
+**1. S3 Bucket Public Access Validation** ✅ (Risk 9/10)
+- [x] Check S3 Block Public Access configuration for KB data sources
+- [x] Detect publicly accessible S3 buckets with KB documents
+- [x] Validate all four BPA settings (BlockPublicAcls, IgnorePublicAcls, BlockPublicPolicy, RestrictPublicBuckets)
+- [x] CRITICAL findings for missing or partial public access blocking
+- **Implemented:** `check_s3_bucket_public_access()` - 156 lines
+- **OWASP:** LLM03 (Supply Chain - Data Poisoning)
+
+**2. S3 Bucket Encryption** ✅ (Risk 8/10)
+- [x] Validate S3 bucket encryption at rest for data sources
+- [x] Check for customer-managed KMS keys (not AWS-managed)
+- [x] Detect unencrypted S3 buckets storing KB documents
+- [x] Compliance validation (HIPAA, PCI-DSS, SOC 2)
+- **Implemented:** `check_s3_bucket_encryption()` - 177 lines
+- **OWASP:** LLM06 (Sensitive Information Disclosure)
+
+**3. Vector Store Encryption** ✅ (Risk 8/10)
+- [x] Validate OpenSearch Serverless encryption at rest
+- [x] Check for customer-managed KMS keys in vector databases
+- [x] Support for OpenSearch, Aurora, RDS, Pinecone, Redis backends
+- [x] Detect AWS-owned keys (non-compliant)
+- **Implemented:** `check_vector_store_encryption()` - 152 lines
+- **OWASP:** LLM06 (Sensitive Information Disclosure)
+
+**4. Vector Store Access Control** ✅ (Risk 9/10)
+- [x] Validate OpenSearch data access policies for wildcard principals
+- [x] Check for overly permissive permissions (aoss:*)
+- [x] Detect public access to vector databases
+- [x] Fine-grained access control (FGAC) validation
+- **Implemented:** `check_vector_store_access_control()` - 315 lines
+- **OWASP:** LLM03 (Supply Chain Compromise)
+
+**5. PII Detection in Embeddings** ✅ (Risk 8/10)
+- [x] Scan KB configurations for PII patterns (SSN, email, phone, credit card, IP)
+- [x] Check bucket names, KB names, and descriptions
+- [x] Pattern-based detection using regex
+- [x] GDPR Art. 32, HIPAA, PCI-DSS compliance
+- **Implemented:** `check_pii_in_embeddings()` - 197 lines
+- **OWASP:** LLM06 (Sensitive Information Disclosure)
+
+**6. Prompt Injection Pattern Detection** ✅ (Risk 8/10)
+- [x] Scan for 24 known prompt injection patterns in KB metadata
+- [x] Detect jailbreak attempts, instruction override, delimiter injection
+- [x] Check KB names and descriptions for suspicious patterns
+- [x] MITRE ATLAS AML.T0051 coverage
+- **Implemented:** `check_prompt_injection_in_documents()` - 164 lines
+- **OWASP:** LLM01 (Prompt Injection - Indirect)
+
+**7. S3 Versioning Validation** ✅ (Risk 6/10)
+- [x] Check if S3 buckets have versioning enabled
+- [x] Rollback capability for data poisoning recovery
+- [x] Detect buckets without version control
+- [x] Deduplication across multiple KBs using same bucket
+- **Implemented:** `check_knowledge_base_versioning()` - 96 lines
+
+**8. IAM Role Permission Audit** ✅ (Risk 8/10)
+- [x] Validate KB service role permissions (least privilege)
+- [x] Detect wildcard permissions (bedrock:*, s3:*)
+- [x] Check for AdministratorAccess and PowerUserAccess
+- [x] Analyze both attached and inline policies
+- **Implemented:** `check_knowledge_base_access_patterns()` - 173 lines
+- **OWASP:** LLM03 (Supply Chain)
+
+**9. Chunking Configuration Review** ✅ (Risk 5/10)
+- [x] Validate chunk size doesn't expose excessive context
+- [x] Check for overly large chunks (>1000 tokens)
+- [x] Review chunking strategy (FIXED_SIZE, SEMANTIC, etc.)
+- [x] Context leakage risk assessment
+- **Implemented:** `check_knowledge_base_chunking_config()` - 129 lines
+
+**10. CloudWatch Logging Validation** ✅ (Risk 6/10)
+- [x] Verify CloudWatch log groups exist for KBs
+- [x] Check log retention policies (90+ days recommended)
+- [x] Validate KMS encryption for logs
+- [x] SOC 2, ISO 27001, GDPR Art. 30 compliance
+- **Implemented:** `check_knowledge_base_logging()` - 190 lines
+
+**11. Resource Tagging Compliance** ✅ (Risk 4/10)
+- [x] Validate required governance tags (Environment, Owner, DataClassification)
+- [x] Detect missing tags for cost allocation
+- [x] FinOps and AWS Well-Architected compliance
+- [x] Tag-based access control validation
+- **Implemented:** `check_knowledge_base_tags()` - 89 lines
+
+**12. Embedding Model Access Control** ✅ (Risk 6/10)
+- [x] Validate embedding model IAM permissions
+- [x] Detect wildcard bedrock:InvokeModel permissions
+- [x] Check for AdministratorAccess on embedding roles
+- [x] Deep IAM policy analysis for model access
+- **Implemented:** `check_embedding_model_access()` - 155 lines
+
+**Module Statistics:**
+- 📝 2,237 lines of production code
+- ✅ 12 comprehensive security checks
+- 🧪 25 test cases passing
+- 🎯 OWASP LLM03, LLM06, LLM07 fully addressed
+- 🔒 Addresses RAG data poisoning and sensitive information disclosure
+
+---
+
+### 1.3 Advanced Guardrails Validation Module ✅ COMPLETE
+**File:** `src/wilma/checks/guardrails.py`
+**Status:** ✅ 100% Complete (11 of 11 checks implemented)
+**Effort:** Completed in single session
+**OWASP:** LLM01 (Prompt Injection), LLM09 (Misinformation), LLM02 (Insecure Output Handling)
+**MITRE ATLAS:** AML.T0051 (LLM Prompt Injection), AML.T0048 (Evade ML Model)
+**Issues Closed:** TBD
+
+#### Implemented Security Checks:
+
+**1. Guardrail Strength Configuration** ✅ (Risk 8/10)
+- [x] Validate HIGH strength settings for content filters
+- [x] Detect LOW/MEDIUM strength settings (LOW misses 70% of attacks, MEDIUM misses 40%)
+- [x] Check both input and output filter strength
+- [x] Provide remediation guidance for strength upgrades
+- **Implemented:** `check_guardrail_strength_configuration()` - 113 lines
+- **OWASP:** LLM01 (Prompt Injection)
+
+**2. Automated Reasoning for Hallucination Prevention** ✅ (Risk 8/10, NEW 2025)
+- [x] Validate contextual grounding policy configured
+- [x] Check grounding and relevance filters
+- [x] Detect missing automated reasoning configuration
+- [x] Verify filter configuration completeness
+- **Implemented:** `check_automated_reasoning_enabled()` - 99 lines
+- **OWASP:** LLM09 (Misinformation)
+
+**3. Content Filter Coverage** ✅ (Risk 9/10)
+- [x] Verify all threat categories configured (VIOLENCE, HATE, INSULTS, MISCONDUCT, PROMPT_ATTACK)
+- [x] CRITICAL finding for missing PROMPT_ATTACK filter
+- [x] HIGH finding for other missing content filters
+- [x] Cross-reference required filter set
+- **Implemented:** `check_content_filter_coverage()` - 104 lines
+- **OWASP:** LLM01 (Prompt Injection)
+
+**4. PII Filter Configuration** ✅ (Risk 8/10)
+- [x] Validate PII entity types (NAME, EMAIL, PHONE, SSN, CREDIT_CARD, ADDRESS)
+- [x] Check for BLOCK vs ANONYMIZE action (BLOCK recommended)
+- [x] Detect missing sensitive information policy
+- [x] Compliance validation (GDPR Art. 32, HIPAA, PCI-DSS)
+- **Implemented:** `check_pii_filters_enabled()` - 126 lines
+- **OWASP:** LLM02 (Insecure Output Handling)
+
+**5. Topic Filter Validation** ✅ (Risk 6/10)
+- [x] Validate denied topics policy configured
+- [x] Check for empty topic configurations
+- [x] Detect missing topic filters (liability/regulatory risk)
+- [x] Provide business-specific recommendations
+- **Implemented:** `check_topic_filters_configured()` - 94 lines
+
+**6. Word Filter Configuration** ✅ (Risk 4/10)
+- [x] Check managed word lists for profanity
+- [x] Validate custom word configuration
+- [x] Detect empty word policies
+- [x] Provide UX quality improvement guidance
+- **Implemented:** `check_word_filters_configured()` - 93 lines
+
+**7. Guardrail Coverage Analysis** ✅ (Risk 9/10)
+- [x] Identify agents without guardrail protection (CRITICAL)
+- [x] Cross-reference agent guardrail associations
+- [x] Detect unprotected autonomous systems
+- [x] Knowledge base coverage validation
+- **Implemented:** `check_guardrail_coverage()` - 106 lines
+- **OWASP:** LLM08 (Excessive Agency)
+
+**8. Version Management Validation** ✅ (Risk 6/10)
+- [x] Detect DRAFT version usage in production
+- [x] Validate versioned guardrail releases
+- [x] Check for PRODUCTION alias usage
+- [x] Stability and auditability compliance
+- **Implemented:** `check_guardrail_version_management()` - 100 lines
+
+**9. KMS Encryption Verification** ✅ (Risk 6/10)
+- [x] Validate customer-managed KMS keys
+- [x] Detect AWS-managed encryption usage
+- [x] Compliance guidance (SOC 2, ISO 27001)
+- [x] Key rotation policy validation
+- **Implemented:** `check_guardrail_kms_encryption()` - 78 lines
+
+**10. Resource Tagging Compliance** ✅ (Risk 4/10)
+- [x] Validate required governance tags (Environment, Owner, DataClassification)
+- [x] Detect missing tags for cost allocation
+- [x] FinOps and AWS Well-Architected compliance
+- [x] Tag-based access control validation
+- **Implemented:** `check_guardrail_tags()` - 99 lines
+
+**11. Contextual Grounding Threshold Validation** ✅ (Risk 6/10)
+- [x] Validate grounding threshold configuration (0.7+ recommended)
+- [x] Detect overly permissive thresholds (< 0.5)
+- [x] RAG application hallucination risk assessment
+- [x] Filter type and threshold analysis
+- **Implemented:** `check_contextual_grounding_sources()` - 87 lines
+- **OWASP:** LLM09 (Misinformation)
+
+**Module Statistics:**
+- 📝 1,196 lines of production code
+- ✅ 11 comprehensive guardrail security checks
+- 🎯 OWASP LLM01, LLM02, LLM09 fully addressed
+- 🔒 Addresses prompt injection, PII leakage, hallucination prevention
+
+---
+
+### 1.4 Model Fine-Tuning Security Module ✅ COMPLETE
+**File:** `src/wilma/checks/fine_tuning.py`
+**Status:** ✅ 100% Complete (11 of 11 checks implemented)
+**Effort:** Completed in single session
+**OWASP:** LLM03 (Supply Chain), LLM04 (Data/Model Poisoning), LLM06 (Sensitive Info)
+**MITRE ATLAS:** AML.T0020 (Poison Training Data), AML.T0024 (Backdoor ML Model)
+
+#### Implemented Security Checks:
+
+**1. Training Data Bucket Security** ✅ (Risk 9/10)
+- [x] Validate S3 Block Public Access configuration for training data buckets
+- [x] Check bucket encryption (customer-managed KMS keys required)
+- [x] Verify bucket versioning enabled (rollback capability for data poisoning)
+- [x] Detect publicly accessible training buckets (CRITICAL finding)
+- [x] Deduplication across multiple fine-tuning jobs
+- **Implemented:** `check_training_data_bucket_security()` - 266 lines
+- **OWASP:** LLM03 (Supply Chain - Data Poisoning)
+
+**2. Training Data PII Detection** ✅ (Risk 8/10)
+- [x] Pattern-based PII scanning in job names and bucket names
+- [x] Detect SSN, Email, Phone, Credit Card, AWS Keys patterns
+- [x] Risk escalation for high-sensitivity PII types
+- [x] GDPR Art. 32, HIPAA, PCI-DSS compliance validation
+- **Implemented:** `check_training_data_pii()` - 107 lines
+- **OWASP:** LLM06 (Sensitive Information Disclosure)
+
+**3. Model Data Replay Risk Assessment** ✅ (Risk 6/10)
+- [x] Alert on fine-tuned models that may memorize training data
+- [x] Recommend output filtering and guardrails with PII filters
+- [x] Prompt injection defense recommendations
+- [x] Differential privacy guidance
+- **Implemented:** `check_model_data_replay_risk()` - 69 lines
+- **OWASP:** LLM06 (Sensitive Information Disclosure)
+
+**4. VPC Isolation for Training Jobs** ✅ (Risk 6/10)
+- [x] Verify fine-tuning jobs configured to run in VPC
+- [x] Check for subnet configuration
+- [x] Detect jobs without network isolation
+- [x] Provide VPC configuration guidance
+- **Implemented:** `check_vpc_isolation_for_training()` - 84 lines
+
+**5. Training Job CloudWatch Logging** ✅ (Risk 6/10)
+- [x] Validate CloudWatch log group exists for fine-tuning jobs
+- [x] Check log retention policies (90+ days recommended)
+- [x] Verify KMS encryption for logs
+- [x] SOC 2, ISO 27001 compliance validation
+- **Implemented:** `check_training_job_logging()` - 109 lines
+
+**6. Output Model Encryption** ✅ (Risk 6/10)
+- [x] Verify custom models use customer-managed KMS keys
+- [x] Detect AWS-managed encryption usage
+- [x] Compliance guidance (SOC 2, ISO 27001)
+- [x] Key rotation policy recommendations
+- **Implemented:** `check_output_model_encryption()` - 65 lines
+
+**7. Training Data Access Logging** ✅ (Risk 5/10)
+- [x] Verify S3 server access logging enabled for training buckets
+- [x] Audit trail for security investigations
+- [x] Compliance support
+- [x] Log destination bucket security validation
+- **Implemented:** `check_training_data_access_logging()` - 84 lines
+
+**8. Training Job IAM Roles** ✅ (Risk 8/10)
+- [x] Validate least privilege permissions for fine-tuning job roles
+- [x] Detect AdministratorAccess and PowerUserAccess policies (CRITICAL)
+- [x] Check for wildcard permissions (bedrock:*, s3:*, etc.)
+- [x] Deep policy document analysis
+- **Implemented:** `check_training_job_iam_roles()` - 127 lines
+- **OWASP:** LLM03 (Supply Chain)
+
+**9. Custom Model Tagging** ✅ (Risk 4/10)
+- [x] Validate required governance tags (Environment, Owner, DataClassification)
+- [x] Detect missing tags for cost allocation
+- [x] FinOps and AWS Well-Architected compliance
+- [x] Tag-based access control support
+- **Implemented:** `check_custom_model_tags()` - 70 lines
+
+**10. Training Data Source Validation** ✅ (Risk 6/10)
+- [x] Verify training data sources are from trusted locations
+- [x] Detect cross-account data sources
+- [x] Validate bucket ownership
+- [x] Supply chain attack prevention guidance
+- **Implemented:** `check_training_data_source_validation()` - 89 lines
+- **OWASP:** LLM03 (Supply Chain)
+
+**11. Model Card Documentation** ✅ (Risk 4/10)
+- [x] Recommend comprehensive model documentation
+- [x] Model card best practices (intended use, limitations, training data)
+- [x] Ethical considerations and risk mitigations
+- [x] Governance and responsible AI compliance
+- **Implemented:** `check_model_card_documentation()` - 68 lines
+
+**Module Statistics:**
+- 📝 1,169 lines of production code
+- ✅ 11 comprehensive security checks
+- 🎯 OWASP LLM03, LLM04, LLM06 fully addressed
+- 🔒 Addresses training data poisoning, model backdoors, and sensitive data leakage
+- ✨ **Priority 1 (CRITICAL) modules now 100% COMPLETE**
+
+---
+
+## Priority 2: HIGH - Important Security Enhancements
+
+### 2.1 Bedrock Flows Orchestration Security
+**File:** `src/wilma/checks/flows.py`
+**Priority:** HIGH
+**Effort:** 1-2 weeks
+**OWASP:** LLM08 (Excessive Agency)
+
+#### Security Checks:
+- [ ] Flow component security validation (Prompts, Agents, Guardrails, KBs)
+- [ ] Inter-service permission validation
+- [ ] Data flow encryption checks
+- [ ] Flow version control and audit trails
+- [ ] Validate condition node logic (no sensitive data in conditions)
+- [ ] Check for infinite loop vulnerabilities
+- [ ] Verify error handling security
+
+---
+
+### 2.2 AgentCore Identity & Token Security
+**File:** `src/wilma/checks/agent_identity.py`
+**Priority:** HIGH
+**Effort:** 1 week
+**OWASP:** LLM02 (Sensitive Information Disclosure)
+
+#### Security Checks:
+- [ ] Token vault integration with Secrets Manager
+- [ ] OAuth client credential storage validation
+- [ ] User access token security
+- [ ] API key rotation policies
+- [ ] Validate token scopes and permissions
+- [ ] Check for hardcoded credentials in agent configs
+
+---
+
+### 2.3 Model Evaluation Security
+**File:** `src/wilma/checks/evaluations.py`
+**Priority:** MEDIUM
+**Effort:** 1 week
+**OWASP:** LLM09 (Misinformation)
+
+#### Security Checks:
+- [ ] Evaluation job data encryption (customer KMS)
+- [ ] Service role validation for evaluation jobs
+- [ ] Evaluation dataset security (S3 permissions)
+- [ ] LLM-as-a-judge security configurations
+- [ ] Toxicity and harmfulness testing enabled
+- [ ] Validate human evaluation workflow security
+- [ ] Check for bias in evaluation datasets
+
+---
+
+### 2.4 Enhanced CloudTrail Monitoring
+**File:** Enhance `src/wilma/checks/logging.py`
+**Priority:** HIGH
+**Effort:** 1 week
+**MITRE ATLAS:** Defense Evasion, Discovery
+
+#### Security Checks:
+- [ ] Bedrock-specific CloudTrail event monitoring
+- [ ] Alert on suspicious events:
+  - [ ] ListDataSources (reconnaissance)
+  - [ ] GetKnowledgeBase (data exfiltration attempt)
+  - [ ] GetAgent (agent enumeration)
+  - [ ] UpdateGuardrail (security control bypass)
+- [ ] Data source access pattern analysis
+- [ ] Model invocation anomaly detection
+- [ ] Agent action execution logging
+- [ ] Failed API call monitoring
+
+---
+
+### 2.5 Cross-Service Integration Security
+**File:** `src/wilma/checks/integrations.py`
+**Priority:** MEDIUM
+**Effort:** 1-2 weeks
+**OWASP:** LLM03 (Supply Chain)
+
+#### Security Checks:
+- [ ] SageMaker Unified Studio integration permissions
+- [ ] S3 bucket cross-account access validation
+- [ ] Lambda function role validation for agents
+- [ ] OpenSearch Service integration security
+- [ ] Step Functions integration (for Flows)
+- [ ] EventBridge rule security
+- [ ] SNS/SQS topic access policies
+
+---
+
+## Priority 3: MEDIUM - Advanced Features
+
+### 3.1 Model Marketplace Security
+**File:** `src/wilma/checks/marketplace.py`
+**Priority:** MEDIUM
+**Effort:** 1 week
+**OWASP:** LLM03 (Supply Chain)
+**MITRE ATLAS:** ML Supply Chain Compromise
+
+#### Security Checks:
+- [ ] Third-party model security assessment
+- [ ] Marketplace model license compliance
+- [ ] Model provenance validation
+- [ ] Vendor security posture checks
+- [ ] Check for known vulnerable model versions
+
+---
+
+### 3.2 Prompt Management Security
+**File:** `src/wilma/checks/prompts.py`
+**Priority:** MEDIUM
+**Effort:** 1 week
+
+#### Security Checks:
+- [ ] Stored prompt encryption
+- [ ] Prompt versioning and audit trails
+- [ ] Prompt injection pattern detection in templates
+- [ ] Access controls for shared prompts
+- [ ] Validate prompt variable sanitization
+
+---
+
+### 3.3 Model Distillation Security
+**File:** `src/wilma/checks/distillation.py`
+**Priority:** MEDIUM
+**Effort:** 1 week
+
+#### Security Checks:
+- [ ] Student model security validation
+- [ ] Teacher-student model permission isolation
+- [ ] Distillation job monitoring
+- [ ] Output model quality/security comparison
+
+---
+
+### 3.4 Bedrock Inference Profile Security
+**File:** `src/wilma/checks/inference_profiles.py`
+**Priority:** LOW
+**Effort:** 3-5 days
+
+#### Security Checks:
+- [ ] Cross-region inference configuration
+- [ ] Failover security validation
+- [ ] Request routing security
+- [ ] Performance vs. security trade-off analysis
+
+---
+
+## Priority 4: CloudShell-Specific Optimizations
+
+### 4.1 Enhanced CloudShell Experience
+**File:** Enhance `src/wilma/__main__.py` and `src/wilma/cloudshell.py`
+**Priority:** HIGH for UX
+**Effort:** 3-5 days
+
+#### Features to Implement:
+
+**Lightweight Scanning Mode**
+- [ ] `--quick-scan` flag for fast checks (<2 minutes)
+- [ ] Progress indicators for long-running checks
+- [ ] `--resume <scan-id>` to resume interrupted scans
+- [ ] Save scan state to `/tmp/wilma-scan-state.json`
+
+**CloudShell Auto-Detection**
+- [ ] Detect CloudShell environment via env vars
+- [ ] Auto-use CloudShell's pre-authenticated credentials
+- [ ] Skip manual credential configuration prompts
+- [ ] Display CloudShell-specific tips
+
+**Minimal Output Mode**
+- [ ] `--compact` flag for condensed terminal output
+- [ ] Color scheme optimized for CloudShell theme
+- [ ] Export options: `--export-json`, `--export-csv`, `--export-html`
+- [ ] Real-time streaming results (vs. batch at end)
+
+**Region-Aware Scanning**
+- [ ] Auto-detect CloudShell region from AWS_REGION
+- [ ] Prioritize region-specific checks first
+- [ ] `--cross-region` flag for multi-region validation
+- [ ] Region recommendation based on Bedrock feature availability
+
+**Quick Actions**
+- [ ] `wilma --fix-now <finding-id>` - Generate AWS CLI fix command
+- [ ] `wilma --explain <check-name>` - Show detailed check documentation
+- [ ] `wilma --compare <scan-id-1> <scan-id-2>` - Compare two scan results
+
+---
+
+## Priority 5: Compliance & Reporting
+
+### 5.1 Compliance Framework Mapping
+**File:** `src/wilma/compliance/frameworks.py`
+**Priority:** MEDIUM (HIGH for enterprises)
+**Effort:** 1-2 weeks
+
+#### Features:
+- [ ] Map findings to OWASP LLM Top 10 2025
+- [ ] Map findings to MITRE ATLAS tactics/techniques
+- [ ] Generate compliance reports:
+  - [ ] SOC 2 Type II
+  - [ ] ISO 27001
+  - [ ] HIPAA
+  - [ ] PCI-DSS (if applicable)
+  - [ ] GDPR
+- [ ] Export findings in SARIF format (for GitHub Security)
+- [ ] Export for AWS Security Hub
+- [ ] Custom compliance framework support
+
+---
+
+### 5.2 Automated Remediation Recommendations
+**File:** `src/wilma/remediation/auto_fix.py`
+**Priority:** MEDIUM
+**Effort:** 2-3 weeks
+
+#### Features:
+- [ ] Generate CloudFormation templates for fixes
+- [ ] Generate Terraform templates for fixes
+- [ ] Create step-by-step remediation workflows
+- [ ] Estimate time and complexity for each fix
+- [ ] Generate AWS CLI scripts for batch remediation
+- [ ] Dry-run mode to validate fixes
+- [ ] Rollback scripts for failed remediations
+
+---
+
+### 5.3 Continuous Monitoring Mode
+**File:** `src/wilma/monitoring/continuous.py`
+**Priority:** MEDIUM
+**Effort:** 2-3 weeks
+
+#### Features:
+- [ ] Deploy as Lambda function for continuous scanning
+- [ ] EventBridge integration for real-time alerts
+- [ ] SNS notifications for critical findings
+- [ ] Dashboard integration:
+  - [ ] CloudWatch Dashboard
+  - [ ] Grafana
+  - [ ] Custom HTML dashboard
+- [ ] Historical trending and drift detection
+- [ ] Security posture scoring over time
+- [ ] Automated weekly/monthly reports
+
+---
+
+## Common Misconfigurations (2025 Research)
+
+### Top 10 Issues to Check For:
+
+1. **Guardrails not configured or set to LOW strength** (70% occurrence)
+   - Ineffective prompt injection protection
+   - Minimal content filtering
+   - **Fix:** Set to HIGH, enable all filters
+
+2. **S3 buckets for Knowledge Bases public or unencrypted** (40% occurrence)
+   - Data poisoning risk
+   - Sensitive data exposure
+   - **Fix:** Private buckets, customer KMS encryption, versioning
+
+3. **Agents with action groups lacking requireConfirmation** (60% occurrence)
+   - Unauthorized mutations
+   - Excessive agency vulnerability
+   - **Fix:** Enable confirmation for all destructive actions
+
+4. **Missing VPC endpoints for bedrock-runtime** (50% occurrence)
+   - Traffic over public internet
+   - Increased latency
+   - **Fix:** Create VPC endpoint for private connectivity
+
+5. **Model invocation logging disabled** (55% occurrence)
+   - No audit trail
+   - Cannot detect abuse
+   - **Fix:** Enable CloudWatch + S3 logging
+
+6. **Fine-tuned models using AWS-managed keys** (65% occurrence)
+   - Less control over encryption
+   - Compliance issues
+   - **Fix:** Use customer-managed KMS keys
+
+7. **Agents without guardrail associations** (70% occurrence)
+   - No prompt injection protection
+   - No content filtering
+   - **Fix:** Attach HIGH-strength guardrails to all agents
+
+8. **Knowledge Base data sources without versioning** (80% occurrence)
+   - Cannot rollback poisoned data
+   - No audit trail for changes
+   - **Fix:** Enable S3 versioning, MFA Delete
+
+9. **CloudTrail not configured for Bedrock API monitoring** (60% occurrence)
+   - Cannot detect reconnaissance
+   - No API abuse detection
+   - **Fix:** Enable CloudTrail with Bedrock event selection
+
+10. **IAM policies with bedrock:* wildcard** (45% occurrence)
+    - Overly permissive access
+    - Lateral movement risk
+    - **Fix:** Least privilege policies, specific actions only
+
+---
+
+## Integration Opportunities
+
+### High-Value AWS Service Integrations:
+
+1. **AWS Security Hub** (Priority: HIGH)
+   - Push Wilma findings as Security Hub insights
+   - Correlate with other security findings
+   - Central security dashboard
+
+2. **Amazon GuardDuty** (Priority: HIGH)
+   - ML-specific threat detection correlation
+   - Runtime security monitoring
+   - Anomaly detection enhancement
+
+3. **Amazon Macie** (Priority: HIGH)
+   - Automated PII detection in:
+     - Training datasets
+     - Knowledge Base documents
+     - Model logs
+     - Agent memory
+
+4. **AWS Config** (Priority: MEDIUM)
+   - Continuous compliance monitoring
+   - Config rules for Bedrock resources
+   - Drift detection
+
+5. **AWS Systems Manager** (Priority: MEDIUM)
+   - Automated remediation via SSM documents
+   - Parameter Store for secure configs
+   - Session Manager for debugging
+
+6. **Amazon EventBridge** (Priority: HIGH)
+   - Real-time event-driven scanning
+   - Immediate alerting on security events
+   - Integration with Lambda for auto-response
+
+7. **AWS Lambda** (Priority: HIGH)
+   - Serverless continuous monitoring
+   - Auto-remediation functions
+   - Cost-effective scheduled scanning
+
+8. **Amazon SNS/SQS** (Priority: MEDIUM)
+   - Multi-channel alerting (email, SMS, Slack)
+   - Alert deduplication
+   - Fan-out notifications
+
+9. **AWS Organizations** (Priority: MEDIUM)
+   - Multi-account security posture
+   - Centralized policy management
+   - Organization-wide compliance
+
+10. **Amazon Detective** (Priority: LOW)
+    - Security investigation workflow
+    - Root cause analysis
+    - Threat hunting
+
+---
+
+## Implementation Roadmap
+
+### Phase 1: Foundation (Weeks 1-4)
+**Goal:** Close critical gaps in Agents, Knowledge Bases, Guardrails
+
+- Week 1-2: Agents Security Module (1.1)
+- Week 2-3: Knowledge Bases Security Module (1.2)
+- Week 3-4: Enhanced Guardrails Validation (1.3)
+- **Deliverable:** 50% increase in security coverage
+
+### Phase 2: Expansion (Weeks 5-8)
+**Goal:** Add fine-tuning, flows, CloudShell optimization
+
+- Week 5-6: Fine-Tuning Security Module (1.4)
+- Week 6-7: Flows Security (2.1)
+- Week 7: Enhanced CloudTrail monitoring (2.4)
+- Week 8: CloudShell optimizations (4.1)
+- **Deliverable:** 75% feature coverage
+
+### Phase 3: Enhancement (Weeks 9-12)
+**Goal:** Advanced features and integrations
+
+- Week 9: AgentCore Identity (2.2)
+- Week 10: Model Evaluation (2.3)
+- Week 11: Cross-service integrations (2.5)
+- Week 12: Compliance framework mapping (5.1)
+- **Deliverable:** Enterprise-ready feature set
+
+### Phase 4: Automation (Weeks 13-16)
+**Goal:** Continuous monitoring and auto-remediation
+
+- Week 13-14: Automated remediation (5.2)
+- Week 15-16: Continuous monitoring mode (5.3)
+- Week 16: Advanced features (Priority 3 items)
+- **Deliverable:** Production-grade automation
+
+---
+
+## Success Metrics
+
+### Coverage Targets:
+
+**After Phase 1:**
+- OWASP LLM Top 10: 20% → 60%
+- MITRE ATLAS: 15% → 40%
+- Bedrock Features: 25% → 50%
+
+**After Phase 2:**
+- OWASP LLM Top 10: 60% → 85%
+- MITRE ATLAS: 40% → 60%
+- Bedrock Features: 50% → 75%
+
+**After Phase 3:**
+- OWASP LLM Top 10: 85% → 95%
+- MITRE ATLAS: 60% → 75%
+- Bedrock Features: 75% → 90%
+
+**After Phase 4:**
+- OWASP LLM Top 10: 95% → 100%
+- MITRE ATLAS: 75% → 85%
+- Bedrock Features: 90% → 95%
+
+### Usage Targets:
+- 1,000 scans/month by end of Phase 2
+- 5,000 scans/month by end of Phase 4
+- 50+ GitHub stars by end of Phase 3
+- 10+ enterprise users by end of Phase 4
+
+---
+
+## Feature Statistics Summary
+
+**Total New Security Checks Identified:** 75+
+
+**By Priority:**
+- Critical: 25 checks
+- High: 30 checks
+- Medium: 15 checks
+- Low: 5 checks
+
+**By OWASP LLM Top 10 2025:**
+- LLM01 (Prompt Injection): 15 checks
+- LLM02 (Sensitive Info): 8 checks
+- LLM03 (Supply Chain): 10 checks
+- LLM04 (Data Poisoning): 8 checks
+- LLM05 (Output Handling): 3 checks
+- LLM06 (Model Theft): 5 checks
+- LLM07 (Vector Weaknesses): 6 checks
+- LLM08 (Excessive Agency): 12 checks
+- LLM09 (Misinformation): 5 checks
+- LLM10 (Unbounded Consumption): 3 checks
+
+**By MITRE ATLAS:**
+- Reconnaissance: 8 checks
+- Resource Development: 5 checks
+- Initial Access: 6 checks
+- Execution: 4 checks
+- Persistence: 3 checks
+- Privilege Escalation: 5 checks
+- Defense Evasion: 10 checks
+- Credential Access: 4 checks
+- Discovery: 8 checks
+- Collection: 6 checks
+- Exfiltration: 7 checks
+- Impact: 9 checks
+
+---
+
+## Contributing
+
+Want to implement a feature from this roadmap? Here's how:
+
+1. **Pick a feature** - Choose from Priority 1 first
+2. **Create a branch** - `git checkout -b feature/<feature-name>`
+3. **Check existing code** - Review current implementation patterns
+4. **Write tests** - Add unit tests for your checks (TODO: test framework)
+5. **Update docs** - Add to README and this ROADMAP
+6. **Submit PR** - Reference the feature number from this roadmap
+
+### Feature Implementation Template:
+
+```python
+# src/wilma/checks/<new_module>.py
+
+"""
+<Module description>
+
+OWASP Coverage: <list>
+MITRE ATLAS Coverage: <list>
+"""
+
+from typing import List, Dict
+from wilma.enums import SecurityMode, RiskLevel
+
+
+class <ModuleName>SecurityChecks:
+    """<Description>."""
+
+    def __init__(self, checker):
+        """Initialize with parent checker instance."""
+        self.checker = checker
+
+    def check_<feature_name>(self) -> List[Dict]:
+        """<Description>."""
+        if self.checker.mode == SecurityMode.LEARN:
+            print("\n[LEARN] Learning Mode: <Feature Name>")
+            print("<Educational description>")
+            return []
+
+        print("[CHECK] Checking <feature>...")
+
+        try:
+            # Implementation
+            pass
+        except Exception as e:
+            print(f"[WARN] Could not check <feature>: {str(e)}")
+
+        return self.checker.findings
+```
+
+---
+
+## Research References
+
+- AWS Bedrock Documentation (2025)
+- OWASP LLM Top 10 2025
+- MITRE ATLAS Framework
+- AWS Security Best Practices
+- AWS Well-Architected Framework - Security Pillar
+- NIST AI Risk Management Framework
+- CIS AWS Foundations Benchmark
+- Common Bedrock Misconfigurations Study (2024-2025)
+
+---
+
+**End of Roadmap**

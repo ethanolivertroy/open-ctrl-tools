@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "trust-me-bro-center": {
+      "url": "http://127.0.0.1:8787/mcp",
+      "headers": {
+        "Authorization": "Bearer replace-with-a-long-random-admin-token"
+      }
+    }
+  }
+}

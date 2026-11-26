@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "trust-me-bro-center",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    // Unknown paths get a real 404 page instead of the trust center shell.
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/mcp", "/mcp/*", "/robots.txt", "/sitemap.xml"]
+  },
+  // Per-network budget for the public subscribe and access-request forms.
+  // namespace_id only needs to be unique within this Worker.
+  "ratelimits": [
+    {
+      "name": "PUBLIC_FORM_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 10, "period": 60 }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TRUST_CENTER_MCP",
+        "class_name": "TrustCenterMCP"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TrustCenterMCP"]
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "trust-me-bro-center-db",
+      // Placeholder used by the Deploy Button flow. Cloudflare replaces it
+      // after provisioning D1; for a manual deploy, replace it with the id
+      // printed by `wrangler d1 create trust-me-bro-center-db`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "preview_database_id": "trust-me-bro-center-local",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "trust-me-bro-center-documents"
+    }
+  ],
+  // Email Service requires separate domain onboarding and is therefore not
+  // enabled by the one-click template. After onboarding, uncomment:
+  // "send_email": [
+  //   {
+  //     "name": "EMAIL"
+  //   }
+  // ],
+  // Optional: let the trust center chatbot compose answers with Workers AI.
+  // Without this binding it returns the best matching published items.
+  // "ai": {
+  //   "binding": "AI"
+  // },
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

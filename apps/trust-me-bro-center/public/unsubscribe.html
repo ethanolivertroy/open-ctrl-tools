@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#fbfbfb">
+  <title>Unsubscribe</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/kumo-public.css">
+  <script src="/token-action.js" type="module"></script>
+</head>
+<body class="public-page" data-theme="kumo" data-mode="light"
+      data-endpoint="/api/unsubscribe"
+      data-progress="Unsubscribing…"
+      data-done="This address will not receive further trust center updates.">
+  <main class="token-action-page">
+    <div class="token-action-card">
+      <h1>Unsubscribe from updates</h1>
+      <p id="token-message">Press the button below to stop trust center update emails for this address. You can subscribe again at any time.</p>
+      <button class="kumo-btn kumo-btn-primary" id="token-action" type="button">Unsubscribe</button>
+      <p class="form-status" id="token-status" role="status"></p>
+      <a class="text-link" href="/">Back to the trust center</a>
+    </div>
+  </main>
+</body>
+</html>

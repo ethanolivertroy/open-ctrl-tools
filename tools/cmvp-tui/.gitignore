@@ -1,0 +1,19 @@
+# Binary
+cmvp-tui
+cmvp-cli
+cmvp
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+
+# Test/Build artifacts
+coverage.out
+*.test
+*.out
+dist/

@@ -1,0 +1,14 @@
+title = "Open Control Tools secret scan configuration"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Synthetic Lambda env-var test fixture in Wilma"
+condition = "AND"
+paths = [
+  '^auditors/wilma/tests/test_agent_checks\.py$',
+]
+regexes = [
+  '^sk-1234567890abcdefghijklmnop$',
+]

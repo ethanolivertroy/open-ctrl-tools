@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#fbfbfb">
+  <title>Trust center access</title>
+  <link rel="icon" id="favicon-link" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/kumo-public.css">
+  <script src="/access.js" type="module"></script>
+</head>
+<body class="public-page kumo-access-page" data-theme="kumo" data-mode="light">
+  <a class="skip-link" href="#main">Skip to shared resources</a>
+
+  <header class="kumo-header">
+    <a class="kumo-brand" href="/" aria-label="Trust center home">
+      <span class="kumo-brand-mark" id="header-logo" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M2 10.5 8 4l6 6.5" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="kumo-brand-copy">
+        <strong id="header-company">Trust center</strong>
+        <small>Shared access</small>
+      </span>
+    </a>
+    <div class="kumo-header-actions">
+      <a class="kumo-btn kumo-btn-ghost kumo-btn-sm" href="/">Public trust center</a>
+      <a class="kumo-btn kumo-btn-secondary kumo-btn-sm" id="contact-link" href="mailto:">Contact security</a>
+    </div>
+  </header>
+
+  <main id="main" class="kumo-page kumo-shell">
+    <div id="access-loading" class="kumo-panel"><div class="skeleton-row" aria-hidden="true"></div></div>
+
+    <section id="access-error" class="kumo-private" hidden>
+      <div class="kumo-panel kumo-private-card">
+        <h1>This access link is not valid.</h1>
+        <p id="access-error-message">It may have expired or been revoked. Ask the security team for a new link.</p>
+        <a class="kumo-btn kumo-btn-secondary" href="/">Back to the trust center</a>
+      </div>
+    </section>
+
+    <div id="access-content" hidden>
+      <div class="kumo-access-intro">
+        <h1 id="access-heading">Shared security materials</h1>
+        <p id="access-summary"></p>
+        <p class="kumo-meta" id="access-meta"></p>
+      </div>
+
+      <section class="kumo-panel kumo-nda-card" id="nda-card" hidden aria-labelledby="nda-heading">
+        <h2 id="nda-heading">Confidentiality agreement</h2>
+        <p id="nda-text">The materials shared here are confidential. By continuing you agree to use them only to evaluate the company's security posture, to keep them within your organization, and not to redistribute them.</p>
+        <button class="kumo-btn kumo-btn-primary" id="accept-nda" type="button">I agree and continue</button>
+        <p class="form-status" id="nda-status" role="status"></p>
+      </section>
+
+      <div class="kumo-access-grid">
+        <div>
+          <div class="kumo-section-head">
+            <h2>Resources</h2>
+          </div>
+          <div class="kumo-panel">
+            <div class="kumo-record-list" id="access-document-list" aria-live="polite"></div>
+          </div>
+        </div>
+        <div id="access-controls-section" hidden>
+          <div class="kumo-section-head">
+            <h2>Controls shared with you</h2>
+          </div>
+          <div id="access-control-list"></div>
+        </div>
+        <div id="access-updates-section" hidden>
+          <div class="kumo-section-head">
+            <h2>Updates</h2>
+          </div>
+          <div class="kumo-panel">
+            <ol class="kumo-updates" id="access-update-list"></ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="kumo-footer">
+      <p><strong id="footer-company">Trust center</strong> · This page is personal to the address it was sent to. Do not forward the link.</p>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

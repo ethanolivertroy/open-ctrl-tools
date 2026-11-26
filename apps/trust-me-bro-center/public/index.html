@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review Northstar Labs security, compliance, documents, subprocessors, and current trust updates.">
+  <meta name="theme-color" content="#fbfbfb">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Northstar Labs Trust Center">
+  <meta property="og:title" content="Northstar Labs Trust Center">
+  <meta property="og:description" content="Review Northstar Labs security, compliance, documents, subprocessors, and current trust updates.">
+  <meta name="twitter:card" content="summary">
+  <title>Northstar Labs Trust Center</title>
+  <link rel="icon" id="favicon-link" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/kumo-public.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body class="public-page" data-theme="kumo" data-mode="light">
+  <a class="skip-link" href="#main">Skip to trust center content</a>
+
+  <header class="kumo-header">
+    <a class="kumo-brand" href="#overview" aria-label="Trust center home">
+      <span class="kumo-brand-mark" id="header-logo" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <path d="M2 10.5 8 4l6 6.5" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="kumo-brand-copy">
+        <strong id="header-company">Northstar Labs</strong>
+        <small id="header-title">Trust center</small>
+      </span>
+    </a>
+    <div class="kumo-header-actions">
+      <button class="kumo-btn kumo-btn-ghost kumo-btn-sm" id="open-chat" type="button" hidden>Ask a question</button>
+      <a class="kumo-btn kumo-btn-ghost kumo-btn-sm" href="#subscribe-heading" id="header-subscribe">Subscribe</a>
+      <a class="kumo-btn kumo-btn-secondary kumo-btn-sm" id="contact-link" href="mailto:security@northstar.example">Contact security</a>
+    </div>
+  </header>
+
+  <div class="kumo-banner kumo-shell" id="site-banner" hidden aria-hidden="true"></div>
+
+  <main id="main" class="kumo-page kumo-shell">
+    <section class="kumo-private" id="private-state" hidden>
+      <div class="kumo-panel kumo-private-card">
+        <h1 id="private-heading">This trust center is private.</h1>
+        <p>Published materials are shared with approved viewers. Request access and the security team will review it. If you already have an access link, open it from your email.</p>
+        <button class="kumo-btn kumo-btn-primary" id="private-request" type="button">Request access</button>
+      </div>
+    </section>
+
+    <div id="public-content">
+    <div class="kumo-tabs" role="tablist" aria-label="Trust center sections">
+      <button type="button" class="kumo-tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" tabindex="0" data-tab="overview">Overview</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-resources" aria-controls="panel-resources" aria-selected="false" tabindex="-1" data-tab="resources">Resources</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-controls" aria-controls="panel-controls" aria-selected="false" tabindex="-1" data-tab="controls" hidden>Controls</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-media" aria-controls="panel-media" aria-selected="false" tabindex="-1" data-tab="media" hidden>Media</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1" data-tab="faq">FAQ</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-subprocessors" aria-controls="panel-subprocessors" aria-selected="false" tabindex="-1" data-tab="subprocessors">Subprocessors</button>
+      <button type="button" class="kumo-tab" role="tab" id="tab-updates" aria-controls="panel-updates" aria-selected="false" tabindex="-1" data-tab="updates">Updates</button>
+    </div>
+
+    <section class="kumo-tab-panel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" data-panel="overview">
+      <div class="kumo-title">
+        <h1 id="hero-heading">Security should be easy to inspect.</h1>
+        <span class="kumo-badge kumo-badge-warning">Demonstration content</span>
+      </div>
+      <p class="kumo-lede" id="hero-summary">Review our security program, data practices, subprocessors, and current assurance materials in one place.</p>
+      <p class="kumo-meta">
+        <span id="hero-location">United States</span>
+        <span aria-hidden="true">·</span>
+        <span>Reviewed <time id="last-reviewed">August 30, 2026</time></span>
+        <span aria-hidden="true">·</span>
+        <a id="hero-contact" href="mailto:security@northstar.example">security@northstar.example</a>
+      </p>
+
+      <div class="kumo-overview">
+        <div class="kumo-overview-col">
+          <div>
+            <div class="kumo-section-head">
+              <h2 id="assurance-heading">Compliance</h2>
+            </div>
+            <div class="kumo-panel">
+              <div class="kumo-compliance" id="certification-list" aria-live="polite">
+                <div class="skeleton-row" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="kumo-section-head">
+              <h2>Resources</h2>
+              <button class="kumo-more" type="button" data-open-tab="resources">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <div id="overview-document-list"></div>
+            </div>
+          </div>
+          <div id="overview-data-collected" hidden>
+            <div class="kumo-section-head">
+              <h2 id="data-collected-heading">Data collected</h2>
+            </div>
+            <div class="kumo-panel">
+              <div class="kumo-data-collected" id="data-collected-list"></div>
+            </div>
+          </div>
+        </div>
+        <div class="kumo-overview-col">
+          <div id="overview-controls" hidden>
+            <div class="kumo-section-head">
+              <h2>Controls</h2>
+              <button class="kumo-more" type="button" data-open-tab="controls">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <div class="kumo-control-summary" id="overview-control-list"></div>
+            </div>
+          </div>
+          <div id="overview-media" hidden>
+            <div class="kumo-section-head">
+              <h2>Media</h2>
+              <button class="kumo-more" type="button" data-open-tab="media">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <button class="kumo-media-card" type="button" data-open-tab="media">
+                <span id="overview-media-label">Watch the security briefing</span>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="kumo-section-head">
+              <h2>FAQ</h2>
+              <button class="kumo-more" type="button" data-open-tab="faq">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <div class="kumo-faq" id="overview-faq-list"></div>
+            </div>
+          </div>
+          <div>
+            <div class="kumo-section-head">
+              <h2>Subprocessors</h2>
+              <button class="kumo-more" type="button" data-open-tab="subprocessors">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <div class="kumo-record-list" id="overview-subprocessor-list"></div>
+            </div>
+          </div>
+          <div>
+            <div class="kumo-section-head">
+              <h2>Updates</h2>
+              <button class="kumo-more" type="button" data-open-tab="updates">View all</button>
+            </div>
+            <div class="kumo-panel">
+              <ol class="kumo-updates" id="overview-update-list"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="kumo-tab-panel" id="panel-resources" role="tabpanel" aria-labelledby="tab-resources" data-panel="resources" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="documents-heading">Resources</h1>
+        <label class="kumo-search">
+          <span class="visually-hidden">Search resources</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search-resources" type="search" placeholder="Search">
+        </label>
+      </div>
+      <p class="kumo-lede">Public materials open immediately. Request-only reports are reviewed by a human before access is granted.</p>
+      <div class="kumo-panel">
+        <div class="kumo-record-list" id="document-list" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="kumo-tab-panel" id="panel-controls" role="tabpanel" aria-labelledby="tab-controls" data-panel="controls" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="controls-heading">Controls</h1>
+        <label class="kumo-search">
+          <span class="visually-hidden">Search controls</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search-controls" type="search" placeholder="Search">
+        </label>
+      </div>
+      <p class="kumo-lede">Security controls the program maintains, grouped by category. Status reflects the most recent internal review.</p>
+      <div id="control-list" aria-live="polite"></div>
+    </section>
+
+    <section class="kumo-tab-panel video-section" id="panel-media" role="tabpanel" aria-labelledby="tab-media" data-panel="media" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="video-heading">Media</h1>
+      </div>
+      <p class="kumo-lede">Short explanations of the security program and current assurance posture.</p>
+      <div class="kumo-video-list" id="video-list"></div>
+    </section>
+
+    <section class="kumo-tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" data-panel="faq" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="faq-heading">FAQ</h1>
+        <label class="kumo-search">
+          <span class="visually-hidden">Search frequently asked questions</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search-faq" type="search" placeholder="Search">
+        </label>
+      </div>
+      <p class="kumo-lede">Answers reflect published policy. Contact security when you need contractual detail.</p>
+      <div id="faq-list" aria-live="polite"></div>
+    </section>
+
+    <section class="kumo-tab-panel" id="panel-subprocessors" role="tabpanel" aria-labelledby="tab-subprocessors" data-panel="subprocessors" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="subprocessors-heading">Subprocessors</h1>
+        <label class="kumo-search">
+          <span class="visually-hidden">Search subprocessors</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search-subprocessors" type="search" placeholder="Search">
+        </label>
+      </div>
+      <p class="kumo-lede">Services that may process customer data while supporting the product.</p>
+      <div class="kumo-panel">
+        <div class="kumo-record-list" id="subprocessor-list" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="kumo-tab-panel" id="panel-updates" role="tabpanel" aria-labelledby="tab-updates" data-panel="updates" hidden>
+      <div class="kumo-toolbar">
+        <h1 id="updates-heading">Updates</h1>
+        <label class="kumo-search">
+          <span class="visually-hidden">Search updates</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="search-updates" type="search" placeholder="Search">
+        </label>
+      </div>
+      <p class="kumo-lede">Material changes to assurance, documents, or subprocessors.</p>
+      <div class="kumo-panel">
+        <ol class="kumo-updates" id="update-list"></ol>
+      </div>
+    </section>
+
+    <section class="kumo-subscribe" aria-labelledby="subscribe-heading">
+      <div>
+        <h2 id="subscribe-heading">Get trust updates</h2>
+        <p>One email when assurance documents, subprocessors, or material security information changes.</p>
+      </div>
+      <form class="kumo-field" id="subscribe-form">
+        <label for="subscribe-email">Work email</label>
+        <div class="kumo-field-row">
+          <input id="subscribe-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required maxlength="254">
+          <button class="kumo-btn kumo-btn-primary" type="submit">Subscribe</button>
+        </div>
+        <div class="turnstile-slot" id="subscribe-turnstile" hidden></div>
+        <p class="form-status" id="subscribe-status" role="status"></p>
+      </form>
+    </section>
+    </div>
+
+    <footer class="kumo-footer">
+      <p><strong id="footer-company">Northstar Labs</strong> · Demonstration trust center. Replace every sample claim before publishing.</p>
+      <p class="kumo-footer-links" id="footer-links" hidden></p>
+    </footer>
+  </main>
+
+  <dialog class="request-dialog" id="request-dialog" aria-labelledby="request-heading">
+    <form method="dialog" class="dialog-close-form">
+      <button class="icon-button" aria-label="Close request form">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+    <div class="dialog-intro">
+      <h2 id="request-heading">Request access</h2>
+      <p id="request-document-name">Tell the security team who needs this report and why.</p>
+    </div>
+    <form id="access-request-form" class="stack-form">
+      <input type="hidden" name="documentId" id="request-document-id">
+      <input type="hidden" name="accessLevel" id="request-access-level">
+      <label>Name<input name="name" autocomplete="name" required maxlength="120"></label>
+      <label>Work email<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+      <label>Company<input name="company" autocomplete="organization" required maxlength="160"></label>
+      <label>Reason for access<textarea name="reason" rows="3" maxlength="800" placeholder="Customer security review, procurement, renewal"></textarea></label>
+      <div class="turnstile-slot" id="request-turnstile" hidden></div>
+      <button class="kumo-btn kumo-btn-primary kumo-btn-full" type="submit">Send request</button>
+      <p class="form-status" id="access-status" role="status"></p>
+    </form>
+  </dialog>
+
+  <dialog class="request-dialog kumo-chat" id="chat-dialog" aria-labelledby="chat-heading">
+    <form method="dialog" class="dialog-close-form">
+      <button class="icon-button" aria-label="Close assistant">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+    <div class="dialog-intro">
+      <h2 id="chat-heading">Ask about our security</h2>
+      <p>Answers come only from what is published on this page. For contractual detail, contact the security team.</p>
+    </div>
+    <div class="kumo-chat-log" id="chat-log" aria-live="polite"></div>
+    <form id="chat-form" class="kumo-field">
+      <label for="chat-input" class="visually-hidden">Your question</label>
+      <div class="kumo-field-row">
+        <input id="chat-input" name="message" autocomplete="off" placeholder="Where is customer data hosted?" required maxlength="1000">
+        <button class="kumo-btn kumo-btn-primary" type="submit">Ask</button>
+      </div>
+      <p class="form-status" id="chat-status" role="status"></p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
