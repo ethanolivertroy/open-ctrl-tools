@@ -1,0 +1,174 @@
+name: ControlBot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "fixtures/**"
+      - "mappings/**"
+      - "src/**"
+      - "scripts/**"
+      - ".controlbot/**"
+      - ".github/workflows/controlbot.yml"
+  pull_request:
+    paths:
+      - "**/*.tf"
+      - "fixtures/**"
+      - "mappings/**"
+      - "src/**"
+      - "scripts/**"
+      - ".controlbot/**"
+      - ".github/workflows/controlbot.yml"
+  workflow_dispatch:
+    inputs:
+      terraform_dir:
+        description: Terraform directory to scan
+        required: false
+        default: fixtures/terraform
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  controlbot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed Terraform files
+        id: changed
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            **/*.tf
+          separator: "\n"
+
+      - name: Resolve scan directory
+        id: scan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CHANGED_FILES: ${{ steps.changed.outputs.all_changed_files }}
+          TERRAFORM_DIR: ${{ github.event.inputs.terraform_dir || 'fixtures/terraform' }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$CHANGED_FILES" ]; then
+            FIRST_FILE=$(printf '%s\n' "$CHANGED_FILES" | awk 'NF { print; exit }')
+            DIR=$(dirname "$FIRST_FILE")
+            {
+              echo "dir=$DIR"
+              echo "changed<<CONTROLBOT_CHANGED_FILES"
+              printf '%s\n' "$CHANGED_FILES"
+              echo "CONTROLBOT_CHANGED_FILES"
+            } >> "$GITHUB_OUTPUT"
+          else
+            echo "dir=$TERRAFORM_DIR" >> "$GITHUB_OUTPUT"
+            echo "changed=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck and unit tests
+        run: npm run typecheck && npm test
+
+      - name: Scan Terraform
+        env:
+          SCAN_DIR: ${{ steps.scan.outputs.dir }}
+        run: npm run scan -- "$SCAN_DIR" findings.json
+
+      - name: Extract repo evidence
+        env:
+          SCAN_DIR: ${{ steps.scan.outputs.dir }}
+        run: npm run evidence -- --scan-dir "$SCAN_DIR"
+
+      - name: Enrich with Cursor agent
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          SCAN_DIR: ${{ steps.scan.outputs.dir }}
+        run: |
+          if [ -z "$CURSOR_API_KEY" ]; then
+            npm run review -- --scan-dir "$SCAN_DIR" --scan-only
+          else
+            npm run review -- --scan-dir "$SCAN_DIR"
+          fi
+
+      - name: Build ControlBot review
+        id: bot
+        env:
+          SCAN_DIR: ${{ steps.scan.outputs.dir }}
+          CHANGED_FILES: ${{ steps.scan.outputs.changed }}
+        run: |
+          CONTROLBOT_ARGS=("--scan-dir" "$SCAN_DIR")
+          if [ -n "$CHANGED_FILES" ]; then
+            while IFS= read -r changed_file; do
+              [ -n "$changed_file" ] || continue
+              CONTROLBOT_ARGS+=("--changed-file" "$changed_file")
+            done <<< "$CHANGED_FILES"
+          fi
+          npm run controlbot -- "${CONTROLBOT_ARGS[@]}" || echo "blocked=true" >> "$GITHUB_ENV"
+        continue-on-error: true
+
+      - name: Generate POA&M seeds
+        if: always()
+        env:
+          SCAN_DIR: ${{ steps.scan.outputs.dir }}
+          CHANGED_FILES: ${{ steps.scan.outputs.changed }}
+        run: |
+          POAM_ARGS=("--scan-dir" "$SCAN_DIR")
+          if [ -n "$CHANGED_FILES" ]; then
+            while IFS= read -r changed_file; do
+              [ -n "$changed_file" ] || continue
+              POAM_ARGS+=("--changed-file" "$changed_file")
+            done <<< "$CHANGED_FILES"
+          fi
+          npm run poam -- "${POAM_ARGS[@]}"
+
+      - name: Post inline PR review
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          REVIEW_PAYLOAD: review-payload.json
+        run: npm run post-review
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlbot-report
+          path: |
+            findings.json
+            report.md
+            review-payload.json
+            custom-compliance-results.json
+            evidence-facts.json
+            poam-seeds.json
+            poam-seeds.md
+
+      - name: Merge gate
+        if: env.blocked == 'true'
+        run: |
+          echo "::error::ControlBot blocked merge — resolve inline review comments."
+          exit 1

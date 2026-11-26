@@ -10,7 +10,7 @@ type TopLevelInfo struct {
 	LastUpdated string `json:"last_updated"`
 }
 
-// ConsolidatedDocument represents the entire FRMR.documentation.json structure
+// ConsolidatedDocument represents the entire consolidated FedRAMP rules structure
 type ConsolidatedDocument struct {
 	Info TopLevelInfo               `json:"info"`
 	FRD  FRDSection                 `json:"FRD"`
@@ -20,45 +20,111 @@ type ConsolidatedDocument struct {
 
 // FRDSection represents the FedRAMP Definitions section
 type FRDSection struct {
-	Info DocumentInfo `json:"info"`
-	Data struct {
-		Both map[string]DefinitionJSON `json:"both"`
-	} `json:"data"`
+	Info DocumentInfo                         `json:"info"`
+	Data map[string]map[string]DefinitionJSON `json:"data"`
 }
 
-// FRRProcess represents a single FRR process (e.g., VDR, UCM, ADS)
+// FRRProcess represents a single FRR rule set (e.g., AFC, VDR, UCM)
 type FRRProcess struct {
-	Info DocumentInfo                                        `json:"info"`
-	Data map[string]map[string]map[string]json.RawMessage    `json:"data"`
+	Info DocumentInfo                                     `json:"info"`
+	Data map[string]map[string]map[string]json.RawMessage `json:"data"`
 }
-// Data structure: applicability("both"/"20x"/"rev5") → label("CSO"/"TRC"/...) → id → requirement
 
-// DocumentInfo represents the common info structure in FedRAMP documents
+// Data structure: applicability("all"/"both"/"20x"/"rev5") -> subset/label -> id -> requirement
+
+// DocumentInfo represents metadata for a rule set (supports 2026 FedRAMP/rules and legacy shapes)
 type DocumentInfo struct {
-	Name        string                    `json:"name"`
-	ShortName   string                    `json:"short_name"`
-	WebName     string                    `json:"web_name"`
-	Effective   map[string]EffectiveInfo  `json:"effective"`
-	Releases    []Release                 `json:"releases"`
-	FrontMatter FrontMatter               `json:"front_matter"`
-	Labels      map[string]LabelInfo      `json:"labels"`
+	Name         string               `json:"name"`
+	ShortName    string               `json:"short_name"`
+	WebName      string               `json:"web_name"`
+	Purpose      string               `json:"purpose"`
+	Status       string               `json:"status"`
+	RawEffective json.RawMessage      `json:"effective"`
+	Effective20x *ScopedEffectiveInfo `json:"20x"`
+	EffectiveRv5 *ScopedEffectiveInfo `json:"rev5"`
+	Releases     []Release            `json:"releases"`
+	FrontMatter  FrontMatter          `json:"front_matter"`
+	Labels       map[string]LabelInfo `json:"labels"`
+	Subsets      map[string]LabelInfo `json:"subsets"`
 }
 
-// LabelInfo describes a label used in an FRR process
+// ScopedEffectiveInfo wraps version-scoped effective status in 2026 FedRAMP/rules
+type ScopedEffectiveInfo struct {
+	Effective json.RawMessage `json:"effective"`
+}
+
+// EffectiveDate holds consolidated rule effective dates
+type EffectiveDate struct {
+	Obtain   string `json:"obtain"`
+	Maintain string `json:"maintain"`
+}
+
+// ParseEffective normalizes both 2026 single-object/scoped effective blocks and legacy maps.
+func (d DocumentInfo) ParseEffective() map[string]EffectiveInfo {
+	out := make(map[string]EffectiveInfo)
+
+	if len(d.RawEffective) > 0 {
+		var single EffectiveInfo
+		if err := json.Unmarshal(d.RawEffective, &single); err == nil && (single.Is != "" || single.CurrentStatus != "" || single.StartDate != "" || single.EndDate != "" || single.Date != nil) {
+			single.normalizeDates()
+			out["default"] = single
+		} else {
+			var legacy map[string]EffectiveInfo
+			if err := json.Unmarshal(d.RawEffective, &legacy); err == nil {
+				for k, v := range legacy {
+					v.normalizeDates()
+					out[k] = v
+				}
+			}
+		}
+	}
+
+	if d.Effective20x != nil && len(d.Effective20x.Effective) > 0 {
+		var eff EffectiveInfo
+		if err := json.Unmarshal(d.Effective20x.Effective, &eff); err == nil {
+			eff.normalizeDates()
+			out["20x"] = eff
+		}
+	}
+
+	if d.EffectiveRv5 != nil && len(d.EffectiveRv5.Effective) > 0 {
+		var eff EffectiveInfo
+		if err := json.Unmarshal(d.EffectiveRv5.Effective, &eff); err == nil {
+			eff.normalizeDates()
+			out["rev5"] = eff
+		}
+	}
+
+	return out
+}
+
+// LabelInfo describes a label or subset used in an FRR rule set
 type LabelInfo struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
 
-// EffectiveInfo represents version-specific applicability
+// EffectiveInfo represents program applicability status
 type EffectiveInfo struct {
-	Is            string   `json:"is"`
-	SignupURL     string   `json:"signup_url"`
-	CurrentStatus string   `json:"current_status"`
-	StartDate     string   `json:"start_date"`
-	EndDate       string   `json:"end_date"`
-	Comments      []string `json:"comments"`
-	Warnings      []string `json:"warnings"`
+	Is            string         `json:"is"`
+	SignupURL     string         `json:"signup_url"`
+	CurrentStatus string         `json:"current_status"`
+	StartDate     string         `json:"start_date"`
+	EndDate       string         `json:"end_date"`
+	Date          *EffectiveDate `json:"date"`
+	Comments      []string       `json:"comments"`
+	Warnings      []string       `json:"warnings"`
+}
+
+func (e *EffectiveInfo) normalizeDates() {
+	if e.Date != nil {
+		if e.StartDate == "" {
+			e.StartDate = e.Date.Obtain
+		}
+		if e.EndDate == "" {
+			e.EndDate = e.Date.Maintain
+		}
+	}
 }
 
 // RelatedRFC represents a related RFC reference
@@ -112,10 +178,10 @@ type VariesByLevel struct {
 
 // LevelVariation represents a level-specific variation of a requirement
 type LevelVariation struct {
-	Statement     string `json:"statement"`
+	Statement      string `json:"statement"`
 	PrimaryKeyWord string `json:"primary_key_word"`
-	TimeframeType string `json:"timeframe_type"`
-	TimeframeNum  int    `json:"timeframe_num"`
+	TimeframeType  string `json:"timeframe_type"`
+	TimeframeNum   int    `json:"timeframe_num"`
 }
 
 // RequirementJSON represents a requirement from FRR sections
@@ -126,6 +192,7 @@ type RequirementJSON struct {
 	Name                 string             `json:"name"`
 	Impact               ImpactJSON         `json:"impact"`
 	Affects              []string           `json:"affects"`
+	Force                string             `json:"force"`
 	PrimaryKeyWord       string             `json:"primary_key_word"`
 	Note                 string             `json:"note"`
 	Notes                []string           `json:"notes"`
@@ -139,21 +206,28 @@ type RequirementJSON struct {
 	RawFollowingInfo     json.RawMessage    `json:"following_information"`
 }
 
-// FollowingInfoField handles following_information which can be string or []RequirementJSON
+// FollowingInfoField handles nested RequirementJSON items when present
 type FollowingInfoField []RequirementJSON
 
-// UnmarshalFollowingInfo processes the raw following_information field after initial unmarshal
+// UnmarshalFollowingInfo processes following_information when shaped as []RequirementJSON.
 func (r *RequirementJSON) UnmarshalFollowingInfo() {
-	if r.RawFollowingInfo == nil || len(r.RawFollowingInfo) == 0 {
+	if len(r.RawFollowingInfo) == 0 {
 		return
 	}
-	// Try as array of requirements first
 	var reqs []RequirementJSON
 	if err := json.Unmarshal(r.RawFollowingInfo, &reqs); err == nil {
-		r.FollowingInformation = reqs
-		return
+		// Ensure it actually parsed nested requirement objects rather than zero-value structs.
+		hasObject := false
+		for _, item := range reqs {
+			if item.ID != "" || item.Statement != "" || item.Name != "" {
+				hasObject = true
+				break
+			}
+		}
+		if hasObject {
+			r.FollowingInformation = reqs
+		}
 	}
-	// Otherwise it's a string or other type, ignore
 }
 
 // ImpactJSON represents impact levels
@@ -199,12 +273,10 @@ func (ind *IndicatorJSON) ParseControls() []ControlJSON {
 	if ind.RawControls == nil {
 		return nil
 	}
-	// Try as array of objects first
 	var controls []ControlJSON
 	if err := json.Unmarshal(ind.RawControls, &controls); err == nil {
 		return controls
 	}
-	// Try as array of strings (just control IDs)
 	var ids []string
 	if err := json.Unmarshal(ind.RawControls, &ids); err == nil {
 		controls = make([]ControlJSON, len(ids))
@@ -224,10 +296,12 @@ type ControlJSON struct {
 
 // ThemeJSON represents a KSI theme
 type ThemeJSON struct {
-	ID         string                     `json:"id"`
-	Name       string                     `json:"name"`
-	Theme      string                     `json:"theme"`
-	Indicators map[string]IndicatorJSON   `json:"indicators"`
+	ID         string                   `json:"id"`
+	Name       string                   `json:"name"`
+	ShortName  string                   `json:"short_name"`
+	Status     string                   `json:"status"`
+	Theme      string                   `json:"theme"`
+	Indicators map[string]IndicatorJSON `json:"indicators"`
 }
 
 // DocumentMetadata holds basic info about a FedRAMP document

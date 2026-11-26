@@ -1,0 +1,235 @@
+{
+  "mesh_type": "consul",
+  "datacenter": "dc1",
+  "primary_datacenter": "dc1",
+  "node_name": "consul-server-1",
+  
+  "connect": {
+    "enabled": true,
+    "enable_mesh_gateway_wan_federation": false,
+    "ca_provider": "consul",
+    "ca_config": {
+      "private_key_type": "rsa",
+      "private_key_bits": 1024,
+      "leaf_cert_ttl": "8760h",
+      "intermediate_cert_ttl": "87600h",
+      "root_cert_ttl": "87600h",
+      "csr_max_concurrent": 0,
+      "csr_max_per_second": 0
+    }
+  },
+  
+  "tls": {
+    "defaults": {
+      "verify_incoming": false,
+      "verify_outgoing": false,
+      "verify_server_hostname": false,
+      "ca_file": "",
+      "ca_path": "",
+      "cert_file": "",
+      "key_file": "",
+      "tls_min_version": "TLSv1.0",
+      "tls_cipher_suites": "",
+      "tls_prefer_server_cipher_suites": false
+    },
+    "internal_rpc": {
+      "verify_incoming": false,
+      "verify_server_hostname": false
+    }
+  },
+  
+  "acl": {
+    "enabled": false,
+    "default_policy": "allow",
+    "enable_token_persistence": true,
+    "enable_token_replication": false,
+    "policy_ttl": "30s",
+    "role_ttl": "30s",
+    "token_ttl": "30s",
+    "down_policy": "allow"
+  },
+  
+  "auto_config": {
+    "enabled": true,
+    "intro_token": "insecure-token-123",
+    "intro_token_file": "",
+    "server_addresses": [],
+    "dns_sans": [],
+    "ip_sans": [],
+    "authorization": {
+      "enabled": false,
+      "static": {
+        "oidc_discovery_url": "",
+        "oidc_discovery_ca_cert": "",
+        "bound_issuer": "",
+        "bound_audiences": [],
+        "claim_mappings": {},
+        "claim_assertions": []
+      }
+    }
+  },
+  
+  "auto_encrypt": {
+    "allow_tls": false,
+    "tls": false,
+    "dns_san": [],
+    "ip_san": []
+  },
+  
+  "gossip_lan": {
+    "gossip_interval": "1s",
+    "gossip_nodes": 3,
+    "probe_interval": "1s",
+    "probe_timeout": "500ms",
+    "suspicion_mult": 4,
+    "retransmit_mult": 4
+  },
+  
+  "limits": {
+    "http_max_conns_per_client": 0,
+    "https_handshake_timeout": "5s",
+    "request_limits": {
+      "mode": "disabled",
+      "read_rate": -1,
+      "write_rate": -1
+    },
+    "rpc_handshake_timeout": "5s",
+    "rpc_max_burst": 0,
+    "rpc_max_conns_per_client": 0,
+    "rpc_rate": -1,
+    "kv_max_value_size": 0,
+    "txn_max_req_len": 0
+  },
+  
+  "proxy": {
+    "expose": {
+      "checks": false,
+      "paths": []
+    },
+    "config": {
+      "protocol": "http",
+      "bind_address": "0.0.0.0",
+      "bind_port": 0,
+      "local_connect_timeout_ms": 0,
+      "local_request_timeout_ms": 0,
+      "max_inbound_connections": 0,
+      "max_outbound_connections": 0,
+      "balance_inbound_connections": "",
+      "balance_outbound_connections": ""
+    }
+  },
+  
+  "performance": {
+    "leave_drain_time": "0s",
+    "raft_multiplier": 1,
+    "rpc_hold_timeout": "0s"
+  },
+  
+  "ports": {
+    "dns": 8600,
+    "http": 8500,
+    "https": -1,
+    "grpc": -1,
+    "grpc_tls": -1,
+    "serf_lan": 8301,
+    "serf_wan": 8302,
+    "server": 8300,
+    "sidecar_min_port": 21000,
+    "sidecar_max_port": 21255,
+    "expose_min_port": 21500,
+    "expose_max_port": 21755
+  },
+  
+  "raft_protocol": 2,
+  "raft_snapshot_threshold": 8192,
+  "raft_snapshot_interval": "120s",
+  "raft_trailing_logs": 10000,
+  
+  "recursors": [],
+  "recursors_timeout": "2s",
+  
+  "rejoin_after_leave": false,
+  "retry_interval": "30s",
+  "retry_interval_wan": "30s",
+  "retry_max": 0,
+  "retry_max_wan": 0,
+  
+  "segment": "",
+  "segments": [],
+  
+  "server": true,
+  "non_voting_server": false,
+  "leave_on_terminate": false,
+  "skip_leave_on_interrupt": true,
+  
+  "telemetry": {
+    "disable_hostname": false,
+    "dogstatsd_addr": "",
+    "dogstatsd_tags": [],
+    "filter_default": false,
+    "prefix_filter": [],
+    "metrics_prefix": "",
+    "prometheus_retention_time": "0s",
+    "statsd_address": "",
+    "statssite_address": ""
+  },
+  
+  "ui_config": {
+    "enabled": true,
+    "dir": "",
+    "content_path": "/",
+    "metrics_provider": "",
+    "metrics_provider_files": [],
+    "metrics_provider_options_json": "",
+    "metrics_proxy": {
+      "base_url": "",
+      "add_headers": []
+    },
+    "dashboard_url_templates": {}
+  },
+  
+  "unix_sockets": {
+    "user": "",
+    "group": "",
+    "mode": ""
+  },
+  
+  "verify_incoming": false,
+  "verify_incoming_https": false,
+  "verify_incoming_rpc": false,
+  "verify_outgoing": false,
+  "verify_server_hostname": false,
+  
+  "watches": [],
+  
+  "encrypt": "",
+  "encrypt_verify_incoming": false,
+  "encrypt_verify_outgoing": false,
+  
+  "log_level": "INFO",
+  "log_json": false,
+  "log_file": "",
+  "log_rotate_duration": "24h",
+  "log_rotate_bytes": 0,
+  "log_rotate_max_files": 0,
+  "enable_syslog": false,
+  "syslog_facility": "LOCAL0",
+  
+  "enable_debug": true,
+  "enable_script_checks": true,
+  "enable_local_script_checks": true,
+  "disable_remote_exec": false,
+  "disable_update_check": true,
+  "discard_check_output": false,
+  
+  "discovery_max_stale": "87600h",
+  "enable_agent_tls_for_checks": false,
+  "enable_central_service_config": true,
+  
+  "use_streaming_backend": false,
+  
+  "xds": {
+    "update_max_per_second": 0,
+    "self_admin_token": ""
+  }
+}

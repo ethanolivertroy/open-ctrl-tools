@@ -1,0 +1,35 @@
+{
+  "_comment": "Consul agent config. Who is allowed to read the KV store and register services? The all-zero encryption key is a training fixture.",
+  "mesh_type": "consul",
+  "datacenter": "dc1",
+  "node_name": "consul-server-1",
+
+  "acl": {
+    "enabled": false,
+    "default_policy": "allow"
+  },
+
+  "connect": {
+    "enabled": true
+  },
+
+  "tls": {
+    "defaults": {
+      "verify_incoming": true,
+      "verify_outgoing": true,
+      "verify_server_hostname": true
+    }
+  },
+
+  "gossip": {
+    "encryption": {
+      "key": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    },
+    "verify_incoming": true,
+    "verify_outgoing": true
+  },
+
+  "telemetry": {
+    "prometheus_retention_time": "24h"
+  }
+}

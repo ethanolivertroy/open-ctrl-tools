@@ -93,30 +93,37 @@ Data is cached locally at `~/.cache/fedramp-browser/` with a 24-hour TTL. On sub
 
 ## Data Sources
 
-Data is fetched directly from the [FedRAMP/docs](https://github.com/FedRAMP/docs) GitHub repository.
+Data is fetched from the [FedRAMP/rules](https://github.com/FedRAMP/rules) GitHub repository (`fedramp-consolidated-rules.json`).
 
-### Documents
+### Documents (Consolidated Rules for 2026)
 
 | Code | Name |
-|------|------|
+|---|---|
 | FRD | FedRAMP Definitions |
 | KSI | Key Security Indicators |
-| VDR | Vulnerability Detection & Response |
-| UCM | Using Cryptographic Modules |
-| RSC | Recommended Secure Configuration |
-| ADS | Authorization Data Sharing |
+| AFC | Addressing FedRAMP Communication |
+| AGU | Agency Use of FedRAMP Certified Cloud Services |
 | CCM | Collaborative Continuous Monitoring |
-| FSI | FedRAMP Security Inbox |
-| ICP | Incident Communications Procedures |
+| CDS | Certification Data Sharing |
+| CMU | Cryptographic Module Use |
+| CPO | Certification Package Overview |
+| FRC | FedRAMP Certification |
+| IEC | Incident Evaluation and Communication |
+| IVV | Independent Verification and Validation |
 | MAS | Minimum Assessment Scope |
-| PVA | Persistent Validation & Assessment |
-| SCN | Significant Change Notifications |
+| MKT | Marketplace Listing |
+| REC | FedRAMP Recognition of Independent Assessment Services |
+| SCG | Secure Configuration Guide |
+| SCN | Significant Change Notification |
+| SDR | Security Decision Record |
+| VDR | Vulnerability Detection and Response |
+| VER | Vulnerability Evaluation and Reporting |
 
 ## Acknowledgments
 
 - [Charm](https://charm.sh/) for the TUI libraries: [Bubble Tea](https://github.com/charmbracelet/bubbletea), [Lip Gloss](https://github.com/charmbracelet/lipgloss), [Bubbles](https://github.com/charmbracelet/bubbles)
 - [GoReleaser](https://goreleaser.com/) for release automation
-- [FedRAMP](https://github.com/FedRAMP/docs) for the source documentation
+- [FedRAMP](https://github.com/FedRAMP/rules) for the consolidated machine-readable rules
 
 ## Disclaimer
 

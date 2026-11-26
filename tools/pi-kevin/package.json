@@ -1,0 +1,51 @@
+{
+  "name": "pi-kevin",
+  "version": "0.1.0",
+  "description": "Pi extension for browsing and analyzing CISA Known Exploited Vulnerabilities with KEVin.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethanolivertroy/open-ctrl-tools.git"
+  },
+  "homepage": "https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/tools/pi-kevin#readme",
+  "bugs": {
+    "url": "https://github.com/ethanolivertroy/open-ctrl-tools/issues"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-coding-agent",
+    "security",
+    "cve",
+    "kev",
+    "cisa",
+    "vulnerability"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*",
+    "@sinclair/typebox": "*"
+  },
+  "devDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*",
+    "@sinclair/typebox": "*",
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "private": true
+}

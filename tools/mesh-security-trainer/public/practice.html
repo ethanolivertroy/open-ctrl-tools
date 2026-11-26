@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice — Spot the Service Mesh Misconfiguration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --ctp-mauve: #cba6f7; --ctp-red: #f38ba8; --ctp-peach: #fab387;
+            --ctp-yellow: #f9e2af; --ctp-green: #a6e3a1; --ctp-blue: #89b4fa;
+            --ctp-lavender: #b4befe; --ctp-text: #cdd6f4; --ctp-subtext0: #a6adc8;
+            --ctp-overlay1: #7f849c; --ctp-overlay0: #6c7086; --ctp-surface2: #585b70;
+            --ctp-surface1: #45475a; --ctp-surface0: #313244; --ctp-base: #1e1e2e;
+            --ctp-mantle: #181825; --ctp-crust: #11111b;
+        }
+        body { background-color: var(--ctp-base); color: var(--ctp-text); font-family: ui-sans-serif, system-ui, sans-serif; }
+        .header-gradient { background: linear-gradient(135deg, var(--ctp-mantle), var(--ctp-crust)); }
+        .bg-card { background-color: var(--ctp-mantle); border: 1px solid var(--ctp-surface0); }
+        .text-muted { color: var(--ctp-subtext0); }
+        a { color: var(--ctp-blue); }
+        a:hover { text-decoration: underline; }
+
+        /* Config listing — one row per line, clickable */
+        .code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
+        .code-line { display: flex; align-items: flex-start; padding: 1px 0; cursor: pointer; border-radius: 3px; }
+        .code-line:hover { background-color: var(--ctp-surface0); }
+        .code-line.flagged { background-color: rgba(203, 166, 247, 0.14); }
+        .code-line.reveal-caught  { background-color: rgba(166, 227, 161, 0.14); box-shadow: inset 2px 0 0 var(--ctp-green); }
+        .code-line.reveal-partial { background-color: rgba(249, 226, 175, 0.14); box-shadow: inset 2px 0 0 var(--ctp-yellow); }
+        .code-line.reveal-missed  { background-color: rgba(243, 139, 168, 0.14); box-shadow: inset 2px 0 0 var(--ctp-red); }
+        .code-line.reveal-fp      { box-shadow: inset 2px 0 0 var(--ctp-overlay1); }
+        .ln { width: 3ch; text-align: right; padding-right: 12px; color: var(--ctp-overlay0); user-select: none; flex-shrink: 0; }
+        .lc { white-space: pre; flex: 1; }
+        .flag-dot { margin-left: 8px; font-size: 11px; flex-shrink: 0; }
+
+        .btn { padding: 8px 16px; border-radius: 6px; font-weight: 500; transition: 0.15s; cursor: pointer; }
+        .btn-primary { background-color: var(--ctp-mauve); color: var(--ctp-crust); }
+        .btn-primary:hover { filter: brightness(1.08); }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-ghost { background-color: var(--ctp-surface0); color: var(--ctp-text); }
+        .btn-ghost:hover { background-color: var(--ctp-surface1); }
+
+        .pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+        .diff-before { background: rgba(243, 139, 168, 0.10); border-left: 2px solid var(--ctp-red); }
+        .diff-after  { background: rgba(166, 227, 161, 0.10); border-left: 2px solid var(--ctp-green); }
+        .diff pre { margin: 0; padding: 8px 12px; white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 12.5px; }
+        select { background-color: var(--ctp-surface0); color: var(--ctp-text); border: 1px solid var(--ctp-surface2); border-radius: 6px; padding: 6px 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="p-6 shadow-lg header-gradient">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold" style="color: var(--ctp-mauve);">Spot the Misconfiguration</h1>
+                <p class="mt-1 text-muted">Train your eye on real service mesh configs. Find the security issues before we reveal them.</p>
+            </div>
+            <a href="/" class="btn btn-ghost">Analyze my own config →</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-6 px-4">
+        <!-- Screen 1: pick an exercise -->
+        <section id="picker">
+            <p class="text-muted mb-4">Pick a config to inspect. Click any line you think is a security problem and say what's wrong with it.</p>
+            <div id="exercise-list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+        </section>
+
+        <!-- Screen 2: the hunt -->
+        <section id="hunt" class="hidden">
+            <div class="flex items-start justify-between mb-3 gap-4">
+                <div>
+                    <button id="back-to-picker" class="text-sm text-muted mb-1">← All exercises</button>
+                    <h2 id="hunt-title" class="text-xl font-semibold"></h2>
+                    <p id="hunt-brief" class="text-muted text-sm mt-1 max-w-3xl"></p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                    <div class="text-sm text-muted mb-1"><span id="flag-count">0</span> flagged</div>
+                    <button id="submit-btn" class="btn btn-primary" disabled>Reveal &amp; score</button>
+                </div>
+            </div>
+
+            <div class="grid gap-4 lg:grid-cols-3">
+                <div class="bg-card rounded-lg p-4 lg:col-span-2">
+                    <div id="config-view" class="code"></div>
+                </div>
+                <div>
+                    <div class="bg-card rounded-lg p-4 mb-4">
+                        <h3 class="font-semibold mb-2">Your flags</h3>
+                        <div id="flag-list" class="space-y-2 text-sm"><p class="text-muted">Click a line in the config to flag it.</p></div>
+                    </div>
+                    <div class="bg-card rounded-lg p-4">
+                        <button id="hint-btn" class="text-sm" style="color: var(--ctp-yellow);">💡 Stuck? Show a hint</button>
+                        <p id="hint-text" class="text-sm text-muted mt-2 hidden"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 3: reveal -->
+        <section id="reveal" class="hidden">
+            <div class="flex items-center justify-between mb-4 gap-4 flex-wrap">
+                <div>
+                    <button id="reveal-back" class="text-sm text-muted mb-1">← All exercises</button>
+                    <h2 id="reveal-title" class="text-xl font-semibold"></h2>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <div id="score-percent" class="text-4xl font-bold" style="color: var(--ctp-mauve);">0%</div>
+                        <div class="text-xs text-muted">score</div>
+                    </div>
+                    <div id="score-breakdown" class="text-sm space-y-1"></div>
+                    <button id="retry-btn" class="btn btn-ghost">Try again</button>
+                </div>
+            </div>
+            <div id="reveal-body" class="space-y-4"></div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 text-muted text-sm">
+        Educational tool · Aligns findings to NIST SP 800-204 / 800-53 and vendor hardening guidance
+    </footer>
+
+    <script src="practice.js"></script>
+</body>
+</html>

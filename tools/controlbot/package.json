@@ -1,0 +1,35 @@
+{
+  "name": "controlbot",
+  "version": "0.2.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "ControlBot — Bugbot-style inline compliance review for infrastructure-as-code (NIST 800-53, Cursor SDK)",
+  "scripts": {
+    "scan": "bash scripts/scan.sh",
+    "evidence": "tsx src/evidence.ts",
+    "review": "tsx src/review.ts",
+    "controlbot": "tsx src/controlbot.ts",
+    "poam": "tsx src/poam.ts",
+    "post-review": "tsx src/post-github-review.ts",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:local": "npm run scan && npm run review && npm run controlbot",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cursor/sdk": "^1.0.13",
+    "@octokit/rest": "^22.0.0",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "overrides": {
+    "tar": "7.5.23"
+  }
+}

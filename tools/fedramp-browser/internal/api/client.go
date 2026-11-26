@@ -5,37 +5,49 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/hackIDLE/fedramp-browser/internal/cache"
 	"github.com/hackIDLE/fedramp-browser/internal/model"
 )
 
-const BaseURL = "https://raw.githubusercontent.com/FedRAMP/docs/main"
+const BaseURL = "https://raw.githubusercontent.com/FedRAMP/rules/main"
 
-// ConsolidatedFilename is the single consolidated FedRAMP document
-const ConsolidatedFilename = "FRMR.documentation.json"
+// ConsolidatedFilename is the single consolidated FedRAMP rules datafile.
+const ConsolidatedFilename = "fedramp-consolidated-rules.json"
 
-// DocumentFiles maps document codes to their metadata
+// DocumentFiles maps known rule set codes to fallback metadata.
 var DocumentFiles = map[string]DocumentMetadata{
 	"FRD": {Code: "FRD", Name: "FedRAMP Definitions", Description: "Terms and definitions"},
 	"KSI": {Code: "KSI", Name: "Key Security Indicators", Description: "Security indicators with control mappings"},
-	"VDR": {Code: "VDR", Name: "Vulnerability Detection & Response", Description: "Vulnerability management requirements"},
-	"UCM": {Code: "UCM", Name: "Using Cryptographic Modules", Description: "Cryptographic module requirements"},
-	"SCG": {Code: "SCG", Name: "Secure Configuration Guide", Description: "Secure configuration requirements"},
-	"ADS": {Code: "ADS", Name: "Authorization Data Sharing", Description: "Data sharing requirements"},
-	"CCM": {Code: "CCM", Name: "Collaborative Continuous Monitoring", Description: "Continuous monitoring requirements"},
-	"FSI": {Code: "FSI", Name: "FedRAMP Security Inbox", Description: "Security inbox procedures"},
-	"ICP": {Code: "ICP", Name: "Incident Communications Procedures", Description: "Incident communication requirements"},
-	"MAS": {Code: "MAS", Name: "Minimum Assessment Scope", Description: "Assessment scope requirements"},
-	"PVA": {Code: "PVA", Name: "Persistent Validation & Assessment", Description: "Validation and assessment requirements"},
-	"SCN": {Code: "SCN", Name: "Significant Change Notifications", Description: "Change notification requirements"},
+	"AFC": {Code: "AFC", Name: "Addressing FedRAMP Communication", Description: "Security inbox and communication rules"},
+	"AGU": {Code: "AGU", Name: "Agency Use of FedRAMP Certified Cloud Services", Description: "Agency authorization rules"},
+	"CCM": {Code: "CCM", Name: "Collaborative Continuous Monitoring", Description: "Continuous monitoring rules"},
+	"CDS": {Code: "CDS", Name: "Certification Data Sharing", Description: "Authorization data sharing rules"},
+	"CMU": {Code: "CMU", Name: "Cryptographic Module Use", Description: "Cryptographic module rules"},
+	"CPO": {Code: "CPO", Name: "Certification Package Overview", Description: "Certification package overview rules"},
+	"FRC": {Code: "FRC", Name: "FedRAMP Certification", Description: "FedRAMP certification rules"},
+	"IEC": {Code: "IEC", Name: "Incident Evaluation and Communication", Description: "Incident evaluation and communication rules"},
+	"IVV": {Code: "IVV", Name: "Independent Verification and Validation", Description: "Independent assessment rules"},
+	"MAS": {Code: "MAS", Name: "Minimum Assessment Scope", Description: "Assessment scope rules"},
+	"MKT": {Code: "MKT", Name: "Marketplace Listing", Description: "FedRAMP Marketplace listing rules"},
+	"REC": {Code: "REC", Name: "FedRAMP Recognition of Independent Assessment Services", Description: "Independent assessment recognition rules"},
+	"SCG": {Code: "SCG", Name: "Secure Configuration Guide", Description: "Secure configuration rules"},
+	"SCN": {Code: "SCN", Name: "Significant Change Notification", Description: "Change notification rules"},
+	"SDR": {Code: "SDR", Name: "Security Decision Record", Description: "Security decision record rules"},
+	"VDR": {Code: "VDR", Name: "Vulnerability Detection and Response", Description: "Vulnerability management rules"},
+	"VER": {Code: "VER", Name: "Vulnerability Evaluation and Reporting", Description: "Vulnerability reporting rules"},
 }
 
-// DocumentOrder defines the display order of documents
-var DocumentOrder = []string{"FRD", "KSI", "VDR", "UCM", "SCG", "ADS", "CCM", "FSI", "ICP", "MAS", "PVA", "SCN"}
+// DocumentOrder defines the default display order of rule sets.
+var DocumentOrder = []string{
+	"FRD", "KSI",
+	"AFC", "AGU", "CCM", "CDS", "CMU", "CPO", "FRC", "IEC", "IVV",
+	"MAS", "MKT", "REC", "SCG", "SCN", "SDR", "VDR", "VER",
+}
 
-// Client is an HTTP client for fetching FedRAMP documents
+// Client is an HTTP client for fetching FedRAMP rules.
 type Client struct {
 	httpClient *http.Client
 	baseURL    string
@@ -43,24 +55,37 @@ type Client struct {
 	refresh    bool
 }
 
-// ClientOption configures the client
+// ClientOption configures the client.
 type ClientOption func(*Client)
 
-// WithRefresh forces fresh fetch, ignoring cache
+// WithRefresh forces a fresh fetch, ignoring cached data.
 func WithRefresh(refresh bool) ClientOption {
 	return func(c *Client) {
 		c.refresh = refresh
 	}
 }
 
-// NewClient creates a new API client
+// WithBaseURL overrides the remote base URL (primarily for testing).
+func WithBaseURL(baseURL string) ClientOption {
+	return func(c *Client) {
+		c.baseURL = strings.TrimRight(baseURL, "/")
+	}
+}
+
+// WithoutCache disables disk cache initialization and reads/writes.
+func WithoutCache() ClientOption {
+	return func(c *Client) {
+		c.cache = nil
+	}
+}
+
+// NewClient creates a new API client.
 func NewClient(opts ...ClientOption) *Client {
 	c := &Client{
 		httpClient: &http.Client{Timeout: 60 * time.Second},
 		baseURL:    BaseURL,
 	}
 
-	// Initialize cache (ignore errors, will just fetch fresh)
 	if cache, err := cache.New(); err == nil {
 		c.cache = cache
 	}
@@ -72,7 +97,7 @@ func NewClient(opts ...ClientOption) *Client {
 	return c
 }
 
-// FetchConsolidatedDocument fetches the single consolidated FRMR.documentation.json
+// FetchConsolidatedDocument fetches the consolidated FedRAMP rules JSON.
 func (c *Client) FetchConsolidatedDocument() ([]byte, error) {
 	return c.fetchDocument(ConsolidatedFilename)
 }
@@ -80,14 +105,12 @@ func (c *Client) FetchConsolidatedDocument() ([]byte, error) {
 func (c *Client) fetchDocument(filename string) ([]byte, error) {
 	url := c.baseURL + "/" + filename
 
-	// Check cache first (unless refresh is forced)
 	if c.cache != nil && !c.refresh {
 		if data, ok := c.cache.Get(url); ok {
 			return data, nil
 		}
 	}
 
-	// Fetch from network
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
 		return nil, err
@@ -99,7 +122,7 @@ func (c *Client) fetchDocument(filename string) ([]byte, error) {
 	}
 
 	var data []byte
-	buf := make([]byte, 1024)
+	buf := make([]byte, 4096)
 	for {
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
@@ -110,7 +133,6 @@ func (c *Client) fetchDocument(filename string) ([]byte, error) {
 		}
 	}
 
-	// Save to cache
 	if c.cache != nil {
 		_ = c.cache.Set(url, data)
 	}
@@ -118,7 +140,7 @@ func (c *Client) fetchDocument(filename string) ([]byte, error) {
 	return data, nil
 }
 
-// ParseConsolidatedDocument parses the top-level structure of the consolidated file
+// ParseConsolidatedDocument parses the top-level structure of the consolidated file.
 func (c *Client) ParseConsolidatedDocument(data []byte) (*ConsolidatedDocument, error) {
 	var doc ConsolidatedDocument
 	if err := json.Unmarshal(data, &doc); err != nil {
@@ -127,7 +149,84 @@ func (c *Client) ParseConsolidatedDocument(data []byte) (*ConsolidatedDocument, 
 	return &doc, nil
 }
 
-// ParseDefinitions parses the FRD section into Definition models
+// ParseDocuments returns document metadata discovered from data (preserving DocumentOrder for known codes).
+func (c *Client) ParseDocuments(data []byte) []model.Document {
+	var rawDoc map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawDoc); err != nil {
+		return GetDocumentMetadata()
+	}
+
+	frrCodes := make(map[string]DocumentInfo)
+	if frrData, ok := rawDoc["FRR"]; ok {
+		var frr map[string]json.RawMessage
+		if err := json.Unmarshal(frrData, &frr); err == nil {
+			for code, procRaw := range frr {
+				var proc struct {
+					Info DocumentInfo `json:"info"`
+				}
+				_ = json.Unmarshal(procRaw, &proc)
+				frrCodes[code] = proc.Info
+			}
+		}
+	}
+
+	if len(frrCodes) == 0 {
+		return GetDocumentMetadata()
+	}
+
+	var docs []model.Document
+	seen := make(map[string]bool)
+
+	addDoc := func(code string) {
+		if seen[code] {
+			return
+		}
+		if code != "FRD" && code != "KSI" {
+			if _, ok := frrCodes[code]; !ok {
+				return
+			}
+		}
+		seen[code] = true
+		meta, known := DocumentFiles[code]
+		doc := model.Document{
+			Code:        code,
+			Name:        meta.Name,
+			Description: meta.Description,
+		}
+		if !known {
+			doc.Name = code
+			doc.Description = "FedRAMP rule set"
+		}
+		if info, ok := frrCodes[code]; ok && info.Name != "" {
+			doc.Name = info.Name
+			if doc.Description == "" {
+				doc.Description = info.Purpose
+			}
+		}
+		docs = append(docs, doc)
+	}
+
+	addDoc("FRD")
+	addDoc("KSI")
+	for _, code := range DocumentOrder {
+		addDoc(code)
+	}
+
+	var extra []string
+	for code := range frrCodes {
+		if !seen[code] {
+			extra = append(extra, code)
+		}
+	}
+	sort.Strings(extra)
+	for _, code := range extra {
+		addDoc(code)
+	}
+
+	return docs
+}
+
+// ParseDefinitions parses the FRD section into Definition models.
 func (c *Client) ParseDefinitions(data []byte) ([]model.Definition, error) {
 	var doc struct {
 		FRD FRDSection `json:"FRD"`
@@ -136,36 +235,43 @@ func (c *Client) ParseDefinitions(data []byte) ([]model.Definition, error) {
 		return nil, err
 	}
 
-	var definitions []model.Definition
-	for id, d := range doc.FRD.Data.Both {
-		note := d.Note
-		if len(d.Notes) > 0 && note == "" {
-			for j, n := range d.Notes {
-				if j > 0 {
-					note += " "
-				}
-				note += n
+	buckets := make([]string, 0, len(doc.FRD.Data))
+	for bucket := range doc.FRD.Data {
+		buckets = append(buckets, bucket)
+	}
+	sort.Strings(buckets)
+
+	byID := make(map[string]model.Definition)
+	for _, bucket := range buckets {
+		for id, d := range doc.FRD.Data[bucket] {
+			note := d.Note
+			if len(d.Notes) > 0 && note == "" {
+				note = strings.Join(d.Notes, " ")
+			}
+
+			defID := d.ID
+			if defID == "" {
+				defID = id
+			}
+
+			byID[defID] = model.Definition{
+				ID:           defID,
+				FKA:          d.FKA,
+				Term:         d.Term,
+				Alts:         d.Alts,
+				Text:         d.Definition,
+				Note:         note,
+				Reference:    d.Reference,
+				ReferenceURL: d.ReferenceURL,
 			}
 		}
-
-		defID := d.ID
-		if defID == "" {
-			defID = id
-		}
-
-		definitions = append(definitions, model.Definition{
-			ID:           defID,
-			FKA:          d.FKA,
-			Term:         d.Term,
-			Alts:         d.Alts,
-			Text:         d.Definition,
-			Note:         note,
-			Reference:    d.Reference,
-			ReferenceURL: d.ReferenceURL,
-		})
 	}
 
-	// Sort by ID for stable ordering
+	definitions := make([]model.Definition, 0, len(byID))
+	for _, def := range byID {
+		definitions = append(definitions, def)
+	}
+
 	sort.Slice(definitions, func(i, j int) bool {
 		return definitions[i].ID < definitions[j].ID
 	})
@@ -173,14 +279,13 @@ func (c *Client) ParseDefinitions(data []byte) ([]model.Definition, error) {
 	return definitions, nil
 }
 
-// ParseIndicators parses the KSI section into Indicator models
+// ParseIndicators parses the KSI section into Indicator models.
 func (c *Client) ParseIndicators(data []byte) ([]model.Indicator, error) {
 	var rawDoc map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawDoc); err != nil {
 		return nil, fmt.Errorf("parsing raw document: %w", err)
 	}
 
-	// Extract the KSI section directly
 	ksiRaw, ok := rawDoc["KSI"]
 	if !ok {
 		return nil, fmt.Errorf("KSI section not found in document")
@@ -231,7 +336,6 @@ func (c *Client) ParseIndicators(data []byte) ([]model.Indicator, error) {
 		}
 	}
 
-	// Sort by ID for stable ordering
 	sort.Slice(indicators, func(i, j int) bool {
 		return indicators[i].ID < indicators[j].ID
 	})
@@ -239,7 +343,7 @@ func (c *Client) ParseIndicators(data []byte) ([]model.Indicator, error) {
 	return indicators, nil
 }
 
-// ParseRequirements parses requirements for a given process from the consolidated document
+// ParseRequirements parses requirements for a given rule set from the consolidated document.
 func (c *Client) ParseRequirements(data []byte, docCode string) ([]model.Requirement, error) {
 	var rawDoc map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawDoc); err != nil {
@@ -268,7 +372,7 @@ func (c *Client) ParseRequirements(data []byte, docCode string) ([]model.Require
 
 	var requirements []model.Requirement
 
-	// Iterate: applicability → label → id → requirement
+	// Iterate: applicability -> subset/label -> id -> requirement
 	for applicability, labels := range process.Data {
 		for label, entries := range labels {
 			for id, rawReq := range entries {
@@ -283,28 +387,31 @@ func (c *Client) ParseRequirements(data []byte, docCode string) ([]model.Require
 					reqID = id
 				}
 
+				keyword := req.PrimaryKeyWord
+				if keyword == "" {
+					keyword = req.Force
+				}
+
 				r := model.Requirement{
-					ID:             reqID,
-					FKA:            req.FKA,
-					DocumentCode:   docCode,
-					Category:       label,
-					Applicability:  applicability,
-					Statement:      req.Statement,
-					Name:           req.Name,
+					ID:            reqID,
+					FKA:           req.FKA,
+					DocumentCode:  docCode,
+					Category:      label,
+					Applicability: applicability,
+					Statement:     req.Statement,
+					Name:          req.Name,
 					Impact: model.Impact{
 						Low:      req.Impact.Low,
 						Moderate: req.Impact.Moderate,
 						High:     req.Impact.High,
 					},
 					Affects:        req.Affects,
-					PrimaryKeyWord: req.PrimaryKeyWord,
+					PrimaryKeyWord: keyword,
 					Note:           req.Note,
 				}
 
-				// Handle varies_by_level
 				if req.VariesByLevel != nil {
-					if req.PrimaryKeyWord == "" || req.PrimaryKeyWord == "varies_by_level" {
-						// Use highest applicable level's keyword
+					if r.PrimaryKeyWord == "" || r.PrimaryKeyWord == "varies_by_level" {
 						if req.VariesByLevel.High != nil && req.VariesByLevel.High.PrimaryKeyWord != "" {
 							r.PrimaryKeyWord = req.VariesByLevel.High.PrimaryKeyWord
 						} else if req.VariesByLevel.Moderate != nil && req.VariesByLevel.Moderate.PrimaryKeyWord != "" {
@@ -315,19 +422,12 @@ func (c *Client) ParseRequirements(data []byte, docCode string) ([]model.Require
 					}
 				}
 
-				// Combine notes if needed
 				if r.Note == "" && len(req.Notes) > 0 {
-					for j, n := range req.Notes {
-						if j > 0 {
-							r.Note += " "
-						}
-						r.Note += n
-					}
+					r.Note = strings.Join(req.Notes, " ")
 				}
 
 				requirements = append(requirements, r)
 
-				// Also extract nested following_information requirements
 				if len(req.FollowingInformation) > 0 {
 					requirements = append(requirements, c.extractFollowingRequirements(req.FollowingInformation, docCode, label, applicability)...)
 				}
@@ -335,7 +435,6 @@ func (c *Client) ParseRequirements(data []byte, docCode string) ([]model.Require
 		}
 	}
 
-	// Sort by ID for stable ordering
 	sort.Slice(requirements, func(i, j int) bool {
 		return requirements[i].ID < requirements[j].ID
 	})
@@ -350,21 +449,26 @@ func (c *Client) extractFollowingRequirements(reqs []RequirementJSON, docCode, c
 		r := &reqs[i]
 		r.UnmarshalFollowingInfo()
 
+		keyword := r.PrimaryKeyWord
+		if keyword == "" {
+			keyword = r.Force
+		}
+
 		req := model.Requirement{
-			ID:             r.ID,
-			FKA:            r.FKA,
-			DocumentCode:   docCode,
-			Category:       category,
-			Applicability:  applicability,
-			Statement:      r.Statement,
-			Name:           r.Name,
+			ID:            r.ID,
+			FKA:           r.FKA,
+			DocumentCode:  docCode,
+			Category:      category,
+			Applicability: applicability,
+			Statement:     r.Statement,
+			Name:          r.Name,
 			Impact: model.Impact{
 				Low:      r.Impact.Low,
 				Moderate: r.Impact.Moderate,
 				High:     r.Impact.High,
 			},
 			Affects:        r.Affects,
-			PrimaryKeyWord: r.PrimaryKeyWord,
+			PrimaryKeyWord: keyword,
 			Note:           r.Note,
 		}
 		requirements = append(requirements, req)
@@ -377,7 +481,7 @@ func (c *Client) extractFollowingRequirements(reqs []RequirementJSON, docCode, c
 	return requirements
 }
 
-// GetDocumentMetadata returns metadata for all documents
+// GetDocumentMetadata returns fallback metadata for known documents.
 func GetDocumentMetadata() []model.Document {
 	docs := make([]model.Document, 0, len(DocumentOrder))
 	for _, code := range DocumentOrder {
@@ -391,7 +495,7 @@ func GetDocumentMetadata() []model.Document {
 	return docs
 }
 
-// ParseDocumentInfo extracts the info section for a specific document
+// ParseDocumentInfo extracts the info section for a specific document.
 func (c *Client) ParseDocumentInfo(data []byte, docCode string) (*DocumentInfo, error) {
 	switch docCode {
 	case "FRD":
@@ -405,7 +509,6 @@ func (c *Client) ParseDocumentInfo(data []byte, docCode string) (*DocumentInfo, 
 		}
 		return &doc.FRD.Info, nil
 	default:
-		// FRR processes
 		var rawDoc map[string]json.RawMessage
 		if err := json.Unmarshal(data, &rawDoc); err != nil {
 			return nil, err
@@ -432,17 +535,22 @@ func (c *Client) ParseDocumentInfo(data []byte, docCode string) (*DocumentInfo, 
 	}
 }
 
-// EnrichDocument populates a Document with info from the JSON
+// EnrichDocument populates a Document with info from the JSON.
 func EnrichDocument(doc *model.Document, info *DocumentInfo) {
 	if info == nil {
 		return
 	}
 
-	// Purpose and expected outcomes
-	doc.Purpose = info.FrontMatter.Purpose
+	if info.Name != "" {
+		doc.Name = info.Name
+	}
+
+	doc.Purpose = info.Purpose
+	if doc.Purpose == "" {
+		doc.Purpose = info.FrontMatter.Purpose
+	}
 	doc.ExpectedOutcomes = info.FrontMatter.ExpectedOutcomes
 
-	// Authority references
 	for _, auth := range info.FrontMatter.Authority {
 		doc.Authority = append(doc.Authority, model.Authority{
 			Reference:    auth.Reference,
@@ -451,7 +559,6 @@ func EnrichDocument(doc *model.Document, info *DocumentInfo) {
 		})
 	}
 
-	// Releases
 	for _, rel := range info.Releases {
 		doc.Releases = append(doc.Releases, model.Release{
 			ID:            rel.ID,
@@ -460,10 +567,10 @@ func EnrichDocument(doc *model.Document, info *DocumentInfo) {
 		})
 	}
 
-	// Effective info (program status)
-	if len(info.Effective) > 0 {
-		doc.EffectiveInfo = make(map[string]model.EffectiveStatus)
-		for version, eff := range info.Effective {
+	effectiveMap := info.ParseEffective()
+	if len(effectiveMap) > 0 {
+		doc.EffectiveInfo = make(map[string]model.EffectiveStatus, len(effectiveMap))
+		for version, eff := range effectiveMap {
 			doc.EffectiveInfo[version] = model.EffectiveStatus{
 				Is:            eff.Is,
 				CurrentStatus: eff.CurrentStatus,

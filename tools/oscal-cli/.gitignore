@@ -1,6 +1,6 @@
 # Binary
-oscal
-oscal.exe
+/oscal
+/oscal.exe
 
 # Build artifacts
 dist/

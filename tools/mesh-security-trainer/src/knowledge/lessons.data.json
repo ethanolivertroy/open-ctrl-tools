@@ -1,0 +1,298 @@
+{
+  "istio.mesh-wide-mtls-not-enabled": {
+    "attack": "With mesh-wide mTLS off, service-to-service traffic can traverse the pod network in cleartext, so an attacker who lands on any node or compromises a single pod can sniff east-west traffic and read credentials, tokens, and PII off the wire. Because peers aren't cryptographically authenticated, they can also stand up a rogue workload that impersonates a legitimate service and receive traffic that should have been rejected. This collapses the zero-trust boundary the mesh is supposed to provide, turning one foothold into broad passive interception and active man-in-the-middle.",
+    "fix": {
+      "before": "meshMTLS:\n  enabled: false",
+      "after": "meshMTLS:\n  enabled: true"
+    },
+    "hint": "Consider whether traffic moving between two services inside the mesh is actually protected on the wire, or just assumed to be."
+  },
+  "istio.applications-start-before-proxy-initialization": {
+    "attack": "During the pod startup window before the Envoy sidecar is ready, the application container can already emit traffic that escapes interception entirely, bypassing mTLS and authorization policy. An attacker who can influence startup timing (or simply relies on a slow-to-init proxy) can capture or inject these unmeshed connections, or exfiltrate data during the gap. The same race applies at shutdown, leaving a repeatable window where mesh controls simply don't apply to real traffic.",
+    "fix": {
+      "before": "defaultConfig:\n  holdApplicationUntilProxyStarts: false",
+      "after": "defaultConfig:\n  holdApplicationUntilProxyStarts: true"
+    },
+    "hint": "Think about the brief moment when a pod is coming up, before all of its containers are fully ready to enforce policy."
+  },
+  "istio.sds-not-enabled-certificate-management": {
+    "attack": "Without the Secret Discovery Service delivering certificates in-memory over the local SDS socket, workload keys and certs fall back to being mounted or written to disk and rotated manually. An attacker with read access to the filesystem, a mounted secret, or a stale volume can lift the workload's private key and clone its SPIFFE identity, then authenticate to peers as that service. Manual, infrequent rotation also widens the window in which a stolen key stays valid.",
+    "fix": {
+      "before": "defaultConfig:\n  sds:\n    enabled: false",
+      "after": "defaultConfig:\n  sds:\n    enabled: true"
+    },
+    "hint": "Look at how each workload's private keys and certificates are delivered and rotated — is that handled automatically and kept off disk?"
+  },
+  "istio.telemetry-collection-disabled": {
+    "attack": "With telemetry collection disabled, the mesh stops emitting the metrics that reveal abnormal request volumes, error spikes, and unexpected service-to-service call patterns. An attacker performing lateral movement, credential stuffing, or slow data exfiltration generates traffic that no longer surfaces in any dashboard or alert, giving them time to operate undetected. This is a defense-evasion win: the intrusion still happens, but the signals that would trigger investigation are simply never recorded.",
+    "fix": {
+      "before": "telemetry:\n  enabled: false",
+      "after": "telemetry:\n  enabled: true"
+    },
+    "hint": "Ask whether the mesh is actually producing the signals a defender would need to notice something going wrong between services."
+  },
+  "istio.access-logging-not-enabled": {
+    "attack": "Without access logging, there is no per-request record of source, destination, path, and response code for traffic flowing through the proxies. An attacker who probes services, abuses an over-permissive route, or pivots between workloads leaves no trail, so incident responders cannot reconstruct what was accessed or when. This both aids the attacker's stealth and defeats after-the-fact forensics and compliance evidence.",
+    "fix": {
+      "before": "telemetry:\n  accessLogging:\n    enabled: false",
+      "after": "telemetry:\n  accessLogging:\n    enabled: true"
+    },
+    "hint": "If an incident happened between two services tomorrow, would there be any per-request trail to investigate it?"
+  },
+  "istio.rbac-enforcement-not-enabled": {
+    "attack": "With RBAC/authorization enforcement off, the mesh grants any authenticated workload access to any other service — authentication without authorization. An attacker who compromises even a low-value pod (say, a public-facing frontend) can then call sensitive backends, databases, and admin APIs directly, since nothing restricts which service may talk to which. This is the classic path from a single foothold to full lateral movement across the mesh, violating least privilege.",
+    "fix": {
+      "before": "rbac:\n  mode: \"OFF\"",
+      "after": "rbac:\n  mode: \"ON\""
+    },
+    "hint": "Authentication proves who a caller is — but consider whether anything actually limits which services a caller is allowed to reach."
+  },
+  "istio.outbound-traffic-external-services-allowed": {
+    "attack": "In the default ALLOW_ANY mode, sidecars pass through connections to any external host, so a compromised workload can open outbound channels to attacker-controlled infrastructure. This enables command-and-control beaconing and bulk data exfiltration to arbitrary internet endpoints, since egress isn't constrained to a vetted registry of ServiceEntries. It also lets malware pull second-stage payloads from external domains without tripping any mesh egress control.",
+    "fix": {
+      "before": "outboundTrafficPolicy:\n  mode: ALLOW_ANY",
+      "after": "outboundTrafficPolicy:\n  mode: REGISTRY_ONLY"
+    },
+    "hint": "Consider where a compromised pod is allowed to send traffic on its way out of the mesh — is the outside world wide open by default?"
+  },
+  "istio.proxy-metadata-configuration-missing": {
+    "attack": "With proxyMetadata unset, sidecars run without the identity and policy metadata the control plane and downstream policies rely on to attribute and constrain traffic accurately. This weakens the mesh's ability to bind requests to a specific workload identity and to apply metadata-driven controls (for example DNS capture or platform identity hints), giving an attacker more room to blend malicious traffic in with legitimate flows and to sidestep controls that depend on that context. The effect is a degraded identity and policy signal rather than an outright bypass, so it compounds other weaknesses rather than standing alone.",
+    "fix": {
+      "before": "defaultConfig:\n  # proxyMetadata is not set",
+      "after": "defaultConfig:\n  proxyMetadata:\n    ISTIO_META_DNS_CAPTURE: \"true\""
+    },
+    "hint": "Look at whether the proxies are given the extra identity and policy context the mesh uses to attribute and govern their traffic."
+  },
+  "istio.proxy-concurrency-not-limited": {
+    "attack": "When concurrency is 0, each Envoy sidecar spins worker threads up to the number of host CPUs, so under a flood the proxy will greedily consume node resources. An attacker sending a burst of connections or expensive requests can drive a sidecar to exhaust CPU and memory, starving co-located workloads and turning a single noisy service into a node-wide denial of service. Bounding worker threads contains the blast radius of such resource-exhaustion attacks.",
+    "fix": {
+      "before": "defaultConfig:\n  concurrency: 0",
+      "after": "defaultConfig:\n  concurrency: 2"
+    },
+    "hint": "Think about how many resources a single sidecar is allowed to grab when it's hit with a heavy load."
+  },
+  "istio.no-metrics-provider-configured": {
+    "attack": "With no metrics provider wired up, the mesh has nowhere to ship the numbers that would expose an attack in progress — request-rate anomalies, error surges, and unusual call graphs go nowhere. An attacker conducting reconnaissance or lateral movement operates against a monitoring blind spot, and defenders lose the continuous-monitoring baseline needed to spot deviations. It is a quieter failure than disabling telemetry outright, but the practical result is the same: the data exists in principle but is never collected or alertable.",
+    "fix": {
+      "before": "defaultProviders: {}",
+      "after": "defaultProviders:\n  metrics:\n    - prometheus"
+    },
+    "hint": "Even if telemetry is switched on, ask where those measurements are actually being sent to be watched."
+  },
+  "istio.access-logging-not-configured": {
+    "attack": "With no accessLogFile path set, proxies have no destination for request logs, so security-relevant events — access attempts, authentication outcomes, and unexpected routes — are never written anywhere durable. An attacker can probe and pivot across services knowing that no per-request record is being produced to reconstruct their activity. This erases the forensic trail incident responders need and undermines any compliance requirement to log access.",
+    "fix": {
+      "before": "accessLogFile: \"\"",
+      "after": "accessLogFile: \"/dev/stdout\""
+    },
+    "hint": "Enabling logging is one thing — check whether the logs actually have a configured destination to be written to."
+  },
+  "consul.acl-system-not-enabled": {
+    "attack": "With the ACL system off, I need no credentials at all. I hit the Consul HTTP and DNS APIs anonymously to enumerate every registered service and its address, read and write the KV store (which often holds secrets and app config), and register or deregister services to redirect traffic to a node I control. From there I map your entire internal topology and pivot deeper. The cluster is effectively a wide-open control plane.",
+    "fix": {
+      "before": "\"acl\": {\n  \"enabled\": false\n}",
+      "after": "\"acl\": {\n  \"enabled\": true,\n  \"default_policy\": \"deny\"\n}"
+    },
+    "hint": "Consul will answer anonymous API and KV requests unless a particular authorization subsystem is switched on at all — check that it is."
+  },
+  "consul.acl-default-policy-allow": {
+    "attack": "Even with ACLs enabled, a default policy of \"allow\" means anything not explicitly denied is permitted. I probe for resources nobody wrote an explicit deny for — usually most of the KV tree and service catalog — and operate there freely. Deny-lists are impossible to keep complete, so there's almost always a gap I can live in.",
+    "fix": {
+      "before": "\"acl\": {\n  \"enabled\": true,\n  \"default_policy\": \"allow\"\n}",
+      "after": "\"acl\": {\n  \"enabled\": true,\n  \"default_policy\": \"deny\"\n}"
+    },
+    "hint": "Even with authorization on, look at whether the baseline stance permits everything that isn't explicitly forbidden."
+  },
+  "consul.acl-default-policy-not-configured": {
+    "attack": "This is the allow-by-default gap seen through a zero-trust/FedRAMP lens: anything not explicitly denied is reachable. I exploit that implicit-allow surface to touch services and KV paths never meant to be exposed, and because there's no deny baseline, nothing stops lateral access.",
+    "fix": {
+      "before": "\"acl\": {\n  \"default_policy\": \"allow\"\n}",
+      "after": "\"acl\": {\n  \"default_policy\": \"deny\"\n}"
+    },
+    "hint": "For zero-trust and FedRAMP, confirm the access baseline is explicitly closed rather than left open or unset."
+  },
+  "consul.using-built-consul-ca-instead": {
+    "attack": "The built-in CA keeps its signing key on the Consul servers themselves. If I compromise a server (or its disk or a backup), I get the private key and can mint valid mesh certificates for any service identity — impersonating anything and defeating mTLS silently. There's no HSM boundary and a limited audit trail to catch the forgery.",
+    "fix": {
+      "before": "\"connect\": {\n  \"ca_provider\": \"consul\"\n}",
+      "after": "\"connect\": {\n  \"ca_provider\": \"vault\"\n}"
+    },
+    "hint": "Check where the mesh's certificate signing authority lives — an in-cluster default keeps the signing key right next to the workloads."
+  },
+  "consul.root-certificate-ttl-exceeds-recommended": {
+    "attack": "A very long-lived root cert means that if I ever extract the CA key, my forged certificates stay valid for years, with no forced rotation event to evict me. It also locks you into today's algorithms, so a key I can eventually break stays exploitable for the entire window.",
+    "fix": {
+      "before": "\"connect\": {\n  \"ca_config\": {\n    \"root_cert_ttl\": \"87600h\"\n  }\n}",
+      "after": "\"connect\": {\n  \"ca_config\": {\n    \"root_cert_ttl\": \"43800h\"\n  }\n}"
+    },
+    "hint": "Review how long the top-level certificate stays valid — multi-year lifetimes widen the compromise window."
+  },
+  "consul.tls-verify-incoming-not-enabled": {
+    "attack": "Without incoming verification, the server accepts connections without validating the client's certificate. I connect as an unauthenticated client and the server treats me as legitimate — no client cert, no problem. That lets me reach APIs and RPC endpoints meant to require a trusted, certificate-bearing peer.",
+    "fix": {
+      "before": "\"tls\": {\n  \"defaults\": {\n    \"verify_incoming\": false\n  }\n}",
+      "after": "\"tls\": {\n  \"defaults\": {\n    \"verify_incoming\": true\n  }\n}"
+    },
+    "hint": "Check whether the server actually validates the certificates of clients connecting into it."
+  },
+  "consul.tls-verify-outgoing-not-enabled": {
+    "attack": "With outgoing verification off, the client won't validate the server's certificate, so I stand up a rogue endpoint (via ARP/DNS spoofing or a malicious node) and the client happily connects and trusts it. Classic man-in-the-middle: I read and rewrite the traffic, harvest tokens, and impersonate the real server.",
+    "fix": {
+      "before": "\"tls\": {\n  \"defaults\": {\n    \"verify_outgoing\": false\n  }\n}",
+      "after": "\"tls\": {\n  \"defaults\": {\n    \"verify_outgoing\": true\n  }\n}"
+    },
+    "hint": "Check whether outbound connections validate the certificate of the server they reach."
+  },
+  "consul.server-hostname-verification-not-enabled": {
+    "attack": "Even with cert validation on, if hostname verification is off I only need *any* cert your CA trusts, not the specific server's. I take a legitimate cert issued to a low-value node and use it to impersonate a privileged Consul server on the internal RPC path, then intercept or manipulate cluster-level operations and move laterally.",
+    "fix": {
+      "before": "\"tls\": {\n  \"internal_rpc\": {\n    \"verify_server_hostname\": false\n  }\n}",
+      "after": "\"tls\": {\n  \"internal_rpc\": {\n    \"verify_server_hostname\": true\n  }\n}"
+    },
+    "hint": "On the internal RPC path, look at whether a trusted certificate is also checked to belong to the specific host it claims to be."
+  },
+  "consul.auto-encrypt-tls-feature-disabled": {
+    "attack": "With auto-encrypt off, certificate distribution is manual — which in practice means stale, expired, or missing certs on some agents, and operators disabling verification \"temporarily\" to get things working. I hunt for the agents that fell out of the mTLS umbrella and target the plaintext or unverified paths they leave behind.",
+    "fix": {
+      "before": "\"auto_encrypt\": {\n  \"tls\": false\n}",
+      "after": "\"auto_encrypt\": {\n  \"tls\": true\n}"
+    },
+    "hint": "Look at whether client agents get their TLS certificates distributed automatically or left to be provisioned by hand."
+  },
+  "consul.auto-config-authorization-disabled": {
+    "attack": "If auto-config is on but its authorization check is off, I can pose as a new agent joining the cluster and receive configuration — including certificates and join secrets — without proving I'm authorized. That's a straight path to enrolling a rogue node that's trusted from birth.",
+    "fix": {
+      "before": "\"auto_config\": {\n  \"authorization\": {\n    \"enabled\": false\n  }\n}",
+      "after": "\"auto_config\": {\n  \"authorization\": {\n    \"enabled\": true\n  }\n}"
+    },
+    "hint": "When agents auto-fetch their configuration, check whether that enrollment path requires the requester to be authorized."
+  },
+  "consul.rsa-key-size-below-2048": {
+    "attack": "Sub-2048-bit RSA keys are within reach of factorization attacks. If your CA or leaf keys are 1024-bit, a well-resourced attacker can recover the private key offline and then forge trusted certificates at will, collapsing the entire mTLS trust model.",
+    "fix": {
+      "before": "\"connect\": {\n  \"ca_config\": {\n    \"private_key_bits\": 1024\n  }\n}",
+      "after": "\"connect\": {\n  \"ca_config\": {\n    \"private_key_bits\": 2048\n  }\n}"
+    },
+    "hint": "Inspect the CA's key strength — undersized keys are factorable."
+  },
+  "consul.script-based-health-checks-enabled": {
+    "attack": "Script checks run shell commands on the agent host on a schedule. If I can register a service definition — or influence an existing one — I supply a health-check command of my choosing and get arbitrary code execution on every host that runs it: a direct RCE and cluster-wide foothold. This is exactly why Consul gated the feature.",
+    "fix": {
+      "before": "\"enable_script_checks\": true",
+      "after": "\"enable_script_checks\": false"
+    },
+    "hint": "Check whether health checks are permitted to run shell commands on the host."
+  },
+  "consul.remote-command-execution-enabled": {
+    "attack": "`consul exec` fans a command out to run across cluster nodes. Left enabled, it's a built-in lateral-movement and mass-execution primitive: one foothold plus this feature equals arbitrary commands on every agent simultaneously. It's the fastest way to turn a single compromise into total cluster control.",
+    "fix": {
+      "before": "\"disable_remote_exec\": false",
+      "after": "\"disable_remote_exec\": true"
+    },
+    "hint": "Look for whether cluster-wide remote command execution has been left switched on."
+  },
+  "consul.proxy-binding-all-network-interfaces": {
+    "attack": "Binding the proxy to 0.0.0.0 exposes it on every interface, including ones reachable outside the host's trust boundary. I connect to the proxy's port directly from the network instead of being forced through localhost, expanding my attack surface to anything that can route to the host.",
+    "fix": {
+      "before": "\"proxy\": {\n  \"config\": {\n    \"bind_address\": \"0.0.0.0\"\n  }\n}",
+      "after": "\"proxy\": {\n  \"config\": {\n    \"bind_address\": \"127.0.0.1\"\n  }\n}"
+    },
+    "hint": "Check which network interfaces the proxy listens on — binding to all of them widens exposure."
+  },
+  "consul.no-inbound-connection-limits-configured": {
+    "attack": "With no inbound connection cap, I open connections to the proxy until it exhausts file descriptors, memory, or threads — a cheap denial of service that takes the service (and anything behind that sidecar) offline. No credentials or clever exploit needed, just volume.",
+    "fix": {
+      "before": "\"proxy\": {\n  \"config\": {\n    \"max_inbound_connections\": 0\n  }\n}",
+      "after": "\"proxy\": {\n  \"config\": {\n    \"max_inbound_connections\": 1024\n  }\n}"
+    },
+    "hint": "See whether the proxy caps how many inbound connections a flood could open at once."
+  },
+  "consul.proxy-configured-use-unencrypted-http": {
+    "attack": "An HTTP (not HTTPS or gRPC-over-TLS) proxy protocol means that hop is plaintext. Anyone on the path — a compromised node, a span port, a sniffing sidecar — reads the requests and responses, lifts session tokens and sensitive payloads, and can tamper with them in flight.",
+    "fix": {
+      "before": "\"proxy\": {\n  \"config\": {\n    \"protocol\": \"http\"\n  }\n}",
+      "after": "\"proxy\": {\n  \"config\": {\n    \"protocol\": \"https\"\n  }\n}"
+    },
+    "hint": "Check whether the proxy hop carries traffic in cleartext or over an encrypted protocol."
+  },
+  "consul.no-http-connection-limits-per": {
+    "attack": "Without a per-client HTTP connection limit, a single misbehaving or malicious client monopolizes the server's connection capacity, starving everyone else. I use one source (or a few) to hold open enough connections to degrade or deny the Consul HTTP API for all legitimate users.",
+    "fix": {
+      "before": "\"limits\": {\n  \"http_max_conns_per_client\": 0\n}",
+      "after": "\"limits\": {\n  \"http_max_conns_per_client\": 100\n}"
+    },
+    "hint": "Look at whether a single client can monopolize the HTTP connection capacity."
+  },
+  "consul.rpc-rate-limiting-disabled": {
+    "attack": "With RPC rate limiting disabled (-1 or unset = unlimited), I flood the servers with RPC calls to exhaust CPU and I/O, degrading Raft/leadership and service-catalog operations for the whole cluster. Unbounded RPC is a direct lever on control-plane availability.",
+    "fix": {
+      "before": "\"limits\": {\n  \"rpc_rate\": -1\n}",
+      "after": "\"limits\": {\n  \"rpc_rate\": 1000\n}"
+    },
+    "hint": "Check whether the RPC layer has any throttle at all or is effectively unlimited."
+  },
+  "consul.request-rate-limiting-disabled": {
+    "attack": "With request limiting disabled there's no enforced ceiling on request volume, so I drive abusive traffic until the service degrades, with no throttle to blunt an application-layer flood. It also removes a guardrail that would otherwise slow brute-force and enumeration attacks.",
+    "fix": {
+      "before": "\"limits\": {\n  \"request_limits\": {\n    \"mode\": \"disabled\"\n  }\n}",
+      "after": "\"limits\": {\n  \"request_limits\": {\n    \"mode\": \"enforce\"\n  }\n}"
+    },
+    "hint": "Confirm the request limiter is actually enforcing rather than switched off or in observe-only mode."
+  },
+  "consul.service-discovery-stale-read-window": {
+    "attack": "A long stale-read window lets follower servers answer discovery queries with old catalog data. I exploit the lag so clients keep routing to a decommissioned or compromised endpoint I still control after it should have been removed — or to delay propagation of a defender's corrective change, like removing a malicious registration.",
+    "fix": {
+      "before": "\"discovery_max_stale\": \"168h\"",
+      "after": "\"discovery_max_stale\": \"72h\""
+    },
+    "hint": "Review how long service discovery is allowed to serve stale catalog data before it must refresh."
+  },
+  "linkerd.tls-enabled-but-not-enforced": {
+    "attack": "Because the mesh runs in permissive mode, an attacker who lands on the pod network (a compromised sidecar-less workload, a rogue pod, or a node-level foothold) can open plaintext connections to meshed services and they are accepted alongside mTLS ones. This lets them sniff or inject traffic that should have been encrypted, and impersonate a client without presenting a valid mesh identity. Sensitive data in those unencrypted flows is exposed without ever defeating TLS itself.",
+    "fix": {
+      "before": "tls:\n  enabled: true\n  enforced: false",
+      "after": "tls:\n  enabled: true\n  enforced: true"
+    },
+    "hint": "Turning encryption on is not the same as requiring it; look at whether plaintext is still tolerated once TLS is available."
+  },
+  "linkerd.tls-minimum-version-below-tls": {
+    "attack": "With a floor below TLS 1.2, an on-path attacker can force a downgrade to a legacy protocol version and then exploit its known weaknesses (for example padding-oracle and cipher flaws in TLS 1.0/1.1) to decrypt or tamper with service-to-service traffic. These protocol-level defects cannot be patched away by other settings, so the weak floor alone is enough to undermine confidentiality of intercepted flows.",
+    "fix": {
+      "before": "tls:\n  minimumVersion: TLSv1.0",
+      "after": "tls:\n  minimumVersion: TLSv1.2"
+    },
+    "hint": "Check the oldest protocol version the mesh is still willing to negotiate."
+  },
+  "linkerd.no-outbound-connection-timeout-configured": {
+    "attack": "With no outbound connect timeout, a proxy will wait indefinitely on connections to slow or unreachable upstreams. An attacker can weaponize this by pointing traffic at black-holed or deliberately stalling endpoints, piling up half-open connections until the proxy exhausts file descriptors, memory, or its connection pool. The result is a low-effort denial of service that degrades the meshed workload rather than a direct data compromise.",
+    "fix": {
+      "before": "proxy:\n  # no outboundConnectTimeout set",
+      "after": "proxy:\n  outboundConnectTimeout: 10s"
+    },
+    "hint": "Consider what happens to outbound connections that never complete because nothing bounds how long the proxy waits."
+  },
+  "linkerd.resource-limits-not-configured-proxies": {
+    "attack": "Without CPU and memory limits on the proxies, a single compromised or overloaded workload's sidecar can consume all available resources on the node. An attacker who can drive traffic or trigger heavy proxy work can starve neighboring pods and destabilize the node, turning one foothold into a broader, noisy-neighbor denial of service across the cluster. This is an availability attack, not a data-exfiltration one.",
+    "fix": {
+      "before": "proxy:\n  resources: {}",
+      "after": "proxy:\n  resources:\n    cpu: \"1\"\n    memory: 256Mi"
+    },
+    "hint": "Think about what caps a proxy's consumption when a workload misbehaves or is pushed hard."
+  },
+  "linkerd.distributed-tracing-not-enabled": {
+    "attack": "Tracing being off does not itself open a door, but it removes the request-level visibility defenders rely on. An attacker moving laterally between services or abusing a service-to-service call path leaves far fewer correlated traces, so intrusion detection, incident scoping, and forensic reconstruction all become slower and less complete. In practice this lengthens dwell time and helps an attacker operate unnoticed.",
+    "fix": {
+      "before": "tracing:\n  enabled: false",
+      "after": "tracing:\n  enabled: true"
+    },
+    "hint": "Look at whether the mesh gives you request-level visibility to reconstruct what happened during an incident."
+  },
+  "linkerd.proxy-resource-limits-not-configured": {
+    "attack": "Missing proxy resource limits means a proxy can grow its CPU and memory use without bound, which an attacker can exploit as a denial-of-service vector: flood a meshed service or induce expensive proxy processing and the unbounded sidecar starves other tenants on the node until the control plane or workloads become unstable. The impact is degraded or lost availability across co-located services rather than a breach of confidentiality.",
+    "fix": {
+      "before": "proxy:\n  resources: {}",
+      "after": "proxy:\n  resources:\n    cpu: \"1\"\n    memory: 256Mi"
+    },
+    "hint": "Consider whether anything stops a proxy from consuming node resources without limit under load."
+  }
+}
