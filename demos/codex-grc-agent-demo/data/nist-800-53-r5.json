@@ -1,0 +1,23 @@
+{
+  "AC-2": {
+    "title": "Account Management",
+    "family": "Access Control",
+    "summary": "Manage information system accounts, access provisioning, and periodic account review."
+  },
+  "IA-5": {
+    "title": "Authenticator Management",
+    "family": "Identification and Authentication",
+    "summary": "Manage authenticators, including complexity, issuance, and MFA-related controls."
+  },
+  "AU-6": {
+    "title": "Audit Review, Analysis, and Reporting",
+    "family": "Audit and Accountability",
+    "summary": "Review and analyze audit records and report suspicious or unusual activity."
+  },
+  "CM-6": {
+    "title": "Configuration Settings",
+    "family": "Configuration Management",
+    "summary": "Establish, document, implement, and monitor secure configuration settings."
+  }
+}
+

@@ -1,0 +1,7 @@
+boto3==1.43.93
+google-api-python-client==2.200.0
+google-auth-httplib2==0.4.2
+google-auth-oauthlib==1.4.1
+google-cloud-secret-manager==2.30.0
+hvac==2.4.0
+PyYAML==6.0.3

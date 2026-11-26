@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Local config and secrets
+.env
+.env.*
+config/local_*.yaml
+
+# Generated data
+data/raw/*
+!data/raw/.gitkeep
+data/extracted/*
+!data/extracted/.gitkeep
+data/training/*
+!data/training/.gitkeep
+data/cmmc/*
+!data/cmmc/.gitkeep
+data/hipaa/*
+!data/hipaa/.gitkeep
+data/embeddings/*
+!data/embeddings/.gitkeep
+data/temp/
+checkpoints/
+
+# Models and large artifacts
+models/
+*.bin
+*.safetensors
+*.gguf
+
+# Logs and reports
+logs/
+reports/
+*.log
+debug_page.html
+
+# Editors and OS noise
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

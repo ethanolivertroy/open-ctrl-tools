@@ -1,0 +1,17 @@
+{
+  "name": "@open-ctrl-tools/gws-inspector-py",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Google Workspace FedRAMP compliance audit snapshot",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node --check fedramp-compliance-check.js && npm test",
+    "test": "node --test fedramp-compliance-check.test.js"
+  },
+  "dependencies": {
+    "googleapis": "180.0.0"
+  }
+}

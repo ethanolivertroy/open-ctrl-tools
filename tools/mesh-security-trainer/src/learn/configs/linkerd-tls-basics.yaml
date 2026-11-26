@@ -1,0 +1,29 @@
+# Linkerd mesh config.
+# Two things here weaken the encryption between services. Can you find both?
+mesh_type: linkerd
+
+identity:
+  issuer:
+    scheme: kubernetes.io/tls
+    clockSkewAllowance: 20s
+    issuanceLifetime: 24h
+
+tls:
+  enabled: true
+  enforced: false
+  minimumVersion: "TLSv1.0"
+
+proxy:
+  image: cr.l5d.io/linkerd/proxy:stable-2.14.10
+  logLevel: warn
+  resources:
+    cpu:
+      limit: "1"
+    memory:
+      limit: 250Mi
+
+policy:
+  defaultAllowPolicy: deny
+
+metrics:
+  enabled: true

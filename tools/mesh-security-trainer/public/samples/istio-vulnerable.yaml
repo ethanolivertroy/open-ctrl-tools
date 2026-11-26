@@ -1,0 +1,128 @@
+# Istio MeshConfig with multiple security vulnerabilities based on 2024 best practices
+mesh_type: istio
+apiVersion: networking.istio.io/v1alpha1
+kind: MeshConfig
+metadata:
+  name: istio-system
+spec:
+  # Basic configuration with security issues
+  defaultConfig:
+    image: docker.io/istio/proxyv2:latest  # CVE risk - unpinned version
+    concurrency: 0  # Resource exhaustion risk
+    privileged: true  # NIST violation - excessive privileges
+    holdApplicationUntilProxyStarts: false  # Traffic bypass vulnerability
+    drainDuration: 45s
+    parentShutdownDuration: 1m0s
+    
+    # Disabled security features
+    sds:
+      enabled: false  # SDS should be enabled for secure cert distribution
+    
+    # Insecure proxy settings
+    proxyStatsMatcher:
+      inclusionRegexps:
+      - ".*"  # Exposing all metrics
+    
+    # Missing resource limits
+    # No CPU/memory limits defined - DoS vulnerability
+    
+    proxyMetadata:
+      DNS_CAPTURE: "false"  # DNS bypass risk
+      PILOT_ENABLE_WORKLOAD_ENTRY_AUTOREGISTRATION: "true"  # Auto-registration risk
+      PILOT_ENABLE_WORKLOAD_ENTRY_HEALTHCHECKS: "false"  # No health checks
+  
+  # Weak mTLS configuration
+  meshMTLS:
+    enabled: false  # mTLS completely disabled - major vulnerability
+  
+  # Insecure CA configuration
+  ca:
+    istiod:
+      workloadCertTtl: 8760h  # 1 year - too long per NIST
+      rootCertTtl: 87600h  # 10 years - excessive
+  
+  # Missing trust domain
+  # trustDomain not set - identity confusion risk
+  
+  # Disabled RBAC
+  rbac:
+    mode: OFF  # Authorization bypass vulnerability
+  
+  # Disabled telemetry
+  telemetry:
+    enabled: false  # No observability
+    v1:
+      enabled: false
+    v2:
+      enabled: false
+      prometheus:
+        configOverride:
+          inboundSidecar:
+            disable_host_header_fallback: false  # Host header injection
+      accessLogging:
+        enabled: false  # No audit trail
+  
+  # Unrestricted outbound traffic
+  outboundTrafficPolicy:
+    mode: ALLOW_ANY  # Data exfiltration risk
+  
+  # Missing policy enforcement
+  policyCheckFailOpen: true  # Fail-open vulnerability
+  enableAutoMtls: false  # Manual mTLS config error-prone
+  
+  # Insecure tracing configuration
+  extensionProviders:
+  - name: zipkin
+    zipkin:
+      service: zipkin.istio-system.svc.cluster.local
+      port: 9411
+      maxTagLength: 0  # No tag sanitization
+  - name: jaeger
+    jaeger:
+      service: jaeger-collector.istio-system.svc.cluster.local
+      port: 14268
+      useSSL: false  # Unencrypted traces
+  - name: oauth2
+    envoyOAuthProvider:
+      service: oauth.local
+      port: 80  # Using HTTP
+      pathPrefix: /oauth2
+      timeout: 10s
+      headersToDownstreamOnDeny: []  # No error details
+      headersToUpstreamOnAllow: []  # No context propagation
+  
+  # Weak proxy configuration
+  defaultProviders:
+    metrics:
+    - prometheus
+    tracing:
+    - zipkin  # Using unencrypted provider
+  
+  # Missing ingress gateway security
+  ingressService: istio-ingressgateway
+  ingressSelector: istio=ingressgateway
+  # No ingress class or controller mode specified
+  
+  # Insecure locality load balancing
+  localityLbSetting:
+    enabled: true
+    distribute:
+    - from: region1/zone1/*
+      to:
+        "region1/zone1/*": 100  # No cross-zone resilience
+    failover: []  # No failover configuration
+  
+  # DNS configuration issues
+  dnsRefreshRate: 300s  # Too long - stale DNS
+  proxyHttpPort: 15080  # Using HTTP port
+  
+  # Disabled access logging
+  accessLogFile: ""  # No access logs
+  accessLogFormat: ""  # No format specified
+  accessLogEncoding: TEXT  # Not structured
+  
+  # Protocol detection issues
+  protocolDetectionTimeout: 0s  # No timeout - DoS risk
+  enablePrometheusMerge: false  # Metrics not merged
+  
+  # OAuth provider configuration (merged with extensionProviders above)

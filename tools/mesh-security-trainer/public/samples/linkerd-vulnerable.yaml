@@ -1,0 +1,229 @@
+# Linkerd configuration with security vulnerabilities based on 2024 best practices
+mesh_type: linkerd
+apiVersion: linkerd.io/v1alpha1
+kind: ServiceProfile
+metadata:
+  name: linkerd-config
+  namespace: linkerd
+spec:
+  # Identity configuration with vulnerabilities
+  identity:
+    issuer:
+      scheme: linkerd.io/tls
+      issuanceLifetime: 8760h  # 1 year - too long
+      clockSkewAllowance: 1h  # Too permissive
+    # Missing trust anchors configuration
+    # trustDomain not specified
+    
+  # Proxy configuration issues
+  proxy:
+    image:
+      name: ghcr.io/linkerd/proxy
+      version: latest  # unpinned tag — silently pulls whatever the newest build is
+    logLevel: info
+    logFormat: plain  # Not structured
+    ports:
+      admin: 4191
+      control: 4190
+      inbound: 4143
+      outbound: 4140
+    uid: 0  # Running as root
+    waitBeforeExitSeconds: 0
+    requireIdentityOnInboundPorts: ""  # No identity requirement
+    disableIdentity: false
+    disableInboundProtocolDetection: false
+    disableOutboundProtocolDetection: false
+    disableTap: false  # Tap enabled in production
+    enableExternalProfiles: true  # External profile injection risk
+    inboundConnectTimeout: 100s  # Too long
+    outboundConnectTimeout: 100s  # Too long
+    controlPlaneTracingNamespace: ""
+    accessLog: ""  # No access logging
+    defaultInboundPolicy: all-unauthenticated  # No authentication required
+    opaquePorts: ""
+    await: false  # Not waiting for proxy ready
+    
+    # Resource limits not set - DoS vulnerability
+    resources:
+      cpu:
+        request: ""
+        limit: ""
+      memory:
+        request: ""
+        limit: ""
+    
+    # Shutdown configuration
+    shutdown:
+      gracePeriod: ""
+      signal: ""
+    
+  # Control plane configuration
+  controlPlane:
+    clusterNetworks: "0.0.0.0/0"  # Too permissive
+    enableH2Upgrade: true
+    enablePprof: true  # Debug endpoints exposed
+    omitWebhookSideEffects: false
+    disableHeartBeat: true  # No heartbeat monitoring
+    disableIPv6: false
+    controllerImage: ghcr.io/linkerd/controller:latest  # Unpinned
+    
+  # Policy configuration vulnerabilities
+  policy:
+    # No default deny policy
+    defaultAllowPolicy: all-unauthenticated
+    allowedClusterNetworks:
+      - cidr: 0.0.0.0/0  # Allow all networks
+        except: []
+    
+  # Traffic configuration
+  traffic:
+    enableEndpointSlices: false
+    outboundPolicy:
+      mode: any  # Unrestricted outbound
+    inboundPolicy:
+      mode: all  # Accept all inbound
+      
+  # ProxyInit configuration
+  proxyInit:
+    image:
+      name: ghcr.io/linkerd/proxy-init
+      version: latest  # Unpinned version
+    skipInboundPorts: []
+    skipOutboundPorts: []
+    skipSubnets: []
+    logLevel: info
+    logFormat: plain
+    closeWaitTimeoutSecs: 0
+    ignoreInboundPorts: "4190,4191"  # Control ports ignored
+    ignoreOutboundPorts: ""
+    iptablesMode: legacy  # Using legacy iptables
+    runAsRoot: true  # Running as root
+    
+  # CNI plugin configuration
+  cniPlugin:
+    image:
+      name: ghcr.io/linkerd/cni-plugin
+      version: latest
+    logLevel: info
+    portsToRedirect: []
+    inboundPortsToIgnore: []
+    simulateTransparentMode: false
+    useWaitFlag: false
+    
+  # Dashboard configuration
+  dashboard:
+    enforcedHostRegexp: ""  # No host validation
+    
+  # Webhook configuration
+  webhookConfig:
+    failurePolicy: Ignore  # Fail open
+    namespaceSelector:
+      matchExpressions: []
+    objectSelector:
+      matchExpressions: []
+    reinvocationPolicy: Never
+    timeoutSeconds: 30
+    admissionReviewVersions:
+      - v1
+      - v1beta1
+    
+  # Heartbeat configuration
+  heartbeat:
+    schedule: ""  # No heartbeat schedule
+    
+  # Admin configuration
+  admin:
+    servers:
+      - name: admin
+        port: 9990
+        ip: 0.0.0.0  # Binding to all interfaces
+        
+  # Prometheus configuration
+  prometheus:
+    enabled: false  # Metrics disabled
+    image: prom/prometheus:latest
+    logLevel: info
+    logFormat: logfmt
+    globalConfig:
+      scrapeInterval: 10s
+      scrapeTimeout: 10s
+      evaluationInterval: 10s
+    alertManagers: []
+    recordingRules: []
+    scrapeConfigs: []
+    alertingRules: []
+    ruleConfigMapMounts: []
+    storage: {}
+    remoteWrite: []
+    remoteRead: []
+    additionalScrapeConfigs: []
+    lifecycle: {}
+    
+  # Tracing configuration
+  tracing:
+    enabled: false  # No tracing
+    collector:
+      name: ""
+      image: ""
+      endpoint: ""
+      
+  # Service configuration
+  service:
+    type: LoadBalancer  # Exposed externally
+    annotations: {}
+    labels: {}
+    externalTrafficPolicy: ""
+    
+  # High Availability configuration
+  highAvailability: false  # Not configured for HA
+  
+  # PodSecurityPolicy
+  podSecurityPolicy:
+    privileged: true  # Privileged containers allowed
+    allowPrivilegeEscalation: true
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
+    runAsUser: 0
+    fsGroup: 0
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - '*'  # All volume types allowed
+    
+  # NetworkPolicy
+  networkPolicy:
+    enabled: false  # No network segmentation
+    
+  # PodDisruptionBudget
+  podDisruptionBudget:
+    enabled: false  # No PDB configured
+    
+  # Feature flags with security implications
+  featureFlags:
+    enableEndpointSlices: false
+    enableIPv6: false
+    enableGatewayAPI: true
+    enablePodDisruptionBudget: false
+    enablePodSecurityPolicy: false
+    enableServiceTopology: false
+    enableTrafficSplit: true
+    
+  # Global configuration
+  global:
+    clusterDomain: cluster.local
+    clusterNetworks: ""
+    imagePullPolicy: Always
+    controllerComponentLabel: linkerd.io/control-plane-component
+    controllerNamespaceLabel: linkerd.io/control-plane-ns
+    workloadNamespaceLabel: linkerd.io/workload-ns
+    createdByAnnotation: linkerd.io/created-by
+    proxiedResourceLabel: linkerd.io/proxy-deployment
+    
+  # Debug configuration
+  debug:
+    enabled: true  # Debug mode enabled in production
+    image:
+      name: ghcr.io/linkerd/debug
+      version: latest

@@ -1,0 +1,10 @@
+# Optional dependencies for the extension workflows in docs/extensions.md
+# Install after the base environment:
+#   pip install -r requirements-extensions.txt
+
+numpy>=1.26.0
+openai>=1.30.0
+pandas>=2.2.0
+pyarrow>=16.0.0
+# Optional if you want local FAISS indexes and have a compatible wheel:
+# faiss-cpu>=1.8.0

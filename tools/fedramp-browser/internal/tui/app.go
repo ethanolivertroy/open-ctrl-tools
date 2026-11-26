@@ -135,23 +135,25 @@ func (m Model) fetchData() tea.Cmd {
 			indicators = inds
 		}
 
+		// Discover document list dynamically from JSON
+		documents := m.apiClient.ParseDocuments(data)
+
 		// Parse requirements for each FRR process document
-		for _, code := range api.DocumentOrder {
-			if code == "FRD" || code == "KSI" {
+		for _, doc := range documents {
+			if doc.Code == "FRD" || doc.Code == "KSI" {
 				continue
 			}
-			if reqs, err := m.apiClient.ParseRequirements(data, code); err == nil {
+			if reqs, err := m.apiClient.ParseRequirements(data, doc.Code); err == nil {
 				allRequirements = append(allRequirements, reqs...)
 			}
 		}
 
-		// Also parse KSI process requirements (KSI has both themes and process requirements)
+		// Also parse KSI process requirements if present under FRR
 		if ksiReqs, err := m.apiClient.ParseRequirements(data, "KSI"); err == nil {
 			allRequirements = append(allRequirements, ksiReqs...)
 		}
 
-		// Build document list with counts and rich info
-		documents := api.GetDocumentMetadata()
+		// Populate counts and rich info
 		reqCounts := make(map[string]int)
 		for _, r := range allRequirements {
 			reqCounts[r.DocumentCode]++

@@ -1,0 +1,25 @@
+# Istio MeshConfig — a small production-ish mesh.
+# Something here means services can talk to each other without proving who they are.
+apiVersion: networking.istio.io/v1alpha1
+kind: MeshConfig
+metadata:
+  name: istio-mesh
+  namespace: istio-system
+
+meshMTLS:
+  enabled: false
+
+defaultConfig:
+  holdApplicationUntilProxyStarts: true
+  concurrency: 2
+
+rbac:
+  mode: "ON"
+
+telemetry:
+  enabled: true
+  accessLogging:
+    enabled: true
+
+outboundTrafficPolicy:
+  mode: REGISTRY_ONLY

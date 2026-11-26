@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "id": "zero-trust-grounding",
+      "notes": "Checks exact NIST grounding plus one of the named reference-architecture components from SP 800-207.",
+      "prompt": "What does NIST SP 800-207 say zero trust is, and name at least one core logical component from the reference architecture.",
+      "checks": [
+        ["sp 800-207", "800-207"],
+        ["zero trust"],
+        ["policy engine", "policy administrator", "policy enforcement point"]
+      ]
+    },
+    {
+      "id": "rmf-steps",
+      "notes": "Checks whether the model preserves the seven-step RMF flow from SP 800-37 Rev. 2 instead of collapsing it into a shorter list.",
+      "prompt": "Summarize the RMF steps from NIST SP 800-37 Rev. 2.",
+      "checks": [
+        ["sp 800-37", "800-37"],
+        ["prepare"],
+        ["categorize", "categorization"],
+        ["select"],
+        ["implement"],
+        ["assess"],
+        ["authorize"],
+        ["monitor"]
+      ]
+    },
+    {
+      "id": "cm-6-grounding",
+      "notes": "Checks exact control-family grounding and whether the model names CM-6 as Configuration Settings rather than drifting to a nearby concept.",
+      "prompt": "Which NIST publication defines control CM-6, what is the control name, and what does it cover?",
+      "checks": [
+        ["sp 800-53", "800-53"],
+        ["cm-6"],
+        ["configuration settings"]
+      ]
+    },
+    {
+      "id": "contractor-remote-access",
+      "notes": "Checks whether the model is still useful for practical security planning even if exact control wording is weaker.",
+      "prompt": "I need to tighten remote access for contractors. Which NIST publications would you start with, and which control families matter most?",
+      "checks": [
+        ["sp 800-53", "sp 800-46", "sp 800-63", "800-53", "800-46", "800-63"],
+        ["ac", "access control"],
+        ["ia", "identification and authentication", "authentication"],
+        ["au", "audit", "logging"]
+      ],
+      "minimum_checks": 3
+    },
+    {
+      "id": "fips-140-delta",
+      "notes": "Checks whether the model can keep a simple named-publication comparison grounded without drifting into generic crypto language.",
+      "prompt": "What changed between FIPS 140-2 and FIPS 140-3?",
+      "checks": [
+        ["fips 140-2", "140-2"],
+        ["fips 140-3", "140-3"],
+        ["iso", "iso/iec 19790", "19790"]
+      ],
+      "minimum_checks": 2
+    }
+  ]
+}
