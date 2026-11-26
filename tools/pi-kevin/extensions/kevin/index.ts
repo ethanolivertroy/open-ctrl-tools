@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
-import type { ExtensionAPI, ExtensionContext, Theme } from "@mariozechner/pi-coding-agent";
-import { Text, truncateToWidth } from "@mariozechner/pi-tui";
+import type { ExtensionAPI, ExtensionContext, Theme } from "@earendil-works/pi-coding-agent";
+import { Text, truncateToWidth } from "@earendil-works/pi-tui";
 import { Type } from "@sinclair/typebox";
 import { KevAnalytics } from "./core/analytics.js";
 import { mapCveToControls, getControlDetails as getMappedControlDetails, listControls as listMappedControls } from "./core/grc.js";
