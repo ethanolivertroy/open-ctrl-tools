@@ -1,0 +1,35 @@
+# Copy to .dev.vars for local development only.
+# In production, use: npx wrangler secret put ADMIN_TOKEN
+ADMIN_TOKEN=replace-with-a-long-random-admin-token
+
+# Optional: verify Cloudflare Access identities on /api/admin/* requests.
+# Set both values to the Access application configuration. When present,
+# a valid Cf-Access-Jwt-Assertion signs the admin in with a named actor;
+# the bearer token above keeps working as a fallback.
+# ACCESS_TEAM_DOMAIN=your-team.cloudflareaccess.com
+# ACCESS_AUD=the-access-application-audience-tag
+
+# Optional: email delivery through Cloudflare Email Service (env.EMAIL.send).
+# Same send_email binding as https://github.com/ethanolivertroy/grokbot-cloudflare-inbox
+# Onboard the From domain in Compute > Email Service, then set EMAIL_FROM.
+# EMAIL_FROM=Trust Me Bro Center <trust@yourcompany.com>
+
+# Local development helper: uncomment to log queued emails to the Wrangler
+# console instead of delivering them. Keep this disabled in production.
+# EMAIL_LOG_ONLY=true
+
+# Optional: absolute origin used in email links. Defaults to the origin of
+# the request that queued the email.
+# PUBLIC_BASE_URL=https://trust.yourcompany.com
+
+# Optional: Cloudflare Turnstile on the public subscribe and access-request
+# forms. Set BOTH keys or neither. With both set, the page renders the widget
+# and the Worker rejects submissions that lack a verified token.
+# Cloudflare's always-pass test keys: site 1x00000000000000000000AA,
+# secret 1x0000000000000000000000000000000AA
+# TURNSTILE_SITE_KEY=
+# TURNSTILE_SECRET_KEY=
+
+# Optional: where new access-request alerts go. Defaults to the security
+# email shown on the public page.
+# ACCESS_REQUEST_NOTIFY_EMAIL=trust-alerts@yourcompany.com

@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#fbfbfb">
+  <title>Trust Me Bro Center Admin</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/kumo-public.css">
+  <link rel="stylesheet" href="/kumo-admin.css">
+  <script src="/admin/admin.js" type="module"></script>
+</head>
+<body class="admin-page" data-theme="kumo" data-mode="light">
+  <div class="admin-shell">
+    <header class="kumo-header admin-topbar">
+      <a class="kumo-brand" href="/admin/" aria-label="Admin home">
+        <span class="kumo-brand-mark" id="admin-logo" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+            <path d="M2 10.5 8 4l6 6.5" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="kumo-brand-copy">
+          <strong>Trust Me Bro Center</strong>
+          <small>Admin</small>
+        </span>
+      </a>
+      <p class="admin-context">Editing <strong id="admin-company">Northstar Labs</strong> · <span id="admin-identity">Checking session…</span></p>
+      <div class="kumo-header-actions">
+        <a class="kumo-btn kumo-btn-ghost kumo-btn-sm" href="/" target="_blank" rel="noopener">View public site</a>
+        <button class="kumo-btn kumo-btn-secondary kumo-btn-sm" id="logout-button" type="button">Log out</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-nav" aria-label="Admin sections">
+        <p class="nav-group-label">Trust center</p>
+        <button class="active" data-panel="overview" type="button">Overview</button>
+        <button data-panel="documents" type="button">Resources <span class="nav-count" id="nav-documents">0</span></button>
+        <button data-panel="controls" type="button">Controls <span class="nav-count" id="nav-controls">0</span></button>
+        <button data-panel="faqs" type="button">FAQ <span class="nav-count" id="nav-faqs">0</span></button>
+        <button data-panel="certifications" type="button">Compliance <span class="nav-count" id="nav-certifications">0</span></button>
+        <button data-panel="data" type="button">Data collected <span class="nav-count" id="nav-data">0</span></button>
+        <button data-panel="subprocessors" type="button">Subprocessors <span class="nav-count" id="nav-subprocessors">0</span></button>
+        <button data-panel="videos" type="button">Videos <span class="nav-count" id="nav-videos">0</span></button>
+        <button data-panel="updates" type="button">Updates <span class="nav-count" id="nav-updates">0</span></button>
+        <p class="nav-group-label">Operations</p>
+        <button data-panel="requests" type="button">Access requests <span class="nav-count" id="nav-requests">0</span></button>
+        <button data-panel="viewers" type="button">Viewers <span class="nav-count" id="nav-viewers">0</span></button>
+        <button data-panel="subscribers" type="button">Subscribers <span class="nav-count" id="nav-subscribers">0</span></button>
+        <button data-panel="outbox" type="button">Email <span class="nav-count" id="nav-outbox">0</span></button>
+        <button data-panel="chat" type="button">Assistant <span class="nav-count" id="nav-chat">0</span></button>
+        <button data-panel="audit" type="button">Audit log</button>
+      </nav>
+
+      <main class="admin-main" id="admin-main">
+        <section class="admin-panel" id="panel-overview" data-panel-content="overview">
+          <div class="admin-panel-header">
+            <div>
+              <h1>Overview</h1>
+              <p>Keep the public surface current without a full compliance suite.</p>
+            </div>
+          </div>
+          <div class="notice">Demonstration content is loaded. Review every claim, date, contact, and document before publishing this trust center for a real company.</div>
+          <dl class="metric-grid">
+            <div class="metric"><dt>Published records</dt><dd id="metric-published">0</dd><small>Visible public records</small></div>
+            <div class="metric"><dt>Gated documents</dt><dd id="metric-gated">0</dd><small>Human review required</small></div>
+            <div class="metric"><dt>Open requests</dt><dd id="metric-requests">0</dd><small>Awaiting a decision</small></div>
+            <div class="metric"><dt>Active viewers</dt><dd id="metric-viewers">0</dd><small>Holding access links</small></div>
+            <div class="metric"><dt>Subscribers</dt><dd id="metric-subscribers">0</dd><small>Active update recipients</small></div>
+          </dl>
+
+          <div class="admin-columns">
+            <form class="kumo-panel admin-card stack-form" id="site-form">
+              <div class="admin-card-header">
+                <div>
+                  <h2>Trust center profile</h2>
+                  <p>Identity, theme, and visibility.</p>
+                </div>
+              </div>
+              <div class="form-grid">
+                <label>Company name<input name="companyName" required maxlength="120"></label>
+                <label>Page title<input name="title" maxlength="160" placeholder="Defaults to “Company Trust Center”"></label>
+                <label class="span-2">Heading<input name="headline" required maxlength="180"></label>
+                <label class="span-2">Company description<textarea name="summary" required maxlength="2400" rows="4"></textarea></label>
+                <label>Contact email<input name="securityEmail" type="email" required maxlength="254"></label>
+                <label>Data location<input name="location" required maxlength="160"></label>
+                <label>Privacy policy URL<input name="privacyPolicyUrl" type="url" placeholder="https://" maxlength="500"></label>
+                <label>Primary color<input name="accent" type="color" required></label>
+                <label>Secondary color<input name="secondaryColor" type="text" maxlength="7" placeholder="#0f3d2e (optional)"></label>
+                <label>Banner<select name="bannerSetting">
+                  <option value="MINIMAL">Minimal (no banner)</option>
+                  <option value="GRADIENT">Gradient</option>
+                  <option value="CUSTOM_IMAGE">Custom image</option>
+                </select></label>
+                <label>Control status visibility<select name="controlVisibilityMode">
+                  <option value="SHOW_ALL_WITH_STATUS">Show all controls with status</option>
+                  <option value="SHOW_ALL_WITHOUT_STATUS">Show all controls without status</option>
+                  <option value="SHOW_OK_AND_UNMAPPED">Show operating and unmapped controls</option>
+                  <option value="SHOW_OK_ONLY">Show operating controls only</option>
+                </select></label>
+                <label>Banner start color<input name="bannerStartColor" type="text" maxlength="7" placeholder="#1f6b52"></label>
+                <label>Banner end color<input name="bannerEndColor" type="text" maxlength="7" placeholder="#0f3d2e"></label>
+                <label class="span-2 checkbox-label"><input name="isPublic" type="checkbox"> Trust center is public. Uncheck to make it private; only viewers with an access link can see content.</label>
+                <div class="span-2 logo-field">
+                  <span>Company logo</span>
+                  <div class="logo-row">
+                    <span class="kumo-brand-mark" id="logo-preview" aria-hidden="true"></span>
+                    <label class="logo-file">
+                      <span class="visually-hidden">Upload company logo</span>
+                      <input id="logo-file" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                    </label>
+                    <button class="kumo-btn kumo-btn-secondary kumo-btn-sm" id="upload-logo" type="button">Upload logo</button>
+                    <button class="kumo-btn kumo-btn-ghost kumo-btn-sm" id="remove-logo" type="button">Remove</button>
+                  </div>
+                  <p class="logo-hint">PNG, JPEG, WebP, or SVG, up to 1 MB.</p>
+                  <p class="form-status" id="logo-status" role="status"></p>
+                </div>
+                <div class="logo-field">
+                  <span>Favicon</span>
+                  <div class="logo-row">
+                    <label class="logo-file">
+                      <span class="visually-hidden">Upload favicon</span>
+                      <input id="favicon-file" type="file" accept="image/png,image/svg+xml,image/x-icon,image/webp,image/jpeg">
+                    </label>
+                    <button class="kumo-btn kumo-btn-secondary kumo-btn-sm" data-asset-upload="favicon" type="button">Upload</button>
+                    <button class="kumo-btn kumo-btn-ghost kumo-btn-sm" data-asset-remove="favicon" type="button">Remove</button>
+                  </div>
+                  <p class="form-status" id="favicon-status" role="status"></p>
+                </div>
+                <div class="logo-field">
+                  <span>Banner image</span>
+                  <div class="logo-row">
+                    <label class="logo-file">
+                      <span class="visually-hidden">Upload banner image</span>
+                      <input id="banner-file" type="file" accept="image/png,image/jpeg,image/webp">
+                    </label>
+                    <button class="kumo-btn kumo-btn-secondary kumo-btn-sm" data-asset-upload="banner" type="button">Upload</button>
+                    <button class="kumo-btn kumo-btn-ghost kumo-btn-sm" data-asset-remove="banner" type="button">Remove</button>
+                  </div>
+                  <p class="form-status" id="banner-status" role="status"></p>
+                </div>
+              </div>
+              <button class="kumo-btn kumo-btn-primary" type="submit">Save profile</button>
+              <p class="form-status" id="site-status" role="status"></p>
+            </form>
+
+            <div class="admin-side">
+              <div class="kumo-panel admin-card">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>Publishing boundary</h2>
+                    <p>What the public API is allowed to expose.</p>
+                  </div>
+                </div>
+                <div class="quick-list">
+                  <div class="quick-row"><strong>Published records</strong><span>Public</span></div>
+                  <div class="quick-row"><strong>Draft, review, archived</strong><span>Admin only</span></div>
+                  <div class="quick-row"><strong>Shareable control categories</strong><span>Viewers only</span></div>
+                  <div class="quick-row"><strong>Private updates</strong><span>Viewers only</span></div>
+                  <div class="quick-row"><strong>R2 object keys</strong><span>Never public</span></div>
+                  <div class="quick-row"><strong>Gated reports</strong><span>Viewer access link</span></div>
+                </div>
+              </div>
+              <div class="kumo-panel admin-card">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>Cursor and Grok Bot</h2>
+                    <p>Agents can manage every surface here through MCP at <code>/mcp</code> with the admin token. If your content lives in another trust center or compliance platform, point the agent at that system and at this Worker and it can migrate the records.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="kumo-panel admin-card">
+                <div class="admin-card-header">
+                  <div>
+                    <h2>Last profile review</h2>
+                    <p id="profile-reviewed">Not loaded</p>
+                  </div>
+                </div>
+                <button class="kumo-btn kumo-btn-secondary kumo-btn-sm" type="button" data-go-panel="audit">Inspect audit trail</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-documents" data-panel-content="documents" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Resources</h1>
+              <p>Public links and request-only reports shown on the Resources tab, grouped by ordered categories.</p>
+            </div>
+            <div class="resource-actions">
+              <button class="kumo-btn kumo-btn-secondary" id="upload-document" type="button">Upload file</button>
+              <button class="kumo-btn kumo-btn-primary" data-create="documents" type="button">Add link</button>
+            </div>
+          </div>
+          <div class="kumo-panel admin-card category-card" data-category-kind="resource">
+            <div class="admin-card-header"><div><h2>Resource categories</h2><p>Drag order is set with the arrows. Deleting a category leaves its resources uncategorized.</p></div></div>
+            <div class="category-list" id="categories-resource"></div>
+            <form class="category-add" data-category-form="resource"><input name="name" placeholder="New category" maxlength="120" required><button class="kumo-btn kumo-btn-secondary kumo-btn-sm" type="submit">Add</button></form>
+          </div>
+          <div class="resource-list" id="list-documents"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-controls" data-panel-content="controls" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Controls</h1>
+              <p>Control categories can be public or shareable (viewers only). Status display follows the profile setting unless a category overrides it.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" id="add-control" type="button">Add control</button>
+          </div>
+          <div class="kumo-panel admin-card category-card" data-category-kind="control">
+            <div class="admin-card-header"><div><h2>Control categories</h2><p>Deleting a control category also deletes the controls in it.</p></div></div>
+            <div class="category-list" id="categories-control"></div>
+            <form class="category-add" data-category-form="control"><input name="name" placeholder="New category" maxlength="120" required><button class="kumo-btn kumo-btn-secondary kumo-btn-sm" type="submit">Add</button></form>
+          </div>
+          <div class="resource-list" id="list-controls"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-faqs" data-panel-content="faqs" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>FAQ</h1>
+              <p>Published answers on the public FAQ tab, grouped by category.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" data-create="faqs" type="button">Add question</button>
+          </div>
+          <div class="kumo-panel admin-card category-card" data-category-kind="faq">
+            <div class="admin-card-header"><div><h2>FAQ categories</h2><p>Deleting a category moves its questions to uncategorized.</p></div></div>
+            <div class="category-list" id="categories-faq"></div>
+            <form class="category-add" data-category-form="faq"><input name="name" placeholder="New category" maxlength="120" required><button class="kumo-btn kumo-btn-secondary kumo-btn-sm" type="submit">Add</button></form>
+          </div>
+          <div class="resource-list" id="list-faqs"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-certifications" data-panel-content="certifications" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Compliance frameworks</h1>
+              <p>Frameworks listed on Overview, with an optional standard and badge image.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" data-create="certifications" type="button">Add framework</button>
+          </div>
+          <div class="resource-list" id="list-certifications"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-data" data-panel-content="data" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Data collected</h1>
+              <p>Disclosures shown on Overview. Saving replaces the whole list. Hidden rows stay here but never render publicly.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-secondary" id="add-data-row" type="button">Add row</button>
+          </div>
+          <form class="kumo-panel admin-card stack-form" id="data-form">
+            <label>Section heading<input name="dataCollectedHeading" maxlength="160" placeholder="Data collected"></label>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Data</th><th>Status</th><th></th></tr></thead>
+                <tbody id="data-rows"></tbody>
+              </table>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" type="submit">Save disclosures</button>
+            <p class="form-status" id="data-status" role="status"></p>
+          </form>
+        </section>
+
+        <section class="admin-panel" id="panel-subprocessors" data-panel-content="subprocessors" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Subprocessors</h1>
+              <p>Vendors that may process customer data.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" data-create="subprocessors" type="button">Add subprocessor</button>
+          </div>
+          <div class="resource-list" id="list-subprocessors"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-videos" data-panel-content="videos" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Videos</h1>
+              <p>Shown on the Media tab in this order. Saving replaces the whole list. YouTube and Vimeo links embed; other HTTPS links open in a new tab.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-secondary" id="add-video-row" type="button">Add video</button>
+          </div>
+          <form class="kumo-panel admin-card stack-form" id="video-form">
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Title</th><th>URL</th><th>Description</th><th></th></tr></thead>
+                <tbody id="video-rows"></tbody>
+              </table>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" type="submit">Save videos</button>
+            <p class="form-status" id="video-status" role="status"></p>
+          </form>
+        </section>
+
+        <section class="admin-panel" id="panel-updates" data-panel-content="updates" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Updates</h1>
+              <p>Material changes shown on the Updates tab. Publishing emails every confirmed subscriber once.</p>
+            </div>
+            <button class="kumo-btn kumo-btn-primary" data-create="updates" type="button">Draft update</button>
+          </div>
+          <div class="resource-list" id="list-updates"></div>
+        </section>
+
+        <section class="admin-panel" id="panel-requests" data-panel-content="requests" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Access requests</h1>
+              <p>Approving creates or updates a viewer and emails them a personal access link. Denials can carry a reason. Pending requests are listed first.</p>
+            </div>
+          </div>
+          <p class="token-note" id="request-summary"></p>
+          <div class="kumo-panel table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Requester</th><th>Requested</th><th>Reason</th><th>Status</th><th>Decision</th></tr></thead>
+              <tbody id="request-list"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-viewers" data-panel-content="viewers" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Viewers</h1>
+              <p>People holding a personal access link. Full access sees every published resource; partial access sees public resources plus the listed ones.</p>
+            </div>
+            <div class="resource-actions">
+              <label class="checkbox-label"><input id="show-removed-viewers" type="checkbox"> Show removed</label>
+              <button class="kumo-btn kumo-btn-primary" id="add-viewer" type="button">Add viewer</button>
+            </div>
+          </div>
+          <div class="kumo-panel table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Viewer</th><th>Access</th><th>NDA</th><th>Expires</th><th>Actions</th></tr></thead>
+              <tbody id="viewer-list"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-subscribers" data-panel-content="subscribers" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Subscribers</h1>
+              <p>Addresses confirm by email before they count as active unless you add them as verified.</p>
+            </div>
+            <div class="request-actions">
+              <button class="kumo-btn kumo-btn-secondary" id="export-subscribers" type="button">Export CSV</button>
+              <button class="kumo-btn kumo-btn-primary" id="add-subscriber" type="button">Add subscriber</button>
+            </div>
+          </div>
+          <p class="token-note" id="subscriber-summary"></p>
+          <div class="kumo-panel table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Email</th><th>Status</th><th>Subscribed</th><th></th></tr></thead>
+              <tbody id="subscriber-list"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-outbox" data-panel-content="outbox" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Email outbox</h1>
+              <p>Queued confirmations, update notifications, access-request alerts, and access links. Without a configured provider, messages wait here as pending. Failed messages can be retried once the cause is fixed.</p>
+            </div>
+          </div>
+          <div class="kumo-panel table-wrap">
+            <table class="admin-table">
+              <thead><tr><th>Recipient</th><th>Subject</th><th>Status</th><th>Queued</th><th></th></tr></thead>
+              <tbody id="outbox-list"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-chat" data-panel-content="chat" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Assistant conversations</h1>
+              <p>Questions visitors asked the trust center assistant. Answers only use published content.</p>
+            </div>
+          </div>
+          <div class="admin-columns">
+            <div class="kumo-panel table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>First message</th><th>Messages</th><th>Who</th><th>Started</th></tr></thead>
+                <tbody id="chat-list"></tbody>
+              </table>
+            </div>
+            <div class="kumo-panel admin-card">
+              <div class="admin-card-header"><div><h2 id="chat-detail-title">Select a conversation</h2></div></div>
+              <div class="kumo-chat-log" id="chat-detail"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel" id="panel-audit" data-panel-content="audit" hidden>
+          <div class="admin-panel-header">
+            <div>
+              <h1>Audit log</h1>
+              <p>Recent content, request, viewer, and subscription changes.</p>
+            </div>
+          </div>
+          <div class="kumo-panel audit-list" id="audit-list"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <dialog class="request-dialog" id="login-dialog" aria-labelledby="login-heading">
+    <div class="dialog-intro">
+      <h2 id="login-heading">Sign in to admin</h2>
+      <p>Enter the <code>ADMIN_TOKEN</code> from your Worker secrets or local <code>.dev.vars</code> file. It stays in this browser tab until you log out. Cloudflare Access deployments skip this step.</p>
+    </div>
+    <form class="stack-form" id="login-form">
+      <label>Admin token<input name="token" type="password" autocomplete="current-password" required></label>
+      <button class="kumo-btn kumo-btn-primary kumo-btn-full" type="submit">Continue</button>
+      <p class="form-status" id="login-status" role="status"></p>
+      <p class="token-note">For local development, copy <code>.dev.vars.example</code> to <code>.dev.vars</code> and use that token. Never commit the real secret.</p>
+    </form>
+  </dialog>
+
+  <dialog class="kumo-dialog" id="editor-dialog" aria-labelledby="editor-heading">
+    <div class="editor-header">
+      <div>
+        <p class="editor-kicker" id="editor-eyebrow">Structured content</p>
+        <h2 id="editor-heading">Edit record</h2>
+      </div>
+      <button class="icon-button" id="close-editor" type="button" aria-label="Close editor">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form id="editor-form">
+      <div class="editor-body stack-form" id="editor-fields"></div>
+      <div class="editor-footer">
+        <button class="kumo-btn kumo-btn-secondary" id="cancel-editor" type="button">Cancel</button>
+        <button class="kumo-btn kumo-btn-primary" type="submit" id="editor-submit">Save record</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="kumo-dialog" id="link-dialog" aria-labelledby="link-heading">
+    <div class="editor-header">
+      <div>
+        <p class="editor-kicker">Viewer access</p>
+        <h2 id="link-heading">Share the access link</h2>
+      </div>
+      <button class="icon-button" id="close-link" type="button" aria-label="Close dialog">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="editor-body stack-form">
+      <p id="link-summary">The access link was issued and queued for email delivery.</p>
+      <label>Personal access link<input id="link-url" readonly></label>
+      <div class="resource-actions">
+        <button class="kumo-btn kumo-btn-primary" id="copy-link" type="button">Copy link</button>
+      </div>
+      <p class="form-status" id="link-status" role="status"></p>
+    </div>
+  </dialog>
+
+  <dialog class="kumo-dialog" id="upload-dialog" aria-labelledby="upload-heading">
+    <div class="editor-header">
+      <div>
+        <p class="editor-kicker">Private R2 storage</p>
+        <h2 id="upload-heading">Upload document</h2>
+      </div>
+      <button class="icon-button" id="close-upload" type="button" aria-label="Close upload">
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form id="upload-form">
+      <div class="editor-body stack-form">
+        <div class="form-grid">
+          <label class="span-2">File<input name="file" type="file" accept="application/pdf,text/plain,text/markdown,.md,.txt" required></label>
+          <label>Title<input name="title" required maxlength="160"></label>
+          <label>Category<select name="categoryId" id="upload-category"></select></label>
+          <label>Visibility<select name="visibility"><option value="public">Public</option><option value="request">By request</option></select></label>
+          <label>Version<input name="version" value="1.0" required maxlength="40"></label>
+          <label class="span-2">Description<textarea name="description" maxlength="800"></textarea></label>
+          <label>Next review date<input name="reviewAt" type="date"></label>
+        </div>
+        <p class="form-status" id="upload-status" role="status"></p>
+        <p class="token-note">Uploads start as drafts. Publish the document from the list when it is ready.</p>
+      </div>
+      <div class="editor-footer">
+        <button class="kumo-btn kumo-btn-secondary" id="cancel-upload" type="button">Cancel</button>
+        <button class="kumo-btn kumo-btn-primary" type="submit">Save draft</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="admin-toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

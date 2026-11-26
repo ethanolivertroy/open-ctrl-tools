@@ -1,0 +1,41 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data: https:; connect-src 'self'; font-src 'self'; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://challenges.cloudflare.com; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+
+/admin/*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/confirm
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/confirm.html
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/unsubscribe
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/unsubscribe.html
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/access
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/access.html
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/*.js
+  Cache-Control: public, max-age=300
+
+/*.css
+  Cache-Control: public, max-age=300

@@ -1,0 +1,46 @@
+{
+  "name": "trust-me-bro-center",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:d1": "vitest run --config vitest.workers.config.ts",
+    "typecheck": "tsc --noEmit",
+    "types": "wrangler types src/worker-configuration.d.ts",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:migrations:apply": "wrangler d1 migrations apply DB --remote",
+    "build": "npm run typecheck && wrangler deploy --dry-run --outdir dist-worker",
+    "deploy": "npm run db:migrations:apply && wrangler deploy",
+    "check": "npm test && npm run test:d1 && npm run build"
+  },
+  "cloudflare": {
+    "bindings": {
+      "ADMIN_TOKEN": {
+        "description": "Required administrator and MCP bearer token. Generate a unique high-entropy value and store it only as a Worker secret."
+      },
+      "DB": {
+        "description": "D1 database for published content, workflow state, subscribers, viewers, and the audit log."
+      },
+      "DOCUMENTS": {
+        "description": "Private R2 bucket for governed trust-center documents and brand assets."
+      }
+    }
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "@cloudflare/workers-types": "^5.20260830.1",
+    "@types/node": "^22.20.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.127.1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "agents": "^0.22.0",
+    "zod": "^4.5.4"
+  }
+}
