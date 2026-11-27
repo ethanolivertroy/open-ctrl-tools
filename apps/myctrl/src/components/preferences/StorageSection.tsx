@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { applyTheme, type Theme } from '@/lib/theme';
 import { getDb } from '@/lib/db';
+import {
+  BACKUP_TABLE_LABELS,
+  exportBackupTables,
+  importBackupPayload,
+} from '@/lib/storage/backup';
 
 interface TableInfo {
   name: string;
@@ -21,16 +26,7 @@ function formatBytes(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-const TABLE_LABELS: Record<string, string> = {
-  favorites: 'Favorites',
-  controlNotes: 'Control Notes',
-  recentlyViewed: 'Recently Viewed',
-  savedViews: 'Saved Views',
-  filterPresets: 'Filter Presets',
-  settings: 'Settings',
-  whiteboards: 'Whiteboards',
-  whiteboardSnapshots: 'Whiteboard Data',
-};
+const TABLE_LABELS = BACKUP_TABLE_LABELS;
 
 const HOLD_MS = 2000;
 const SNAP_BACK_MS = 200;
@@ -137,22 +133,7 @@ export function StorageSection() {
 
   const handleExport = async () => {
     const db = await getDb();
-    const data: Record<string, unknown[]> = {};
-    const tableNames = Object.keys(TABLE_LABELS);
-    for (const name of tableNames) {
-      if (name === 'settings' && !includeApiKey) {
-        // Export settings but filter out API key
-        try {
-          const table = db.table(name);
-          const all = await table.toArray() as Array<{ key: string }>;
-          data[name] = all.filter(s => s.key !== 'api-key');
-        } catch { /* skip */ }
-        continue;
-      }
-      try {
-        data[name] = await db.table(name).toArray();
-      } catch { /* skip */ }
-    }
+    const data = await exportBackupTables(db, { includeApiKey });
 
     const exportData: PreferencesExport & { theme?: string | null } = {
       version: 2,
@@ -185,21 +166,13 @@ export function StorageSection() {
       try {
         const text = await file.text();
         const parsed = JSON.parse(text);
-
-        if (parsed.version === 2 && parsed.data && typeof parsed.data === 'object') {
-          const db = await getDb();
-          // v2 format: Dexie tables
-          for (const [tableName, records] of Object.entries(parsed.data)) {
-            if (!TABLE_LABELS[tableName]) continue;
-            if (Array.isArray(records)) {
-              await db.table(tableName).bulkPut(records);
-            }
-          }
-        } else if (parsed.version === 1 && parsed.data) {
-          // v1 format: localStorage keys — import into Dexie via migration-style logic
+        const db = await getDb();
+        const status = await importBackupPayload(db, parsed);
+        if (status === 'v1') {
           alert('Legacy v1 export detected. Please use the migration feature instead.');
           return;
-        } else {
+        }
+        if (status === 'invalid') {
           alert('Invalid preferences file format.');
           return;
         }

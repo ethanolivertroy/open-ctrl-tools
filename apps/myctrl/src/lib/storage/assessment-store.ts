@@ -73,18 +73,34 @@ export async function deleteAssessment(assessmentId: string): Promise<void> {
 }
 
 export async function duplicateAssessment(sourceId: string, newName: string): Promise<Assessment> {
+  if (typeof window === 'undefined') throw new Error('Not in browser');
   const db = await openDb();
   const source = await db.assessments.get(sourceId);
   if (!source) throw new Error(`Assessment ${sourceId} not found`);
 
-  const newAssessment = await createAssessment(newName, source.targetFrameworks, source.description, source.projectId);
+  const now = Date.now();
+  const newAssessment: Assessment = {
+    id: crypto.randomUUID(),
+    projectId: source.projectId,
+    name: newName,
+    description: source.description,
+    targetFrameworks: [...source.targetFrameworks],
+    createdAt: now,
+    updatedAt: now,
+    assessorName: source.assessorName,
+    assessorOrg: source.assessorOrg,
+    systemName: source.systemName,
+    targetBaseline: source.targetBaseline,
+    crosswalkSources: source.crosswalkSources?.map((entry) => ({ ...entry })),
+  };
+  await db.assessments.put(newAssessment);
 
   const statuses = await db.controlStatuses.where('assessmentId').equals(sourceId).toArray();
   const clonedStatuses = statuses.map(status => ({
     ...status,
     id: makeAssessmentStatusId(newAssessment.id, status.frameworkId, status.controlId),
     assessmentId: newAssessment.id,
-    updatedAt: Date.now(),
+    updatedAt: now,
   }));
   await db.controlStatuses.bulkPut(clonedStatuses);
 
@@ -93,11 +109,11 @@ export async function duplicateAssessment(sourceId: string, newName: string): Pr
     ...module,
     id: makeAssessmentModuleId(newAssessment.id, module.moduleId),
     assessmentId: newAssessment.id,
-    addedAt: Date.now(),
-    updatedAt: Date.now(),
+    addedAt: now,
+    updatedAt: now,
   }));
   await db.assessmentCryptoModules.bulkPut(clonedModules);
-  await db.projects.update(source.projectId, { updatedAt: Date.now() });
+  await db.projects.update(source.projectId, { updatedAt: now });
 
   return newAssessment;
 }
@@ -165,9 +181,9 @@ export async function refreshAssessmentCryptoModuleSnapshot(
   detailSnapshot: CmvpCertificateDetail,
 ): Promise<void> {
   const db = await openDb();
-  const normalized = detailToNormalizedCmvpModule(detailSnapshot);
+  const { id: _certificateId, ...normalizedFields } = detailToNormalizedCmvpModule(detailSnapshot);
   await db.assessmentCryptoModules.update(makeAssessmentModuleId(assessmentId, moduleId), {
-    ...normalized,
+    ...normalizedFields,
     detailSnapshot,
     snapshottedAt: Date.now(),
     sourceGeneratedAt: detailSnapshot.generatedAt ?? null,
@@ -279,31 +295,46 @@ export async function setControlStatus(
   });
 }
 
+async function upsertControlStatusFields(
+  frameworkId: string,
+  controlId: string,
+  assessmentId: string,
+  fields: { owner?: string | undefined; notes?: string | undefined },
+): Promise<void> {
+  if (typeof window === 'undefined') return;
+  const db = await openDb();
+  const id = makeAssessmentStatusId(assessmentId, frameworkId, controlId);
+  const applyUpdate = async () => {
+    const existing = await db.controlStatuses.get(id);
+    await db.controlStatuses.put({
+      id,
+      assessmentId,
+      frameworkId,
+      controlId,
+      status: existing?.status || 'not-assessed',
+      owner: 'owner' in fields ? fields.owner?.trim() || undefined : existing?.owner,
+      notes: 'notes' in fields ? fields.notes?.trim() || undefined : existing?.notes,
+      updatedAt: Date.now(),
+      autoSuggested: existing?.autoSuggested ?? false,
+      autoSuggestSource: existing?.autoSuggestSource,
+      confidence: existing?.confidence,
+      linkedCmvpModuleIds: existing?.linkedCmvpModuleIds,
+    });
+  };
+  if (typeof db.transaction === 'function') {
+    await db.transaction('rw', db.controlStatuses, applyUpdate);
+  } else {
+    await applyUpdate();
+  }
+}
+
 export async function setControlOwner(
   frameworkId: string,
   controlId: string,
   owner: string | undefined,
   assessmentId: string = DEFAULT_ASSESSMENT_ID,
 ): Promise<void> {
-  if (typeof window === 'undefined') return;
-  const db = await openDb();
-  const id = makeAssessmentStatusId(assessmentId, frameworkId, controlId);
-  const existing = await db.controlStatuses.get(id);
-  const normalizedOwner = owner?.trim() || undefined;
-  await db.controlStatuses.put({
-    id,
-    assessmentId,
-    frameworkId,
-    controlId,
-    status: existing?.status || 'not-assessed',
-    owner: normalizedOwner,
-    notes: existing?.notes,
-    updatedAt: Date.now(),
-    autoSuggested: existing?.autoSuggested ?? false,
-    autoSuggestSource: existing?.autoSuggestSource,
-    confidence: existing?.confidence,
-    linkedCmvpModuleIds: existing?.linkedCmvpModuleIds,
-  });
+  await upsertControlStatusFields(frameworkId, controlId, assessmentId, { owner });
 }
 
 export async function setControlNotes(
@@ -312,25 +343,17 @@ export async function setControlNotes(
   notes: string | undefined,
   assessmentId: string = DEFAULT_ASSESSMENT_ID,
 ): Promise<void> {
-  if (typeof window === 'undefined') return;
-  const db = await openDb();
-  const id = makeAssessmentStatusId(assessmentId, frameworkId, controlId);
-  const existing = await db.controlStatuses.get(id);
-  const normalizedNotes = notes?.trim() || undefined;
-  await db.controlStatuses.put({
-    id,
-    assessmentId,
-    frameworkId,
-    controlId,
-    status: existing?.status || 'not-assessed',
-    owner: existing?.owner,
-    notes: normalizedNotes,
-    updatedAt: Date.now(),
-    autoSuggested: existing?.autoSuggested ?? false,
-    autoSuggestSource: existing?.autoSuggestSource,
-    confidence: existing?.confidence,
-    linkedCmvpModuleIds: existing?.linkedCmvpModuleIds,
-  });
+  await upsertControlStatusFields(frameworkId, controlId, assessmentId, { notes });
+}
+
+export async function setControlOwnerAndNotes(
+  frameworkId: string,
+  controlId: string,
+  owner: string | undefined,
+  notes: string | undefined,
+  assessmentId: string = DEFAULT_ASSESSMENT_ID,
+): Promise<void> {
+  await upsertControlStatusFields(frameworkId, controlId, assessmentId, { owner, notes });
 }
 
 export async function bulkSetControlOwner(

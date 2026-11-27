@@ -407,7 +407,7 @@ export function getAssessmentParameterInfo(
   }
 
   if (frameworkId === 'dod-srg' && isDoDSRGControl(control)) {
-    const key = DOD_SRG_IMPACT_MAP[normalized as keyof typeof DOD_SRG_IMPACT_MAP] as Lowercase<DoDImpactLevel>;
+    const key = DOD_SRG_IMPACT_MAP[normalized as keyof typeof DOD_SRG_IMPACT_MAP].toLowerCase() as Lowercase<DoDImpactLevel>;
     const data = control.impact_levels[key];
     const text = joinParameterSections([
       ['Inherited FedRAMP parameters', data?.fedramp_parameters],

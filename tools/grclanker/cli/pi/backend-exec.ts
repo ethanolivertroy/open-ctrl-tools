@@ -655,7 +655,13 @@ function createContractCommandAdapter(
     teardown,
     mapPath: async (absolutePath) => ensureWorkspaceMapping(localCwd, absolutePath, await ensureStaged()),
     async stream(command, cwd, options) {
+      if (options.signal?.aborted) {
+        throw new Error("aborted");
+      }
       const remoteRoot = await ensureStaged();
+      if (options.signal?.aborted) {
+        throw new Error("aborted");
+      }
       const result = await backend.exec({
         sessionId,
         command: [command],
@@ -679,7 +685,7 @@ function createContractCommandAdapter(
       if (result.exitCode !== 0 && !acceptFailure?.(result)) {
         throw new ExecutionBackendError(result.stderr.trim() || `Command failed (${result.exitCode}) on ${backend.kind}`);
       }
-      return Buffer.from(result.stdout, "utf8");
+      return result.stdoutBuffer ?? Buffer.from(result.stdout, "utf8");
     },
   };
 }

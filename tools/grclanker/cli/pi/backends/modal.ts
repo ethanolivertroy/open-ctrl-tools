@@ -130,6 +130,7 @@ export function createModalBackend(options: ModalBackendOptions = {}): Execution
         return guard.finish({
           exitCode: normalizeExitCode(result.exitCode),
           stdout: result.stdout,
+          stdoutBuffer: result.stdoutBuffer,
           stderr: result.stderr,
           artifacts: [],
         });

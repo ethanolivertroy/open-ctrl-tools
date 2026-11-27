@@ -13,7 +13,7 @@ import {
   bulkSetControlOwner,
   bulkSetControlStatus,
   setControlNotes,
-  setControlOwner,
+  setControlOwnerAndNotes,
 } from '@/lib/storage/assessment-store';
 
 export interface AssessmentScope {
@@ -62,10 +62,7 @@ export async function updateControlOwnerAndNotes(
   owner: string,
   notes: string,
 ): Promise<void> {
-  await Promise.all([
-    setControlOwner(scope.frameworkId, controlId, owner, scope.assessmentId),
-    setControlNotes(scope.frameworkId, controlId, notes, scope.assessmentId),
-  ]);
+  await setControlOwnerAndNotes(scope.frameworkId, controlId, owner, notes, scope.assessmentId);
 }
 
 /** Save notes for a single control. */

@@ -45,6 +45,8 @@ export type ExecutionResult = {
   exitCode: number;
   stdout: string;
   stderr: string;
+  /** Raw stdout bytes when unredacted; stripped by `redactExecutionResult`. */
+  stdoutBuffer?: Buffer;
   artifacts?: string[];
 };
 
@@ -105,6 +107,7 @@ export type CommandRunnerResult = {
   exitCode: number | null;
   stdout: string;
   stderr: string;
+  stdoutBuffer?: Buffer;
 };
 
 export type CommandRunner = (
@@ -497,8 +500,9 @@ function redactCompletedOutput(text: string, extraSecrets: Array<string | undefi
 }
 
 export function redactExecutionResult(result: ExecutionResult, extraSecrets: Array<string | undefined> = []): ExecutionResult {
+  const { stdoutBuffer: _discarded, ...rest } = result;
   return {
-    ...result,
+    ...rest,
     stdout: redactCompletedOutput(result.stdout, extraSecrets),
     stderr: redactCompletedOutput(result.stderr, extraSecrets),
   };
@@ -570,6 +574,10 @@ function quoteArg(value: string): string {
 export function createProcessCommandRunner(): CommandRunner {
   return (executable, args, options = {}) =>
     new Promise<CommandRunnerResult>((resolvePromise, reject) => {
+      if (options.signal?.aborted) {
+        reject(new Error("aborted"));
+        return;
+      }
       const child = spawn(executable, args, {
         cwd: options.cwd,
         env: options.env ? { ...process.env, ...options.env } : process.env,
@@ -628,9 +636,11 @@ export function createProcessCommandRunner(): CommandRunner {
           reject(new Error(`timeout:${Math.round((options.timeoutMs ?? 0) / 1000)}`));
           return;
         }
+        const stdoutBuffer = Buffer.concat(stdout);
         resolvePromise({
           exitCode: code,
-          stdout: Buffer.concat(stdout).toString("utf8"),
+          stdout: stdoutBuffer.toString("utf8"),
+          stdoutBuffer,
           stderr: Buffer.concat(stderr).toString("utf8"),
         });
       });
