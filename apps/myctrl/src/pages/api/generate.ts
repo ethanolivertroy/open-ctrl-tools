@@ -19,6 +19,7 @@ import {
   getGenerationDefaults,
   type ProviderId,
 } from '@/lib/ai/providers';
+import { resolveSafeBaseUrl } from '@/lib/ai/base-url-guard';
 
 // Request validation schema — expanded for multi-provider support
 const RequestSchema = z.object({
@@ -104,7 +105,8 @@ function createProviderModel(
  * Resolve the API key: user-provided > environment variable per provider.
  */
 function resolveApiKey(provider: ProviderId, userApiKey?: string): string | null {
-  if (userApiKey) return userApiKey;
+  const trimmed = userApiKey?.trim();
+  if (trimmed) return trimmed;
 
   // Check environment variables by provider
   switch (provider) {
@@ -162,6 +164,11 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    const baseUrlCheck = resolveSafeBaseUrl(provider, userApiKey, baseUrl);
+    if (!baseUrlCheck.ok) {
+      return jsonError(baseUrlCheck.error, 400);
+    }
+
     // Build the user message with context
     const userMessage = systemPromptOverride
       ? prompt
@@ -175,7 +182,7 @@ export const POST: APIRoute = async ({ request }) => {
       : adaptPromptForProvider(generateLightweightSystemPrompt(context), provider);
 
     // Create the appropriate model
-    const aiModel = createProviderModel(provider, apiKey, model, baseUrl);
+    const aiModel = createProviderModel(provider, apiKey, model, baseUrlCheck.baseUrl);
     const resolvedMaxOutputTokens = maxOutputTokens
       || getGenerationDefaults(provider, model).maxOutputTokens;
     const history = clipConversationHistory(conversation ?? []);
