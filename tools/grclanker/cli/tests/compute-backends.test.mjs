@@ -2841,3 +2841,104 @@ test("modal credentials resolve from the environment or the CLI profile file wit
     rmSync(home, { recursive: true, force: true });
   }
 });
+
+test("readOperations.readFile preserves raw binary bytes through createProcessCommandRunner and redaction strips stdoutBuffer", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "grclanker-binary-read-"));
+  const binaryBytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0xff, 0x00, 0xfe, 0x80]);
+  writeFileSync(join(dir, "probe.png"), binaryBytes);
+
+  try {
+    const processRunner = createProcessCommandRunner();
+    const dockerRunner = async (_executable, args, options = {}) => {
+      if (args[0] === "info") return { exitCode: 0, stdout: "ok", stderr: "" };
+      const command = String(args.at(-1)).replaceAll("/repo", dir);
+      return processRunner("sh", ["-c", command], { ...options, cwd: dir });
+    };
+
+    const dockerBackend = createDockerBackend({
+      image: "test-image",
+      localRoot: dir,
+      workspaceRoot: "/repo",
+      runner: dockerRunner,
+    });
+
+    const unredacted = await dockerBackend.exec({
+      sessionId: "bin-1",
+      command: ["cat -- /repo/probe.png"],
+      cwd: "/repo",
+      redactOutput: false,
+    });
+    assert.equal(unredacted.exitCode, 0);
+    assert.ok(Buffer.isBuffer(unredacted.stdoutBuffer));
+    assert.deepEqual(unredacted.stdoutBuffer, binaryBytes);
+
+    const redacted = await dockerBackend.exec({
+      sessionId: "bin-2",
+      command: ["cat -- /repo/probe.png"],
+      cwd: "/repo",
+    });
+    assert.equal(redacted.exitCode, 0);
+    assert.equal(redacted.stdoutBuffer, undefined);
+    assert.equal(redactExecutionResult(unredacted).stdoutBuffer, undefined);
+
+    await withComputeBackendExecution(dir, { computeBackend: "docker", dockerWorkspacePath: "/repo" }, async (execution) => {
+      const remoteRead = await execution.readOperations.readFile(join(dir, "probe.png"));
+      assert.ok(Buffer.isBuffer(remoteRead));
+      assert.deepEqual(remoteRead, binaryBytes);
+    }, { runner: dockerRunner });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("createProcessCommandRunner and contract stream reject already-aborted signals without executing commands", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "grclanker-abort-"));
+  const sentinel = join(dir, "executed.flag");
+  const processRunner = createProcessCommandRunner();
+
+  try {
+    const preAborted = new AbortController();
+    preAborted.abort();
+    await assert.rejects(
+      () => processRunner("sh", ["-c", `touch ${quoteForBash(sentinel)} && printf executed`], {
+        cwd: dir,
+        signal: preAborted.signal,
+      }),
+      /aborted/,
+    );
+    assert.equal(existsSync(sentinel), false, "pre-aborted signal must prevent process spawn");
+
+    writeFileSync(join(dir, "tracked.txt"), "ok\n");
+    const streamController = new AbortController();
+    const calls = [];
+    const podRunner = async (executable, args) => {
+      calls.push({ executable, args });
+      if (executable === "git" && args.includes("ls-files")) {
+        return { exitCode: 0, stdout: "tracked.txt\0", stderr: "" };
+      }
+      if (executable === "ssh" && String(args.at(-1)).includes("mkdir -p")) {
+        // Cancel while stageWorkspace() is awaiting remote session setup.
+        streamController.abort();
+        return { exitCode: 0, stdout: "", stderr: "" };
+      }
+      return { exitCode: 0, stdout: "ok", stderr: "" };
+    };
+    const podFetch = async () => new Response(RUNPOD_POD_JSON, { status: 200 });
+
+    await withEnv({ RUNPOD_API_KEY: "test-key", RUNPOD_POD_ID: "pod42" }, async () => {
+      await withComputeBackendExecution(dir, { computeBackend: "runpod-pod" }, async (execution) => {
+        await assert.rejects(
+          () => execution.bashOperations.exec("printf should-not-run", dir, { signal: streamController.signal }),
+          /aborted/,
+        );
+        assert.equal(
+          calls.some((call) => call.executable === "ssh" && String(call.args.at(-1)).includes("should-not-run")),
+          false,
+          "cancelling during staging must prevent backend.exec from running the command",
+        );
+      }, { runner: podRunner, fetch: podFetch });
+    });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

@@ -125,6 +125,7 @@ export function createDockerBackend(options: DockerBackendOptions): ExecutionBac
         return guard.finish({
           exitCode: normalizeExitCode(result.exitCode),
           stdout: result.stdout,
+          stdoutBuffer: result.stdoutBuffer,
           stderr: result.stderr,
           artifacts: [],
         });
