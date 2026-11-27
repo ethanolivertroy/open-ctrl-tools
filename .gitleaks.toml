@@ -20,3 +20,1014 @@ condition = "AND"
 regexTarget = "match"
 regexes = ['''^DRATA_API_KEY=\r?\nDRATA_REGION=us$''']
 paths = ['^tools/drata-cli/\.env\.example$']
+
+# Synthetic credential-redaction fixtures from grclanker (non-vendor-prefixed generic/PEM/JWT shapes).
+# Every exception requires BOTH its exact file path and its exact fixture value.
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/abort\\-signals\\.test\\.mjs$"]
+regexes = [
+  "^\\Q0123456789abcdef0123456789abcdef\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/ansible\\.test\\.mjs$"]
+regexes = [
+  "^\\QJSPjcxzMspntP5VF\\E$",
+  "^\\QRk7pQ2vXw9LmZt4N\\E$",
+  "^\\QRrv2Mnx7EX7KgtTz\\E$",
+  "^\\QVJQu6BSFDkFPS2g6GsLGSMsg\\E$",
+  "^\\QVqAngJDvPREAn5FP2K3M\\E$",
+  "^\\QWq7Lm3Zx8Rt2Vk5Pn9Yb\\E$",
+  "^\\QX89StUkLvF4K83bS\\E$",
+  "^\\QY5GNkYQtTmcrkMM4\\E$",
+  "^\\Qc9nD6HXEBzhV9Th5\\E$",
+  "^\\QcWqm4dQNJrBzMMJY\\E$",
+  "^\\QhGcSb2PCzW26RTva\\E$",
+  "^\\QhQ2vT8mKp4Xw9ZrLc6Nd\\E$",
+  "^\\QprodkeyQz8Nv3Tm5Rk2Wy7\\E$",
+  "^\\QuUVRsNMEa9w6DN2K\\E$",
+  "^\\QvLcMQ4fU9Ckw4k2y\\E$",
+  "^\\QwU4Gga3pBBcjBCtv\\E$",
+  "^\\QxTMeP8Wvx92YAXw8\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/aws\\.test\\.mjs$"]
+regexes = [
+  "^\\QMCuGTqGBG8dmEzse\\E$",
+  "^\\QprodkeyQz8Nv3Tm5Rk2Wy7\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/azure\\.test\\.mjs$"]
+regexes = [
+  "^\\Q0f7b2a6c-9c4e-4a63-8f2c-2f1d9a1c0b77\\E$",
+  "^\\QArmTok3nHx9Pl2Vt7Rb4Kn6Mc1\\E$",
+  "^\\QCs9pLm4XvBn7QwTz2Hk5\\E$",
+  "^\\QGk7wQp2ZtVn9RmXc4Lb8\\E$",
+  "^\\QGq4Wt7Zx2Kp9Mr5Lc3Nv8Hd6\\E$",
+  "^\\QMv3hTy8KqWz5NpRd2Jf6\\E$",
+  "^\\QMw8Kt3Zq6Xp2Vr9Lc4Nb7Hd5\\E$",
+  "^\\QZt6Kq9Xw3Mp7Vr2Lc8Nd4Hb5\\E$",
+  "^\\Qb5V3vQtHa4NrCTQWuG2gcdgw\\E$",
+  "^\\QmrL5GAh6R6FUeSpZvVJpxy6M\\E$",
+  "^\\QpauZH8n84TFXKVtF\\E$",
+  "^\\QprodkeyQz8Nv3Tm5Rk2Wy7\\E$",
+  "^\\QrnsaRgwdFnwJc2MF8bmjNe3Z\\E$",
+  "^\\QsFXt44aupQwvh8RLjhga\\E$",
+  "^\\Qucgh9GJ7npBbuFxYTK87GKj7\\E$",
+  "^\\Qx8kNSPJe6DYbDUGBgw58Q9HW\\E$",
+  "^\\QygYBdUkafMHfu87FTKCPTkzt\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/box\\.test\\.mjs$"]
+regexes = [
+  "^\\Q2Rb9uJGUcX6cRuGlBCA0phBAkJktqCDZ\\E$",
+  "^\\Q3f9a1c4e7b2d8f60a5c3e1b9d7f24a6c8e0b1d3f\\E$",
+  "^\\Q5oBc7cx5Ap5GyoRLYF2spiykxV2neZ4K\\E$",
+  "^\\Q9YDCyOfc0DLyjBjYEQ8QaGkXwhznHGpa\\E$",
+  "^\\QAV0dmemkRXsetix24wXkRWifYWmR9WuJ\\E$",
+  "^\\QFRfCXXrGKHPSQoEQI2tXYKc8UFBiAPd2\\E$",
+  "^\\QHx2MkV6dYa4ZrT8pB7\\E$",
+  "^\\QJf7PsL3yQc9GwN5tR2\\E$",
+  "^\\QLwpKhwybpxvF598hRekWfQ4RvQHhs4jN\\E$",
+  "^\\QPHusoCSroBiMZPU6N9wJwMMNtgN5KrpB\\E$",
+  "^\\QWq4TnZ8rKd2VbX6mH3\\E$",
+  "^\\QYuCrx3AeiPGNJUXAUKXsJecXdAKMuXxe\\E$",
+  "^\\QdYNfZ83NyGPawpD36FisN4mi7knLccqW\\E$",
+  "^\\Qf5GCpCy4b88x1VLSGueF6ZHW3KGLeN1z\\E$",
+  "^\\QvpzNAAhcRicNV6dbDCxX6GZDZQSByBMN\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/claude\\-api\\-cli\\.test\\.mjs$"]
+regexes = [
+  "^\\QBp5Hx8Rq2Lm7Nv4Kz9Wt3Fc6\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/cloudflare\\.test\\.mjs$"]
+regexes = [
+  "^\\QBhK5xQdrtGjV39mFJaKvKeRV\\E$",
+  "^\\QUozGqxKrt74WafWJLzJBwYhkrFDkZ5g6\\E$",
+  "^\\QXr4Tq9Vw2Kp7Mz3Nb8Lc5Hd1\\E$",
+  "^\\QYYSQRQdqSqf9TtSkHKPxfKXQ\\E$",
+  "^\\QaoZts2YcLqkMb5E4RGaHa7tAChVAor8h\\E$",
+  "^\\QdcgqmL3afrWE64EJTmzpzEjb\\E$",
+  "^\\QprodkeyQz8Nv3Tm5Rk2Wy7\\E$",
+  "^\\QvN8kQ3xT7mWp2Zr9Lc4Hd6Fs\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/compute\\-backends\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN OPENSSH PRIVATE KEY-----\\n\"));\n  assert.deepEqual(chunks, [\"before\\n\", \"./notes.md:\"]);\n  for (const line of FAKE_PEM_BODY) sink.write(Buffer.from(`${line}\\n`));\n  assert.deepEqual(chunks, [\"before\\n\", \"./notes.md:\"], \"body lines stay held while the block is open\");\n  sink.write(Buffer.from(\"-----END OPENSSH PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN OPENSSH PRIVATE KEY-----\\n${FAKE_PEM_BODY.join(\"\\n\")}\\n`);\n      const truncatedChunks = [];\n      const truncatedResult = await host.bashOperations.exec(\n        `cat ${quoteForBash(truncatedPath)}; printf 'done\\\\n'`,\n        keyDir,\n        { onData: (chunk) => truncatedChunks.push(chunk.toString(\"utf8\")) },\n      );\n      assert.equal(truncatedResult.exitCode, 0);\n      const truncatedStream = truncatedChunks.join(\"\");\n      assert.ok(!truncatedStream.includes(\"BEGIN OPENSSH PRIVATE KEY\"), truncatedStream);\n      assert.ok(!FAKE_PEM_BODY.some((line) => truncatedStream.includes(line)), truncatedStream);\n      assert.equal(truncatedStream, `${UNTERMINATED_PEM}\\ndone\\n`);\n\n      // The runtime's own command timeout killing a key mid-stream: END never arrives, the sink is\n      // ended on the throw path, and neither the header nor any body line reaches the stream.\n      const longBody = Array.from({ length: 8 }, (_, index) => `MIIEowIBAAKCAQEA${index}FAKEKEYBODYLINE${\"QUFB\".repeat(10)}`);\n      const longKeyPath = join(keyDir, \"id_rsa\");\n      writeFileSync(longKeyPath, `-----BEGIN RSA PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN OPENSSH PRIVATE KEY-----\\n${FAKE_PEM_BODY.join(\"\\n\")}\\ndone\\n`;\n  for (const [strategy, chunker] of Object.entries(CHUNKERS)) {\n    const { beforeEnd, joined } = collectSink(truncated, chunker);\n    assert.equal(beforeEnd, \"\", `${strategy}: nothing is emitted while the block is open`);\n    assert.equal(joined, `${UNTERMINATED_PEM}\\ndone\\n`, strategy);\n    assert.ok(!FAKE_PEM_BODY.some((line) => joined.includes(line)), `${strategy}: a body line survived`);\n  }\n\n  // The cap: filled with key-shaped base64, none of it may escape, and ordinary output appended\n  // afterwards still flows.\n  const chunks = [];\n  const sink = createRedactingSink((chunk) => chunks.push(chunk.toString(\"utf8\")));\n  sink.write(Buffer.from(\"-----BEGIN RSA PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN OPENSSH PRIVATE KEY-----\\nb3BlbnNzaC1rZXktdjEAAAAA\\n-----END OPENSSH PRIVATE KEY-----\";\n    assert.equal(redactSecrets(`cat ~/.ssh/id_ed25519\\n${pem}\\ndone`), \"cat ~/.ssh/id_ed25519\\n[REDACTED PRIVATE KEY]\\ndone\");\n    assert.equal(redactSecrets(\"plain output stays\"), \"plain output stays\");\n  });\n});\n\ntest(\"redacting sink catches a secret split across streamed chunks\", () => {\n  withEnv({ RUNPOD_API_KEY: \"fake-distinctive-secret-9f8e7d6c\" }, () => {\n    const chunks = [];\n    const sink = createRedactingSink((chunk) => chunks.push(chunk.toString(\"utf8\")));\n    sink.write(Buffer.from(\"token=fake-distinctive-\"));\n    assert.deepEqual(chunks, []);\n    sink.write(Buffer.from(\"secret-9f8e7d6c\\npartial trailing\"));\n    assert.deepEqual(chunks, [\"token=[REDACTED]\\n\"]);\n    sink.end();\n    assert.deepEqual(chunks, [\"token=[REDACTED]\\n\", \"partial trailing\"]);\n    const silent = createRedactingSink(undefined);\n    silent.write(Buffer.from(\"ignored\"));\n    silent.end();\n  });\n});\n\nconst FAKE_PEM_BODY = [\"b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\", \"QyNTUxOQAAACBmYWtlIGtleSBib2R5IGZvciB0ZXN0cyBvbmx5AAAAAAAAAAAAAAAAAAA\"];\nconst FAKE_PEM = `-----BEGIN OPENSSH PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\n${FAKE_PEM_BODY[0]}\\n`, CHUNKERS[\"per-line\"]);\n  assert.equal(two.beforeEnd, \"[REDACTED PRIVATE KEY]\\n\");\n  assert.equal(two.joined, `[REDACTED PRIVATE KEY]\\n${UNTERMINATED_PEM}\\n`);\n\n  // END arriving in the same chunk as the last body line but without its newline: the block is\n  // held, then flushed as one redacted block once the newline lands.\n  const crossing = [];\n  const crossingSink = createRedactingSink((chunk) => crossing.push(chunk.toString(\"utf8\")));\n  crossingSink.write(Buffer.from(`-----BEGIN OPENSSH PRIVATE KEY-----\\E$",
+  "^\\Qid_ed25519.partial\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/credential\\-scrub\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\QBPt5mgDrRZ5YyLTHaQPepJUYQbGYRCjG\\E$",
+  "^\\QPCWXTXXWpLrVFgXp2SPm7YQKZgcAgWUx\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW5hcnkifQ.c2lnbmF0dXJlY2FuYXJ5\\E$",
+  "^\\Qprod-us-east-2026\\E$",
+  "^\\QzSVNdtuTMXK9T7qXe8CEDEYXmJ9K6vVL\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/crowdstrike\\.test\\.mjs$"]
+regexes = [
+  "^\\Q47xGMHC5Z8gJUckTyB\\E$",
+  "^\\Q6hPpZYXUCsPxCUgGxP\\E$",
+  "^\\Q845kpNMHDNTcWGMC2A\\E$",
+  "^\\Q8y6YfvKmNBqS3ynUq3\\E$",
+  "^\\QBhdHYLvSUmsyvG5TQk\\E$",
+  "^\\QGnLNeK7BVWATB8vrSR\\E$",
+  "^\\QHb3ZsY8cVn5RtJ1q\\E$",
+  "^\\QK8mN4pQ7rT2vW9xZ6cB3\\E$",
+  "^\\QQY5PHe53gd9h8xy26c\\E$",
+  "^\\QQm7vTz2KpX9wLr4N\\E$",
+  "^\\QR7cQYACujPskMA2jJD\\E$",
+  "^\\QSx5T2uSUa7nwunm5AF\\E$",
+  "^\\QY9yWFGgBas8nujKGLs\\E$",
+  "^\\QcN4rGYkQv4MsftpRf4\\E$",
+  "^\\QfanNHJPRQ8hTdrQe84\\E$",
+  "^\\Qk2va2LcNRQ8MpbvEZs\\E$",
+  "^\\Qrh5SzQeu7bq3ypyZtP\\E$",
+  "^\\Qtim5vbAnh6jDp9nUwL0oR6abazdD2LBK\\E$",
+  "^\\Qy6RWbfHqmHfduL8VUr\\E$",
+  "^\\Qyj6lxeMEtMhX3rD7BWcbQUKB9s9Odwk0\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/datadog\\.test\\.mjs$"]
+regexes = [
+  "^\\Q2RvBvXQvD5Q3nXeXYMx8dsCqRzzWejV2\\E$",
+  "^\\Q2m8GreSvHjjjksfPfpAyyLSYq6VQTFvK\\E$",
+  "^\\Q5ItglOYb4TaBATDAJP0skzvKTx7gUFVC\\E$",
+  "^\\Q7mVGCyZd6dPnr832nGuyMZzpBMErDbEg\\E$",
+  "^\\Q8GQxdZDYuhs7BTwe2iu6JjepD7bpn3yo\\E$",
+  "^\\Q98sHDuRibZ2CmnHqch66LJFGaoMg5Phh\\E$",
+  "^\\Q9dreg9dLZ54JQKyVRhtGmn9CFQhxQSqE\\E$",
+  "^\\QD7SHc4Mn7XCp7pyHXrojnpAXwYbKtSoY\\E$",
+  "^\\QEsQPhEMyzMYKNAT8TQm1zYWBfpESb7Jm\\E$",
+  "^\\QLWRwKrhD8Fads9LWU7V3snTayZGtwe9y\\E$",
+  "^\\QLc02gQBuvRIfLEfN9Pim1azA32YSTHQz\\E$",
+  "^\\QO80TVzLOWaz7VQTsJMfQkrT1HUNyXwrT\\E$",
+  "^\\QQ8nRGc7bNtAPvaVQvP22ECELERX8ZNuX\\E$",
+  "^\\QSw8ZTJvncn5FXpWrzH6LbvA5C36KHGDG\\E$",
+  "^\\QTLe2gSxXgrR48Ah8LkNn4ELH9nfhZXXK\\E$",
+  "^\\QU4H8d4FFDZ4UZcbZET2UjkxC6kKRjFVB\\E$",
+  "^\\QXa7Pe2Qr9Ub4Nw6Ky3Ht8Lc1Vm5Gd0Jz\\E$",
+  "^\\QZq4Wn8Ty2Lp6Vx3Hc9Rb7Mk5Jd1Fg0Ss\\E$",
+  "^\\Qapi-key-0123456789abcdef\\E$",
+  "^\\Qarg-api-key-0123456789\\E$",
+  "^\\Qd7866h7kagjaaxz9xrfhkp8tC5804cDK\\E$",
+  "^\\Qenv-api-key-0123456789\\E$",
+  "^\\QiTFB9rmbfzgVmtI6CPgQrb5kDcDDjusS\\E$",
+  "^\\QkXam3Rmp2dS2GtCNqc8XAuTd2NmSLrYB\\E$",
+  "^\\QkfQBxTvN3PZcoECfREZy5PhSEERq6BsQ\\E$",
+  "^\\QutwtgBfyJYQsMvPogB9BZaLatvQDZNE6\\E$",
+  "^\\QwohBNFgejWm8mOLSpTTRxLJz2itHjTeF\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/duo\\.test\\.mjs$"]
+regexes = [
+  "^\\QDI3QW3S5UJCSFJFV7VMU\\E$",
+  "^\\QDIENV7KQ2XW9MP4ZR6LC\\E$",
+  "^\\QDIK7RW2QX9MZ4TPV6NBH\\E$",
+  "^\\QH3kzAfks4jCg3VzH9uLuQdH38trqd9uqyzAvJZjd\\E$",
+  "^\\QRk7Xq2Vw9Mt4Zp8Lc3Nb6Hd5Fs1Gy0Jv\\E$",
+  "^\\QVq3LtZ8xRk2WmN6pYs9JbHd4CgF7uTe5AzQw1KnP\\E$",
+  "^\\QZ8NuV9GgLCQwL2THRTgLkmzsLgf6bbScBFMZ9NWd\\E$",
+  "^\\QprodkeyQz8Nv3Tm5Rk2Wy7\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/elastic\\.test\\.mjs$"]
+regexes = [
+  "^\\Q2xp33ZaXQ83GeheL5KqCzkZdKRLubJQw\\E$",
+  "^\\Q4DwXTMoA5vB7sAEpZsJQyU7vVXvL5sbF\\E$",
+  "^\\Q6WHC8a6NVk0LTUArutZ7wjhnNauZpeGY\\E$",
+  "^\\QAaB6wvMiGMD7ReAp6tKkmeQD9QWYFmuM\\E$",
+  "^\\QHq3ZwN8vKt5XcL2rPy7BdM9sGf4jTa6E\\E$",
+  "^\\QOGYVOxq9KdXXf8ZYGZxfnFRw3TbLqyIE\\E$",
+  "^\\QRH6KajwLmtW4pn5csRcoGWhqC5nM2GFw\\E$",
+  "^\\QRk8PmT4xVz2LqW7nYb3HdJ9cGs5fAe1N\\E$",
+  "^\\QTrRpRjXEmKud7cZtPAgpAWkRGDofqgAU\\E$",
+  "^\\QZmlsZS1pZDpmaWxlLWtleQ==\\E$",
+  "^\\Qcsbj7LDHYpDgAsPDECbjN4Gh6iykWaJj\\E$",
+  "^\\Qe3mNEELYbK9PcGrRFHn4KTRDadLwdn3a\\E$",
+  "^\\QljFjVRKYSGC7xJ2OdZj9oQde4JtJbMTM\\E$",
+  "^\\Qm8zZdEUbAErhQC8WXbaTYdXutb7uG7zG\\E$",
+  "^\\QpAK0qHjsDBBWtEz4cMrnJV3AjvBcXOAH\\E$",
+  "^\\Qpf4bJ2aaYRdRv9UBB5ZkrDKRUzxMhBa7\\E$",
+  "^\\QqcTKOOqVk8geD6X6NGQMozTRCHnNSf2A\\E$",
+  "^\\QqykqlQJBFt8Qlt48qnH43GKBnUsakj9Y\\E$",
+  "^\\QrdKSFgIpiANQwp35ByPpvw8qekstCJF7\\E$",
+  "^\\Qt8eA28gPGYmT7Y6c7fXedGwoMyHbavaB\\E$",
+  "^\\QuhDpm8hGwVfWzqfG8myJcwTk91FrfjyC\\E$",
+  "^\\Qz4vwczZ3wciSgujZu5okOpC2GOSEUuse\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/fedramp\\-sync\\.test\\.mjs$"]
+regexes = [
+  "^\\QghpQx7Lm2Vb9Rt4Kz8Wn3Ys6Pd1Hg5Jc0Fa\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/flue\\.test\\.mjs$"]
+regexes = [
+  "^\\Qtok_1234567890\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/gcp\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\";\n  // The private_key line lost its opening quote, so the parser stops on the key body itself.\n  const unquoted = `{\\n  \"type\": \"service_account\",\\n  \"client_email\": \"svc@prod-audit.iam.gserviceaccount.com\",\\n  \"private_key\": ${keyBody}\\\\n${pemHeader}\\\\n${ERROR_CANARIES.bearer}\\\\n-----END PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\nAAAAB3NzaC1yc2EAAAADAQABAAABAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\QMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\E$",
+  "^\\Qabcdef123456\\E$",
+  "^\\QeyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdmNAcHJvZC1hdWRpdCJ9.c2lnbmF0dXJlLXNpZ25hdHVyZS1zaWduYXR1cmU\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/github\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nabc\\n-----END PRIVATE KEY-----\\n\");\n\n  const resolved = await resolveGitHubConfiguration({\n    organization: \"example-org\",\n    auth_mode: \"app\",\n    app_id: \"123\",\n    app_private_key_path: privateKeyPath,\n    installation_id: \"456\",\n  });\n\n  assert.equal(resolved.authMode, \"app\");\n  assert.equal(resolved.appId, \"123\");\n  assert.equal(resolved.installationId, \"456\");\n  assert.match(resolved.appPrivateKey, /BEGIN PRIVATE KEY/);\n});\n\nconst PRIVATE_KEY_READ_FAILURE = /^Unable to read GitHub App private key file .* \\((EISDIR|ENOENT)\\)$/;\n/** Wording the Node fs messages carry (`EISDIR: illegal operation on a directory, read`, `ENOENT: no such file or directory, open '<path>'`). */\nconst FS_MESSAGE_WORDING = [\"illegal operation\", \"no such file or directory\", \", read\", \", open\", \"open '\"];\nconst INVALID_PRIVATE_KEY_TEXT = \"GitHub App private key is not a valid PEM private key\";\nconst UNSIGNABLE_PRIVATE_KEY_TEXT = \"GitHub App private key could not produce an RS256 signature (an RSA private key is required)\";\n\n/** Captures the registered GitHub tools so a test can call a handler the way the agent runtime does. */\nfunction captureGitHubTools() {\n  const tools = new Map();\n  registerGitHubTools({ registerTool(tool) { tools.set(tool.name, tool); } });\n  return tools;\n}\n\nfunction appArgs(privateKeyPath, overrides = {}) {\n  return { organization: \"example-org\", auth_mode: \"app\", app_id: \"123\", installation_id: \"456\", app_private_key_path: privateKeyPath, ...overrides };\n}\n\nfunction appEnv(privateKeyPath) {\n  return { GITHUB_ORG: \"example-org\", GITHUB_APP_ID: \"123\", GITHUB_APP_INSTALLATION_ID: \"456\", GITHUB_APP_PRIVATE_KEY_PATH: privateKeyPath };\n}\n\nasync function rejection(promise) {\n  try {\n    await promise;\n  } catch (error) {\n    return error;\n  }\n  assert.fail(\"expected a rejection\");\n}\n\nfunction assertCarriesNone(text, forbidden, context) {\n  for (const needle of forbidden) {\n    assert.ok(!text.includes(needle), `${context} must not carry ${JSON.stringify(needle)}: ${text}`);\n  }\n}\n\ntest(\"resolveGitHubConfiguration reports a private key read failure by system error code, never the fs message\", async () => {\n  const base = createTempBase(\"grclanker-github-key-read-\");\n  const directoryPath = join(base, \"key-as-directory.pem\");\n  mkdirSync(directoryPath);\n  const missingPath = join(base, \"missing-LEAKPATHCANARY.pem\");\n\n  // Positive control: the raw fs messages carry library wording, and ENOENT quotes the path inline.\n  const directoryControl = (() => {\n    try {\n      readFileSync(directoryPath, \"utf8\");\n      return \"\";\n    } catch (error) {\n      return error.message;\n    }\n  })();\n  assert.match(directoryControl, /^EISDIR: illegal operation on a directory, read/);\n  const missingControl = (() => {\n    try {\n      readFileSync(missingPath, \"utf8\");\n      return \"\";\n    } catch (error) {\n      return error.message;\n    }\n  })();\n  assert.match(missingControl, /^ENOENT: no such file or directory, open '.*missing-LEAKPATHCANARY\\.pem'$/);\n\n  for (const [pathname, code] of [[directoryPath, \"EISDIR\"], [missingPath, \"ENOENT\"]]) {\n    for (const [route, run] of [\n      [\"environment\", () => resolveGitHubConfiguration({}, appEnv(pathname))],\n      [\"arguments\", () => resolveGitHubConfiguration(appArgs(pathname), {})],\n    ]) {\n      const thrown = await rejection(run());\n      assert.ok(thrown instanceof Error, `${route} route throws an Error for ${code}`);\n      assert.match(thrown.message, PRIVATE_KEY_READ_FAILURE, `${route} route, ${code}`);\n      assert.ok(thrown.message.endsWith(` (${code})`), `${route} route names the ${code} code: ${thrown.message}`);\n      assert.ok(thrown.message.includes(resolve(pathname)), `${route} route names the configured path: ${thrown.message}`);\n      assertCarriesNone(thrown.message, FS_MESSAGE_WORDING, `${route} route, ${code}`);\n    }\n  }\n\n  // The same text reaches the tool result through summarizeError, with nothing else appended.\n  const checkAccess = captureGitHubTools().get(\"github_check_access\");\n  const result = await checkAccess.execute(\"call-1\", appArgs(directoryPath));\n  assert.equal(result.isError, true);\n  assert.match(result.content[0].text, /^GitHub access check failed: Unable to read GitHub App private key file .*key-as-directory\\.pem \\(EISDIR\\)$/);\n  assertCarriesNone(JSON.stringify(result), FS_MESSAGE_WORDING, \"github_check_access result\");\n});\n\ntest(\"a non-standard private key read error contributes nothing but a validated code to the github_check_access result\", async () => {\n  const base = createTempBase(\"grclanker-github-key-stub-\");\n  const keyPath = join(base, \"github-app.pem\");\n  writeFileSync(keyPath, \"-----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\n${keyBodyCanary}: Bearer ${bearerCanary}\\n-----END RSA PRIVATE KEY-----\\E$",
+  "^\\QCANARY_APIKEY_5b8e2f\\E$",
+  "^\\QCANARY_QUOTED_PW_9e5d7b\\E$",
+  "^\\QCANARY_XAPIKEY_1f6c9a\\E$",
+  "^\\QCANARYa7f3e9d2c1b8f4e6d0c2a9b7e5d3f1c8\\E$",
+  "^\\QLEAKKEYBODYCANARY0123456789abcdef\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/gws\\-ops\\.test\\.mjs$"]
+regexes = [
+  "^\\QPLANTEDr4pair0123456789\\E$",
+  "^\\QPLANTEDr5ctorpair0123\\E$",
+  "^\\QPLANTEDr6tok\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/gws\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\QPLANTEDr5pair0123456789\\E$",
+  "^\\QRz6HnQx3VtKpMwBsLeGuFjYv\\E$",
+  "^\\QWq9ZkTr4XmPvLsNbYhJcDgQx\\E$",
+  "^\\QeyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiJ9.c2lnbmF0dXJlLXNpZ25hdHVyZQ\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-credential\\-pairs\\.test\\.mjs$"]
+regexes = [
+  "^\\Q3f6c1e2a-8b4d-4c7e-9a1f-2d5e6b7c8d9e\\E$",
+  "^\\Q9B2E4F6A-1C3D-4E5F-8A9B-0C1D2E3F4A5B\\E$",
+  "^\\QKq7Zx2Vw9Lm4Tp8RwQ12\\E$",
+  "^\\QQm7pJ2sX9vRk4tLw8nHy3bZc\\E$",
+  "^\\Qk7Qm2xZp9vLw4nRt8sYb\\E$",
+  "^\\Qyln2bVNl4tE9Cyp1B18V2mX7CVud5LhW\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-error\\-text\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\nMIIEowIBAAKCAQEA7canaryKEYbody\\nsecondLINE0f1t\\n-----END RSA PRIVATE KEY-----\\E$",
+  "^\\QKq7Zx2Vw9Lm4Tp8R\\E$",
+  "^\\QKq7Zx2Vw9Lm4Tp8RwQ12\\E$",
+  "^\\QYUVEiVuCTge5Xk7iTaMU2YHLgrPkg5bm\\E$",
+  "^\\Qa1b2c3d4e5f6\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-escape\\-boundaries\\.test\\.mjs$"]
+regexes = [
+  "^\\QKq7Zx2Vw9Lm4Tp8RaB3cD5eF\\E$",
+  "^\\QtnAki87T1HyQ\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-guard\\-trials\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCq7Zx1Vb3Nm5Kp\\nRt9Ws2Yu4Io6Pa8Sd0Fg1Hj3Kl5Zx7Cv9Bn2Mq4We6Rt8Yu0Io2Pa4Sd6Fg8Hj0K\\n-----END PRIVATE KEY-----\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-leak\\-probe\\.test\\.mjs$"]
+regexes = [
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-must\\-keep\\.test\\.mjs$"]
+regexes = [
+  "^\\QKq7Zx2Vw9Lm4Tp8RwQ12\\E$",
+  "^\\Qak_canary_APIKEY_2718281828459045\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-next\\-link\\.test\\.mjs$"]
+regexes = [
+  "^\\QWj9cPf2RmA7tKs4D\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/hardening\\-quoted\\-carriers\\.test\\.mjs$"]
+regexes = [
+  "^\\Qabcdef123456\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/aws\\-sdk\\-fixture\\.mjs$"]
+regexes = [
+  "^\\QPMZ4hQaDC37k7PXPKkdSzUg6vD4H\\E$",
+  "^\\QQrNKBjvvWTSh7JRk6Eux\\E$",
+  "^\\QqNBXsx64Xxg9ux7wejCu\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/config\\-loader\\-matrix\\.mjs$"]
+regexes = [
+  "^\\QK7Pkdu8HLvR9BFwPEh\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/deep\\-nesting\\.mjs$"]
+regexes = [
+  "^\\Q7SL8bSc4vaQfeUevsHjnBuYu\\E$",
+  "^\\QsTwpLhNBeyQfbAQX2HADDhx3\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/error\\-canaries\\.mjs$"]
+regexes = [
+  "^\\QYWm6RTrMRVZq3cfs9sQG\\E$",
+  "^\\QcPWqj5swNXPywURtfydcFhDW\\E$",
+  "^\\QdGhpcyBpcyBhIHNlY3JldA==\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiIsImtpZCI6Ill0SzZrTUFQZ1haayJ9.eyJzdWIiOiJEY1J3OFJoZUViVEoifQ.hLyJhJZMRGcb3BUkmTgFbpjpjt6UvCJh\\E$",
+  "^\\Qz8MbGj5JMM5dyEKMYGUYcVkAFnv3\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/escape\\-boundary\\.mjs$"]
+regexes = [
+  "^\\QHq4vZm8kTw2yXc7RbN\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/hardening\\-canaries\\.mjs$"]
+regexes = [
+  "^\\Q3M8AvBLPJEefqBZVQSy3efNH\\E$",
+  "^\\Q4f3a9c1b7e2d8f6a0b5c4d3e2f1a0b9c\\E$",
+  "^\\QKsDA6SpXx5wofyiQ\\E$",
+  "^\\QboLPh53qYQfSUibqxt8q8J9w\\E$",
+  "^\\Qt4siE8a4gqtrY9p2LfZg\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/leak\\-probe\\-harness\\.mjs$"]
+regexes = [
+  "^\\QeyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/quoted\\-header\\-matrix\\.mjs$"]
+regexes = [
+  "^\\QVq4Hn8Zt2Kw6Rd9Xp3Jm7Cy5Bf1Lg0\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/redaction\\-table\\.mjs$"]
+regexes = [
+  "^\\QFwoGZXIvYXdzEBYaDHt4Q2kzR2xNbVpqNXo5Y3VkbXM2Kq3Ht8Wz\\E$",
+  "^\\QQv7Tz3Km9Rb2Wn5Xp8Lc4Hd6Jf1Gs\\E$",
+  "^\\Qc2547eb745079dac9320b638f5e225cf483cc\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/scrub\\-boundary\\-matrix\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC\\n-----END PRIVATE KEY-----\\E$",
+  "^\\QQw7xKp2ZvN9tRb4Ym6Lc\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW5hcnkifQ.c2lnbmF0dXJl\\E$",
+  "^\\Qprod-us-east-2026\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/helpers/text\\-field\\-carriers\\.mjs$"]
+regexes = [
+  "^\\Q5UprSzzyDjMVfQaARQa7\\E$",
+  "^\\Q84fjUKdKfKEsCzNAJTqB\\E$",
+  "^\\QGswy3m37CC2cvVnfrvdM\\E$",
+  "^\\QRdX7eg7JnYGxcvpJ968M\\E$",
+  "^\\QULkfBn4fyTY87d2AkJxB\\E$",
+  "^\\QXmBeZZK7anrEJz3HCgNd\\E$",
+  "^\\QeyJXq7Lm2Nv9Rt4Wy6Zb8.eyJKc3Fh5Jd1PgSaUeQm7Z.x3Kp9Wm2Rt5Yv8Nb4Lc6Hd\\E$",
+  "^\\QpVwcmY4sUt7LQawUnZQq\\E$",
+  "^\\QwwajkCRRybmRR5pnM9XsZv8c\\E$",
+  "^\\QxbUwCYyjakswBppyDyj5\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/knowbe4\\.test\\.mjs$"]
+regexes = [
+  "^\\Q4WVSdSG5bXWSpcsYrJWDqWoVbkoC6E6v\\E$",
+  "^\\QCUD9ejYDya5wZQ7QnHUY2WsuhQQM8F3X\\E$",
+  "^\\QUfJ5c4A7p6pL5VJpnbCyGKExThjgzGZV\\E$",
+  "^\\QWq7pLz3KfR9vT2mXc8NbH4yJ\\E$",
+  "^\\QtTy4it2NbNVWLjmDrDgg4E5wiQxg7SDp\\E$",
+  "^\\QzgLBVJZ37SdoNdbZfBfHeSQAkGYNYYfj\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/launchdarkly\\.test\\.mjs$"]
+regexes = [
+  "^\\Q3HBmKocR7PPS5uBfjHMcVCV7WgcSJFhH\\E$",
+  "^\\Q4idBU9tWqjTjawfBTxvH68aXvkfESBG3\\E$",
+  "^\\Q56eDKUCdKB43HRb5QAXnPEJt4VQB6bwi\\E$",
+  "^\\Q6f3a9c1e7b2d48e05a9f31c7\\E$",
+  "^\\QBYAE7HSiWwjvHTvPPwjGYcJbPxHBW7tY\\E$",
+  "^\\QPCWXTXXWpLrVFgXp2SPm7YQKZgcAgWUx\\E$",
+  "^\\QQJGjPixxDSCkGNoArXMeL2USsBcdGfdd\\E$",
+  "^\\QU7ktAa5zEHKELrac4CfrjWJF3zBQuiEx\\E$",
+  "^\\QVp8CkeZuEMbdWw5eD9FfgsrZEFCFBcAV\\E$",
+  "^\\QWB3FfAGQCKmcpSbk7MGRBT5tshEK3rrL\\E$",
+  "^\\Qe83bd5a5f00659aed175191b7953c460\\E$",
+  "^\\QgG8UG456pXwM9PVP6LAeK9KXvPEJbo7v\\E$",
+  "^\\QitUua8RSaaYJmiJJafrKLp7xzGScVwRi\\E$",
+  "^\\QuCANkAy4FHeqgLEqUbRo93C8P7NAJbBf\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/mulesoft\\.test\\.mjs$"]
+regexes = [
+  "^\\Q5BL3GwUzeH3x5BGRGE\\E$",
+  "^\\Q5FYVrSz8PxBN9R3U8m\\E$",
+  "^\\Q60T5Nfr8u4p1EVkD9H\\E$",
+  "^\\Q82BzRHwkheLNAwayXu\\E$",
+  "^\\Q9dUvtkD5mgQkKTzZvj\\E$",
+  "^\\QBeZzmaRmeqXpKGLa5k\\E$",
+  "^\\QGgJvJG5gjJqDXc5hLN\\E$",
+  "^\\QHmRgJvEWE6WKZWgN3j\\E$",
+  "^\\QIkZ9DeNrEDPd73pFKE\\E$",
+  "^\\QJ8srNkQC7YrwHjF5eY\\E$",
+  "^\\QKCFpPdp6JcCkEKxWtV\\E$",
+  "^\\QQWFbud4ugH3fGdPzv8\\E$",
+  "^\\QSCRragWfu3gVEZWS7v\\E$",
+  "^\\QTscV6cNhpsMdCpaFuP\\E$",
+  "^\\QWJ4yHcfVzvCgStgZAx\\E$",
+  "^\\QbmreKj2rqjDtkNE4Hz\\E$",
+  "^\\Qh2fpZsVuYwfaNAVJZv\\E$",
+  "^\\QnMyDpGtQfqmSt3xNY4\\E$",
+  "^\\QpZvH4eWJ57cMuBga5N\\E$",
+  "^\\QpuGsP4hvM4Gp6YaHTw\\E$",
+  "^\\Qsz8rQcmHDrurRdFAeQ\\E$",
+  "^\\QtF7Yvm3gKVjL4eyXvG\\E$",
+  "^\\QwUVX8UCFMdjtBgL4TL\\E$",
+  "^\\QzS8UnCR3BnceRQyrBb\\E$",
+  "^\\QzfRMRp7nDygejtnkdm\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/newrelic\\.test\\.mjs$"]
+regexes = [
+  "^\\QCANARYAPIKEY7f3a9c1d\\E$",
+  "^\\QCANARYSECRET7f3a9c1d\\E$",
+  "^\\QPw9vqvHCSPh6GMeeZNjkbkruXCDwoSKA\\E$",
+  "^\\QT2G7XLKQBKVK6YWZIVMEDFCN43L\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/oci\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\nFAKE_PEM_BODY_1\\n-----END RSA PRIVATE KEY-----\";\n/** The documented OCI request-signing Authorization header form (signingrequests.htm), with fake identifiers. */\nconst SIGNING_HEADER = 'Signature version=\"1\",keyId=\"ocid1.tenancy.oc1..FAKE_TENANCY_1/ocid1.user.oc1..FAKE_USER_1/FAKE_FINGERPRINT_1\",algorithm=\"rsa-sha256\",headers=\"(request-target) date host\",signature=\"FAKE_SIGNATURE_BASE64_1==\"';\nconst SECRET_ERROR = new Error(\n  `Command failed: oci cloud-guard problem list --config-file /tmp/oci/config\\nServiceError: 401 NotAuthenticated: Authorization: ${SIGNING_HEADER}\\nDebug: keyId=\"ocid1.tenancy.oc1..FAKE_TENANCY_2/ocid1.user.oc1..FAKE_USER_2/FAKE_FINGERPRINT_2\" signature=\"FAKE_SIGNATURE_BASE64_2==\" Bearer FAKE_BEARER_1abcdefgh Signature FAKE_SIGNATURE_BARE_1abcdef key_file=/tmp/oci/FAKE_KEY_PATH_1.pem token=FAKE_ERROR_TOKEN_1 ${SECRET_PEM}`,\n);\n\n/**\n * Rule 9 fixture: the compliant tenancy with a distinctive FAKE_ marker in\n * every collected object that can carry credential material (documented\n * secret-bearing fields plus tags, descriptions, and metadata that must not be\n * dumped verbatim). Public key material uses the ALLOWED_ prefix because it\n * may legitimately appear.\n */\nfunction secretLadenClient() {\n  const client = compliantClient();\n  const tags = (marker) => ({ freeformTags: { password: `FAKE_TAG_${marker}` }, definedTags: { audit: { token: `FAKE_DEFINED_TAG_${marker}` } } });\n  const withSecrets = (items, marker, extra = {}) => items.map((item, index) => ({ ...item, ...tags(`${marker}_${index}`), description: `FAKE_DESCRIPTION_${marker}_${index}`, ...extra }));\n  const wrapList = (method, marker, extra) => {\n    const original = client[method];\n    client[method] = async (...args) => withSecrets(await original(...args), marker, extra);\n  };\n  wrapList(\"listCompartments\", \"COMPARTMENT\");\n  wrapList(\"listUsers\", \"USER\");\n  wrapList(\"listApiKeys\", \"API_KEY\", { keyValue: \"-----BEGIN PUBLIC KEY-----\\E$",
+  "^\\QCANARY-APIKEY-oci-7f3a9c1d\\E$",
+  "^\\QQm9vdHNlY3JldEt\\E$",
+  "^\\QeyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0In0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/okta\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nQbNhmq3FzXaXEDy3zZU5fS2EepAmFzLGFkGmhBeB\\n-----END PRIVATE KEY-----\",\n  };\n  const privateKey = await resolveOktaConfiguration({ org_url: \"https://tenant.okta.gov\" }, privateKeyEnv, dir, homeDir);\n  assert.equal(privateKey.privateKey, privateKeyEnv.OKTA_CLIENT_PRIVATEKEY, \"the environment private key survives an unrelated org_url argument\");\n  assert.equal(privateKey.clientId, \"0oa1abcd2EFGH3ijk4x5\");\n  assert.equal(privateKey.authMode, \"PrivateKey\");\n  assert.deepEqual(privateKey.sourceChain, [\"environment\", \"arguments\"]);\n});\n\n/** A 32-character random run: any 6 to 24 character window of it in an output is a leak. */\nconst PLANTED_TOKEN = \"Xq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\";\n/** A Stripe-shaped live key: the vendor prefix makes it an unambiguous credential shape on both sides. */\nconst PLANTED_STRIPE_KEY = \"sk_live_\" + \"4eC39HqLyjWDarjtT1zdp7dc\";\n/** The distinctive segments of the planted JWT; the header is the common RS256 prefix and is not a canary. */\nconst PLANTED_JWT_PAYLOAD = \"Zm9vYmFyLXByb2JlLXBheWxvYWQtOTgxMjM0NTY3ODkw\";\nconst PLANTED_JWT_SIGNATURE = \"c2lnbmF0dXJlLXBhcnQtb2YtdGhlLWpvdC1nb2VzLWhlcmU\";\nconst PLANTED_JWT = `eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.${PLANTED_JWT_PAYLOAD}.${PLANTED_JWT_SIGNATURE}`;\nconst PLANTED_PEM = \"-----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nQbNhmq3FzXaXEDy3zZU5fS2EepAmFzLGFkGmhBeB\\n-----END PRIVATE KEY-----\",\n  };\n  const privateKey = await resolveOktaConfiguration({ org_url: \"https://tenant.okta.gov\" }, privateKeyEnv, dir, homeDir);\n  assert.equal(privateKey.privateKey, privateKeyEnv.OKTA_CLIENT_PRIVATEKEY, \"the environment private key survives an unrelated org_url argument\");\n  assert.equal(privateKey.clientId, \"0oa1abcd2EFGH3ijk4x5\");\n  assert.equal(privateKey.authMode, \"PrivateKey\");\n  assert.deepEqual(privateKey.sourceChain, [\"environment\", \"arguments\"]);\n});\n\n/** A 32-character random run: any 6 to 24 character window of it in an output is a leak. */\nconst PLANTED_TOKEN = \"Xq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\";\n/** A Stripe-shaped live key: the vendor prefix makes it an unambiguous credential shape on both sides. */\nconst PLANTED_STRIPE_KEY = \"sk_live_\" + \"4eC39HqLyjWDarjtT1zdp7dc\";\n/** The distinctive segments of the planted JWT; the header is the common RS256 prefix and is not a canary. */\nconst PLANTED_JWT_PAYLOAD = \"foobar-probe-payload-981234567890\";\nconst PLANTED_JWT_SIGNATURE = \"signature-part-of-the-jot-goes-here\";\nconst PLANTED_JWT = `{\"alg\":\"RS256\",\"typ\":\"JWT\"}.${PLANTED_JWT_PAYLOAD}.${PLANTED_JWT_SIGNATURE}`;\nconst PLANTED_PEM = \"-----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q0oa1abcd2EFGH3ijk4x5\\E$",
+  "^\\Q2D2GP46d8TcMvqSPEv\\E$",
+  "^\\Q7Yx5FjWaghuQ55JkgA\\E$",
+  "^\\Q98EkVfVxxMHrUjyyWb\\E$",
+  "^\\QAb3dEf9hIj2k\\E$",
+  "^\\QBp6TzX3kW9nQ2sRc\\E$",
+  "^\\QHy5WnKq9ZtRm3VbXpLs7JcDf\\E$",
+  "^\\QMk2Pq8Rt4Vw6Xy1Zb3Cd5Fg7Hj9Ln0Ns\\E$",
+  "^\\QQUXMgWm9fxYpbS3Ewa\\E$",
+  "^\\QQmFzZTY0K1N5bWJvbHM=\\E$",
+  "^\\QQv7ZkT3mR9pXw2Lc\\E$",
+  "^\\QTZWTvADmT7CSsgrYHD\\E$",
+  "^\\QTq8MvRz3KpXw6NbLhJ2cYsGd\\E$",
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+  "^\\QaB3xZ9qL2mN8pR4tV7wY1\\E$",
+  "^\\QeQw65LsRKMVMGfc28K\\E$",
+  "^\\QjPpMDR6m22qMZCvQHL\\E$",
+  "^\\QnHaCnyfzL5fGnBFXGp\\E$",
+  "^\\Qy7PFSxdGWneFdx234j\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/pagerduty\\.test\\.mjs$"]
+regexes = [
+  "^\\Q3XnuC3YjgaXwrN8krz\\E$",
+  "^\\Q5bGHanNnsgV3Vay9SY\\E$",
+  "^\\Q6CLuXRpZNQfQZzyfkG\\E$",
+  "^\\Q7ATZj5mshYWwkGmdma\\E$",
+  "^\\QBWf7DSVupXeuZRagtp\\E$",
+  "^\\QL2ZmNtntFXSxpXDBgy\\E$",
+  "^\\QVP6RDnThNgGxBpL42W\\E$",
+  "^\\QWjB6eRwTvdctKEemdV\\E$",
+  "^\\QZKGD9nYbzN8SWnFdLs\\E$",
+  "^\\QeKpIdYp0YChA3DsjtF\\E$",
+  "^\\Qg7Y5mqtqHaU98JFu73\\E$",
+  "^\\QjFQbwYfhySPpDdR8jg\\E$",
+  "^\\QqMkDly0KEM1Znd6x8C\\E$",
+  "^\\QsgBL63d4Me6NjrukVb\\E$",
+  "^\\QtvurJUAQrzbu3GJ5XN\\E$",
+  "^\\QxOs0GQt9uTMFX1m1WH\\E$",
+  "^\\QxYtFC7ZxDzSt3vPHs4\\E$",
+  "^\\QyPynAQd8eG9pNR7Z4c\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/paloalto\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEfake\\n-----END PRIVATE KEY-----\"), \"[REDACTED]\");\n  assert.equal(redactCredentialValueText(\"-----BEGIN OPENSSH PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\nMIIEfake\\n-----END RSA PRIVATE KEY-----\", \"[REDACTED]\"],\n    [\"-----BEGIN CERTIFICATE-----\\nMIIEfake\\n-----END CERTIFICATE-----\", \"[REDACTED]\"],\n    [\"truncated -----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q0JZOorpfk5rQhCKp6RA4o0\\E$",
+  "^\\Q2L6QMbn3y1GfaHnnWdnTaU\\E$",
+  "^\\Q2jHcFdODU4Qf1OmFfrXlh5\\E$",
+  "^\\Q3RC06KxXSjuXX0BMtxebvJ\\E$",
+  "^\\Q3i5DxV75zXGfqxZMp7o4GV\\E$",
+  "^\\Q59EqaIulIB1Xinh8WcYxW4\\E$",
+  "^\\Q5WO44igAdCyWi6gvSnwVcC\\E$",
+  "^\\QC58sEmb4VTg1xXSxXRmK5N\\E$",
+  "^\\QHaYQlBX4Z3yN7uznDZ\\E$",
+  "^\\QHq4vT9zKp2WmX7cRb5Nd\\E$",
+  "^\\QPn9mPxU0Vc5CZN4kHE1ihV\\E$",
+  "^\\QQSv2at8HxDN9YgiRo6Aw5w\\E$",
+  "^\\QYwq2FPogPzVzE0Buuf\\E$",
+  "^\\QaFz86YMxEqbb0D6TxXN30I\\E$",
+  "^\\Qc7asnENn31NX3tIlv2KOzq\\E$",
+  "^\\QcnrA1qz8Xw4LpT9vK2mD\\E$",
+  "^\\Qcompute-fixture-harbor-2026\\E$",
+  "^\\QenvP5rT8yU2iO7pA3sD6\\E$",
+  "^\\QenvS9dF2gH6jK4lZ8xC1\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0In0.abcdefghijk\\E$",
+  "^\\Qfixture-ochre-lantern-2026\\E$",
+  "^\\QgAj2r82tYmFMjBnmlovWn4\\E$",
+  "^\\QglnVK045hZAzIB6orPc68q\\E$",
+  "^\\QidlsZTIu1AXVyugMWj4c46\\E$",
+  "^\\QpjVQSukJKGD10deeMS0Fq2\\E$",
+  "^\\QsVmDR0RnpiQAC0GnEZ75XY\\E$",
+  "^\\QxVEG6RkKSCFp29n7mb\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/qualys\\.test\\.mjs$"]
+regexes = [
+  "^\\QCANARY-APIKEY-7f3a9c1d\\E$",
+  "^\\QRq7vWm2KxT9pLc4N\\E$",
+  "^\\QZt5HbY8nQe3JfV6sGd1A\\E$",
+  "^\\Qabcdef123456\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhY21lIn0.s3cr3tS1gnatur3Valu3\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4N3BrIn0.Wk9dTq2MhR6vXb3LsN8c\\E$",
+  "^\\Qqualysapi.qg3.apps.qualys.com\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/salesforce\\.test\\.mjs$"]
+regexes = [
+  "^\\Q3MVG9consumer\\E$",
+  "^\\Q42hVWhA6RMgXyWeTy7\\E$",
+  "^\\Q6H9X9nDrdanEaDShqe\\E$",
+  "^\\QA9pwcgJ8ecng9MCE3Z\\E$",
+  "^\\QAHj4JRZH2pFB6rJ2dV\\E$",
+  "^\\QHs9GvYc3NjWq6TeB2m\\E$",
+  "^\\QKM9PbWt6WxhFxCkaJf\\E$",
+  "^\\QPw7Qx9Lm2Vn4Rt6Yz1Kj3Hb5\\E$",
+  "^\\QQm4XwTz8RbVn2KpLd7\\E$",
+  "^\\QTb8MwEq2YhJs6RcN4x\\E$",
+  "^\\QVChk753jUysbeZcQWG\\E$",
+  "^\\QYk63nyEVp6krSwMWtv\\E$",
+  "^\\QZr5KfUx7PdLa3VgQ9n\\E$",
+  "^\\QaYQEGbnRuCrFfp76eu\\E$",
+  "^\\QbzG37r6jxUXAkc56md\\E$",
+  "^\\Qdeg982tgLeJyLWypFZ\\E$",
+  "^\\QjPuTG7AJfujrN9L4nJ\\E$",
+  "^\\Qk2DAkV4Bbutx9hV3YH\\E$",
+  "^\\QnL9EVdZszdTMtgLeS4\\E$",
+  "^\\QqnHCnRw8pYkatSZNXj\\E$",
+  "^\\QqsTChD9iKSnC5Dn4PS\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/servicenow\\.test\\.mjs$"]
+regexes = [
+  "^\\QCFe6ahZBmU4AsbZt4J\\E$",
+  "^\\QF3282AzaVAnDy8QxzdVgC9h8\\E$",
+  "^\\QKa4pnBxqUxmU8PgZhf\\E$",
+  "^\\QPw7Qx9Lm2Vn4Rt6Yz1Kj3Hb5\\E$",
+  "^\\QQAK8MsfbqRnUyzYNfP\\E$",
+  "^\\QQWJHXVZPKMTRYU1\\E$",
+  "^\\QbGnrbF6YU5UQUxDu2u\\E$",
+  "^\\QgjbPA9KryHPaZwmf9C\\E$",
+  "^\\QhLWJHSGAZrhB4j8z7e\\E$",
+  "^\\QjG9FmV3axD4A7pcZdp\\E$",
+  "^\\QpSxb8eQAKJZumEpGEB\\E$",
+  "^\\QvUySfhtReYjPs6gxE5\\E$",
+  "^\\QvdKjWDw6FPzcNrMpAF\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/slack\\.test\\.mjs$"]
+regexes = [
+  "^\\QCANARYSL7f3a9C1d2E4b6A8c0D1e2F3a4B5c6D7e8F9a0B1c2D3e4F5a6B7c8D9e0Fqz\\E$",
+  "^\\QHn4Kd8Qw2Zx6Pv1Rt9Yb3Mc7Lf5Sg0Jk\\E$",
+  "^\\QQm7Vt2Xr9Lk4Pz8Hd3Wn6Bj5Fy1Gc0Sa4Ue8Ni2T\\E$",
+  "^\\QRk3Zp9Ws2Qx7Lm4Vb8Nc1Hd6Ty5Gf0Jq\\E$",
+  "^\\QWc9Fp3Ln7Tq1Vz5Xk8Bd2Hm6Rs4Gy0Nj\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/snowflake\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\Q4f9c2b7e1d3a4c5b8e6f7a9b0c1d2e3f\\E$",
+  "^\\QAJ64FNHxZz2NkPrJmyLz\\E$",
+  "^\\QAb3dEf9hIj2k\\E$",
+  "^\\QQm7vKx2RtN9wLp4ZsB8c\\E$",
+  "^\\QQmFzZTY0K1N5bWJvbHM=\\E$",
+  "^\\QQv7ZkT3mR9pXw2Lc\\E$",
+  "^\\QRHW9enMyb9c69WJ9nP\\E$",
+  "^\\QSNOWFLAKE-03\\E$",
+  "^\\QSNOWFLAKE-04\\E$",
+  "^\\QSNOWFLAKE-05\\E$",
+  "^\\QSNOWFLAKE-13\\E$",
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+  "^\\QXyJZddzExJmchaeS8g\\E$",
+  "^\\QaB3xZ9qL2mN8pR4tV7wY1\\E$",
+  "^\\QayfzGHG9fDtZaSmG3cMg\\E$",
+  "^\\QgtbYqvbqKUkywb9wy66ZxoWXv7CZAXUE\\E$",
+  "^\\Qprod-us-east-2026\\E$",
+  "^\\Qqtz36MNVgApweGXmsgkGzM\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/splunk\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\Q2xwtSsxGESNew4jyGcRvZHsM\\E$",
+  "^\\Q4975Q3dY7v42SawGus\\E$",
+  "^\\Q4f9c2b7e1d3a4c5b8e6f7a9b0c1d2e3f\\E$",
+  "^\\Q5ZAR84KxJV5mqCKQej\\E$",
+  "^\\Q78MufNpWDNdJmpjX9tMhHjW3\\E$",
+  "^\\Q8Kw9ExUHb7Y3CbFJdr\\E$",
+  "^\\Q8bsWKgqWCQn7fRJgD6eKk4jr\\E$",
+  "^\\Q8fyNDV2sTJnfNYZdjFVkhDGCDd4gg4ML\\E$",
+  "^\\Q9UuF9u63aYHpsFUmeu\\E$",
+  "^\\Q9XWrk2ZvMFkvKRxUd9\\E$",
+  "^\\QA4w2XUNjYgBBfCXhsp\\E$",
+  "^\\QAb3dEf9hIj2k\\E$",
+  "^\\QBZJaRfcKYwJx5gBWUypXAc4a\\E$",
+  "^\\QBfk7B9GfWxkLEgkV7C\\E$",
+  "^\\QC9sKx6YMZee52aA9hKavCtjB\\E$",
+  "^\\QHeb5VKCAf2VT5MSKXbdBZ46c\\E$",
+  "^\\QKc4WnB9tYq2MxF7sLr3G\\E$",
+  "^\\QQmFzZTY0K1N5bWJvbHM=\\E$",
+  "^\\QSZWRrhMsc6XjB5LURB\\E$",
+  "^\\QShWLCDwUTEn9pFsdCc38ZLD7\\E$",
+  "^\\QTAgXYC6qr79e4KFucKQ4CaRjFw3w6o4P\\E$",
+  "^\\QVh27ecdg7ce6eqg3eZ3Y3FyN\\E$",
+  "^\\QVq8LmT3wXk6RzN2pHd5J\\E$",
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+  "^\\QZFEs9XDcfwfCFxxfyVD9FqcU\\E$",
+  "^\\QaB3xZ9qL2mN8pR4tV7wY1\\E$",
+  "^\\QaxJE3DCPasdNvvp9Tt\\E$",
+  "^\\Qe3PWkuJSQgQbcjKyRz\\E$",
+  "^\\QgR7Efd8kk72J87EFaW\\E$",
+  "^\\QkpQxJQTYthwEcws2ZMA2rZKS4MGBhLvK\\E$",
+  "^\\QnXH5v29gTgy6CsrHAQahPfRn\\E$",
+  "^\\QpMRkZj27UYBXajtvFySbdSbQ\\E$",
+  "^\\QtsaMTrUYqUkYNN8aZKTjmmLR\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/sumologic\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\QAb3dEf9hIj2k\\E$",
+  "^\\QDNEFcZkeyYdm3WhqWS\\E$",
+  "^\\QFmEP7cQrCjqKDbBCpd\\E$",
+  "^\\QG9zQNG7PXy37LgyAxr\\E$",
+  "^\\QGS5CL3ytUXgqZSKXgn\\E$",
+  "^\\QHb6NzP2vKc9WqL4tYf7D\\E$",
+  "^\\QQmFzZTY0K1N5bWJvbHM=\\E$",
+  "^\\QQv7ZkT3mR9pXw2Lc\\E$",
+  "^\\QTTmF84rGQ5FKybBUS7CJkEnq\\E$",
+  "^\\QWLfKnscQU649TkVynC\\E$",
+  "^\\QWncUw2Cm8x2LECdwny\\E$",
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+  "^\\QaB3xZ9qL2mN8pR4tV7wY1\\E$",
+  "^\\QhCddmrYzWJjBh9vUZq\\E$",
+  "^\\QhFUY8WTsSwjWGwETqw\\E$",
+  "^\\QkUkFvcpgZrvBNHV7BL\\E$",
+  "^\\QmLngURgY387cwCdzVN\\E$",
+  "^\\Qprod-us-east-2026\\E$",
+  "^\\QuG8dhJSjYWYbStMXmJ\\E$",
+  "^\\Qyc9gR8yHAwPbKEwkuA\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/tenable\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEfake\\n-----END PRIVATE KEY-----\"), \"[REDACTED]\");\n  assert.equal(redactCredentialValueText(`${certificate}\\n-----BEGIN EC PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\nMIIEfake\\n-----END RSA PRIVATE KEY-----\", \"[REDACTED]\"],\n    [\"-----BEGIN CERTIFICATE-----\\nMIIEfake\\n-----END CERTIFICATE-----\", \"[REDACTED]\"],\n    [\"truncated -----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q0aLPuMBcC3LrhC03EFlIq8\\E$",
+  "^\\Q2dzaTJuwLGmPzB5L9ZZEK4\\E$",
+  "^\\Q5OvJOMuFTt9kEn8tS14NAW\\E$",
+  "^\\Q9U1CEev6U71JmHG2ldC100\\E$",
+  "^\\Q9U4Je6VR8IKId3TLiyyNFq\\E$",
+  "^\\QKoZR57LLWDrl7waJR0GOBv\\E$",
+  "^\\QPKJwsecPe18jp19Xw6vO2r\\E$",
+  "^\\QPz6hJm2YgB9sFeUo\\E$",
+  "^\\QR1M0s5f4SrgBX0CgcNzyzJ\\E$",
+  "^\\QUHE7I4ihja1YxODlSyT2S0\\E$",
+  "^\\QWd3qLx8RkT5vNcGy\\E$",
+  "^\\QYd7rmz2KDiBHYn4oc83WbN\\E$",
+  "^\\QcnrA1qz8Xw4LpT9vK2mD\\E$",
+  "^\\Qcobalt-meadow-ridge-2026\\E$",
+  "^\\QenvH5jK8lZ3xC6vB2nM9\\E$",
+  "^\\QenvR4tY7uI1oP8aS3dF6\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0In0.abcdefghijk\\E$",
+  "^\\Qfixture-sc-secret-key-2026\\E$",
+  "^\\Qhftgrr92BIbTnK98YFN4io\\E$",
+  "^\\Qho4A04gykhqEgcruJ1Hu65\\E$",
+  "^\\Qj8lEIFXwMaM2TE4aDCERVZ\\E$",
+  "^\\Ql9zRN6mVdNtN6JZ7xz1MXL\\E$",
+  "^\\Qsc-fixture-secret-2026\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/vanta\\.test\\.mjs$"]
+regexes = [
+  "^\\QTm9Fb3Yc7Gs5Pj0W\\E$",
+  "^\\QUa6Xe2Vk8Qn4Dr1J\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/veracode\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7\\n-----END PRIVATE KEY-----\\E$",
+  "^\\Q4f9c2b7e1d3a4c5b8e6f7a9b0c1d2e3f\\E$",
+  "^\\Q530da152f87e5530c82f786907fbc74b09a6894785a78bab3891632ba69325400a40713bdc11d2a6d2d1c3969431281c0a73f455a53c0ed5ea0756e9c54f366c\\E$",
+  "^\\Q6mckJxBg2BmjE9GKTpz5KeWXxHXcHtwkSm8Le9Gj\\E$",
+  "^\\Q7xrxUx6g5sUrQB26s5JySTb5pXQ2QSfcNDfZzhSM\\E$",
+  "^\\Q7zsXBTgCW2Xmxk8LwH\\E$",
+  "^\\QA4urKDYCG35ubTm9v54aKCfTwDUYD4r5YFP7Lr99\\E$",
+  "^\\QAX9Ajv33cV74xYBtFWjbQQvyLw4T2LkSH9BdWsRy\\E$",
+  "^\\QAb3dEf9hIj2k\\E$",
+  "^\\QF9UDKhAWZvwMQdLNHh\\E$",
+  "^\\QGy4Sr2nthWewBaLdX3CNSKuSQ2dajbJh5ht77mWw\\E$",
+  "^\\QNFjheYRmvsxWLttZk7\\E$",
+  "^\\QPGUysLcBuHSWdW9AZY\\E$",
+  "^\\QQmFzZTY0K1N5bWJvbHM=\\E$",
+  "^\\QRBTsRfDATVHez2jXNJh7sBB5nDQkU9hs9Weyyjpb\\E$",
+  "^\\QTRcHmKPJYAfFQftqKaPQWjhu2M5qT8YCvdCjTHT3\\E$",
+  "^\\QXq7Vw2Lm9Tp4Rb8Kd3Fh6Jn1Zs5Yc0Ag\\E$",
+  "^\\QZ7J4pAhJr9F4H33emp2fLkHuUV68ZpbKGfuenF6G\\E$",
+  "^\\QaB3xZ9qL2mN8pR4tV7wY1\\E$",
+  "^\\QcTEF3JvzumskuFUSrpnujEU2Xjf9jPqXnj9Px23p\\E$",
+  "^\\Qf22bfe158eb39e4fdf4468aa987de27a9fd9908a71339e49fed978d71a455cae7f2f9c4699b9f73f364ed7b0d8532cfe3e51114bbb753c299d201d54702a2651\\E$",
+  "^\\QnjAV3RP8LRBFpXTaGr\\E$",
+  "^\\QpGWNtV2BmepjRQH4fBgLvxbPFHdxV6qWJmcdyZqY\\E$",
+  "^\\QrYhKYxi7tSNzdArwD3\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/webex\\.test\\.mjs$"]
+regexes = [
+  "^\\QHc5dYs8JfB3nUe6G\\E$",
+  "^\\QJn6wXq1HsA8fYd3M\\E$",
+  "^\\QPr9cVt5BkE2hNz7L\\E$",
+  "^\\QQm7vTz2KpX9wLr4N\\E$",
+  "^\\QSINKASSIGNMENTp3o7i1u5y9t2\\E$",
+  "^\\QSINKBEARERm4n8b2v6c0x5\\E$",
+  "^\\QTOKCANARYqz8m2v4x7k1p3w5n9r\\E$",
+  "^\\QVk2gRa9WqM4tZp7C\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/zendesk\\.test\\.mjs$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\nMIIEfake\\n-----END PRIVATE KEY-----\"), \"[REDACTED]\");\n  assert.equal(redactCredentialValueText(`${certificate}\\n-----BEGIN EC PRIVATE KEY-----\\E$",
+  "^\\Q-----BEGIN RSA PRIVATE KEY-----\\nMIIEfake\\n-----END RSA PRIVATE KEY-----\", \"[REDACTED]\"],\n    [\"-----BEGIN CERTIFICATE-----\\nMIIEfake\\n-----END CERTIFICATE-----\", \"[REDACTED]\"],\n    [\"truncated -----BEGIN PRIVATE KEY-----\\E$",
+  "^\\Q0123456789abcdef\\E$",
+  "^\\Q18F0CMC68hClk3TW4foXVF\\E$",
+  "^\\Q1Ea9sLRnJ4beGrDd6EAyOa\\E$",
+  "^\\Q7f654gQ0nPLsqTXNMMyqtN\\E$",
+  "^\\QDEV0MWVDG3ENLxn9MHYvM3\\E$",
+  "^\\QGc6YeJ3uSa8DfN1hR4\\E$",
+  "^\\QLGt33E2k18gewfyCqTGlRi\\E$",
+  "^\\QLq7RmX2vKp9TzW4nB8\\E$",
+  "^\\QMHFLILdUP1k7O2mIk7F4QL\\E$",
+  "^\\QMducb0QASQv3Ugw3wqZ21sZXWBc5ITociTOs5dcY\\E$",
+  "^\\QMf6Yp3Jd8Gs1Kx5Wn2Bv\\E$",
+  "^\\QNtCeeftEa9id8Zaw3Y3yLk\\E$",
+  "^\\QP3GfdBos2IChWd8L1EAbNz\\E$",
+  "^\\QRs1O7EhdcCddVrl6dqlc4v\\E$",
+  "^\\QTMeDd3BKQgw6FrtK3HQ94H\\E$",
+  "^\\QTq4Lw9Xc2Nb7Vd5Hk8Rz\\E$",
+  "^\\QUdJ9SQ3o7EilvPZTNQt6f5\\E$",
+  "^\\QcnrA1qz8Xw4LpT9vK2mD\\E$",
+  "^\\QecLDZ7wK81IOa6WmUeZu25\\E$",
+  "^\\QenvQ2wE5rT8yU1iO4pA7\\E$",
+  "^\\QenvT8yU3iO6pA1sD4fG9\\E$",
+  "^\\QeyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0In0.abcdefghijk\\E$",
+  "^\\QfEOwyslS3SCop1Dnk99SME\\E$",
+  "^\\QfG8Y1Kg3zFnbHPqBRx6S1j\\E$",
+  "^\\Qfixture-teal-harbor-2026\\E$",
+  "^\\QgKmD93ySVYQ0j8YqAVky65\\E$",
+  "^\\QjK83AxM1mN8VeQdSsFhvI6\\E$",
+  "^\\Qjgf1W64hNNx9ke1OPzMZVU\\E$",
+  "^\\QmjDAS07t0Z1n9lwnyFLaPh\\E$",
+  "^\\QpAO1eEu7rf1wU7JgfwroI0\\E$",
+  "^\\Qs1cZ1rG1ghdksri9b59ZD3\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/zoom\\.test\\.mjs$"]
+regexes = [
+  "^\\QAwSi5QTDzJ7AinSR\\E$",
+  "^\\QCANARY-APIKEY-7f3a9c1d\\E$",
+  "^\\QG2WNDRjEzwMMLbys\\E$",
+  "^\\QKp4xWm8RtV2nLq6ZcY9bHs3JdF7gNe5A\\E$",
+  "^\\QLisz3yY5MNw5Nd4g\\E$",
+  "^\\Qabcdef123456\\E$",
+  "^\\Qd99EDS6GfCHkttxt\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/cli/tests/zscaler\\.test\\.mjs$"]
+regexes = [
+  "^\\QCANARYbaPrivateKey0027\\E$",
+  "^\\QCANARYenrollmentPrivateKey0026\\E$",
+  "^\\QCANARYquoted0004\\E$",
+  "^\\QCANARYtunnelKey0016\\E$",
+  "^\\QCANARYziaApiKey0001ABCDEFGHIJKLMNOP\\E$",
+  "^\\QCANARYzrsaPrivateKey0024\\E$",
+  "^\\QTOKCANARYqz8m2v4x7k1p3w5n9r\\E$",
+  "^\\QWjaAYFLBkX8RGeyB3dtv\\E$",
+  "^\\QXYG2V5oHQQwtDH7qHNNbRJX8h8KUFKEn\\E$",
+  "^\\QZZf7RrrD3QR2asz3FdTX42GgUWCH9Y\\E$",
+  "^\\QmJvJNC3sK3DQbx4UmXDJ\\E$",
+  "^\\QtRgQoGDBUmwtqpEEjPX6\\E$",
+  "^\\QvFxusTzB5MyDB8FjAsVoMv2S\\E$",
+]
+
+[[allowlists]]
+description = "Pinned synthetic redaction fixtures"
+condition = "AND"
+paths = ["^tools/grclanker/src/content/docs/docs/integrations/okta\\.md$"]
+regexes = [
+  "^\\Q-----BEGIN PRIVATE KEY-----\\n...\"\nexport OKTA_CLIENT_PRIVATEKEYID=kid-optional\n```\n\ngrclanker signs an RS256 client assertion with `node:crypto` and requests `client_credentials` tokens from `/oauth2/v1/token`. It caches them until shortly before expiry and refreshes on 401.\n\nTo supply a pre-signed JWT instead, pass `client_assertion` (or `OKTA_CLIENT_CLIENTASSERTION`).\n\n### Config discovery order\n\nLater sources override earlier ones field by field:\n\n1. `~/.okta/okta.yaml`\n2. Project `.okta.yaml`\n3. Environment variables: `OKTA_CLIENT_ORGURL`, `OKTA_CLIENT_TOKEN`, `OKTA_CLIENT_AUTHORIZATIONMODE`, `OKTA_CLIENT_CLIENTID`, `OKTA_CLIENT_PRIVATEKEY`, `OKTA_CLIENT_PRIVATEKEYID`, `OKTA_CLIENT_CLIENTASSERTION`, `OKTA_CLIENT_SCOPES`.\n4. Explicit tool arguments: `org_url`, `auth_mode`, `api_token`, `client_id`, `private_key`, `private_key_id`, `client_assertion`, `scopes`, or `config_file` to bypass the default YAML locations.\n\nA missing YAML file is skipped. Other failures are reported as follows:\n\n- **File cannot be read:** The tool stops with `Unable to read Okta config file <path> (<errno code>)`.\n- **File cannot be parsed:** The tool stops with `Unable to parse Okta config file: invalid YAML in <path> at line N, column M (<code>)`.\n  - The code is the yaml package's own (`DUPLICATE_KEY`, `MISSING_CHAR`, `BAD_INDENT`, and so on).\n  - The code is `INVALID_YAML` when the parser threw something else, such as the unresolved alias `token: *value`.\n  - The position is omitted when the parser reports none.\n- **Private key:** A private key that `node:crypto` cannot load is reported as `Okta PrivateKey auth could not load the configured private key (<ERR_ code>)`.\n\nNone of these messages repeats a line, key, value, or key material from the file.\n\n```yaml\nokta:\n  client:\n    orgUrl: https://your-org.okta.com\n    authorizationMode: PrivateKey\n    clientId: 0oa...\n    privateKey: |\n      -----BEGIN PRIVATE KEY-----\\E$",
+]

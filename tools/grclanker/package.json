@@ -1,0 +1,54 @@
+{
+  "name": "grclanker",
+  "type": "module",
+  "version": "0.1.5",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/check-doc-identifiers.mjs && next build && node scripts/check-links.mjs",
+    "check:doc-identifiers": "node scripts/check-doc-identifiers.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "test:site": "node --test \"scripts/*.test.mjs\"",
+    "preview": "npm run build && wrangler dev",
+    "sync:fedramp": "npm --prefix cli run sync:fedramp",
+    "sync:tool-catalog": "npm --prefix cli run sync:tool-catalog",
+    "generate-types": "wrangler types",
+    "check": "next typegen && tsc --noEmit",
+    "prebuild": "npm run check",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "@monaco-editor/loader": "^1.7.0",
+    "fumadocs-core": "16.19.0",
+    "fumadocs-mdx": "15.6.0",
+    "fumadocs-ui": "16.19.0",
+    "hast-util-to-html": "^9.0.5",
+    "next": "^16.4.6",
+    "picomatch": "file:cli/scripts/vendor/picomatch",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remark-smartypants": "^3.0.3",
+    "yaml": "^2.9.1",
+    "zbsearch": "^4.0.1",
+    "zod": "^4.6.7"
+  },
+  "overrides": {
+    "sharp": "^0.35.5",
+    "picomatch": "$picomatch"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.160.1"
+  }
+}

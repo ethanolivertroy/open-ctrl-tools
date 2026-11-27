@@ -1,0 +1,749 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_OWNER="${GRCLANKER_REPO_OWNER:-ethanolivertroy}"
+REPO_NAME="${GRCLANKER_REPO_NAME:-grclanker}"
+VERSION="${GRCLANKER_VERSION:-latest}"
+INSTALL_DIR="${GRCLANKER_INSTALL_DIR:-$HOME/.local/share/grclanker}"
+BIN_DIR="${GRCLANKER_BIN_DIR:-$HOME/.local/bin}"
+BIN_PATH="${BIN_DIR}/grclanker"
+ASSET_URL_OVERRIDE="${GRCLANKER_ASSET_URL:-}"
+RELEASE_BASE_URL="${GRCLANKER_RELEASE_BASE_URL:-}"
+TARGET_OVERRIDE="${GRCLANKER_INSTALL_TARGET:-}"
+SCRIPT_PATH="${BASH_SOURCE[0]:-}"
+
+if [ "$#" -gt 1 ]; then
+  printf "Usage: install [latest|<version>]\n" >&2
+  exit 1
+fi
+
+if [ "$#" -eq 1 ]; then
+  VERSION="$1"
+fi
+
+if [ -t 1 ]; then
+  B="\033[1m"
+  BLUE="\033[38;2;140;170;238m"
+  MAUVE="\033[38;2;202;158;230m"
+  LAVENDER="\033[38;2;186;187;241m"
+  GREEN="\033[38;2;166;209;137m"
+  YELLOW="\033[38;2;229;200;144m"
+  RED="\033[38;2;231;130;132m"
+  DIM="\033[38;2;140;143;161m"
+  INK="\033[38;2;198;208;245m"
+  R="\033[0m"
+else
+  B="" BLUE="" MAUVE="" LAVENDER="" GREEN="" YELLOW="" RED="" DIM="" INK="" R=""
+fi
+
+STEP=0
+STEPS=6
+step() {
+  STEP=$((STEP + 1))
+  printf "  ${DIM}[%d/%d]${R} ${GREEN}✓${R} %s\n" "$STEP" "$STEPS" "$*"
+}
+log()  { printf "  ${DIM}[%d/%d]${R} ${BLUE}▸${R} %s\n" "$((STEP + 1))" "$STEPS" "$*"; }
+ok()   { step "$@"; }
+warn() { printf "  ${YELLOW}!${R} %s\n" "$*" >&2; }
+fail() { printf "  ${RED}✗${R} %s\n" "$*" >&2; exit 1; }
+
+spin() {
+  local pid=$1 msg=$2
+  local frames=("⣾" "⣽" "⣻" "⢿" "⡿" "⣟" "⣯" "⣷")
+  local i=0
+  while kill -0 "$pid" 2>/dev/null; do
+    printf "\r  ${DIM}[%d/%d]${R} ${BLUE}${frames[$i]}${R} %s" "$((STEP + 1))" "$STEPS" "$msg"
+    i=$(( (i + 1) % ${#frames[@]} ))
+    sleep 0.08
+  done
+  wait "$pid"
+  return $?
+}
+
+need_cmd() {
+  command -v "$1" >/dev/null 2>&1 || fail "missing required command: $1"
+}
+
+banner() {
+  printf "\n"
+  printf "${BLUE}    ____ ____   ____ _        _    _   _ _  _______ ____  ${R}\n"
+  printf "${BLUE}   / ___|  _ \\\\ / ___| |      / \\\\  | \\\\ | | |/ / ____|  _ \\\\ ${R}\n"
+  printf "${MAUVE}  | |  _| |_) | |   | |     / _ \\\\ |  \\\\| | ' /|  _| | |_) |${R}\n"
+  printf "${MAUVE}  | |_| |  _ <| |___| |___ / ___ \\\\| |\\\\  | . \\\\| |___|  _ < ${R}\n"
+  printf "${LAVENDER}   \\\\____|_| \\\\_\\\\\\\\____|_____/_/   \\\\_\\\\_| \\\\_|_|\\\\_\\\\_____|_| \\\\_\\\\${R}\n"
+  printf "\n"
+  printf "  ${DIM}https://ethantroy.dev // https://hackidle.com${R}\n\n"
+}
+
+normalize_version() {
+  printf "%s" "${1#v}"
+}
+
+version_core() {
+  printf "%s" "${1%%-*}"
+}
+
+version_prerelease() {
+  case "$1" in
+    *-*) printf "%s" "${1#*-}" ;;
+  esac
+}
+
+# macOS ships BSD sort, which rejects GNU sort -V and aborts this script under
+# set -e. Compare the version embedded in the archive name instead.
+version_is_newer() {
+  local left="$1" right="$2"
+  local left_core right_core l1 l2 l3 r1 r2 r3
+  left_core="$(version_core "$left")"
+  right_core="$(version_core "$right")"
+  local IFS=.
+  # shellcheck disable=SC2086
+  set -- $left_core
+  l1="${1:-0}"; l2="${2:-0}"; l3="${3:-0}"
+  # shellcheck disable=SC2086
+  set -- $right_core
+  r1="${1:-0}"; r2="${2:-0}"; r3="${3:-0}"
+  if ! printf "%s%s%s%s%s%s" "$l1" "$l2" "$l3" "$r1" "$r2" "$r3" | grep -Eq "^[0-9]+$"; then
+    return 1
+  fi
+  if [ "$l1" -ne "$r1" ]; then [ "$l1" -gt "$r1" ]; return; fi
+  if [ "$l2" -ne "$r2" ]; then [ "$l2" -gt "$r2" ]; return; fi
+  if [ "$l3" -ne "$r3" ]; then [ "$l3" -gt "$r3" ]; return; fi
+
+  local left_pre right_pre
+  left_pre="$(version_prerelease "$left")"
+  right_pre="$(version_prerelease "$right")"
+  if [ -z "$left_pre" ] && [ -z "$right_pre" ]; then
+    return 1
+  fi
+  if [ -z "$left_pre" ]; then
+    return 0
+  fi
+  if [ -z "$right_pre" ]; then
+    return 1
+  fi
+
+  local -a left_ids right_ids
+  local i=0 count a b
+  IFS=.
+  # shellcheck disable=SC2086
+  set -- $left_pre
+  left_ids=("$@")
+  # shellcheck disable=SC2086
+  set -- $right_pre
+  right_ids=("$@")
+  count=${#left_ids[@]}
+  if [ "${#right_ids[@]}" -gt "$count" ]; then
+    count=${#right_ids[@]}
+  fi
+  while [ "$i" -lt "$count" ]; do
+    a=""
+    b=""
+    if [ "$i" -lt "${#left_ids[@]}" ]; then
+      a="${left_ids[$i]}"
+    fi
+    if [ "$i" -lt "${#right_ids[@]}" ]; then
+      b="${right_ids[$i]}"
+    fi
+    if [ "$a" = "$b" ]; then
+      i=$((i + 1))
+      continue
+    fi
+    if [ -z "$a" ]; then return 1; fi
+    if [ -z "$b" ]; then return 0; fi
+    case "$a$b" in
+      *[!0-9]*)
+        [ "$a" \> "$b" ]
+        return
+        ;;
+    esac
+    [ "$a" -gt "$b" ]
+    return
+  done
+  return 1
+}
+
+archive_version() {
+  local path="$1" target="$2" archive_ext="$3" name suffix
+  name="$(basename "$path")"
+  suffix="-${target}.${archive_ext}"
+  case "$name" in
+    grclanker-*"$suffix") ;;
+    *) return 1 ;;
+  esac
+  name="${name#grclanker-}"
+  name="${name%"$suffix"}"
+  [ -n "$name" ] || return 1
+  printf "%s" "$name"
+}
+
+newest_local_archive() {
+  local dir="$1" target="$2" archive_ext="$3"
+  local newest="" newest_version="" path version
+  while IFS= read -r path; do
+    [ -n "$path" ] || continue
+    version="$(archive_version "$path" "$target" "$archive_ext")" || continue
+    if [ -z "$newest" ] || version_is_newer "$version" "$newest_version"; then
+      newest="$path"
+      newest_version="$version"
+    fi
+  done <<EOF
+$(find "$dir" -maxdepth 1 -type f -name "grclanker-*-${target}.${archive_ext}")
+EOF
+  [ -n "$newest" ] || return 1
+  printf "%s\n" "$newest"
+}
+
+resolve_script_dir() {
+  if [ -z "$SCRIPT_PATH" ]; then
+    return 1
+  fi
+
+  if [ ! -f "$SCRIPT_PATH" ]; then
+    return 1
+  fi
+
+  cd "$(dirname "$SCRIPT_PATH")" && pwd
+}
+
+read_local_cli_version() {
+  local package_json
+  local candidates=()
+
+  if script_dir="$(resolve_script_dir 2>/dev/null)"; then
+    candidates+=("$(cd "${script_dir}/.." && pwd)/cli/package.json")
+  fi
+  candidates+=("$(pwd)/cli/package.json")
+
+  for package_json in "${candidates[@]}"; do
+    [ -f "$package_json" ] || continue
+    sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$package_json" | head -n 1
+    return 0
+  done
+
+  return 1
+}
+
+find_local_asset() {
+  local target="$1"
+  local archive_ext="$2"
+  local version_filter="${3:-}"
+  local pattern
+  local search_dirs=()
+  local candidate=""
+  local preferred_version=""
+
+  if script_dir="$(resolve_script_dir 2>/dev/null)"; then
+    search_dirs+=("$(cd "${script_dir}/.." && pwd)/cli/release")
+  fi
+  search_dirs+=("$(pwd)/cli/release")
+
+  for dir in "${search_dirs[@]}"; do
+    [ -d "$dir" ] || continue
+
+    if [ -n "$version_filter" ] && [ "$version_filter" != "latest" ]; then
+      pattern="grclanker-${version_filter}-${target}.${archive_ext}"
+      if [ -f "${dir}/${pattern}" ]; then
+        printf "%s\n" "${dir}/${pattern}"
+        return 0
+      fi
+      continue
+    fi
+
+    if preferred_version="$(read_local_cli_version 2>/dev/null)" && [ -n "$preferred_version" ]; then
+      pattern="grclanker-${preferred_version}-${target}.${archive_ext}"
+      if [ -f "${dir}/${pattern}" ]; then
+        printf "%s\n" "${dir}/${pattern}"
+        return 0
+      fi
+    fi
+
+    if candidate="$(newest_local_archive "$dir" "$target" "$archive_ext")"; then
+      printf "%s\n" "$candidate"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+# "latest" means the newest full release that carries a bundle for this target.
+# Prereleases (vX.Y.Z-rc.N) and asset-less releases such as specs-v2 are skipped.
+resolve_latest_release_asset() {
+  local target="$1"
+  local archive_ext="$2"
+
+  resolve_latest_release_asset_from_api "$target" "$archive_ext" && return 0
+  resolve_latest_release_asset_from_redirect "$target" "$archive_ext"
+}
+
+resolve_latest_release_asset_from_api() {
+  local target="$1"
+  local archive_ext="$2"
+  local api_url="https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases?per_page=30"
+  local response current_tag="" current_skip="" current_asset_name="" asset_url="" line=""
+
+  response="$(curl -fsSL -H "Accept: application/vnd.github+json" "$api_url" 2>/dev/null)" || return 1
+
+  while IFS= read -r line; do
+    case "$line" in
+      *'"tag_name":'*)
+        current_tag="$(printf "%s" "$line" | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+        current_skip=""
+        current_asset_name=""
+        ;;
+      *'"draft":'*true*|*'"prerelease":'*true*)
+        current_skip="1"
+        ;;
+      *'"name":'*)
+        current_asset_name="$(printf "%s" "$line" | sed -n 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+        case "$current_asset_name" in
+          grclanker-*-"${target}.${archive_ext}") ;;
+          *) current_asset_name="" ;;
+        esac
+        ;;
+      *'"browser_download_url":'*)
+        if [ -z "$current_asset_name" ] || [ -z "$current_tag" ] || [ -n "$current_skip" ]; then
+          continue
+        fi
+
+        asset_url="$(printf "%s" "$line" | sed -n 's/.*"browser_download_url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+        if [ -n "$asset_url" ]; then
+          printf "%s\n%s\n%s\n" "$(normalize_version "$current_tag")" "$current_asset_name" "$asset_url"
+          return 0
+        fi
+        ;;
+    esac
+  done <<EOF
+$response
+EOF
+
+  return 1
+}
+
+# The unauthenticated GitHub API allows 60 requests an hour per IP, which shared
+# networks exhaust. The /releases/latest page redirect is not rate limited and
+# points at the release the release-bundles workflow marked latest.
+resolve_latest_release_asset_from_redirect() {
+  local target="$1"
+  local archive_ext="$2"
+  local latest_url tag version asset_name
+
+  latest_url="$(curl -fsSLI -o /dev/null -w '%{url_effective}' "https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/latest" 2>/dev/null)" || return 1
+  case "$latest_url" in
+    */releases/tag/v*) tag="${latest_url##*/releases/tag/}" ;;
+    *) return 1 ;;
+  esac
+
+  version="$(normalize_version "$tag")"
+  asset_name="grclanker-${version}-${target}.${archive_ext}"
+  printf "%s\n%s\n%s\n" "$version" "$asset_name" "https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${tag}/${asset_name}"
+}
+
+detect_target() {
+  if [ -n "$TARGET_OVERRIDE" ]; then
+    printf "%s" "$TARGET_OVERRIDE"
+    return 0
+  fi
+
+  local os arch
+  os="$(uname -s)"
+  arch="$(uname -m)"
+
+  case "$os" in
+    Darwin) os="darwin" ;;
+    Linux)
+      os="linux"
+      confirm_linux_libc
+      ;;
+    *) fail "unsupported operating system: $os" ;;
+  esac
+
+  case "$arch" in
+    arm64|aarch64) arch="arm64" ;;
+    x86_64|amd64) arch="x64" ;;
+    *) fail "unsupported architecture: $arch" ;;
+  esac
+
+  printf "%s-%s" "$os" "$arch"
+}
+
+asset_extension_for_target() {
+  case "$1" in
+    win32-*) printf "zip" ;;
+    *) printf "tar.gz" ;;
+  esac
+}
+
+# Release bundles ship a glibc Node binary. musl is rejected on purpose.
+# A host whose C library cannot be identified used to continue and then fail
+# later with "bundle unavailable", which sends the reader to the wrong fix.
+confirm_linux_libc() {
+  local ldd_version=""
+  if getconf GNU_LIBC_VERSION >/dev/null 2>&1; then
+    return 0
+  fi
+  if command -v ldd >/dev/null 2>&1; then
+    ldd_version="$(ldd --version 2>&1 || true)"
+  fi
+  if printf "%s" "$ldd_version" | grep -qi "musl"; then
+    printf "\n" >&2
+    warn "Linux musl hosts are not supported by release bundles yet."
+    source_instructions
+    printf "\n" >&2
+    fail "Install aborted."
+  fi
+  if printf "%s" "$ldd_version" | grep -Eqi "glibc|gnu libc"; then
+    return 0
+  fi
+  printf "\n" >&2
+  warn "Release bundles need glibc. This host's C library could not be confirmed."
+  source_instructions
+  printf "\n" >&2
+  fail "Install aborted."
+}
+
+# Writes to stderr because detect_target runs inside a command substitution.
+source_instructions() {
+  {
+    printf "  ${DIM}Build from source instead (Node.js 22.19+):${R}\n"
+    printf "    git clone https://github.com/%s/%s.git\n" "$REPO_OWNER" "$REPO_NAME"
+    printf "    cd %s\n" "$REPO_NAME"
+    printf "    npm --prefix cli ci\n"
+    printf "    npm --prefix cli run build\n"
+    printf "    node cli/bin/grclanker.js\n"
+    printf "  ${DIM}Guide: https://grclanker.com/docs/getting-started/installation/${R}\n"
+  } >&2
+}
+
+fallback_instructions() {
+  printf "\n"
+  warn "Release bundle unavailable for ${1}."
+  source_instructions
+  printf "\n"
+  fail "Install aborted."
+}
+
+# Stage an immutable version, then atomically switch the command to it. The
+# compatibility install path changes only after the command points at a complete
+# version; a failed activation restores both pointers before removing staging.
+install_archive() (
+  local archive_path="$1" install_dir="$2" entries="" entry=""
+  local parent base versions candidate alias_path launcher_path saved_launcher previous_dir="" previous_version=""
+  local launcher_changed=0 root_changed=0 committed=0
+  [ -n "$install_dir" ] || fail "Refusing to extract: install directory is empty"
+  parent="$(dirname "$install_dir")"
+  base="$(basename "$install_dir")"
+  mkdir -p "$parent" "$BIN_DIR"
+  parent="$(cd "$parent" && pwd -P)"
+  install_dir="$parent/$base"
+  versions="$parent/.$base.versions"
+  mkdir -p "$versions"
+  candidate="$(mktemp -d "$versions/version.XXXXXXXX")"
+  alias_path="$candidate.alias"
+  launcher_path="$BIN_DIR/.grclanker.activate-${candidate##*.}"
+  saved_launcher="$BIN_DIR/.grclanker.previous-${candidate##*.}"
+
+  rollback_install() {
+    local restored=1
+    if [ "$committed" -eq 0 ]; then
+      if [ "$root_changed" -eq 1 ] && ! rm -f "$install_dir"; then restored=0; fi
+      if [ -n "$previous_dir" ]; then
+        if ! mv "$previous_dir" "$install_dir"; then restored=0; warn "Previous install remains at $previous_dir"; fi
+      fi
+      if [ "$launcher_changed" -eq 1 ]; then
+        if [ -e "$saved_launcher" ] || [ -L "$saved_launcher" ]; then
+          if ! mv -f "$saved_launcher" "$BIN_PATH"; then restored=0; warn "Previous launcher remains at $saved_launcher"; fi
+        elif ! rm -f "$BIN_PATH"; then restored=0; fi
+      fi
+      if [ "$restored" -eq 1 ]; then rm -rf "$candidate"; fi
+    fi
+    rm -f "$alias_path" "$launcher_path"
+    if [ "$committed" -eq 1 ] || [ "$restored" -eq 1 ]; then rm -f "$saved_launcher"; fi
+  }
+  trap rollback_install EXIT
+
+  if ! entries="$(tar -tzf "$archive_path")"; then
+    fail "Could not list the entries in $(basename "$archive_path"), so nothing was installed"
+  fi
+  while IFS= read -r entry; do
+    [ -n "$entry" ] || continue
+    case "$entry" in /*) fail "Refusing to extract unsafe archive entry: $entry" ;; esac
+    case "/$entry/" in */../*) fail "Refusing to extract unsafe archive entry: $entry" ;; esac
+  done <<EOF
+$entries
+EOF
+  if ! tar -xzf "$archive_path" -C "$candidate"; then
+    fail "Could not extract $(basename "$archive_path"); the previous install was left unchanged"
+  fi
+  if [ ! -f "$candidate/grclanker" ] || ! bash "$candidate/grclanker" --help >/dev/null; then
+    fail "Bundle validation failed; the previous install was left unchanged"
+  fi
+  chmod +x "$candidate/grclanker"
+  [ ! -d "$BIN_PATH" ] || fail "Launcher path is a directory: $BIN_PATH"
+  if [ -e "$BIN_PATH" ] || [ -L "$BIN_PATH" ]; then cp -P "$BIN_PATH" "$saved_launcher"; fi
+  ln -s "$candidate" "$alias_path"
+  ln -s "$candidate/grclanker" "$launcher_path"
+  # BIN_PATH names a file, so rename replaces it rather than following a directory.
+  mv -f "$launcher_path" "$BIN_PATH"
+  launcher_changed=1
+  if [ -L "$install_dir" ]; then previous_version="$(readlink "$install_dir")"; fi
+  if [ -e "$install_dir" ] || [ -L "$install_dir" ]; then
+    previous_dir="$parent/.$base.previous-${candidate##*.}"
+    mv "$install_dir" "$previous_dir"
+  fi
+  mv "$alias_path" "$install_dir"
+  root_changed=1
+  committed=1
+  if [ -n "$previous_dir" ]; then rm -rf "$previous_dir" || warn "Could not remove previous install at $previous_dir"; fi
+  # Retain one prior immutable version for an existing process or a rollback.
+  for entry in "$versions"/version.*; do
+    [ "$entry" = "$candidate" ] || [ "$entry" = "$previous_version" ] || rm -rf "$entry" || warn "Could not remove previous version at $entry"
+  done
+  # Retire backup names produced by older installers only after activation.
+  for entry in "$install_dir".old-????????; do
+    case "${entry##*.old-}" in *[!0123456789abcdef]*) continue ;; esac
+    rm -rf "$entry" || warn "Could not remove previous install at $entry"
+  done
+)
+
+checksum_entry_hash() {
+  local checksums_path="$1" archive_name="$2" line hash=""
+  while IFS= read -r line || [ -n "$line" ]; do
+    line="${line%$'\r'}"
+    case "$line" in
+      *"  ${archive_name}") hash="${line%%  ${archive_name}}" ;;
+      *" ${archive_name}") hash="${line%% ${archive_name}}" ;;
+    esac
+  done < "$checksums_path"
+  printf "%s" "$hash"
+}
+
+verify_checksum() {
+  local archive_path="$1"
+  local archive_name="$2"
+  local checksums_path="${tmp_dir}/SHA256SUMS.txt"
+  local checksums_url=""
+  local strict=0
+
+  # Returns 0 when verified, 2 when a local or custom source skips the check.
+  # Official GitHub downloads and GRCLANKER_RELEASE_BASE_URL fail closed.
+  if [ -n "$ASSET_URL_OVERRIDE" ]; then
+    warn "Skipping checksum verification: custom GRCLANKER_ASSET_URL in use"
+    return 2
+  elif printf "%s" "$ASSET_URL" | grep -q '^file://'; then
+    local local_dir
+    local_dir="$(dirname "${ASSET_URL#file://}")"
+    if [ -f "${local_dir}/SHA256SUMS.txt" ]; then
+      cp "${local_dir}/SHA256SUMS.txt" "$checksums_path"
+      # A checksum file that is present has to cover this archive. Only a
+      # missing file is an unverified local artifact.
+      strict=1
+    else
+      warn "No SHA256SUMS.txt found alongside local artifact, skipping verification"
+      return 2
+    fi
+  elif [ -n "$RELEASE_BASE_URL" ]; then
+    strict=1
+    checksums_url="${RELEASE_BASE_URL%/}/SHA256SUMS.txt"
+  else
+    strict=1
+    checksums_url="https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${TAG}/SHA256SUMS.txt"
+  fi
+
+  if [ -n "$checksums_url" ]; then
+    if ! curl -fsSL --retry 3 --retry-delay 1 --connect-timeout 20 "$checksums_url" -o "$checksums_path"; then
+      fail "Could not fetch SHA256SUMS.txt from ${checksums_url}. Refusing to install ${archive_name} without a checksum."
+    fi
+  fi
+
+  local expected_hash
+  expected_hash="$(checksum_entry_hash "$checksums_path" "$archive_name")"
+  if [ -z "$expected_hash" ]; then
+    if [ "$strict" -eq 1 ]; then
+      fail "No checksum entry for ${archive_name} in SHA256SUMS.txt. Refusing to install without a checksum."
+    fi
+    warn "No checksum entry for ${archive_name} in SHA256SUMS.txt, skipping verification"
+    return 2
+  fi
+  if ! printf "%s" "$expected_hash" | grep -Eq "^[0-9a-fA-F]{64}$"; then
+    fail "Checksum entry for ${archive_name} is not a SHA-256 hex digest."
+  fi
+  expected_hash="$(printf "%s" "$expected_hash" | tr "A-F" "a-f")"
+
+  local actual_hash
+  if command -v sha256sum >/dev/null 2>&1; then
+    actual_hash="$(sha256sum "$archive_path" | awk '{print $1}')"
+  elif command -v shasum >/dev/null 2>&1; then
+    actual_hash="$(shasum -a 256 "$archive_path" | awk '{print $1}')"
+  elif [ "$strict" -eq 1 ]; then
+    fail "Neither sha256sum nor shasum is available. Refusing to install ${archive_name} without verifying its checksum."
+  else
+    warn "Neither sha256sum nor shasum found, skipping checksum verification"
+    return 2
+  fi
+
+  if [ "$actual_hash" != "$expected_hash" ]; then
+    fail "Checksum mismatch for ${archive_name}: expected ${expected_hash}, got ${actual_hash}. The download may be corrupted or tampered with."
+  fi
+}
+
+banner
+
+need_cmd curl
+need_cmd tar
+ok "Prerequisites verified"
+
+TARGET="$(detect_target)"
+ARCHIVE_EXT="$(asset_extension_for_target "$TARGET")"
+LOCAL_ASSET_PATH=""
+
+if [ "$VERSION" != "latest" ]; then
+  VERSION="$(normalize_version "$VERSION")"
+  if LOCAL_ASSET_PATH="$(find_local_asset "$TARGET" "$ARCHIVE_EXT" "$VERSION")" && [ -n "$LOCAL_ASSET_PATH" ]; then
+    ASSET_URL="file://${LOCAL_ASSET_PATH}"
+    ASSET_NAME="$(basename "$LOCAL_ASSET_PATH")"
+    TAG="v${VERSION}"
+  fi
+fi
+
+if [ "${ASSET_URL:-}" = "" ] && [ "$VERSION" = "latest" ]; then
+  if LOCAL_ASSET_PATH="$(find_local_asset "$TARGET" "$ARCHIVE_EXT" latest)" && [ -n "$LOCAL_ASSET_PATH" ]; then
+    VERSION="$(archive_version "$LOCAL_ASSET_PATH" "$TARGET" "$ARCHIVE_EXT")" || fail "Could not read a version from local artifact $(basename "$LOCAL_ASSET_PATH")"
+    ASSET_URL="file://${LOCAL_ASSET_PATH}"
+    ASSET_NAME="$(basename "$LOCAL_ASSET_PATH")"
+    TAG="v${VERSION}"
+    printf "  ${DIM}       Using local artifact ${ASSET_NAME}${R}\n"
+  else
+    log "Resolving latest release"
+    if RELEASE_INFO="$(resolve_latest_release_asset "$TARGET" "$ARCHIVE_EXT")"; then
+      VERSION="$(printf "%s" "$RELEASE_INFO" | sed -n '1p')"
+      ASSET_NAME="$(printf "%s" "$RELEASE_INFO" | sed -n '2p')"
+      ASSET_URL="$(printf "%s" "$RELEASE_INFO" | sed -n '3p')"
+      TAG="v${VERSION}"
+    else
+      fallback_instructions "$TARGET"
+    fi
+  fi
+fi
+
+if [ -n "$ASSET_URL_OVERRIDE" ]; then
+  warn "GRCLANKER_ASSET_URL is set, downloading from a non-default source"
+  ASSET_URL="$ASSET_URL_OVERRIDE"
+  ASSET_NAME="${ASSET_NAME:-$(basename "$ASSET_URL_OVERRIDE")}"
+elif [ -n "$RELEASE_BASE_URL" ]; then
+  warn "GRCLANKER_RELEASE_BASE_URL is set, downloading from a non-default source"
+  VERSION="$(normalize_version "$VERSION")"
+  if [ -z "$VERSION" ] || [ "$VERSION" = "latest" ]; then
+    fail "GRCLANKER_RELEASE_BASE_URL requires an explicit version. Set GRCLANKER_VERSION or pass a version argument."
+  fi
+  TAG="v${VERSION}"
+  ASSET_NAME="${ASSET_NAME:-grclanker-${VERSION}-${TARGET}.${ARCHIVE_EXT}}"
+  ASSET_URL="${RELEASE_BASE_URL%/}/${ASSET_NAME}"
+elif [ -z "${ASSET_URL:-}" ]; then
+  VERSION="$(normalize_version "$VERSION")"
+  TAG="v${VERSION}"
+  ASSET_NAME="${ASSET_NAME:-grclanker-${VERSION}-${TARGET}.${ARCHIVE_EXT}}"
+  ASSET_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${TAG}/${ASSET_NAME}"
+fi
+
+tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/grclanker-install.XXXXXX")"
+cleanup() {
+  rm -rf "$tmp_dir"
+}
+trap cleanup EXIT
+
+archive_path="${tmp_dir}/${ASSET_NAME}"
+
+ok "Detected ${LAVENDER}${TARGET}${R}"
+
+if [ -t 1 ]; then
+  curl -fsSL --retry 3 --retry-delay 1 --connect-timeout 20 "$ASSET_URL" -o "$archive_path" &
+  if ! spin $! "Downloading ${ASSET_NAME}"; then
+    printf "\r\033[K"
+    fallback_instructions "$TARGET"
+  fi
+  printf "\r\033[K"
+  ok "Downloaded ${DIM}${ASSET_NAME}${R}"
+else
+  log "Downloading ${ASSET_NAME}"
+  if ! curl -fsSL --retry 3 --retry-delay 1 --connect-timeout 20 "$ASSET_URL" -o "$archive_path"; then
+    fallback_instructions "$TARGET"
+  fi
+  ok "Downloaded"
+fi
+
+if verify_checksum "$archive_path" "$ASSET_NAME"; then
+  ok "Integrity verified"
+fi
+
+mkdir -p "$BIN_DIR"
+install_archive "$archive_path" "$INSTALL_DIR"
+ok "Installed to ${LAVENDER}${INSTALL_DIR}${R}"
+
+if [ -n "$(command -v grclanker 2>/dev/null)" ] && [ "$(command -v grclanker)" != "$BIN_PATH" ]; then
+  warn "Another grclanker command is already on PATH: $(command -v grclanker)"
+fi
+
+ok "Linked ${LAVENDER}${BIN_PATH}${R}"
+
+if [[ ":$PATH:" != *":${BIN_DIR}:"* ]]; then
+  warn "your PATH does not include ${BIN_DIR}"
+  shell_name="$(basename "${SHELL:-}")"
+  case "$shell_name" in
+    zsh)
+      warn "add this to ~/.zshrc: export PATH=\"${BIN_DIR}:\$PATH\""
+      ;;
+    bash)
+      warn "add this to ~/.bashrc: export PATH=\"${BIN_DIR}:\$PATH\""
+      ;;
+    *)
+      warn "export PATH=\"${BIN_DIR}:\$PATH\" before running grclanker"
+      ;;
+  esac
+fi
+
+ELAPSED="${SECONDS:-0}"
+
+BOX_W=46
+border_h() { printf "%0.s─" $(seq 1 $((BOX_W + 2))); }
+row() {
+  local raw stripped pad_len
+  raw="$1"
+  stripped="$(printf "%b" "$raw" | sed 's/\x1b\[[0-9;]*m//g')"
+  pad_len=$(( BOX_W - ${#stripped} ))
+  [ "$pad_len" -lt 0 ] && pad_len=0
+  printf "  ${DIM}│${R} %b%*s ${DIM}│${R}\n" "$raw" "$pad_len" ""
+}
+row_lr() {
+  local left="$1" right="$2"
+  local ls rs gap
+  ls="$(printf "%b" "$left" | sed 's/\x1b\[[0-9;]*m//g')"
+  rs="$(printf "%b" "$right" | sed 's/\x1b\[[0-9;]*m//g')"
+  gap=$(( BOX_W - ${#ls} - ${#rs} ))
+  [ "$gap" -lt 1 ] && gap=1
+  printf "  ${DIM}│${R} %b%*s%b ${DIM}│${R}\n" "$left" "$gap" "" "$right"
+}
+
+printf "\n"
+printf "  ${DIM}╭$(border_h)╮${R}\n"
+row_lr "${MAUVE}${B}GRCLANKER${R} ${DIM}v${VERSION}${R}" "${LAVENDER}${TARGET}${R}"
+printf "  ${DIM}├$(border_h)┤${R}\n"
+row "${GREEN}${B}Ready.${R} Run ${INK}${B}grclanker setup${R} to start."
+row "${DIM}Installed in ${ELAPSED}s${R}"
+row ""
+row "${DIM}Workflows:${R}"
+row "  ${INK}grclanker${R}"
+row "  ${INK}grclanker investigate${R}"
+row "  ${INK}grclanker audit${R}"
+row "  ${INK}grclanker assess${R}"
+row "  ${INK}grclanker validate${R}"
+printf "  ${DIM}╰$(border_h)╯${R}\n"
+
+tips=(
+  "pipe a spec URL straight into your agent's context"
+  "grclanker investigate <vendor> to start a deep-dive"
+  "specs are markdown: read them, fork them, extend them"
+  "CMVP + KEV + EPSS lookups use public source data"
+)
+printf "\n  ${DIM}Tip: ${tips[$((RANDOM % ${#tips[@]}))]}${R}\n\n"

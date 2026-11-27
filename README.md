@@ -32,6 +32,7 @@ A monorepo of GRC engineering tools, cloud and identity auditors, agent skills, 
 | [`controlbot`](./tools/controlbot) | TypeScript | Terraform PR compliance reviewer combining Checkov static scans, NIST 800-53 mapping, and optional Cursor review. |
 | [`drata-cli`](./tools/drata-cli) | Node.js | Unofficial OpenAPI-driven CLI and agent workflow skill for Drata's public v1/v2 APIs. |
 | [`fedramp-browser`](./tools/fedramp-browser) | Go | Terminal UI for browsing FedRAMP requirements, definitions, and Key Security Indicators. |
+| [`grclanker`](./tools/grclanker) | TypeScript / Next.js | Local-first AI GRC CLI built on Pi with 241 domain tools, multi-agent SDK adapters, and companion docs site. |
 | [`mesh-security`](./tools/mesh-security) | TypeScript | Monorepo toolkit (core library, VS Code extension, MCP server) for checking Istio, Consul, and Linkerd configs. |
 | [`mesh-security-trainer`](./tools/mesh-security-trainer) | Node.js | Interactive browser trainer for spotting Istio, Consul, and Linkerd security misconfigurations. |
 | [`nist-cmvp-api`](./tools/nist-cmvp-api) | Python | Self-hosted scraper, validator, Modal runner, workflow templates, and agent skill for publishing a NIST CMVP static JSON API. |
@@ -68,4 +69,4 @@ This repository intentionally omits a root `package.json` or workspace file so C
 
 ## License
 
-MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE), and bundled Drata OpenAPI specifications in `drata-cli` retain Drata's terms in [`tools/drata-cli/NOTICE`](./tools/drata-cli/NOTICE).
+MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE), bundled Drata OpenAPI specifications in `drata-cli` retain Drata's terms in [`tools/drata-cli/NOTICE`](./tools/drata-cli/NOTICE), and third-party notices for `grclanker` (including Pi, SIL OFL 1.1 Helix Mono fonts, vendored `picomatch`, and U.S. federal public-domain NIST OSCAL / FedRAMP materials) are in [`tools/grclanker/NOTICE`](./tools/grclanker/NOTICE).

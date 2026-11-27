@@ -1,0 +1,232 @@
+---
+title: Installation
+description: Install the Pi terminal release bundle, build grclanker from source, or install only the skills.
+---
+
+This page installs grclanker's Pi terminal application. SDK hosts have their own complete setup guides on [Choose a Deployment](/docs/getting-started/deployment/); they use the shared source package with separate host configuration.
+
+There are two ways to install the terminal application:
+
+- **Release bundle.** The one-line installer fetches the newest GitHub release bundle, currently `v0.1.5`, with all 241 domain tools and its own Node.js runtime.
+- **Source checkout.** Build `main` yourself to run unreleased changes or to work on grclanker.
+
+If you just want the shortest install-to-first-run path, use the [Quick Start](/docs/getting-started/quick-start). This page is the full reference for both paths, pinned versions, skills-only installs, and troubleshooting.
+
+> grclanker is primarily tested on macOS and Linux. Windows support is best-effort. If you want the least-friction path, use macOS or Linux.
+
+## What the current release includes
+
+The `v0.1.5` bundle gives you:
+
+- 241 domain tools, including the 35 platform integrations (AWS, Okta, GitHub, and the rest of the [integrations](/docs/integrations/aws/) section) plus the CMVP, KEV/EPSS, FedRAMP, OSCAL, and SCF tools
+- the interactive CLI, `grclanker setup`, and the `investigate`, `audit`, `assess`, and `validate` workflows
+- `grclanker tools`, which lists every bundled tool
+- `grclanker --version`, which prints the installed version, and `grclanker --session <id>`, which reopens the session it names
+- `grclanker flue run`, which runs the same agent under the [Flue runtime](/docs/getting-started/flue-runtime/)
+- `grclanker durable run`, `resume`, and `tui`, which run the domain tools under the experimental, opt-in [Durable Runtime](/docs/getting-started/durable-runtime/)
+- `grclanker env list`, `env doctor`, `env smoke-test`, and `env exec`
+- `grclanker "<prompt>"` for a free-form prompt, and a subject after `investigate`, `audit`, `assess`, or `validate`
+- `--compute <kind>` to pick a compute backend:
+  - for one run of `investigate`, `audit`, `assess`, `validate`, or a `"<prompt>"`
+  - with `grclanker setup --compute <kind>`, to save it as the preferred backend
+  - as an alias for `--backend` on `env smoke-test` and `env exec`
+
+A bare `grclanker --compute <kind>` is rejected as an unknown command.
+
+[What's New](/docs/changelog/) has release notes and upgrade details.
+
+## One-line installer
+
+On macOS or Linux:
+
+```bash
+curl -fsSL https://grclanker.com/install | bash
+```
+
+On Windows PowerShell (best effort):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm https://grclanker.com/install.ps1 | iex"
+```
+
+After install, run:
+
+```bash
+grclanker setup
+```
+
+That setup step is where you choose the local-first or hosted model path. Follow the [Quick Start](/docs/getting-started/quick-start/) to authenticate and verify a model response.
+
+## What the installer does
+
+- Detects your OS and architecture. Bundles exist for `darwin-arm64`, `darwin-x64`, `linux-arm64`, `linux-x64` (glibc), `win32-arm64`, and `win32-x64`. Linux musl hosts (such as Alpine) are not supported. Use a [source checkout](#install-from-source) there.
+- Downloads the bundle for your platform from the newest full release, skipping prereleases such as `v0.2.0-rc.1`. If the GitHub API is unavailable or rate limited, it follows the `releases/latest` link on github.com instead.
+- Checks the archive against `SHA256SUMS.txt`. An official GitHub download or a `GRCLANKER_RELEASE_BASE_URL` install aborts when that file cannot be fetched, has no entry for the archive, the entry is not a SHA-256 digest, the digest does not match, or (the shell installer only) neither `sha256sum` nor `shasum` is available.
+  - A custom `GRCLANKER_ASSET_URL` prints a warning and installs without verifying.
+  - A local archive with no `SHA256SUMS.txt` beside it prints a warning and installs without verifying. When that file is present, a missing entry, a digest that is not SHA-256, or a mismatch aborts the install, and the shell installer also aborts if neither `sha256sum` nor `shasum` is available.
+- Replaces `~/.local/share/grclanker` with the unpacked bundle. The bundle includes its own Node.js runtime, so you do not need Node installed.
+- Links `grclanker` into `~/.local/bin`. On Windows it writes a `grclanker.cmd` launcher there instead.
+- Warns if `~/.local/bin` is not on your `PATH`. On macOS and Linux it prints the `export PATH=...` line to add to your shell profile.
+
+grclanker keeps its settings and runtime state under `~/.grclanker/agent`, separate from the install directory, so reinstalling does not reset your setup.
+
+### First interactive session
+
+The first interactive session looks for `fd` and `rg` (ripgrep), which the `find` and `grep` tools use on the `host` compute backend. If either is not on your `PATH`, grclanker downloads it from that project's GitHub releases into `~/.grclanker/agent/bin`. A custom `GRCLANKER_HOME` moves this cache with your settings and sessions; see [Configuration](/docs/getting-started/configuration/#environment-variables).
+
+On a machine without internet access, install both first, or set `PI_OFFLINE=1` to skip the download and the other startup network calls. Without them, `find` and `grep` fail with a message that the binary is not available.
+
+## Pinned versions and install locations
+
+Pin a release explicitly:
+
+```bash
+curl -fsSL https://grclanker.com/install | bash -s -- 0.1.5
+```
+
+Windows PowerShell (best effort):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "& ([scriptblock]::Create((irm https://grclanker.com/install.ps1))) -Version 0.1.5"
+```
+
+Both installers also read these environment variables:
+
+| Variable | Default | Effect |
+| --- | --- | --- |
+| `GRCLANKER_VERSION` | `latest` | Release to install, with or without the leading `v`. A positional version or `-Version` wins over it. |
+| `GRCLANKER_INSTALL_DIR` | `~/.local/share/grclanker` | Where the bundle is unpacked. The installer deletes and recreates this directory. |
+| `GRCLANKER_BIN_DIR` | `~/.local/bin` | Where the `grclanker` launcher is linked. |
+
+For example:
+
+```bash
+curl -fsSL https://grclanker.com/install | GRCLANKER_INSTALL_DIR="$HOME/opt/grclanker" GRCLANKER_BIN_DIR="$HOME/bin" bash
+```
+
+## Install from source
+
+A source checkout gives you everything on `main`, including changes that have not been released yet. You need `git`, `npm`, and Node.js 22.19 or newer, the `engines` floor in `cli/package.json`. The Pi and Flue runtime packages the CLI depends on require it.
+
+```bash
+# From the top level of an Open Control Tools checkout:
+cd grclanker
+npm --prefix cli ci
+npm --prefix cli run build
+node cli/bin/grclanker.js --help
+node cli/bin/grclanker.js tools
+```
+
+`grclanker tools` should report `241 domain tools + 7 compute backend tools`. Run `node cli/bin/grclanker.js setup` next.
+
+To put `grclanker` on your `PATH`, link the package from inside `cli/`:
+
+```bash
+cd cli
+npm link
+```
+
+Run `npm link` from the `cli/` directory. `npm --prefix cli link` does not work, because `--prefix` also redirects npm's global link directory into the checkout.
+
+To run only the [Cursor / Grok Agent SDK](/docs/getting-started/agent-sdk/) from this checkout, stop after `npm --prefix cli ci` and `npm --prefix cli run build`, then follow that guide. Leave `node cli/bin/grclanker.js`, `npm link`, `grclanker setup`, and Ollama unused. The repository-root site and docs build stay unused too. Node.js 22.19 or newer still applies. A model turn needs a Cursor credential. `cursor:validate` and `cursor:call` do not.
+
+If you would rather have the same self-contained layout as the release installer, build a bundle for your platform and install it from the checkout root:
+
+```bash
+npm --prefix cli run build:bundle
+bash public/install
+```
+
+When run from a checkout, the installer uses the newest matching bundle in `cli/release/` instead of downloading one. If `build:bundle` wrote `SHA256SUMS.txt` next to that bundle, the installer checks the archive against it and aborts when the file does not cover the archive. If that checksum file is missing, it prints a warning and installs without verifying. The install banner shows the version in `cli/package.json`.
+
+To update a source install:
+
+1. Run `git pull`.
+2. Repeat `npm --prefix cli ci` and `npm --prefix cli run build`.
+3. If you use the bundle layout, also repeat `build:bundle` plus `bash public/install`.
+
+## Configure grclanker for local-only use
+
+Install and model setup are separate on purpose.
+
+If you want grclanker to stay local-first instead of using a hosted provider, install Ollama first from [ollama.com/download](https://ollama.com/download). The grclanker installer does not install it.
+
+Ollama must be serving before setup, with a context window large enough for grclanker's tool definitions. If the Ollama app or background service is already running, raise its context length setting instead of running this command. Otherwise start the server in its own terminal and leave it running:
+
+```bash
+OLLAMA_CONTEXT_LENGTH=128000 ollama serve
+```
+
+[Context length](/docs/getting-started/setup#context-length) on the Setup page explains the number.
+
+Then, in a second terminal:
+
+```bash
+ollama pull gemma4
+grclanker setup
+```
+
+Choose `Local-first` when prompted. The defaults are:
+
+- endpoint: `http://localhost:11434/v1`
+- provider kind: `ollama`
+- model example: `gemma4`
+
+If the endpoint is unreachable, setup stops and prints the commands to fix it. If the model you name is not installed, setup offers another installed local model or asks you to pull one. It does not fall back to a hosted model.
+
+See [Setup](/docs/getting-started/setup/) for the full wizard.
+
+## Skills only
+
+If you only want the grclanker agent skill for Codex or another skills-aware agent, and not the terminal runtime:
+
+User-scoped install, into `~/.codex/skills/grclanker`:
+
+```bash
+curl -fsSL https://grclanker.com/install-skills | bash
+```
+
+Repo-local install, into `.agents/skills/grclanker` under the current directory:
+
+```bash
+curl -fsSL https://grclanker.com/install-skills | bash -s -- --repo
+```
+
+Windows PowerShell (best effort):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm https://grclanker.com/install-skills.ps1 | iex"
+```
+
+These installers download only `skills/grclanker/SKILL.md` from the `main` branch. They do not install the runtime bundle, the terminal UI, or the state under `~/.grclanker/agent`.
+
+## Package managers
+
+`@grclanker/cli` is not published to npm, so `npm install -g @grclanker/cli` and `bun install -g @grclanker/cli` fail. If no release bundle fits your platform, use a [source checkout](#install-from-source) instead.
+
+## Verify the install
+
+```bash
+grclanker --version
+grclanker --help
+grclanker setup
+```
+
+`--version` should print `0.1.5`. The help output and setup wizard verify startup; `grclanker tools` checks the registered tool catalog. To verify authenticated model access, complete the [first response check](/docs/getting-started/quick-start/#3-verify-a-model-response).
+
+## Upgrade an existing install
+
+For a release bundle, rerun the [one-line installer](#one-line-installer), then check `grclanker --version`. Your settings and sessions stay in the separate runtime directory. Run `grclanker setup` if you want to select the current hosted defaults; upgrading preserves your existing model choice.
+
+On very old bundles, `grclanker tools`, free-form prompts, or `grclanker --session <id>` may report `Unknown command`. Upgrade before using the current examples. If a saved Anthropic model is retired, rerun setup and choose `claude-sonnet-4-6` or another model your account can access.
+
+## Troubleshooting
+
+- If `grclanker` resolves to a different install (for example an `npm link` from a source checkout), run `which -a grclanker` and `hash -r`, or launch `~/.local/bin/grclanker` directly. The installer warns when another `grclanker` is already on your `PATH`.
+- If local-first setup fails, check that Ollama is serving on `http://localhost:11434/v1`.
+- If `gemma4` is missing, run `ollama pull gemma4` and rerun `grclanker setup`.
+- If local-first answers come back without any tool calls, run `ollama ps` while the model is loaded. The `CONTEXT` column should show at least `128000`. If it is lower, raise it as described in [Context length](/docs/getting-started/setup#context-length).
+- If `grclanker` reports that it is not configured yet and asks for an interactive terminal, it was started without one, for example from a script or CI job. Run `grclanker setup` once in a terminal, or write the settings by hand as described in [Configuration](/docs/getting-started/configuration/).
+- If you do not want local-first, rerun `grclanker setup` and choose `Hosted`.
+
+On Windows, expect rough edges. The recommended path for now is macOS or Linux.

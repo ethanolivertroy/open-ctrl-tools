@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import { existsSync, readFileSync } from 'node:fs';
+import { test } from 'node:test';
+
+const home = readFileSync(new URL('../src/app/page.tsx', import.meta.url), 'utf8');
+const about = readFileSync(new URL('../src/app/about/page.tsx', import.meta.url), 'utf8');
+const rail = readFileSync(new URL('../src/components/hero-images.tsx', import.meta.url), 'utf8');
+const install = readFileSync(new URL('../src/components/hero-install.tsx', import.meta.url), 'utf8');
+const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');
+
+test('homepage workflow states match the shipped prompts', () => {
+  assert.match(
+    home,
+    /satisfied, partially satisfied, not satisfied, or unable to assess/,
+  );
+  assert.match(home, /strong, mixed, at risk, or critical/);
+  assert.match(
+    home,
+    /actively validated, previously validated but expired, in process, or not found in the searched catalog/,
+  );
+  assert.doesNotMatch(home, /unverifiable/);
+  assert.doesNotMatch(home, /partial, absent/);
+});
+
+test('deployment choices list every source integration', () => {
+  for (const label of ['Pi Terminal CLI', 'OpenAI Agents SDK', 'Codex SDK', 'Cursor / Grok Agent SDK', 'Claude Code', 'Claude API Tool Runner', 'Claude Agent SDK']) {
+    assert.ok(home.includes(`label: '${label}'`), label);
+  }
+  assert.doesNotMatch(home, /status: 'Planned'/);
+  assert.match(home, /Source integrations add Claude Code, OpenAI Agents SDK, the Claude API tool runner, Claude Agent SDK, Codex SDK, and Cursor \/ Grok Agent SDK/);
+  assert.match(home, /including Flue and the experimental durable runtime/);
+  assert.match(about, /Claude Code, OpenAI Agents SDK, the Claude API tool runner, Claude Agent SDK, Codex SDK, or Cursor \/ Grok Agent SDK/);
+  assert.doesNotMatch(`${home}\n${about}`, /Claude Agent SDK is planned/);
+});
+
+test('the install command stays in the copy button name with visible feedback', () => {
+  assert.match(install, /aria-label=\{`\$\{copied \? 'Copied' : 'Copy'\} install command: \$\{command\}`\}/);
+  assert.match(install, /\{copied \? 'Copied' : 'Copy'\}/);
+});
+
+test('llms.txt raw spec URLs use the published repository', () => {
+  const urls = [...llms.matchAll(/https:\/\/raw\.githubusercontent\.com\/([^/]+\/[^/]+)\/main\/specs\/([^)\s]+\.spec\.md)/g)];
+  assert.ok(urls.length >= 35);
+  assert.deepEqual([...new Set(urls.map((match) => match[1]))], ['ethanolivertroy/grclanker']);
+  assert.equal(urls.filter((match) => match[2] === 'veracode-sec-inspector.spec.md').length, 1);
+  assert.equal(new Set(urls.map((match) => match[2])).size, urls.length);
+  assert.match(llms, /except Vanta/);
+});
+
+test('pages reference image files that exist', () => {
+  const sources = [home, about, rail];
+  const paths = sources.flatMap((source) => [...source.matchAll(/['"](\/[^'"]+\.(?:webp|png|jpe?g))['"]/g)].map((match) => match[1]));
+  assert.ok(paths.length >= 8);
+  for (const path of paths) {
+    assert.equal(existsSync(new URL(`../public${path}`, import.meta.url)), true, path);
+  }
+  assert.equal(existsSync(new URL('../public/hero/grclanker-terminal.png', import.meta.url)), false);
+  assert.equal(existsSync(new URL('../public/hero/assembly.webp', import.meta.url)), false);
+  assert.equal(existsSync(new URL('../public/hero/cockpit.webp', import.meta.url)), false);
+});

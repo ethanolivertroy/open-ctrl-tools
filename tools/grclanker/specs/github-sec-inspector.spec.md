@@ -1,0 +1,714 @@
+---
+slug: "github-sec-inspector"
+name: "GitHub Security Inspector"
+vendor: "GitHub"
+category: "devops-developer-platforms"
+language: "typescript"
+status: "implemented"
+version: "1.0"
+last_updated: "2026-09-21"
+source_repo: "https://github.com/ethanolivertroy/grclanker"
+---
+
+# github-sec-inspector — Architecture Specification
+
+## 1. Overview
+
+**GitHub Enterprise Cloud** is the most widely adopted platform for source code hosting, collaboration, and DevOps automation. Organizations use it to manage repositories, CI/CD pipelines (GitHub Actions), package registries, code review workflows, and developer access across thousands of contributors.
+
+Misconfigurations at the organization or enterprise level — unenforced SSO, missing two-factor authentication requirements, overly permissive member base permissions, unprotected default branches, disabled security scanning, unrestricted Actions workflows, or unmonitored OAuth/GitHub App integrations — can expose source code, enable supply chain attacks, leak secrets, and undermine the software development lifecycle. Because GitHub is the central nervous system of modern software delivery, its security posture directly determines an organization's exposure to code tampering, credential theft, and insider threats.
+
+**github-sec-inspector** is an automated compliance inspection tool that connects to a GitHub organization (or enterprise) via the GitHub APIs, collects security-relevant configuration data across organization settings, repositories, rulesets, Actions posture, code security features, and access controls, evaluates the configuration against hardened baselines derived from multiple compliance frameworks, and produces actionable reports with framework-specific control mappings.
+
+The current implementation ships natively inside `grclanker` as a TypeScript tool family: `github_check_access`, `github_assess_org_access`, `github_assess_repo_protection`, `github_assess_actions_security`, `github_assess_code_security`, and `github_export_audit_bundle`.
+
+## 2. APIs & SDKs
+
+### 2.1 GitHub REST API v3
+
+Base URL: `https://api.github.com`
+
+#### Organization Settings & Members
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}` | GET | Organization profile, settings, default permissions, 2FA requirement |
+| `/orgs/{org}/settings/billing/actions` | GET | Actions usage and billing |
+| `/orgs/{org}/members` | GET | List organization members (with filter, role params) |
+| `/orgs/{org}/members/{username}` | GET | Check membership status |
+| `/orgs/{org}/memberships/{username}` | GET | Get membership details (role: member/admin) |
+| `/orgs/{org}/outside_collaborators` | GET | List outside collaborators across all repos |
+| `/orgs/{org}/teams` | GET | List all teams |
+| `/orgs/{org}/teams/{team_slug}/members` | GET | List team members |
+| `/orgs/{org}/teams/{team_slug}/repos` | GET | List repos accessible to a team |
+| `/orgs/{org}/failed_invitations` | GET | List failed membership invitations |
+| `/orgs/{org}/invitations` | GET | List pending invitations |
+| `/orgs/{org}/blocks` | GET | List blocked users |
+
+#### Security & Access Management
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}/security-managers` | GET | List security manager teams (deprecated Jan 2026; use Organization Roles) |
+| `/orgs/{org}/organization-roles` | GET | List organization roles and assignments |
+| `/orgs/{org}/credential-authorizations` | GET | List SAML SSO credential authorizations for members |
+| `/orgs/{org}/installations` | GET | List GitHub App installations on the org |
+| `/orgs/{org}/hooks` | GET | List organization webhooks |
+| `/orgs/{org}/hooks/{hook_id}` | GET | Get webhook details (config, events, SSL verification) |
+
+#### Audit Log
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}/audit-log` | GET | Query organization audit log events (with `phrase`, `include`, `after` params) |
+| `/enterprises/{enterprise}/audit-log` | GET | Enterprise-level audit log (Enterprise Cloud only) |
+
+#### Code Security (GHAS)
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}/code-scanning/alerts` | GET | List code scanning alerts across all repos |
+| `/orgs/{org}/secret-scanning/alerts` | GET | List secret scanning alerts across all repos |
+| `/orgs/{org}/dependabot/alerts` | GET | List Dependabot alerts across all repos |
+| `/orgs/{org}/code-security/configurations` | GET | List code security configurations |
+| `/repos/{owner}/{repo}/code-scanning/alerts` | GET | Repository-level code scanning alerts |
+| `/repos/{owner}/{repo}/secret-scanning/alerts` | GET | Repository-level secret scanning alerts |
+| `/repos/{owner}/{repo}/dependabot/alerts` | GET | Repository-level Dependabot alerts |
+| `/repos/{owner}/{repo}/vulnerability-alerts` | GET | Check if Dependabot alerts are enabled |
+
+#### Repository Settings & Branch Protection
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}/repos` | GET | List all organization repositories |
+| `/repos/{owner}/{repo}` | GET | Repository details (visibility, default branch, settings) |
+| `/repos/{owner}/{repo}/branches/{branch}/protection` | GET | Branch protection rules |
+| `/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` | GET | Required review settings |
+| `/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` | GET | Signed commit requirement |
+| `/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` | GET | Required status checks |
+| `/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` | GET | Admin enforcement of protections |
+| `/repos/{owner}/{repo}/rulesets` | GET | Repository rulesets (newer API replacing branch protection) |
+| `/orgs/{org}/rulesets` | GET | Organization-level rulesets |
+
+#### Deploy Keys, Secrets, and Actions
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/repos/{owner}/{repo}/keys` | GET | List deploy keys |
+| `/repos/{owner}/{repo}/actions/permissions` | GET | Actions permissions for a repo |
+| `/orgs/{org}/actions/permissions` | GET | Actions permissions for the org |
+| `/orgs/{org}/actions/permissions/workflow` | GET | Default workflow permissions |
+| `/orgs/{org}/actions/permissions/selected-actions` | GET | Allowed actions configuration |
+| `/orgs/{org}/actions/runner-groups` | GET | Self-hosted runner groups |
+| `/orgs/{org}/actions/runners` | GET | List self-hosted runners |
+| `/orgs/{org}/actions/secrets` | GET | List organization-level Actions secrets |
+| `/orgs/{org}/dependabot/secrets` | GET | List organization-level Dependabot secrets |
+| `/orgs/{org}/packages` | GET | List packages in the organization registry |
+
+#### OAuth and GitHub Apps
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/orgs/{org}/installations` | GET | GitHub App installations |
+| `/app/installations/{installation_id}` | GET | Installation details and permissions |
+| `/orgs/{org}/credential-authorizations` | GET | OAuth credential authorizations (SAML SSO orgs) |
+
+### 2.2 GitHub GraphQL API v4
+
+Base URL: `https://api.github.com/graphql`
+
+#### Organization-Level Queries
+
+```graphql
+# SAML Identity Provider configuration
+query {
+  organization(login: "org-name") {
+    samlIdentityProvider {
+      ssoUrl
+      issuer
+      digestMethod
+      signatureMethod
+      externalIdentities(first: 100) {
+        edges {
+          node {
+            samlIdentity { nameId }
+            scimIdentity { username }
+            user { login, email }
+          }
+        }
+      }
+    }
+  }
+}
+
+# IP Allow List entries
+query {
+  organization(login: "org-name") {
+    ipAllowListEnabledSetting
+    ipAllowListForInstalledAppsEnabledSetting
+    ipAllowListEntries(first: 100) {
+      nodes {
+        allowListValue
+        isActive
+        name
+        createdAt
+      }
+    }
+  }
+}
+
+# Enterprise Managed Users (EMU) detection
+query {
+  organization(login: "org-name") {
+    membersWithRole(first: 1) {
+      nodes {
+        login
+        enterpriseUserAccount {
+          login
+          enterprise { slug }
+        }
+      }
+    }
+  }
+}
+
+# Repository security features
+query {
+  organization(login: "org-name") {
+    repositories(first: 100) {
+      nodes {
+        name
+        isPrivate
+        defaultBranchRef {
+          name
+          branchProtectionRule {
+            requiresApprovingReviews
+            requiredApprovingReviewCount
+            requiresCodeOwnerReviews
+            requiresCommitSignatures
+            requiresStatusChecks
+            requiresLinearHistory
+            dismissesStaleReviews
+            restrictsReviewDismissals
+            isAdminEnforced
+            allowsForcePushes
+            allowsDeletions
+          }
+        }
+        hasVulnerabilityAlertsEnabled
+        securityPolicyUrl
+        deleteBranchOnMerge
+        mergeCommitAllowed
+        squashMergeAllowed
+        rebaseMergeAllowed
+      }
+    }
+  }
+}
+```
+
+#### Enterprise-Level Queries (Enterprise Cloud)
+
+```graphql
+# Enterprise audit log
+query {
+  enterprise(slug: "enterprise-slug") {
+    ownerInfo {
+      admins(first: 10) { nodes { login } }
+      affiliatedUsersWithTwoFactorDisabled(first: 100) {
+        nodes { login, email }
+      }
+      samlIdentityProvider {
+        ssoUrl
+        issuer
+        externalIdentities(first: 100) {
+          nodes {
+            samlIdentity { nameId }
+            user { login }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### 2.3 SDKs and CLIs
+
+| Tool | Language | Package | Notes |
+|------|----------|---------|-------|
+| **go-github** | Go | `github.com/google/go-github/v68` | Google-maintained Go client for GitHub REST API v3 |
+| **shurcooL/githubv4** | Go | `github.com/shurcooL/githubv4` | Go client for GitHub GraphQL API v4 |
+| **gh CLI** | Go | `gh` (Homebrew, apt, etc.) | Official GitHub CLI; extensible with extensions |
+| **PyGithub** | Python | `pip install PyGithub` | Full-featured Python wrapper for REST API |
+| **ghapi** | Python | `pip install ghapi` | Lightweight Python wrapper auto-generated from OpenAPI spec |
+| **octokit/rest.js** | JS/TS | `npm install @octokit/rest` | Official JavaScript REST client |
+| **octokit/graphql.js** | JS/TS | `npm install @octokit/graphql` | Official JavaScript GraphQL client |
+| **octokit.rb** | Ruby | `gem install octokit` | Official Ruby client |
+| **Terraform GitHub Provider** | HCL | `integrations/github` | Infrastructure-as-code for GitHub settings |
+
+### 2.4 API Rate Limits
+
+| API | Limit | Notes |
+|-----|-------|-------|
+| REST API (authenticated) | 5,000 requests/hour | Per PAT or OAuth token |
+| REST API (GitHub App) | 5,000 requests/hour per installation | Higher for large orgs |
+| GraphQL API | 5,000 points/hour | Cost varies by query complexity |
+| Audit Log REST | 1,750 queries/hour per user | Lower rate for audit log queries |
+| Search API | 30 requests/minute | Separate rate limit bucket |
+
+## 3. Authentication
+
+### 3.1 Personal Access Token (Fine-Grained)
+
+```bash
+export GITHUB_TOKEN="github_pat_..."
+export GITHUB_ORG="your-organization"
+```
+
+Fine-grained PATs (recommended) can be scoped to specific repositories and permissions. Required permissions for full audit:
+- **Organization**: `read:org`, `read:audit_log`, `admin:org` (for some settings)
+- **Repository**: `read:repo`, `read:security_events`
+- **Members**: `read:org`
+
+### 3.2 Personal Access Token (Classic)
+
+```bash
+export GITHUB_TOKEN="ghp_..."
+export GITHUB_ORG="your-organization"
+```
+
+Classic PATs require the following scopes:
+- `repo` — full repository access (needed for branch protection, security alerts)
+- `admin:org` — organization settings, members, teams, webhooks
+- `read:audit_log` — audit log access
+- `security_events` — code scanning and secret scanning alerts
+- `read:packages` — package registry access
+
+### 3.3 GitHub App Authentication
+
+```bash
+export GITHUB_APP_ID="12345"
+export GITHUB_APP_PRIVATE_KEY_PATH="/path/to/private-key.pem"
+export GITHUB_APP_INSTALLATION_ID="67890"
+export GITHUB_ORG="your-organization"
+```
+
+GitHub Apps provide the highest rate limits and finest-grained permissions. The app must be installed on the organization with the following permissions:
+- **Organization**: Administration (read), Members (read), Plan (read)
+- **Repository**: Administration (read), Code scanning alerts (read), Dependabot alerts (read), Secret scanning alerts (read), Metadata (read)
+
+### 3.4 OAuth App (Interactive)
+
+For interactive use or CI/CD systems using OAuth flow. Not recommended for automated inspection; prefer PAT or GitHub App.
+
+### 3.5 SAML SSO Authorization
+
+In organizations with SAML SSO enabled, tokens must be explicitly authorized for the organization. Classic PATs must be SSO-authorized via GitHub Settings > Developer settings > Personal access tokens > Authorize.
+
+### 3.6 Environment Variables (github-sec-inspector)
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GITHUB_TOKEN` | Yes* | Personal access token (classic or fine-grained) |
+| `GITHUB_ORG` | Yes | Target organization slug |
+| `GITHUB_ENTERPRISE` | Optional | Enterprise slug (for enterprise-level checks) |
+| `GITHUB_APP_ID` | Alt* | GitHub App ID |
+| `GITHUB_APP_PRIVATE_KEY_PATH` | Alt* | Path to GitHub App private key PEM file |
+| `GITHUB_APP_INSTALLATION_ID` | Alt* | GitHub App installation ID |
+| `GITHUB_API_URL` | Optional | API base URL (default: `https://api.github.com`; set for GHES) |
+| `GITHUB_GRAPHQL_URL` | Optional | GraphQL URL (default: `https://api.github.com/graphql`) |
+
+*Either `GITHUB_TOKEN` or all three `GITHUB_APP_*` variables are required.
+
+## 4. Security Controls
+
+### Identity & Authentication
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 1 | **SAML SSO Enforcement** | Critical | Verify SAML SSO is configured and enforced for the organization via GraphQL `samlIdentityProvider`; check that all members have active SAML identity bindings |
+| 2 | **Two-Factor Authentication Requirement** | Critical | Verify `two_factor_requirement_enabled` is `true` on the organization; enumerate members without 2FA via `/orgs/{org}/members?filter=2fa_disabled` |
+| 3 | **Enterprise Managed Users (EMU)** | High | Detect whether the organization uses EMU (managed by enterprise IdP); check enterprise user account bindings via GraphQL |
+| 4 | **IP Allow List** | High | Via GraphQL, verify `ipAllowListEnabledSetting` is `ENABLED`; enumerate allow list entries; check `ipAllowListForInstalledAppsEnabledSetting` |
+
+### Organization Permissions & Policies
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 5 | **Member Base Permissions** | High | Check `default_repository_permission` on the org object; flag if set to `write` or `admin` (should be `read` or `none`) |
+| 6 | **Repository Visibility Defaults** | Medium | Check `members_can_create_public_repositories`; verify `members_can_create_private_repositories` and `members_can_create_internal_repositories` policies |
+| 7 | **Fork Policy** | Medium | Check `members_can_fork_private_repositories`; flag if private repo forking is unrestricted |
+| 8 | **Outside Collaborator Policy** | High | Enumerate outside collaborators via `/orgs/{org}/outside_collaborators`; flag excessive external access; check if admin approval is required |
+| 9 | **OAuth App Restrictions** | High | Verify OAuth application access policy is set to restricted; check `/orgs/{org}/credential-authorizations` for unauthorized OAuth apps |
+
+### Repository & Code Protection
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 10 | **Branch Protection Rules** | Critical | For every repo's default branch, verify protection is enabled; check `requiresApprovingReviews`, `isAdminEnforced`, `allowsForcePushes=false`, `allowsDeletions=false` |
+| 11 | **Required Pull Request Reviews** | High | Verify `requiredApprovingReviewCount >= 1`; check `requiresCodeOwnerReviews`, `dismissesStaleReviews`, `restrictsReviewDismissals` |
+| 12 | **Required Status Checks** | High | Verify `requiresStatusChecks=true` with specific required contexts; flag repos with no CI checks |
+| 13 | **Signed Commit Requirement** | Medium | Check `requiresCommitSignatures` on branch protection; flag repos where unsigned commits are allowed on protected branches |
+| 14 | **Repository Rulesets** | Medium | Enumerate org-level and repo-level rulesets; verify they enforce branch protection, tag protection, and push restrictions |
+
+### Code Security Features (GHAS)
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 15 | **Code Scanning Enabled** | High | Verify code scanning (CodeQL or third-party) is configured on all repositories; count open critical/high alerts via `/orgs/{org}/code-scanning/alerts` |
+| 16 | **Secret Scanning Enabled** | Critical | Verify secret scanning is enabled on all repositories; check push protection is enabled; count open alerts via `/orgs/{org}/secret-scanning/alerts` |
+| 17 | **Dependabot Enabled** | High | Verify Dependabot alerts and security updates are enabled; count open critical/high alerts via `/orgs/{org}/dependabot/alerts` |
+| 18 | **Security Policy** | Low | Check each repo has a `SECURITY.md` or `securityPolicyUrl` configured |
+
+### Audit & Monitoring
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 19 | **Audit Log Streaming** | High | Verify audit log streaming is configured to an external SIEM; check via enterprise settings or audit log API |
+| 20 | **Webhook Security** | High | Audit all organization webhooks; flag webhooks without `secret` configured, webhooks with `insecure_ssl=1`, webhooks sending to non-HTTPS URLs |
+
+### Actions & CI/CD Security
+
+| # | Control | Severity | What Is Checked |
+|---|---------|----------|-----------------|
+| 21 | **Actions Permissions** | High | Check org-level Actions permissions; flag if `allowed_actions` is `all` (should be `selected` or `local_only`); verify `default_workflow_permissions` is `read` not `write` |
+| 22 | **Runner Group Restrictions** | Medium | Audit self-hosted runner groups; flag runners accessible to all repos; verify runner group repository access restrictions |
+| 23 | **Deploy Key Management** | Medium | Enumerate deploy keys across all repos; flag keys with write access; flag keys older than 365 days without rotation |
+| 24 | **GitHub App Permissions Audit** | High | Enumerate all GitHub App installations; flag apps with excessive permissions (admin access, write to all repos); check for inactive/unused apps |
+| 25 | **Package Registry Access** | Medium | Audit package visibility settings; flag packages with public visibility in private organizations; check package access inheritance |
+
+## 5. Compliance Framework Mappings
+
+| # | Control | FedRAMP (800-53 r5) | CMMC 2.0 | SOC 2 (TSC) | CIS GitHub Benchmark | PCI-DSS 4.0 | DISA STIG | IRAP (ISM) | ISMAP |
+|---|---------|---------------------|----------|-------------|---------------------|-------------|-----------|------------|-------|
+| 1 | SAML SSO Enforcement | IA-2, IA-8 | AC.L2-3.1.1 | CC6.1 | 1.1.1 | 8.3.1 | SRG-APP-000148 | ISM-1557 | 5.1.1 |
+| 2 | Two-Factor Authentication | IA-2(1), IA-2(2) | IA.L2-3.5.3 | CC6.1 | 1.1.2 | 8.4.2 | SRG-APP-000149 | ISM-1401 | 5.1.2 |
+| 3 | Enterprise Managed Users | IA-2, IA-5 | IA.L2-3.5.1 | CC6.1 | 1.1.3 | 8.2.1 | SRG-APP-000163 | ISM-1558 | 5.1.3 |
+| 4 | IP Allow List | SC-7, AC-17 | SC.L2-3.13.1 | CC6.1, CC6.6 | 1.2.1 | 1.3.1 | SRG-APP-000142 | ISM-1416 | 5.1.4 |
+| 5 | Member Base Permissions | AC-3, AC-6 | AC.L2-3.1.5 | CC6.3 | 1.3.1 | 7.2.1 | SRG-APP-000033 | ISM-1508 | 5.2.1 |
+| 6 | Repository Visibility Defaults | AC-3, AC-22 | AC.L2-3.1.22 | CC6.1 | 1.3.2 | 7.2.2 | SRG-APP-000211 | ISM-0264 | 5.2.2 |
+| 7 | Fork Policy | AC-3, AC-4 | AC.L2-3.1.3 | CC6.1 | 1.3.3 | 7.2.3 | SRG-APP-000033 | ISM-0405 | 5.2.3 |
+| 8 | Outside Collaborator Policy | AC-2, AC-6(5) | AC.L2-3.1.6 | CC6.2, CC6.3 | 1.3.4 | 7.2.4 | SRG-APP-000340 | ISM-1509 | 5.2.4 |
+| 9 | OAuth App Restrictions | AC-3, AC-6 | AC.L2-3.1.5 | CC6.6, CC6.8 | 1.4.1 | 6.3.2 | SRG-APP-000386 | ISM-1490 | 5.2.5 |
+| 10 | Branch Protection Rules | CM-3, SI-7 | CM.L2-3.4.5 | CC8.1 | 2.1.1 | 6.5.1 | SRG-APP-000133 | ISM-1072 | 5.3.1 |
+| 11 | Required Pull Request Reviews | CM-3, CM-5 | CM.L2-3.4.5 | CC8.1 | 2.1.2 | 6.5.2 | SRG-APP-000381 | ISM-1525 | 5.3.2 |
+| 12 | Required Status Checks | SI-7, SA-11 | SA.L2-3.13.10 | CC8.1 | 2.1.3 | 6.5.3 | SRG-APP-000456 | ISM-1525 | 5.3.3 |
+| 13 | Signed Commit Requirement | SI-7(6) | SI.L2-3.14.1 | CC8.1 | 2.1.4 | 6.5.4 | SRG-APP-000411 | ISM-1072 | 5.3.4 |
+| 14 | Repository Rulesets | CM-3, CM-5 | CM.L2-3.4.5 | CC8.1 | 2.1.5 | 6.5.5 | SRG-APP-000133 | ISM-1072 | 5.3.5 |
+| 15 | Code Scanning Enabled | RA-5, SA-11 | RA.L2-3.11.2 | CC7.1 | 3.1.1 | 6.5.6 | SRG-APP-000456 | ISM-1163 | 5.4.1 |
+| 16 | Secret Scanning Enabled | IA-5(7), SC-12 | SC.L2-3.13.10 | CC6.1, CC7.1 | 3.1.2 | 6.5.7 | SRG-APP-000175 | ISM-1590 | 5.4.2 |
+| 17 | Dependabot Enabled | RA-5, SI-2 | RA.L2-3.11.2 | CC7.1 | 3.1.3 | 6.3.3 | SRG-APP-000456 | ISM-1163 | 5.4.3 |
+| 18 | Security Policy | PL-2, IR-8 | IR.L2-3.6.1 | CC2.2 | 3.1.4 | 12.10.1 | SRG-APP-000516 | ISM-0043 | 5.4.4 |
+| 19 | Audit Log Streaming | AU-2, AU-6, SI-4 | AU.L2-3.3.1 | CC7.2, CC7.3 | 4.1.1 | 10.2.1 | SRG-APP-000095 | ISM-0580 | 5.5.1 |
+| 20 | Webhook Security | SC-8, SI-4 | SC.L2-3.13.8 | CC6.7 | 4.1.2 | 4.2.1 | SRG-APP-000439 | ISM-1139 | 5.5.2 |
+| 21 | Actions Permissions | CM-7, AC-3 | CM.L2-3.4.7 | CC6.8, CC8.1 | 5.1.1 | 6.3.2 | SRG-APP-000386 | ISM-1490 | 5.6.1 |
+| 22 | Runner Group Restrictions | AC-3, CM-7 | AC.L2-3.1.3 | CC6.3 | 5.1.2 | 7.2.5 | SRG-APP-000033 | ISM-0405 | 5.6.2 |
+| 23 | Deploy Key Management | IA-5, SC-12 | IA.L2-3.5.10 | CC6.1, CC6.6 | 5.2.1 | 8.6.3 | SRG-APP-000175 | ISM-1590 | 5.6.3 |
+| 24 | GitHub App Permissions Audit | AC-6(10), CM-11 | AC.L2-3.1.7 | CC6.3, CC6.8 | 5.2.2 | 6.3.2 | SRG-APP-000342 | ISM-1490 | 5.6.4 |
+| 25 | Package Registry Access | AC-3, AC-22 | AC.L2-3.1.22 | CC6.1 | 5.3.1 | 7.2.6 | SRG-APP-000211 | ISM-0264 | 5.6.5 |
+
+## 6. Existing Tools
+
+| Tool | Type | Relevance |
+|------|------|-----------|
+| **github/safe-settings** | GitHub App | Declarative repo/org settings management via YAML; enforces branch protection, collaborators, labels, and org settings; apply-and-drift-detect model |
+| **ossf/allstar** | GitHub App | OpenSSF project for continuous security policy enforcement; checks branch protection, binary artifacts, CI tests, pinned dependencies, SECURITY.md, admin access |
+| **ossf/scorecard** | CLI / GitHub Action | OpenSSF Scorecard assesses 18+ security heuristics (branch protection, code review, dependency pinning, fuzzing, SAST, signed releases, etc.); assigns 0-10 score per check |
+| **github/codeql-action** | GitHub Action | CodeQL static analysis for code scanning; detects vulnerabilities in supported languages |
+| **trufflesecurity/trufflehog** | CLI | Secret scanning across git history, live endpoints, and filesystems |
+| **aquasecurity/trivy** | CLI | Vulnerability scanner for code repos, container images, IaC; includes GitHub integration |
+| **bridgecrewio/checkov** | CLI | IaC and supply chain scanner; includes GitHub Actions workflow checks |
+| **Legit Security** | SaaS | Commercial SDLC security platform with GitHub security posture management |
+| **Apiiro** | SaaS | Risk-based application security platform with GitHub integration |
+| **GitGuardian** | SaaS/CLI | Secret detection and remediation for GitHub repos |
+| **Terraform GitHub Provider** | IaC | `integrations/github` Terraform provider for declarative management of GitHub settings as code |
+
+## 7. Architecture
+
+The project is written in Go and mirrors the modular architecture of [okta-inspector-py](https://github.com/hackIDLE/okta-inspector-py).
+
+```
+github-sec-inspector/
+├── cmd/
+│   └── github-sec-inspector/
+│       └── main.go                  # Entrypoint, CLI parsing, orchestration
+├── internal/
+│   ├── client/
+│   │   ├── client.go                # Unified client (REST + GraphQL)
+│   │   ├── rest.go                  # REST API v3 client (wraps go-github)
+│   │   ├── graphql.go               # GraphQL API v4 client (wraps shurcooL/githubv4)
+│   │   ├── auth.go                  # PAT, GitHub App, and OAuth authentication
+│   │   └── ratelimit.go             # Rate limiting, retry, and pagination helpers
+│   ├── collector/
+│   │   ├── collector.go             # Top-level data collector orchestrator
+│   │   ├── org.go                   # Collect org settings, member policies, teams
+│   │   ├── members.go               # Collect members, 2FA status, SAML identities
+│   │   ├── repos.go                 # Collect repositories and visibility settings
+│   │   ├── branches.go              # Collect branch protection rules and rulesets
+│   │   ├── security.go              # Collect GHAS: code scanning, secret scanning, Dependabot
+│   │   ├── actions.go               # Collect Actions permissions, runners, workflows
+│   │   ├── apps.go                  # Collect GitHub App installations, OAuth apps
+│   │   ├── webhooks.go              # Collect organization webhooks
+│   │   ├── keys.go                  # Collect deploy keys across repos
+│   │   ├── packages.go              # Collect package registry configurations
+│   │   ├── audit.go                 # Collect audit log events and streaming config
+│   │   └── enterprise.go            # Collect enterprise-level settings (if applicable)
+│   ├── models/
+│   │   ├── githubdata.go            # GitHubData: container for all collected API data
+│   │   ├── finding.go               # ComplianceFinding: individual check result
+│   │   └── result.go                # AuditResult: aggregated audit output
+│   ├── analyzers/
+│   │   ├── base.go                  # Analyzer interface and registry
+│   │   ├── common.go                # Shared analysis helpers
+│   │   ├── fedramp.go               # FedRAMP (NIST 800-53 r5) analyzer
+│   │   ├── cmmc.go                  # CMMC 2.0 analyzer
+│   │   ├── soc2.go                  # SOC 2 (TSC) analyzer
+│   │   ├── cis.go                   # CIS GitHub Benchmark analyzer
+│   │   ├── pci_dss.go               # PCI-DSS 4.0 analyzer
+│   │   ├── stig.go                  # DISA STIG analyzer
+│   │   ├── irap.go                  # IRAP (ISM) analyzer
+│   │   └── ismap.go                 # ISMAP analyzer
+│   ├── reporters/
+│   │   ├── base.go                  # Reporter interface and registry
+│   │   ├── executive.go             # Executive summary (pass/fail counts, risk score)
+│   │   ├── matrix.go                # Cross-framework compliance matrix
+│   │   ├── fedramp.go               # FedRAMP-formatted report
+│   │   ├── cmmc.go                  # CMMC-formatted report
+│   │   ├── soc2.go                  # SOC 2 formatted report
+│   │   ├── cis.go                   # CIS benchmark report
+│   │   ├── pci_dss.go               # PCI-DSS 4.0 report
+│   │   ├── stig.go                  # DISA STIG checklist (CKL/XCCDF)
+│   │   ├── irap.go                  # IRAP assessment report
+│   │   ├── ismap.go                 # ISMAP assessment report
+│   │   └── validation.go            # Finding validation and deduplication
+│   ├── engine/
+│   │   └── engine.go                # AuditEngine: collect → analyze → report → archive
+│   └── tui/
+│       ├── app.go                   # Bubble Tea TUI application
+│       ├── components/
+│       │   ├── spinner.go           # Progress spinner
+│       │   ├── table.go             # Results table
+│       │   └── summary.go           # Summary dashboard
+│       └── views/
+│           ├── audit.go             # Audit progress view
+│           └── results.go           # Results browser view
+├── testdata/
+│   ├── fixtures/                    # Mock API response JSON files
+│   └── golden/                      # Golden file test outputs
+├── go.mod
+├── go.sum
+├── Makefile
+├── Dockerfile
+├── .goreleaser.yml
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                   # Lint, test, build
+│       └── release.yml              # GoReleaser publish
+├── COPYING                          # GPL v3
+├── README.md
+└── spec.md                          # This file
+```
+
+### Data Flow
+
+```
+┌──────────────────┐     ┌──────────────┐     ┌────────────┐     ┌────────────┐
+│      Client      │────>│  Collector   │────>│  Analyzers │────>│  Reporters │
+│ (REST + GraphQL) │     │ (GitHubData) │     │ (Findings) │     │ (Reports)  │
+└──────────────────┘     └──────────────┘     └────────────┘     └────────────┘
+       │                                             │
+       │               ┌────────────┐                │
+       └──────────────>│   Engine   │<───────────────┘
+                       │ (Orchestr.)│
+                       └────────────┘
+```
+
+## 8. CLI Interface
+
+```bash
+# Basic audit with personal access token
+github-sec-inspector audit \
+  --org your-organization \
+  --token $GITHUB_TOKEN
+
+# Audit with GitHub App authentication
+github-sec-inspector audit \
+  --org your-organization \
+  --app-id 12345 \
+  --app-private-key /path/to/private-key.pem \
+  --app-installation-id 67890
+
+# Include enterprise-level checks
+github-sec-inspector audit \
+  --org your-organization \
+  --enterprise your-enterprise \
+  --token $GITHUB_TOKEN
+
+# Run only specific frameworks
+github-sec-inspector audit \
+  --org your-organization \
+  --token $GITHUB_TOKEN \
+  --frameworks fedramp,stig,pci-dss
+
+# Audit specific repositories only
+github-sec-inspector audit \
+  --org your-organization \
+  --token $GITHUB_TOKEN \
+  --repos repo1,repo2,repo3
+
+# Output to custom directory
+github-sec-inspector audit \
+  --org your-organization \
+  --token $GITHUB_TOKEN \
+  --output-dir ./github-audit-results
+
+# JSON-only output (no TUI)
+github-sec-inspector audit \
+  --org your-organization \
+  --token $GITHUB_TOKEN \
+  --format json \
+  --quiet
+
+# List available frameworks
+github-sec-inspector frameworks
+
+# Validate connectivity and permissions
+github-sec-inspector validate \
+  --org your-organization \
+  --token $GITHUB_TOKEN
+
+# Scan a single repository
+github-sec-inspector repo \
+  --owner your-organization \
+  --repo your-repo \
+  --token $GITHUB_TOKEN
+
+# Environment variable usage
+export GITHUB_TOKEN="ghp_..."
+export GITHUB_ORG="your-organization"
+export GITHUB_ENTERPRISE="your-enterprise"
+github-sec-inspector audit
+```
+
+## 9. Build Sequence
+
+### Phase 1 — Foundation (Weeks 1-2)
+- [ ] Initialize Go module, project scaffolding, CI/CD pipeline
+- [ ] Implement `internal/client/` — REST and GraphQL clients with PAT and GitHub App auth
+- [ ] Implement `internal/models/` — `GitHubData`, `ComplianceFinding`, `AuditResult`
+- [ ] Implement `internal/collector/org.go`, `members.go` — org settings, member enumeration, 2FA status
+- [ ] Write unit tests with mock API responses in `testdata/fixtures/`
+
+### Phase 2 — Core Analyzers (Weeks 3-4)
+- [ ] Implement `internal/analyzers/base.go` — analyzer interface and registry
+- [ ] Implement controls 1-9 (identity, authentication, org permissions)
+- [ ] Implement `internal/collector/repos.go`, `branches.go` — repo enumeration and branch protection
+- [ ] Implement controls 10-14 (repository and code protection)
+- [ ] Build first analyzer: `fedramp.go`
+- [ ] Build `stig.go` and `cmmc.go` analyzers
+
+### Phase 3 — GHAS & Actions (Weeks 5-6)
+- [ ] Implement `internal/collector/security.go` — code scanning, secret scanning, Dependabot
+- [ ] Implement `internal/collector/actions.go`, `apps.go`, `webhooks.go`, `keys.go`
+- [ ] Implement controls 15-25 (GHAS, audit, Actions, apps, packages)
+- [ ] Build remaining analyzers: `soc2.go`, `cis.go`, `pci_dss.go`, `irap.go`, `ismap.go`
+
+### Phase 4 — Reporting & CLI (Weeks 7-8)
+- [ ] Implement `internal/reporters/` — all report formatters
+- [ ] Implement `internal/engine/engine.go` — orchestration pipeline
+- [ ] Implement `cmd/github-sec-inspector/main.go` — CLI with cobra or stdlib flags
+- [ ] STIG CKL/XCCDF export support
+- [ ] JSON, CSV, and Markdown output formats
+
+### Phase 5 — TUI & Polish (Weeks 9-10)
+- [ ] Implement `internal/tui/` — Bubble Tea interactive interface
+- [ ] Implement GraphQL-based collectors for SAML, IP allow list, enterprise data
+- [ ] Dockerfile and GoReleaser configuration
+- [ ] Integration tests against a GitHub organization
+- [ ] Documentation, README, and usage examples
+- [ ] Golden file tests for report output stability
+
+## 10. Status
+
+**Implemented in grclanker as native TypeScript tools** (`cli/extensions/grc-tools/github.ts`, tests in `cli/tests/github.test.mjs`, live smoke `npm --prefix cli run test:github:live`). The standalone Go binary, TUI, and STIG CKL/XCCDF output described in sections 7 to 9 were not built; the CLI tools below cover the same controls.
+
+### grclanker implementation
+
+| Tool | Purpose |
+|------|---------|
+| `github_check_access` | Probes the org-level read surfaces (org profile, members, repositories, audit log, org roles, rulesets, Actions permissions, code security configurations) and reports healthy, limited, or failed (every probe returned 401, so the credentials were rejected, or in App mode the installation token request returned 404, so the installation ID is wrong or the App is not installed) before any assessment runs |
+| `github_assess_org_access` | Controls 1 to 8 and 19: 2FA requirement plus `members?filter=2fa_disabled`, SAML SSO and identity linkage (GraphQL `samlIdentityProvider`, `externalIdentities`), EMU detection (GraphQL `enterprise.ownerInfo`), IP allow list (GraphQL `ipAllowListEnabledSetting`, `ipAllowListForInstalledAppsEnabledSetting`, `ipAllowListEntries`), base permission, public repository creation, private fork policy, outside collaborators, privileged access, audit log visibility, audit log streaming (manual) |
+| `github_assess_repo_protection` | Controls 10 to 14: effective rules for each default branch (`/repos/{owner}/{repo}/rules/branches/{branch}`) merged with legacy branch protection, org and repo rulesets, approving review detail, status check detail, signed commits, force push and deletion, web commit signoff |
+| `github_assess_actions_security` | Controls 21 and 22: allowed actions, workflow token defaults, workflow PR approval, Actions enablement scope, self-hosted runner and runner group exposure |
+| `github_assess_code_security` | Controls 15 to 18: code security configurations, secret scanning and push protection defaults, Dependabot defaults, code scanning default setup, security policy (manual) |
+| `github_assess_integrations` | Controls 9, 20, 23, 24, 25: webhook HTTPS, `insecure_ssl`, and secret across org and repository hooks, deploy key `read_only` and age, App installation permissions and suspension, OAuth app restriction (manual), package registry visibility (manual) |
+| `github_export_audit_bundle` | Runs every collector once, writes `core_data/`, `analysis/`, `compliance/` (executive summary, unified matrix, one report per framework), `QUICK_REFERENCE.md`, `_errors.log` on partial failure, and a paired `.zip` that never overwrites a prior bundle |
+
+Authentication: fine-grained or classic PAT (`GITHUB_TOKEN` or `GH_TOKEN`) and GitHub App installation tokens (`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY` or `GITHUB_APP_PRIVATE_KEY_PATH`, `GITHUB_APP_INSTALLATION_ID`). Endpoints: `GITHUB_API_URL` (alias `GITHUB_API_BASE_URL`), `GITHUB_GRAPHQL_URL` (derived from the REST URL when unset, including the GHES `/api/graphql` form), `GITHUB_ENTERPRISE` for the enterprise-level GraphQL queries. The interactive OAuth App mode in section 3.4 is not implemented.
+
+### Control coverage (25 of 25 mapped, 22 automated)
+
+| # | Control | Finding | Verdict semantics |
+|---|---------|---------|-------------------|
+| 1 | SAML SSO Enforcement | GITHUB-ORG-006 | Pass when a SAML provider is configured and every member has a linked external identity; Partial when identities are truncated or the member list is unreadable; Fail when no provider exists |
+| 2 | Two-Factor Authentication | GITHUB-ORG-001 | Pass on `two_factor_requirement_enabled = true` with an empty `2fa_disabled` list; Fail when members without 2FA exist; Partial when the owner-only filter is forbidden |
+| 3 | Enterprise Managed Users | GITHUB-ORG-007 | Pass when the enterprise reports an OIDC provider (EMU); Partial for a SAML-only enterprise IdP; Manual without an enterprise slug or when `ownerInfo` is forbidden |
+| 4 | IP Allow List | GITHUB-ORG-008 | Pass when the list is ENABLED with active entries and enforced for installed apps; Partial when entries are truncated or empty |
+| 5 | Member Base Permissions | GITHUB-ORG-002 | Pass on `read` or `none` |
+| 6 | Repository Visibility Defaults | GITHUB-ORG-009 | Pass when `members_can_create_public_repositories` is false |
+| 7 | Fork Policy | GITHUB-ORG-010 | Pass when `members_can_fork_private_repositories` is false |
+| 8 | Outside Collaborator Policy | GITHUB-ORG-003 | Pass on an empty list (stated as compliant emptiness); the admin approval policy has no API field and is left as a manual note |
+| 9 | OAuth App Restrictions | GITHUB-INTEG-004 | Manual: neither `organization-full` nor GraphQL `Organization` exposes the third-party access policy |
+| 10 | Branch Protection Rules | GITHUB-REPO-002, GITHUB-REPO-004 | Pass when every active default branch requires pull requests and blocks force pushes and deletions through rules or legacy protection |
+| 11 | Required Pull Request Reviews | GITHUB-REPO-006 | Pass when every active repository requires at least one approving review; evidence lists code owner review, stale dismissal, last push approval |
+| 12 | Required Status Checks | GITHUB-REPO-007 | Pass when every active repository requires at least one status check; strict mode reported |
+| 13 | Signed Commit Requirement | GITHUB-REPO-003 | Pass when every active repository enforces `required_signatures` |
+| 14 | Repository Rulesets | GITHUB-REPO-001 | Pass when active org rulesets exist and reach every repository |
+| 15 | Code Scanning Enabled | GITHUB-CODE-005 | Pass when every default configuration from `GET /orgs/{org}/code-security/configurations/defaults` (public and private_and_internal, or all) enables code scanning default setup and is `enforced` or `enterprise_enforced`; Partial when a default is `unenforced` or covers one visibility; Fail when no default exists; org-wide alert counts are deferred |
+| 16 | Secret Scanning Enabled | GITHUB-CODE-002, GITHUB-CODE-003 | Same defaults evaluation for `secret_scanning` and `secret_scanning_push_protection`; the deprecated `*_enabled_for_new_repositories` organization flags corroborate only and never carry a pass on their own; alert counts are deferred |
+| 17 | Dependabot Enabled | GITHUB-CODE-004 | Same defaults evaluation for `dependabot_alerts` and `dependabot_security_updates`, both required |
+| 18 | Security Policy | GITHUB-CODE-006 | Manual, cites GraphQL `isSecurityPolicyEnabled` as the deferred collector |
+| 19 | Audit Log Streaming | GITHUB-ORG-011 | Manual, cites `GET /enterprises/{enterprise}/audit-log/streams`; GITHUB-ORG-005 covers visibility only, reads the window through `phrase=created:>=YYYY-MM-DD` (`after` is a pagination cursor), and states when the 200-event sample was capped |
+| 20 | Webhook Security | GITHUB-INTEG-001 | Fail on any hook with a non-HTTPS URL, `insecure_ssl = 1`, or no secret; Partial when repository hooks are only partially readable |
+| 21 | Actions Permissions | GITHUB-ACT-001, GITHUB-ACT-002, GITHUB-ACT-003, GITHUB-ACT-005 | Pass on `selected` or `local_only`, read-only tokens, no workflow PR approval |
+| 22 | Runner Group Restrictions | GITHUB-ACT-004 | Pass when no runner group is org-wide or open to public repositories; Info when no org-level runners exist; Manual when the inventory is forbidden |
+| 23 | Deploy Key Management | GITHUB-INTEG-002 | Fail on write-capable or 365-day-old keys; Partial on undated keys or unreadable repositories |
+| 24 | GitHub App Permissions Audit | GITHUB-INTEG-003 | Fail on admin or write-to-all-repositories permissions; suspended installations reported |
+| 25 | Package Registry Access | GITHUB-INTEG-005 | Manual, cites `GET /orgs/{org}/packages?package_type=` |
+
+Extra findings beyond the numbered controls carry the mapping row of the closest control: GITHUB-ORG-004 (privileged access ratio) uses row 5, GITHUB-ORG-005 (audit log visibility) uses row 19, GITHUB-REPO-005 (web commit signoff) uses row 13, and GITHUB-CODE-001 (code security configurations exist) carries the union of rows 15, 16, and 17 because the configurations are the vehicle for all three. Every other finding carries exactly the identifiers of its row in the mapping table above; `cli/tests/github.test.mjs` parses both tables and asserts the equality.
+
+### Verdict safety
+
+Every finding follows the shared rules: forbidden or errored endpoints render Manual with the cause and the evidence to collect, partial inventories (truncated GraphQL connections, per-repository 403s, capped audit samples) render Partial, empty inventories pass only where the summary states that emptiness is compliant (outside collaborators, App installations, webhooks and deploy keys once the repository inventory is non-empty), undated deploy keys never count as fresh, REST pagination follows `Link` headers to completion, and reruns allocate a new bundle directory and zip. The self-check fixtures (a) all-403, (b) all-empty, (c) partial, (d) fully compliant, (e) unenforced code security pilots, and (f) enforced defaults without owner flags are encoded in `cli/tests/github.test.mjs`.
+
+Truncation is reported on every paging exit: GraphQL loops set `truncated` when `hasNextPage` is true without an `endCursor` (the schema allows a null cursor), when the cursor repeats, at the page cap, and whenever `totalCount` exceeds the collected nodes, so GITHUB-ORG-006 and GITHUB-ORG-008 demote instead of passing on a partial inventory; the REST paginate helper returns a truncation flag alongside the records, and the audit log snapshot carries it so exactly 200 events are not misreported as capped.
+
+The same standard applies to the `snapshot_summary` each assess tool returns (also written to `analysis/<category>.json`): every metric is a value paired with a `<name>_status` that starts with `complete:` or `partial:` and names the endpoints read, or with `unreadable:`, `not collected:`, or `unknown:` and names the denied or skipped endpoint, in which case the value is `null`. Per-repository fan-outs (hooks, deploy keys, branch rules and protection) count readable repositories only and list the denied ones; GraphQL connections render `null` when denied or truncated before any node arrived. GITHUB-ORG-006 likewise renders its linked-identity and unlinked-member counts as `null` and names no member when the `externalIdentities` connection was truncated or carried errors. `cli/tests/github.test.mjs` sweeps every denied inventory across the five categories and asserts that no unavailable status sits beside a `0` or `[]`, that every metric carries a status, and that a complete or partial status names only endpoints the client actually requested.
+
+### Retries and timeouts
+
+Every request runs under a 30-second deadline raced against both the fetch and the body read, so a fetch that ignores its abort signal still ends. A request is retried up to four times (five attempts, the one App-mode token refresh after a `401` included) on `429`, on a `403` with a rate-limit marker (`x-ratelimit-remaining: 0` or a message containing "rate limit"; a `403` without one is a permission denial and fails at once), on `500`, `502`, `503`, and `504`, on timeouts, and on network failures. This covers REST GETs, the GraphQL query POST, and the installation token exchange (`POST /app/installations/{installation_id}/access_tokens`), all safe to repeat. Only the attempt right after that `401` mints a new installation token; later retries reuse it. Waits follow GitHub's [rate limit guidance](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api#handle-rate-limit-errors-appropriately): `Retry-After` first (delta-seconds or an HTTP-date, measured against the client clock), then `x-ratelimit-reset` once `x-ratelimit-remaining` is `0`, then one minute for a rate limit that names neither, doubled for each earlier rate limit on the same request. Other retries back off exponentially from 0.5 s to an 8 s cap. Any wait past 60 s fails closed at once with a note naming the time.
+
+An exhausted request throws `GitHubHttpError` naming the method and path (never the query, which can carry an audit log cursor), the last HTTP status or `timed out after N ms` or `network error (CODE)` (a transport failure keeps only its system error code), and `after N attempts`. A listing whose later page is exhausted fails as a whole, so its collector records the endpoint as unreadable and keeps none of the earlier pages; `cli/tests/github.test.mjs` asserts that no finding passes on that partial inventory.
+
+### Bundle hygiene
+
+Collectors project every record to the documented fields the verdicts read before anything is persisted: audit log events keep identifying fields only (the unconstrained `config`, `config_was`, and `data` bags and `openssh_public_key` are dropped), credential authorizations drop `token_last_eight`, `fingerprint`, and the free-text `authorized_credential_title` and `authorized_credential_note` labels (read by no verdict), deploy keys drop `key`, and webhook `config.secret` is replaced by a `[redacted]` presence marker so GITHUB-INTEG-001 still reads it. GraphQL data is already limited by the field selections in the queries. Every JSON file written to the bundle also passes a key-name belt that masks credential-named keys at any depth. `cli/tests/github.test.mjs` drives the real client through a tenant that carries a distinct canary in every documented carrier, exports, and asserts that no canary appears in any bundle file or extracted zip entry.
+
+Error bodies are treated as untrusted text. A non-JSON error body (an HTML page from a proxy, outside GitHub's documented error schema) is never echoed: the error string carries the HTTP status, the method and path, the canonical reason phrase, the content type, and the body length instead. A JSON error body contributes only `message`, `documentation_url`, and `errors[].code` and `.field` (GraphQL: `errors[].type`, `.message`, and `.path` limited to names in the query sent). One exported scrub, `scrubErrorText`, runs wherever an error string is created (the `GitHubHttpError` constructor, `summarizeError`, the GraphQL error mapping and formatter) and again at the bundle write: it strips the query and fragment of every embedded URL, Cookie and Set-Cookie values, credential name-value pairs, Bearer and Basic values, and GitHub token shapes, and drops long tokens from free-text message fields. The test file walks every REST and GraphQL surface the collectors call with an HTML 502, a JSON 403 carrying a tokenised URL, and a free-text message carrying a long token, and asserts that no canary reaches memory, the bundle, the zip, or a thrown error while the failure stays disclosed.
+
+The GitHub App private key loader applies the same rule to library messages. A failed read of `GITHUB_APP_PRIVATE_KEY_PATH` or `app_private_key_path` throws `Unable to read GitHub App private key file <path>` plus the system error code (`EISDIR`, `ENOENT`) when the code matches `^E[A-Z0-9_]{1,30}$`, never the Node fs message and never a non-standard thrown value's `String(error)`. A key that OpenSSL cannot parse throws the fixed text `GitHub App private key is not a valid PEM private key`, and one that parses but cannot sign RS256 throws a fixed text as well, so no `DECODER routines` or `Provider routines` wording reaches the probe details. The tests drive a directory, a missing path, and a stubbed read throwing a non-standard object through both the environment and the argument route, and a malformed PEM carrying planted canaries through `github_check_access`, each with a positive control against the library.
+
+### Deferred
+
+Named follow-ons, none of which block the current verdicts:
+
+1. Audit log streaming collector (`GET /enterprises/{enterprise}/audit-log/streams`) to automate GITHUB-ORG-011.
+2. Security policy sweep through GraphQL `Repository.isSecurityPolicyEnabled` to automate GITHUB-CODE-006.
+3. Package registry sweep (`GET /orgs/{org}/packages` per `package_type`) to automate GITHUB-INTEG-005.
+4. Org-wide alert enumeration for code scanning, secret scanning, and Dependabot (`/orgs/{org}/code-scanning/alerts`, `/orgs/{org}/secret-scanning/alerts`, `/orgs/{org}/dependabot/alerts`) to add open-alert counts to controls 15 to 17.
+5. Interactive OAuth App authentication (section 3.4).
+6. Tag protection and push restriction detail inside rulesets (control 14 currently checks branch rules only).
+7. Enterprise-level SAML and 2FA enforcement beyond EMU detection, and the standalone Go binary, TUI, and STIG CKL/XCCDF outputs from sections 7 to 9.

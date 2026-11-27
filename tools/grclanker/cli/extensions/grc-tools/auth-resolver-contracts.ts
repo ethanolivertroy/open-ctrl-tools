@@ -1,0 +1,518 @@
+export interface ResolverAuthenticationContract {
+  modes: readonly string[];
+  precedence: readonly string[];
+  environment: readonly string[];
+  configLocations: readonly string[];
+  variants: readonly string[];
+  configFields: readonly string[];
+  refreshRequest?: string;
+}
+
+export function readResolverEnvironment(
+  contract: ResolverAuthenticationContract,
+  environment: NodeJS.ProcessEnv,
+): NodeJS.ProcessEnv {
+  return Object.fromEntries(contract.environment.map((name) => [name, environment[name]]));
+}
+
+export const OKTA_AUTH_RESOLVER = {
+  modes: ["SSWS API token", "OAuth service application private-key JWT", "Prebuilt OAuth client assertion"],
+  precedence: ["Explicit tool arguments", "OKTA_CLIENT_* environment variables", "Project .okta.yaml", "Home ~/.okta/okta.yaml"],
+  environment: [
+    "OKTA_CLIENT_ORGURL",
+    "OKTA_CLIENT_AUTHORIZATIONMODE",
+    "OKTA_CLIENT_TOKEN",
+    "OKTA_CLIENT_CLIENTID",
+    "OKTA_CLIENT_PRIVATEKEY",
+    "OKTA_CLIENT_PRIVATEKEYID",
+    "OKTA_CLIENT_CLIENTASSERTION",
+    "OKTA_CLIENT_SCOPES",
+  ],
+  configLocations: [".okta.yaml", "~/.okta/okta.yaml"],
+  variants: ["Commercial, preview, and custom Okta organization origins"],
+  configFields: ["orgUrl", "authorizationMode", "token", "clientId", "privateKey", "privateKeyId", "clientAssertion", "scopes"],
+  refreshRequest: "POST /oauth2/v1/token with the client_credentials grant and a private_key_jwt assertion.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const DUO_AUTH_RESOLVER = {
+  modes: ["Duo Admin API HMAC integration key and secret key"],
+  precedence: ["Explicit tool arguments", "DUO_* environment variables"],
+  environment: ["DUO_API_HOST", "DUO_IKEY", "DUO_SKEY", "DUO_LOOKBACK_DAYS"],
+  configLocations: [],
+  variants: ["Commercial and FedRAMP Duo API hostnames selected by api_host"],
+  configFields: [],
+} as const satisfies ResolverAuthenticationContract;
+
+export const GWS_AUTH_RESOLVER = {
+  modes: ["Service-account JWT assertion with domain-wide delegation", "Explicit OAuth access token"],
+  precedence: ["Explicit tool arguments", "GWS_* and GOOGLE_APPLICATION_CREDENTIALS environment variables"],
+  environment: [
+    "GWS_AUTH_MODE",
+    "GWS_CREDENTIALS_FILE",
+    "GWS_SERVICE_ACCOUNT_FILE",
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    "GWS_CREDENTIALS_JSON",
+    "GWS_SERVICE_ACCOUNT_JSON",
+    "GWS_ACCESS_TOKEN",
+    "GWS_ADMIN_EMAIL",
+    "GWS_DOMAIN",
+    "GWS_CUSTOMER_ID",
+    "GWS_LOOKBACK_DAYS",
+  ],
+  configLocations: ["Service-account credential JSON supplied explicitly by credentials_file"],
+  variants: ["my_customer alias or explicit customer ID", "Delegated administrator subject for service-account authentication"],
+  configFields: ["client_email", "private_key", "token_uri"],
+  refreshRequest: "POST https://oauth2.googleapis.com/token with a signed JWT bearer grant and delegated administrator subject.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const BOX_AUTH_RESOLVER = {
+  modes: ["JWT server authentication", "Client Credentials Grant", "OAuth refresh token", "Explicit access token"],
+  precedence: ["Explicit tool arguments", "BOX_* environment variables", "Explicit or default inspector YAML config"],
+  environment: [
+    "BOX_AUTH_METHOD",
+    "BOX_JWT_CONFIG_PATH",
+    "BOX_JWT_PASSPHRASE",
+    "BOX_JWT_ALGORITHM",
+    "BOX_CLIENT_ID",
+    "BOX_CLIENT_SECRET",
+    "BOX_ENTERPRISE_ID",
+    "BOX_SUBJECT_TYPE",
+    "BOX_SUBJECT_ID",
+    "BOX_ACCESS_TOKEN",
+    "BOX_TOKEN",
+    "BOX_DEVELOPER_TOKEN",
+    "BOX_REFRESH_TOKEN",
+    "BOX_API_BASE_URL",
+    "BOX_BASE_URL",
+    "BOX_TOKEN_URL",
+    "BOX_TIMEOUT",
+    "BOX_MAX_RETRIES",
+    "BOX_CONFIG_PATH",
+  ],
+  configLocations: ["Explicit path from config_path or BOX_CONFIG_PATH", "~/.box-sec-inspector/config.yaml"],
+  variants: ["Enterprise or user subject", "JWT RS256, RS384, or RS512 assertion"],
+  configFields: [
+    "auth_method", "authMethod", "auth_mode", "jwt_config_path", "jwt_config", "jwtConfigPath",
+    "jwt_passphrase", "passphrase", "jwt_algorithm", "jwtAlgorithm", "client_id", "clientId", "clientID",
+    "client_secret", "clientSecret", "enterprise_id", "enterpriseId", "enterpriseID", "subject_type",
+    "subjectType", "subject_id", "subjectId", "user_id", "access_token", "accessToken", "token",
+    "developer_token", "refresh_token", "refreshToken", "base_url", "baseUrl", "api_base_url", "token_url",
+    "tokenUrl", "timeout_seconds", "timeout", "max_retries", "maxRetries",
+  ],
+  refreshRequest: "POST https://api.box.com/oauth2/token using the selected JWT, client_credentials, or refresh_token grant.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const SLACK_AUTH_RESOLVER = {
+  modes: ["User OAuth token", "Bot OAuth token", "SCIM bearer token"],
+  precedence: ["Explicit tool arguments", "SLACK_* environment variables", "Slack JSON config file"],
+  environment: [
+    "SLACK_CONFIG_FILE",
+    "SLACK_USER_TOKEN",
+    "SLACK_TOKEN",
+    "SLACK_BOT_TOKEN",
+    "SLACK_SCIM_TOKEN",
+    "SLACK_ORG_ID",
+    "SLACK_ENTERPRISE_ID",
+    "SLACK_WEB_API_BASE_URL",
+    "SLACK_SCIM_BASE_URL",
+    "SLACK_AUDIT_BASE_URL",
+    "SLACK_TIMEOUT",
+  ],
+  configLocations: ["~/.config/grclanker/slack.json", "Explicit path from SLACK_CONFIG_FILE"],
+  variants: ["Enterprise Grid org token plus optional bot and SCIM credentials"],
+  configFields: ["user_token", "token", "bot_token", "scim_token", "org_id"],
+} as const satisfies ResolverAuthenticationContract;
+
+export const ZOOM_AUTH_RESOLVER = {
+  modes: ["Server-to-Server OAuth client credentials", "Explicit OAuth access token"],
+  precedence: ["Explicit tool arguments", "ZOOM_* environment variables", "Discovered Zoom JSON config file"],
+  environment: [
+    "ZOOM_CONFIG_FILE",
+    "ZOOM_ACCOUNT_ID",
+    "ZOOM_TOKEN",
+    "ZOOM_ACCESS_TOKEN",
+    "ZOOM_CLIENT_ID",
+    "ZOOM_CLIENT_SECRET",
+    "ZOOM_BASE_URL",
+    "ZOOM_API_BASE_URL",
+    "ZOOM_OAUTH_BASE_URL",
+    "ZOOM_TIMEOUT",
+  ],
+  configLocations: [
+    "./.zoom.json",
+    "./.grclanker-zoom.json",
+    "~/.zoom.json",
+    "~/.grclanker-zoom.json",
+    "~/.config/grclanker/zoom.json",
+    "Explicit path from config_file or ZOOM_CONFIG_FILE",
+  ],
+  variants: ["Master or sub-account ID supplied explicitly"],
+  configFields: ["account_id", "accountId", "token", "access_token", "client_id", "clientId", "client_secret", "clientSecret", "base_url", "baseUrl", "oauth_base_url", "oauthBaseUrl"],
+  refreshRequest: "POST /oauth/token?grant_type=account_credentials&account_id={accountId} with client Basic authentication.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const ZENDESK_AUTH_RESOLVER = {
+  modes: ["API token with email Basic authentication", "OAuth bearer token"],
+  precedence: ["Explicit tool arguments", "ZENDESK_* environment variables", "Zendesk JSON config file"],
+  environment: [
+    "ZENDESK_CONFIG_FILE",
+    "ZENDESK_SUBDOMAIN",
+    "ZENDESK_EMAIL",
+    "ZENDESK_API_TOKEN",
+    "ZENDESK_OAUTH_TOKEN",
+    "ZENDESK_ACCESS_TOKEN",
+    "ZENDESK_BASE_URL",
+    "ZENDESK_TIMEOUT",
+  ],
+  configLocations: ["~/.zendesk/config.json", "Explicit path from config_file or ZENDESK_CONFIG_FILE"],
+  variants: ["Zendesk subdomain or explicit same-origin API base URL"],
+  configFields: ["subdomain", "email", "api_token", "apiToken", "oauth_token", "oauthToken", "base_url", "baseUrl", "timeout_seconds"],
+} as const satisfies ResolverAuthenticationContract;
+
+export const SALESFORCE_AUTH_RESOLVER = {
+  modes: ["JWT bearer", "Username/password plus security token", "OAuth refresh token", "Explicit access token"],
+  precedence: ["Explicit tool arguments", "SF_* environment variables", "Explicit credentials JSON file"],
+  environment: [
+    "SF_CREDENTIALS_FILE",
+    "SF_INSTANCE_URL",
+    "SF_LOGIN_URL",
+    "SF_USERNAME",
+    "SF_PASSWORD",
+    "SF_SECURITY_TOKEN",
+    "SF_CONSUMER_KEY",
+    "SF_CLIENT_ID",
+    "SF_CONSUMER_SECRET",
+    "SF_CLIENT_SECRET",
+    "SF_PRIVATE_KEY_FILE",
+    "SF_PRIVATE_KEY",
+    "SF_REFRESH_TOKEN",
+    "SF_ACCESS_TOKEN",
+    "SF_API_VERSION",
+    "SF_GRANT_TYPE",
+    "SF_SANDBOX",
+    "SF_TIMEOUT",
+    "SF_MAX_RETRIES",
+  ],
+  configLocations: ["Explicit credentials JSON file from credentials_file or SF_CREDENTIALS_FILE"],
+  variants: ["Production login", "Sandbox login", "Custom My Domain login"],
+  configFields: [
+    "instance_url", "instanceUrl", "login_url", "loginUrl", "username", "password", "security_token",
+    "securityToken", "consumer_key", "client_id", "consumerKey", "clientId", "consumer_secret", "client_secret",
+    "consumerSecret", "clientSecret", "private_key_file", "privateKeyFile", "private_key", "privateKey",
+    "refresh_token", "refreshToken", "access_token", "accessToken", "api_version", "apiVersion", "grant_type",
+    "grantType", "sandbox",
+  ],
+  refreshRequest: "POST /services/oauth2/token with the selected JWT bearer, refresh_token, or password grant.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const SERVICENOW_AUTH_RESOLVER = {
+  modes: ["Basic username and password", "OAuth client credentials or refresh token", "Explicit OAuth access token"],
+  precedence: ["Explicit tool arguments", "SERVICENOW_* environment variables", "Explicit or default ServiceNow YAML config"],
+  environment: [
+    "SERVICENOW_CONFIG_FILE",
+    "SERVICENOW_URL",
+    "SERVICENOW_INSTANCE_URL",
+    "SERVICENOW_INSTANCE",
+    "SERVICENOW_AUTH_METHOD",
+    "SERVICENOW_USERNAME",
+    "SERVICENOW_PASSWORD",
+    "SERVICENOW_CLIENT_ID",
+    "SERVICENOW_CLIENT_SECRET",
+    "SERVICENOW_ACCESS_TOKEN",
+    "SERVICENOW_TOKEN",
+    "SERVICENOW_REFRESH_TOKEN",
+    "SERVICENOW_TIMEOUT",
+    "SERVICENOW_MAX_RETRIES",
+    "SERVICENOW_PAGE_SIZE",
+  ],
+  configLocations: ["./.servicenow.yaml", "~/.servicenow-sec-inspector/config.yaml", "Explicit path from config_file or SERVICENOW_CONFIG_FILE"],
+  variants: ["Instance name or explicit HTTPS instance URL", "Mutual TLS is rejected as unsupported"],
+  configFields: [
+    "instance_url", "url", "instanceUrl", "base_url", "instance", "instance_name", "instanceName",
+    "auth_method", "authMethod", "auth_mode", "username", "user", "password", "client_id", "clientId",
+    "client_secret", "clientSecret", "access_token", "accessToken", "token", "refresh_token", "refreshToken",
+    "timeout_seconds", "timeout", "max_retries", "maxRetries", "page_size", "pageSize",
+  ],
+  refreshRequest: "POST /oauth_token.do with client_credentials or refresh_token form fields.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const AZURE_AUTH_RESOLVER = {
+  modes: ["Explicit Microsoft Graph and Azure Resource Manager bearer tokens", "Azure CLI token discovery", "OAuth client credentials"],
+  precedence: ["Explicit tool arguments", "AZURE_* environment variables", "Azure CLI", "OAuth client credentials when a token is absent"],
+  environment: [
+    "AZURE_AUTHORITY_HOST",
+    "AZURE_GRAPH_HOST",
+    "AZURE_MANAGEMENT_HOST",
+    "AZURE_CLIENT_ID",
+    "AZURE_CLIENT_SECRET",
+    "AZURE_CLIENT_CERTIFICATE_PATH",
+    "AZURE_TENANT_ID",
+    "AZURE_SUBSCRIPTION_ID",
+    "AZURE_GRAPH_TOKEN",
+    "AZURE_MANAGEMENT_TOKEN",
+    "AZURE_ACCESS_TOKEN",
+  ],
+  configLocations: ["Azure CLI account context"],
+  variants: ["Azure public cloud", "Azure US Government", "Azure China"],
+  configFields: [],
+  refreshRequest: "POST /{tenant}/oauth2/v2.0/token using client_credentials independently for Microsoft Graph and Azure Resource Manager scopes.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const GCP_AUTH_RESOLVER = {
+  modes: ["Explicit OAuth access token", "Service-account application default credentials", "Authorized-user application default credentials", "gcloud access token"],
+  precedence: ["Explicit tool arguments", "GCP and GOOGLE_* environment variables", "Application Default Credentials file", "gcloud auth print-access-token"],
+  environment: [
+    "APPDATA",
+    "CLOUDSDK_CONFIG",
+    "GCP_ORGANIZATION_ID",
+    "GCP_ORG_ID",
+    "GCP_ACCESS_TOKEN",
+    "GOOGLE_OAUTH_ACCESS_TOKEN",
+    "GOOGLE_ACCESS_TOKEN",
+    "GCP_CREDENTIALS_FILE",
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    "GCP_PROJECT_ID",
+    "GOOGLE_CLOUD_PROJECT",
+    "GCLOUD_PROJECT",
+  ],
+  configLocations: ["Explicit credentials_file", "GCP_CREDENTIALS_FILE", "GOOGLE_APPLICATION_CREDENTIALS", "Application Default Credentials well-known path"],
+  variants: ["Organization scope", "Project scope", "Service-account JWT bearer exchange", "Authorized-user refresh-token exchange"],
+  configFields: ["type", "client_email", "private_key", "token_uri", "project_id", "client_id", "client_secret", "refresh_token"],
+  refreshRequest: "POST the credential token_uri with a JWT bearer assertion or refresh_token grant.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const OCI_AUTH_RESOLVER = {
+  modes: ["OCI CLI configuration profile"],
+  precedence: ["Explicit tool arguments", "OCI_* environment variables", "Selected OCI CLI profile", "Runtime defaults"],
+  environment: ["HOME", "USERPROFILE", "OCI_CONFIG_FILE", "OCI_CLI_PROFILE", "OCI_REGION", "OCI_TENANCY_OCID", "OCI_COMPARTMENT_OCID"],
+  configLocations: ["~/.oci/config", "Explicit path from config_file or OCI_CONFIG_FILE"],
+  variants: ["Named OCI CLI profile", "Explicit tenancy or compartment scope", "OCI region"],
+  configFields: ["tenancy", "region", "user", "fingerprint", "key_file", "pass_phrase", "security_token_file"],
+} as const satisfies ResolverAuthenticationContract;
+
+export const CLOUDFLARE_AUTH_RESOLVER = {
+  modes: ["Cloudflare API token", "Global API key with account email"],
+  precedence: ["Explicit tool arguments", "CLOUDFLARE_* environment variables"],
+  environment: [
+    "CLOUDFLARE_API_TOKEN",
+    "CLOUDFLARE_API_KEY",
+    "CLOUDFLARE_EMAIL",
+    "CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_API_BASE_URL",
+    "CLOUDFLARE_TIMEOUT",
+  ],
+  configLocations: [],
+  variants: ["Explicit account ID", "Single visible account discovery", "Custom same-origin API base URL"],
+  configFields: [],
+} as const satisfies ResolverAuthenticationContract;
+
+export const PALOALTO_AUTH_RESOLVER = {
+  modes: ["Prisma Cloud access key and secret key", "Prisma Cloud Compute token exchange", "PAN-OS API key", "PAN-OS username and password key generation"],
+  precedence: ["Explicit tool arguments", "Palo Alto environment variables", "Palo Alto JSON config file"],
+  environment: [
+    "PALOALTO_CONFIG_FILE",
+    "PRISMA_ACCESS_KEY_ID",
+    "PRISMA_SECRET_KEY",
+    "PRISMA_API_URL",
+    "PRISMA_COMPUTE_URL",
+    "PANOS_HOST",
+    "PANOS_API_KEY",
+    "PANOS_USERNAME",
+    "PANOS_PASSWORD",
+    "PANOS_VERIFY_TLS",
+    "PALOALTO_TIMEOUT",
+  ],
+  configLocations: ["~/.grclanker/paloalto.json", "Explicit path from config_file or PALOALTO_CONFIG_FILE"],
+  variants: ["Prisma Cloud CSPM", "Prisma Cloud Compute", "One or more PAN-OS devices", "Per-client PAN-OS TLS verification override"],
+  configFields: [
+    "PRISMA_ACCESS_KEY_ID", "prisma_access_key_id", "PRISMA_SECRET_KEY", "prisma_secret_key",
+    "PRISMA_API_URL", "prisma_api_url", "PRISMA_COMPUTE_URL", "prisma_compute_url",
+    "PANOS_HOST", "panos_hosts", "PANOS_API_KEY", "panos_api_key", "PANOS_USERNAME",
+    "panos_username", "PANOS_PASSWORD", "panos_password", "PANOS_VERIFY_TLS",
+  ],
+  refreshRequest: "POST /login for Prisma Cloud or Prisma Compute; POST /api/?type=keygen for PAN-OS username/password authentication.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const ZSCALER_AUTH_RESOLVER = {
+  modes: ["ZIA legacy API-key obfuscation and session cookie", "ZPA OAuth client credentials"],
+  precedence: ["Explicit tool arguments", "Zscaler environment variables", "Zscaler YAML config file"],
+  environment: [
+    "ZSCALER_CONFIG_FILE",
+    "ZIA_CLOUD",
+    "ZIA_BASE_URL",
+    "ZIA_API_KEY",
+    "ZIA_USERNAME",
+    "ZIA_PASSWORD",
+    "ZPA_CLOUD",
+    "ZPA_BASE_URL",
+    "ZPA_CLIENT_ID",
+    "ZPA_CLIENT_SECRET",
+    "ZPA_CUSTOMER_ID",
+    "ZSCALER_CLIENT_ID",
+    "ZSCALER_CLIENT_SECRET",
+    "ZDX_CLIENT_ID",
+    "ZDX_CLIENT_SECRET",
+    "ZSCALER_TIMEOUT",
+    "ZSCALER_MAX_RETRIES",
+  ],
+  configLocations: ["~/.zscaler/zscaler.yaml", "Explicit path from config_file or ZSCALER_CONFIG_FILE"],
+  variants: ["ZIA commercial, beta, government, and tenant clouds", "ZPA production, beta, government, and government-US clouds"],
+  configFields: ["zia.client", "zpa.client", "zscaler.client"],
+  refreshRequest: "POST /authenticatedSession for ZIA; POST /signin for ZPA OAuth client credentials.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const TENABLE_AUTH_RESOLVER = {
+  modes: [
+    "Tenable Vulnerability Management X-ApiKeys access and secret key pair",
+    "Tenable Security Center x-apikey access and secret key pair",
+  ],
+  precedence: ["Explicit tool arguments", "TENABLE_* environment variables", "Tenable YAML config file"],
+  environment: [
+    "TENABLE_CONFIG_FILE",
+    "TENABLE_URL",
+    "TENABLE_BASE_URL",
+    "TENABLE_ACCESS_KEY",
+    "TENABLE_SECRET_KEY",
+    "TENABLE_SC_URL",
+    "TENABLE_SC_ACCESS_KEY",
+    "TENABLE_SC_SECRET_KEY",
+    "TENABLE_TIMEOUT",
+  ],
+  configLocations: ["~/.tenable/config.yaml", "Explicit path from config_file or TENABLE_CONFIG_FILE"],
+  variants: [
+    "Commercial cloud at cloud.tenable.com or a regional *.cloud.tenable.com host",
+    "FedRAMP cloud at fedcloud.tenable.com",
+    "Tenable Security Center host, alone or alongside a cloud tenant",
+  ],
+  configFields: ["url", "base_url", "access_key", "accessKey", "secret_key", "secretKey", "sc_url", "sc_access_key", "sc_secret_key", "timeout_seconds"],
+} as const satisfies ResolverAuthenticationContract;
+
+export const QUALYS_AUTH_RESOLVER = {
+  modes: [
+    "Basic authentication: Authorization: Basic with the base64 encoding of username:password",
+    "Pre-issued bearer token: Authorization: Bearer with the configured token",
+    "Gateway token exchange: the username and password are exchanged at the platform gateway for a bearer token",
+  ],
+  precedence: [
+    "Explicit tool arguments",
+    "QUALYS_* environment variables",
+    "Qualys key=value config file",
+    "A token from any source selects bearer authentication; otherwise use_oauth selects the gateway token exchange; otherwise basic authentication",
+  ],
+  environment: [
+    "QUALYS_CONFIG_FILE",
+    "QUALYS_USERNAME",
+    "QUALYS_USER",
+    "QUALYS_PASSWORD",
+    "QUALYS_TOKEN",
+    "QUALYS_ACCESS_TOKEN",
+    "QUALYS_USE_OAUTH",
+    "QUALYS_PLATFORM",
+    "QUALYS_API_SERVER",
+    "QUALYS_BASE_URL",
+    "QUALYS_API_URL",
+    "QUALYS_GATEWAY_URL",
+    "QUALYS_TIMEOUT",
+    "QUALYS_MAX_RETRIES",
+    "QUALYS_LOOKBACK_DAYS",
+  ],
+  configLocations: ["~/.qcrc", "Explicit path from config_file or QUALYS_CONFIG_FILE"],
+  variants: [
+    "Named platforms US1 (the default), US2, US3, US4, GOV1, EU1, EU2, EU3, IN1, CA1, AE1, UK1, AU1, and KSA1, each with its own API server and gateway",
+    "An API server hostname or https URL that belongs to a named platform resolves to that platform",
+    "Any other API server host is a custom platform whose gateway replaces a leading qualysapi. with qualysgateway., unless gateway_url overrides it",
+  ],
+  configFields: ["username", "user", "password", "token", "use_oauth", "platform", "hostname", "base_url", "gateway_url", "timeout"],
+  refreshRequest: "POST {gateway}/auth with the form fields username, password, and token=true when use_oauth is set and no token is configured; the returned token is reused for 3.5 hours.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const CROWDSTRIKE_AUTH_RESOLVER = {
+  modes: ["OAuth2 client credentials: client_id and client_secret are exchanged for a bearer token, sent as Authorization: Bearer on every API read"],
+  precedence: [
+    "Explicit tool arguments",
+    "CS_* environment variables, then their FALCON_* aliases",
+    "CrowdStrike JSON config file",
+    "A base_url from any source takes precedence over a cloud from any source; with neither, the us-1 API host is used",
+  ],
+  environment: [
+    "CS_CONFIG_FILE",
+    "CS_CLIENT_ID",
+    "FALCON_CLIENT_ID",
+    "CS_CLIENT_SECRET",
+    "FALCON_CLIENT_SECRET",
+    "CS_CLOUD",
+    "FALCON_CLOUD",
+    "CS_BASE_URL",
+    "FALCON_BASE_URL",
+    "CS_MEMBER_CID",
+    "FALCON_MEMBER_CID",
+    "CS_TIMEOUT",
+  ],
+  configLocations: ["~/.crowdstrike/config.json", "Explicit path from config_file or CS_CONFIG_FILE"],
+  variants: [
+    "Named clouds us-1 (the default, https://api.crowdstrike.com), us-2, eu-1, us-gov-1, and us-gov-2, each with its own API host",
+    "Cloud aliases us1, us2, eu1, usgov1, usgov2, gov-1, gov, and laggar, matched case-insensitively with underscores read as hyphens",
+    "An explicit https base_url (the scheme may be omitted; http is rejected) replaces the cloud's API host, and a base_url equal to a named cloud's host reports that cloud",
+    "A Flight Control child CID (member_cid) is sent only in the token request, so the token and every read made with it cover that CID only",
+  ],
+  configFields: ["client_id", "clientId", "client_secret", "clientSecret", "cloud", "region", "base_url", "baseUrl", "member_cid", "memberCid", "timeout_seconds"],
+  refreshRequest: "POST {base_url}/oauth2/token with Accept: application/json and an application/x-www-form-urlencoded body of client_id, client_secret, and member_cid when configured; the access_token is reused until 60 seconds before its expires_in (1799 seconds when absent) runs out, and for at least 60 seconds.",
+} as const satisfies ResolverAuthenticationContract;
+
+export const KNOWBE4_AUTH_RESOLVER = {
+  modes: [
+    "Reporting API token: sent as Authorization: Bearer on every KnowBe4 Reporting API read",
+    "Optional PhishER API token: sent as Authorization: Bearer on every PhishER GraphQL request; PhishER is not read without it",
+  ],
+  precedence: [
+    "Explicit tool arguments (api_token, else token, for the Reporting API token)",
+    "KNOWBE4_* environment variables",
+    "KnowBe4 YAML config file",
+    "A base_url or phisher_graphql_url from any source takes precedence over the region's default; with no region, us is used",
+  ],
+  environment: [
+    "KNOWBE4_CONFIG_FILE",
+    "KNOWBE4_API_TOKEN",
+    "KNOWBE4_REGION",
+    "KNOWBE4_BASE_URL",
+    "KNOWBE4_PHISHER_API_TOKEN",
+    "KNOWBE4_PHISHER_GRAPHQL_URL",
+    "KNOWBE4_TIMEOUT",
+    "KNOWBE4_REDACT_PII",
+  ],
+  configLocations: ["~/.knowbe4-inspector/config.yaml", "Explicit path from config_file or KNOWBE4_CONFIG_FILE"],
+  variants: [
+    "Regions us (the default), eu, ca, uk, and de, matched after trimming and lowercasing; any other region is rejected",
+    "Each region's Reporting API host is https://{region}.api.knowbe4.com; its PhishER GraphQL URL is https://training.knowbe4.com/graphql for us and https://{region}.knowbe4.com/graphql otherwise",
+    "An explicit base_url or phisher_graphql_url replaces the region's URL, with any user information, query, fragment, and trailing slashes removed",
+  ],
+  configFields: ["api_token", "region", "base_url", "phisher_api_token", "phisher_graphql_url", "timeout_seconds", "redact_pii"],
+} as const satisfies ResolverAuthenticationContract;
+
+export const VERACODE_AUTH_RESOLVER = {
+  modes: [
+    "HMAC-signed API key pair: every request carries Authorization: VERACODE-HMAC-SHA-256 id={api_key_id},ts={timestamp},nonce={nonce},sig={signature}, where timestamp is the current time in epoch milliseconds, nonce is 16 random bytes as 32 lowercase hex digits, and signature is the lowercase hex HMAC-SHA256 of id={api_key_id}&host={host}&url={path and query}&method={METHOD} under a signing key derived from the hex-decoded api_key_secret by three chained HMAC-SHA256 steps over the nonce bytes, the timestamp digits, and vcode_request_version_1",
+  ],
+  precedence: [
+    "Explicit tool arguments",
+    "VERACODE_* environment variables",
+    "The selected profile of the Veracode credentials file, read only for whichever of the key ID and secret is still missing",
+    "A base_url from any source takes precedence over the region; with no region, us is used",
+  ],
+  environment: [
+    "VERACODE_API_PROFILE",
+    "VERACODE_API_CREDENTIALS_FILE",
+    "VERACODE_API_KEY_ID",
+    "VERACODE_API_KEY_SECRET",
+    "VERACODE_REGION",
+    "VERACODE_API_BASE_URL",
+    "VERACODE_TIMEOUT",
+  ],
+  configLocations: ["~/.veracode/credentials", "Explicit path from credentials_file or VERACODE_API_CREDENTIALS_FILE"],
+  variants: [
+    "Regions us and commercial (https://api.veracode.com, the default), eu, europe, and european (https://api.veracode.eu), and fedramp, us-fed, and federal (https://api.veracode.us), matched after trimming and lowercasing; any other region is rejected unless a base_url is given",
+    "An explicit base_url replaces the region's host, with any query, fragment, and trailing slashes removed",
+    "Named INI profiles in the credentials file, selected by profile or VERACODE_API_PROFILE, else the default profile; the api_key_secret must be a hex string",
+  ],
+  configFields: ["veracode_api_key_id", "veracode_api_key_secret"],
+} as const satisfies ResolverAuthenticationContract;

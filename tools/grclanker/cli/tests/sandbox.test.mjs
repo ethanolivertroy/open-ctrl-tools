@@ -1,0 +1,158 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+
+import {
+  createSandboxReadOperations,
+  createSandboxWriteOperations,
+  loadSandboxConfig,
+} from "../dist/pi/sandbox.js";
+
+function createTempBase(prefix) {
+  return mkdtempSync(join(tmpdir(), prefix));
+}
+
+test("sandbox read rules follow symlinks before policy checks", async () => {
+  const base = createTempBase("grclanker-sandbox-read-");
+  const cwd = resolve(base, "project");
+  const secretPath = resolve(base, "secret.txt");
+  const symlinkPath = resolve(cwd, "linked-secret.txt");
+
+  mkdirSync(resolve(cwd, ".grclanker"), { recursive: true });
+  writeFileSync(
+    resolve(cwd, ".grclanker", "sandbox.json"),
+    JSON.stringify({
+      filesystem: {
+        denyRead: [secretPath],
+        allowWrite: ["."],
+        denyWrite: [],
+      },
+    }, null, 2),
+  );
+  writeFileSync(secretPath, "super-secret\n", "utf8");
+  symlinkSync(secretPath, symlinkPath);
+
+  const readOps = createSandboxReadOperations(cwd);
+  await assert.rejects(
+    () => readOps.readFile(symlinkPath),
+    /Sandbox denied read access/,
+  );
+});
+
+test("sandbox write rules reject paths that escape through symlinked directories", async () => {
+  const base = createTempBase("grclanker-sandbox-write-");
+  const cwd = resolve(base, "project");
+  const outsideDir = resolve(base, "outside");
+  const symlinkDir = resolve(cwd, "linked-outside");
+  const escapedPath = resolve(symlinkDir, "new.txt");
+
+  mkdirSync(resolve(cwd, ".grclanker"), { recursive: true });
+  mkdirSync(outsideDir, { recursive: true });
+  writeFileSync(
+    resolve(cwd, ".grclanker", "sandbox.json"),
+    JSON.stringify({
+      filesystem: {
+        denyRead: [],
+        allowWrite: ["."],
+        denyWrite: [],
+      },
+    }, null, 2),
+  );
+  symlinkSync(outsideDir, symlinkDir);
+
+  const writeOps = createSandboxWriteOperations(cwd);
+  await assert.rejects(
+    () => writeOps.writeFile(escapedPath, "escaped\n"),
+    /Sandbox denied write access/,
+  );
+});
+
+test("malformed sandbox.json fails closed without quoting the file", () => {
+  const base = createTempBase("grclanker-sandbox-bad-json-");
+  const cwd = resolve(base, "project");
+  const configPath = resolve(cwd, ".grclanker", "sandbox.json");
+  mkdirSync(resolve(cwd, ".grclanker"), { recursive: true });
+  const body = '{ "filesystem": { "denyRead": ["CANARYSANDBOXSECRET99"] \n';
+  writeFileSync(configPath, body, "utf8");
+  const previous = process.env.GRCLANKER_HOME;
+  process.env.GRCLANKER_HOME = base;
+
+  try {
+    assert.throws(
+      () => loadSandboxConfig(cwd),
+      (error) => {
+        assert.match(error.message, /Unable to parse config file: invalid JSON/);
+        assert.equal(error.message.includes("CANARYSANDBOXSECRET99"), false);
+        return true;
+      },
+    );
+  } finally {
+    if (previous === undefined) delete process.env.GRCLANKER_HOME;
+    else process.env.GRCLANKER_HOME = previous;
+  }
+
+  assert.equal(readFileSync(configPath, "utf8"), body);
+});
+
+test("sandbox literal path entries match the exact name instead of a glob", async () => {
+  const base = createTempBase("grclanker-sandbox-literal-");
+  const cwd = resolve(base, "project");
+  const secretPath = resolve(cwd, "secrets[prod].env");
+
+  mkdirSync(resolve(cwd, ".grclanker"), { recursive: true });
+  writeFileSync(
+    resolve(cwd, ".grclanker", "sandbox.json"),
+    JSON.stringify({
+      filesystem: {
+        denyRead: [{ path: secretPath, literal: true }],
+        allowWrite: [{ path: ".", literal: true }],
+        denyWrite: [{ path: "notes[1].txt", literal: true }],
+      },
+    }, null, 2),
+  );
+  writeFileSync(secretPath, "super-secret\n", "utf8");
+
+  const readOps = createSandboxReadOperations(cwd);
+  await assert.rejects(
+    () => readOps.readFile(secretPath),
+    /Sandbox denied read access/,
+  );
+
+  const writeOps = createSandboxWriteOperations(cwd);
+  await assert.rejects(
+    () => writeOps.writeFile(resolve(cwd, "notes[1].txt"), "draft\n"),
+    /Sandbox denied write access/,
+  );
+  await writeOps.writeFile(resolve(cwd, "notes1.txt"), "draft\n");
+});
+
+test("sandbox rules fail closed on an object entry without literal: true", async () => {
+  const base = createTempBase("grclanker-sandbox-unmarked-");
+  const cwd = resolve(base, "project");
+
+  mkdirSync(resolve(cwd, ".grclanker"), { recursive: true });
+  writeFileSync(
+    resolve(cwd, ".grclanker", "sandbox.json"),
+    JSON.stringify({
+      filesystem: {
+        denyRead: [],
+        allowWrite: [{ path: "." }],
+        denyWrite: [],
+      },
+    }, null, 2),
+  );
+
+  const writeOps = createSandboxWriteOperations(cwd);
+  await assert.rejects(
+    () => writeOps.writeFile(resolve(cwd, "notes.txt"), "draft\n"),
+    /Sandbox filesystem rules must be a path/,
+  );
+});

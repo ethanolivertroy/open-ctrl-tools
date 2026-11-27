@@ -1,0 +1,318 @@
+# grclanker
+
+grclanker is an experimental open source GRC engineering assistant with native tools for evidence collection, control assessments, and risk analysis. Its default terminal host embeds [Pi](https://github.com/earendil-works/pi) 1.4 (`@earendil-works/pi-coding-agent` and `@earendil-works/pi-ai` 1.4.0); source adapters support other agent hosts. The current release is [`v0.1.5`](https://github.com/ethanolivertroy/grclanker/releases/tag/v0.1.5). It is early: minor versions can break before 1.0.
+
+macOS and Linux are the platforms with release bundles. Windows support is best effort. Linux musl hosts, including Alpine, have no bundle. Use a source checkout there.
+
+grclanker's goal is a GRC engineering assistant: scope assessments, gather evidence, map controls, prioritize organizational risks, and recommend remediation. Vendor integrations provide the evidence for that work. Choose your host below; each guide stands on its own with installation, authentication, code, and a first run.
+
+| Deployment | Availability | Self-contained guide |
+| --- | --- | --- |
+| Pi terminal CLI | Release bundle or source; local or hosted models | [Pi](https://grclanker.com/docs/getting-started/pi-runtime/) |
+| OpenAI Agents SDK | TypeScript adapter and runner from source | [OpenAI Agents SDK](https://grclanker.com/docs/getting-started/openai-agents-sdk/) |
+| Codex SDK | Source adapter with selected read tools over local MCP | [Codex SDK](https://grclanker.com/docs/getting-started/codex-sdk/) |
+| Cursor / Grok Agent SDK | Source project using `@grok/agent-sdk`; local harness | [Cursor / Grok](https://grclanker.com/docs/getting-started/agent-sdk/) |
+| Claude Code (MCP) | Local MCP server for Claude Code; uses your Claude Code sign-in | [Claude Code](https://grclanker.com/docs/getting-started/claude-code/) |
+| Claude API tool runner | TypeScript adapter on `@anthropic-ai/sdk`'s tool runner from source | [Claude API](https://grclanker.com/docs/getting-started/claude-api/) |
+| Claude Agent SDK | Source adapter with selected tools over in-process MCP and write approval | [Claude Agent SDK](https://grclanker.com/docs/getting-started/claude-agent-sdk/) |
+
+Claude Code (MCP) runs inside your own Claude Code session, including with a Claude subscription; the Claude API tool runner and Claude Agent SDK paths use API authentication. OpenAI Agents SDK and Codex SDK are different hosts. Cursor currently distributes its Agent SDK as `@grok/agent-sdk`, so Cursor and Grok share one SDK guide. Each host has its own setup, model credentials, and execution controls. Source adapters share native tool implementations and the CLI dependency installation/build; they are not independently packaged products. See [Choose a Deployment](https://grclanker.com/docs/getting-started/deployment/) for operating boundaries and [cli/README.md](cli/README.md) for the code map.
+
+## Install the Pi terminal CLI
+
+On macOS or Linux:
+
+```bash
+curl -fsSL https://grclanker.com/install | bash
+```
+
+On Windows PowerShell (best effort):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm https://grclanker.com/install.ps1 | iex"
+```
+
+The installer downloads the newest GitHub release bundle, currently `v0.1.5`. The bundle includes its own Node.js 24.22.0 runtime. Pin that release on macOS or Linux with:
+
+```bash
+curl -fsSL https://grclanker.com/install | bash -s -- 0.1.5
+```
+
+An official GitHub download or a `GRCLANKER_RELEASE_BASE_URL` install checks the archive against `SHA256SUMS.txt` and aborts when that file cannot be fetched, has no entry for the archive, the entry is not a SHA-256 digest, the digest does not match, or (the shell installer only) neither `sha256sum` nor `shasum` is available. A custom `GRCLANKER_ASSET_URL` prints a warning and installs without verifying. The [installation guide](https://grclanker.com/docs/getting-started/installation/) has the Windows pin command, the local-archive rules, and the `GRCLANKER_VERSION`, `GRCLANKER_INSTALL_DIR`, and `GRCLANKER_BIN_DIR` overrides.
+
+`@grclanker/cli` is not on npm. `npm install -g @grclanker/cli` and `bun install -g @grclanker/cli` fail.
+
+### Pi terminal CLI from source
+
+A checkout of `main` runs changes that are not in the release bundle yet. You need git, npm, and Node.js 22.19 or newer, the `engines` floor in `cli/package.json`.
+
+```bash
+# From the top level of an Open Control Tools checkout:
+cd tools/grclanker
+npm --prefix cli ci
+npm --prefix cli run build
+cd cli
+npm link
+cd ..
+grclanker tools
+```
+
+`grclanker tools` should report `241 domain tools + 7 compute backend tools`. `npm link` has to run from inside `cli/`, where it puts the `cli/bin/grclanker.js` launcher on your `PATH`. `npm --prefix cli link` does not, because `--prefix` also redirects npm's global link directory into the checkout.
+
+That sequence builds and links the Pi terminal CLI. A fork that only runs the Cursor / Grok Agent SDK stops after `npm --prefix cli ci` and `npm --prefix cli run build`, then continues at [SDK adapters from source](#sdk-adapters-from-source). Leave `npm link`, the `grclanker` binary, `grclanker setup`, and Ollama unused. The marketing site and the docs build in `grclanker/` (`npm install`, `npm run dev`, `npm run build`) stay unused too. Node.js 22.19 or newer still applies. A model turn needs a Cursor credential. `cursor:validate` and `cursor:call` do not.
+
+## Pi terminal quick start
+
+The release installer links `grclanker` into `~/.local/bin`. A source checkout does the same with the `npm link` step above. The commands below use that name.
+
+Install [Ollama](https://ollama.com/download) yourself. The grclanker installer does not install it. If Ollama is not already serving, start it with a larger context window and leave that terminal running:
+
+```bash
+OLLAMA_CONTEXT_LENGTH=128000 ollama serve
+```
+
+grclanker sends about 100k tokens of tool definitions with every request. Unless your GPU has 48 GiB or more, Ollama's default context window (4k or 32k tokens) is too small to hold them. If the Ollama app is already serving, raise its context length setting instead. `ollama ps` shows the context each loaded model got.
+
+In a second terminal:
+
+```bash
+ollama pull gemma4
+grclanker setup
+```
+
+Choose Local-first. Setup uses `http://localhost:11434/v1`. If that endpoint is down, setup stops and prints the commands to start it. If the model you name is not installed, setup offers an installed local model or asks you to pull one. It never switches you to a hosted model. The wizard can also save an explicit hosted provider and model; Anthropic defaults to `claude-sonnet-4-6`. grclanker reads the key from `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `GEMINI_API_KEY`, or from a key saved with `/login` in a session. Cancelling setup exits without opening Pi or saving a partial model choice. See [Setup](https://grclanker.com/docs/getting-started/setup/) for the hosted path.
+
+Then:
+
+```bash
+grclanker tools
+grclanker
+grclanker "Is CVE-2021-44228 in the CISA KEV catalog, and what is its EPSS score?"
+grclanker investigate "CVE-2021-44228"
+```
+
+`grclanker tools` lists every bundled tool without opening a session. `grclanker` with no arguments opens an interactive session. Leave it with `/quit` or Ctrl+D before you run the next command, and use `/resume` inside a session to reopen an earlier one. The `grclanker --session <id>` command printed on exit reopens that session. The `v0.1.3` and older bundles reject it as an unknown command. A quoted argument is a prompt. `investigate`, `audit`, `assess`, and `validate` open a session that starts on that workflow, and each one takes a subject. The `v0.0.1` bundle rejects the quoted form and drops workflow subjects.
+
+Inside a session the same four workflows are slash commands. Guides: [Investigate](https://grclanker.com/docs/workflows/investigate/), [Audit](https://grclanker.com/docs/workflows/audit/), [Assess](https://grclanker.com/docs/workflows/assess/), [Validate](https://grclanker.com/docs/workflows/validate/).
+
+## What ships in v0.1.5
+
+- 241 domain tools. `grclanker tools` and the [tool catalog](https://grclanker.com/docs/tools/catalog/) list the same set.
+- 7 compute backend tools: `bash`, `read`, `write`, `edit`, `ls`, `find`, and `grep`.
+- 4 workflows, and 2 personas: `auditor` and `verifier`.
+- `grclanker flue run` in the release bundle.
+- `grclanker durable run`, `resume`, and `tui` in the release bundle: the experimental, opt-in [durable runtime](https://grclanker.com/docs/getting-started/durable-runtime/), which can resume a run that crashed or was stopped.
+- Source adapters for OpenAI Agents SDK, Codex SDK, Claude Code, Claude API tool runner, Claude Agent SDK, and Cursor/Grok Agent SDK.
+- Runtime state under `~/.grclanker/agent`. `GRCLANKER_HOME` moves the grclanker configuration and Pi's managed `fd`/`rg` cache together.
+
+[What's New](https://grclanker.com/docs/changelog/) covers `v0.1.5`: Pi startup respects cancelled setup, isolates its binary cache, and uses Sonnet 4.6 for new Anthropic setups. CMVP replies distinguish returned results, matches, and catalog coverage, and onboarding separates hosted and local model setup. The tool count is unchanged from `v0.1.4`.
+
+Use full hosted model IDs, such as `claude-sonnet-4-6`; Pi still expands shorthand names through its own model matching. A resumed hosted session restores its saved model. Results still need review against the cited sources, especially where a lookup is incomplete or a compliance mapping needs confirmation.
+
+### Platform integrations
+
+35 integrations, 212 tools. Each count is the number of `grclanker tools` entries with that prefix.
+
+| Integration | Tools |
+| --- | --- |
+| [Ansible Automation Platform](https://grclanker.com/docs/integrations/ansible/) | 5 `ansible_*` |
+| [AWS](https://grclanker.com/docs/integrations/aws/) | 7 `aws_*` |
+| [Azure](https://grclanker.com/docs/integrations/azure/) | 7 `azure_*` |
+| [Box](https://grclanker.com/docs/integrations/box/) | 6 `box_*` |
+| [Cloudflare](https://grclanker.com/docs/integrations/cloudflare/) | 5 `cloudflare_*` |
+| [CrowdStrike Falcon](https://grclanker.com/docs/integrations/crowdstrike/) | 7 `crowdstrike_*` |
+| [Datadog](https://grclanker.com/docs/integrations/datadog/) | 6 `datadog_*` |
+| [Duo Security Inspector](https://grclanker.com/docs/integrations/duo/) | 6 `duo_*` |
+| [Elastic](https://grclanker.com/docs/integrations/elastic/) | 7 `elastic_*` |
+| [GitHub](https://grclanker.com/docs/integrations/github/) | 7 `github_*` |
+| [Google Cloud Platform](https://grclanker.com/docs/integrations/gcp/) | 7 `gcp_*` |
+| [Google Workspace](https://grclanker.com/docs/integrations/gws/) | 6 `gws_*` |
+| [Google Workspace CLI operator bridge](https://grclanker.com/docs/integrations/gws-ops/) | 5 `gws_ops_*` |
+| [KnowBe4](https://grclanker.com/docs/integrations/knowbe4/) | 6 `knowbe4_*` |
+| [LaunchDarkly](https://grclanker.com/docs/integrations/launchdarkly/) | 7 `launchdarkly_*` |
+| [MuleSoft Anypoint Platform](https://grclanker.com/docs/integrations/mulesoft/) | 6 `mulesoft_*` |
+| [New Relic](https://grclanker.com/docs/integrations/newrelic/) | 6 `newrelic_*` |
+| [Okta](https://grclanker.com/docs/integrations/okta/) | 6 `okta_*` |
+| [Oracle Cloud Infrastructure](https://grclanker.com/docs/integrations/oci/) | 6 `oci_*` |
+| [PagerDuty](https://grclanker.com/docs/integrations/pagerduty/) | 7 `pagerduty_*` |
+| [Palo Alto Networks](https://grclanker.com/docs/integrations/paloalto/) | 6 `paloalto_*` |
+| [Qualys](https://grclanker.com/docs/integrations/qualys/) | 6 `qualys_*` |
+| [Salesforce](https://grclanker.com/docs/integrations/salesforce/) | 6 `salesforce_*` |
+| [ServiceNow](https://grclanker.com/docs/integrations/servicenow/) | 6 `servicenow_*` |
+| [Slack](https://grclanker.com/docs/integrations/slack/) | 7 `slack_*` |
+| [Snowflake](https://grclanker.com/docs/integrations/snowflake/) | 6 `snowflake_*` |
+| [Splunk](https://grclanker.com/docs/integrations/splunk/) | 7 `splunk_*` |
+| [Sumo Logic](https://grclanker.com/docs/integrations/sumologic/) | 6 `sumologic_*` |
+| [Tenable](https://grclanker.com/docs/integrations/tenable/) | 6 `tenable_*` |
+| [Vanta Auditor API](https://grclanker.com/docs/integrations/vanta/) | 3 `vanta_*` |
+| [Veracode](https://grclanker.com/docs/integrations/veracode/) | 7 `veracode_*` |
+| [Webex](https://grclanker.com/docs/integrations/webex/) | 5 `webex_*` |
+| [Zendesk](https://grclanker.com/docs/integrations/zendesk/) | 6 `zendesk_*` |
+| [Zoom](https://grclanker.com/docs/integrations/zoom/) | 5 `zoom_*` |
+| [Zscaler](https://grclanker.com/docs/integrations/zscaler/) | 5 `zscaler_*` |
+
+The Google Workspace CLI operator bridge (`gws_ops_*`) shells out to an installed [`gws`](https://github.com/googleworkspace/cli) binary. The Google Workspace tools (`gws_*`) call the APIs directly.
+
+### Reference data
+
+These five families are the other 29 domain tools. They are not tenant integrations.
+
+| Family | Tools | Guide |
+| --- | --- | --- |
+| CMVP | 4 `cmvp_*` | [Tool catalog](https://grclanker.com/docs/tools/catalog/) |
+| KEV / EPSS | 4 `kevs_*` | [Tool catalog](https://grclanker.com/docs/tools/catalog/) |
+| FedRAMP | 10 `fedramp_*` | [FedRAMP](https://grclanker.com/docs/fedramp/) |
+| OSCAL | 7 `oscal_*` | [OSCAL workspaces](https://grclanker.com/docs/guides/oscal-workspaces/) |
+| SCF | 4 `scf_*` | [SCF crosswalks](https://grclanker.com/docs/guides/scf-crosswalks/) |
+
+212 platform tools and 29 reference tools are the 241 domain tools.
+
+## Pi compute backends
+
+These settings configure the Pi terminal host. The default backend is `host`, the local shell. `grclanker setup --compute <kind>` saves a preference. For one run, put `--compute <kind>` on a workflow command, a quoted prompt, `env smoke-test`, or `env exec`. Examples: `grclanker investigate --compute docker` and `grclanker env smoke-test --compute host`. `grclanker --compute docker` is an unknown command. `env doctor` and `env list` ignore the flag.
+
+| Kind | State | What runs there |
+| --- | --- | --- |
+| `host` | shipped | The local shell. |
+| `sandbox-runtime` | shipped | `bash`, `grep`, and `find` in the sandbox. `read`, `write`, `edit`, and `ls` stay local and follow the same filesystem policy. |
+| `docker` | shipped | `bash`, `read`, `write`, `edit`, `ls`, `grep`, and `find` in a local container. |
+| `parallels-vm` | shipped | Those same seven tools, in a disposable Parallels sandbox. grclanker prefers a dedicated template and falls back to cloning a stopped base VM. It attaches the repo share. |
+| `modal` | shipped | One-shot `bash`. File tools stay on the local workspace. |
+| `runpod-pod` | shipped | The seven tools over SSH, on a pod you already own. grclanker copies the repo's tracked files into that pod. |
+| `runpod-serverless` | shipped | One-shot `bash`. File tools stay on the local workspace. |
+| `vercel-sandbox`, `cloudflare-sandbox` | reserved | A request for either kind fails immediately. |
+
+`sandbox-runtime` reads `~/.grclanker/sandbox.json`, then `.grclanker/sandbox.json` in the current directory. The project file wins. `GRCLANKER_HOME` moves the home directory off `~/.grclanker`.
+
+`grclanker env list` shows which kinds this machine can run. `env doctor` checks the saved backend. `env smoke-test` checks file tools and backend-native search. The [compute backends](https://grclanker.com/docs/getting-started/compute-backends/) page is the full matrix.
+
+## SDK adapters from source
+
+The adapters live together under `cli/adapters/`. Each uses the shared GRC core in `cli/core/` and native tool implementations in `cli/extensions/grc-tools/`; none starts another adapter's agent loop. The default terminal host remains in `cli/pi/`.
+
+| Host | Source | Complete setup |
+| --- | --- | --- |
+| OpenAI Agents SDK | [`cli/adapters/openai-agents/`](cli/adapters/openai-agents/) | [OpenAI guide](https://grclanker.com/docs/getting-started/openai-agents-sdk/): TypeScript agent, selected tools, and write approvals |
+| Codex SDK | [`cli/adapters/codex/`](cli/adapters/codex/) | [Codex guide](https://grclanker.com/docs/getting-started/codex-sdk/): worker with selected read tools over local MCP |
+| Claude API tool runner | [`cli/adapters/claude-api/`](cli/adapters/claude-api/) | [Claude API guide](https://grclanker.com/docs/getting-started/claude-api/): tool runner agent, selected tools, reviewers, and write approvals |
+| Claude Code (MCP) | [`cli/adapters/claude-code/`](cli/adapters/claude-code/) | [Claude Code guide](https://grclanker.com/docs/getting-started/claude-code/): local MCP server with GRC tools, role, and workflow prompts |
+| Claude Agent SDK | [`cli/adapters/claude-agent-sdk/`](cli/adapters/claude-agent-sdk/) | [Claude guide](https://grclanker.com/docs/getting-started/claude-agent-sdk/): selected tools over in-process MCP, reviewer subagents, and write approvals |
+| Cursor / Grok Agent SDK | [`cli/adapters/cursor-grok/`](cli/adapters/cursor-grok/) | [Cursor / Grok guide](https://grclanker.com/docs/getting-started/agent-sdk/): generated SDK project, skills, personas, and local playground |
+
+From the checkout root, install and build the shared source package:
+
+```bash
+npm --prefix cli ci
+npm --prefix cli run build
+```
+
+Then use the check for your chosen adapter:
+
+```bash
+npm --prefix cli run openai-agents:check
+npm --prefix cli run claude-api:check
+npm --prefix cli run cursor:validate
+npm --prefix cli run codex:install
+npm --prefix cli run codex:check
+npm --prefix cli run claude:install
+npm --prefix cli run claude:check
+npm --prefix cli run claude-code:install
+npm --prefix cli run claude-code:check
+```
+
+These checks need no model credential. Codex requires Node.js 22.22 or newer and installs its additional SDK/MCP dependencies in its adapter directory. The Claude Agent SDK adapter does the same, because the SDK bundles a platform-specific Claude Code executable. The Claude Code MCP server installs only the MCP SDK in its directory; register it with `claude mcp add` as its guide shows. OpenAI, Claude API, and Cursor dependencies resolve from `cli/package.json`. The source package currently installs and builds these hosts together; separate configuration and run paths do not imply isolated dependency packages.
+
+A fork that only runs the Cursor / Grok adapter uses that shared install and the [Cursor / Grok guide](https://grclanker.com/docs/getting-started/agent-sdk/). It leaves the marketing site, the docs build, `npm link`, the `grclanker` binary, `grclanker setup`, and Ollama unused. Node.js 22.19 or newer still applies. A model turn needs a Cursor credential before it starts. `cursor:validate` and `cursor:call` do not. On that path the harness `shell` is unsandboxed, and the `auditor` and `verifier` `Allowed:` lines are prompt text. The guide states both.
+
+Use `openai-agents:run`, `claude-api:run`, `codex:run`, `claude:run`, or `cursor:run` with the credentials and tool selection documented in that host's guide. Cursor's `cursor:dev` starts its playground. The older `agent-sdk:*` scripts remain compatibility aliases for the Cursor adapter; new instructions use `cursor:*`.
+
+## Flue
+
+The release bundle can run the same 241 domain tools, the four workflow prompts, and the `auditor` and `verifier` personas under the [Flue Framework](https://flueframework.com/).
+
+```bash
+grclanker flue run --message "Is CVE-2021-44228 in the CISA KEV catalog?"
+```
+
+From a checkout, on Node.js 22.19 or newer, run the official CLI from `cli/`:
+
+```bash
+cd cli
+npm ci
+npx flue run flue/agent.ts --message "Is CVE-2021-44228 in the CISA KEV catalog?"
+```
+
+`@flue/cli` is a devDependency so it shares this repo's `@flue/runtime`. A separately downloaded `npx @flue/cli` loads a second runtime and fails.
+
+`GRCLANKER_FLUE_MODEL` sets the `provider/model` specifier. Without it, Flue reuses the `grclanker setup` choice, or `anthropic/claude-sonnet-4-6` when setup has not chosen one. Hosted provider API keys come from the environment. A missing key ends the run with `Provider is not configured: <provider>`. `GRCLANKER_FLUE_SANDBOX=none` turns off Flue's local file and shell sandbox. Pi compute backends do not apply here.
+
+`grclanker flue run` stores conversations in `~/.grclanker/flue/conversations.db`, including tool arguments and credentials. `GRCLANKER_HOME` moves that directory. Pass `--db <path>` to use another file, or `--db :memory:` in CI so the run keeps nothing.
+
+`npx flue run` has no `--db` option. With no `flue.config.*` database entry, a run from `cli/` stores conversations in `cli/node_modules/.cache/flue/run.db`. That file can hold the same credentials, and a CI cache of `node_modules` keeps it. Delete `node_modules/.cache/flue` after the job, or leave that directory out of the cache.
+
+See [Flue runtime](https://grclanker.com/docs/getting-started/flue-runtime/).
+
+## Skills only
+
+User-scoped Codex skill, into `~/.codex/skills/grclanker/`:
+
+```bash
+curl -fsSL https://grclanker.com/install-skills | bash
+```
+
+Repo-local skill, into `.agents/skills/grclanker/` under the current directory:
+
+```bash
+curl -fsSL https://grclanker.com/install-skills | bash -s -- --repo
+```
+
+Windows PowerShell (best effort):
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm https://grclanker.com/install-skills.ps1 | iex"
+```
+
+These installers download `skills/grclanker/SKILL.md` from `main`. They do not install the CLI.
+
+## Specs
+
+The repo has 35 specs in [`specs/`](specs/). Browse them at [grclanker.com/specs](https://grclanker.com/specs/), or fetch one raw file:
+
+```bash
+curl -O https://raw.githubusercontent.com/ethanolivertroy/grclanker/main/specs/aws-sec-inspector.spec.md
+```
+
+A release bundle does not include `specs/`. From a source checkout, start grclanker in `grclanker/` and give it a spec path. See [Using specs as inputs](https://grclanker.com/docs/specs/using-specs-as-inputs/).
+
+## Release bundles
+
+The installers look for these GitHub release assets, plus `SHA256SUMS.txt`:
+
+- `grclanker-<version>-darwin-arm64.tar.gz`
+- `grclanker-<version>-darwin-x64.tar.gz`
+- `grclanker-<version>-linux-arm64.tar.gz` (glibc)
+- `grclanker-<version>-linux-x64.tar.gz` (glibc)
+- `grclanker-<version>-win32-arm64.zip`
+- `grclanker-<version>-win32-x64.zip`
+
+A local archive prints a warning and installs without verifying when no `SHA256SUMS.txt` sits beside it. When that file is present, a missing entry, a digest that is not SHA-256, or a mismatch aborts the install, and the shell installer also aborts if neither `sha256sum` nor `shasum` is available.
+
+Build them from a checkout:
+
+```bash
+cd cli
+npm install
+npm run build:bundle -- --all
+```
+
+`build:bundle` packages Node.js 24.22.0. `GRCLANKER_NODE_VERSION` overrides that. Artifacts and `SHA256SUMS.txt` land in `cli/release/`. Drop `--all` to build only the host platform, or pass `--target <platform-arch>`. `--output-dir <dir>` changes the destination.
+
+## Contributing
+
+Bugs and feature requests use the [issue templates](.github/ISSUE_TEMPLATE/). Repository layout, commands, and how to add an integration are in [AGENTS.md](AGENTS.md). The short contributor path is [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+grclanker is licensed under the [MIT License](LICENSE). See [NOTICE](NOTICE) for attribution.
+
+Built by [Ethan Troy](https://ethantroy.dev).

@@ -44,6 +44,7 @@ jobs:
       wilma: ${{ steps.filter.outputs.wilma }}
       controlbot: ${{ steps.filter.outputs.controlbot }}
       drata_cli: ${{ steps.filter.outputs.drata_cli }}
+      grclanker: ${{ steps.filter.outputs.grclanker }}
       mesh_security_trainer: ${{ steps.filter.outputs.mesh_security_trainer }}
       nist_cmvp_api: ${{ steps.filter.outputs.nist_cmvp_api }}
       pi_kevin: ${{ steps.filter.outputs.pi_kevin }}
@@ -88,6 +89,7 @@ jobs:
           echo "wilma=$(has_match '^auditors/wilma/')" >> "$GITHUB_OUTPUT"
           echo "controlbot=$(has_match '^tools/controlbot/')" >> "$GITHUB_OUTPUT"
           echo "drata_cli=$(has_match '^tools/drata-cli/')" >> "$GITHUB_OUTPUT"
+          echo "grclanker=$(has_match '^tools/grclanker/')" >> "$GITHUB_OUTPUT"
           echo "mesh_security_trainer=$(has_match '^tools/mesh-security-trainer/')" >> "$GITHUB_OUTPUT"
           echo "nist_cmvp_api=$(has_match '^tools/nist-cmvp-api/')" >> "$GITHUB_OUTPUT"
           echo "pi_kevin=$(has_match '^tools/pi-kevin/')" >> "$GITHUB_OUTPUT"
@@ -278,6 +280,45 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+
+  grclanker-cli:
+    name: tools/grclanker (CLI)
+    needs: changes
+    if: needs.changes.outputs.grclanker == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: tools/grclanker/cli
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/grclanker/cli/package-lock.json
+      - run: npm ci
+      - run: npm run verify
+
+  grclanker-site:
+    name: tools/grclanker (Site)
+    needs: changes
+    if: needs.changes.outputs.grclanker == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: tools/grclanker
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/grclanker/package-lock.json
+      - run: npm ci
+      - run: npm run test:site
+      - run: npm run build
 
   mesh-security-trainer:
     name: tools/mesh-security-trainer
