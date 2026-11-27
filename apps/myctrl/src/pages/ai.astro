@@ -1,0 +1,28 @@
+---
+import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
+import { getStats, getByTag } from '../data/controls';
+
+const aiContent = getByTag('AI').map(config => ({
+  config,
+  stats: getStats(config.id),
+}));
+
+const totalItems = aiContent.reduce((sum, { stats }) => sum + stats.total, 0);
+const description =
+  `Security frameworks, risk lists, and guidance for AI and Large Language Model applications. ` +
+  `${totalItems} items across ${aiContent.length} resource${aiContent.length !== 1 ? 's' : ''}.`;
+---
+
+<FrameworkCategoryPage
+  title="AI Security"
+  breadcrumbLabel="AI Security"
+  heading="AI Security Resources"
+  badge={{ label: 'AI', class: 'badge-ai' }}
+  description={description}
+  groups={[{ frameworks: aiContent }]}
+  emptyMessage="No AI-related content available yet."
+>
+  <p slot="footer" class="text-center text-sm text-muted-foreground">
+    More AI security resources coming soon: NIST AI RMF Overlay
+  </p>
+</FrameworkCategoryPage>

@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ControlCardCompact } from '../../../components/controls/ControlCard';
+import { ExportButton } from '../../../components/export/ExportButton';
+import { FavoriteButton } from '../../../components/ui/FavoriteButton';
+import { AIViewButton } from '../../../components/ai/AskAISection';
+import FrameworkLicenseNotice from '../../../components/frameworks/FrameworkLicenseNotice.astro';
+import FrameworkFilterBadges from '../../../components/frameworks/FrameworkFilterBadges.astro';
+import {
+  getAllControls,
+  getAllFamilies,
+  getControlsByFamily,
+  getFamilyName,
+  getStats,
+  getFrameworks,
+  getFrameworkConfig,
+  isValidFramework,
+  hasFrameworkData,
+  isLocalFrameworkData,
+} from '../../../data/controls';
+import { getFrameworkCrosswalkTargets } from '../../../data/crosswalk';
+
+export async function getStaticPaths() {
+  const frameworks = getFrameworks();
+  return frameworks.map((config) => ({
+    params: { framework: config.id },
+    props: { frameworkId: config.id },
+  }));
+}
+
+const { frameworkId } = Astro.props;
+
+if (!isValidFramework(frameworkId)) {
+  return Astro.redirect('/');
+}
+
+const config = getFrameworkConfig(frameworkId);
+const isLoaded = hasFrameworkData(frameworkId);
+const isLocal = isLocalFrameworkData(frameworkId);
+const stats = getStats(frameworkId);
+const families = getAllFamilies(frameworkId);
+const allControls = getAllControls(frameworkId);
+const crosswalkTargets = getFrameworkCrosswalkTargets(frameworkId);
+---
+
+<BaseLayout title={`${config.name} ${config.version}`} showSidebar={true} frameworkId={frameworkId}>
+  <div class="space-y-8">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span>Frameworks</span>
+        <span>/</span>
+        <span class="text-foreground">{config.name}</span>
+      </div>
+
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <h1 class="text-3xl font-bold tracking-tight">
+            {config.name} <span class="text-primary">v{config.version}</span>
+          </h1>
+          <FavoriteButton client:load frameworkId={frameworkId} />
+        </div>
+        {isLoaded && allControls.length > 0 && (
+          <div class="flex items-center gap-2">
+            <AIViewButton client:load frameworkId={frameworkId} />
+            <ExportButton
+              client:idle
+              controls={allControls}
+              config={config}
+            />
+          </div>
+        )}
+      </div>
+
+      <p class="text-muted-foreground">
+        {config.description}
+      </p>
+
+      <FrameworkLicenseNotice config={config} isLoaded={isLoaded} isLocal={isLocal} />
+
+      {/* Quick stats / Filter badges */}
+      {isLoaded && <FrameworkFilterBadges config={config} stats={stats} variant="page" />}
+    </header>
+
+    {!isLoaded && crosswalkTargets.length > 0 && (
+      <section class="p-5 rounded-xl border border-border bg-card/50 space-y-3">
+        <h2 class="text-base font-semibold">Published Public-Domain Crosswalk References</h2>
+        <p class="text-sm text-muted-foreground">
+          While {config.name} control prose is not redistributed, published public-domain ID-to-ID references connect it to:
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {crosswalkTargets.map((targetId) => {
+            const targetConfig = isValidFramework(targetId) ? getFrameworkConfig(targetId) : null;
+            return (
+              <a
+                href={`/frameworks/${targetId}`}
+                class="px-3 py-1.5 text-xs font-mono rounded-md border border-border bg-background hover:border-primary/50 hover:text-primary transition-colors"
+              >
+                {targetConfig ? targetConfig.name : targetId} →
+              </a>
+            );
+          })}
+          {frameworkId === 'pci-dss-v4' && (
+            <a
+              href="/crosswalk/csf-pci"
+              class="px-3 py-1.5 text-xs font-mono rounded-md border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+            >
+              Browse CSF 2.0 ↔ PCI IDs →
+            </a>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Control Families / Requirements -->
+    {isLoaded && (
+      <section class="space-y-8">
+        {families.map((family) => {
+          const controls = getControlsByFamily(frameworkId, family);
+          const familyName = getFamilyName(frameworkId, family);
+
+          return (
+            <div class="space-y-4 scroll-reveal" id={family.toLowerCase()}>
+              <h2 class="text-xl font-semibold flex items-center gap-3 sticky top-16 py-2 z-10 bg-background">
+                <span class="font-mono text-primary">{family}</span>
+                <span class="text-muted-foreground">—</span>
+                <span>{familyName}</span>
+                <span class="text-sm text-muted-foreground font-normal">
+                  ({controls.length} {config.itemLabel})
+                </span>
+              </h2>
+
+              <div class="space-y-2">
+                {controls.map((control) => (
+                  <ControlCardCompact control={control} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    )}
+  </div>
+</BaseLayout>

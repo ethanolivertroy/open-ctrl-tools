@@ -1,0 +1,387 @@
+{
+  "component-definition": {
+    "uuid": "23497e12-9772-46b0-bcce-861640ff6b4e",
+    "metadata": {
+      "title": "Elastic Component Definition",
+      "last-modified": "2026-02-03T17:16:24.618151+00:00",
+      "version": "1.0.0.2026-02-03",
+      "oscal-version": "1.1.2",
+      "parties": [
+        {
+          "uuid": "d6f53be2-a7d4-43e5-b907-affb0e91a4bb",
+          "type": "organization",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "remarks": "Original document title: Amazon Elastic Compute Cloud (EC2)\nLast updated: 2025-12-09"
+    },
+    "components": [
+      {
+        "uuid": "1239a26b-a4fe-4528-9a72-9af9682fb7d7",
+        "type": "software",
+        "title": "Amazon Elastic Compute Cloud (EC2)",
+        "description": "Amazon Elastic Cloud Compute (EC2) security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements.\n\n**Important Disclaimer**: This document provides AWS recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. AWS makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\n**Command and Configuration Disclaimer**: All AWS CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. AWS CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest AWS CLI documentation and service-specific guides for current syntax and available options.",
+        "responsible-roles": [
+          {
+            "role-id": "provider",
+            "party-uuids": [
+              "d6f53be2-a7d4-43e5-b907-affb0e91a4bb"
+            ]
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "e5cf27c3-2bfb-4903-9218-c6f5c040abc3",
+            "source": "#fedramp-high-baseline",
+            "description": "FedRAMP control implementations for Elastic",
+            "implemented-requirements": []
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fedramp-high-baseline",
+          "description": "FedRAMP Revision 4 High Baseline Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/GSA/fedramp-automation/master/dist/content/rev4/baselines/json/FedRAMP_rev4_HIGH-baseline_profile.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "26132520-6d4e-439c-b494-a7655f3839c8",
+          "title": "Document Information",
+          "description": "[cols=\"1,3\"]\n|===\n|Version |1.0.0\n|Last Updated |2025-12-09\n|Documentation URL |https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "bec6831f-8146-4acd-9ba4-3deb7fc3e485",
+          "title": "Overview",
+          "description": "Amazon Elastic Cloud Compute (EC2) security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements.\n\n**Important Disclaimer**: This document provides AWS recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. AWS makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\n**Command and Configuration Disclaimer**: All AWS CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. AWS CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest AWS CLI documentation and service-specific guides for current syntax and available options.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "c77ea9f9-054c-4c7d-8732-42d8ec8c8df2",
+          "title": "FedRAMP Requirements",
+          "description": "Amazon Elastic Compute Cloud (EC2) must comply with the following FedRAMP requirements:\n\n* FRR-RSC-03\n* FRR-RSC-04\n* FRR-RSC-05\n* FRR-RSC-06\n* FRR-RSC-07",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "5cf48d0b-fb8a-46e4-a40c-5f42c85a548e",
+          "title": "Administrative Account Model",
+          "description": "Amazon Elastic Compute Cloud (EC2) does not have an administrative account model.\n\n[cols=\"1,3\"]\n|===\n|Administrative Accounts |No\n|Account Type |N/A\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "3ae73820-c53a-478b-a5e2-ac4d0a8deca1",
+          "title": "FRR-RSC-01: Administrative Accounts",
+          "description": "*Applicable:* No\n\nNot applicable - no administrative account model",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "a7e49c6b-11e7-4e6a-8d75-6e2b283ab120",
+          "title": "FRR-RSC-02: Administrative Settings",
+          "description": "*Applicable:* Yes (OS-Level Administrative Accounts)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "a5da6fa0-5db5-4c38-b45a-bc298daf4867",
+          "title": "Operating System Administrative Account Security",
+          "description": "Amazon EC2 instances run customer-managed operating systems. Unlike database services, EC2 does not have a service-level \"master user.\" Instead, security focuses on OS-level administrative accounts that vary by operating system. This section provides guidance for securing administrative access across different operating systems.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "abf0772d-1093-4900-8828-a14783a797f4",
+          "title": "Linux-Based Operating Systems (Amazon Linux, Ubuntu, RHEL, etc.)",
+          "description": "===== 1. Root Account Security\n\n*Operations Restricted to root:*\n\n* System-wide configuration changes\n* Installation and removal of system packages\n* Modification of system services and daemons\n* Network configuration changes\n* Firewall and iptables management\n* User and group management\n* File system mounting and unmounting\n* Kernel module loading\n* System logging configuration\n\n*Security Implications:*\n\n* Root access provides complete system control\n* Compromised root account enables full system takeover\n* Root operations bypass most security controls\n* Improper root usage violates least privilege\n* Root access required for security patching\n\n*Best Practices:*\n\n* Disable direct root SSH login (`PermitRootLogin no` in sshd_config)\n* Use sudo for privileged operations instead of su\n* Require individual user accounts with sudo access\n* Enable sudo logging and auditing\n* Use SSH key-based authentication only (disable password auth)\n* Implement multi-factor authentication for sudo operations\n* Regularly audit sudo access and usage\n\n===== 2. Sudo-Enabled User Accounts\n\n*Operations:*\n\n* Execute commands with root privileges via sudo\n* Modify system configuration files\n* Install/update software packages\n* Manage system services\n* Access restricted log files\n* Modify security settings\n\n*Security Implications:*\n\n* Sudo provides temporary privilege escalation\n* Sudo logs provide audit trail of privileged operations\n* Misconfigured sudoers file can grant excessive privileges\n* Sudo without password (NOPASSWD) increases risk\n\n*Best Practices:*\n\n* Configure sudoers file with least privilege\n* Require password for sudo operations (avoid NOPASSWD)\n* Use sudo groups instead of individual user entries\n* Enable sudo logging to syslog\n* Implement command restrictions in sudoers\n* Regular review of sudoers configuration\n* Use `visudo` to prevent syntax errors\n\n===== 3. SSH Key Management\n\n*Operations:*\n\n* Generate and distribute SSH key pairs\n* Manage authorized_keys files\n* Configure SSH daemon settings\n* Implement SSH certificate authorities\n\n*Security Implications:*\n\n* SSH keys provide passwordless authentication\n* Compromised private keys enable unauthorized access\n* Shared keys violate accountability principles\n* Unmanaged keys create security gaps\n\n*Best Practices:*\n\n* Use EC2 key pairs or AWS Systems Manager Session Manager\n* Generate unique SSH keys per user\n* Implement SSH key rotation (90 days maximum)\n* Use SSH certificates instead of static keys where possible\n* Disable password authentication in sshd_config\n* Implement SSH bastion hosts for access control\n* Use AWS Systems Manager Session Manager for auditable access\n\n===== 4. System Service Management\n\n*Operations:*\n\n* Start, stop, restart system services\n* Enable/disable services at boot\n* Modify service configurations\n* View service status and logs\n\n*Security Implications:*\n\n* Service management affects system availability\n* Malicious services can compromise system\n* Service misconfigurations create vulnerabilities\n* Service accounts may have elevated privileges\n\n*Best Practices:*\n\n* Use systemd or init.d for service management\n* Implement service-specific user accounts (not root)\n* Enable SELinux or AppArmor for service confinement\n* Regular audit of running services\n* Disable unnecessary services\n* Monitor service logs for anomalies",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "5c7959e8-99fc-4fe2-99b2-b62a6bbc2bdb",
+          "title": "Windows-Based Operating Systems",
+          "description": "===== 1. Administrator Account Security\n\n*Operations Restricted to Administrator:*\n\n* System-wide configuration changes\n* Software installation and removal\n* User and group management\n* Security policy configuration\n* Service management\n* Registry modifications\n* Firewall configuration\n* Event log management\n\n*Security Implications:*\n\n* Administrator access provides complete system control\n* Compromised Administrator account enables full takeover\n* Administrator operations bypass User Account Control (UAC)\n* Improper Administrator usage violates least privilege\n\n*Best Practices:*\n\n* Rename default Administrator account\n* Disable built-in Administrator account when not needed\n* Use separate administrative accounts (not daily-use accounts)\n* Enable and configure User Account Control (UAC)\n* Implement Local Administrator Password Solution (LAPS)\n* Use RDP with Network Level Authentication (NLA)\n* Require strong passwords (minimum 20 characters)\n* Enable account lockout policies\n\n===== 2. Domain Administrator Accounts (Active Directory)\n\n*Operations:*\n\n* Domain-wide user and computer management\n* Group Policy creation and modification\n* Domain controller management\n* Trust relationship configuration\n* Schema modifications\n* Forest and domain functional level changes\n\n*Security Implications:*\n\n* Domain Admin access affects entire AD environment\n* Compromised Domain Admin enables enterprise-wide attack\n* Domain Admin credentials are high-value targets\n* Improper Group Policy can weaken security\n\n*Best Practices:*\n\n* Minimize Domain Admin account usage\n* Use separate accounts for domain administration\n* Implement Privileged Access Workstations (PAWs)\n* Enable Protected Users security group\n* Implement tiered administrative model\n* Use Just-In-Time (JIT) admin access\n* Monitor Domain Admin activity with SIEM\n* Regular audit of Domain Admin group membership\n\n===== 3. Local Security Policy Management\n\n*Operations:*\n\n* Password policy configuration\n* Account lockout policy settings\n* User rights assignment\n* Security options configuration\n* Audit policy settings\n\n*Security Implications:*\n\n* Security policies enforce baseline security\n* Weak policies create vulnerabilities\n* Policy misconfigurations can lock out users\n* Audit policies affect compliance\n\n*Best Practices:*\n\n* Implement CIS Benchmarks for Windows\n* Use Group Policy for centralized management\n* Enable comprehensive audit logging\n* Configure password complexity requirements\n* Implement account lockout policies\n* Regular review of security policy settings\n* Test policy changes in non-production first\n\n===== 4. Remote Desktop Protocol (RDP) Security\n\n*Operations:*\n\n* Enable/disable RDP access\n* Configure RDP security settings\n* Manage RDP user permissions\n* Configure Network Level Authentication\n\n*Security Implications:*\n\n* RDP provides remote administrative access\n* Unsecured RDP is common attack vector\n* RDP credentials can be intercepted\n* RDP sessions may not be audited\n\n*Best Practices:*\n\n* Use AWS Systems Manager Session Manager instead of RDP when possible\n* Enable Network Level Authentication (NLA)\n* Use RDP Gateway for centralized access\n* Implement multi-factor authentication for RDP\n* Restrict RDP access via security groups\n* Enable RDP session recording\n* Use strong encryption for RDP connections\n* Disable RDP when not needed",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "924b7cc2-4fa3-477e-ab66-85b091234cba",
+          "title": "Cross-Platform Administrative Security Best Practices",
+          "description": "===== 1. Access Management\n\n* Use AWS Systems Manager Session Manager for secure, auditable access\n* Implement bastion hosts for SSH/RDP access\n* Use AWS IAM roles for EC2 instead of long-term credentials\n* Enable AWS CloudTrail for API logging\n* Implement just-in-time (JIT) administrative access\n* Use separate accounts for administrative tasks\n\n===== 2. Credential Management\n\n* Store credentials in AWS Secrets Manager\n* Implement automatic credential rotation\n* Use SSH keys or certificates (not passwords)\n* Enable multi-factor authentication\n* Implement password complexity requirements\n* Regular credential audits and rotation\n\n===== 3. Monitoring and Auditing\n\n* Enable CloudWatch Logs for system logs\n* Configure CloudWatch alarms for suspicious activity\n* Use AWS Config for configuration compliance\n* Implement centralized logging (SIEM)\n* Enable detailed audit logging\n* Regular review of administrative activity\n\n===== 4. Patch Management\n\n* Use AWS Systems Manager Patch Manager\n* Implement automated patching schedules\n* Test patches in non-production first\n* Maintain patch compliance reporting\n* Enable automatic security updates where appropriate\n* Regular vulnerability scanning\n\n===== 5. Network Security\n\n* Deploy EC2 instances in private subnets\n* Use security groups with least privilege\n* Implement Network ACLs for additional protection\n* Use VPC endpoints for AWS service access\n* Enable VPC Flow Logs for network monitoring\n* Implement host-based firewalls (iptables, Windows Firewall)\n\n===== 6. Compliance and Documentation\n\n* Document all administrative accounts and their purposes\n* Maintain inventory of administrative access\n* Conduct quarterly access reviews\n* Implement change management for system changes\n* Use infrastructure as code (CloudFormation, Terraform)\n* Regular security assessments and penetration testing",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "36ed161c-40ec-4d0b-9fc6-de7731724ec8",
+          "title": "AWS-Specific Administrative Tools",
+          "description": "===== 1. AWS Systems Manager Session Manager\n\n*Benefits:*\n\n* No need for SSH keys or RDP passwords\n* Fully auditable sessions via CloudTrail\n* No need for bastion hosts or open inbound ports\n* Integrated with IAM for access control\n* Session recording and logging capabilities\n\n*Security Implications:*\n\n* Requires IAM permissions for access\n* Sessions are encrypted in transit\n* Provides centralized access management\n* Eliminates need for direct SSH/RDP access\n\n===== 2. AWS Systems Manager Run Command\n\n*Operations:*\n\n* Execute commands across multiple instances\n* Automate administrative tasks\n* Apply patches and updates\n* Collect system information\n\n*Security Implications:*\n\n* Requires IAM permissions\n* Commands are logged in CloudTrail\n* Can execute with elevated privileges\n* Requires careful access control\n\n===== 3. EC2 Instance Connect\n\n*Operations:*\n\n* Temporary SSH access via AWS Console\n* One-time SSH public key push\n* No permanent key management\n\n*Security Implications:*\n\n* Requires IAM permissions\n* Keys are temporary (60 seconds)\n* Access is logged in CloudTrail\n* Eliminates long-term key management",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "0c51e1f3-c4a3-4399-9581-f0fbbba9713d",
+          "title": "Implementation Checklist",
+          "description": "☐ Disable direct root/Administrator login +\n☐ Implement individual user accounts with sudo/admin rights +\n☐ Enable SSH key-based authentication (disable passwords) +\n☐ Configure multi-factor authentication +\n☐ Use AWS Systems Manager Session Manager +\n☐ Enable comprehensive audit logging +\n☐ Implement automated patch management +\n☐ Configure host-based firewalls +\n☐ Deploy instances in private subnets +\n☐ Regular access reviews and audits +\n☐ Document administrative procedures +\n☐ Implement change management processes +\n\nThis comprehensive guidance ensures that EC2 instance administrative accounts are configured according to security best practices and FedRAMP requirements across different operating systems.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "ecd9d85f-4a82-4408-8491-92dbeafe5fc8",
+          "title": "FRR-RSC-03: Privileged Settings",
+          "description": "*Applicable:* Yes\n\nWithin EC2 you have two layers of privileged access. One layer is at the IAM layer, where you can limit what permissions a user has to operate within EC@. This section covers the priviliged settings for using the service itself and provides example IAM Policies that would allow for varying levels of access to the service. The second layer of privileged access is at the OS layer itself which is covered in the other sections of this document.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "5b32ff40-abc6-4c43-bb38-b7b7219e4e1a",
+          "title": "IAM Least Privilege Policies",
+          "description": "Sample IAM policies for least privilege access to Amazon Elastic Compute Cloud (EC2)\n\n\n*Read Only Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"ec2:Describe*\",\n        \"ec2:List*\",\n        \"ec2:Get*\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n----\n\n\n*Operator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"ec2:Describe*\",\n        \"ec2:List*\",\n        \"ec2:Get*\",\n        \"ec2:StartInstances\",\n        \"ec2:StopInstances\",\n        \"ec2:RebootInstances\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        }\n      }\n    }\n  ]\n}\n----\n\n\n*Administrator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"ec2:*\",\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        },\n        \"NumericLessThan\": {\n          \"aws:MultiFactorAuthAge\": \"3600\"\n        }\n      }\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "803513f6-6f6d-4471-92ba-2a3f47b00898",
+          "title": "Instance Metadata Service",
+          "description": "Configure EC2 Instance Metadata Service v2 (IMDSv2) for enhanced security and disable IMDSv1.\n\n*Implementation Overview:* IMDSv2 provides session-oriented access to instance metadata with enhanced security features including token-based authentication and hop limit controls to prevent SSRF attacks.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "dd4db37a-1d8e-472f-9834-409ef0411791",
+          "title": "Implementation Examples",
+          "description": ". *Launch Instance with IMDSv2 Required*\n+\nCreate EC2 instance with IMDSv2 enforcement\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws ec2 run-instances --image-id AMI-12345678 --instance-type t3.micro --metadata-options HttpTokens=required,HttpPutResponseHopLimit=1,HttpEndpoint=enabled,InstanceMetadataTags=enabled\n----\n\n. *Modify Existing Instance Metadata Options*\n+\nUpdate existing instances to require IMDSv2\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws ec2 modify-instance-metadata-options --instance-id <instance-id> --http-tokens required --http-put-response-hop-limit 1\n----\n\n*Control:* SC-7",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "9e3a834b-86ff-40b2-9f38-604c2807a7b4",
+          "title": "Security Groups",
+          "description": "Configure EC2 security groups with least privilege access rules and comprehensive traffic control.\n\n*Implementation Overview:* Security groups act as virtual firewalls controlling inbound and outbound traffic at the instance level. They should follow least privilege principles with specific port and protocol restrictions.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "d32ecef3-f66f-40ec-80ba-47d37d0e5c3b",
+          "title": "Implementation Examples",
+          "description": ". *Create Restrictive Security Group*\n+\nCreate security group with minimal required access\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws ec2 create-security-group --group-name web-tier-sg --description 'Web tier security group' --vpc-id vpc-12345678\naws ec2 authorize-security-group-ingress --group-id sg-abcdef12 --protocol tcp --port 443 --source-group sg-alb-sg\naws ec2 authorize-security-group-ingress --group-id sg-abcdef12 --protocol tcp --port 22 --cidr 10.0.0.0/8\n----\n\n*Control:* AC-4",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "ab76f535-1f71-4856-8726-b57d835476c2",
+          "title": "Privileged Access Control",
+          "description": "Amazon Elastic Compute Cloud (EC2) requires implementation of privileged account security controls including least privilege access, multi-factor authentication for administrative operations, and comprehensive audit logging of privileged activities.\n\n*Implementation Overview:* Amazon Elastic Compute Cloud (EC2) privileged account security involves implementing strict access controls, monitoring privileged operations, and ensuring administrative activities are properly authenticated and logged.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "a3d7ce52-0de8-44c3-b381-2df5f9933acc",
+          "title": "Implementation Examples",
+          "description": ". *Implement Least Privilege Access*\n+\nConfigure Amazon Elastic Compute Cloud (EC2) with minimal required permissions for administrative accounts\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create least privilege IAM policy for Amazon Elastic Compute Cloud (EC2) administration\naws iam create-policy --policy-name ServiceAdminPolicy --policy-document file://admin-policy.json\n# Attach policy to administrative role\naws iam attach-role-policy --role-name ServiceAdminRole --policy-arn arn:aws:iam::account:policy/ServiceAdminPolicy\n----\n\n. *Enable Multi-Factor Authentication*\n+\nRequire MFA for all privileged operations and administrative access\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create MFA-required policy condition\n# Add MFA condition to administrative policies\n# Verify MFA enforcement for privileged operations\n----\n\n. *Configure Privileged Activity Monitoring*\n+\nEnable comprehensive logging and monitoring of all privileged account activities\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Enable CloudTrail for API logging\naws cloudtrail create-trail --name ServicePrivilegedAccess --s3-bucket-name audit-logs\n# Configure CloudWatch alarms for privileged operations\naws logs create-log-group --log-group-name /aws/service/privileged-access\n----\n\n*API:* `Configure via IAM policies and amazon-elastic-compute-cloud-(ec2) administrative APIs`\n\n*Control:* AC-6",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "85097d75-936a-4e4c-8615-955e0cdf485c",
+          "title": "FRR-RSC-04: Secure Defaults",
+          "description": "*Applicable:* Yes\n\nAmazon Elastic Compute Cloud (EC2) should be configured using {aws} Security Best Practice recommendations. {aws} allows customers to define the security of services, and does not enforce a minimum security standard by default. {aws} services are designed with security in mind, but do not enforce a minimum security standard to allow customers freedom to meet their needed business requirements.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "62af03b1-01b8-4192-ad1e-e63d04651ca5",
+          "title": "Implementation",
+          "description": "Ensure Amazon Elastic Compute Cloud (EC2) resources are created with security-first configurations following {aws} security design philosophy\n\n\n*Best Practices:*\n\n* Enable encryption by default for EBS volumes using customer-managed KMS keys\n* Apply least privilege access policies through IAM roles and security groups\n* Enable comprehensive logging and monitoring with CloudTrail, VPC Flow Logs, and CloudWatch\n* Use secure network configurations with VPCs, private subnets, and NACLs\n* Implement Instance Metadata Service v2 (IMDSv2) to prevent SSRF attacks\n* Configure security groups with minimal required access and specific port restrictions\n* Use Systems Manager Session Manager for secure, auditable instance access\n* Enable detailed monitoring and automated patching through Systems Manager\n* Implement proper key pair management and rotate access credentials regularly\n* Use dedicated tenancy or Nitro-based instances for enhanced security isolation",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "744c7374-08aa-4ff5-84cd-0539da33b53c",
+          "title": "FRR-RSC-05: Configuration Comparison",
+          "description": "*Applicable:* Yes\n\nUse AWS Config rules or custom scripts to compare current Amazon Elastic Compute Cloud (EC2) configuration against baselines.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "b2edd7f8-5d1c-477d-92c2-67685dc5e998",
+          "title": "AWS Config Implementation",
+          "description": "Deploy AWS Config rules to continuously monitor Amazon Elastic Compute Cloud (EC2) compliance\n\n\n*Comparison Commands:*\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws elastic describe-* --query 'relevant-fields'\nCompare output against baseline configuration files\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "850fc908-b0a3-4126-9f62-c0e81a66ca66",
+          "title": "Automation",
+          "description": "Use AWS Config conformance packs or custom Lambda functions for automated comparison",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "e38d63cd-1832-4223-a1f6-2b9b120d39f0",
+          "title": "FRR-RSC-06: Configuration Export",
+          "description": "*Applicable:* Yes\n\nExport Amazon Elastic Compute Cloud (EC2) configuration using AWS CLI describe/get commands in JSON format.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "ccbf66ca-175c-49e6-8dde-123b8227cebc",
+          "title": "Export Format",
+          "description": "JSON via AWS CLI\n\n\n*Export Commands:*\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws elastic describe-* --output json > amazon_elastic_compute_cloud_(ec2)_config.json\n----\n\n\n*Use Cases:*\n\n* Backup current configuration\n* Compare configurations across environments\n* Audit and compliance reporting\n* Infrastructure as Code generation",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "9451b9a0-2896-47d8-b936-70a566dac080",
+          "title": "FRR-RSC-07: API Configuration",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "8f423b18-d75f-4568-a37e-c0733508d3b4",
+          "title": "Instance Management",
+          "description": "*API Command:*\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\naws ec2 run-instances --image-id <AMI-id> --instance-type <type> --key-name <key-pair> --security-group-ids <sg-id> --encrypted\n----\n\n*Control:* AC-6\n\n*Implementation Guidance:*\n\n* Create separate roles for different access levels (read-only, operator, administrator)\n* Always require MFA for privileged operations\n* Use time-based conditions to limit session duration\n* Apply resource-specific restrictions where possible\n* Regularly review and audit policy assignments\n* Use AWS Access Analyzer to validate least privilege\n\n\n*Best Practices:*\n\n* Start with read-only access and add permissions as needed\n* Use AWS managed policies as a baseline when available\n* Implement just-in-time access for administrative operations\n* Monitor policy usage with CloudTrail and Access Analyzer\n* Document business justification for each permission",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "f382c697-5cf5-41a5-a758-47422873d51e",
+          "title": "Additional Resources",
+          "description": "For more information about {aws} security best practices, see the following resources:\n\n* link:https://docs.aws.amazon.com/security/[{aws} Security Documentation]\n* link:https://aws.amazon.com/compliance/fedramp/[{aws} FedRAMP Compliance]\n* link:https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html[{aws} Well-Architected Security Pillar]",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

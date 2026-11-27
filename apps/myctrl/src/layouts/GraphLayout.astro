@@ -1,0 +1,71 @@
+---
+/**
+ * Full-screen layout for the knowledge graph.
+ * Includes the site header/nav but no sidebar, footer, or search overlays.
+ */
+import '../styles/globals.css';
+import Header from '../components/layout/Header';
+import { CommandSearch } from '../components/search/CommandSearch';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Interactive compliance knowledge graph — explore 120+ frameworks and their relationships.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="preload" href="/fonts/GeistVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistMonoVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="canonical" href={Astro.url} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={`${title} | myctrl.tools`} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <title>{title} | myctrl.tools</title>
+
+    <!-- Theme detection -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        let theme = stored;
+        var valid = ['mocha', 'dracula', 'latte'];
+        var legacyLight = ['zinc-light','gruvbox-light','solarized-light','earth-light','flexoki-light'];
+        if (!theme || valid.indexOf(theme) === -1) {
+          theme = legacyLight.indexOf(theme) !== -1 ? 'latte' : 'dracula';
+          localStorage.setItem('theme', theme);
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme !== 'latte');
+      })();
+    </script>
+  </head>
+  <body style="overflow: hidden; margin: 0; padding: 0;" class="bg-[#0b0f19]">
+    <!-- Site header/nav -->
+    <div class="relative z-50">
+      <Header client:load />
+    </div>
+
+    <slot />
+
+    <!-- Cmd+K search -->
+    <CommandSearch client:idle />
+  </body>
+</html>

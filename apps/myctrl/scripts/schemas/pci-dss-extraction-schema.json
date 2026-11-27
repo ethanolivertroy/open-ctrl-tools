@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "description": "PCI DSS v4.0.1 Controls Extraction Schema",
+  "properties": {
+    "controls": {
+      "type": "array",
+      "description": "List of PCI DSS v4.0.1 controls",
+      "items": {
+        "type": "object",
+        "properties": {
+          "requirement_id": {
+            "type": "string",
+            "description": "PCI DSS Requirement ID (e.g., '1.1.1', '1.2.3')"
+          },
+          "title": {
+            "type": "string",
+            "description": "Short title of the requirement"
+          },
+          "requirement": {
+            "type": "string",
+            "description": "Parent requirement number (1-12) for grouping in navigation"
+          },
+          "description": {
+            "type": "string",
+            "description": "Full description of the control requirement"
+          },
+          "testing_procedures": {
+            "type": "string",
+            "description": "Testing procedures for validating the control"
+          },
+          "guidance": {
+            "type": "string",
+            "description": "Additional guidance and context for the control"
+          }
+        },
+        "required": [
+          "requirement_id",
+          "title",
+          "requirement",
+          "description"
+        ]
+      }
+    }
+  },
+  "required": [
+    "controls"
+  ]
+}

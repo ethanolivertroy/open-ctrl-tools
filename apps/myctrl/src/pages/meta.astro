@@ -1,0 +1,63 @@
+---
+import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
+import { getStats, getByTag } from '../data/controls';
+
+const metaContent = getByTag('Meta-Framework').map(config => ({
+  config,
+  stats: getStats(config.id),
+  isTBD: config.tags?.includes('TBD') ?? false,
+}));
+
+// Sort so fully developed frameworks come first
+metaContent.sort((a, b) => {
+  if (a.isTBD && !b.isTBD) return 1;
+  if (!a.isTBD && b.isTBD) return -1;
+  return 0;
+});
+
+const loadedCount = metaContent.filter(c => c.stats.total > 0).length;
+const externalCount = metaContent.filter(c => !c.isTBD && c.stats.total === 0).length;
+const tbdCount = metaContent.filter(c => c.isTBD).length;
+const description =
+  `Unified control frameworks that map across multiple compliance standards, acting as a "Rosetta Stone" for compliance. ` +
+  `${loadedCount} built-in dataset${loadedCount !== 1 ? 's' : ''}` +
+  `${externalCount > 0 ? `, ${externalCount} external reference${externalCount !== 1 ? 's' : ''}` : ''}` +
+  `${tbdCount > 0 ? `, ${tbdCount} planned` : ''}.`;
+---
+
+<FrameworkCategoryPage
+  title="Meta Frameworks"
+  breadcrumbLabel="Meta Frameworks"
+  heading="Meta Frameworks"
+  badge={{ label: 'Meta', class: 'badge-meta' }}
+  description={description}
+  groups={[{ frameworks: metaContent }]}
+  emptyMessage="No meta frameworks available yet."
+>
+  <div slot="footer" class="border border-border rounded-lg p-6 bg-card/50">
+    <h3 class="text-lg font-semibold mb-3">What are Meta Frameworks?</h3>
+    <p class="text-muted-foreground text-sm leading-relaxed">
+      Meta frameworks serve as unified control catalogs that map across multiple compliance standards.
+      Instead of managing controls for NIST, PCI, HIPAA, and SOC 2 separately, a meta framework
+      provides a single control set with mappings to all these standards. This enables:
+    </p>
+    <ul class="mt-4 space-y-2 text-sm text-muted-foreground">
+      <li class="flex items-start gap-2">
+        <span class="text-primary mt-1">&bull;</span>
+        <span><strong class="text-foreground">Cross-standard mapping</strong> - See how controls relate across frameworks</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-primary mt-1">&bull;</span>
+        <span><strong class="text-foreground">Reduced duplication</strong> - Implement once, satisfy multiple requirements</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-primary mt-1">&bull;</span>
+        <span><strong class="text-foreground">Gap analysis</strong> - Identify missing controls across compliance programs</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span class="text-primary mt-1">&bull;</span>
+        <span><strong class="text-foreground">Unified evidence</strong> - Map evidence collection to multiple requirements</span>
+      </li>
+    </ul>
+  </div>
+</FrameworkCategoryPage>

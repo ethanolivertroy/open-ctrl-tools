@@ -1,0 +1,1003 @@
+{
+  "framework": {
+    "id": "or-cpa",
+    "name": "Oregon CPA",
+    "version": "2024",
+    "description": "Oregon CPA compliance framework"
+  },
+  "families": {
+    "Section": "Section"
+  },
+  "controls": [
+    {
+      "control_id": "Section 1",
+      "title": "Section 1",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 2",
+      "title": "Section 2",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 3",
+      "title": "Section 3",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 3(1)",
+      "title": "Section 3(1)",
+      "family": "Section",
+      "description": "Subject to section 4 of this 2023 Act, a consumer may:"
+    },
+    {
+      "control_id": "Section 3(1)(a)",
+      "title": "Section 3(1)(a)",
+      "family": "Section",
+      "description": "Obtain from a controller:"
+    },
+    {
+      "control_id": "Section 3(1)(a)(A)",
+      "title": "Section 3(1)(a)(A)",
+      "family": "Section",
+      "description": "Confirmation as to whether the controller is processing or has processed the consumer’s personal data and the categories of personal data the controller is processing or has processed;"
+    },
+    {
+      "control_id": "Section 3(1)(a)(B)",
+      "title": "Section 3(1)(a)(B)",
+      "family": "Section",
+      "description": "At the controller’s option, a list of specific third parties, other than natural persons, to which the controller has disclosed:"
+    },
+    {
+      "control_id": "Section 3(1)(a)(B)(i)",
+      "title": "Section 3(1)(a)(B)(i)",
+      "family": "Section",
+      "description": "The consumer’s personal data; or"
+    },
+    {
+      "control_id": "Section 3(1)(a)(B)(ii)",
+      "title": "Section 3(1)(a)(B)(ii)",
+      "family": "Section",
+      "description": "Any personal data; and"
+    },
+    {
+      "control_id": "Section 3(1)(a)(C)",
+      "title": "Section 3(1)(a)(C)",
+      "family": "Section",
+      "description": "A copy of all of the consumer’s personal data that the controller has processed or is processing;"
+    },
+    {
+      "control_id": "Section 3(1)(b)",
+      "title": "Section 3(1)(b)",
+      "family": "Section",
+      "description": "Require a controller to correct inaccuracies in personal data about the consumer, taking into account the nature of the personal data and the controller’s purpose for processing the personal data;"
+    },
+    {
+      "control_id": "Section 3(1)(c)",
+      "title": "Section 3(1)(c)",
+      "family": "Section",
+      "description": "Require a controller to delete personal data about the consumer, including personal data the consumer provided to the controller, personal data the controller obtained from another source and derived data; or"
+    },
+    {
+      "control_id": "Section 3(1)(d)",
+      "title": "Section 3(1)(d)",
+      "family": "Section",
+      "description": "Opt out from a controller’s processing of personal data of the consumer that the controller processes for any of the following purposes:"
+    },
+    {
+      "control_id": "Section 3(1)(d)(A)",
+      "title": "Section 3(1)(d)(A)",
+      "family": "Section",
+      "description": "Targeted advertising;"
+    },
+    {
+      "control_id": "Section 3(1)(d)(B)",
+      "title": "Section 3(1)(d)(B)",
+      "family": "Section",
+      "description": "Selling the personal data; or"
+    },
+    {
+      "control_id": "Section 3(1)(d)(C)",
+      "title": "Section 3(1)(d)(C)",
+      "family": "Section",
+      "description": "Profiling the consumer in furtherance of decisions that produce legal effects or effects of similar significance."
+    },
+    {
+      "control_id": "Section 3(2)",
+      "title": "Section 3(2)",
+      "family": "Section",
+      "description": "A controller that provides a copy of personal data to a consumer under subsection (1)(a)(C) of this section shall provide the personal data in a portable and, to the extent technically feasible, readily usable format that allows the consumer to transmit the personal data to another person without hindrance."
+    },
+    {
+      "control_id": "Section 3(3)",
+      "title": "Section 3(3)",
+      "family": "Section",
+      "description": "This section does not require a controller to disclose the controller’s trade secrets, as defined in ORS 646.461."
+    },
+    {
+      "control_id": "Section 4",
+      "title": "Section 4",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 4(1)",
+      "title": "Section 4(1)",
+      "family": "Section",
+      "description": "A consumer may exercise the rights described in section 3 of this 2023 Act by submitting a request to a controller using the method that the controller specifies in the privacy notice described in section 5 of this 2023 Act."
+    },
+    {
+      "control_id": "Section 4(2)",
+      "title": "Section 4(2)",
+      "family": "Section",
+      "description": "A controller may not require a consumer to create an account for the purpose described in subsection (1) of this section, but the controller may require the consumer to use an account the consumer created previously."
+    },
+    {
+      "control_id": "Section 4(3)",
+      "title": "Section 4(3)",
+      "family": "Section",
+      "description": "A parent or legal guardian may exercise the rights described in section 3 of this 2023 Act on behalf of the parent’s child or on behalf of a child for whom the guardian has legal responsibility. A guardian or conservator may exercise the rights described in subsection (1) of this section on behalf of a consumer that is subject to a guardianship, conservatorship or other protective arrangement."
+    },
+    {
+      "control_id": "Section 4(4)",
+      "title": "Section 4(4)",
+      "family": "Section",
+      "description": "A consumer may designate another person to act on the consumer’s behalf as the consumer’s authorized agent for the purpose of opting out of a controller’s processing of the consumer’s personal data, as provided in section 3 (1)(d) of this 2023 Act. The consumer may designate an authorized agent by means of an internet link, browser setting, browser extension, global device setting or other technology that enables the consumer to opt out of the controller’s processing of the consumer’s personal data. A controller shall comply with an opt-out request the controller receives from an authorized agent if the controller can verify, with commercially reasonable effort, the identity of the consumer and the authorized agent’s authority to act on the consumer’s behalf."
+    },
+    {
+      "control_id": "Section 4(5)",
+      "title": "Section 4(5)",
+      "family": "Section",
+      "description": "Except as otherwise provided in sections 1 to 9 of this 2023 Act, in responding to a request under subsection (1) of this section, a controller shall:"
+    },
+    {
+      "control_id": "Section 4(5)(a)",
+      "title": "Section 4(5)(a)",
+      "family": "Section",
+      "description": "Respond to a request from a consumer without undue delay and not later than 45 days after receiving the request. The controller may extend the period within which the controller responds by an additional 45 days if the extension is reasonably necessary to comply with the consumer’s request, taking into consideration the complexity of the request and the number of requests the consumer makes. A controller that intends to extend the period for responding shall notify the consumer within the initial 45-day response period and explain the reason for the extension."
+    },
+    {
+      "control_id": "Section 4(5)(b)",
+      "title": "Section 4(5)(b)",
+      "family": "Section",
+      "description": "Notify the consumer without undue delay and not later than 45 days after receiving the consumer’s request if the controller declines to take action on the request. The controller in the notice shall explain the justification for not taking action and include instructions for appealing the controller’s decision."
+    },
+    {
+      "control_id": "Section 4(5)(c)",
+      "title": "Section 4(5)(c)",
+      "family": "Section",
+      "description": "Provide information the consumer requests once during any 12-month period without charge to the consumer. A controller may charge a reasonable fee to cover the administrative costs of complying with a second or subsequent request within the 12-month period, unless the purpose of the second or subsequent request is to verify that the controller corrected inaccuracies in, or deleted, the consumer’s personal data in compliance with the consumer’s request."
+    },
+    {
+      "control_id": "Section 4(5)(d)",
+      "title": "Section 4(5)(d)",
+      "family": "Section",
+      "description": "Notify the consumer if the controller cannot, using commercially reasonable methods, authenticate the consumer’s request without additional information from the consumer. A controller that sends a notification under this paragraph does not have to comply with the request until the consumer provides the information necessary to authenticate the request."
+    },
+    {
+      "control_id": "Section 4(5)(e)",
+      "title": "Section 4(5)(e)",
+      "family": "Section",
+      "description": "Comply with a request under section 3 (1)(d) of this 2023 Act to opt out of the controller’s processing of the consumer’s personal data without requiring authentication, except that:"
+    },
+    {
+      "control_id": "Section 4(5)(e)(A)",
+      "title": "Section 4(5)(e)(A)",
+      "family": "Section",
+      "description": "A controller may ask for additional information necessary to comply with the request, such as information that is necessary to identify the consumer that requested to opt out."
+    },
+    {
+      "control_id": "Section 4(5)(e)(B)",
+      "title": "Section 4(5)(e)(B)",
+      "family": "Section",
+      "description": "A controller may deny a request to opt out if the controller has a good-faith, reasonable and documented belief that the request is fraudulent. If the controller denies a request under this subparagraph, the controller shall notify the consumer that the controller believes the request is fraudulent, stating in the notice that the controller will not comply with the request."
+    },
+    {
+      "control_id": "Section 4(6)",
+      "title": "Section 4(6)",
+      "family": "Section",
+      "description": "A controller shall establish a process by means of which a consumer may appeal the controller’s refusal to take action on a request under subsection (1) of this section. The controller’s process must:"
+    },
+    {
+      "control_id": "Section 4(6)(a)",
+      "title": "Section 4(6)(a)",
+      "family": "Section",
+      "description": "Allow a reasonable period of time after the consumer receives the controller’s refusal within which to appeal;"
+    },
+    {
+      "control_id": "Section 4(6)(b)",
+      "title": "Section 4(6)(b)",
+      "family": "Section",
+      "description": "Be conspicuously available to the consumer;"
+    },
+    {
+      "control_id": "Section 4(6)(c)",
+      "title": "Section 4(6)(c)",
+      "family": "Section",
+      "description": "Be similar to the manner in which a consumer must submit a request under subsection (1) of this section; and"
+    },
+    {
+      "control_id": "Section 4(6)(d)",
+      "title": "Section 4(6)(d)",
+      "family": "Section",
+      "description": "Require the controller to approve or deny the appeal within 45 days after the date on which the controller received the appeal and to notify the consumer in writing of the controller’s decision and the reasons for the decision. If the controller denies the appeal, the notice must provide or specify information that enables the consumer to contact the Attorney General to submit a complaint."
+    },
+    {
+      "control_id": "Section 4(7)",
+      "title": "Section 4(7)",
+      "family": "Section",
+      "description": "A controller that obtains personal data about a consumer from a source other than the consumer complies with the consumer’s request to delete the personal data if the controller:"
+    },
+    {
+      "control_id": "Section 4(7)(a)",
+      "title": "Section 4(7)(a)",
+      "family": "Section",
+      "description": "Deletes the data but retains a record of the deletion request and a minimal amount of data necessary to ensure that the personal data remains deleted and does not use the minimal data for any other purpose; or"
+    },
+    {
+      "control_id": "Section 4(7)(b)",
+      "title": "Section 4(7)(b)",
+      "family": "Section",
+      "description": "Opts the consumer out of the controller’s processing of the consumer’s personal data for any purpose other than a purpose that is exempt under section 2 of this 2023 Act."
+    },
+    {
+      "control_id": "Section 5",
+      "title": "Section 5",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 5(1)",
+      "title": "Section 5(1)",
+      "family": "Section",
+      "description": "A controller shall:"
+    },
+    {
+      "control_id": "Section 5(1)(a)",
+      "title": "Section 5(1)(a)",
+      "family": "Section",
+      "description": "Specify in the privacy notice described in subsection (4) of this section the express purposes for which the controller is collecting and processing personal data;"
+    },
+    {
+      "control_id": "Section 5(1)(b)",
+      "title": "Section 5(1)(b)",
+      "family": "Section",
+      "description": "Limit the controller’s collection of personal data to only the personal data that is adequate, relevant and reasonably necessary to serve the purposes the controller specified in paragraph (a) of this subsection;"
+    },
+    {
+      "control_id": "Section 5(1)(c)",
+      "title": "Section 5(1)(c)",
+      "family": "Section",
+      "description": "Establish, implement and maintain for personal data the same safeguards described in ORS 646A.622 that are required for protecting personal information, as defined in ORS 646A.602, such that the controller’s safeguards protect the confidentiality, integrity and accessibility of the personal data to the extent appropriate for the volume and nature of the personal data; and"
+    },
+    {
+      "control_id": "Section 5(1)(d)",
+      "title": "Section 5(1)(d)",
+      "family": "Section",
+      "description": "Provide an effective means by which a consumer may revoke consent a consumer gave under sections 1 to 9 of this 2023 Act to the controller’s processing of the consumer’s personal data. The means must be at least as easy as the means by which the consumer provided consent. Once the consumer revokes consent, the controller shall cease processing the personal data as soon as is practicable, but not later than 15 days after receiving the revocation."
+    },
+    {
+      "control_id": "Section 5(2)",
+      "title": "Section 5(2)",
+      "family": "Section",
+      "description": "A controller may not:"
+    },
+    {
+      "control_id": "Section 5(2)(a)",
+      "title": "Section 5(2)(a)",
+      "family": "Section",
+      "description": "Process personal data for purposes that are not reasonably necessary for and compatible with the purposes the controller specified in subsection (1)(a) of this section, unless the controller obtains the consumer’s consent;"
+    },
+    {
+      "control_id": "Section 5(2)(b)",
+      "title": "Section 5(2)(b)",
+      "family": "Section",
+      "description": "Process sensitive data about a consumer without first obtaining the consumer’s consent or, if the controller knows the consumer is a child, without processing the sensitive data in accordance with the Children’s Online Privacy Protection Act of 1998, 15 U.S.C. 6501 et seq. and the regulations, rules and guidance adopted under the Act, all as in effect on the effective date of this 2023 Act;"
+    },
+    {
+      "control_id": "Section 5(2)(c)",
+      "title": "Section 5(2)(c)",
+      "family": "Section",
+      "description": "Process a consumer’s personal data for the purposes of targeted advertising, of profiling the consumer in furtherance of decisions that produce legal effects or effects of similar significance or of selling the consumer’s personal data without the consumer’s consent if the controller has actual knowledge that, or willfully disregards whether, the consumer is at least 13 years of age and not older than 15 years of age; or"
+    },
+    {
+      "control_id": "Section 5(2)(d)",
+      "title": "Section 5(2)(d)",
+      "family": "Section",
+      "description": "Discriminate against a consumer that exercises a right provided to the consumer under sections 1 to 9 of this 2023 Act by means such as denying goods or services, charging different prices or rates for goods or services or providing a different level of quality or selection of goods or services to the consumer."
+    },
+    {
+      "control_id": "Section 5(3)",
+      "title": "Section 5(3)",
+      "family": "Section",
+      "description": "Subsections (1) and (2) of this section do not:"
+    },
+    {
+      "control_id": "Section 5(3)(a)",
+      "title": "Section 5(3)(a)",
+      "family": "Section",
+      "description": "Require a controller to provide a good or service that requires personal data from a consumer that the controller does not collect or maintain; or"
+    },
+    {
+      "control_id": "Section 5(3)(b)",
+      "title": "Section 5(3)(b)",
+      "family": "Section",
+      "description": "Prohibit a controller from offering a different price, rate, level of quality or selection of goods or services to a consumer, including an offer for no fee or charge, in connection with a consumer’s voluntary participation in a bona fide loyalty, rewards, premium features, discount or club card program."
+    },
+    {
+      "control_id": "Section 5(4)",
+      "title": "Section 5(4)",
+      "family": "Section",
+      "description": "A controller shall provide to consumers a reasonably accessible, clear and meaningful privacy notice that:"
+    },
+    {
+      "control_id": "Section 5(4)(a)",
+      "title": "Section 5(4)(a)",
+      "family": "Section",
+      "description": "Lists the categories of personal data, including the categories of sensitive data, that the controller processes;"
+    },
+    {
+      "control_id": "Section 5(4)(b)",
+      "title": "Section 5(4)(b)",
+      "family": "Section",
+      "description": "Describes the controller’s purposes for processing the personal data;"
+    },
+    {
+      "control_id": "Section 5(4)(c)",
+      "title": "Section 5(4)(c)",
+      "family": "Section",
+      "description": "Describes how a consumer may exercise the consumer’s rights under sections 1 to 9 of this 2023 Act, including how a consumer may appeal a controller’s denial of a consumer’s request under section 4 of this 2023 Act;"
+    },
+    {
+      "control_id": "Section 5(4)(d)",
+      "title": "Section 5(4)(d)",
+      "family": "Section",
+      "description": "Lists all categories of personal data, including the categories of sensitive data, that the controller shares with third parties;"
+    },
+    {
+      "control_id": "Section 5(4)(e)",
+      "title": "Section 5(4)(e)",
+      "family": "Section",
+      "description": "Describes all categories of third parties with which the controller shares personal data at a level of detail that enables the consumer to understand what type of entity each third party is and, to the extent possible, how each third party may process personal data;"
+    },
+    {
+      "control_id": "Section 5(4)(f)",
+      "title": "Section 5(4)(f)",
+      "family": "Section",
+      "description": "Specifies an electronic mail address or other online method by which a consumer can contact the controller that the controller actively monitors;"
+    },
+    {
+      "control_id": "Section 5(4)(g)",
+      "title": "Section 5(4)(g)",
+      "family": "Section",
+      "description": "Identifies the controller, including any business name under which the controller registered with the Secretary of State and any assumed business name that the controller uses in this state;"
+    },
+    {
+      "control_id": "Section 5(4)(h)",
+      "title": "Section 5(4)(h)",
+      "family": "Section",
+      "description": "Provides a clear and conspicuous description of any processing of personal data in which the controller engages for the purpose of targeted advertising or for the purpose of profiling the consumer in furtherance of decisions that produce legal effects or effects of similar significance, and a procedure by which the consumer may opt out of this type of processing; and"
+    },
+    {
+      "control_id": "Section 5(4)(i)",
+      "title": "Section 5(4)(i)",
+      "family": "Section",
+      "description": "Describes the method or methods the controller has established for a consumer to submit a request under section 4 (1) of this 2023 Act."
+    },
+    {
+      "control_id": "Section 5(5)",
+      "title": "Section 5(5)",
+      "family": "Section",
+      "description": "The method or methods described in subsection (4)(i) of this section for submitting a consumer’s request to a controller must:"
+    },
+    {
+      "control_id": "Section 5(5)(a)",
+      "title": "Section 5(5)(a)",
+      "family": "Section",
+      "description": "Take into account:"
+    },
+    {
+      "control_id": "Section 5(5)(a)(A)",
+      "title": "Section 5(5)(a)(A)",
+      "family": "Section",
+      "description": "Ways in which consumers normally interact with the controller;"
+    },
+    {
+      "control_id": "Section 5(5)(a)(B)",
+      "title": "Section 5(5)(a)(B)",
+      "family": "Section",
+      "description": "A need for security and reliability in communications related to the request; and"
+    },
+    {
+      "control_id": "Section 5(5)(a)(C)",
+      "title": "Section 5(5)(a)(C)",
+      "family": "Section",
+      "description": "The controller’s ability to authenticate the identity of the consumer that makes the request; and"
+    },
+    {
+      "control_id": "Section 5(5)(b)",
+      "title": "Section 5(5)(b)",
+      "family": "Section",
+      "description": "Provide a clear and conspicuous link to a webpage where the consumer or an authorized agent may opt out from a controller’s processing of the consumer’s personal data as described in section 3 (1)(d) of this 2023 Act or, solely if the controller does not have a capacity needed for linking to a webpage, provide another method the consumer can use to opt out."
+    },
+    {
+      "control_id": "Section 5(5)(c)",
+      "title": "Section 5(5)(c)",
+      "family": "Section",
+      "description": "Allow a consumer or authorized agent to send a signal to the controller that indicates the consumer’s preference to opt out of the sale of personal data or targeted advertising under section 3 (1)(d) of this 2023 Act by means of a platform, technology or mechanism that:"
+    },
+    {
+      "control_id": "Section 5(5)(c)(A)",
+      "title": "Section 5(5)(c)(A)",
+      "family": "Section",
+      "description": "Does not unfairly disadvantage another controller;"
+    },
+    {
+      "control_id": "Section 5(5)(c)(B)",
+      "title": "Section 5(5)(c)(B)",
+      "family": "Section",
+      "description": "Does not use a default setting but instead requires the consumer or authorized agent to make an affirmative, voluntary and unambiguous choice to opt out;"
+    },
+    {
+      "control_id": "Section 5(5)(c)(C)",
+      "title": "Section 5(5)(c)(C)",
+      "family": "Section",
+      "description": "Is consumer friendly and easy for an average consumer to use;"
+    },
+    {
+      "control_id": "Section 5(5)(c)(D)",
+      "title": "Section 5(5)(c)(D)",
+      "family": "Section",
+      "description": "Is as consistent as possible with similar platforms, technologies or mechanisms required under federal or state laws or regulations; and"
+    },
+    {
+      "control_id": "Section 5(5)(c)(E)",
+      "title": "Section 5(5)(c)(E)",
+      "family": "Section",
+      "description": "Enables the controller to accurately determine whether the consumer is a resident of this state and has made a legitimate request under section 4 of this 2023 Act to opt out as described in section 3 (1)(d) of this 2023 Act."
+    },
+    {
+      "control_id": "Section 5(6)",
+      "title": "Section 5(6)",
+      "family": "Section",
+      "description": "If a consumer or authorized agent uses a method described in subsection (5) of this section to opt out of a controller’s processing of the consumer’s personal data under section 3 (1)(d) of this 2023 Act and the decision conflicts with a consumer’s voluntary participation in a bona fide reward, club card or loyalty program or a program that provides premium features or discounts in return for the consumer’s consent to the controller’s processing of the consumer’s personal data, the controller may either comply with the request to opt out or notify the consumer of the conflict and ask the consumer to affirm that the consumer intends to withdraw from the bona fide reward, club card or loyalty program or the program that provides premium features or discounts. If the consumer affirms that the consumer intends to withdraw, the controller shall comply with the request to opt out."
+    },
+    {
+      "control_id": "Section 6",
+      "title": "Section 6",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 6(1)",
+      "title": "Section 6(1)",
+      "family": "Section",
+      "description": "A processor shall adhere to a controller’s instructions and shall assist the controller in meeting the controller’s obligations under sections 1 to 9 of this 2023 Act. In assisting the controller, the processor must:"
+    },
+    {
+      "control_id": "Section 6(1)(a)",
+      "title": "Section 6(1)(a)",
+      "family": "Section",
+      "description": "Enable the controller to respond to requests from consumers under section 4 of this 2023 Act by means that take into account how the processor processes personal data and the information available to the processor and that use appropriate technical and organizational measures to the extent reasonably practicable;"
+    },
+    {
+      "control_id": "Section 6(1)(b)",
+      "title": "Section 6(1)(b)",
+      "family": "Section",
+      "description": "Adopt administrative, technical and physical safeguards that are reasonably designed to protect the security and confidentiality of the personal data the processor processes, taking into account how the processor processes the personal data and the information available to the processor; and"
+    },
+    {
+      "control_id": "Section 6(1)(c)",
+      "title": "Section 6(1)(c)",
+      "family": "Section",
+      "description": "Provide information reasonably necessary for the controller to conduct and document data protection assessments."
+    },
+    {
+      "control_id": "Section 6(2)",
+      "title": "Section 6(2)",
+      "family": "Section",
+      "description": "The processor shall enter into a contract with the controller that governs how the processor processes personal data on the controller’s behalf. The contract must:"
+    },
+    {
+      "control_id": "Section 6(2)(a)",
+      "title": "Section 6(2)(a)",
+      "family": "Section",
+      "description": "Be valid and binding on both parties;"
+    },
+    {
+      "control_id": "Section 6(2)(b)",
+      "title": "Section 6(2)(b)",
+      "family": "Section",
+      "description": "Set forth clear instructions for processing data, the nature and purpose of the processing, the type of data that is subject to processing and the duration of the processing;"
+    },
+    {
+      "control_id": "Section 6(2)(c)",
+      "title": "Section 6(2)(c)",
+      "family": "Section",
+      "description": "Specify the rights and obligations of both parties with respect to the subject matter of the contract;"
+    },
+    {
+      "control_id": "Section 6(2)(d)",
+      "title": "Section 6(2)(d)",
+      "family": "Section",
+      "description": "Ensure that each person that processes personal data is subject to a duty of confidentiality with respect to the personal data;"
+    },
+    {
+      "control_id": "Section 6(2)(e)",
+      "title": "Section 6(2)(e)",
+      "family": "Section",
+      "description": "Require the processor to delete the personal data or return the personal data to the controller at the controller’s direction or at the end of the provision of services, unless a law requires the processor to retain the personal data;"
+    },
+    {
+      "control_id": "Section 6(2)(f)",
+      "title": "Section 6(2)(f)",
+      "family": "Section",
+      "description": "Require the processor to make available to the controller, at the controller’s request, all information the controller needs to verify that the processor has complied with all obligations the processor has under sections 1 to 9 of this 2023 Act;"
+    },
+    {
+      "control_id": "Section 6(2)(g)",
+      "title": "Section 6(2)(g)",
+      "family": "Section",
+      "description": "Require the processor to enter into a subcontract with a person the processor engages to assist with processing personal data on the controller’s behalf and in the subcontract require the subcontractor to meet the processor’s obligations under the processor’s contract with the controller; and"
+    },
+    {
+      "control_id": "Section 6(2)(h)",
+      "title": "Section 6(2)(h)",
+      "family": "Section",
+      "description": "Allow the controller, the controller’s designee or a qualified and independent person the processor engages, in accordance with an appropriate and accepted control standard, framework or procedure, to assess the processor’s policies and technical and organizational measures for complying with the processor’s obligations under sections 1 to 9 of this 2023 Act, and require the processor to cooperate with the assessment and, at the controller’s request, report the results of the assessment to the controller."
+    },
+    {
+      "control_id": "Section 6(3)",
+      "title": "Section 6(3)",
+      "family": "Section",
+      "description": "This section does not relieve a controller or processor from any liability that accrues under sections 1 to 9 of this 2023 Act as a result of the controller’s or processor’s actions in processing personal data."
+    },
+    {
+      "control_id": "Section 6(4)",
+      "title": "Section 6(4)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 6(4)(a)",
+      "title": "Section 6(4)(a)",
+      "family": "Section",
+      "description": "For purposes of determining obligations under sections 1 to 9 of this 2023 Act, a person is a controller with respect to processing a set of personal data, and is subject to an action under section 9 of this 2023 Act to punish a violation of sections 1 to 9 of this 2023 Act, if the person:"
+    },
+    {
+      "control_id": "Section 6(4)(a)(A)",
+      "title": "Section 6(4)(a)(A)",
+      "family": "Section",
+      "description": "Does not need to adhere to another person’s instructions to process the personal data;"
+    },
+    {
+      "control_id": "Section 6(4)(a)(B)",
+      "title": "Section 6(4)(a)(B)",
+      "family": "Section",
+      "description": "Does not adhere to another person’s instructions with respect to processing the personal data when the person is obligated to do so; or"
+    },
+    {
+      "control_id": "Section 6(4)(a)(C)",
+      "title": "Section 6(4)(a)(C)",
+      "family": "Section",
+      "description": "Begins at any point to determine the purposes and means for processing the personal data, alone or in concert with another person."
+    },
+    {
+      "control_id": "Section 6(4)(b)",
+      "title": "Section 6(4)(b)",
+      "family": "Section",
+      "description": "A determination under this subsection is a fact-based determination that must take account of the context in which a set of personal data is processed."
+    },
+    {
+      "control_id": "Section 6(4)(c)",
+      "title": "Section 6(4)(c)",
+      "family": "Section",
+      "description": "A processor that adheres to a controller’s instructions with respect to a specific processing of personal data remains a processor."
+    },
+    {
+      "control_id": "Section 7",
+      "title": "Section 7",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 7(1)",
+      "title": "Section 7(1)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 7(1)(a)",
+      "title": "Section 7(1)(a)",
+      "family": "Section",
+      "description": "A controller that possesses deidentified data shall:"
+    },
+    {
+      "control_id": "Section 7(1)(a)(A)",
+      "title": "Section 7(1)(a)(A)",
+      "family": "Section",
+      "description": "Take reasonable measures to ensure that the deidentified data cannot be associated with an individual;"
+    },
+    {
+      "control_id": "Section 7(1)(a)(B)",
+      "title": "Section 7(1)(a)(B)",
+      "family": "Section",
+      "description": "Publicly commit to maintaining and using deidentified data without attempting to reidentify the deidentified data; and"
+    },
+    {
+      "control_id": "Section 7(1)(a)(C)",
+      "title": "Section 7(1)(a)(C)",
+      "family": "Section",
+      "description": "Enter into a contract with a recipient of the deidentified data and provide in the contract that the recipient must comply with the controller’s obligations under sections 1 to 9 of this 2023 Act."
+    },
+    {
+      "control_id": "Section 7(1)(b)",
+      "title": "Section 7(1)(b)",
+      "family": "Section",
+      "description": "A controller that discloses deidentified data shall exercise reasonable oversight to monitor compliance with any contractual commitments to which the deidentified data is subject and shall take appropriate steps to address any breaches of the contractual commitments."
+    },
+    {
+      "control_id": "Section 7(1)(c)",
+      "title": "Section 7(1)(c)",
+      "family": "Section",
+      "description": "This section does not prohibit a controller from attempting to reidentify deidentified data solely for the purpose of testing the controller’s methods for deidentifying data."
+    },
+    {
+      "control_id": "Section 7(2)",
+      "title": "Section 7(2)",
+      "family": "Section",
+      "description": "Sections 1 to 9 of this 2023 Act do not:"
+    },
+    {
+      "control_id": "Section 7(2)(a)",
+      "title": "Section 7(2)(a)",
+      "family": "Section",
+      "description": "Require a controller or processor to:"
+    },
+    {
+      "control_id": "Section 7(2)(a)(A)",
+      "title": "Section 7(2)(a)(A)",
+      "family": "Section",
+      "description": "Reidentify deidentified data; or"
+    },
+    {
+      "control_id": "Section 7(2)(a)(B)",
+      "title": "Section 7(2)(a)(B)",
+      "family": "Section",
+      "description": "Associate a consumer with personal data in order to authenticate the consumer’s request under section 4 of this 2023 Act by:"
+    },
+    {
+      "control_id": "Section 7(2)(a)(B)(i)",
+      "title": "Section 7(2)(a)(B)(i)",
+      "family": "Section",
+      "description": "Maintaining data in identifiable form; or"
+    },
+    {
+      "control_id": "Section 7(2)(a)(B)(ii)",
+      "title": "Section 7(2)(a)(B)(ii)",
+      "family": "Section",
+      "description": "Collecting, retaining or accessing any particular data or technology."
+    },
+    {
+      "control_id": "Section 7(2)(b)",
+      "title": "Section 7(2)(b)",
+      "family": "Section",
+      "description": "Require a controller or processor to comply with a consumer’s request under section 4 of this 2023 Act if the controller:"
+    },
+    {
+      "control_id": "Section 7(2)(b)(A)",
+      "title": "Section 7(2)(b)(A)",
+      "family": "Section",
+      "description": "Cannot reasonably associate the request with personal data or if the controller’s attempt to associate the request with personal data would be unreasonably burdensome;"
+    },
+    {
+      "control_id": "Section 7(2)(b)(B)",
+      "title": "Section 7(2)(b)(B)",
+      "family": "Section",
+      "description": "Does not use personal data to recognize or respond to the specific consumer who is the subject of the personal data or associate the personal data with any other personal data about the specific consumer; and"
+    },
+    {
+      "control_id": "Section 7(2)(b)(C)",
+      "title": "Section 7(2)(b)(C)",
+      "family": "Section",
+      "description": "Does not sell or otherwise voluntarily disclose personal data to a third party, except as otherwise provided in this section."
+    },
+    {
+      "control_id": "Section 8",
+      "title": "Section 8",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 8(1)",
+      "title": "Section 8(1)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 8(1)(a)",
+      "title": "Section 8(1)(a)",
+      "family": "Section",
+      "description": "A controller shall conduct and document a data protection assessment for each of the controller’s processing activities that presents a heightened risk of harm to a consumer."
+    },
+    {
+      "control_id": "Section 8(1)(b)",
+      "title": "Section 8(1)(b)",
+      "family": "Section",
+      "description": "Processing activities that present a heightened risk of harm to a consumer include:"
+    },
+    {
+      "control_id": "Section 8(1)(b)(A)",
+      "title": "Section 8(1)(b)(A)",
+      "family": "Section",
+      "description": "Processing personal data for the purpose of targeted advertising;"
+    },
+    {
+      "control_id": "Section 8(1)(b)(B)",
+      "title": "Section 8(1)(b)(B)",
+      "family": "Section",
+      "description": "Processing sensitive data;"
+    },
+    {
+      "control_id": "Section 8(1)(b)(C)",
+      "title": "Section 8(1)(b)(C)",
+      "family": "Section",
+      "description": "Selling personal data; and"
+    },
+    {
+      "control_id": "Section 8(1)(b)(D)",
+      "title": "Section 8(1)(b)(D)",
+      "family": "Section",
+      "description": "Using the personal data for purposes of profiling, if the profiling presents a reasonably foreseeable risk of:"
+    },
+    {
+      "control_id": "Section 8(1)(b)(D)(i)",
+      "title": "Section 8(1)(b)(D)(i)",
+      "family": "Section",
+      "description": "Unfair or deceptive treatment of, or unlawful disparate impact on, consumers;"
+    },
+    {
+      "control_id": "Section 8(1)(b)(D)(ii)",
+      "title": "Section 8(1)(b)(D)(ii)",
+      "family": "Section",
+      "description": "Financial, physical or reputational injury to consumers;"
+    },
+    {
+      "control_id": "Section 8(1)(b)(D)(iii)",
+      "title": "Section 8(1)(b)(D)(iii)",
+      "family": "Section",
+      "description": "Physical or other types of intrusion upon a consumer’s solitude, seclusion or private affairs or concerns, if the intrusion would be offensive to a reasonable person; or"
+    },
+    {
+      "control_id": "Section 8(1)(b)(D)(iv)",
+      "title": "Section 8(1)(b)(D)(iv)",
+      "family": "Section",
+      "description": "Other substantial injury to consumers."
+    },
+    {
+      "control_id": "Section 8(1)(c)",
+      "title": "Section 8(1)(c)",
+      "family": "Section",
+      "description": "A single data protection assessment may address a comparable set of processing operations that present a similar heightened risk of harm."
+    },
+    {
+      "control_id": "Section 8(2)",
+      "title": "Section 8(2)",
+      "family": "Section",
+      "description": "A data protection assessment shall identify and weigh how processing personal data may directly or indirectly benefit the controller, the consumer, other stakeholders and the public against potential risks to the consumer, taking into account how safeguards the controller employs can mitigate the risks. In conducting the assessment, the controller shall consider how deidentified data might reduce risks, the reasonable expectations of consumers, the context in which the data is processed and the relationship between the controller and the consumers whose personal data the controller will process."
+    },
+    {
+      "control_id": "Section 8(3)",
+      "title": "Section 8(3)",
+      "family": "Section",
+      "description": "The Attorney General may require a controller to provide to the Attorney General any data protection assessments the controller has conducted if the data protection assessment is relevant to an investigation the Attorney General conducts under section 9 of this 2023 Act. The Attorney General may evaluate a data protection assessment for the controller’s compliance with the requirements of section 1 to 9 of this 2023 Act. If a data protection assessment the Attorney General obtains under this subsection includes information that is subject to attorney-client privilege or is work product that is subject to a privilege, the controller’s provision of the data protection assessment does not waive the privilege."
+    },
+    {
+      "control_id": "Section 8(4)",
+      "title": "Section 8(4)",
+      "family": "Section",
+      "description": "A data protection assessment that a controller conducts to comply with another applicable law or regulation satisfies the requirements of this section if the data protection assessment is reasonably similar in scope and effect to a data protection assessment conducted under this section."
+    },
+    {
+      "control_id": "Section 8(5)",
+      "title": "Section 8(5)",
+      "family": "Section",
+      "description": "Requirements that apply to a data protection assessment under this section apply only to processing activities that occur on and after July 1, 2024, and are not retroactive."
+    },
+    {
+      "control_id": "Section 8(6)",
+      "title": "Section 8(6)",
+      "family": "Section",
+      "description": "A controller shall retain for at least five years all data protection assessments the controller conducts under this section."
+    },
+    {
+      "control_id": "Section 8(7)",
+      "title": "Section 8(7)",
+      "family": "Section",
+      "description": "A data protection assessment is confidential and is not subject to disclosure under ORS 192.311 to 192.478."
+    },
+    {
+      "control_id": "Section 9",
+      "title": "Section 9",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 9(1)",
+      "title": "Section 9(1)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 9(1)(a)",
+      "title": "Section 9(1)(a)",
+      "family": "Section",
+      "description": "The Attorney General may serve an investigative demand upon any person that possesses, controls or has custody of any information, document or other material that the Attorney General determines is relevant to an investigation of a violation of sections 1 to 9 of this 2023 Act or that could lead to a discovery of relevant information. An investigative demand may require the person to:"
+    },
+    {
+      "control_id": "Section 9(1)(a)(A)",
+      "title": "Section 9(1)(a)(A)",
+      "family": "Section",
+      "description": "Appear and testify under oath at the time and place specified in the investigative demand;"
+    },
+    {
+      "control_id": "Section 9(1)(a)(B)",
+      "title": "Section 9(1)(a)(B)",
+      "family": "Section",
+      "description": "Answer written interrogatories; or"
+    },
+    {
+      "control_id": "Section 9(1)(a)(C)",
+      "title": "Section 9(1)(a)(C)",
+      "family": "Section",
+      "description": "Produce relevant documents or physical evidence for examination at the time and place specified in the investigative demand."
+    },
+    {
+      "control_id": "Section 9(1)(b)",
+      "title": "Section 9(1)(b)",
+      "family": "Section",
+      "description": "The Attorney General shall serve an investigative demand under this section in the manner provided in ORS 646.622. The Attorney General may enforce the investigative demand as provided in ORS 646.626."
+    },
+    {
+      "control_id": "Section 9(2)",
+      "title": "Section 9(2)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 9(2)(a)",
+      "title": "Section 9(2)(a)",
+      "family": "Section",
+      "description": "An attorney may accompany, represent and advise in confidence a person that appears in response to a demand under subsection (1)(a)(A) of this section. The person may refuse to answer any question on constitutional grounds or on the basis of any other legal right or privilege, including protection against self-incrimination, but must answer any other question that is not subject to the right or privilege. If the person refuses to answer a question on grounds that the answer would be self-incriminating, the Attorney General may compel the person to testify as provided in ORS 136.617."
+    },
+    {
+      "control_id": "Section 9(2)(b)",
+      "title": "Section 9(2)(b)",
+      "family": "Section",
+      "description": "The Attorney General shall exclude from the place in which the Attorney General conducts an examination under this subsection all persons other than the person the Attorney General is examining, the person’s attorney, the officer before which the person gives the testimony and any stenographer recording the testimony."
+    },
+    {
+      "control_id": "Section 9(3)",
+      "title": "Section 9(3)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 9(3)(a)",
+      "title": "Section 9(3)(a)",
+      "family": "Section",
+      "description": "The Attorney General shall hold in confidence and may not disclose to any person any documents, including data protection assessments, answers to interrogatories and transcripts of oral testimony, except that the Attorney General may disclose the documents to:"
+    },
+    {
+      "control_id": "Section 9(3)(a)(A)",
+      "title": "Section 9(3)(a)(A)",
+      "family": "Section",
+      "description": "The person that provided the documents or the oral testimony;"
+    },
+    {
+      "control_id": "Section 9(3)(a)(B)",
+      "title": "Section 9(3)(a)(B)",
+      "family": "Section",
+      "description": "The attorney or representative of the person that provided the documents or oral testimony;"
+    },
+    {
+      "control_id": "Section 9(3)(a)(C)",
+      "title": "Section 9(3)(a)(C)",
+      "family": "Section",
+      "description": "Employees of the Attorney General; or"
+    },
+    {
+      "control_id": "Section 9(3)(a)(D)",
+      "title": "Section 9(3)(a)(D)",
+      "family": "Section",
+      "description": "An official of the United States or of any state who is authorized to enforce federal or state consumer protection laws if the Attorney General first obtains a written agreement from the official in which the official agrees to abide by the confidentiality requirements of this subsection."
+    },
+    {
+      "control_id": "Section 9(3)(b)",
+      "title": "Section 9(3)(b)",
+      "family": "Section",
+      "description": "The Attorney General may use any of the materials described in paragraph (a) of this subsection in any investigation the Attorney General conducts under this section or in any action or proceeding the Attorney General brings or initiates in a court or before an administrative agency in connection with the investigation."
+    },
+    {
+      "control_id": "Section 9(4)",
+      "title": "Section 9(4)",
+      "family": "Section",
+      "description": "N/A due to no content"
+    },
+    {
+      "control_id": "Section 9(4)(a)",
+      "title": "Section 9(4)(a)",
+      "family": "Section",
+      "description": "The Attorney General may bring an action to seek a civil penalty of not more than $7,500 for each violation of sections 1 to 9 of this 2023 Act or to enjoin a violation or obtain other equitable relief. The Attorney General shall bring the action in the circuit court for Multnomah County or the circuit court of a county where any part of the violation occurred."
+    },
+    {
+      "control_id": "Section 9(4)(b)",
+      "title": "Section 9(4)(b)",
+      "family": "Section",
+      "description": "A court may award reasonable attorney fees, expert witness fees and costs of investigation to the Attorney General if the Attorney General prevails in an action under this subsection. The court may award reasonable attorney fees to a defendant that prevails in an action under this subsection if the court finds that the Attorney General had no objectively reasonable basis for asserting the claim or for appealing an adverse decision of the trial court."
+    },
+    {
+      "control_id": "Section 9(4)(c)",
+      "title": "Section 9(4)(c)",
+      "family": "Section",
+      "description": "The Attorney General shall deposit the proceeds of any recovery under this subsection into the Department of Justice Protection and Education Revolving Account, as provided in ORS 180.095."
+    },
+    {
+      "control_id": "Section 9(5)",
+      "title": "Section 9(5)",
+      "family": "Section",
+      "description": "Before bringing an action under subsection (4) of this section, the Attorney General shall notify a controller of a violation of sections 1 to 9 of this 2023 Act if the Attorney General determines that the controller can cure the violation. If the controller fails to cure the violation within 30 days after receiving the notice of the violation, the Attorney General may bring the action without further notice."
+    },
+    {
+      "control_id": "Section 9(6)",
+      "title": "Section 9(6)",
+      "family": "Section",
+      "description": "The remedies available to the Attorney General under subsection (4) of this section are in addition to and not in lieu of any other relief available to the Attorney General or another person under other applicable provisions of law. A claim available under another provision of law may be joined to the Attorney General’s claim under subsection (4) of this section."
+    },
+    {
+      "control_id": "Section 9(7)",
+      "title": "Section 9(7)",
+      "family": "Section",
+      "description": "The Attorney General has exclusive authority to enforce the provisions of sections 1 to 9 of this 2023 Act. Sections 1 to 9 of this 2023 Act, or any other laws of this state, do not create a private right of action to enforce a violation of sections 1 to 9 of this 2023 Act."
+    },
+    {
+      "control_id": "Section 10",
+      "title": "Section 10",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 11",
+      "title": "Section 11",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 12",
+      "title": "Section 12",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 13",
+      "title": "Section 13",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 14",
+      "title": "Section 14",
+      "family": "Section",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "Section 15",
+      "title": "Section 15",
+      "family": "Section",
+      "description": "See law for full details"
+    }
+  ]
+}

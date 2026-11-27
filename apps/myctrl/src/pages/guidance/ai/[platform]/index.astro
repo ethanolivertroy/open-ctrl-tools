@@ -1,0 +1,25 @@
+---
+import TechGuidePage from '@/components/guidance/TechGuidePage.astro';
+import {
+  getTechnologiesByCategory,
+  getTechnologyById,
+  getCategoryMeta,
+} from '@/data/technology-guides';
+
+export function getStaticPaths() {
+  return getTechnologiesByCategory('ai').map((tech) => ({
+    params: { platform: tech.id },
+  }));
+}
+
+const { platform } = Astro.params;
+const tech = getTechnologyById(platform);
+
+if (!tech || tech.category !== 'ai') {
+  return Astro.redirect('/guidance/ai');
+}
+
+const categoryMeta = getCategoryMeta('ai');
+---
+
+<TechGuidePage tech={tech} categoryMeta={categoryMeta} categoryHref={categoryMeta?.path} />

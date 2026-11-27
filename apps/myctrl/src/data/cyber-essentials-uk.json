@@ -1,0 +1,197 @@
+{
+  "framework": {
+    "id": "cyber-essentials-uk",
+    "name": "Cyber Essentials",
+    "version": "3.2",
+    "description": "UK NCSC Cyber Essentials certification scheme - 5 technical controls to protect against common cyber attacks"
+  },
+  "families": {
+    "FW": "Firewalls",
+    "SC": "Secure Configuration",
+    "SUM": "Security Update Management",
+    "UAC": "User Access Control",
+    "MP": "Malware Protection"
+  },
+  "controls": [
+    {
+      "control_id": "FW-01",
+      "title": "Firewall Protection",
+      "family": "FW",
+      "description": "Every device in scope must be protected with a correctly configured firewall (or network device with firewall functionality)."
+    },
+    {
+      "control_id": "FW-02",
+      "title": "Change Default Passwords",
+      "family": "FW",
+      "description": "Change default administrative passwords to a strong and unique password, or disable remote administrative access entirely."
+    },
+    {
+      "control_id": "FW-03",
+      "title": "Restrict Admin Interface Access",
+      "family": "FW",
+      "description": "Prevent access to the administrative interface from the internet, unless protected by MFA or IP allow list with properly managed password authentication."
+    },
+    {
+      "control_id": "FW-04",
+      "title": "Block Unauthenticated Inbound",
+      "family": "FW",
+      "description": "Block unauthenticated inbound connections by default."
+    },
+    {
+      "control_id": "FW-05",
+      "title": "Document Firewall Rules",
+      "family": "FW",
+      "description": "Ensure inbound firewall rules are approved and documented by an authorised person, including the business need in the documentation."
+    },
+    {
+      "control_id": "FW-06",
+      "title": "Remove Unnecessary Rules",
+      "family": "FW",
+      "description": "Remove or disable unnecessary firewall rules when they are no longer needed."
+    },
+    {
+      "control_id": "FW-07",
+      "title": "Software Firewall on Untrusted Networks",
+      "family": "FW",
+      "description": "Use a software firewall on devices which are used on untrusted networks, such as public wifi hotspots."
+    },
+    {
+      "control_id": "SC-01",
+      "title": "Remove Unnecessary User Accounts",
+      "family": "SC",
+      "description": "Remove and disable unnecessary user accounts (such as guest accounts and administrative accounts that won't be used)."
+    },
+    {
+      "control_id": "SC-02",
+      "title": "Change Default Passwords",
+      "family": "SC",
+      "description": "Change any default or guessable account passwords."
+    },
+    {
+      "control_id": "SC-03",
+      "title": "Remove Unnecessary Software",
+      "family": "SC",
+      "description": "Remove or disable unnecessary software (including applications, system utilities and network services)."
+    },
+    {
+      "control_id": "SC-04",
+      "title": "Disable Auto-Run",
+      "family": "SC",
+      "description": "Disable any auto-run feature which allows file execution without user authorisation."
+    },
+    {
+      "control_id": "SC-05",
+      "title": "Authenticate Users",
+      "family": "SC",
+      "description": "Ensure users are authenticated before allowing them access to organisational data or services."
+    },
+    {
+      "control_id": "SC-06",
+      "title": "Device Locking Controls",
+      "family": "SC",
+      "description": "Ensure appropriate device locking controls for users that are physically present. Protect against brute-force attacks with throttling (max 10 guesses in 5 minutes) or locking after 10 unsuccessful attempts."
+    },
+    {
+      "control_id": "SUM-01",
+      "title": "Licensed and Supported Software",
+      "family": "SUM",
+      "description": "All software on in-scope devices must be licensed and supported."
+    },
+    {
+      "control_id": "SUM-02",
+      "title": "Remove Unsupported Software",
+      "family": "SUM",
+      "description": "Remove software from devices when it becomes unsupported, or remove from scope by using a defined sub-set that prevents all traffic to/from the internet."
+    },
+    {
+      "control_id": "SUM-03",
+      "title": "Enable Automatic Updates",
+      "family": "SUM",
+      "description": "Have automatic updates enabled where possible."
+    },
+    {
+      "control_id": "SUM-04",
+      "title": "Apply Critical Updates Within 14 Days",
+      "family": "SUM",
+      "description": "Apply updates within 14 days of release when they fix 'critical' or 'high risk' vulnerabilities (CVSS v3 base score of 7 or above), or when vulnerability severity is not specified by the vendor."
+    },
+    {
+      "control_id": "UAC-01",
+      "title": "User Account Creation Process",
+      "family": "UAC",
+      "description": "Have in place a process to create and approve user accounts."
+    },
+    {
+      "control_id": "UAC-02",
+      "title": "Unique User Credentials",
+      "family": "UAC",
+      "description": "Authenticate users with unique credentials before granting access to applications or devices."
+    },
+    {
+      "control_id": "UAC-03",
+      "title": "Remove Inactive Accounts",
+      "family": "UAC",
+      "description": "Remove or disable user accounts when they're no longer required (e.g., when a user leaves the organisation or after a defined period of account inactivity)."
+    },
+    {
+      "control_id": "UAC-04",
+      "title": "Implement MFA",
+      "family": "UAC",
+      "description": "Implement multi-factor authentication where available. Authentication to cloud services must always use MFA."
+    },
+    {
+      "control_id": "UAC-05",
+      "title": "Separate Admin Accounts",
+      "family": "UAC",
+      "description": "Use separate accounts to perform administrative activities only (no emailing, web browsing or other standard user activities that may expose administrative privileges to avoidable risks)."
+    },
+    {
+      "control_id": "UAC-06",
+      "title": "Remove Special Access When Not Required",
+      "family": "UAC",
+      "description": "Remove or disable special access privileges when no longer required (e.g., when a member of staff changes role)."
+    },
+    {
+      "control_id": "UAC-07",
+      "title": "Password Brute-Force Protection",
+      "family": "UAC",
+      "description": "Protect passwords against brute-force guessing using MFA, throttling (max 10 guesses in 5 minutes), or locking after 10 unsuccessful attempts."
+    },
+    {
+      "control_id": "UAC-08",
+      "title": "Password Quality Requirements",
+      "family": "UAC",
+      "description": "Use technical controls to manage password quality: MFA, OR minimum 12 characters with no max limit, OR minimum 8 characters with deny list for common passwords."
+    },
+    {
+      "control_id": "UAC-09",
+      "title": "Password Management Support",
+      "family": "UAC",
+      "description": "Support users to choose unique passwords: avoid common passwords, encourage longer passwords (minimum 3 words), provide secure password storage, do not enforce regular expiry or complexity requirements."
+    },
+    {
+      "control_id": "UAC-10",
+      "title": "Compromised Password Process",
+      "family": "UAC",
+      "description": "Have an established process in place to change passwords promptly if you know or suspect a password or account has been compromised."
+    },
+    {
+      "control_id": "MP-01",
+      "title": "Malware Protection Mechanism",
+      "family": "MP",
+      "description": "A malware protection mechanism must be active on all devices in scope. Use at least one of: anti-malware software or application allow listing."
+    },
+    {
+      "control_id": "MP-02",
+      "title": "Anti-Malware Software Configuration",
+      "family": "MP",
+      "description": "If using anti-malware software, configure it to: be updated per vendor recommendations, prevent malware from running, prevent execution of malicious code, and prevent connections to malicious websites."
+    },
+    {
+      "control_id": "MP-03",
+      "title": "Application Allow Listing",
+      "family": "MP",
+      "description": "If using application allow listing: only approved applications (restricted by code signing) are allowed to execute, actively approve applications before deploying, maintain a current list, users must not be able to install unsigned or invalid signature applications."
+    }
+  ]
+}

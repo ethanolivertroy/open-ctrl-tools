@@ -1,0 +1,232 @@
+{
+  "framework": {
+    "id": "nist-800-172",
+    "name": "NIST SP 800-172",
+    "version": "2021",
+    "description": "NIST SP 800-172 provides enhanced security requirements for protecting Controlled Unclassified Information (CUI) in nonfederal systems and organizations when the CUI is associated with critical programs or high value assets. These requirements supplement NIST SP 800-171 and are intended to address the Advanced Persistent Threat (APT)."
+  },
+  "families": {
+    "3.1": "Access Control",
+    "3.2": "Awareness and Training",
+    "3.4": "Configuration Management",
+    "3.5": "Identification and Authentication",
+    "3.6": "Incident Response",
+    "3.9": "Personnel Security",
+    "3.11": "Risk Assessment",
+    "3.12": "Security Assessment",
+    "3.13": "System and Communications Protection",
+    "3.14": "System and Information Integrity"
+  },
+  "controls": [
+    {
+      "control_id": "3.1.1e",
+      "title": "Dual Authorization for Critical Operations",
+      "family": "3.1",
+      "description": "Employ dual authorization to execute critical or sensitive system and organizational operations."
+    },
+    {
+      "control_id": "3.1.2e",
+      "title": "Restrict Access to Organization-Owned Resources",
+      "family": "3.1",
+      "description": "Restrict access to systems and system components to only those information resources that are owned, provisioned, or issued by the organization."
+    },
+    {
+      "control_id": "3.1.3e",
+      "title": "Controlled Information Flows Between Security Domains",
+      "family": "3.1",
+      "description": "Employ [Assignment: organization-defined secure information transfer solutions] to control information flows between security domains on connected systems."
+    },
+    {
+      "control_id": "3.2.1e",
+      "title": "Threat-Focused Awareness Training",
+      "family": "3.2",
+      "description": "Provide awareness training [Assignment: organization-defined frequency] focused on recognizing and responding to threats from social engineering, advanced persistent threat actors, breaches, and suspicious behaviors; update the training [Assignment: organization-defined frequency] or when there are significant changes to the threat."
+    },
+    {
+      "control_id": "3.2.2e",
+      "title": "Practical Exercises in Awareness Training",
+      "family": "3.2",
+      "description": "Include practical exercises in awareness training for [Assignment: organization-defined roles] that are aligned with current threat scenarios and provide feedback to individuals involved in the training and their supervisors."
+    },
+    {
+      "control_id": "3.4.1e",
+      "title": "Authoritative Source and Repository for System Components",
+      "family": "3.4",
+      "description": "Establish and maintain an authoritative source and repository to provide a trusted source and accountability for approved and implemented system components."
+    },
+    {
+      "control_id": "3.4.2e",
+      "title": "Automated Detection of Misconfigured or Unauthorized Components",
+      "family": "3.4",
+      "description": "Employ automated mechanisms to detect misconfigured or unauthorized system components; after detection, [Selection (one or more): remove the components; place the components in a quarantine or remediation network] to facilitate patching, re-configuration, or other mitigations."
+    },
+    {
+      "control_id": "3.4.3e",
+      "title": "Automated System Component Inventory Management",
+      "family": "3.4",
+      "description": "Employ automated discovery and management tools to maintain an up-to-date, complete, accurate, and readily available inventory of system components."
+    },
+    {
+      "control_id": "3.5.1e",
+      "title": "Bidirectional Cryptographic Device Authentication",
+      "family": "3.5",
+      "description": "Identify and authenticate [Assignment: organization-defined systems and system components] before establishing a network connection using bidirectional authentication that is cryptographically based and replay resistant."
+    },
+    {
+      "control_id": "3.5.2e",
+      "title": "Automated Password Management for Non-MFA Systems",
+      "family": "3.5",
+      "description": "Employ automated mechanisms for the generation, protection, rotation, and management of passwords for systems and system components that do not support multifactor authentication or complex account management."
+    },
+    {
+      "control_id": "3.5.3e",
+      "title": "Authenticated and Configured System Component Connections",
+      "family": "3.5",
+      "description": "Employ automated or manual/procedural mechanisms to prohibit system components from connecting to organizational systems unless the components are known, authenticated, in a properly configured state, or in a trust profile."
+    },
+    {
+      "control_id": "3.6.1e",
+      "title": "Security Operations Center Capability",
+      "family": "3.6",
+      "description": "Establish and maintain a security operations center capability that operates [Assignment: organization-defined time period]."
+    },
+    {
+      "control_id": "3.6.2e",
+      "title": "Cyber Incident Response Team",
+      "family": "3.6",
+      "description": "Establish and maintain a cyber incident response team that can be deployed by the organization within [Assignment: organization-defined time period]."
+    },
+    {
+      "control_id": "3.9.1e",
+      "title": "Enhanced Personnel Screening",
+      "family": "3.9",
+      "description": "Conduct [Assignment: organization-defined enhanced personnel screening] for individuals and reassess individual positions and access to CUI [Assignment: organization-defined frequency]."
+    },
+    {
+      "control_id": "3.9.2e",
+      "title": "Protection Against Adverse Personnel Information",
+      "family": "3.9",
+      "description": "Ensure that organizational systems are protected if adverse information develops or is obtained about individuals with access to CUI."
+    },
+    {
+      "control_id": "3.11.1e",
+      "title": "Threat Intelligence-Informed Risk Assessment",
+      "family": "3.11",
+      "description": "Employ [Assignment: organization-defined sources of threat intelligence] as part of a risk assessment to guide and inform the development of organizational systems, security architectures, selection of security solutions, monitoring, threat hunting, and response and recovery activities."
+    },
+    {
+      "control_id": "3.11.2e",
+      "title": "Cyber Threat Hunting",
+      "family": "3.11",
+      "description": "Conduct cyber threat hunting activities [Selection (one or more): [Assignment: organization-defined frequency]; [Assignment: organization-defined event]] to search for indicators of compromise in [Assignment: organization-defined systems] and detect, track, and disrupt threats that evade existing controls."
+    },
+    {
+      "control_id": "3.11.3e",
+      "title": "Advanced Automation and Analytics for Risk Prediction",
+      "family": "3.11",
+      "description": "Employ advanced automation and analytics capabilities in support of analysts to predict and identify risks to organizations, systems, and system components."
+    },
+    {
+      "control_id": "3.11.4e",
+      "title": "Security Solution Documentation and Risk Determination",
+      "family": "3.11",
+      "description": "Document or reference in the system security plan the security solution selected, the rationale for the security solution, and the risk determination."
+    },
+    {
+      "control_id": "3.11.5e",
+      "title": "Security Solution Effectiveness Assessment",
+      "family": "3.11",
+      "description": "Assess the effectiveness of security solutions [Assignment: organization-defined frequency] to address anticipated risk to organizational systems and the organization based on current and accumulated threat intelligence."
+    },
+    {
+      "control_id": "3.11.6e",
+      "title": "Supply Chain Risk Monitoring",
+      "family": "3.11",
+      "description": "Assess, respond to, and monitor supply chain risks associated with organizational systems and system components."
+    },
+    {
+      "control_id": "3.11.7e",
+      "title": "Supply Chain Risk Management Plan",
+      "family": "3.11",
+      "description": "Develop a plan for managing supply chain risks associated with organizational systems and system components; update the plan [Assignment: organization-defined frequency]."
+    },
+    {
+      "control_id": "3.12.1e",
+      "title": "Penetration Testing",
+      "family": "3.12",
+      "description": "Conduct penetration testing [Assignment: organization-defined frequency], leveraging automated scanning tools and ad hoc tests using subject matter experts."
+    },
+    {
+      "control_id": "3.13.1e",
+      "title": "System Component Diversity",
+      "family": "3.13",
+      "description": "Create diversity in [Assignment: organization-defined system components] to reduce the extent of malicious code propagation."
+    },
+    {
+      "control_id": "3.13.2e",
+      "title": "Operational Unpredictability",
+      "family": "3.13",
+      "description": "Implement the following changes to organizational systems and system components to introduce a degree of unpredictability into operations: [Assignment: organization-defined changes and frequency of changes by system and system component]."
+    },
+    {
+      "control_id": "3.13.3e",
+      "title": "Deception Techniques Against Adversaries",
+      "family": "3.13",
+      "description": "Employ [Assignment: organization-defined technical and procedural means] to confuse and mislead adversaries."
+    },
+    {
+      "control_id": "3.13.4e",
+      "title": "Physical and Logical Isolation",
+      "family": "3.13",
+      "description": "Employ [Selection: (one or more): [Assignment: organization-defined physical isolation techniques]; [Assignment: organization-defined logical isolation techniques]] in organizational systems and system components."
+    },
+    {
+      "control_id": "3.13.5e",
+      "title": "Distribute and Relocate System Functions",
+      "family": "3.13",
+      "description": "Distribute and relocate the following system functions or resources [Assignment: organization-defined frequency]: [Assignment: organization-defined system functions or resources]."
+    },
+    {
+      "control_id": "3.14.1e",
+      "title": "Software Integrity Verification",
+      "family": "3.14",
+      "description": "Verify the integrity of [Assignment: organization-defined security critical or essential software] using root of trust mechanisms or cryptographic signatures."
+    },
+    {
+      "control_id": "3.14.2e",
+      "title": "Continuous Monitoring for Anomalous Behavior",
+      "family": "3.14",
+      "description": "Monitor organizational systems and system components on an ongoing basis for anomalous or suspicious behavior."
+    },
+    {
+      "control_id": "3.14.3e",
+      "title": "Scope of Enhanced Security Requirements",
+      "family": "3.14",
+      "description": "Ensure that [Assignment: organization-defined systems and system components] are included in the scope of the specified enhanced security requirements or are segregated in purpose-specific networks."
+    },
+    {
+      "control_id": "3.14.4e",
+      "title": "System Refresh from Trusted State",
+      "family": "3.14",
+      "description": "Refresh [Assignment: organization-defined systems and system components] from a known, trusted state [Assignment: organization-defined frequency]."
+    },
+    {
+      "control_id": "3.14.5e",
+      "title": "CUI Storage Review and Removal",
+      "family": "3.14",
+      "description": "Conduct reviews of persistent organizational storage locations [Assignment: organization-defined frequency] and remove CUI that is no longer needed."
+    },
+    {
+      "control_id": "3.14.6e",
+      "title": "Threat Indicator-Guided Intrusion Detection",
+      "family": "3.14",
+      "description": "Use threat indicator information and effective mitigations obtained from [Assignment: organization-defined external organizations] to guide and inform intrusion detection and threat hunting."
+    },
+    {
+      "control_id": "3.14.7e",
+      "title": "Verification of Security-Critical Components",
+      "family": "3.14",
+      "description": "Verify the correctness of [Assignment: organization-defined security critical or essential software, firmware, and hardware components] using [Assignment: organization-defined verification methods or techniques]."
+    }
+  ]
+}

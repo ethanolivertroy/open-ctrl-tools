@@ -1,0 +1,19 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ControlDetailPageClient } from '../../../components/controls/ControlDetailPageClient';
+
+const frameworkId = Astro.params.framework;
+const controlSlug = Astro.params.control;
+---
+
+<BaseLayout
+  title="Control Detail"
+  description="Security and compliance control detail from the myctrl.tools framework library."
+  showSidebar={true}
+  frameworkId={frameworkId}
+  controlSlug={controlSlug}
+>
+  <ControlDetailPageClient frameworkId={frameworkId} controlSlug={controlSlug} client:only="react" />
+</BaseLayout>

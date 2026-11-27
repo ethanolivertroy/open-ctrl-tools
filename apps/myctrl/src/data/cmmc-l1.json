@@ -1,0 +1,115 @@
+{
+  "framework": {
+    "id": "cmmc-l1",
+    "name": "CMMC 2.0 Level 1",
+    "version": "2.0",
+    "description": "CMMC 2.0 Level 1 compliance framework"
+  },
+  "families": {
+    "Not": "Not",
+    "AC": "AC",
+    "IA": "IA",
+    "MP": "MP",
+    "PE": "PE",
+    "SC": "SC",
+    "SI": "SI"
+  },
+  "controls": [
+    {
+      "control_id": "Not In CMMC Level 1",
+      "title": "Not In CMMC Level 1",
+      "family": "Not",
+      "description": "Read FAR 52.204-21(a) for full text (https://www.acquisition.gov/far/52.204-21)"
+    },
+    {
+      "control_id": "AC.L1-B.1.I",
+      "title": "AC.L1-B.1.I",
+      "family": "AC",
+      "description": "Limit information system access to authorized users, processes acting on behalf of authorized users, or devices (including other information systems)."
+    },
+    {
+      "control_id": "AC.L1-B.1.II",
+      "title": "AC.L1-B.1.II",
+      "family": "AC",
+      "description": "Limit information system access to the types of transactions and functions that authorized users are permitted to execute."
+    },
+    {
+      "control_id": "AC.L1-B.1.III",
+      "title": "AC.L1-B.1.III",
+      "family": "AC",
+      "description": "Verify and control/limit connections to and use of external information systems."
+    },
+    {
+      "control_id": "AC.L1-B.1.IV",
+      "title": "AC.L1-B.1.IV",
+      "family": "AC",
+      "description": "Control information posted or processed on publicly accessible information systems."
+    },
+    {
+      "control_id": "IA.L1-B.1.V",
+      "title": "IA.L1-B.1.V",
+      "family": "IA",
+      "description": "Identify information system users, processes acting on behalf of users, or devices."
+    },
+    {
+      "control_id": "IA.L1-B.1.VI",
+      "title": "IA.L1-B.1.VI",
+      "family": "IA",
+      "description": "Authenticate (or verify) the identities of those users, processes, or devices, as a prerequisite to allowing access to organizational information systems."
+    },
+    {
+      "control_id": "MP.L1-B.1.VII",
+      "title": "MP.L1-B.1.VII",
+      "family": "MP",
+      "description": "Sanitize or destroy information system media containing Federal Contract Information before disposal or release for reuse."
+    },
+    {
+      "control_id": "PE.L1-B.1.VIII",
+      "title": "PE.L1-B.1.VIII",
+      "family": "PE",
+      "description": "Limit physical access to organizational information systems, equipment, and the respective operating environments to authorized individuals."
+    },
+    {
+      "control_id": "PE.L1-B.1.IX",
+      "title": "PE.L1-B.1.IX",
+      "family": "PE",
+      "description": "Escort visitors and monitor visitor activity; maintain audit logs of physical access; and control and manage physical access devices."
+    },
+    {
+      "control_id": "SC.L1-B.1.X",
+      "title": "SC.L1-B.1.X",
+      "family": "SC",
+      "description": "Monitor, control, and protect organizational communications (i.e., information transmitted or received by organizational information systems) at the external boundaries and key internal boundaries of the information systems."
+    },
+    {
+      "control_id": "SC.L1-B.1.XI",
+      "title": "SC.L1-B.1.XI",
+      "family": "SC",
+      "description": "Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks."
+    },
+    {
+      "control_id": "SI.L1-B.1.XII",
+      "title": "SI.L1-B.1.XII",
+      "family": "SI",
+      "description": "Identify, report, and correct information and information system flaws in a timely manner."
+    },
+    {
+      "control_id": "SI.L1-B.1.XIII",
+      "title": "SI.L1-B.1.XIII",
+      "family": "SI",
+      "description": "Provide protection from malicious code at appropriate locations within organizational information systems."
+    },
+    {
+      "control_id": "SI.L1-B.1.XIV",
+      "title": "SI.L1-B.1.XIV",
+      "family": "SI",
+      "description": "Update malicious code protection mechanisms when new releases are available."
+    },
+    {
+      "control_id": "SI.L1-B.1.XV",
+      "title": "SI.L1-B.1.XV",
+      "family": "SI",
+      "description": "Perform periodic scans of the information system and real-time scans of files from external sources as files are downloaded, opened, or executed."
+    }
+  ]
+}

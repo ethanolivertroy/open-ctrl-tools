@@ -1,0 +1,57 @@
+---
+import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
+import { getStats, getFrameworks, getRiskLists } from '../data/controls';
+
+const frameworks = getFrameworks().map(config => ({
+  config,
+  stats: getStats(config.id),
+}));
+
+const riskLists = getRiskLists().map(config => ({
+  config,
+  stats: getStats(config.id),
+}));
+
+const allEntries = [...frameworks, ...riskLists];
+const totalItems = allEntries.reduce((sum, { stats }) => sum + stats.total, 0);
+const loadedCount = allEntries.filter(({ stats }) => stats.total > 0).length;
+const description =
+  `Complete catalog of security frameworks and risk lists: ` +
+  `${totalItems.toLocaleString()} built-in items across ${loadedCount} open frameworks and risk lists (${allEntries.length} total catalog entries including external publisher directories).`;
+---
+
+<FrameworkCategoryPage
+  title="All Frameworks"
+  breadcrumbLabel="All Frameworks"
+  heading="All Frameworks & Risk Lists"
+  description={description}
+  groups={[
+    { heading: 'Frameworks', frameworks },
+    { heading: 'Risk Lists', frameworks: riskLists },
+  ]}
+>
+  <section slot="info" class="flex flex-wrap gap-3">
+    <a href="/us-federal" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-400 hover:bg-blue-500/20 transition-colors">
+      U.S. Federal
+    </a>
+    <a href="/ai" class="badge-ai px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
+      AI & ML
+    </a>
+    <a href="/enterprise" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-teal-500/30 bg-teal-500/10 text-teal-700 dark:text-teal-400 hover:bg-teal-500/20 transition-colors">
+      Enterprise
+    </a>
+    <a href="/owasp" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-400 hover:bg-red-500/20 transition-colors">
+      OWASP
+    </a>
+    <span class="border-l border-border mx-1"></span>
+    <a href="/public-domain" class="badge-public-domain px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
+      Public Domain
+    </a>
+    <a href="/proprietary" class="badge-proprietary px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
+      Proprietary
+    </a>
+    <a href="/open-license" class="badge-open-license px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
+      Open License
+    </a>
+  </section>
+</FrameworkCategoryPage>

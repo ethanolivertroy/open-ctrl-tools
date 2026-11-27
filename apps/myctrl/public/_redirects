@@ -1,0 +1,6 @@
+# The scf-2025 / myctrl-ccf meta-framework was removed; its crosswalk data
+# now powers per-control cross-framework mappings.
+/frameworks/scf-2025 /crosswalk 301
+/frameworks/scf-2025/* /crosswalk 301
+/frameworks/myctrl-ccf /crosswalk 301
+/frameworks/myctrl-ccf/* /crosswalk 301

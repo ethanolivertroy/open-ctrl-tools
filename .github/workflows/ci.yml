@@ -36,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       trust_me_bro_center: ${{ steps.filter.outputs.trust_me_bro_center }}
+      myctrl: ${{ steps.filter.outputs.myctrl }}
       goog_sec: ${{ steps.filter.outputs.goog_sec }}
       github_security_audit: ${{ steps.filter.outputs.github_security_audit }}
       gws_inspector_py: ${{ steps.filter.outputs.gws_inspector_py }}
@@ -83,6 +84,7 @@ jobs:
           }
 
           echo "trust_me_bro_center=$(has_match '^apps/trust-me-bro-center/')" >> "$GITHUB_OUTPUT"
+          echo "myctrl=$(has_match '^apps/myctrl/')" >> "$GITHUB_OUTPUT"
           echo "goog_sec=$(has_match '^apps/goog-sec/')" >> "$GITHUB_OUTPUT"
           echo "github_security_audit=$(has_match '^auditors/github-security-audit/')" >> "$GITHUB_OUTPUT"
           echo "gws_inspector_py=$(has_match '^auditors/gws-inspector-py/')" >> "$GITHUB_OUTPUT"
@@ -144,6 +146,30 @@ jobs:
           cache-dependency-path: apps/goog-sec/package-lock.json
       - run: npm ci
       - run: npm test
+
+  myctrl:
+    name: apps/myctrl
+    needs: changes
+    if: needs.changes.outputs.myctrl == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/myctrl
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/myctrl/package-lock.json
+      - run: npm ci --onnxruntime-node-install-cuda=skip
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run validate:local
+      - run: python3 scripts/validate_mappings.py
+      - run: npm run build
+      - run: node scripts/qa_static_routes.mjs && node scripts/qa_internal_links.mjs
 
   github-security-audit:
     name: auditors/github-security-audit

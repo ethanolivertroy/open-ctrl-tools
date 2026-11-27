@@ -1,0 +1,34 @@
+---
+import TechGuidePage from '@/components/guidance/TechGuidePage.astro';
+import TechGuidePlaybookPage from '@/components/guidance/TechGuidePlaybookPage.astro';
+import {
+  getAllTechnologyGuides,
+  getTechnologyById,
+  getCategoryMeta,
+} from '@/data/technology-guides';
+
+export function getStaticPaths() {
+  return getAllTechnologyGuides().map((tech) => ({
+    params: { technology: tech.id },
+  }));
+}
+
+const { technology: techId } = Astro.params;
+const tech = getTechnologyById(techId);
+
+if (!tech) {
+  return Astro.redirect('/guidance');
+}
+
+const categoryMeta = getCategoryMeta(tech.category);
+
+if (categoryMeta?.detailPathPrefix) {
+  return Astro.redirect(`${categoryMeta.detailPathPrefix}/${tech.id}`);
+}
+---
+
+{tech.playbook ? (
+  <TechGuidePlaybookPage tech={tech} categoryMeta={categoryMeta} categoryHref={categoryMeta?.path} />
+) : (
+  <TechGuidePage tech={tech} categoryMeta={categoryMeta} categoryHref={categoryMeta?.path} />
+)}

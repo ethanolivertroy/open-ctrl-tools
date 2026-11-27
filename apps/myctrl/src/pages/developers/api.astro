@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StaticCode from '@/components/ui/StaticCode.astro';
+
+type EndpointParam = {
+  name: string;
+  type: string;
+  description: string;
+};
+
+type EndpointDoc = {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  summary: string;
+  details?: string;
+  params?: EndpointParam[];
+  example: string;
+};
+
+const publicEndpoints: EndpointDoc[] = [
+  {
+    method: 'GET',
+    path: '/api/v1/frameworks',
+    summary: 'List all available frameworks with pagination.',
+    params: [
+      { name: 'category', type: 'string', description: 'Filter by tag such as `us-federal`, `ai`, or `privacy`.' },
+      { name: 'limit', type: 'number', description: 'Results per page. Default `50`, maximum `200`.' },
+      { name: 'cursor', type: 'string', description: 'Pagination cursor from the previous response.' },
+    ],
+    example: `curl "https://myctrl.tools/api/v1/frameworks?category=ai&limit=10"`,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/frameworks/{slug}',
+    summary: 'Get metadata for a single framework, including family list and framework-level context.',
+    example: `curl "https://myctrl.tools/api/v1/frameworks/nist-800-53-r5"`,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/controls/{frameworkSlug}/{controlId}',
+    summary: 'Look up a single control with framework-specific fields and crosswalk mappings.',
+    details: 'Supports exact IDs such as `AC-2` and slugified forms such as `ac-2`. Matching is case-insensitive.',
+    example: `curl "https://myctrl.tools/api/v1/controls/nist-800-53-r5/AC-2"`,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/crosswalks',
+    summary: 'Query cross-framework control mappings.',
+    params: [
+      { name: 'from', type: 'string', description: 'Required source framework slug.' },
+      { name: 'to', type: 'string', description: 'Target framework slug.' },
+      { name: 'control', type: 'string', description: 'Source control ID to narrow the mapping set.' },
+    ],
+    example: `curl "https://myctrl.tools/api/v1/crosswalks?from=nist-csf-v2&to=nist-800-53-r5&control=PR.AA-01"`,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/guidance/{technologySlug}',
+    summary: 'Retrieve technology-specific implementation guidance with sources, commands, and control mappings.',
+    example: `curl "https://myctrl.tools/api/v1/guidance/okta"`,
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/search',
+    summary: 'Search across controls, frameworks, and guidance with exact-ID boosting.',
+    params: [
+      { name: 'q', type: 'string', description: 'Required search query. Maximum 200 characters.' },
+      { name: 'type', type: 'string', description: '`control`, `framework`, or `all`.' },
+      { name: 'limit', type: 'number', description: 'Maximum results. Default `10`, maximum `50`.' },
+    ],
+    example: `curl "https://myctrl.tools/api/v1/search?q=account+management&type=control&limit=5"`,
+  },
+];
+---
+
+<BaseLayout
+  title="API Reference"
+  showSidebar={false}
+  description="Unified API reference for the supported public myctrl.tools REST endpoints"
+>
+  <div class="max-w-4xl mx-auto space-y-10 py-12 px-4">
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <a href="/developers" class="hover:text-foreground transition-colors">Developers</a>
+        <span>/</span>
+        <span class="text-foreground">API</span>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-3xl font-bold tracking-tight">API Reference</h1>
+        <p class="max-w-3xl text-muted-foreground">
+          myctrl.tools exposes a public read-only /api/v1/* API family for framework, control, crosswalk, guidance, and search workflows.
+        </p>
+      </div>
+    </header>
+
+    <section class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-border p-5 space-y-3">
+        <div class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Public API</div>
+        <div class="space-y-2">
+          <h2 id="public-api" class="text-xl font-semibold tracking-tight"><code>/api/v1/*</code></h2>
+          <p class="text-sm text-muted-foreground">
+            No-key endpoints for frameworks, controls, crosswalks, guidance, and unified search.
+          </p>
+          <code class="block rounded-lg bg-muted px-3 py-2 text-sm">https://myctrl.tools/api/v1</code>
+        </div>
+      </div>
+      <div class="rounded-xl border border-border p-5 space-y-3">
+        <div class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">External Resource</div>
+        <div class="space-y-2">
+          <h2 class="text-xl font-semibold tracking-tight">Upstream NIST CMVP API</h2>
+          <p class="text-sm text-muted-foreground">
+            The CMVP explorer uses an upstream static dataset that remains outside the supported myctrl.tools API contract.
+          </p>
+          <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">View the upstream CMVP API guide</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-4" id="access">
+      <h2 class="text-xl font-semibold tracking-tight border-b border-border pb-2">Access</h2>
+      <div class="space-y-3 text-sm text-muted-foreground">
+        <p>All supported myctrl.tools API access goes through the public read-only /api/v1/* surface.</p>
+        <p>No GitHub sign-in, API key, or server-side account is required.</p>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <div>
+        <h2 class="text-xl font-semibold tracking-tight border-b border-border pb-2">Public Endpoints</h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+          The public API is optimized for compliance data retrieval and automation inside external systems.
+        </p>
+      </div>
+
+      {publicEndpoints.map((endpoint) => (
+        <div class="space-y-3 rounded-xl border border-border p-5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="rounded bg-green-500/20 px-2 py-0.5 text-xs font-bold text-green-400">{endpoint.method}</span>
+            <code class="text-sm font-mono">{endpoint.path}</code>
+          </div>
+          <div class="space-y-2">
+            <p class="text-sm text-muted-foreground">{endpoint.summary}</p>
+            {endpoint.details && <p class="text-sm text-muted-foreground">{endpoint.details}</p>}
+          </div>
+          {endpoint.params && (
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-border text-left">
+                    <th class="pb-2 font-medium">Param</th>
+                    <th class="pb-2 font-medium">Type</th>
+                    <th class="pb-2 font-medium">Description</th>
+                  </tr>
+                </thead>
+                <tbody class="text-muted-foreground">
+                  {endpoint.params.map((param) => (
+                    <tr>
+                      <td class="py-1 font-mono text-xs">{param.name}</td>
+                      <td class="py-1">{param.type}</td>
+                      <td class="py-1">{param.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <StaticCode code={endpoint.example} language="bash" class="rounded-lg overflow-hidden border border-border/60" />
+        </div>
+      ))}
+    </section>
+
+    <section class="space-y-4" id="errors">
+      <h2 class="text-xl font-semibold tracking-tight border-b border-border pb-2">Error Handling</h2>
+      <p class="text-sm text-muted-foreground">Authenticated API errors return JSON with a consistent structure:</p>
+      <StaticCode
+        code={`{
+  "error": {
+    "code": "not_found",
+    "message": "Control 'XY-99' not found in framework 'nist-800-53-r5'."
+  }
+}`}
+        language="json"
+        class="rounded-lg overflow-hidden border border-border/60"
+      />
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border text-left">
+              <th class="pb-2 font-medium">HTTP</th>
+              <th class="pb-2 font-medium">Code</th>
+              <th class="pb-2 font-medium">When</th>
+            </tr>
+          </thead>
+          <tbody class="text-muted-foreground">
+            <tr><td class="py-1">400</td><td class="font-mono text-xs">bad_request</td><td>Invalid params or malformed slugs.</td></tr>
+            <tr><td class="py-1">404</td><td class="font-mono text-xs">not_found</td><td>Framework, control, or guide not found.</td></tr>
+            <tr><td class="py-1">500</td><td class="font-mono text-xs">internal_error</td><td>Unexpected server error.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="rounded-xl border border-border p-5 space-y-3">
+      <div class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Upstream Resource</div>
+      <div class="space-y-2">
+        <h2 class="text-xl font-semibold tracking-tight">Upstream NIST CMVP API</h2>
+        <p class="text-sm text-muted-foreground">
+          The upstream static CMVP dataset is documented separately so it stays clearly outside the myctrl.tools product API contract.
+        </p>
+        <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">View the upstream CMVP API guide</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

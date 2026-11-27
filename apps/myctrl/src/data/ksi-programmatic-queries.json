@@ -1,0 +1,2216 @@
+{
+  "queries": [
+    {
+      "ksiId": "KSI-IAM-AAM",
+      "title": "Automating Account Management",
+      "tools": [
+        {
+          "id": "okta-aam",
+          "name": "Okta",
+          "category": "identity",
+          "commands": [
+            {
+              "description": "List all users with status",
+              "command": "okta-aws-cli list-users --output json | jq '.[].profile.login'"
+            },
+            {
+              "description": "Find deactivated accounts",
+              "command": "curl -s -H \"Authorization: SSWS ${OKTA_API_TOKEN}\" \"https://${OKTA_DOMAIN}/api/v1/users?filter=status+eq+%22DEPROVISIONED%22\" | jq '.[].profile.email'"
+            }
+          ],
+          "docs": "https://developer.okta.com/docs/reference/api/users/"
+        },
+        {
+          "id": "aws-iam-aam",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all IAM users",
+              "command": "aws iam list-users --query \"Users[].{User:UserName,Created:CreateDate}\" --output table"
+            },
+            {
+              "description": "Generate credential report for account hygiene",
+              "command": "aws iam generate-credential-report && sleep 5 && aws iam get-credential-report --query Content --output text | base64 -d"
+            },
+            {
+              "description": "Find users without recent activity",
+              "command": "aws iam list-users --query \"Users[?PasswordLastUsed<='$(date -v-90d +%Y-%m-%d)'].UserName\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/"
+        },
+        {
+          "id": "azure-ad-aam",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all Azure AD users",
+              "command": "az ad user list --query \"[].{Name:displayName,UPN:userPrincipalName,Enabled:accountEnabled}\" --output table"
+            },
+            {
+              "description": "Find disabled accounts",
+              "command": "az ad user list --filter \"accountEnabled eq false\" --query \"[].userPrincipalName\" --output tsv"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/ad/user"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-APM",
+      "title": "Adopting Passwordless Methods",
+      "tools": [
+        {
+          "id": "okta-apm",
+          "name": "Okta",
+          "category": "identity",
+          "commands": [
+            {
+              "description": "List authenticator policies",
+              "command": "curl -s -H \"Authorization: SSWS ${OKTA_API_TOKEN}\" \"https://${OKTA_DOMAIN}/api/v1/policies?type=MFA_ENROLL\" | jq '.[].name'"
+            },
+            {
+              "description": "Check WebAuthn/FIDO2 enrollment",
+              "command": "curl -s -H \"Authorization: SSWS ${OKTA_API_TOKEN}\" \"https://${OKTA_DOMAIN}/api/v1/authenticators\" | jq '.[] | select(.type==\"security_key\") | {name,status}'"
+            }
+          ],
+          "docs": "https://developer.okta.com/docs/reference/api/authenticators-admin/"
+        },
+        {
+          "id": "azure-apm",
+          "name": "Azure CLI",
+          "category": "identity",
+          "commands": [
+            {
+              "description": "List authentication methods for users",
+              "command": "az rest --method GET --url \"https://graph.microsoft.com/v1.0/reports/authenticationMethods/usersRegisteredByMethod\" | jq ."
+            },
+            {
+              "description": "Check passwordless methods registered",
+              "command": "az rest --method GET --url \"https://graph.microsoft.com/v1.0/reports/authenticationMethods/usersRegisteredByFeature\" | jq ."
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/ad"
+        },
+        {
+          "id": "aws-iam-apm",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List MFA devices for all users",
+              "command": "for user in $(aws iam list-users --query \"Users[].UserName\" --output text); do echo \"=== $user ===\"; aws iam list-mfa-devices --user-name \"$user\" --output table; done"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/list-mfa-devices.html"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-ELP",
+      "title": "Ensuring Least Privilege",
+      "tools": [
+        {
+          "id": "aws-iam-elp",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List attached user policies",
+              "command": "aws iam list-attached-user-policies --user-name <username> --output table"
+            },
+            {
+              "description": "Simulate policy for specific actions",
+              "command": "aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::<account>:user/<username> --action-names s3:GetObject s3:PutObject --output table"
+            },
+            {
+              "description": "Find users with AdministratorAccess",
+              "command": "aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/"
+        },
+        {
+          "id": "azure-elp",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all role assignments",
+              "command": "az role assignment list --all --query \"[].{Principal:principalName,Role:roleDefinitionName,Scope:scope}\" --output table"
+            },
+            {
+              "description": "Find Owner role assignments",
+              "command": "az role assignment list --all --role Owner --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/role/assignment"
+        },
+        {
+          "id": "gcloud-elp",
+          "name": "Google Cloud",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List IAM roles in project",
+              "command": "gcloud iam roles list --project <project-id> --format=\"table(name,title,stage)\""
+            },
+            {
+              "description": "Get IAM policy bindings",
+              "command": "gcloud projects get-iam-policy <project-id> --format=json | jq '.bindings[] | select(.role | contains(\"admin\") or contains(\"owner\"))'"
+            }
+          ],
+          "docs": "https://cloud.google.com/sdk/gcloud/reference/iam"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-JIT",
+      "title": "Authorizing Just-in-Time Access",
+      "tools": [
+        {
+          "id": "aws-iam-jit",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List roles with session duration limits",
+              "command": "aws iam list-roles --query \"Roles[].{Role:RoleName,MaxSession:MaxSessionDuration}\" --output table"
+            },
+            {
+              "description": "Check role trust policies for time-bounded conditions",
+              "command": "aws iam get-role --role-name <role-name> --query \"Role.AssumeRolePolicyDocument\" --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/get-role.html"
+        },
+        {
+          "id": "azure-pim-jit",
+          "name": "Azure PIM",
+          "category": "identity",
+          "commands": [
+            {
+              "description": "List eligible PIM role assignments",
+              "command": "az rest --method GET --url \"https://graph.microsoft.com/v1.0/roleManagement/directory/roleEligibilityScheduleInstances\" | jq '.value[] | {principalId,roleDefinitionId,startDateTime,endDateTime}'"
+            },
+            {
+              "description": "List active PIM role assignments",
+              "command": "az rest --method GET --url \"https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignmentScheduleInstances\" | jq '.value[] | {principalId,roleDefinitionId,startDateTime,endDateTime}'"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/azure/active-directory/privileged-identity-management/"
+        },
+        {
+          "id": "okta-jit",
+          "name": "Okta",
+          "category": "identity",
+          "commands": [
+            {
+              "description": "List app assignments with time-bounded access",
+              "command": "curl -s -H \"Authorization: SSWS ${OKTA_API_TOKEN}\" \"https://${OKTA_DOMAIN}/api/v1/apps/<appId>/users\" | jq '.[].credentials'"
+            }
+          ],
+          "docs": "https://developer.okta.com/docs/reference/api/apps/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-SNU",
+      "title": "Securing Non-User Authentication",
+      "tools": [
+        {
+          "id": "aws-iam-snu",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all access keys and age",
+              "command": "aws iam list-access-keys --user-name <username> --query \"AccessKeyMetadata[].{Key:AccessKeyId,Status:Status,Created:CreateDate}\" --output table"
+            },
+            {
+              "description": "Find service-linked roles",
+              "command": "aws iam list-roles --query \"Roles[?starts_with(Path,'/aws-service-role/')].{Role:RoleName,Service:Path}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/"
+        },
+        {
+          "id": "azure-snu",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List service principals",
+              "command": "az ad sp list --all --query \"[].{Name:displayName,AppId:appId,Type:servicePrincipalType}\" --output table"
+            },
+            {
+              "description": "Check credential expiry for service principals",
+              "command": "az ad sp credential list --id <appId> --query \"[].{KeyId:keyId,Type:type,EndDate:endDateTime}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/ad/sp"
+        },
+        {
+          "id": "gcloud-snu",
+          "name": "Google Cloud",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List service accounts",
+              "command": "gcloud iam service-accounts list --format=\"table(email,displayName,disabled)\""
+            },
+            {
+              "description": "List service account keys and age",
+              "command": "gcloud iam service-accounts keys list --iam-account <sa-email> --format=\"table(name.basename(),validAfterTime,validBeforeTime,keyType)\""
+            }
+          ],
+          "docs": "https://cloud.google.com/sdk/gcloud/reference/iam/service-accounts"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-IAM-SUS",
+      "title": "Responding to Suspicious Activity",
+      "tools": [
+        {
+          "id": "splunk-sus",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Search for failed login attempts in last 24h",
+              "command": "splunk search 'index=main sourcetype=access_combined action=failure | stats count by src_ip user | sort -count | head 20' -earliest -24h"
+            },
+            {
+              "description": "Detect brute force patterns",
+              "command": "splunk search 'index=main action=failure | stats count by user src_ip | where count > 10 | sort -count' -earliest -1h"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        },
+        {
+          "id": "aws-cloudtrail-sus",
+          "name": "AWS CloudTrail",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Look up recent unauthorized API calls",
+              "command": "aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventName,AttributeValue=ConsoleLogin --query \"Events[?contains(CloudTrailEvent,'Failed')]\" --max-results 20 --output json"
+            },
+            {
+              "description": "Find root account usage",
+              "command": "aws cloudtrail lookup-events --lookup-attributes AttributeKey=Username,AttributeValue=root --start-time $(date -v-7d +%Y-%m-%dT%H:%M:%SZ) --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/lookup-events.html"
+        },
+        {
+          "id": "azure-monitor-sus",
+          "name": "Azure Monitor",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List recent sign-in failures",
+              "command": "az monitor activity-log list --start-time $(date -v-24H +%Y-%m-%dT%H:%M:%SZ) --query \"[?status.value=='Failure'].{Time:eventTimestamp,Caller:caller,Operation:operationName.localizedValue}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/monitor/activity-log"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-DFP",
+      "title": "Defining Functionality and Privileges",
+      "tools": [
+        {
+          "id": "aws-iam-dfp",
+          "name": "AWS IAM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all managed policies",
+              "command": "aws iam list-policies --scope Local --query \"Policies[].{Name:PolicyName,Arn:Arn,Updated:UpdateDate}\" --output table"
+            },
+            {
+              "description": "Get policy version document",
+              "command": "aws iam get-policy-version --policy-arn <policy-arn> --version-id v1 --query \"PolicyVersion.Document\" --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/iam/"
+        },
+        {
+          "id": "kubectl-dfp",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List cluster roles and permissions",
+              "command": "kubectl get clusterroles -o custom-columns=NAME:.metadata.name,RULES:.rules[*].resources"
+            },
+            {
+              "description": "Describe a specific role binding",
+              "command": "kubectl describe clusterrolebinding cluster-admin"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        },
+        {
+          "id": "terraform-dfp",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List all managed resources",
+              "command": "terraform state list"
+            },
+            {
+              "description": "Show details of an IAM resource",
+              "command": "terraform state show aws_iam_role.example"
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-EIS",
+      "title": "Enforcing Intended State",
+      "tools": [
+        {
+          "id": "terraform-eis",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Detect configuration drift",
+              "command": "terraform plan -detailed-exitcode"
+            },
+            {
+              "description": "List all managed state resources",
+              "command": "terraform state list | wc -l"
+            },
+            {
+              "description": "Show planned changes without applying",
+              "command": "terraform plan -no-color | tail -5"
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli/commands/plan"
+        },
+        {
+          "id": "aws-config-eis",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Get compliance summary by config rules",
+              "command": "aws configservice get-compliance-summary-by-config-rule --output table"
+            },
+            {
+              "description": "List non-compliant resources",
+              "command": "aws configservice get-compliance-details-by-config-rule --config-rule-name <rule-name> --compliance-types NON_COMPLIANT --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "kubectl-eis",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Diff live state against desired manifests",
+              "command": "kubectl diff -f manifests/"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-IBP",
+      "title": "Implementing Best Practices",
+      "tools": [
+        {
+          "id": "snyk-ibp",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Scan IaC for misconfigurations",
+              "command": "snyk iac test --report"
+            },
+            {
+              "description": "Test Terraform files for best practices",
+              "command": "snyk iac test ./terraform/ --severity-threshold=medium"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/iac-test"
+        },
+        {
+          "id": "aws-config-ibp",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List active config rules",
+              "command": "aws configservice describe-config-rules --query \"ConfigRules[].{Name:ConfigRuleName,State:ConfigRuleState,Source:Source.SourceIdentifier}\" --output table"
+            },
+            {
+              "description": "Get compliance status for all rules",
+              "command": "aws configservice describe-compliance-by-config-rule --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "azure-security-ibp",
+          "name": "Azure Security",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List security assessments and their status",
+              "command": "az security assessment list --query \"[].{Name:displayName,Status:status.code,Severity:metadata.severity}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/security/assessment"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-MAT",
+      "title": "Minimizing Attack Surface",
+      "tools": [
+        {
+          "id": "aws-ec2-mat",
+          "name": "AWS EC2",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List security groups with open ingress",
+              "command": "aws ec2 describe-security-groups --query \"SecurityGroups[?IpPermissions[?IpRanges[?CidrIp=='0.0.0.0/0']]].{Name:GroupName,Id:GroupId}\" --output table"
+            },
+            {
+              "description": "Find public-facing instances",
+              "command": "aws ec2 describe-instances --query \"Reservations[].Instances[?PublicIpAddress!=null].{Id:InstanceId,PublicIP:PublicIpAddress,State:State.Name}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/ec2/"
+        },
+        {
+          "id": "azure-nsg-mat",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List network security groups",
+              "command": "az network nsg list --query \"[].{Name:name,RG:resourceGroup,Rules:securityRules | length(@)}\" --output table"
+            },
+            {
+              "description": "Find NSG rules allowing any source",
+              "command": "az network nsg rule list --nsg-name <nsg-name> --resource-group <rg> --query \"[?sourceAddressPrefix=='*'].{Name:name,Direction:direction,Access:access,Port:destinationPortRange}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/network/nsg"
+        },
+        {
+          "id": "kubectl-mat",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List network policies across namespaces",
+              "command": "kubectl get networkpolicies --all-namespaces -o wide"
+            },
+            {
+              "description": "Find namespaces without network policies",
+              "command": "for ns in $(kubectl get ns -o jsonpath='{.items[*].metadata.name}'); do count=$(kubectl get networkpolicy -n \"$ns\" --no-headers 2>/dev/null | wc -l); [ \"$count\" -eq 0 ] && echo \"No NetworkPolicy: $ns\"; done"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-OFA",
+      "title": "Optimizing for Availability",
+      "tools": [
+        {
+          "id": "aws-elb-ofa",
+          "name": "AWS ELB",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List load balancers and their AZs",
+              "command": "aws elbv2 describe-load-balancers --query \"LoadBalancers[].{Name:LoadBalancerName,Scheme:Scheme,AZs:AvailabilityZones[].ZoneName,State:State.Code}\" --output table"
+            },
+            {
+              "description": "Check target group health",
+              "command": "aws elbv2 describe-target-health --target-group-arn <tg-arn> --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/elbv2/"
+        },
+        {
+          "id": "kubectl-ofa",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List horizontal pod autoscalers",
+              "command": "kubectl get hpa --all-namespaces -o wide"
+            },
+            {
+              "description": "Check pod disruption budgets",
+              "command": "kubectl get pdb --all-namespaces -o wide"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        },
+        {
+          "id": "azure-autoscale-ofa",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List autoscale settings",
+              "command": "az monitor autoscale list --query \"[].{Name:name,Enabled:enabled,Min:profiles[0].capacity.minimum,Max:profiles[0].capacity.maximum}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/monitor/autoscale"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-RNT",
+      "title": "Restricting Network Traffic",
+      "tools": [
+        {
+          "id": "aws-ec2-rnt",
+          "name": "AWS EC2",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Describe security group rules",
+              "command": "aws ec2 describe-security-group-rules --filter \"Name=group-id,Values=<sg-id>\" --query \"SecurityGroupRules[].{Direction:IsEgress,Protocol:IpProtocol,FromPort:FromPort,ToPort:ToPort,CIDR:CidrIpv4}\" --output table"
+            },
+            {
+              "description": "List network ACLs",
+              "command": "aws ec2 describe-network-acls --query \"NetworkAcls[].{Id:NetworkAclId,VPC:VpcId,Rules:Entries | length(@)}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/ec2/"
+        },
+        {
+          "id": "azure-nsg-rnt",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List NSG rules in a security group",
+              "command": "az network nsg rule list --nsg-name <nsg-name> --resource-group <rg> --query \"[].{Name:name,Priority:priority,Direction:direction,Access:access,Source:sourceAddressPrefix,DestPort:destinationPortRange}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/network/nsg/rule"
+        },
+        {
+          "id": "kubectl-rnt",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List network policies",
+              "command": "kubectl get networkpolicies --all-namespaces -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,POD-SELECTOR:.spec.podSelector.matchLabels"
+            },
+            {
+              "description": "Describe a specific network policy",
+              "command": "kubectl describe networkpolicy <policy-name> -n <namespace>"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-RVP",
+      "title": "Reviewing Protections",
+      "tools": [
+        {
+          "id": "aws-waf-rvp",
+          "name": "AWS WAF",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List web ACLs",
+              "command": "aws wafv2 list-web-acls --scope REGIONAL --query \"WebACLs[].{Name:Name,Id:Id}\" --output table"
+            },
+            {
+              "description": "Get WAF rule details",
+              "command": "aws wafv2 get-web-acl --name <name> --scope REGIONAL --id <id> --query \"WebACL.Rules[].{Name:Name,Priority:Priority,Action:Action}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/wafv2/"
+        },
+        {
+          "id": "azure-waf-rvp",
+          "name": "Azure CLI",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List Front Door WAF policies",
+              "command": "az network front-door waf-policy list --query \"[].{Name:name,Mode:policySettings.mode,State:policySettings.enabledState}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/network/front-door/waf-policy"
+        },
+        {
+          "id": "snyk-rvp",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Test project for known vulnerabilities",
+              "command": "snyk test --all-projects --severity-threshold=high"
+            },
+            {
+              "description": "Generate HTML vulnerability report",
+              "command": "snyk test --json | snyk-to-html -o results.html"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/test"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CNA-ULN",
+      "title": "Using Logical Networking",
+      "tools": [
+        {
+          "id": "aws-vpc-uln",
+          "name": "AWS VPC",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List VPCs with CIDR blocks",
+              "command": "aws ec2 describe-vpcs --query \"Vpcs[].{VpcId:VpcId,CIDR:CidrBlock,Name:Tags[?Key=='Name'].Value | [0]}\" --output table"
+            },
+            {
+              "description": "List subnets by VPC",
+              "command": "aws ec2 describe-subnets --query \"Subnets[].{SubnetId:SubnetId,VPC:VpcId,AZ:AvailabilityZone,CIDR:CidrBlock,Public:MapPublicIpOnLaunch}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/ec2/"
+        },
+        {
+          "id": "azure-vnet-uln",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List virtual networks",
+              "command": "az network vnet list --query \"[].{Name:name,RG:resourceGroup,AddressSpace:addressSpace.addressPrefixes[0],Subnets:subnets | length(@)}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/network/vnet"
+        },
+        {
+          "id": "kubectl-uln",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List namespaces for logical isolation",
+              "command": "kubectl get namespaces -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,AGE:.metadata.creationTimestamp"
+            },
+            {
+              "description": "List services by namespace",
+              "command": "kubectl get services --all-namespaces -o wide"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CMT-LMC",
+      "title": "Logging Changes",
+      "tools": [
+        {
+          "id": "gh-lmc",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List recent commits",
+              "command": "gh api repos/{owner}/{repo}/commits --jq '.[].{sha: .sha[:7], message: .commit.message, author: .commit.author.name, date: .commit.author.date}' | head -20"
+            },
+            {
+              "description": "List recent workflow runs",
+              "command": "gh run list --limit 10 --json status,conclusion,name,createdAt"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "terraform-lmc",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Show current state with resource details",
+              "command": "terraform show -json | jq '.values.root_module.resources[] | {type,name,provider}'"
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli/commands/show"
+        },
+        {
+          "id": "aws-cloudtrail-lmc",
+          "name": "AWS CloudTrail",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Look up recent management events",
+              "command": "aws cloudtrail lookup-events --max-results 20 --query \"Events[].{Time:EventTime,Name:EventName,User:Username}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CMT-RMV",
+      "title": "Redeploying vs Modifying",
+      "tools": [
+        {
+          "id": "gh-rmv",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List recent deployments",
+              "command": "gh api repos/{owner}/{repo}/deployments --jq '.[].{id: .id, env: .environment, ref: .ref, created: .created_at}' | head -10"
+            },
+            {
+              "description": "Check deployment statuses",
+              "command": "gh api repos/{owner}/{repo}/deployments/<deploy-id>/statuses --jq '.[].{state: .state, description: .description, created: .created_at}'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "kubectl-rmv",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "View deployment rollout history",
+              "command": "kubectl rollout history deployment/<name> -n <namespace>"
+            },
+            {
+              "description": "Check current deployment revision",
+              "command": "kubectl rollout status deployment/<name> -n <namespace>"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        },
+        {
+          "id": "argocd-rmv",
+          "name": "ArgoCD",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List application deployment history",
+              "command": "argocd app history <app-name> --output json | jq '.[] | {revision,deployedAt,source}'"
+            },
+            {
+              "description": "Check application sync status",
+              "command": "argocd app get <app-name> --output json | jq '{status: .status.sync.status, health: .status.health.status}'"
+            }
+          ],
+          "docs": "https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_app/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CMT-RVP",
+      "title": "Reviewing Change Procedures",
+      "tools": [
+        {
+          "id": "gh-rvp",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Check branch protection rules",
+              "command": "gh api repos/{owner}/{repo}/branches/main/protection --jq '{required_reviews: .required_pull_request_reviews.required_approving_review_count, status_checks: .required_status_checks.contexts, enforce_admins: .enforce_admins.enabled}'"
+            },
+            {
+              "description": "List recently merged PRs",
+              "command": "gh pr list --state merged --limit 20 --json number,title,mergedAt,author"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "jira-rvp",
+          "name": "Jira",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "List change management issues",
+              "command": "jira issue list --project CHANGE --status \"Done\" --created-after \"-30d\" --plain"
+            },
+            {
+              "description": "View change request details",
+              "command": "jira issue view CHANGE-<number> --plain"
+            }
+          ],
+          "docs": "https://github.com/ankitpokhrel/jira-cli"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CMT-VTD",
+      "title": "Validating Throughout Deployment",
+      "tools": [
+        {
+          "id": "gh-vtd",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List workflow runs with status",
+              "command": "gh run list --json name,status,conclusion,createdAt --limit 20"
+            },
+            {
+              "description": "Check required status checks for a commit",
+              "command": "gh api repos/{owner}/{repo}/commits/<sha>/check-suites --jq '.check_suites[] | {app: .app.name, status: .status, conclusion: .conclusion}'"
+            },
+            {
+              "description": "View a specific workflow run",
+              "command": "gh run view <run-id> --json jobs --jq '.jobs[] | {name,status,conclusion,startedAt,completedAt}'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "kubectl-vtd",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Check rollout status of a deployment",
+              "command": "kubectl rollout status deployment/<name> -n <namespace> --timeout=120s"
+            },
+            {
+              "description": "View pod readiness across deployments",
+              "command": "kubectl get deployments --all-namespaces -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,READY:.status.readyReplicas,DESIRED:.spec.replicas"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-ALA",
+      "title": "Authorizing Log Access",
+      "tools": [
+        {
+          "id": "aws-cw-ala",
+          "name": "AWS CloudWatch",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List log groups and retention settings",
+              "command": "aws logs describe-log-groups --query \"logGroups[].{Name:logGroupName,Retention:retentionInDays,Stored:storedBytes}\" --output table"
+            },
+            {
+              "description": "Check log group resource policies",
+              "command": "aws logs describe-resource-policies --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/logs/"
+        },
+        {
+          "id": "splunk-ala",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Audit log access events",
+              "command": "splunk search 'index=_audit action=search info=granted | stats count by user info | sort -count' -earliest -7d"
+            },
+            {
+              "description": "Check role-based access to indexes",
+              "command": "splunk search '| rest /services/authorization/roles | table title srchIndexesAllowed srchIndexesDefault'"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        },
+        {
+          "id": "azure-la-ala",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List Log Analytics workspaces",
+              "command": "az monitor log-analytics workspace list --query \"[].{Name:name,RG:resourceGroup,Retention:retentionInDays,Sku:sku.name}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/monitor/log-analytics/workspace"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-EVC",
+      "title": "Evaluating Configurations",
+      "tools": [
+        {
+          "id": "aws-config-evc",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all config rules and compliance",
+              "command": "aws configservice describe-config-rules --query \"ConfigRules[].{Name:ConfigRuleName,State:ConfigRuleState}\" --output table"
+            },
+            {
+              "description": "Get compliance summary by resource type",
+              "command": "aws configservice get-compliance-summary-by-resource-type --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "azure-policy-evc",
+          "name": "Azure Policy",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List policy assignments",
+              "command": "az policy assignment list --query \"[].{Name:displayName,Enforcement:enforcementMode,Scope:scope}\" --output table"
+            },
+            {
+              "description": "Get policy compliance state",
+              "command": "az policy state summarize --query \"{NonCompliant:results.nonCompliantResources,Total:results.totalResources}\""
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/policy/assignment"
+        },
+        {
+          "id": "datadog-evc",
+          "name": "Datadog",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List synthetic tests and status",
+              "command": "datadog-ci synthetics list --json | jq '.[] | {name,status,type}'"
+            }
+          ],
+          "docs": "https://docs.datadoghq.com/synthetics/cicd_integrations/configuration/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-LET",
+      "title": "Logging Event Types",
+      "tools": [
+        {
+          "id": "aws-ct-let",
+          "name": "AWS CloudTrail",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Check trail status and logging",
+              "command": "aws cloudtrail get-trail-status --name <trail-name> --query \"{Logging:IsLogging,LatestDelivery:LatestDeliveryTime}\" --output table"
+            },
+            {
+              "description": "List event types in recent logs",
+              "command": "aws cloudtrail lookup-events --max-results 50 --query \"Events[].EventName\" --output text | tr '\\t' '\\n' | sort -u"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/cloudtrail/"
+        },
+        {
+          "id": "azure-diag-let",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List diagnostic settings for a resource",
+              "command": "az monitor diagnostic-settings list --resource <resource-id> --query \"[].{Name:name,Logs:logs[].{Category:category,Enabled:enabled}}\" --output json"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/monitor/diagnostic-settings"
+        },
+        {
+          "id": "splunk-let",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List indexed sourcetypes with event counts",
+              "command": "splunk search 'index=main | stats count by sourcetype | sort -count' -earliest -24h"
+            },
+            {
+              "description": "Check log ingestion volume by source",
+              "command": "splunk search 'index=_internal source=*metrics.log group=per_sourcetype_thruput | stats sum(kb) as totalKB by series | sort -totalKB' -earliest -24h"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-OSM",
+      "title": "Operating SIEM Capability",
+      "tools": [
+        {
+          "id": "splunk-osm",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Check SIEM health and indexing status",
+              "command": "splunk search 'index=_internal source=*metrics.log group=pipeline | stats sum(cpu_seconds) as cpu by name | sort -cpu' -earliest -1h"
+            },
+            {
+              "description": "List active correlation searches",
+              "command": "splunk search '| rest /servicesNS/-/-/saved/searches | search is_scheduled=1 alert_type!=\"\" | table title eai:acl.app cron_schedule disabled'"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        },
+        {
+          "id": "datadog-osm",
+          "name": "Datadog",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List active monitors and their status",
+              "command": "datadog-ci monitors list --json | jq '.[] | {name,type,overall_state}'"
+            }
+          ],
+          "docs": "https://docs.datadoghq.com/api/latest/monitors/"
+        },
+        {
+          "id": "aws-cw-osm",
+          "name": "AWS CloudWatch",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List active alarms",
+              "command": "aws cloudwatch describe-alarms --state-value ALARM --query \"MetricAlarms[].{Name:AlarmName,State:StateValue,Metric:MetricName}\" --output table"
+            },
+            {
+              "description": "List all configured alarms",
+              "command": "aws cloudwatch describe-alarms --query \"MetricAlarms[].{Name:AlarmName,State:StateValue,Actions:AlarmActions | length(@)}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-MLA-RVL",
+      "title": "Reviewing Logs",
+      "tools": [
+        {
+          "id": "splunk-rvl",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Search recent security events",
+              "command": "splunk search 'index=main sourcetype=syslog OR sourcetype=wineventlog | stats count by sourcetype host | sort -count' -earliest -24h"
+            },
+            {
+              "description": "Review authentication events",
+              "command": "splunk search 'index=main tag=authentication | stats count by action user src | sort -count | head 50' -earliest -24h"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        },
+        {
+          "id": "aws-cwli-rvl",
+          "name": "AWS CloudWatch Logs Insights",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Query recent error logs",
+              "command": "aws logs start-query --log-group-name <group> --start-time $(date -v-24H +%s) --end-time $(date +%s) --query-string 'fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 50'"
+            },
+            {
+              "description": "Get query results",
+              "command": "aws logs get-query-results --query-id <query-id> --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/logs/"
+        },
+        {
+          "id": "azure-la-rvl",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Run a Log Analytics query",
+              "command": "az monitor log-analytics query --workspace <workspace-id> --analytics-query \"SecurityEvent | summarize count() by EventID, Activity | top 20 by count_\""
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/monitor/log-analytics"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-ACM",
+      "title": "Automating Configuration Management",
+      "tools": [
+        {
+          "id": "terraform-acm",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Plan and detect configuration drift",
+              "command": "terraform plan -detailed-exitcode -no-color"
+            },
+            {
+              "description": "List all managed resources",
+              "command": "terraform state list"
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli"
+        },
+        {
+          "id": "aws-config-acm",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List active configuration rules",
+              "command": "aws configservice describe-config-rules --query \"ConfigRules[].{Name:ConfigRuleName,State:ConfigRuleState}\" --output table"
+            },
+            {
+              "description": "Get compliance status per resource type",
+              "command": "aws configservice get-compliance-summary-by-resource-type --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "kubectl-acm",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List ConfigMaps across namespaces",
+              "command": "kubectl get configmaps --all-namespaces -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,DATA:.data | head -30"
+            },
+            {
+              "description": "Check resource quotas",
+              "command": "kubectl get resourcequotas --all-namespaces -o wide"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-ASM",
+      "title": "Automating Secret Management",
+      "tools": [
+        {
+          "id": "vault-asm",
+          "name": "HashiCorp Vault",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List secret engines",
+              "command": "vault secrets list -format=json | jq 'to_entries[] | {path: .key, type: .value.type}'"
+            },
+            {
+              "description": "Check audit device status",
+              "command": "vault audit list -format=json | jq 'to_entries[] | {path: .key, type: .value.type}'"
+            },
+            {
+              "description": "List access policies",
+              "command": "vault policy list"
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/vault/docs/commands"
+        },
+        {
+          "id": "aws-sm-asm",
+          "name": "AWS Secrets Manager",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all secrets",
+              "command": "aws secretsmanager list-secrets --query \"SecretList[].{Name:Name,LastRotated:LastRotatedDate,AutoRotate:RotationEnabled}\" --output table"
+            },
+            {
+              "description": "Find secrets without rotation",
+              "command": "aws secretsmanager list-secrets --query \"SecretList[?RotationEnabled==`false`].{Name:Name,LastChanged:LastChangedDate}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/secretsmanager/"
+        },
+        {
+          "id": "azure-kv-asm",
+          "name": "Azure Key Vault",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List Key Vaults in subscription",
+              "command": "az keyvault list --query \"[].{Name:name,RG:resourceGroup,SoftDelete:properties.enableSoftDelete}\" --output table"
+            },
+            {
+              "description": "List secrets in a vault",
+              "command": "az keyvault secret list --vault-name <vault-name> --query \"[].{Name:name,Enabled:attributes.enabled,Expires:attributes.expires}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/keyvault"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-EIS",
+      "title": "Evaluating and Improving Security",
+      "tools": [
+        {
+          "id": "snyk-eis",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Test for open source vulnerabilities",
+              "command": "snyk test --all-projects --severity-threshold=medium"
+            },
+            {
+              "description": "Test container images",
+              "command": "snyk container test <image>:<tag> --severity-threshold=high"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/test"
+        },
+        {
+          "id": "aws-inspector-eis",
+          "name": "AWS Inspector",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List findings by severity",
+              "command": "aws inspector2 list-findings --filter-criteria '{}' --query \"findings[].{Title:title,Severity:severity,Status:status,Type:type}\" --output table --max-results 20"
+            },
+            {
+              "description": "Get finding counts by severity",
+              "command": "aws inspector2 list-finding-aggregations --aggregation-type SEVERITY --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/inspector2/"
+        },
+        {
+          "id": "azure-security-eis",
+          "name": "Azure Security",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List security assessments",
+              "command": "az security assessment list --query \"[].{Name:displayName,Status:status.code,Severity:metadata.severity}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/security/assessment"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-PRR",
+      "title": "Preventing Residual Risk",
+      "tools": [
+        {
+          "id": "aws-config-prr",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Get compliance summary",
+              "command": "aws configservice get-compliance-summary-by-config-rule --output table"
+            },
+            {
+              "description": "List non-compliant resources",
+              "command": "aws configservice get-compliance-details-by-config-rule --config-rule-name <rule-name> --compliance-types NON_COMPLIANT --query \"EvaluationResults[].{Resource:EvaluationResultIdentifier.EvaluationResultQualifier.ResourceId,Time:ResultRecordedTime}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "terraform-prr",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Check for drift with exit code",
+              "command": "terraform plan -detailed-exitcode; echo \"Exit code: $?\""
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli/commands/plan"
+        },
+        {
+          "id": "kubectl-prr",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "Find failed pods",
+              "command": "kubectl get pods --all-namespaces --field-selector=status.phase=Failed -o wide"
+            },
+            {
+              "description": "Check for pods in CrashLoopBackOff",
+              "command": "kubectl get pods --all-namespaces -o json | jq '.items[] | select(.status.containerStatuses[]?.state.waiting?.reason==\"CrashLoopBackOff\") | {ns: .metadata.namespace, name: .metadata.name}'"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-RUD",
+      "title": "Removing Unwanted Data",
+      "tools": [
+        {
+          "id": "aws-s3-rud",
+          "name": "AWS S3",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List bucket lifecycle policies",
+              "command": "aws s3api get-bucket-lifecycle-configuration --bucket <bucket-name> --query \"Rules[].{Id:ID,Status:Status,Expiration:Expiration,Transitions:Transitions}\" --output json"
+            },
+            {
+              "description": "Find buckets without lifecycle rules",
+              "command": "for bucket in $(aws s3api list-buckets --query \"Buckets[].Name\" --output text); do aws s3api get-bucket-lifecycle-configuration --bucket \"$bucket\" 2>&1 | grep -q NoSuchLifecycleConfiguration && echo \"No lifecycle: $bucket\"; done"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/s3api/"
+        },
+        {
+          "id": "azure-storage-rud",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Show storage account lifecycle management policy",
+              "command": "az storage account management-policy show --account-name <account> --resource-group <rg> --output json"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/storage/account/management-policy"
+        },
+        {
+          "id": "kubectl-rud",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List persistent volumes and reclaim policies",
+              "command": "kubectl get pv -o custom-columns=NAME:.metadata.name,CAPACITY:.spec.capacity.storage,RECLAIM:.spec.persistentVolumeReclaimPolicy,STATUS:.status.phase"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-SIN",
+      "title": "Securing Information",
+      "tools": [
+        {
+          "id": "aws-acm-snt",
+          "name": "AWS ACM",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List SSL/TLS certificates",
+              "command": "aws acm list-certificates --query \"CertificateSummaryList[].{Domain:DomainName,Status:Status,InUse:InUseBy | length(@)}\" --output table"
+            },
+            {
+              "description": "Check certificate details and expiry",
+              "command": "aws acm describe-certificate --certificate-arn <cert-arn> --query \"Certificate.{Domain:DomainName,Status:Status,NotAfter:NotAfter,KeyAlgorithm:KeyAlgorithm}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/acm/"
+        },
+        {
+          "id": "azure-appgw-snt",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List application gateway SSL certificates",
+              "command": "az network application-gateway ssl-cert list --gateway-name <gw-name> --resource-group <rg> --query \"[].{Name:name}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/network/application-gateway/ssl-cert"
+        },
+        {
+          "id": "kubectl-snt",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List TLS secrets",
+              "command": "kubectl get secrets --all-namespaces --field-selector type=kubernetes.io/tls -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,AGE:.metadata.creationTimestamp"
+            },
+            {
+              "description": "Check ingress TLS configuration",
+              "command": "kubectl get ingress --all-namespaces -o json | jq '.items[] | {ns: .metadata.namespace, name: .metadata.name, tls: .spec.tls}'"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-VCM",
+      "title": "Validating Communications",
+      "tools": [
+        {
+          "id": "dns-vcm",
+          "name": "DNS Tools",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Check DMARC record",
+              "command": "dig +short TXT _dmarc.example.com"
+            },
+            {
+              "description": "Check SPF record",
+              "command": "dig +short TXT example.com | grep \"v=spf1\""
+            },
+            {
+              "description": "Check DKIM record",
+              "command": "dig +short TXT selector._domainkey.example.com"
+            }
+          ],
+          "docs": "https://www.rfc-editor.org/rfc/rfc7489"
+        },
+        {
+          "id": "aws-ses-vcm",
+          "name": "AWS SES",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Get DKIM attributes for identity",
+              "command": "aws ses get-identity-dkim-attributes --identities example.com --query \"DkimAttributes.*.{Enabled:DkimEnabled,Status:DkimVerificationStatus}\" --output table"
+            },
+            {
+              "description": "List verified email identities",
+              "command": "aws ses list-identities --identity-type Domain --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/ses/"
+        },
+        {
+          "id": "azure-comm-vcm",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List communication services",
+              "command": "az communication list --query \"[].{Name:name,Location:location,Status:provisioningState}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/communication"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SVC-VRI",
+      "title": "Validating Resource Integrity",
+      "tools": [
+        {
+          "id": "gh-vri",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Export SBOM for a repository",
+              "command": "gh api repos/{owner}/{repo}/dependency-graph/sbom --jq '.sbom.packages[] | {name: .name, version: .versionInfo}' | head -30"
+            },
+            {
+              "description": "Check Dependabot vulnerability alerts",
+              "command": "gh api repos/{owner}/{repo}/dependabot/alerts --jq '.[].{package: .security_advisory.summary, severity: .security_advisory.severity, state: .state}' | head -20"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "snyk-vri",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Monitor project for new vulnerabilities",
+              "command": "snyk monitor --all-projects"
+            },
+            {
+              "description": "Test dependencies for vulnerabilities",
+              "command": "snyk test --json | jq '{vulns: .vulnerabilities | length, high: [.vulnerabilities[] | select(.severity==\"high\")] | length}'"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/monitor"
+        },
+        {
+          "id": "cosign-vri",
+          "name": "Cosign",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Verify container image signature",
+              "command": "cosign verify --key cosign.pub <image>:<tag>"
+            },
+            {
+              "description": "Verify image with keyless signing",
+              "command": "cosign verify --certificate-identity=<identity> --certificate-oidc-issuer=<issuer> <image>:<tag>"
+            }
+          ],
+          "docs": "https://docs.sigstore.dev/cosign/verifying/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SCR-MON",
+      "title": "Monitoring Supply Chain Risk",
+      "tools": [
+        {
+          "id": "snyk-mon",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Enable continuous dependency monitoring",
+              "command": "snyk monitor --all-projects"
+            },
+            {
+              "description": "List monitored projects",
+              "command": "snyk monitor --all-projects --json | jq '.uri'"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/monitor"
+        },
+        {
+          "id": "gh-mon",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List Dependabot alerts",
+              "command": "gh api repos/{owner}/{repo}/dependabot/alerts --jq '.[].{package: .dependency.package.name, ecosystem: .dependency.package.ecosystem, severity: .security_advisory.severity, state: .state}' | head -20"
+            },
+            {
+              "description": "Check Dependabot status",
+              "command": "gh api repos/{owner}/{repo}/vulnerability-alerts --jq '.message // \"Dependabot alerts enabled\"'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "npm-mon",
+          "name": "npm",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Audit dependencies for vulnerabilities",
+              "command": "npm audit --json | jq '{total: .metadata.vulnerabilities | add, critical: .metadata.vulnerabilities.critical, high: .metadata.vulnerabilities.high}'"
+            }
+          ],
+          "docs": "https://docs.npmjs.com/cli/commands/npm-audit"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-SCR-MIT",
+      "title": "Mitigating Supply Chain Risk",
+      "tools": [
+        {
+          "id": "gh-mit",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Export SBOM for dependency analysis",
+              "command": "gh api repos/{owner}/{repo}/dependency-graph/sbom --jq '.sbom | {name: .name, packages: [.packages[] | {name,versionInfo,supplier}]}'"
+            },
+            {
+              "description": "Check dependency review status",
+              "command": "gh api repos/{owner}/{repo}/dependency-graph/compare/main...HEAD --jq '.[].{change,manifest,package_url,vulnerabilities}' 2>/dev/null || echo \"Use on PR branches\""
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "snyk-mit",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Test all project dependencies",
+              "command": "snyk test --all-projects --json | jq '{project: .projectName, vulns: .vulnerabilities | length}'"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/test"
+        },
+        {
+          "id": "npm-mit",
+          "name": "npm",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Detailed audit with fix suggestions",
+              "command": "npm audit --json | jq '.vulnerabilities | to_entries[] | {package: .key, severity: .value.severity, fixAvailable: .value.fixAvailable}'"
+            },
+            {
+              "description": "List outdated packages",
+              "command": "npm outdated --json | jq 'to_entries[] | {package: .key, current: .value.current, latest: .value.latest}'"
+            }
+          ],
+          "docs": "https://docs.npmjs.com/cli/commands/npm-audit"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-PIY-GIV",
+      "title": "Generating Inventories",
+      "tools": [
+        {
+          "id": "aws-config-giv",
+          "name": "AWS Config",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List discovered resources by type",
+              "command": "aws configservice get-discovered-resource-counts --query \"resourceCounts[].{Type:resourceType,Count:count}\" --output table"
+            },
+            {
+              "description": "List specific resource type instances",
+              "command": "aws configservice list-discovered-resources --resource-type AWS::EC2::Instance --query \"resourceIdentifiers[].{Id:resourceId,Name:resourceName}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/configservice/"
+        },
+        {
+          "id": "azure-resource-giv",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List all resources grouped by type",
+              "command": "az resource list --query \"[].type\" --output tsv | sort | uniq -c | sort -rn"
+            },
+            {
+              "description": "Export full resource inventory",
+              "command": "az resource list --query \"[].{Name:name,Type:type,RG:resourceGroup,Location:location}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/resource"
+        },
+        {
+          "id": "gcloud-giv",
+          "name": "Google Cloud",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "Search all resources in project",
+              "command": "gcloud asset search-all-resources --scope=projects/<project-id> --format=\"table(assetType,name)\" --limit=50"
+            }
+          ],
+          "docs": "https://cloud.google.com/sdk/gcloud/reference/asset/search-all-resources"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-PIY-RES",
+      "title": "Reviewing Executive Support",
+      "tools": [
+        {
+          "id": "jira-res",
+          "name": "Jira",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "List security project issues",
+              "command": "jira issue list --project SECURITY --status \"In Progress,Done\" --created-after \"-90d\" --plain"
+            },
+            {
+              "description": "View security board summary",
+              "command": "jira board list --project SECURITY --plain"
+            }
+          ],
+          "docs": "https://github.com/ankitpokhrel/jira-cli"
+        },
+        {
+          "id": "gh-res",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List project milestones",
+              "command": "gh api repos/{owner}/{repo}/milestones --jq '.[].{title,state,open_issues,closed_issues,due_on}'"
+            },
+            {
+              "description": "Check milestone progress",
+              "command": "gh api repos/{owner}/{repo}/milestones --jq '.[].{title, progress: ((.closed_issues / ((.open_issues + .closed_issues) | if . == 0 then 1 else . end)) * 100 | floor | tostring + \"%\")}'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-PIY-RIS",
+      "title": "Reviewing Investments in Security",
+      "tools": [
+        {
+          "id": "jira-ris",
+          "name": "Jira",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "Count security issues by status",
+              "command": "jira issue list --project SECURITY --plain --columns status | sort | uniq -c | sort -rn"
+            }
+          ],
+          "docs": "https://github.com/ankitpokhrel/jira-cli"
+        },
+        {
+          "id": "gh-ris",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Count issues by security label",
+              "command": "gh api repos/{owner}/{repo}/issues?labels=security\\&state=all --jq '. | length'"
+            },
+            {
+              "description": "List security-labeled issues with state",
+              "command": "gh issue list --label security --state all --json number,title,state,createdAt --limit 30"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-PIY-RSD",
+      "title": "Reviewing Security in SDLC",
+      "tools": [
+        {
+          "id": "gh-rsd",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Check branch protection enforcement",
+              "command": "gh api repos/{owner}/{repo}/branches/main/protection --jq '{reviews: .required_pull_request_reviews.required_approving_review_count, checks: .required_status_checks.contexts, admins: .enforce_admins.enabled}'"
+            },
+            {
+              "description": "List recent workflow runs",
+              "command": "gh run list --limit 10 --json name,status,conclusion,event"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "snyk-rsd",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Test for vulnerabilities in CI pipeline",
+              "command": "snyk test --all-projects --severity-threshold=high"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/test"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-PIY-RVD",
+      "title": "Reviewing Vulnerability Disclosures",
+      "tools": [
+        {
+          "id": "gh-rvd",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List security advisories",
+              "command": "gh api repos/{owner}/{repo}/security-advisories --jq '.[].{summary,severity,state,published_at}'"
+            },
+            {
+              "description": "List Dependabot alerts by severity",
+              "command": "gh api repos/{owner}/{repo}/dependabot/alerts --jq '[group_by(.security_advisory.severity)[] | {severity: .[0].security_advisory.severity, count: length}]'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "snyk-rvd",
+          "name": "Snyk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "List known vulnerabilities in project",
+              "command": "snyk test --json | jq '[.vulnerabilities[] | {id,title,severity,from}] | group_by(.severity) | map({severity: .[0].severity, count: length})'"
+            }
+          ],
+          "docs": "https://docs.snyk.io/snyk-cli/commands/test"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-INR-AAR",
+      "title": "After Action Reports",
+      "tools": [
+        {
+          "id": "gh-aar",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List postmortem issues",
+              "command": "gh issue list --label postmortem --state all --json number,title,state,createdAt --limit 20"
+            },
+            {
+              "description": "View postmortem details",
+              "command": "gh issue view <number> --json title,body,labels,createdAt"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "pagerduty-aar",
+          "name": "PagerDuty",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "List resolved incidents with details",
+              "command": "pd incident list --status resolved --since \"90 days ago\" --output json | jq '.[] | {title,created_at,resolved_at,urgency}'"
+            }
+          ],
+          "docs": "https://developer.pagerduty.com/docs/"
+        },
+        {
+          "id": "splunk-aar",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Search for incident review entries",
+              "command": "splunk search 'index=notable | stats count by rule_name status_label | sort -count' -earliest -90d"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-INR-RIR",
+      "title": "Reviewing IR Procedures",
+      "tools": [
+        {
+          "id": "gh-rir",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "Check for IR documentation",
+              "command": "gh api repos/{owner}/{repo}/contents/docs/incident-response --jq '.[].name'"
+            },
+            {
+              "description": "View IR runbook contents",
+              "command": "gh api repos/{owner}/{repo}/contents/docs/incident-response/runbook.md --jq '.content' | base64 -d | head -40"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        },
+        {
+          "id": "pagerduty-rir",
+          "name": "PagerDuty",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "List services with escalation policies",
+              "command": "pd service list --output json | jq '.[] | {name,status,escalation_policy}'"
+            },
+            {
+              "description": "Check on-call schedules",
+              "command": "pd oncall list --output json | jq '.[] | {user: .user.summary, schedule: .schedule.summary, start: .start, end: .end}'"
+            }
+          ],
+          "docs": "https://developer.pagerduty.com/docs/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-INR-RPI",
+      "title": "Reviewing Past Incidents",
+      "tools": [
+        {
+          "id": "pagerduty-rpi",
+          "name": "PagerDuty",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "List past incidents by date range",
+              "command": "pd incident list --status resolved --since \"180 days ago\" --output json | jq '.[] | {title,urgency,created_at,resolved_at}'"
+            },
+            {
+              "description": "Get incident analytics summary",
+              "command": "pd analytics incident list --since \"90 days ago\" --output json | jq '.[] | {description,seconds_to_resolve,urgency}'"
+            }
+          ],
+          "docs": "https://developer.pagerduty.com/docs/"
+        },
+        {
+          "id": "splunk-rpi",
+          "name": "Splunk",
+          "category": "security",
+          "commands": [
+            {
+              "description": "Search for past security incidents",
+              "command": "splunk search 'index=notable status_label!=\"New\" | stats count by rule_name urgency status_label | sort -count' -earliest -180d"
+            }
+          ],
+          "docs": "https://docs.splunk.com/Documentation/Splunk/latest/SearchReference"
+        },
+        {
+          "id": "gh-rpi",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List closed incident issues",
+              "command": "gh issue list --label incident --state closed --json number,title,createdAt,closedAt --limit 20"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-CED-RAT",
+      "title": "Reviewing All Training",
+      "tools": [
+        {
+          "id": "lms-rgt",
+          "name": "LMS API",
+          "category": "grc",
+          "commands": [
+            {
+              "description": "Check security awareness training completion",
+              "command": "curl -s -H \"Authorization: Bearer ${LMS_TOKEN}\" \"${LMS_URL}/api/v1/courses?category=security-awareness\" | jq '.[].{name,completion_rate,due_date}'"
+            },
+            {
+              "description": "List overdue training assignments",
+              "command": "curl -s -H \"Authorization: Bearer ${LMS_TOKEN}\" \"${LMS_URL}/api/v1/enrollments?status=overdue&course_category=security\" | jq '.[].{user,course,due_date}'"
+            }
+          ],
+          "docs": "https://canvas.instructure.com/doc/api/"
+        },
+        {
+          "id": "gh-rgt",
+          "name": "GitHub CLI",
+          "category": "cicd",
+          "commands": [
+            {
+              "description": "List repository collaborators",
+              "command": "gh api repos/{owner}/{repo}/collaborators --jq '.[].{login,role_name}'"
+            }
+          ],
+          "docs": "https://cli.github.com/manual/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-RPL-ABO",
+      "title": "Aligning Backups",
+      "tools": [
+        {
+          "id": "aws-backup-abo",
+          "name": "AWS Backup",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List backup plans",
+              "command": "aws backup list-backup-plans --query \"BackupPlansList[].{Name:BackupPlanName,Id:BackupPlanId,Created:CreationDate}\" --output table"
+            },
+            {
+              "description": "List backup vaults",
+              "command": "aws backup list-backup-vaults --query \"BackupVaultList[].{Name:BackupVaultName,Points:NumberOfRecoveryPoints,Encrypted:EncryptionKeyArn}\" --output table"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/backup/"
+        },
+        {
+          "id": "azure-backup-abo",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List backup policies",
+              "command": "az backup policy list --vault-name <vault> --resource-group <rg> --query \"[].{Name:name,Type:properties.backupManagementType}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/backup/policy"
+        },
+        {
+          "id": "terraform-abo",
+          "name": "Terraform",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List backup-related resources in state",
+              "command": "terraform state list | grep -i \"backup\\|snapshot\\|recovery\""
+            }
+          ],
+          "docs": "https://developer.hashicorp.com/terraform/cli"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-RPL-ARP",
+      "title": "Aligning Recovery Plan",
+      "tools": [
+        {
+          "id": "aws-backup-arp",
+          "name": "AWS Backup",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List recovery points in a vault",
+              "command": "aws backup list-recovery-points-by-backup-vault --backup-vault-name <vault> --query \"RecoveryPoints[].{ARN:RecoveryPointArn,Resource:ResourceType,Created:CreationDate,Status:Status}\" --output table --max-results 20"
+            },
+            {
+              "description": "Describe a specific recovery point",
+              "command": "aws backup describe-recovery-point --backup-vault-name <vault> --recovery-point-arn <arn> --query \"{Status:Status,Created:CreationDate,Encrypted:IsEncrypted,Lifecycle:Lifecycle}\" --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/backup/"
+        },
+        {
+          "id": "azure-backup-arp",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List backup items",
+              "command": "az backup item list --vault-name <vault> --resource-group <rg> --query \"[].{Name:name,Type:properties.workloadType,ProtectionState:properties.protectionState}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/backup/item"
+        },
+        {
+          "id": "kubectl-arp",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List volume snapshots",
+              "command": "kubectl get volumesnapshots --all-namespaces -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,READY:.status.readyToUse,SIZE:.status.restoreSize"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-RPL-RRO",
+      "title": "Reviewing Recovery Objectives",
+      "tools": [
+        {
+          "id": "aws-backup-rro",
+          "name": "AWS Backup",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List recovery points with timestamps",
+              "command": "aws backup list-recovery-points-by-backup-vault --backup-vault-name <vault> --query \"RecoveryPoints[].{Resource:ResourceType,Created:CreationDate,Completion:CompletionDate,Status:Status}\" --output table --max-results 10"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/backup/"
+        },
+        {
+          "id": "azure-backup-rro",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List backup jobs and status",
+              "command": "az backup job list --vault-name <vault> --resource-group <rg> --query \"[].{Name:name,Operation:properties.operation,Status:properties.status,Start:properties.startTime}\" --output table --top 10"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/backup/job"
+        },
+        {
+          "id": "aws-rds-rro",
+          "name": "AWS RDS",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List DB snapshots",
+              "command": "aws rds describe-db-snapshots --query \"DBSnapshots[].{Id:DBSnapshotIdentifier,DB:DBInstanceIdentifier,Created:SnapshotCreateTime,Status:Status,Encrypted:Encrypted}\" --output table --max-items 10"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/rds/"
+        }
+      ]
+    },
+    {
+      "ksiId": "KSI-RPL-TRC",
+      "title": "Testing Recovery",
+      "tools": [
+        {
+          "id": "aws-backup-trc",
+          "name": "AWS Backup",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List restore jobs",
+              "command": "aws backup list-restore-jobs --query \"RestoreJobs[].{Id:RestoreJobId,Resource:ResourceType,Status:Status,Created:CreationDate,Completed:CompletionDate}\" --output table --max-results 10"
+            },
+            {
+              "description": "Check restore job details",
+              "command": "aws backup describe-restore-job --restore-job-id <job-id> --query \"{Status:Status,Created:CreationDate,Completed:CompletionDate,RecoveryPoint:RecoveryPointArn}\" --output json"
+            }
+          ],
+          "docs": "https://docs.aws.amazon.com/cli/latest/reference/backup/"
+        },
+        {
+          "id": "azure-backup-trc",
+          "name": "Azure CLI",
+          "category": "cloud",
+          "commands": [
+            {
+              "description": "List restore jobs",
+              "command": "az backup job list --vault-name <vault> --resource-group <rg> --query \"[?properties.operation=='Restore'].{Name:name,Status:properties.status,Start:properties.startTime,End:properties.endTime}\" --output table"
+            }
+          ],
+          "docs": "https://learn.microsoft.com/en-us/cli/azure/backup/job"
+        },
+        {
+          "id": "kubectl-trc",
+          "name": "kubectl",
+          "category": "infrastructure",
+          "commands": [
+            {
+              "description": "List DR test jobs",
+              "command": "kubectl get jobs --all-namespaces -l type=dr-test -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name,STATUS:.status.conditions[0].type,COMPLETED:.status.completionTime"
+            }
+          ],
+          "docs": "https://kubernetes.io/docs/reference/kubectl/"
+        }
+      ]
+    }
+  ]
+}

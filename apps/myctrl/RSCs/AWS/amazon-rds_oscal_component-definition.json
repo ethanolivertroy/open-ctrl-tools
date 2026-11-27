@@ -1,0 +1,607 @@
+{
+  "component-definition": {
+    "uuid": "b676423b-0f96-4263-bb24-cf5f5968b13e",
+    "metadata": {
+      "title": "RDS Component Definition",
+      "last-modified": "2026-02-03T17:16:24.618151+00:00",
+      "version": "1.0.0.2026-02-03",
+      "oscal-version": "1.1.2",
+      "parties": [
+        {
+          "uuid": "6daff2f2-e988-41e3-9bc4-2bf98ec97db2",
+          "type": "organization",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "remarks": "Original document title: Amazon RDS\nLast updated: 2026-01-09"
+    },
+    "components": [
+      {
+        "uuid": "cdb0fb72-05a3-4d15-a9d7-f1dcdd1998ee",
+        "type": "software",
+        "title": "Amazon RDS",
+        "description": "Amazon RDS security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements. This guidance covers master user account security across all supported database engines and privileged access controls for relational database operations.\n\n**Important Disclaimer**: This document provides {aws} recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. {aws} makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. {aws} services and features evolve rapidly. Customers should verify current service capabilities and limitations through official {aws} documentation before implementation.\n\n**Command and Configuration Disclaimer**: All {aws} CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. {aws} CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest {aws} CLI documentation and service-specific guides for current syntax and available options.",
+        "responsible-roles": [
+          {
+            "role-id": "provider",
+            "party-uuids": [
+              "6daff2f2-e988-41e3-9bc4-2bf98ec97db2"
+            ]
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "1295b392-3baf-49fe-8bf1-49c3f26d039f",
+            "source": "#fedramp-high-baseline",
+            "description": "FedRAMP control implementations for RDS",
+            "implemented-requirements": []
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fedramp-high-baseline",
+          "description": "FedRAMP Revision 4 High Baseline Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/GSA/fedramp-automation/master/dist/content/rev4/baselines/json/FedRAMP_rev4_HIGH-baseline_profile.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "116a5043-28e2-49a4-9c7c-ec3dd61e37e2",
+          "title": "Document Information",
+          "description": "[cols=\"1,3\"]\n|===\n|Version |1.0.0\n|Last Updated |2026-01-09\n|Documentation URL |https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_GettingStarted.html\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "436aca82-23cf-4e51-826f-b7b69eb87e94",
+          "title": "Overview",
+          "description": "Amazon RDS security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements. This guidance covers master user account security across all supported database engines and privileged access controls for relational database operations.\n\n**Important Disclaimer**: This document provides {aws} recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. {aws} makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. {aws} services and features evolve rapidly. Customers should verify current service capabilities and limitations through official {aws} documentation before implementation.\n\n**Command and Configuration Disclaimer**: All {aws} CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. {aws} CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest {aws} CLI documentation and service-specific guides for current syntax and available options.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "68c1bd3a-328d-4dbc-8784-fb19821eddc5",
+          "title": "FedRAMP Requirements",
+          "description": "Amazon RDS must comply with the following FedRAMP requirements:\n\n* FRR-RSC-01\n* FRR-RSC-02\n* FRR-RSC-03\n* FRR-RSC-04\n* FRR-RSC-05\n* FRR-RSC-06\n* FRR-RSC-07",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "75a59667-0f7c-4ba8-8c35-55aacead5fb7",
+          "title": "Administrative Account Model",
+          "description": "Amazon RDS has an administrative account model.\n\n[cols=\"1,3\"]\n|===\n|Administrative Accounts |Yes\n|Account Type |Master database user\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "d80764ab-11fe-46ea-9073-99fd6bf6fac9",
+          "title": "FRR-RSC-01: Administrative Accounts",
+          "description": "*Applicable:* Yes\n\n*Implementation Overview:* Amazon RDS administrative access is managed through the Master database user account and AWS IAM roles. This guidance provides comprehensive security recommendations for securing administrative access to RDS instances across all supported database engines.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "b9b64654-1ade-4560-b038-d8abbc705288",
+          "title": "Master Database User Security",
+          "description": "*Master User Account Configuration:*\n\n* Use strong, randomly generated passwords (minimum 20 characters)\n* Rotate master passwords regularly (every 90 days maximum)  \n* Store passwords in AWS Secrets Manager with automatic rotation\n* Never use default or predictable usernames (avoid 'admin', 'root', 'sa')\n\n*Authentication Methods:*\n\n* Enable IAM database authentication where supported\n* Use AWS Secrets Manager for password management\n* Implement database-specific authentication mechanisms",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "4cad39e7-c08c-474a-bb15-019cac209022",
+          "title": "Database Engine-Specific Configurations",
+          "description": "*PostgreSQL Administrative Security*\n\n* Master user: Create with CREATEDB and CREATEROLE privileges only\n* Disable superuser privileges for application accounts\n* Configure pg_hba.conf for strict connection controls:\n** Require SSL connections: `hostssl all all 0.0.0.0/0 md5`\n** Limit connections by IP range and database\n* Enable logging: `log_statement = 'all'`, `log_connections = on`\n* Set connection limits: `max_connections` appropriate for workload\n* Configure password policies: `password_encryption = 'scram-sha-256'`\n\n*MySQL Administrative Security*\n\n* Master user: Limit to necessary privileges, avoid SUPER privilege\n* Enable SSL/TLS: `require_secure_transport = ON`\n* Configure strict authentication: `default_authentication_plugin = mysql_native_password`\n* Enable audit logging: `audit_log_policy = ALL`\n* Set connection limits: `max_connections`, `max_user_connections`\n* Disable remote root access: `DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')`\n\n*SQL Server Administrative Security*\n\n* Master user: Use Windows Authentication when possible\n* Enable SQL Server Audit for administrative actions\n* Configure login policies: `CHECK_POLICY = ON`, `CHECK_EXPIRATION = ON`\n* Set connection encryption: `Encrypt = yes`, `TrustServerCertificate = no`\n* Enable C2 audit mode for comprehensive logging\n* Configure server roles with least privilege principles\n\n*Oracle Administrative Security*\n\n* Master user: Avoid using SYS/SYSTEM accounts for applications\n* Enable Oracle Audit Vault and Database Firewall integration\n* Configure strong authentication: `SQLNET.AUTHENTICATION_SERVICES = (NONE)`\n* Enable SSL/TLS: `SQLNET.ENCRYPTION_SERVER = REQUIRED`\n* Set password policies: `PASSWORD_VERIFY_FUNCTION`\n* Configure connection pooling limits and timeouts\n\n*MariaDB Administrative Security*\n\n* Master user: Limit to necessary privileges, avoid SUPER privilege\n* Enable SSL/TLS: `require_secure_transport = ON`\n* Configure authentication plugins: Support for `mysql_native_password`, `ed25519`, and `pam` authentication\n* Enable audit logging: Use MariaDB Audit Plugin via RDS option groups\n* Set connection limits: `max_connections`, `max_user_connections`\n* Configure password validation: Use `simple_password_check` or `cracklib_password_check` plugins\n* Implement account resource limits: `MAX_QUERIES_PER_HOUR`, `MAX_UPDATES_PER_HOUR`, `MAX_CONNECTIONS_PER_HOUR`\n* Enable password expiration policies: `default_password_lifetime` parameter\n* Disable remote root access: `DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')`\n* Use roles for privilege management: `CREATE ROLE`, `GRANT role TO user`\n\n*IBM DB2 Administrative Security*\n\n* Master user: Has DBADM, SYSCTRL, SYSMAINT, and SYSMON authorities (not SYSADM)\n* Use group-based access control: Users gain database access through group membership\n* Enable SSL/TLS: Configure `DB2COMM = TCPIP,SSL` and `SSL_SVCENAME` parameters\n* Configure authentication: Support for LDAP and Kerberos integration\n* Enable audit logging: Use DB2_AUDIT option in RDS option groups with S3 integration\n* Implement role-based access: Use RDS default roles (`ROLE_NULLID_PACKAGES`, `ROLE_TABLESPACES`, `ROLE_PROCEDURES`)\n* Set connection limits: Configure workload management and connection limits\n* Use rdsadmin procedures: `rdsadmin.add_user`, `rdsadmin.create_role`, `rdsadmin.grant_role`\n* Configure password policies: Implement through group policies and authentication mechanisms\n* Separate administrative duties: Create specific roles for different administrative functions\n* Grant minimal database authorities: Use `CONNECT`, `BINDADD`, `CREATETAB`, `IMPLICIT_SCHEMA` as baseline",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "2a63439d-5c1b-4e13-a635-3532d48d394e",
+          "title": "AWS IAM Integration",
+          "description": "*IAM Database Authentication (PostgreSQL/MySQL):*\n\n* Enable IAM database authentication on RDS instance\n* Create IAM policies with rds-db:connect permissions\n* Use temporary credentials instead of passwords\n* Example policy for IAM database authentication:\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"rds-db:connect\",\n      \"Resource\": \"arn:aws:rds-db:region:account:dbuser:db-instance-id/db-username\"\n    }\n  ]\n}\n----\n\n*Cross-Service Integration:*\n\n* Use AWS Secrets Manager for credential rotation\n* Integrate with AWS CloudTrail for API call logging\n* Configure VPC security groups for network-level access control\n* Enable Enhanced Monitoring for performance insights",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "c7176c52-995e-4987-ad64-963ca689a91c",
+          "title": "Network Security",
+          "description": "*VPC Configuration:*\n\n* Deploy RDS in private subnets only\n* Configure DB subnet groups across multiple AZs\n* Use VPC security groups instead of DB security groups\n* Implement least-privilege security group rules\n\n*Connection Security:*\n\n* Enable SSL/TLS encryption in transit for all connections\n* Use VPC endpoints for AWS service communications\n* Configure connection timeouts and limits\n* Monitor connection patterns for anomalies",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "97fa8dd7-304c-4f8b-84c3-19c62b486277",
+          "title": "Monitoring and Auditing",
+          "description": "*Database-Level Auditing:*\n\n* Enable database audit logs for all administrative actions\n* Configure log retention policies (minimum 90 days)\n* Monitor failed login attempts and privilege escalations\n* Set up alerts for suspicious administrative activities\n\n*AWS-Level Monitoring:*\n\n* Enable CloudTrail for all RDS API calls\n* Configure CloudWatch alarms for administrative events\n* Use AWS Config rules for compliance monitoring\n* Implement AWS GuardDuty for threat detection",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "0bd053dd-a5fb-446a-932f-30868f12b6e7",
+          "title": "Backup and Recovery Security",
+          "description": "*Automated Backups:*\n\n* Enable automated backups with encryption\n* Configure backup retention period (7-35 days)\n* Use cross-region backup replication for DR\n* Encrypt backup snapshots with customer-managed KMS keys\n\n*Manual Snapshots:*\n\n* Encrypt all manual snapshots\n* Implement snapshot sharing controls\n* Regular testing of snapshot restoration procedures\n* Document recovery time objectives (RTO) and recovery point objectives (RPO)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ffc2016a-ffae-4511-baa8-b8ee239ad675",
+          "title": "Compliance Requirements",
+          "description": "*FedRAMP Controls Addressed:*\n\n* AC-2: Account Management\n* AC-3: Access Enforcement\n* AC-6: Least Privilege\n* AU-2: Audit Events\n* AU-3: Content of Audit Records\n* IA-2: Identification and Authentication\n* SC-8: Transmission Confidentiality\n* SC-28: Protection of Information at Rest\n\n*Implementation Validation:*\n\n* Regular access reviews (quarterly minimum)\n* Penetration testing of database security\n* Compliance scanning and vulnerability assessments\n* Documentation of security configurations and procedures",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "825fef91-4a51-4cc6-bb8c-89eeadedf0d8",
+          "title": "Implementation Checklist",
+          "description": "☐ Configure strong master user credentials +\n☐ Enable IAM database authentication where supported +\n☐ Implement engine-specific security configurations +\n☐ Configure VPC and security group restrictions +\n☐ Enable SSL/TLS encryption in transit +\n☐ Set up comprehensive audit logging +\n☐ Configure automated encrypted backups +\n☐ Implement monitoring and alerting +\n☐ Document administrative procedures +\n☐ Conduct regular security reviews +\n\nThis comprehensive guidance ensures that Amazon RDS administrative accounts are configured according to security best practices and FedRAMP requirements across all supported database engines.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "21700b2a-83bc-4d89-b69b-44be2da22e46",
+          "title": "FRR-RSC-02: Administrative Settings",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "b71450ea-0215-4e2f-9708-47f24452ef8f",
+          "title": "Security-Related Settings Restricted to Master User",
+          "description": "The master user account in Amazon RDS has elevated privileges specific to each database engine. The following operations and their security implications are restricted to the master user account. Note that RDS is a managed service, so some traditional database superuser operations are not available.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "e56ee6b1-147e-4a90-b6cf-39b9985c82bc",
+          "title": "1. User and Privilege Management (All Engines)",
+          "description": "*Operations:*\n\n* CREATE USER / CREATE ROLE\n* DROP USER / DROP ROLE\n* ALTER USER / ALTER ROLE\n* GRANT and REVOKE privileges\n* Password management for all database users\n* Role membership management\n\n*Security Implications:*\n\n* Controls who can access the database instance\n* Determines authentication methods and password policies\n* Manages privilege escalation through role/privilege assignments\n* Unauthorized user creation could lead to security breaches\n* Improper privilege grants violate least privilege principles",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "6804986e-1801-4cfb-9184-712360c4cf1e",
+          "title": "2. Database Creation and Management (All Engines)",
+          "description": "*Operations:*\n\n* CREATE DATABASE\n* DROP DATABASE\n* ALTER DATABASE\n* Database ownership changes\n\n*Security Implications:*\n\n* Database owners have extensive privileges within their databases\n* Unauthorized database creation could consume resources\n* Database deletion results in permanent data loss\n* Database-level settings affect all objects and users",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "06d9e578-bca5-4fb6-8f5e-60e2faa659b9",
+          "title": "3. PostgreSQL-Specific Master User Operations",
+          "description": "*Operations Restricted to rds_superuser Role:*\n\n* CREATE EXTENSION / DROP EXTENSION (for supported extensions)\n* ALTER EXTENSION\n* CREATE EVENT TRIGGER / DROP EVENT TRIGGER\n* Modify system catalogs (limited)\n* Access to replication slots\n* Logical replication configuration\n* CREATE TABLESPACE (limited in RDS)\n\n*Security Implications:*\n\n* Extensions can introduce security vulnerabilities\n* Event triggers execute with elevated privileges\n* Replication access allows reading all database data\n* System catalog access reveals database structure\n* Tablespace management affects storage allocation\n\n*Note:* RDS PostgreSQL master user has `rds_superuser` role, NOT full PostgreSQL superuser. Cannot access OS, modify pg_hba.conf, or perform certain system-level operations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "099d2e6d-7801-4841-a9e7-5047cd56ed94",
+          "title": "4. MySQL-Specific Master User Operations",
+          "description": "*Operations (Aurora MySQL Version 3):*\n\n* CREATE ROLE / DROP ROLE\n* GRANT/REVOKE role memberships\n* SET_USER_ID privilege (impersonate users)\n* ROLE_ADMIN privilege\n* APPLICATION_PASSWORD_ADMIN\n* CONNECTION_ADMIN\n* REPLICATION CLIENT / REPLICATION SLAVE\n* RELOAD privilege (flush operations)\n* PROCESS privilege (view all connections)\n\n*Security Implications:*\n\n* Role management controls privilege inheritance\n* SET_USER_ID allows user impersonation\n* REPLICATION access enables data exfiltration\n* PROCESS privilege reveals all active queries\n* RELOAD can disrupt service or clear settings\n* CONNECTION_ADMIN bypasses connection limits\n\n*Note:* RDS MySQL master user does NOT have SUPER privilege. Cannot perform certain system-level operations or modify some global variables.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "161cc951-53f4-44fe-a852-2bc433ff3451",
+          "title": "5. SQL Server-Specific Master User Operations",
+          "description": "*Operations:*\n\n* CREATE LOGIN / DROP LOGIN\n* ALTER LOGIN\n* Server role management (limited)\n* Database ownership changes\n* SQL Server Agent job management\n* Backup and restore operations\n* Linked server configuration (limited)\n\n*Security Implications:*\n\n* Login management controls server-level access\n* Server roles provide elevated privileges\n* Database ownership affects object permissions\n* Agent jobs execute with elevated privileges\n* Backup access enables data exfiltration\n* Linked servers can expose other systems\n\n*Note:* RDS SQL Server master user is NOT a sysadmin. Cannot access OS, modify certain server configurations, or perform xp_cmdshell operations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "613c37ab-0d4d-4fc7-a9a9-10957fea6138",
+          "title": "6. Oracle-Specific Master User Operations",
+          "description": "*Operations:*\n\n* CREATE USER / DROP USER\n* GRANT/REVOKE system privileges\n* CREATE PROFILE / ALTER PROFILE\n* Tablespace management\n* Directory object management (limited)\n* Scheduler job management\n* Materialized view management\n\n*Security Implications:*\n\n* System privileges provide database-wide access\n* Profiles enforce password and resource policies\n* Tablespace management affects storage\n* Directory objects enable file system access\n* Scheduler jobs execute with elevated privileges\n* Materialized views can expose sensitive data\n\n*Note:* RDS Oracle master user is NOT SYS/SYSTEM. Cannot access OS, modify certain initialization parameters, or perform certain DBA operations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "a74b71b3-c178-4270-9dda-41c41bedbcf0",
+          "title": "7. MariaDB-Specific Master User Operations",
+          "description": "*Operations:*\n\n* CREATE USER / DROP USER / ALTER USER\n* CREATE ROLE / DROP ROLE\n* GRANT/REVOKE privileges and role memberships\n* SET PASSWORD for all users\n* SHOW CREATE USER (version 11.4+)\n* SHOW CREATE ROUTINE privilege (version 11.4+)\n* CREATE TEMPORARY TABLES\n* LOCK TABLES\n* REPLICATION CLIENT / REPLICATION SLAVE\n* PROCESS privilege (view all connections)\n* RELOAD privilege (flush operations)\n* EVENT privilege (create/modify scheduled events)\n* TRIGGER privilege\n* CREATE VIEW / SHOW VIEW\n\n*Security Implications:*\n\n* Role management enables hierarchical privilege structures\n* PROCESS privilege reveals all active queries and connections\n* REPLICATION access enables data exfiltration\n* RELOAD can disrupt service or clear caches\n* EVENT privilege allows scheduled task execution\n* Trigger execution can bypass application logic\n* View creation can expose or hide sensitive data\n* Password management controls authentication security\n\n*Note:* RDS MariaDB master user does NOT have SUPER privilege. Cannot perform certain system-level operations, modify some global variables, or access OS-level functions.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "39f79283-0460-4cf4-aa25-c1caa63b2e44",
+          "title": "8. IBM DB2-Specific Master User Operations",
+          "description": "*Operations:*\n\n* User and group management via rdsadmin procedures:\n** `rdsadmin.add_user` / `rdsadmin.remove_user`\n** `rdsadmin.add_groups` / `rdsadmin.remove_groups`\n** `rdsadmin.change_password`\n* Role management:\n** `rdsadmin.create_role` / `rdsadmin.drop_role`\n** `rdsadmin.grant_role` / `rdsadmin.revoke_role`\n* Database authorization grants:\n** `rdsadmin.dbadm_grant` / `rdsadmin.dbadm_revoke`\n** Grant DBADM, ACCESSCTRL, DATAACCESS authorities\n* Schema and object creation\n* Tablespace management (limited)\n* Workload management configuration\n* Audit policy configuration\n\n*Security Implications:*\n\n* Group-based access model requires careful group management\n* DBADM authority provides extensive database control\n* ACCESSCTRL authority manages security policies\n* DATAACCESS authority enables reading all data\n* Role grants can cascade privileges to multiple users\n* Audit configuration affects compliance and forensics\n* Workload management impacts resource allocation\n* Schema ownership determines object access control\n\n*Note:* RDS DB2 master user has DBADM, SYSCTRL, SYSMAINT, and SYSMON authorities but NOT SYSADM. Cannot access OS, modify certain database manager configuration parameters, or perform certain instance-level operations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "a3e1cf8b-b234-416b-9ada-7fb7cc561e41",
+          "title": "9. Parameter Group Management (All Engines)",
+          "description": "*Operations:*\n\n* Create custom DB parameter groups\n* Modify parameter group settings\n* Apply parameter groups to instances\n* Configure engine-specific security parameters\n\n*Security Implications:*\n\n* Parameter changes affect instance behavior and security\n* Some parameters require instance reboot\n* Security-related parameters (SSL, authentication, logging)\n* Incorrect parameters could impact availability or security",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "d702e990-e791-4d83-a6d7-be0bea6d2d88",
+          "title": "10. Backup and Recovery Operations (All Engines)",
+          "description": "*Operations:*\n\n* Configure automated backup retention\n* Create manual snapshots\n* Delete snapshots\n* Copy snapshots to other regions\n* Restore from snapshots\n* Point-in-time recovery\n\n*Security Implications:*\n\n* Backup retention affects recovery capabilities\n* Snapshot access enables data exfiltration\n* Cross-region copies may violate data residency\n* Restore operations can overwrite existing data\n* Snapshot sharing requires careful access control",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "da837746-3279-4681-8130-9067c729f959",
+          "title": "11. Replication and High Availability (All Engines)",
+          "description": "*Operations:*\n\n* Configure read replicas\n* Promote read replicas\n* Enable Multi-AZ deployment\n* Configure replication settings\n* Manage replication lag\n\n*Security Implications:*\n\n* Replication provides access to all database data\n* Read replicas may have different security settings\n* Multi-AZ failover affects availability\n* Replication lag can impact data consistency\n* Replica promotion changes cluster topology",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "792979e6-8959-4ea7-b0f7-da2f685c73fd",
+          "title": "12. Audit and Logging Configuration (All Engines)",
+          "description": "*Operations:*\n\n* Enable/disable database audit logging\n* Configure log retention and export\n* Set logging parameters (connections, statements, errors)\n* Export logs to CloudWatch Logs\n\n*Security Implications:*\n\n* Disabling audit logs could hide malicious activity\n* Log data contains sensitive query information\n* Log retention affects compliance requirements\n* CloudWatch export requires IAM permissions\n* Audit settings are critical for forensics",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "8ce75bc3-e596-4ffd-a37b-ed96695b543e",
+          "title": "Best Practices for RDS Master User Account Security",
+          "description": "1. *Minimize Master User Usage*\n   - Never use master user directly in applications\n   - Create application-specific users with minimal privileges\n   - Reserve master user for administrative tasks only\n   - Use engine-specific RBAC for fine-grained access\n\n2. *Secure Master User Credentials*\n   - Use AWS Secrets Manager for password management\n   - Enable automatic password rotation (90 days maximum)\n   - Use strong, randomly generated passwords (minimum 20 characters)\n   - Never hardcode master credentials in application code\n\n3. *Enable Multi-Factor Authentication*\n   - Require MFA for AWS Console access to modify master password\n   - Implement MFA for IAM users who can modify DB instances\n   - Use IAM database authentication where supported (PostgreSQL/MySQL)\n\n4. *Audit Master User Activity*\n   - Enable comprehensive database audit logging\n   - Monitor all master user connections and operations\n   - Set up CloudWatch alarms for master user activity\n   - Review audit logs regularly for unauthorized access\n\n5. *Implement Least Privilege*\n   - Create role-based access with minimal required privileges\n   - Grant privileges at the most granular level possible\n   - Use engine-specific roles appropriately\n   - Document all privilege grants and their justifications\n\n6. *Network Security*\n   - Deploy RDS in private subnets only\n   - Use VPC security groups to restrict database access\n   - Never make RDS instances publicly accessible\n   - Enforce SSL/TLS for all client connections\n\n7. *Compliance and Documentation*\n   - Document all master user operations\n   - Maintain audit trail of privilege changes\n   - Conduct quarterly access reviews\n   - Implement change management for security settings",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "56cea6a9-3e2d-4133-ba5e-54417a6c89ca",
+          "title": "Engine-Specific Limitations in RDS",
+          "description": "*Important:* RDS is a managed service. The master user does NOT have full superuser/admin privileges:\n\n*PostgreSQL:*\n- Cannot access OS or modify pg_hba.conf\n- Cannot install arbitrary extensions (only AWS-supported)\n- Cannot modify certain system parameters\n- Has `rds_superuser` role, not full superuser\n\n*MySQL:*\n- Cannot use SUPER privilege\n- Cannot access mysql.user table directly for some operations\n- Cannot modify certain global variables\n- Cannot perform OS-level operations\n\n*MariaDB:*\n- Cannot use SUPER privilege\n- Cannot access mysql.user table directly for some operations\n- Cannot modify certain global variables\n- Cannot perform OS-level operations\n- Limited access to performance_schema and information_schema tables\n\n*SQL Server:*\n- Not a member of sysadmin role\n- Cannot use xp_cmdshell\n- Cannot access OS or file system directly\n- Limited server-level configuration access\n\n*Oracle:*\n- Not SYS or SYSTEM user\n- Cannot access OS or modify certain init parameters\n- Limited DBA operations\n- Cannot perform certain maintenance tasks\n\n*IBM DB2:*\n- Not SYSADM user (has DBADM, SYSCTRL, SYSMAINT, SYSMON)\n- Cannot access OS or modify database manager configuration\n- Cannot perform instance-level operations\n- Limited tablespace and storage management\n- Must use rdsadmin procedures for user and role management",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "2e26a441-d7bb-4a2f-9d7a-3a968a924b5b",
+          "title": "FRR-RSC-03: Privileged Settings",
+          "description": "*Applicable:* Yes\n\nWithin RDS you have two layers of privileged access. One layer is at the IAM layer, where you can limit what permissions a user has to operate within RDS. This section covers the priviliged settings for using the service itself and provides example IAM Policies that would allow for varying levels of access to the service. The second layer of privileged access is at the database engine layer itself which is covered in the other sections of this document.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "4b3b30fd-2aa1-4c1e-bc30-441cdabf26a2",
+          "title": "IAM Least Privilege Policies",
+          "description": "This section provides sample IAM policies for implementing least privilege access to Amazon RDS resources across different operational roles and responsibilities.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "2b4819fb-41f4-4a2c-a7a4-97844c921a5a",
+          "title": "Read-Only Access Policy",
+          "description": "*Purpose:* Provides read-only access to RDS resources for monitoring and auditing purposes.\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"rds:Get*\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "78b947c0-6586-4a62-abbf-dcee19d278b9",
+          "title": "Operator Access Policy",
+          "description": "*Purpose:* Provides operational access for routine database management tasks with MFA requirement.\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"rds:Get*\",\n        \"rds:StartDBInstance\",\n        \"rds:StopDBInstance\",\n        \"rds:RebootDBInstance\",\n        \"rds:ModifyDBInstance\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        }\n      }\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "0b13f15b-638f-43c1-a0b5-898c5a682cef",
+          "title": "Administrator Access Policy",
+          "description": "*Purpose:* Provides full administrative access with MFA and session time restrictions.\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"rds:*\",\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        },\n        \"NumericLessThan\": {\n          \"aws:MultiFactorAuthAge\": \"3600\"\n        }\n      }\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "85977f05-07aa-49ae-8031-0ad865357ccf",
+          "title": "Database Security Configuration",
+          "description": "Configure Amazon RDS with comprehensive database security including encryption at rest and in transit, secure authentication, parameter groups, automated backups, and network isolation for relational database operations.\n\n*Implementation Overview:* Amazon RDS security involves implementing encryption, access controls, network isolation, and comprehensive monitoring to protect database resources and meet compliance requirements.\n\n*API Reference:* `aws rds create-db-instance --storage-encrypted --kms-key-id`\n\n*Control Mapping:* SC-28 (Protection of Information at Rest)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "7e9438e8-35fc-4978-99a9-24a307ba432d",
+          "title": "Privileged Access Control",
+          "description": "Amazon RDS requires implementation of privileged account security controls including least privilege access, multi-factor authentication for administrative operations, and comprehensive audit logging of privileged activities.\n\n*Implementation Overview:* Amazon RDS privileged account security involves implementing strict access controls, monitoring privileged operations, and ensuring administrative activities are properly authenticated and logged.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "c9c35e8e-4be7-4a03-933a-f82ab1dce992",
+          "title": "Implementation Examples",
+          "description": "*Step 1: Implement Least Privilege Access*\n\nConfigure Amazon RDS with minimal required permissions for administrative accounts:\n\n[source,bash]\n----\n# Create least privilege IAM policy for Amazon RDS administration\naws iam create-policy \\\n  --policy-name RDSAdminPolicy \\\n  --policy-document file://rds-admin-policy.json\n\n# Attach policy to administrative role\naws iam attach-role-policy \\\n  --role-name RDSAdminRole \\\n  --policy-arn arn:aws:iam::account:policy/RDSAdminPolicy\n----\n\n*Step 2: Enable Multi-Factor Authentication*\n\nRequire MFA for all privileged operations and administrative access:\n\n[source,bash]\n----\n# MFA enforcement is configured through IAM policy conditions\n# Verify MFA enforcement for privileged operations\naws iam simulate-principal-policy \\\n  --policy-source-arn arn:aws:iam::account:role/RDSAdminRole \\\n  --action-names rds:CreateDBInstance \\\n  --context-entries ContextKeyName=aws:MultiFactorAuthPresent,ContextKeyValues=false,ContextKeyType=boolean\n----\n\n*Step 3: Configure Privileged Activity Monitoring*\n\nEnable comprehensive logging and monitoring of all privileged account activities:\n\n[source,bash]\n----\n# Enable CloudTrail for API logging\naws cloudtrail create-trail \\\n  --name RDSPrivilegedAccess \\\n  --s3-bucket-name rds-audit-logs \\\n  --include-global-service-events \\\n  --is-multi-region-trail\n\n# Configure CloudWatch alarms for privileged operations\naws logs create-log-group \\\n  --log-group-name /aws/rds/privileged-access \\\n  --retention-in-days 365\n----\n\n*API Reference:* Configure via IAM policies and Amazon RDS administrative APIs\n\n*Control Mapping:* AC-6 (Least Privilege)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "f3b53a1a-6e16-41c7-a720-66d64b6cf33d",
+          "title": "FRR-RSC-04: Secure Defaults",
+          "description": "*Applicable:* Yes\n\nAWS services are designed with security in mind, providing multiple layers of security controls and encryption capabilities. However, AWS allows customers to define the security configuration of services and does not enforce a minimum security standard by default, enabling customers the flexibility to meet their specific business requirements and compliance needs.\n\nAmazon RDS should be configured using the above AWS Security Best Practice recommendations. AWS allows customers to define the security of services, and does not enforce a minimum security standard by default.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "c53ab97d-dffc-49bf-8a70-fcb497abce33",
+          "title": "Implementation Guidelines",
+          "description": "Ensure Amazon RDS resources are created with security-first configurations that align with AWS security best practices and organizational compliance requirements.\n\n*Security Configuration Best Practices:*\n\n* Enable encryption at rest using customer-managed KMS keys\n* Apply least privilege access policies for all database operations\n* Enable comprehensive logging and monitoring for security events\n* Use secure network configurations with private subnets and security groups\n* Implement automated backup encryption with appropriate retention policies\n* Configure SSL/TLS encryption for all database connections\n* Enable Enhanced Monitoring for performance and security insights",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ccd67abe-72ac-49c1-9674-f76f812d7675",
+          "title": "FRR-RSC-05: Configuration Comparison",
+          "description": "*Applicable:* Yes\n\n*Implementation Overview:* Use AWS Config rules, custom scripts, or third-party tools to compare current Amazon RDS configuration against established security baselines and compliance requirements.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "41efe6c3-3388-4de7-993a-d0787e76c18f",
+          "title": "AWS Config Implementation",
+          "description": "Deploy AWS Config rules to continuously monitor Amazon RDS compliance with organizational security standards:\n\n*Configuration Monitoring Commands:*\n\n[source,bash]\n----\n# Describe RDS instances and compare against baseline\naws rds describe-db-instances \\\n  --query 'DBInstances[*].{InstanceId:DBInstanceIdentifier,Encrypted:StorageEncrypted,Engine:Engine}' \\\n  --output table\n\n# Export configuration for comparison\naws rds describe-db-instances --output json > current-rds-config.json\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "09435138-feee-4785-b5a7-baf73b32804d",
+          "title": "Automation Framework",
+          "description": "* Use AWS Config conformance packs for automated compliance checking\n* Implement custom Lambda functions for configuration drift detection\n* Deploy AWS Systems Manager for configuration management\n* Integrate with AWS Security Hub for centralized compliance reporting",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "691ddbeb-e1fc-46de-a893-b521dddb685c",
+          "title": "FRR-RSC-06: Configuration Export",
+          "description": "*Applicable:* Yes\n\n*Implementation Overview:* Export Amazon RDS configuration using AWS CLI describe commands in machine-readable JSON format for backup, audit, and Infrastructure as Code purposes.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "d8e9a8fb-ac93-4e8f-bcd2-841cfb6a12de",
+          "title": "Export Procedures",
+          "description": "*Export Format:* JSON via AWS CLI\n\n*Primary Export Commands:*\n\n[source,bash]\n----\n# Export complete RDS configuration\naws rds describe-db-instances --output json > rds-instances.json\naws rds describe-db-parameter-groups --output json > rds-parameter-groups.json\naws rds describe-db-subnet-groups --output json > rds-subnet-groups.json\naws rds describe-db-security-groups --output json > rds-security-groups.json\n----\n\n*Configuration Export Use Cases:*\n\n* Backup current configuration state\n* Compare configurations across environments (dev, staging, production)\n* Audit and compliance reporting requirements\n* Infrastructure as Code template generation\n* Disaster recovery planning and documentation",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "38a8f785-7c58-4038-989a-7700a9062229",
+          "title": "FRR-RSC-07: API Configuration",
+          "description": "*Applicable:* Yes\n\n*Implementation Overview:* Amazon RDS security configurations are manageable through AWS APIs, CLI commands, and Infrastructure as Code tools, enabling automated and repeatable security implementations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "714e2dc5-a8e6-42ad-a9b4-ca604ace04fa",
+          "title": "Encryption Configuration",
+          "description": "*API Command:*\n\n[source,bash]\n----\n# Create encrypted RDS instance\naws rds create-db-instance \\\n  --db-instance-identifier secure-database \\\n  --storage-encrypted \\\n  --kms-key-id alias/rds-encryption-key \\\n  --engine mysql \\\n  --db-instance-class db.t3.micro\n----\n\n*Control Mapping:* SC-28 (Protection of Information at Rest)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "a50cdec5-df0b-4762-b5ae-b350099823ee",
+          "title": "Backup Configuration",
+          "description": "*API Command:*\n\n[source,bash]\n----\n# Configure automated backups with retention\naws rds modify-db-instance \\\n  --db-instance-identifier secure-database \\\n  --backup-retention-period 7 \\\n  --preferred-backup-window \"05:00-06:00\"\n----\n\n*Control Mapping:* CP-9 (Information System Backup)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "8ff4a756-cdba-4fd9-8a4e-6b5e2d65b1b4",
+          "title": "Multi-AZ Configuration",
+          "description": "*API Command:*\n\n[source,bash]\n----\n# Enable Multi-AZ deployment for high availability\naws rds modify-db-instance \\\n  --db-instance-identifier secure-database \\\n  --multi-az \\\n  --apply-immediately\n----\n\n*Control Mapping:* CP-6 (Alternate Processing Site)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "fb0a65d9-ddda-4472-aac7-1e20b08acd4a",
+          "title": "Implementation Guidance",
+          "description": "*Role-Based Access Control:*\n\n* Create separate IAM roles for different access levels (read-only, operator, administrator)\n* Always require MFA for privileged operations and administrative access\n* Use time-based conditions to limit session duration for administrative roles\n* Apply resource-specific restrictions where possible to limit blast radius\n* Regularly review and audit policy assignments and usage patterns\n* Use AWS Access Analyzer to validate least privilege implementations\n\n*Security Best Practices:*\n\n* Start with read-only access and incrementally add permissions as needed\n* Use AWS managed policies as a baseline when available and appropriate\n* Implement just-in-time access for administrative operations\n* Monitor policy usage with CloudTrail and Access Analyzer\n* Document business justification for each permission granted\n* Implement automated policy compliance checking and drift detection",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "84dbe52e-8043-4b36-8545-05182360ef97",
+          "title": "Additional Resources",
+          "description": "For more information about {aws} security best practices, see the following resources:\n\n*{aws} Security Documentation:*\n\n* link:https://docs.aws.amazon.com/security/[{aws} Security Documentation,type=\"documentation\"] - Comprehensive security guidance across all {aws} services\n* link:https://aws.amazon.com/compliance/fedramp/[{aws} FedRAMP Compliance,type=\"documentation\"] - FedRAMP-specific compliance information and resources\n* link:https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html[{aws} Well-Architected Security Pillar,type=\"documentation\"] - Security design principles and best practices\n\n*Amazon RDS-Specific Resources:*\n\n* link:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.Security.html[Amazon RDS Security Best Practices,type=\"documentation\"] - Service-specific security recommendations\n* link:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html[IAM Database Authentication,type=\"documentation\"] - Implementation guide for IAM-based database authentication\n* link:https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html[Amazon RDS Encryption,type=\"documentation\"] - Encryption at rest and in transit configuration guidance\n\n*Compliance and Governance:*\n\n* link:https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config.html[{aws} Config Rules,type=\"documentation\"] - Automated compliance monitoring and evaluation\n* link:https://docs.aws.amazon.com/cloudtrail/latest/userguide/cloudtrail-user-guide.html[{aws} CloudTrail User Guide,type=\"documentation\"] - API logging and audit trail management\n* link:https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html[{aws} Secrets Manager,type=\"documentation\"] - Credential management and rotation automation",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

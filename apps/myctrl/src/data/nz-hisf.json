@@ -1,0 +1,1685 @@
+{
+  "framework": {
+    "id": "nz-hisf",
+    "name": "New Zealand HISF",
+    "version": "2025",
+    "description": "New Zealand HISF compliance framework"
+  },
+  "families": {
+    "HSUP01": "HSUP01",
+    "HSUP02": "HSUP02",
+    "HSUP03": "HSUP03",
+    "HSUP04": "HSUP04",
+    "HSUP05": "HSUP05",
+    "HSUP06": "HSUP06",
+    "HSUP07": "HSUP07",
+    "HSUP08": "HSUP08",
+    "HSUP09": "HSUP09",
+    "HSUP10": "HSUP10",
+    "HSUP11": "HSUP11",
+    "HSUP12": "HSUP12",
+    "HSUP13": "HSUP13",
+    "HSUP14": "HSUP14",
+    "HSUP15": "HSUP15",
+    "HSUP16": "HSUP16",
+    "HSUP17": "HSUP17",
+    "HSUP18": "HSUP18",
+    "HSUP19": "HSUP19",
+    "HSUP20": "HSUP20",
+    "HSUP21": "HSUP21",
+    "HSUP22": "HSUP22",
+    "HSUP23": "HSUP23",
+    "HSUP24": "HSUP24",
+    "HSUP25": "HSUP25",
+    "HSUP26": "HSUP26",
+    "HSUP27": "HSUP27",
+    "HSUP28": "HSUP28",
+    "HSUP29": "HSUP29",
+    "HSUP30": "HSUP30",
+    "HSUP31": "HSUP31",
+    "HSUP32": "HSUP32",
+    "HSUP33": "HSUP33",
+    "HSUP34": "HSUP34",
+    "HSUP35": "HSUP35",
+    "HSUP36": "HSUP36",
+    "HSUP37": "HSUP37",
+    "HSUP38": "HSUP38",
+    "HSUP39": "HSUP39",
+    "HSUP40": "HSUP40",
+    "HSUP41": "HSUP41",
+    "HSUP42": "HSUP42",
+    "HSUP43": "HSUP43",
+    "HSUP44": "HSUP44",
+    "HSUP45": "HSUP45",
+    "HSUP46": "HSUP46",
+    "HSUP47": "HSUP47",
+    "HSUP48": "HSUP48",
+    "HSUP49": "HSUP49",
+    "HSUP50": "HSUP50",
+    "HSUP51": "HSUP51",
+    "HSUP52": "HSUP52",
+    "HSUP53": "HSUP53",
+    "HSUP54": "HSUP54",
+    "HSUP55": "HSUP55",
+    "HSUP56": "HSUP56",
+    "HSUP57": "HSUP57",
+    "HSUP58": "HSUP58",
+    "HSUP59": "HSUP59",
+    "HSUP60": "HSUP60",
+    "HSUP61": "HSUP61",
+    "HSUP62": "HSUP62",
+    "HSUP63": "HSUP63",
+    "HSUP64": "HSUP64",
+    "HML01": "HML01",
+    "HSUP65": "HSUP65",
+    "HSUP66": "HSUP66",
+    "HSUP67": "HSUP67",
+    "HSUP68": "HSUP68",
+    "HHSP01": "HHSP01",
+    "HHSP02": "HHSP02",
+    "HHSP03": "HHSP03",
+    "HHSP04": "HHSP04",
+    "HHSP05": "HHSP05",
+    "HHSP06": "HHSP06",
+    "HHSP07": "HHSP07",
+    "HHSP08": "HHSP08",
+    "HHSP09": "HHSP09",
+    "HHSP10": "HHSP10",
+    "HHSP11": "HHSP11",
+    "HHSP12": "HHSP12",
+    "HHSP13": "HHSP13",
+    "HHSP14": "HHSP14",
+    "HHSP15": "HHSP15",
+    "HHSP16": "HHSP16",
+    "HHSP17": "HHSP17",
+    "HHSP18": "HHSP18",
+    "HHSP19": "HHSP19",
+    "HHSP20": "HHSP20",
+    "HHSP21": "HHSP21",
+    "HHSP22": "HHSP22",
+    "HHSP23": "HHSP23",
+    "HHSP24": "HHSP24",
+    "HHSP25": "HHSP25",
+    "HHSP26": "HHSP26",
+    "HHSP27": "HHSP27",
+    "HHSP28": "HHSP28",
+    "HHSP29": "HHSP29",
+    "HHSP30": "HHSP30",
+    "HHSP31": "HHSP31",
+    "HHSP32": "HHSP32",
+    "HHSP33": "HHSP33",
+    "HHSP34": "HHSP34",
+    "HHSP35": "HHSP35",
+    "HHSP36": "HHSP36",
+    "HHSP37": "HHSP37",
+    "HHSP38": "HHSP38",
+    "HHSP39": "HHSP39",
+    "HHSP40": "HHSP40",
+    "HHSP41": "HHSP41",
+    "HHSP42": "HHSP42",
+    "HHSP43": "HHSP43",
+    "HHSP44": "HHSP44",
+    "HHSP45": "HHSP45",
+    "HHSP46": "HHSP46",
+    "HHSP47": "HHSP47",
+    "HHSP48": "HHSP48",
+    "HHSP49": "HHSP49",
+    "HHSP50": "HHSP50",
+    "HHSP51": "HHSP51",
+    "HHSP52": "HHSP52",
+    "HHSP53": "HHSP53",
+    "HHSP54": "HHSP54",
+    "HHSP55": "HHSP55",
+    "HHSP56": "HHSP56",
+    "HHSP57": "HHSP57",
+    "HHSP58": "HHSP58",
+    "HHSP59": "HHSP59",
+    "HHSP60": "HHSP60",
+    "HHSP61": "HHSP61",
+    "HHSP62": "HHSP62",
+    "HHSP63": "HHSP63",
+    "HHSP64": "HHSP64",
+    "HHSP65": "HHSP65",
+    "HHSP66": "HHSP66",
+    "HHSP67": "HHSP67",
+    "HHSP68": "HHSP68",
+    "HHSP69": "HHSP69",
+    "HHSP70": "HHSP70",
+    "HHSP71": "HHSP71",
+    "HHSP72": "HHSP72",
+    "HHSP73": "HHSP73",
+    "HHSP74": "HHSP74",
+    "HHSP75": "HHSP75",
+    "HML02": "HML02",
+    "HML03": "HML03",
+    "HML04": "HML04",
+    "HML05": "HML05",
+    "HML06": "HML06",
+    "HML07": "HML07",
+    "HML08": "HML08",
+    "HML09": "HML09",
+    "HML10": "HML10",
+    "HML11": "HML11",
+    "HML12": "HML12",
+    "HML13": "HML13",
+    "HML14": "HML14",
+    "HML15": "HML15",
+    "HML16": "HML16",
+    "HML17": "HML17",
+    "HML18": "HML18",
+    "HML19": "HML19",
+    "HML20": "HML20",
+    "HML21": "HML21",
+    "HML22": "HML22",
+    "HML23": "HML23",
+    "HML24": "HML24",
+    "HML25": "HML25",
+    "HML26": "HML26",
+    "HML27": "HML27",
+    "HML28": "HML28",
+    "HML29": "HML29",
+    "HML30": "HML30",
+    "HML31": "HML31",
+    "HML32": "HML32",
+    "HML33": "HML33",
+    "HML34": "HML34",
+    "HML35": "HML35",
+    "HML36": "HML36",
+    "HML37": "HML37",
+    "HML38": "HML38",
+    "HML39": "HML39",
+    "HML40": "HML40",
+    "HML41": "HML41",
+    "HML42": "HML42",
+    "HML43": "HML43",
+    "HML44": "HML44",
+    "HML45": "HML45",
+    "HML46": "HML46",
+    "HML47": "HML47",
+    "HML48": "HML48",
+    "HML49": "HML49",
+    "HML50": "HML50",
+    "HML51": "HML51",
+    "HML52": "HML52",
+    "HML53": "HML53",
+    "HML54": "HML54",
+    "HML55": "HML55",
+    "HML56": "HML56",
+    "HML57": "HML57",
+    "HML58": "HML58",
+    "HML59": "HML59",
+    "HML60": "HML60",
+    "HML61": "HML61",
+    "HML62": "HML62",
+    "HML63": "HML63",
+    "HML64": "HML64",
+    "HML65": "HML65",
+    "HML66": "HML66",
+    "HML67": "HML67",
+    "HML68": "HML68",
+    "HML69": "HML69",
+    "HML70": "HML70",
+    "HML71": "HML71",
+    "HML72": "HML72",
+    "HML73": "HML73",
+    "HML74": "HML74",
+    "HML75": "HML75",
+    "HMS01": "HMS01",
+    "HMS02": "HMS02",
+    "HMS03": "HMS03",
+    "HMS04": "HMS04",
+    "HMS05": "HMS05",
+    "HMS06": "HMS06",
+    "HMS07": "HMS07",
+    "HMS08": "HMS08",
+    "HMS09": "HMS09",
+    "HMS10": "HMS10",
+    "HMS11": "HMS11",
+    "HMS12": "HMS12",
+    "HMS13": "HMS13",
+    "HMS14": "HMS14",
+    "HMS15": "HMS15",
+    "HMS16": "HMS16",
+    "HMS17": "HMS17",
+    "HMS18": "HMS18",
+    "HMS19": "HMS19",
+    "HMS20": "HMS20",
+    "HMS21": "HMS21"
+  },
+  "controls": [
+    {
+      "control_id": "HSUP01",
+      "title": "HSUP01",
+      "family": "HSUP01",
+      "description": "The organisation has a clear information security policy, acceptable use policy, topic-specific policies and procedures to maintain information security."
+    },
+    {
+      "control_id": "HSUP02",
+      "title": "HSUP02",
+      "family": "HSUP02",
+      "description": "Security roles and responsibilities of personnel are included within job descriptions."
+    },
+    {
+      "control_id": "HSUP03",
+      "title": "HSUP03",
+      "family": "HSUP03",
+      "description": "A breach of information by personnel is considered a security policy violation. Consequences of a security policy violation leads to a disciplinary process."
+    },
+    {
+      "control_id": "HSUP04",
+      "title": "HSUP04",
+      "family": "HSUP04",
+      "description": "There are documented procedures for providing and revoking logical, and physical access when personnel join, have a role change or leave the organisation."
+    },
+    {
+      "control_id": "HSUP05",
+      "title": "HSUP05",
+      "family": "HSUP05",
+      "description": "Asset management process(es) are in place."
+    },
+    {
+      "control_id": "HSUP06",
+      "title": "HSUP06",
+      "family": "HSUP06",
+      "description": "Processes are in place for media equipment management, decommissioning and secure disposal."
+    },
+    {
+      "control_id": "HSUP07",
+      "title": "HSUP07",
+      "family": "HSUP07",
+      "description": "An information security incident management process is in place."
+    },
+    {
+      "control_id": "HSUP08",
+      "title": "HSUP08",
+      "family": "HSUP08",
+      "description": "Organisations have a documented, approved, business continuity and disaster recovery management, operational resilience policies and procedures in place."
+    },
+    {
+      "control_id": "HSUP09",
+      "title": "HSUP09",
+      "family": "HSUP09",
+      "description": "Establish, document, approve, and implement rules to control physical and logical access to information and its assets."
+    },
+    {
+      "control_id": "HSUP10",
+      "title": "HSUP10",
+      "family": "HSUP10",
+      "description": "The organisation's Board or information security steering committee is accountable for information security governance."
+    },
+    {
+      "control_id": "HSUP11",
+      "title": "HSUP11",
+      "family": "HSUP11",
+      "description": "A documented policy and supporting procedures for maintaining physical security within the organisation is in place."
+    },
+    {
+      "control_id": "HSUP12",
+      "title": "HSUP12",
+      "family": "HSUP12",
+      "description": "A documented and approved procedure to remove papers and removable storage from easily accessible areas is to be implemented."
+    },
+    {
+      "control_id": "HSUP13",
+      "title": "HSUP13",
+      "family": "HSUP13",
+      "description": "Organisations have planned maintenance of information and services that are being provided to their customers via cloud services as per documented policies and agreements."
+    },
+    {
+      "control_id": "HSUP14",
+      "title": "HSUP14",
+      "family": "HSUP14",
+      "description": "Information systems are securely designed, and appropriate controls are implemented."
+    },
+    {
+      "control_id": "HSUP15",
+      "title": "HSUP15",
+      "family": "HSUP15",
+      "description": "A backup and recovery procedure is in place."
+    },
+    {
+      "control_id": "HSUP16",
+      "title": "HSUP16",
+      "family": "HSUP16",
+      "description": "A documented process is in place for performing changes to new and existing systems or services."
+    },
+    {
+      "control_id": "HSUP17",
+      "title": "HSUP17",
+      "family": "HSUP17",
+      "description": "There is a documented and approved process for identifying vulnerabilities and updating patches on the organisation's systems, applications, tools, services etc."
+    },
+    {
+      "control_id": "HSUP18",
+      "title": "HSUP18",
+      "family": "HSUP18",
+      "description": "Organisations, at a minimum, screen all personnel by verifying their identity, previous employment, applicable professional qualifications and criminal backgrounds before confirmation of employment."
+    },
+    {
+      "control_id": "HSUP19",
+      "title": "HSUP19",
+      "family": "HSUP19",
+      "description": "Organisations are to ensure:  a)  information security responsibilities are clearly defined and assigned b)  a governance body or steering committee overseeing information security activities is in place c)  there is at least one individual responsible for maintaining information security within the organisation."
+    },
+    {
+      "control_id": "HSUP20",
+      "title": "HSUP20",
+      "family": "HSUP20",
+      "description": "There has been an assessment of information security training needs and a training plan is put in place."
+    },
+    {
+      "control_id": "HSUP21",
+      "title": "HSUP21",
+      "family": "HSUP21",
+      "description": "Organisations are to have roles and responsibilities determined to carry out the incident management process."
+    },
+    {
+      "control_id": "HSUP22",
+      "title": "HSUP22",
+      "family": "HSUP22",
+      "description": "Establish criteria for developing business continuity, disaster recovery, operational resilience strategies, and capabilities based on disruption and impact to the organisation."
+    },
+    {
+      "control_id": "HSUP23",
+      "title": "HSUP23",
+      "family": "HSUP23",
+      "description": "Roles and responsibilities are defined and documented for planning, implementing, operating, assessing, and reporting on the organisation's information security requirements."
+    },
+    {
+      "control_id": "HSUP24",
+      "title": "HSUP24",
+      "family": "HSUP24",
+      "description": "Organisations are to integrate information security into project management."
+    },
+    {
+      "control_id": "HSUP25",
+      "title": "HSUP25",
+      "family": "HSUP25",
+      "description": "Relevant legal, regulatory, and contractual requirements are identified and implemented."
+    },
+    {
+      "control_id": "HSUP26",
+      "title": "HSUP26",
+      "family": "HSUP26",
+      "description": "A risk assessment methodology and cloud assurance activities that support the use of cloud technologies are in place."
+    },
+    {
+      "control_id": "HSUP27",
+      "title": "HSUP27",
+      "family": "HSUP27",
+      "description": "Business, customer, and security requirements are identified, documented, and approved when developing or acquiring applications."
+    },
+    {
+      "control_id": "HSUP28",
+      "title": "HSUP28",
+      "family": "HSUP28",
+      "description": "Risk assessments are performed on new, existing systems, and applications to understand the risks posed to the organisation while using them."
+    },
+    {
+      "control_id": "HSUP29",
+      "title": "HSUP29",
+      "family": "HSUP29",
+      "description": "The proposed changes are to be analysed for potential security threats and their impact on the organisation and their customers."
+    },
+    {
+      "control_id": "HSUP30",
+      "title": "HSUP30",
+      "family": "HSUP30",
+      "description": "The organisation's information and associated assets are appropriately protected, used, and handled based on their importance."
+    },
+    {
+      "control_id": "HSUP31",
+      "title": "HSUP31",
+      "family": "HSUP31",
+      "description": "In the event of a disruption or failure, critical information or services are identified, and measures are taken for the continuity of services."
+    },
+    {
+      "control_id": "HSUP32",
+      "title": "HSUP32",
+      "family": "HSUP32",
+      "description": "Rules for effective use of cryptography, including encryption, and key management are defined and implemented."
+    },
+    {
+      "control_id": "HSUP33",
+      "title": "HSUP33",
+      "family": "HSUP33",
+      "description": "The complete lifecycle of the account(s) being used to access, process, or manage information and services is managed."
+    },
+    {
+      "control_id": "HSUP34",
+      "title": "HSUP34",
+      "family": "HSUP34",
+      "description": "User accounts are authenticated and circumventing the authentication process is prevented."
+    },
+    {
+      "control_id": "HSUP35",
+      "title": "HSUP35",
+      "family": "HSUP35",
+      "description": "Access to information and its associated assets is defined and authorised according to the business, customer and security requirements by adhering to the organisation's identity and access management policy or procedures."
+    },
+    {
+      "control_id": "HSUP36",
+      "title": "HSUP36",
+      "family": "HSUP36",
+      "description": "Organisations are to ensure that only authorised users, software components and services are provided with privileged access rights."
+    },
+    {
+      "control_id": "HSUP37",
+      "title": "HSUP37",
+      "family": "HSUP37",
+      "description": "Access to source code, development tools, and software libraries are restricted, appropriately managed, and maintained."
+    },
+    {
+      "control_id": "HSUP38",
+      "title": "HSUP38",
+      "family": "HSUP38",
+      "description": "Metrics affecting the organisation's cyber security posture are regularly reported to the Board, and any decisions made are clearly documented."
+    },
+    {
+      "control_id": "HSUP39",
+      "title": "HSUP39",
+      "family": "HSUP39",
+      "description": "Update, protect and maintain the devices installed as physical security safeguards including the utilities."
+    },
+    {
+      "control_id": "HSUP40",
+      "title": "HSUP40",
+      "family": "HSUP40",
+      "description": "Secure areas of the organisation are protected from unauthorised personnel."
+    },
+    {
+      "control_id": "HSUP41",
+      "title": "HSUP41",
+      "family": "HSUP41",
+      "description": "Secure mechanisms are available and supported by a documented policy or guidelines to connect to the organisation's or customer's network."
+    },
+    {
+      "control_id": "HSUP42",
+      "title": "HSUP42",
+      "family": "HSUP42",
+      "description": "Security controls are implemented if the organisation is developing the web applications to protect them and their customers from potential cyber-attacks."
+    },
+    {
+      "control_id": "HSUP43",
+      "title": "HSUP43",
+      "family": "HSUP43",
+      "description": "The organisation's architectural strategy supports the adoption of cloud technologies."
+    },
+    {
+      "control_id": "HSUP44",
+      "title": "HSUP44",
+      "family": "HSUP44",
+      "description": "Organisations are to make use of developed and configured APIs for secure transfer of information between different cloud components."
+    },
+    {
+      "control_id": "HSUP45",
+      "title": "HSUP45",
+      "family": "HSUP45",
+      "description": "Organisations are to ensure that appropriate controls are implemented to protect information in a multi-tenant cloud environment."
+    },
+    {
+      "control_id": "HSUP46",
+      "title": "HSUP46",
+      "family": "HSUP46",
+      "description": "Networks and network devices that are used within the organisation are to be securely managed."
+    },
+    {
+      "control_id": "HSUP47",
+      "title": "HSUP47",
+      "family": "HSUP47",
+      "description": "The systems and applications that are used to process, store, or transmit information are connected to a separate, dedicated network."
+    },
+    {
+      "control_id": "HSUP48",
+      "title": "HSUP48",
+      "family": "HSUP48",
+      "description": "Backup copies of information, software, services provided, and relevant systems are protected and maintained in accordance with the backup and recovery procedures."
+    },
+    {
+      "control_id": "HSUP49",
+      "title": "HSUP49",
+      "family": "HSUP49",
+      "description": "Backups are tested for their restoration in accordance with the documented backup and recovery procedures. Organisations are able to access restored backups as well."
+    },
+    {
+      "control_id": "HSUP50",
+      "title": "HSUP50",
+      "family": "HSUP50",
+      "description": "Organisations developing inhouse systems, applications, or services are to maintain separate production and non-production environments."
+    },
+    {
+      "control_id": "HSUP51",
+      "title": "HSUP51",
+      "family": "HSUP51",
+      "description": "Identified vulnerabilities or unpatched systems, services or applications are properly identified, tracked, and remediated."
+    },
+    {
+      "control_id": "HSUP52",
+      "title": "HSUP52",
+      "family": "HSUP52",
+      "description": "Organisations have a standardised baseline configuration in place for new and existing systems, services, and applications."
+    },
+    {
+      "control_id": "HSUP53",
+      "title": "HSUP53",
+      "family": "HSUP53",
+      "description": "The capacity requirements for maintenance of information processing facilities, communication, and environmental support during contingency operations are met."
+    },
+    {
+      "control_id": "HSUP54",
+      "title": "HSUP54",
+      "family": "HSUP54",
+      "description": "Information, services, and applications on organisation systems and associated assets are protected against malware."
+    },
+    {
+      "control_id": "HSUP55",
+      "title": "HSUP55",
+      "family": "HSUP55",
+      "description": "Organisations are to detect and prevent data leakage through the unauthorised disclosure and siphoning of information by individuals, systems, or services."
+    },
+    {
+      "control_id": "HSUP56",
+      "title": "HSUP56",
+      "family": "HSUP56",
+      "description": "The lessons learned from business continuity and disaster recovery testing are reflected in the established and implemented information security controls."
+    },
+    {
+      "control_id": "HSUP57",
+      "title": "HSUP57",
+      "family": "HSUP57",
+      "description": "Installed physical and environmental security mechanisms are monitored for potential security incidents."
+    },
+    {
+      "control_id": "HSUP58",
+      "title": "HSUP58",
+      "family": "HSUP58",
+      "description": "Regular reviews are performed to confirm that the legal, regulatory, statutory, and contractual requirements are met."
+    },
+    {
+      "control_id": "HSUP59",
+      "title": "HSUP59",
+      "family": "HSUP59",
+      "description": "Independent security reviews are defined and implemented before any new or major upgrades on systems are moved to the production environment."
+    },
+    {
+      "control_id": "HSUP60",
+      "title": "HSUP60",
+      "family": "HSUP60",
+      "description": "Authorised personnel or teams are alerted upon unsuccessful backups."
+    },
+    {
+      "control_id": "HSUP61",
+      "title": "HSUP61",
+      "family": "HSUP61",
+      "description": "The activities performed on the information processing systems, services, and applications are logged and stored as per the organisation's (and the customer's) logging and auditing requirements."
+    },
+    {
+      "control_id": "HSUP62",
+      "title": "HSUP62",
+      "family": "HSUP62",
+      "description": "The information processing systems, applications, devices, and services are synchronised to an approved time source."
+    },
+    {
+      "control_id": "HSUP63",
+      "title": "HSUP63",
+      "family": "HSUP63",
+      "description": "Breach of employment and supplier agreements are enforced."
+    },
+    {
+      "control_id": "HSUP64",
+      "title": "HSUP64",
+      "family": "HSUP64",
+      "description": "Misuse of the organisation's assets is investigated, and documented procedures are followed as stated in the acceptable use policy, contractor agreements, or service agreements."
+    },
+    {
+      "control_id": "HML01",
+      "title": "HML01",
+      "family": "HML01",
+      "description": "A clear information security policy, acceptable use policy, topic-specific policies and procedures are in place to maintain information security."
+    },
+    {
+      "control_id": "HSUP65",
+      "title": "HSUP65",
+      "family": "HSUP65",
+      "description": "Organisations report all security incidents and near misses to their senior management or to the Board by a nominated Information Security Officer. All customer-related incidents are to be notified to the customer as per agreed timelines."
+    },
+    {
+      "control_id": "HSUP66",
+      "title": "HSUP66",
+      "family": "HSUP66",
+      "description": "Evidence gathered as part of the incident management process is appropriately protected."
+    },
+    {
+      "control_id": "HSUP67",
+      "title": "HSUP67",
+      "family": "HSUP67",
+      "description": "Suppliers are to be systematically evaluated, and their information security activities are reviewed before and after onboarding of their systems and services."
+    },
+    {
+      "control_id": "HSUP68",
+      "title": "HSUP68",
+      "family": "HSUP68",
+      "description": "The organisation's information security requirements are to be included in the agreements with the suppliers."
+    },
+    {
+      "control_id": "HHSP01",
+      "title": "HHSP01",
+      "family": "HHSP01",
+      "description": "A clear information security policy, acceptable use policy and topic-specific policies and procedures are in place."
+    },
+    {
+      "control_id": "HHSP02",
+      "title": "HHSP02",
+      "family": "HHSP02",
+      "description": "Hospitals processing and storing health information include the security roles and responsibilities of personnel within job descriptions."
+    },
+    {
+      "control_id": "HHSP03",
+      "title": "HHSP03",
+      "family": "HHSP03",
+      "description": "A breach of information security, including health information by personnel, is considered a security policy violation. Consequences of a security policy violation leads to a disciplinary process."
+    },
+    {
+      "control_id": "HHSP04",
+      "title": "HHSP04",
+      "family": "HHSP04",
+      "description": "Procedures for providing and revoking logical and physical access when personnel join, have a role change, or leave the hospital are in place."
+    },
+    {
+      "control_id": "HHSP05",
+      "title": "HHSP05",
+      "family": "HHSP05",
+      "description": "Asset management process(es) is in place."
+    },
+    {
+      "control_id": "HHSP06",
+      "title": "HHSP06",
+      "family": "HHSP06",
+      "description": "Processes are in place for media equipment management, decommissioning and secure disposal."
+    },
+    {
+      "control_id": "HHSP07",
+      "title": "HHSP07",
+      "family": "HHSP07",
+      "description": "A health information security incident management process is in place."
+    },
+    {
+      "control_id": "HHSP08",
+      "title": "HHSP08",
+      "family": "HHSP08",
+      "description": "Documented, approved, business continuity and disaster recovery management, operational resilience policies and procedures are established."
+    },
+    {
+      "control_id": "HHSP09",
+      "title": "HHSP09",
+      "family": "HHSP09",
+      "description": "The information security requirements for managing the risks while a supplier is accessing health information are identified and communicated."
+    },
+    {
+      "control_id": "HHSP10",
+      "title": "HHSP10",
+      "family": "HHSP10",
+      "description": "Establish, document, approve, and implement rules to control physical and logical access to health information and its assets."
+    },
+    {
+      "control_id": "HHSP11",
+      "title": "HHSP11",
+      "family": "HHSP11",
+      "description": "Hospitals are to include cyber security in procurement planning and decisions."
+    },
+    {
+      "control_id": "HHSP12",
+      "title": "HHSP12",
+      "family": "HHSP12",
+      "description": "The Board is accountable for hospitals information security governance."
+    },
+    {
+      "control_id": "HHSP13",
+      "title": "HHSP13",
+      "family": "HHSP13",
+      "description": "A documented policy and supporting procedures for maintaining physical security within the hospital is in place."
+    },
+    {
+      "control_id": "HHSP14",
+      "title": "HHSP14",
+      "family": "HHSP14",
+      "description": "A documented and approved procedure to remove papers and removable storage from easily accessible areas is implemented."
+    },
+    {
+      "control_id": "HHSP15",
+      "title": "HHSP15",
+      "family": "HHSP15",
+      "description": "Hospitals have planned maintenance of health information via cloud services as documented in policies and agreements."
+    },
+    {
+      "control_id": "HHSP16",
+      "title": "HHSP16",
+      "family": "HHSP16",
+      "description": "Health information systems are securely designed, and appropriate controls are implemented."
+    },
+    {
+      "control_id": "HHSP17",
+      "title": "HHSP17",
+      "family": "HHSP17",
+      "description": "A backup and recovery procedure is in place."
+    },
+    {
+      "control_id": "HHSP18",
+      "title": "HHSP18",
+      "family": "HHSP18",
+      "description": "A documented process is in place for performing changes to new and existing systems or services related to health information."
+    },
+    {
+      "control_id": "HHSP19",
+      "title": "HHSP19",
+      "family": "HHSP19",
+      "description": "A documented process is in place for identifying vulnerabilities and updating patches on the hospitals systems, services and applications."
+    },
+    {
+      "control_id": "HHSP20",
+      "title": "HHSP20",
+      "family": "HHSP20",
+      "description": "Hospitals, at a minimum, screen all personnel by verifying their identity, previous employment, applicable health professional qualifications and criminal backgrounds before confirmation of employment."
+    },
+    {
+      "control_id": "HHSP21",
+      "title": "HHSP21",
+      "family": "HHSP21",
+      "description": "Hospitals processing health information are to ensure: a: information security responsibilities are clearly defined and assigned b: a governance body overseeing health information security activities is in place c: at least one individual is responsible for health information security."
+    },
+    {
+      "control_id": "HHSP22",
+      "title": "HHSP22",
+      "family": "HHSP22",
+      "description": "There has been an assessment of information security training needs and a training plan is put in place."
+    },
+    {
+      "control_id": "HHSP23",
+      "title": "HHSP23",
+      "family": "HHSP23",
+      "description": "Hospitals processing and storing health information have roles and responsibilities determined for carrying out the incident management process."
+    },
+    {
+      "control_id": "HHSP24",
+      "title": "HHSP24",
+      "family": "HHSP24",
+      "description": "Establish criteria for developing business continuity, disaster recovery, operational resilience strategies, and capabilities based on disruption impacts and risk to hospitals."
+    },
+    {
+      "control_id": "HHSP25",
+      "title": "HHSP25",
+      "family": "HHSP25",
+      "description": "Suppliers are systematically evaluated, and their information security activities are reviewed before and after onboarding of their systems and services."
+    },
+    {
+      "control_id": "HHSP26",
+      "title": "HHSP26",
+      "family": "HHSP26",
+      "description": "Vulnerability scanning on medical devices is only performed when they are in a test environment not connected for patient care."
+    },
+    {
+      "control_id": "HHSP27",
+      "title": "HHSP27",
+      "family": "HHSP27",
+      "description": "Roles and responsibilities are defined and documented for planning, implementing, operating, assessing, and reporting on the hospitals information security requirements."
+    },
+    {
+      "control_id": "HHSP28",
+      "title": "HHSP28",
+      "family": "HHSP28",
+      "description": "Hospitals are to integrate information security into project management."
+    },
+    {
+      "control_id": "HHSP29",
+      "title": "HHSP29",
+      "family": "HHSP29",
+      "description": "Relevant legal, regulatory and contractual requirements are identified and implemented."
+    },
+    {
+      "control_id": "HHSP30",
+      "title": "HHSP30",
+      "family": "HHSP30",
+      "description": "A risk assessment methodology and cloud assurance activities that support the use of cloud technologies are in place."
+    },
+    {
+      "control_id": "HHSP31",
+      "title": "HHSP31",
+      "family": "HHSP31",
+      "description": "Health information business security requirements are identified, documented and approved when developing or acquiring applications."
+    },
+    {
+      "control_id": "HHSP32",
+      "title": "HHSP32",
+      "family": "HHSP32",
+      "description": "Risk assessments are performed on new and existing systems and applications that manage health information to understand and manage the risks posed to the hospital while using them."
+    },
+    {
+      "control_id": "HHSP33",
+      "title": "HHSP33",
+      "family": "HHSP33",
+      "description": "The proposed changes are to be analysed for potential security threats and their impact to the hospital."
+    },
+    {
+      "control_id": "HHSP34",
+      "title": "HHSP34",
+      "family": "HHSP34",
+      "description": "Health information and associated assets are appropriately protected, used, and handled based on their importance."
+    },
+    {
+      "control_id": "HHSP35",
+      "title": "HHSP35",
+      "family": "HHSP35",
+      "description": "In the event of a disruption or failure, critical health information and/or services are identified, and measures are taken for the continuity of services."
+    },
+    {
+      "control_id": "HHSP36",
+      "title": "HHSP36",
+      "family": "HHSP36",
+      "description": "The hospitals information security requirements are to be included in the agreements with the suppliers."
+    },
+    {
+      "control_id": "HHSP37",
+      "title": "HHSP37",
+      "family": "HHSP37",
+      "description": "Rules for effective use of cryptography including encryption and key management are defined and implemented."
+    },
+    {
+      "control_id": "HHSP38",
+      "title": "HHSP38",
+      "family": "HHSP38",
+      "description": "The complete lifecycle of user account(s) being used to access, process, or manage health information is managed."
+    },
+    {
+      "control_id": "HHSP39",
+      "title": "HHSP39",
+      "family": "HHSP39",
+      "description": "User accounts are authenticated and circumventing the authentication process is prevented."
+    },
+    {
+      "control_id": "HHSP40",
+      "title": "HHSP40",
+      "family": "HHSP40",
+      "description": "Access to health information and its associated assets is defined and authorised according to the business and security requirements and adhere to the hospitals identity and access management policy or procedures."
+    },
+    {
+      "control_id": "HHSP41",
+      "title": "HHSP41",
+      "family": "HHSP41",
+      "description": "Hospitals are to ensure that only authorised users, software components and services are provided with privileged access rights."
+    },
+    {
+      "control_id": "HHSP42",
+      "title": "HHSP42",
+      "family": "HHSP42",
+      "description": "Access to source code, development tools, and software libraries are restricted, appropriately managed, and maintained."
+    },
+    {
+      "control_id": "HHSP43",
+      "title": "HHSP43",
+      "family": "HHSP43",
+      "description": "Where possible, production and legacy medical devices are on a separate network."
+    },
+    {
+      "control_id": "HHSP44",
+      "title": "HHSP44",
+      "family": "HHSP44",
+      "description": "All medical devices are maintained as per the latest updates from the manufacturers and current industry/regulatory standards."
+    },
+    {
+      "control_id": "HHSP45",
+      "title": "HHSP45",
+      "family": "HHSP45",
+      "description": "Medical devices with patient health information are digitally sanitised before their disposal or when they are being returned."
+    },
+    {
+      "control_id": "HHSP46",
+      "title": "HHSP46",
+      "family": "HHSP46",
+      "description": "Metrics affecting the hospitals cyber security posture are regularly reported to the Board, and any decisions made are clearly documented."
+    },
+    {
+      "control_id": "HHSP47",
+      "title": "HHSP47",
+      "family": "HHSP47",
+      "description": "Update, protect and maintain the devices installed as physical security safeguards including the utilities."
+    },
+    {
+      "control_id": "HHSP48",
+      "title": "HHSP48",
+      "family": "HHSP48",
+      "description": "Secure areas of the hospital are protected from unauthorised personnel."
+    },
+    {
+      "control_id": "HHSP49",
+      "title": "HHSP49",
+      "family": "HHSP49",
+      "description": "Secure mechanisms are available and supported by a documented policy or guidelines to connect to the hospital network and access health information."
+    },
+    {
+      "control_id": "HHSP50",
+      "title": "HHSP50",
+      "family": "HHSP50",
+      "description": "Security controls are implemented while developing the web applications to protect hospitals from potential cyber-attacks."
+    },
+    {
+      "control_id": "HHSP51",
+      "title": "HHSP51",
+      "family": "HHSP51",
+      "description": "The hospital's architectural strategy supports the adoption of cloud technologies."
+    },
+    {
+      "control_id": "HHSP52",
+      "title": "HHSP52",
+      "family": "HHSP52",
+      "description": "Hospitals are to make use of developed and configured APIs for secure transfer of health information between different cloud components."
+    },
+    {
+      "control_id": "HHSP53",
+      "title": "HHSP53",
+      "family": "HHSP53",
+      "description": "Hospitals are to ensure that appropriate controls are implemented to protect health information in a multi-tenant cloud environment."
+    },
+    {
+      "control_id": "HHSP54",
+      "title": "HHSP54",
+      "family": "HHSP54",
+      "description": "Networks and network devices used within hospitals or supporting hospitals systems and applications are securely managed."
+    },
+    {
+      "control_id": "HHSP55",
+      "title": "HHSP55",
+      "family": "HHSP55",
+      "description": "The systems and applications used to process, store or transmit health information are connected to a separate, dedicated network."
+    },
+    {
+      "control_id": "HHSP56",
+      "title": "HHSP56",
+      "family": "HHSP56",
+      "description": "Backup copies of health information, software and systems are protected and maintained in accordance with the backup and recovery procedures."
+    },
+    {
+      "control_id": "HHSP57",
+      "title": "HHSP57",
+      "family": "HHSP57",
+      "description": "Health information backups are tested for their restoration in accordance with the documented backup and recovery procedures. Hospitals are able to access restored backups as well."
+    },
+    {
+      "control_id": "HHSP58",
+      "title": "HHSP58",
+      "family": "HHSP58",
+      "description": "Hospitals developing inhouse systems and applications are to maintain separate production and non-production environments."
+    },
+    {
+      "control_id": "HHSP59",
+      "title": "HHSP59",
+      "family": "HHSP59",
+      "description": "Identified vulnerabilities or unpatched systems, services or applications within the hospital are properly identified, tracked and remediated."
+    },
+    {
+      "control_id": "HHSP60",
+      "title": "HHSP60",
+      "family": "HHSP60",
+      "description": "Hospitals have a standardised baseline configuration in place for new and existing operating systems, services and applications."
+    },
+    {
+      "control_id": "HHSP61",
+      "title": "HHSP61",
+      "family": "HHSP61",
+      "description": "The capacity requirements for maintenance of information processing facilities, communication and environmental support during contingency operations are met."
+    },
+    {
+      "control_id": "HHSP62",
+      "title": "HHSP62",
+      "family": "HHSP62",
+      "description": "Health information on hospital systems and associated assets are protected against malware."
+    },
+    {
+      "control_id": "HHSP63",
+      "title": "HHSP63",
+      "family": "HHSP63",
+      "description": "Hospitals detect and prevent data leakage through the unauthorised disclosure and siphoning of information by individuals, systems or services."
+    },
+    {
+      "control_id": "HHSP64",
+      "title": "HHSP64",
+      "family": "HHSP64",
+      "description": "The lessons learned from business continuity and disaster recovery testing are reflected in the established and implemented information security controls."
+    },
+    {
+      "control_id": "HHSP65",
+      "title": "HHSP65",
+      "family": "HHSP65",
+      "description": "Medical devices are compliant with relevant standards, and the identified risks are documented within the medical device risk register."
+    },
+    {
+      "control_id": "HHSP66",
+      "title": "HHSP66",
+      "family": "HHSP66",
+      "description": "Installed physical and environmental security mechanisms are monitored for potential security incidents."
+    },
+    {
+      "control_id": "HHSP67",
+      "title": "HHSP67",
+      "family": "HHSP67",
+      "description": "Regular reviews are performed to confirm that the legal, regulatory, statutory, and contractual requirements are met."
+    },
+    {
+      "control_id": "HHSP68",
+      "title": "HHSP68",
+      "family": "HHSP68",
+      "description": "Independent security reviews are defined and implemented before any new or major upgrades on systems are moved to the production environment."
+    },
+    {
+      "control_id": "HHSP69",
+      "title": "HHSP69",
+      "family": "HHSP69",
+      "description": "Authorised personnel or teams are alerted upon unsuccessful or incomplete backups."
+    },
+    {
+      "control_id": "HHSP70",
+      "title": "HHSP70",
+      "family": "HHSP70",
+      "description": "The activities performed on the health information processing systems, services and applications are logged and stored as per the hospitals logging and auditing requirements."
+    },
+    {
+      "control_id": "HHSP71",
+      "title": "HHSP71",
+      "family": "HHSP71",
+      "description": "The health information processing systems, services and applications are synchronised to an approved time source."
+    },
+    {
+      "control_id": "HHSP72",
+      "title": "HHSP72",
+      "family": "HHSP72",
+      "description": "Breach of employment agreements and supplier agreements are enforced."
+    },
+    {
+      "control_id": "HHSP73",
+      "title": "HHSP73",
+      "family": "HHSP73",
+      "description": "Misuse of the hospitals assets is investigated, and documented procedures are followed as stated in the acceptable use policy, contractor agreements or service agreements."
+    },
+    {
+      "control_id": "HHSP74",
+      "title": "HHSP74",
+      "family": "HHSP74",
+      "description": "Evidence gathered as part of the health incident management process is appropriately protected."
+    },
+    {
+      "control_id": "HHSP75",
+      "title": "HHSP75",
+      "family": "HHSP75",
+      "description": "Hospitals report all security incidents and near misses to the hospital's senior management or to the Board by a nominated Information Security Officer."
+    },
+    {
+      "control_id": "HML02",
+      "title": "HML02",
+      "family": "HML02",
+      "description": "Security roles and responsibilities of personnel are included within job descriptions."
+    },
+    {
+      "control_id": "HML03",
+      "title": "HML03",
+      "family": "HML03",
+      "description": "A breach of information security, including information by personnel, is considered a security policy violation. Consequences of a security policy violation leads to a disciplinary process."
+    },
+    {
+      "control_id": "HML04",
+      "title": "HML04",
+      "family": "HML04",
+      "description": "Procedures for providing and revoking logical and physical access when personnel join, have a role change or leave the organisation are in place."
+    },
+    {
+      "control_id": "HML05",
+      "title": "HML05",
+      "family": "HML05",
+      "description": "Asset management process(es) is in place."
+    },
+    {
+      "control_id": "HML06",
+      "title": "HML06",
+      "family": "HML06",
+      "description": "Processes are in place for media equipment management, decommissioning and secure disposal."
+    },
+    {
+      "control_id": "HML07",
+      "title": "HML07",
+      "family": "HML07",
+      "description": "An information security incident management process is in place."
+    },
+    {
+      "control_id": "HML08",
+      "title": "HML08",
+      "family": "HML08",
+      "description": "Documented, approved, business continuity and disaster recovery management, operational resilience policies and procedures are established."
+    },
+    {
+      "control_id": "HML09",
+      "title": "HML09",
+      "family": "HML09",
+      "description": "The information security requirements for managing the risks while a supplier is accessing information are to be identified and communicated."
+    },
+    {
+      "control_id": "HML10",
+      "title": "HML10",
+      "family": "HML10",
+      "description": "Establish, document, approve, and implement rules to control physical and logical access to information and its assets."
+    },
+    {
+      "control_id": "HML11",
+      "title": "HML11",
+      "family": "HML11",
+      "description": "Organisations are to include cyber security in procurement planning and decisions."
+    },
+    {
+      "control_id": "HML12",
+      "title": "HML12",
+      "family": "HML12",
+      "description": "The organisation's Board or information security steering committee is accountable for organisations information security governance."
+    },
+    {
+      "control_id": "HML13",
+      "title": "HML13",
+      "family": "HML13",
+      "description": "A documented policy and supporting procedures for maintaining physical security within the organisation is in place."
+    },
+    {
+      "control_id": "HML14",
+      "title": "HML14",
+      "family": "HML14",
+      "description": "A documented and approved procedure to remove papers and removable storage from easily accessible areas is implemented."
+    },
+    {
+      "control_id": "HML15",
+      "title": "HML15",
+      "family": "HML15",
+      "description": "Organisations have planned maintenance of information via cloud services as per documented policies and agreements."
+    },
+    {
+      "control_id": "HML16",
+      "title": "HML16",
+      "family": "HML16",
+      "description": "Information systems are securely designed, and appropriate controls are implemented."
+    },
+    {
+      "control_id": "HML17",
+      "title": "HML17",
+      "family": "HML17",
+      "description": "A backup and recovery procedure is in place."
+    },
+    {
+      "control_id": "HML18",
+      "title": "HML18",
+      "family": "HML18",
+      "description": "A documented process is in place for performing changes to new and existing systems or services related to information."
+    },
+    {
+      "control_id": "HML19",
+      "title": "HML19",
+      "family": "HML19",
+      "description": "A documented process is in place for identifying vulnerabilities and updating patches on the organisations systems, applications, tools, services etc."
+    },
+    {
+      "control_id": "HML20",
+      "title": "HML20",
+      "family": "HML20",
+      "description": "Organisations, at a minimum, screen all personnel by verifying their identity, previous employment, applicable health professional qualifications and criminal backgrounds before confirmation of employment."
+    },
+    {
+      "control_id": "HML21",
+      "title": "HML21",
+      "family": "HML21",
+      "description": "Organisations are to ensure:  a)  information security responsibilities are clearly defined and assigned b)  a governance body or steering committee overseeing information security activities is in place c)  there is at least one individual responsible for maintaining information security within the organisation."
+    },
+    {
+      "control_id": "HML22",
+      "title": "HML22",
+      "family": "HML22",
+      "description": "There has been an assessment of information security training needs and a training plan is put in place."
+    },
+    {
+      "control_id": "HML23",
+      "title": "HML23",
+      "family": "HML23",
+      "description": "Organisations are to have roles and responsibilities determined to carry out the incident management process."
+    },
+    {
+      "control_id": "HML24",
+      "title": "HML24",
+      "family": "HML24",
+      "description": "Establish criteria for developing business continuity, disaster recovery, operational resilience strategies, and capabilities are to be determined based on disruption and impact to the organisation."
+    },
+    {
+      "control_id": "HML25",
+      "title": "HML25",
+      "family": "HML25",
+      "description": "Suppliers are to be systematically evaluated, and their information security activities are reviewed before and after onboarding of their systems and services."
+    },
+    {
+      "control_id": "HML26",
+      "title": "HML26",
+      "family": "HML26",
+      "description": "Vulnerability scanning on medical devices is only performed when they are in a test environment not connected for patient care."
+    },
+    {
+      "control_id": "HML27",
+      "title": "HML27",
+      "family": "HML27",
+      "description": "Roles and responsibilities are defined and documented for planning, implementing, operating, assessing, and reporting on the organisations information security requirements."
+    },
+    {
+      "control_id": "HML28",
+      "title": "HML28",
+      "family": "HML28",
+      "description": "Organisations are to integrate information security into project management."
+    },
+    {
+      "control_id": "HML29",
+      "title": "HML29",
+      "family": "HML29",
+      "description": "Relevant legal, regulatory and contractual requirements are identified and implemented."
+    },
+    {
+      "control_id": "HML30",
+      "title": "HML30",
+      "family": "HML30",
+      "description": "A risk assessment methodology and cloud assurance activities that support the use of cloud technologies are in place."
+    },
+    {
+      "control_id": "HML31",
+      "title": "HML31",
+      "family": "HML31",
+      "description": "Business and security requirements are identified, documented and approved when developing or acquiring applications."
+    },
+    {
+      "control_id": "HML32",
+      "title": "HML32",
+      "family": "HML32",
+      "description": "Risk assessments are performed on new and existing systems and applications that manage information to understand the risks posed to the organisation while using them."
+    },
+    {
+      "control_id": "HML33",
+      "title": "HML33",
+      "family": "HML33",
+      "description": "The proposed changes are to be analysed for potential security threats and their impact on the organisation."
+    },
+    {
+      "control_id": "HML34",
+      "title": "HML34",
+      "family": "HML34",
+      "description": "Information and associated assets are appropriately protected, used, and handled based on their importance."
+    },
+    {
+      "control_id": "HML35",
+      "title": "HML35",
+      "family": "HML35",
+      "description": "In the event of a disruption or failure, critical information or services are identified, and measures are taken for the continuity of services."
+    },
+    {
+      "control_id": "HML36",
+      "title": "HML36",
+      "family": "HML36",
+      "description": "The organisation's information security requirements are to be included in the agreements with the suppliers."
+    },
+    {
+      "control_id": "HML37",
+      "title": "HML37",
+      "family": "HML37",
+      "description": "Rules for effective use of cryptography including encryption and key management are defined and implemented."
+    },
+    {
+      "control_id": "HML38",
+      "title": "HML38",
+      "family": "HML38",
+      "description": "The complete lifecycle of the account(s) being used to access, process, or manage information and services is managed."
+    },
+    {
+      "control_id": "HML39",
+      "title": "HML39",
+      "family": "HML39",
+      "description": "User accounts are authenticated and circumventing the authentication process is prevented."
+    },
+    {
+      "control_id": "HML40",
+      "title": "HML40",
+      "family": "HML40",
+      "description": "Access to information and its associated assets is defined and authorised according to the business and security requirements and adhere to the organisation's identity and access management policy or procedures."
+    },
+    {
+      "control_id": "HML41",
+      "title": "HML41",
+      "family": "HML41",
+      "description": "Organisations are to ensure that only authorised users, software components and services are provided with privileged access rights."
+    },
+    {
+      "control_id": "HML42",
+      "title": "HML42",
+      "family": "HML42",
+      "description": "Access to source code, development tools, and software libraries are restricted, appropriately managed, and maintained."
+    },
+    {
+      "control_id": "HML43",
+      "title": "HML43",
+      "family": "HML43",
+      "description": "Where possible, production and legacy medical devices are on a separate network."
+    },
+    {
+      "control_id": "HML44",
+      "title": "HML44",
+      "family": "HML44",
+      "description": "All medical devices are maintained as per the latest updates from the manufacturers and current industry/regulatory standards."
+    },
+    {
+      "control_id": "HML45",
+      "title": "HML45",
+      "family": "HML45",
+      "description": "Medical devices with patient information are digitally sanitised before their disposal or when they are being returned."
+    },
+    {
+      "control_id": "HML46",
+      "title": "HML46",
+      "family": "HML46",
+      "description": "Metrics affecting the organisations cyber security posture are regularly reported to the Board, and any decisions made are clearly documented."
+    },
+    {
+      "control_id": "HML47",
+      "title": "HML47",
+      "family": "HML47",
+      "description": "Update, protect and maintain the devices installed as physical security safeguards including the utilities."
+    },
+    {
+      "control_id": "HML48",
+      "title": "HML48",
+      "family": "HML48",
+      "description": "Secure areas of the organisation are protected from unauthorised personnel."
+    },
+    {
+      "control_id": "HML49",
+      "title": "HML49",
+      "family": "HML49",
+      "description": "Secure mechanisms are available and supported by a documented policy or guidelines to connect to the organisations network."
+    },
+    {
+      "control_id": "HML50",
+      "title": "HML50",
+      "family": "HML50",
+      "description": "Security controls are implemented if the organisation is developing the web applications to protect them from potential cyber-attacks."
+    },
+    {
+      "control_id": "HML51",
+      "title": "HML51",
+      "family": "HML51",
+      "description": "The organisation's architectural strategy supports the adoption of cloud technologies."
+    },
+    {
+      "control_id": "HML52",
+      "title": "HML52",
+      "family": "HML52",
+      "description": "Organisations are to make use of developed and configured APIs for secure transfer of information between different cloud components."
+    },
+    {
+      "control_id": "HML53",
+      "title": "HML53",
+      "family": "HML53",
+      "description": "Organisations are to ensure that appropriate controls are implemented to protect information in a multi-tenant cloud environment."
+    },
+    {
+      "control_id": "HML54",
+      "title": "HML54",
+      "family": "HML54",
+      "description": "Networks and network devices supporting the organisations systems and applications are to be securely managed."
+    },
+    {
+      "control_id": "HML55",
+      "title": "HML55",
+      "family": "HML55",
+      "description": "The systems and applications that are used to process, store or transmit information are connected to a separate, dedicated network."
+    },
+    {
+      "control_id": "HML56",
+      "title": "HML56",
+      "family": "HML56",
+      "description": "Backup copies of information, software and relevant systems are protected and maintained in accordance with the backup and recovery procedures."
+    },
+    {
+      "control_id": "HML57",
+      "title": "HML57",
+      "family": "HML57",
+      "description": "Backups are tested for their restoration in accordance with the documented backup and recovery procedures. Organisations are able to access restored backups as well."
+    },
+    {
+      "control_id": "HML58",
+      "title": "HML58",
+      "family": "HML58",
+      "description": "Organisations developing inhouse systems, applications or services are to maintain separate production and non-production environments."
+    },
+    {
+      "control_id": "HML59",
+      "title": "HML59",
+      "family": "HML59",
+      "description": "Identified vulnerabilities or unpatched systems, services or applications within the organisation are properly identified, tracked and remediated."
+    },
+    {
+      "control_id": "HML60",
+      "title": "HML60",
+      "family": "HML60",
+      "description": "Organisations have a standardised baseline configuration in place for new and existing systems, services and applications."
+    },
+    {
+      "control_id": "HML61",
+      "title": "HML61",
+      "family": "HML61",
+      "description": "The capacity requirements for maintenance of information processing facilities, communication and environmental support during contingency operations are met."
+    },
+    {
+      "control_id": "HML62",
+      "title": "HML62",
+      "family": "HML62",
+      "description": "Information, services, and applications on organisation systems and associated assets are protected against malware."
+    },
+    {
+      "control_id": "HML63",
+      "title": "HML63",
+      "family": "HML63",
+      "description": "The lessons learned from business continuity and disaster recovery testing are reflected in the established and implemented information security controls."
+    },
+    {
+      "control_id": "HML64",
+      "title": "HML64",
+      "family": "HML64",
+      "description": "Medical devices are compliant with relevant standards, and the identified risks are documented within the medical device risk register."
+    },
+    {
+      "control_id": "HML65",
+      "title": "HML65",
+      "family": "HML65",
+      "description": "Installed physical and environmental security mechanisms are monitored for potential security incidents."
+    },
+    {
+      "control_id": "HML66",
+      "title": "HML66",
+      "family": "HML66",
+      "description": "Regular reviews are performed to confirm that the legal, regulatory, statutory, and contractual requirements are met."
+    },
+    {
+      "control_id": "HML67",
+      "title": "HML67",
+      "family": "HML67",
+      "description": "Independent security reviews are defined and implemented before any new or major upgrades on systems are moved to the production environment."
+    },
+    {
+      "control_id": "HML68",
+      "title": "HML68",
+      "family": "HML68",
+      "description": "Authorised personnel or teams are alerted upon unsuccessful or incomplete backups."
+    },
+    {
+      "control_id": "HML69",
+      "title": "HML69",
+      "family": "HML69",
+      "description": "Organisations are to detect and prevent data leakage through the unauthorised disclosure and siphoning of information by individuals, systems or services."
+    },
+    {
+      "control_id": "HML70",
+      "title": "HML70",
+      "family": "HML70",
+      "description": "The activities performed on the information processing systems, services and applications are logged and stored as per the organisations logging and auditing requirements."
+    },
+    {
+      "control_id": "HML71",
+      "title": "HML71",
+      "family": "HML71",
+      "description": "Information processing systems, applications, devices, and services are synchronised to an approved time source."
+    },
+    {
+      "control_id": "HML72",
+      "title": "HML72",
+      "family": "HML72",
+      "description": "Breach of employment and supplier agreements are enforced."
+    },
+    {
+      "control_id": "HML73",
+      "title": "HML73",
+      "family": "HML73",
+      "description": "Misuse of the organisations assets is investigated, and documented procedures are followed as stated in the acceptable use policy, contractor agreements or service agreements."
+    },
+    {
+      "control_id": "HML74",
+      "title": "HML74",
+      "family": "HML74",
+      "description": "Evidence gathered as part of the incident management process is appropriately protected."
+    },
+    {
+      "control_id": "HML75",
+      "title": "HML75",
+      "family": "HML75",
+      "description": "Organisations report all security incidents and near misses to the organisation's senior management or to the Board by a nominated Information Security Officer."
+    },
+    {
+      "control_id": "HMS01",
+      "title": "HMS01",
+      "family": "HMS01",
+      "description": "Information security roles and responsibilities are to be clearly defined."
+    },
+    {
+      "control_id": "HMS02",
+      "title": "HMS02",
+      "family": "HMS02",
+      "description": "A defined health information security policy is documented and approved by management."
+    },
+    {
+      "control_id": "HMS03",
+      "title": "HMS03",
+      "family": "HMS03",
+      "description": "An inventory of assets where health information is stored, including software, endpoint devices and relevant owners are identified and maintained."
+    },
+    {
+      "control_id": "HMS04",
+      "title": "HMS04",
+      "family": "HMS04",
+      "description": "All suppliers responsible for delivering health information related assets and services are to undergo periodic security assurance activities."
+    },
+    {
+      "control_id": "HMS05",
+      "title": "HMS05",
+      "family": "HMS05",
+      "description": "A security risk assessment is conducted periodically, and the identified risks are managed."
+    },
+    {
+      "control_id": "HMS06",
+      "title": "HMS06",
+      "family": "HMS06",
+      "description": "Requirements are identified, and contractual obligations are met before the information is shared with authorised parties."
+    },
+    {
+      "control_id": "HMS07",
+      "title": "HMS07",
+      "family": "HMS07",
+      "description": "Access to health information and endpoint devices is provided based on the legitimate business and health information security requirements and on the role of the individual."
+    },
+    {
+      "control_id": "HMS08",
+      "title": "HMS08",
+      "family": "HMS08",
+      "description": "Latest operating systems, hardware devices, relevant software and internet browsers are used and kept up-to-date and where applicable, licensed versions are to be used."
+    },
+    {
+      "control_id": "HMS09",
+      "title": "HMS09",
+      "family": "HMS09",
+      "description": "Permissions for all personnel is restricted so that external media, unauthorised or malicious software is not installed on devices that are used to store, process or transfer health information."
+    },
+    {
+      "control_id": "HMS10",
+      "title": "HMS10",
+      "family": "HMS10",
+      "description": "Up-to-date anti-virus, anti-malware/endpoint security software is installed on all computers and servers to protect health information and endpoint devices against malicious code or software."
+    },
+    {
+      "control_id": "HMS11",
+      "title": "HMS11",
+      "family": "HMS11",
+      "description": "All relevant health information is backed up securely (as outlined in your documented policy) in an encrypted format and restoration is tested periodically."
+    },
+    {
+      "control_id": "HMS12",
+      "title": "HMS12",
+      "family": "HMS12",
+      "description": "Only authorised devices that are managed and have security controls in place are to be used to process health information."
+    },
+    {
+      "control_id": "HMS13",
+      "title": "HMS13",
+      "family": "HMS13",
+      "description": "When personnel are working remotely, security measures are in place to protect health information which could be accessed, processed, or stored outside the organisations premises."
+    },
+    {
+      "control_id": "HMS14",
+      "title": "HMS14",
+      "family": "HMS14",
+      "description": "Licensed and secure software, tools or services are used to manage health information."
+    },
+    {
+      "control_id": "HMS15",
+      "title": "HMS15",
+      "family": "HMS15",
+      "description": "Network services used for transmitting and receiving health information and data are kept secure, to ensure minimal security impact upon clinical practice."
+    },
+    {
+      "control_id": "HMS16",
+      "title": "HMS16",
+      "family": "HMS16",
+      "description": "Devices processing or storing or transmitting health information are connected, where possible, to a separate network with heightened security away from other information and assets."
+    },
+    {
+      "control_id": "HMS17",
+      "title": "HMS17",
+      "family": "HMS17",
+      "description": "Web traffic is encrypted for public facing websites which contain health information, so that they are protected against Distributed Denial of Service (DDoS) attacks."
+    },
+    {
+      "control_id": "HMS18",
+      "title": "HMS18",
+      "family": "HMS18",
+      "description": "All health information user activities are recorded, stored for a period of time and protected for analysis in case of a security incident."
+    },
+    {
+      "control_id": "HMS19",
+      "title": "HMS19",
+      "family": "HMS19",
+      "description": "Unusual behaviour and potential information security incidents amongst endpoints and internal and external network traffic are detected."
+    },
+    {
+      "control_id": "HMS20",
+      "title": "HMS20",
+      "family": "HMS20",
+      "description": "A documented and approved security incident management process is maintained, reviewed, and tested periodically."
+    },
+    {
+      "control_id": "HMS21",
+      "title": "HMS21",
+      "family": "HMS21",
+      "description": "Availability of health information is to be maintained in the event of a service, system, or application being disrupted for a prolonged period."
+    }
+  ]
+}

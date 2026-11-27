@@ -1,0 +1,631 @@
+{
+  "framework": {
+    "id": "va-cdpa",
+    "name": "Virginia CDPA",
+    "version": "2024",
+    "description": "Virginia CDPA compliance framework"
+  },
+  "families": {
+    "59": "59"
+  },
+  "controls": [
+    {
+      "control_id": "59.1-575",
+      "title": "59.1-575",
+      "family": "59",
+      "description": "See law for details"
+    },
+    {
+      "control_id": "59.1-576",
+      "title": "59.1-576",
+      "family": "59",
+      "description": "See law for details"
+    },
+    {
+      "control_id": "59.1-577.A",
+      "title": "59.1-577.A",
+      "family": "59",
+      "description": "A consumer may invoke the consumer rights authorized pursuant to this subsection at any time by submitting a request to a controller specifying the consumer rights the consumer wishes to invoke. A known child's parent or legal guardian may invoke such consumer rights on behalf of the child regarding processing personal data belonging to the known child. A controller shall comply with an authenticated consumer request to exercise the right:"
+    },
+    {
+      "control_id": "59.1-577.A.1",
+      "title": "59.1-577.A.1",
+      "family": "59",
+      "description": "To confirm whether or not a controller is processing the consumer's personal data and to access such personal data;"
+    },
+    {
+      "control_id": "59.1-577.A.2",
+      "title": "59.1-577.A.2",
+      "family": "59",
+      "description": "To correct inaccuracies in the consumer's personal data, taking into account the nature of the personal data and the purposes of the processing of the consumer's personal data;"
+    },
+    {
+      "control_id": "59.1-577.A.3",
+      "title": "59.1-577.A.3",
+      "family": "59",
+      "description": "To delete personal data provided by or obtained about the consumer;"
+    },
+    {
+      "control_id": "59.1-577.A.4",
+      "title": "59.1-577.A.4",
+      "family": "59",
+      "description": "To obtain a copy of the consumer's personal data that the consumer previously provided to the controller in a portable and, to the extent technically feasible, readily usable format that allows the consumer to transmit the data to another controller without hindrance, where the processing is carried out by automated means; and"
+    },
+    {
+      "control_id": "59.1-577.A.5",
+      "title": "59.1-577.A.5",
+      "family": "59",
+      "description": "To opt out of the processing of the personal data for purposes of (i) targeted advertising, (ii) the sale of personal data, or (iii) profiling in furtherance of decisions that produce legal or similarly significant effects concerning the consumer."
+    },
+    {
+      "control_id": "59.1-577.B",
+      "title": "59.1-577.B",
+      "family": "59",
+      "description": "Except as otherwise provided in this chapter, a controller shall comply with a request by a consumer to exercise the consumer rights authorized pursuant to subsection A as follows:"
+    },
+    {
+      "control_id": "59.1-577.B.1",
+      "title": "59.1-577.B.1",
+      "family": "59",
+      "description": "A controller shall respond to the consumer without undue delay, but in all cases within 45 days of receipt of the request submitted pursuant to the methods described in subsection A. The response period may be extended once by 45 additional days when reasonably necessary, taking into account the complexity and number of the consumer's requests, so long as the controller informs the consumer of any such extension within the initial 45-day response period, together with the reason for the extension."
+    },
+    {
+      "control_id": "59.1-577.B.2",
+      "title": "59.1-577.B.2",
+      "family": "59",
+      "description": "If a controller declines to take action regarding the consumer's request, the controller shall inform the consumer without undue delay, but in all cases and at the latest within 45 days of receipt of the request, of the justification for declining to take action and instructions for how to appeal the decision pursuant to subsection C."
+    },
+    {
+      "control_id": "59.1-577.B.3",
+      "title": "59.1-577.B.3",
+      "family": "59",
+      "description": "Information provided in response to a consumer request shall be provided by a controller free of charge, up to twice annually per consumer. If requests from a consumer are manifestly unfounded, excessive, or repetitive, the controller may charge the consumer a reasonable fee to cover the administrative costs of complying with the request or decline to act on the request. The controller bears the burden of demonstrating the manifestly unfounded, excessive, or repetitive nature of the request."
+    },
+    {
+      "control_id": "59.1-577.B.4",
+      "title": "59.1-577.B.4",
+      "family": "59",
+      "description": "If a controller is unable to authenticate the request using commercially reasonable efforts, the controller shall not be required to comply with a request to initiate an action under subsection A and may request that the consumer provide additional information reasonably necessary to authenticate the consumer and the consumer's request."
+    },
+    {
+      "control_id": "59.1-577.B.5",
+      "title": "59.1-577.B.5",
+      "family": "59",
+      "description": "A controller that has obtained personal data about a consumer from a source other than the consumer shall be deemed in compliance with a consumer's request to delete such data pursuant to subdivision A 3 by either (i) retaining a record of the deletion request and the minimum data necessary for the purpose of ensuring the consumer's personal data remains deleted from the business's records and not using such retained data for any other purpose pursuant to the provisions of this chapter or (ii) opting the consumer out of the processing of such personal data for any purpose except for those exempted pursuant to the provisions of this chapter."
+    },
+    {
+      "control_id": "59.1-577.C",
+      "title": "59.1-577.C",
+      "family": "59",
+      "description": "A controller shall establish a process for a consumer to appeal the controller's refusal to take action on a request within a reasonable period of time after the consumer's receipt of the decision pursuant to subdivision B 2. The appeal process shall be conspicuously available and similar to the process for submitting requests to initiate action pursuant to subsection A. Within 60 days of receipt of an appeal, a controller shall inform the consumer in writing of any action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If the appeal is denied, the controller shall also provide the consumer with an online mechanism, if available, or other method through which the consumer may contact the Attorney General to submit a complaint."
+    },
+    {
+      "control_id": "59.1-577.1.A",
+      "title": "59.1-577.1.A",
+      "family": "59",
+      "description": "For purposes of this section, \"minor\" means any natural person younger than 16 years of age."
+    },
+    {
+      "control_id": "59.1-577.1.B",
+      "title": "59.1-577.1.B",
+      "family": "59",
+      "description": "Any controller or processor that operates a social media platform shall (i) use commercially reasonable methods, such as a neutral age screen mechanism, to determine whether a user is a minor and (ii) limit a minor's use of such social media platform to one hour per day, per service or application, and allow a parent to give verifiable parental consent to increase or decrease the daily time limit."
+    },
+    {
+      "control_id": "59.1-577.1.C",
+      "title": "59.1-577.1.C",
+      "family": "59",
+      "description": "Information collected for the purpose of determining a user's age shall not be used for any purpose other than age determination and provision of age-appropriate experiences. For purposes of this section, any controller or processor that operates a social media platform shall treat a user as a minor if the user's device communicates or signals that the user is or shall be treated as a minor, including through a browser plug-in or privacy setting, device setting, or other mechanism."
+    },
+    {
+      "control_id": "59.1-577.1.D",
+      "title": "59.1-577.1.D",
+      "family": "59",
+      "description": "Nothing in this section shall be construed as requiring any controller or processor that operates a social media platform to give a parent who grants verifiable parental consent pursuant to subsection B any additional or special access to or control over the data or accounts of the minor."
+    },
+    {
+      "control_id": "59.1-577.1.E",
+      "title": "59.1-577.1.E",
+      "family": "59",
+      "description": "No controller or processor that operates a social media platform shall withhold, degrade, lower the quality of, or increase the price of any online service, product, or feature to a user due to the controller or processor not being permitted to provide use of such social media platform beyond the one hour per day, per service or application, daily time limit under subsection B. However, nothing in this section shall be construed as (i) requiring a social media platform to provide an online service, product, or feature that requires the personal information of a known minor or (ii) prohibiting a social media platform from offering a different price, rate, level, quality, or selection of goods or services to a known minor, including offering goods or services for no fee, if such behavior is reasonably related to the exercise of rights pursuant to or compliance with the requirements of this chapter."
+    },
+    {
+      "control_id": "59.1-578.A",
+      "title": "59.1-578.A",
+      "family": "59",
+      "description": "A controller shall:"
+    },
+    {
+      "control_id": "59.1-578.A.1",
+      "title": "59.1-578.A.1",
+      "family": "59",
+      "description": "Limit the collection of personal data to what is adequate, relevant, and reasonably necessary in relation to the purposes for which such data is processed, as disclosed to the consumer;"
+    },
+    {
+      "control_id": "59.1-578.A.2",
+      "title": "59.1-578.A.2",
+      "family": "59",
+      "description": "Except as otherwise provided in this chapter, not process personal data for purposes that are neither reasonably necessary to nor compatible with the disclosed purposes for which such personal data is processed, as disclosed to the consumer, unless the controller obtains the consumer's consent;"
+    },
+    {
+      "control_id": "59.1-578.A.3",
+      "title": "59.1-578.A.3",
+      "family": "59",
+      "description": "Establish, implement, and maintain reasonable administrative, technical, and physical data security practices to protect the confidentiality, integrity, and accessibility of personal data. Such data security practices shall be appropriate to the volume and nature of the personal data at issue;"
+    },
+    {
+      "control_id": "59.1-578.A.4",
+      "title": "59.1-578.A.4",
+      "family": "59",
+      "description": "Not process personal data in violation of state and federal laws that prohibit unlawful discrimination against consumers. A controller shall not discriminate against a consumer for exercising any of the consumer rights contained in this chapter, including denying goods or services, charging different prices or rates for goods or services, or providing a different level of quality of goods and services to the consumer. However, nothing in this subdivision shall be construed to require a controller to provide a product or service that requires the personal data of a consumer that the controller does not collect or maintain or to prohibit a controller from offering a different price, rate, level, quality, or selection of goods or services to a consumer, including offering goods or services for no fee, if the consumer has exercised his right to opt out pursuant to § 59.1-577 or the offer is related to a consumer's voluntary participation in a bona fide loyalty, rewards, premium features, discounts, or club card program; and"
+    },
+    {
+      "control_id": "59.1-578.A.5",
+      "title": "59.1-578.A.5",
+      "family": "59",
+      "description": "Not process sensitive data concerning a consumer without obtaining the consumer's consent, or, in the case of the processing of sensitive data concerning a known child, without processing such data in accordance with the federal Children's Online Privacy Protection Act (15 U.S.C. § 6501 et seq.)."
+    },
+    {
+      "control_id": "59.1-578.B",
+      "title": "59.1-578.B",
+      "family": "59",
+      "description": "Any provision of a contract or agreement of any kind that purports to waive or limit in any way consumer rights pursuant to § 59.1-577 shall be deemed contrary to public policy and shall be void and unenforceable."
+    },
+    {
+      "control_id": "59.1-578.C",
+      "title": "59.1-578.C",
+      "family": "59",
+      "description": "Controllers shall provide consumers with a reasonably accessible, clear, and meaningful privacy notice that includes:"
+    },
+    {
+      "control_id": "59.1-578.C.1",
+      "title": "59.1-578.C.1",
+      "family": "59",
+      "description": "The categories of personal data processed by the controller;"
+    },
+    {
+      "control_id": "59.1-578.C.2",
+      "title": "59.1-578.C.2",
+      "family": "59",
+      "description": "The purpose for processing personal data;"
+    },
+    {
+      "control_id": "59.1-578.C.3",
+      "title": "59.1-578.C.3",
+      "family": "59",
+      "description": "How consumers may exercise their consumer rights pursuant § 59.1-577, including how a consumer may appeal a controller's decision with regard to the consumer's request;"
+    },
+    {
+      "control_id": "59.1-578.C.4",
+      "title": "59.1-578.C.4",
+      "family": "59",
+      "description": "The categories of personal data that the controller shares with third parties, if any; and"
+    },
+    {
+      "control_id": "59.1-578.C.5",
+      "title": "59.1-578.C.5",
+      "family": "59",
+      "description": "The categories of third parties, if any, with whom the controller shares personal data."
+    },
+    {
+      "control_id": "59.1-578.D",
+      "title": "59.1-578.D",
+      "family": "59",
+      "description": "If a controller sells personal data to third parties or processes personal data for targeted advertising, the controller shall clearly and conspicuously disclose such processing, as well as the manner in which a consumer may exercise the right to opt out of such processing."
+    },
+    {
+      "control_id": "59.1-578.E",
+      "title": "59.1-578.E",
+      "family": "59",
+      "description": "A controller shall establish, and shall describe in a privacy notice, one or more secure and reliable means for consumers to submit a request to exercise their consumer rights under this chapter. Such means shall take into account the ways in which consumers normally interact with the controller, the need for secure and reliable communication of such requests, and the ability of the controller to authenticate the identity of the consumer making the request. Controllers shall not require a consumer to create a new account in order to exercise consumer rights pursuant to § 59.1-577 but may require a consumer to use an existing account."
+    },
+    {
+      "control_id": "59.1-578.F",
+      "title": "59.1-578.F",
+      "family": "59",
+      "description": "Known Child Data Protections"
+    },
+    {
+      "control_id": "59.1-578.F.1",
+      "title": "59.1-578.F.1",
+      "family": "59",
+      "description": "Subject to the consent requirement established by subdivision 3, no controller shall process any personal data collected from a known child:"
+    },
+    {
+      "control_id": "59.1-578.F.1.a",
+      "title": "59.1-578.F.1.a",
+      "family": "59",
+      "description": "For the purposes of (i) targeted advertising, (ii) the sale of such personal data, or (iii) profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer;"
+    },
+    {
+      "control_id": "59.1-578.F.1.b",
+      "title": "59.1-578.F.1.b",
+      "family": "59",
+      "description": "Unless such processing is reasonably necessary to provide the online service, product, or feature;"
+    },
+    {
+      "control_id": "59.1-578.F.1.c",
+      "title": "59.1-578.F.1.c",
+      "family": "59",
+      "description": "For any processing purpose other than the processing purpose that the controller disclosed at the time such controller collected such personal data or that is reasonably necessary for and compatible with such disclosed purpose; or"
+    },
+    {
+      "control_id": "59.1-578.F.1.d",
+      "title": "59.1-578.F.1.d",
+      "family": "59",
+      "description": "For longer than is reasonably necessary to provide the online service, product, or feature."
+    },
+    {
+      "control_id": "59.1-578.F.2",
+      "title": "59.1-578.F.2",
+      "family": "59",
+      "description": "Subject to the consent requirement established by subdivision 3, no controller shall collect precise geolocation data from a known child unless (i) such precise geolocation data is reasonably necessary for the controller to provide an online service, product, or feature and, if such data is necessary to provide such online service, product, or feature, such controller shall only collect such data for the time necessary to provide such online service, product, or feature and (ii) the controller provides to the known child a signal indicating that such controller is collecting such precise geolocation data, which signal shall be available to such known child for the entire duration of such collection."
+    },
+    {
+      "control_id": "59.1-578.F.3",
+      "title": "59.1-578.F.3",
+      "family": "59",
+      "description": "No controller shall engage in the activities described in subdivisions 1 or 2 unless the controller obtains consent from the child's parent or legal guardian in accordance with the federal Children's Online Privacy Protection Act (15 U.S.C. § 6501 et seq.)."
+    },
+    {
+      "control_id": "59.1-579.A",
+      "title": "59.1-579.A",
+      "family": "59",
+      "description": "A processor shall adhere to the instructions of a controller and shall assist the controller in meeting its obligations under this chapter. Such assistance shall include:"
+    },
+    {
+      "control_id": "59.1-579.A.1",
+      "title": "59.1-579.A.1",
+      "family": "59",
+      "description": "Taking into account the nature of processing and the information available to the processor, by appropriate technical and organizational measures, insofar as this is reasonably practicable, to fulfill the controller's obligation to respond to consumer rights requests pursuant to § 59.1-577."
+    },
+    {
+      "control_id": "59.1-579.A.2",
+      "title": "59.1-579.A.2",
+      "family": "59",
+      "description": "Taking into account the nature of processing and the information available to the processor, by assisting the controller in meeting the controller's obligations in relation to the security of processing the personal data and in relation to the notification of a breach of security of the system of the processor pursuant to § 18.2-186.6 in order to meet the controller's obligations."
+    },
+    {
+      "control_id": "59.1-579.A.3",
+      "title": "59.1-579.A.3",
+      "family": "59",
+      "description": "Providing necessary information to enable the controller to conduct and document data protection assessments pursuant to § 59.1-580."
+    },
+    {
+      "control_id": "59.1-579.B",
+      "title": "59.1-579.B",
+      "family": "59",
+      "description": "A contract between a controller and a processor shall govern the processor's data processing procedures with respect to processing performed on behalf of the controller. The contract shall be binding and clearly set forth instructions for processing data, the nature and purpose of processing, the type of data subject to processing, the duration of processing, and the rights and obligations of both parties. The contract shall also include requirements that the processor shall:"
+    },
+    {
+      "control_id": "59.1-579.B.1",
+      "title": "59.1-579.B.1",
+      "family": "59",
+      "description": "Ensure that each person processing personal data is subject to a duty of confidentiality with respect to the data;"
+    },
+    {
+      "control_id": "59.1-579.B.2",
+      "title": "59.1-579.B.2",
+      "family": "59",
+      "description": "At the controller's direction, delete or return all personal data to the controller as requested at the end of the provision of services, unless retention of the personal data is required by law;"
+    },
+    {
+      "control_id": "59.1-579.B.3",
+      "title": "59.1-579.B.3",
+      "family": "59",
+      "description": "Upon the reasonable request of the controller, make available to the controller all information in its possession necessary to demonstrate the processor's compliance with the obligations in this chapter;"
+    },
+    {
+      "control_id": "59.1-579.B.4",
+      "title": "59.1-579.B.4",
+      "family": "59",
+      "description": "Allow, and cooperate with, reasonable assessments by the controller or the controller's designated assessor; alternatively, the processor may arrange for a qualified and independent assessor to conduct an assessment of the processor's policies and technical and organizational measures in support of the obligations under this chapter using an appropriate and accepted control standard or framework and assessment procedure for such assessments. The processor shall provide a report of such assessment to the controller upon request; and"
+    },
+    {
+      "control_id": "59.1-579.B.5",
+      "title": "59.1-579.B.5",
+      "family": "59",
+      "description": "Engage any subcontractor pursuant to a written contract in accordance with subsection C that requires the subcontractor to meet the obligations of the processor with respect to the personal data."
+    },
+    {
+      "control_id": "59.1-579.C",
+      "title": "59.1-579.C",
+      "family": "59",
+      "description": "Nothing in this section shall be construed to relieve a controller or a processor from the liabilities imposed on it by virtue of its role in the processing relationship as defined by this chapter."
+    },
+    {
+      "control_id": "59.1-579.D",
+      "title": "59.1-579.D",
+      "family": "59",
+      "description": "Determining whether a person is acting as a controller or processor with respect to a specific processing of data is a fact-based determination that depends upon the context in which personal data is to be processed. A processor that continues to adhere to a controller's instructions with respect to a specific processing of personal data remains a processor."
+    },
+    {
+      "control_id": "59.1-580.A",
+      "title": "59.1-580.A",
+      "family": "59",
+      "description": "A controller shall conduct and document a data protection assessment of each of the following processing activities involving personal data:"
+    },
+    {
+      "control_id": "59.1-580.A.1",
+      "title": "59.1-580.A.1",
+      "family": "59",
+      "description": "The processing of personal data for purposes of targeted advertising;"
+    },
+    {
+      "control_id": "59.1-580.A.2",
+      "title": "59.1-580.A.2",
+      "family": "59",
+      "description": "The sale of personal data;"
+    },
+    {
+      "control_id": "59.1-580.A.3",
+      "title": "59.1-580.A.3",
+      "family": "59",
+      "description": "The processing of personal data for purposes of profiling, where such profiling presents a reasonably foreseeable risk of (i) unfair or deceptive treatment of, or unlawful disparate impact on, consumers; (ii) financial, physical, or reputational injury to consumers; (iii) a physical or other intrusion upon the solitude or seclusion, or the private affairs or concerns, of consumers, where such intrusion would be offensive to a reasonable person; or (iv) other substantial injury to consumers;"
+    },
+    {
+      "control_id": "59.1-580.A.4",
+      "title": "59.1-580.A.4",
+      "family": "59",
+      "description": "The processing of sensitive data; and"
+    },
+    {
+      "control_id": "59.1-580.A.5",
+      "title": "59.1-580.A.5",
+      "family": "59",
+      "description": "Any processing activities involving personal data that present a heightened risk of harm to consumers."
+    },
+    {
+      "control_id": "59.1-580.B",
+      "title": "59.1-580.B",
+      "family": "59",
+      "description": "Each controller that offers any online service, product, or feature directed to consumers whom such controller has actual knowledge are children shall conduct a data protection assessment for such online service, product, or feature that addresses (i) the purpose of such online service, product, or feature; (ii) the categories of known children's personal data that such online service, product, or feature processes; and (iii) the purposes for which such controller processes known children's personal data with respect to such online service, product, or feature."
+    },
+    {
+      "control_id": "59.1-580.C",
+      "title": "59.1-580.C",
+      "family": "59",
+      "description": "Data protection assessments conducted pursuant to subsection A shall identify and weigh the benefits that may flow, directly and indirectly, from the processing to the controller, the consumer, other stakeholders, and the public against the potential risks to the rights of the consumer associated with such processing, as mitigated by safeguards that can be employed by the controller to reduce such risks. The use of de-identified data and the reasonable expectations of consumers, as well as the context of the processing and the relationship between the controller and the consumer whose personal data will be processed, shall be factored into this assessment by the controller."
+    },
+    {
+      "control_id": "59.1-580.D",
+      "title": "59.1-580.D",
+      "family": "59",
+      "description": "The Attorney General may request, pursuant to a civil investigative demand, that a controller disclose any data protection assessment that is relevant to an investigation conducted by the Attorney General, and the controller shall make the data protection assessment available to the Attorney General. The Attorney General may evaluate the data protection assessment for compliance with the responsibilities set forth in § 59.1-578. Data protection assessments shall be confidential and exempt from public inspection and copying under the Virginia Freedom of Information Act (§ 2.2-3700 et seq.). The disclosure of a data protection assessment pursuant to a request from the Attorney General shall not constitute a waiver of attorney-client privilege or work product protection with respect to the assessment and any information contained in the assessment."
+    },
+    {
+      "control_id": "59.1-580.E",
+      "title": "59.1-580.E",
+      "family": "59",
+      "description": "A single data protection assessment may address a comparable set of processing operations that include similar activities."
+    },
+    {
+      "control_id": "59.1-580.F",
+      "title": "59.1-580.F",
+      "family": "59",
+      "description": "Data protection assessments conducted by a controller for the purpose of compliance with other laws or regulations may comply under this section if the assessments have a reasonably comparable scope and effect."
+    },
+    {
+      "control_id": "59.1-580.G",
+      "title": "59.1-580.G",
+      "family": "59",
+      "description": "Data protection assessment requirements shall apply to processing activities created or generated after January 1, 2023, and are not retroactive."
+    },
+    {
+      "control_id": "59.1-581.A",
+      "title": "59.1-581.A",
+      "family": "59",
+      "description": "The controller in possession of de-identified data shall:"
+    },
+    {
+      "control_id": "59.1-581.A.1",
+      "title": "59.1-581.A.1",
+      "family": "59",
+      "description": "Take reasonable measures to ensure that the data cannot be associated with a natural person;"
+    },
+    {
+      "control_id": "59.1-581.A.2",
+      "title": "59.1-581.A.2",
+      "family": "59",
+      "description": "Publicly commit to maintaining and using de-identified data without attempting to re-identify the data; and"
+    },
+    {
+      "control_id": "59.1-581.A.3",
+      "title": "59.1-581.A.3",
+      "family": "59",
+      "description": "Contractually obligate any recipients of the de-identified data to comply with all provisions of this chapter."
+    },
+    {
+      "control_id": "59.1-581.B",
+      "title": "59.1-581.B",
+      "family": "59",
+      "description": "Nothing in this chapter shall be construed to (i) require a controller or processor to re-identify de-identified data or pseudonymous data or (ii) maintain data in identifiable form, or collect, obtain, retain, or access any data or technology, in order to be capable of associating an authenticated consumer request with personal data."
+    },
+    {
+      "control_id": "59.1-581.C",
+      "title": "59.1-581.C",
+      "family": "59",
+      "description": "Nothing in this chapter shall be construed to require a controller or processor to comply with an authenticated consumer rights request, pursuant to § 59.1-577, if all of the following are true:"
+    },
+    {
+      "control_id": "59.1-581.C.1",
+      "title": "59.1-581.C.1",
+      "family": "59",
+      "description": "The controller is not reasonably capable of associating the request with the personal data or it would be unreasonably burdensome for the controller to associate the request with the personal data;"
+    },
+    {
+      "control_id": "59.1-581.C.2",
+      "title": "59.1-581.C.2",
+      "family": "59",
+      "description": "The controller does not use the personal data to recognize or respond to the specific consumer who is the subject of the personal data, or associate the personal data with other personal data about the same specific consumer; and"
+    },
+    {
+      "control_id": "59.1-581.C.3",
+      "title": "59.1-581.C.3",
+      "family": "59",
+      "description": "The controller does not sell the personal data to any third party or otherwise voluntarily disclose the personal data to any third party other than a processor, except as otherwise permitted in this section."
+    },
+    {
+      "control_id": "59.1-581.D",
+      "title": "59.1-581.D",
+      "family": "59",
+      "description": "The consumer rights contained in subdivisions A 1 through 4 of § 59.1-577 and § 59.1-578 shall not apply to pseudonymous data in cases where the controller is able to demonstrate any information necessary to identify the consumer is kept separately and is subject to effective technical and organizational controls that prevent the controller from accessing such information."
+    },
+    {
+      "control_id": "59.1-581.E",
+      "title": "59.1-581.E",
+      "family": "59",
+      "description": "A controller that discloses pseudonymous data or de-identified data shall exercise reasonable oversight to monitor compliance with any contractual commitments to which the pseudonymous data or de-identified data is subject and shall take appropriate steps to address any breaches of those contractual commitments."
+    },
+    {
+      "control_id": "59.1-582.A",
+      "title": "59.1-582.A",
+      "family": "59",
+      "description": "Nothing in this chapter shall be construed to restrict a controller's or processor's ability to:"
+    },
+    {
+      "control_id": "59.1-582.A.1",
+      "title": "59.1-582.A.1",
+      "family": "59",
+      "description": "Comply with federal, state, or local laws, rules, or regulations;"
+    },
+    {
+      "control_id": "59.1-582.A.2",
+      "title": "59.1-582.A.2",
+      "family": "59",
+      "description": "Comply with a civil, criminal, or regulatory inquiry, investigation, subpoena, or summons by federal, state, local, or other governmental authorities;"
+    },
+    {
+      "control_id": "59.1-582.A.3",
+      "title": "59.1-582.A.3",
+      "family": "59",
+      "description": "Cooperate with law-enforcement agencies concerning conduct or activity that the controller or processor reasonably and in good faith believes may violate federal, state, or local laws, rules, or regulations;"
+    },
+    {
+      "control_id": "59.1-582.A.4",
+      "title": "59.1-582.A.4",
+      "family": "59",
+      "description": "Investigate, establish, exercise, prepare for, or defend legal claims;"
+    },
+    {
+      "control_id": "59.1-582.A.5",
+      "title": "59.1-582.A.5",
+      "family": "59",
+      "description": "Provide a product or service specifically requested by a consumer, perform a contract to which the consumer is a party, including fulfilling the terms of a written warranty, or take steps at the request of the consumer prior to entering into a contract;"
+    },
+    {
+      "control_id": "59.1-582.A.6",
+      "title": "59.1-582.A.6",
+      "family": "59",
+      "description": "Take immediate steps to protect an interest that is essential for the life or physical safety of the consumer or of another natural person, and where the processing cannot be manifestly based on another legal basis;"
+    },
+    {
+      "control_id": "59.1-582.A.7",
+      "title": "59.1-582.A.7",
+      "family": "59",
+      "description": "Prevent, detect, protect against, or respond to security incidents, identity theft, fraud, harassment, malicious or deceptive activities, or any illegal activity; preserve the integrity or security of systems; or investigate, report, or prosecute those responsible for any such action;"
+    },
+    {
+      "control_id": "59.1-582.A.8",
+      "title": "59.1-582.A.8",
+      "family": "59",
+      "description": "Engage in public or peer-reviewed scientific or statistical research in the public interest that adheres to all other applicable ethics and privacy laws and is approved, monitored, and governed by an institutional review board, or similar independent oversight entities that determine: (i) if the deletion of the information is likely to provide substantial benefits that do not exclusively accrue to the controller; (ii) the expected benefits of the research outweigh the privacy risks; and (iii) if the controller has implemented reasonable safeguards to mitigate privacy risks associated with research, including any risks associated with reidentification; or"
+    },
+    {
+      "control_id": "59.1-582.A.9",
+      "title": "59.1-582.A.9",
+      "family": "59",
+      "description": "Assist another controller, processor, or third party with any of the obligations under this subsection."
+    },
+    {
+      "control_id": "59.1-582.B",
+      "title": "59.1-582.B",
+      "family": "59",
+      "description": "The obligations imposed on controllers or processors under this chapter shall not restrict a controller's or processor's ability to collect, use, or retain data to:"
+    },
+    {
+      "control_id": "59.1-582.B.1",
+      "title": "59.1-582.B.1",
+      "family": "59",
+      "description": "Conduct internal research to develop, improve, or repair products, services, or technology;"
+    },
+    {
+      "control_id": "59.1-582.B.2",
+      "title": "59.1-582.B.2",
+      "family": "59",
+      "description": "Effectuate a product recall;"
+    },
+    {
+      "control_id": "59.1-582.B.3",
+      "title": "59.1-582.B.3",
+      "family": "59",
+      "description": "Identify and repair technical errors that impair existing or intended functionality; or"
+    },
+    {
+      "control_id": "59.1-582.B.4",
+      "title": "59.1-582.B.4",
+      "family": "59",
+      "description": "Perform internal operations that are reasonably aligned with the expectations of the consumer or reasonably anticipated based on the consumer's existing relationship with the controller or are otherwise compatible with processing data in furtherance of the provision of a product or service specifically requested by a consumer or the performance of a contract to which the consumer is a party."
+    },
+    {
+      "control_id": "59.1-582.C",
+      "title": "59.1-582.C",
+      "family": "59",
+      "description": "The obligations imposed on controllers or processors under this chapter shall not apply where compliance by the controller or processor with this chapter would violate an evidentiary privilege under the laws of the Commonwealth. Nothing in this chapter shall be construed to prevent a controller or processor from providing personal data concerning a consumer to a person covered by an evidentiary privilege under the laws of the Commonwealth as part of a privileged communication."
+    },
+    {
+      "control_id": "59.1-582.D",
+      "title": "59.1-582.D",
+      "family": "59",
+      "description": "A controller or processor that discloses personal data to a third-party controller or processor, in compliance with the requirements of this chapter, is not in violation of this chapter if the third-party controller or processor that receives and processes such personal data is in violation of this chapter, provided that, at the time of disclosing the personal data, the disclosing controller or processor did not have actual knowledge that the recipient intended to commit a violation. A third-party controller or processor receiving personal data from a controller or processor in compliance with the requirements of this chapter is likewise not in violation of this chapter for the transgressions of the controller or processor from which it receives such personal data."
+    },
+    {
+      "control_id": "59.1-582.E",
+      "title": "59.1-582.E",
+      "family": "59",
+      "description": "Nothing in this chapter shall be construed as an obligation imposed on controllers and processors that adversely affects the rights or freedoms of any persons, such as exercising the right of free speech pursuant to the First Amendment to the United States Constitution, or applies to the processing of personal data by a person in the course of a purely personal or household activity."
+    },
+    {
+      "control_id": "59.1-582.F",
+      "title": "59.1-582.F",
+      "family": "59",
+      "description": "Personal data processed by a controller pursuant to this section shall not be processed for any purpose other than those expressly listed in this section unless otherwise allowed by this chapter. Personal data processed by a controller pursuant to this section may be processed to the extent that such processing is:"
+    },
+    {
+      "control_id": "59.1-582.F.1",
+      "title": "59.1-582.F.1",
+      "family": "59",
+      "description": "Reasonably necessary and proportionate to the purposes listed in this section; and"
+    },
+    {
+      "control_id": "59.1-582.F.2",
+      "title": "59.1-582.F.2",
+      "family": "59",
+      "description": "Adequate, relevant, and limited to what is necessary in relation to the specific purposes listed in this section. Personal data collected, used, or retained pursuant to subsection B shall, where applicable, take into account the nature and purpose or purposes of such collection, use, or retention. Such data shall be subject to reasonable administrative, technical, and physical measures to protect the confidentiality, integrity, and accessibility of the personal data and to reduce reasonably foreseeable risks of harm to consumers relating to such collection, use, or retention of personal data."
+    },
+    {
+      "control_id": "59.1-582.G",
+      "title": "59.1-582.G",
+      "family": "59",
+      "description": "If a controller processes personal data pursuant to an exemption in this section, the controller bears the burden of demonstrating that such processing qualifies for the exemption and complies with the requirements in subsection F."
+    },
+    {
+      "control_id": "59.1-582.H",
+      "title": "59.1-582.H",
+      "family": "59",
+      "description": "Processing personal data for the purposes expressly identified in subdivisions A 1 through 9 shall not solely make an entity a controller with respect to such processing."
+    },
+    {
+      "control_id": "59.1-583",
+      "title": "59.1-583",
+      "family": "59",
+      "description": "Whenever the Attorney General has reasonable cause to believe that any person has engaged in, is engaging in, or is about to engage in any violation of this chapter, the Attorney General is empowered to issue a civil investigative demand. The provisions of § 59.1-9.10 shall apply mutatis mutandis to civil investigative demands issued under this section."
+    },
+    {
+      "control_id": "59.1-585",
+      "title": "59.1-585",
+      "family": "59",
+      "description": "Repealed by Acts 2022, cc. 451 and 452, cl. 2."
+    }
+  ]
+}

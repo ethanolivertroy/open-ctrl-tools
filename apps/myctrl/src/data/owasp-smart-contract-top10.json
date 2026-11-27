@@ -1,0 +1,311 @@
+{
+  "framework": {
+    "id": "owasp-smart-contract-top10",
+    "name": "OWASP Smart Contract Top 10",
+    "version": "2026",
+    "description": "The OWASP Smart Contract Top 10 identifies the most critical security risks in smart contract development, based on 2025 incident data from SolidityScan's Web3HackHub"
+  },
+  "families": {
+    "Access Control": "Risks related to access control enforcement in smart contracts",
+    "Business Logic": "Risks related to design-level flaws in protocol economics and state transitions",
+    "Oracle Security": "Risks related to price feed manipulation and oracle trust boundaries",
+    "Flash Loans": "Risks related to uncollateralized same-transaction borrowing amplifying vulnerabilities",
+    "Input Validation": "Risks related to insufficient validation of external data and parameters",
+    "External Calls": "Risks related to unsafe interactions with external contracts and callbacks",
+    "Arithmetic": "Risks related to integer math errors, rounding, and precision loss",
+    "Reentrancy": "Risks related to external calls re-entering vulnerable functions before state updates",
+    "Integer Safety": "Risks related to integer overflow and underflow in arithmetic operations",
+    "Upgradeability": "Risks related to proxy patterns and contract upgrade mechanisms"
+  },
+  "controls": [
+    {
+      "control_id": "SC01",
+      "title": "Access Control Vulnerabilities",
+      "family": "Access Control",
+      "description": "Improper access control encompasses situations where smart contracts fail to enforce who may invoke privileged behavior, under which conditions, and with which parameters. Modern DeFi systems require enforcement beyond simple `onlyOwner` modifiers, involving governance contracts, multisigs, guardians, proxy admins, and cross-chain routers controlling token minting/burning, reserve movement, pool reconfiguration, pause mechanisms, and implementation upgrades. Weak or inconsistent application of these trust boundaries allows attackers to impersonate privileged actors or manipulate the system into treating untrusted addresses as authorized.\n\n**Key Focus Areas:**\n- Ownership and admin controls (e.g., `onlyOwner`, governors, multisigs)\n- Upgrade and pause mechanisms (proxy admins, guardians)\n- Fund movement and accounting (mint/burn, pool reconfigurations, fee routing)\n- Cross-chain and cross-module trust boundaries (bridges, vault routers, L2 messengers)\n\n**Exploitation Methods:**\n- Missing modifiers or role checks on sensitive functions\n- Incorrect `msg.sender` assumptions (via delegatecalls or meta-transactions)\n- Unprotected initialization/re-initialization of contracts or proxies\n- Privilege confusion across modules",
+      "prevention_strategies": [
+        "Utilize battle-tested primitives such as OpenZeppelin's Ownable and AccessControl rather than custom role systems.",
+        "Keep privileged roles minimal, clearly documented, and held by well-secured multisigs or governance modules instead of EOAs.",
+        "Implement initialization locks for upgradeable contracts using initializer/reinitializer guards with explicit versioning to prevent re-initialization attacks.",
+        "Upgrade paths for proxies and core components should be tightly controlled and observable, with events emitted for every privilege change or upgrade so that off-chain monitoring can quickly detect abuse.",
+        "Encode access control policies through tests, fuzzing properties, and formal specifications verifying that no unprivileged address can ever drain funds or seize admin control."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Balancer V2 (November 2025, ~$128M loss)",
+          "description": "The manageUserBalance function contained improper access controls checking msg.sender against a user-provided op.sender value, which attackers could set to match msg.sender to bypass protections. Attackers masqueraded as pool controllers executing unauthorized WITHDRAW_INTERNAL operations, chained with rounding errors to drain liquidity."
+        },
+        {
+          "title": "Zoth (March 2025, $8.4M loss)",
+          "description": "Improper privilege checks around core accounting and administrative functions enabled attackers to compromise the deployer wallet (single EOA controlling admin) and execute a malicious proxy upgrade, withdrawing $8.4M through a malicious implementation."
+        },
+        {
+          "title": "Cork Protocol (May 2025, $11-12M loss)",
+          "description": "Uniswap V4 hook callbacks (e.g., beforeSwap) lacked access control validation that callers were the trusted PoolManager. The beforeSwap function had no onlyPoolManager modifier. Attackers called hooks directly with arbitrary parameters, fraudulently obtaining derivative tokens."
+        }
+      ],
+      "references": [
+        {"title": "OpenZeppelin: Understanding the Balancer V2 Exploit", "url": "https://www.openzeppelin.com/news/understanding-the-balancer-v2-exploit"},
+        {"title": "Checkpoint Research: Balancer Rounding Error Exploitation", "url": "https://research.checkpoint.com/2025/how-an-attacker-drained-128m-from-balancer-through-rounding-error-exploitation/"},
+        {"title": "SolidityScan: Zoth Hack Analysis", "url": "https://blog.solidityscan.com/zoth-hack-analysis-80ba3ac5076b"},
+        {"title": "Dedaub: Cork Protocol Hack Analysis", "url": "https://dedaub.com/blog/the-11m-cork-protocol-hack-a-critical-lesson-in-uniswap-v4-hook-security/"}
+      ]
+    },
+    {
+      "control_id": "SC02",
+      "title": "Business Logic Vulnerabilities",
+      "family": "Business Logic",
+      "description": "Business logic vulnerabilities occur when a smart contract's intended economic or functional behavior can be undermined despite correct low-level checks. These represent design flaws in how system rules, incentives, state transitions, and invariants are implemented on-chain. Unlike low-level bugs (overflow, reentrancy), these arise when the rules themselves are unsafe — the code functions as written, but the rules permit exploitable outcomes.\n\n**Key Focus Areas:**\n- Invariant violations across modules (vault/strategy/gauge, collateral/debt, supply/backing)\n- Reward and fee logic (double-counting, under/over-accrual, wrong beneficiary)\n- Eligibility and limit checks that are bypassable or inconsistently enforced\n- Path-dependent state machines allowing manipulative action sequences\n- Cross-module and cross-chain assumptions (bridge liquidity, L2 finality, message ordering)\n\n**Exploitation Methods:**\n- Arbitrage between inconsistent accounting (vault vs. strategy, internal vs. external balance)\n- Order-of-operations edge cases (deposit/withdraw/claim sequences breaking invariants)\n- Eligibility bypasses (claiming rewards without stake, liquidating healthy positions)\n- Parameter manipulation creating economically irrational states",
+      "prevention_strategies": [
+        "Model protocol economics explicitly using adversarial simulations and agent-based models rather than relying on intuition.",
+        "Express core invariants in code and tests, e.g., total value withdrawn cannot exceed total deposits + realized yield, rewards distribution is proportional to time-weighted stake.",
+        "Use formal verification and property-based fuzzing for key accounting paths (vaults, strategies, reward distribution).",
+        "Version and gate new strategies/spells: roll out behind caps, monitor metrics and on-chain invariants before raising limits.",
+        "Ensure governance and operations teams understand invariants, not just auditors."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Abracadabra (March 2025, $12.9M loss)",
+          "description": "Flawed collateral accounting in GMX V2 CauldronV4 contracts enabled attackers to exploit broken economic invariants: (1) made a deposit into GMX designed to fail, leaving tokens stuck in OrderAgent, (2) self-liquidated their position causing the contract to erase the position but fail to remove the associated order and collateral, (3) used the ghost collateral to borrow 6,260 ETH (~$12.9M)."
+        },
+        {
+          "title": "Yearn Finance (November 2025, $9M loss)",
+          "description": "A design flaw in the yETH weighted stableswap pool's fixed-point iteration solver allowed attackers to force the solver into divergent behavior. Through highly imbalanced liquidity operations, they caused the product term to collapse to zero, converting the pool from a hybrid stableswap invariant to a constant-sum curve, enabling minting of approximately 2.35x10^56 yETH LP tokens without collateral."
+        }
+      ],
+      "references": [
+        {"title": "SolidityScan: Abracadabra Hack Analysis", "url": "https://blog.solidityscan.com/abracadabra-hack-analysis-f2efcdee9c05"},
+        {"title": "Halborn: Abracadabra Money Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-abracadabra-money-hack-march-2025"},
+        {"title": "Three Sigma: Abracadabra GMX DeFi Exploit", "url": "https://threesigma.xyz/blog/exploit/abracadabra-gmx-defi-exploit-explained"},
+        {"title": "DeFiMon: Yearn yETH Hack Analysis", "url": "https://defimon.xyz/blog/yearn-yeth-hack-november-2025"}
+      ]
+    },
+    {
+      "control_id": "SC03",
+      "title": "Price Oracle Manipulation",
+      "family": "Oracle Security",
+      "description": "Price oracle manipulation occurs when smart contracts depend on price or valuation data that attackers can influence directly or indirectly, leading protocols to make decisions based on incorrect values. Oracles represent trust boundaries where contracts assume received prices reflect genuine market or on-chain conditions.\n\nThis vulnerability affects all contract types consuming price data: DeFi lending and borrowing (collateral assessment, liquidation mechanisms), AMMs and DEXes (spot and TWAP-based pricing), yield vaults (NAV calculations, share valuation), liquid staking and derivatives (ETH/stake price feeds), NFT and token valuations (floor price oracles), and cross-chain bridges (asset pricing for mint/burn ratios).\n\n**Exploitation Methods:**\n- Spot price manipulation via large trades, flash loans, or JIT liquidity within a single block\n- TWAP manipulation over short windows or during low-liquidity periods\n- Stale or stuck data when contracts fail to enforce freshness or implement fallback behavior\n- Deviation and outlier handling when aggregation logic cannot reject manipulated inputs",
+      "prevention_strategies": [
+        "Aggregate multiple price sources using median/mean calculations across several DEXs or oracles; reject outliers and anomalous deviations.",
+        "Implement TWAPs over sufficient windows to resist short-lived price skewing; reject prices exceeding maximum staleness thresholds.",
+        "Avoid building core pricing on illiquid pools; cap the impact of any single pool or feed on global pricing.",
+        "On suspicious or unavailable data, halt sensitive operations like borrowing and liquidations; use circuit breakers and rate limiting on parameter changes.",
+        "Track price deviations between your oracle and reference markets; set automated alerts for unexpected movements or stuck oracles."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "NGP Token (September 2025, ~$2M loss)",
+          "description": "The protocol's price function relied solely on DEX pair (Uniswap V2/PancakeSwap) reserve balances to calculate token price. Attackers used flash loans to manipulate reserves, artificially lowering oracle values, then bypassed purchase limits and cooldown protections."
+        },
+        {
+          "title": "GMX (July 2025, $42M loss — oracle component)",
+          "description": "While reentrancy in executeDecreaseOrder was the primary root cause, the attacker manipulated global average short price for Bitcoin downward (~57x), then used a flash loan to purchase GLP at artificially low prices and redeem at inflated prices. Price feed manipulation served as a key enabler."
+        }
+      ],
+      "references": [
+        {"title": "SolidityScan: NGP Token Hack Analysis", "url": "https://blog.solidityscan.com/ngp-token-hack-analysis-414b6ca16d96"},
+        {"title": "Hacken: NGP Hack Explained", "url": "https://hacken.io/insights/ngp-hack-explained/"},
+        {"title": "SolidityScan: GMX V1 Hack Analysis", "url": "https://blog.solidityscan.com/gmx-v1-hack-analysis-ed0ab0c0dd0f"},
+        {"title": "Halborn: GMX Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-gmx-hack-july-2025"}
+      ]
+    },
+    {
+      "control_id": "SC04",
+      "title": "Flash Loan-Facilitated Attacks",
+      "family": "Flash Loans",
+      "description": "Flash loan-facilitated attacks exploit uncollateralized, same-transaction borrowing to amplify underlying vulnerabilities into protocol-draining exploits. Flash loans are not inherently vulnerable — they are a legitimate DeFi primitive — but they grant attackers arbitrarily large, transient capital within a single transaction.\n\nThe attack pattern involves: (1) borrowing large capital via flash loan (Aave, dYdX, Uniswap V3, or equivalent), (2) manipulating protocol state, prices, or accounting using borrowed funds, (3) extracting profit through liquidity drainage, under-collateralized loans, or governance skewing, and (4) repaying the flash loan in the same transaction while retaining profits.\n\nThese attacks affect lending protocols, AMMs, yield vaults, governance systems, NFT and token valuation mechanisms, and cross-protocol composability scenarios. Flash loans act as a force multiplier, turning small bugs into catastrophic exploits.",
+      "prevention_strategies": [
+        "Design economic and accounting logic assuming attackers have access to arbitrarily large transient capital.",
+        "Implement per-block or per-epoch limits on rebasing, rebalancing, or high-impact state transitions; use dynamic fees increasing with action magnitude/frequency.",
+        "Set maximum slippage, position sizes, and borrowing caps; limit state changes within single transactions.",
+        "Include flash-loan-style tests in QA and audits; use fuzzing to discover profitable multi-call sequences.",
+        "Address underlying issues at the root level — flash loans act as a force multiplier for business logic (SC02), oracle (SC03), and arithmetic (SC07) vulnerabilities."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Bunni (September 2025, $8.4M loss)",
+          "description": "A rounding error in withdrawal functions was amplified by flash loans. Attackers flash-borrowed 3M USDT, manipulated spot prices (reducing USDC active balance to 28 wei), then executed 44 chained withdrawals exploiting rounding — decreasing USDC balance by 85.7% while only burning 84.4% of liquidity."
+        },
+        {
+          "title": "zkLend (February 2025, $9.5M loss)",
+          "description": "A rounding error in the mint() function (integer division rounding down) allowed inflation of the lending_accumulator through repeated deposits/withdrawals. Flash loans provided the capital scale that turned small per-iteration precision gains into a ~$9.5M drain."
+        }
+      ],
+      "references": [
+        {"title": "Halborn: Bunni Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-bunni-hack-september-2025"},
+        {"title": "Bunni: Exploit Post-Mortem", "url": "https://blog.bunni.xyz/posts/exploit-post-mortem/"},
+        {"title": "SolidityScan: zkLend Hack Analysis", "url": "https://blog.solidityscan.com/zklend-hack-analysis-e494cb794f71"},
+        {"title": "Halborn: zkLend Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-zklend-hack-february-2025"}
+      ]
+    },
+    {
+      "control_id": "SC05",
+      "title": "Lack of Input Validation",
+      "family": "Input Validation",
+      "description": "Lack of input validation occurs when smart contracts process external data — function parameters, calldata, cross-chain messages, or signed payloads — without rigorously enforcing that the data is well-formed, within expected bounds, and authorized for the intended operation.\n\nThis vulnerability applies across all contract types: DeFi protocols, NFT systems, DAOs, bridges, and composable contracts accepting arbitrary calldata.\n\n**Key Focus Areas:**\n- Numeric parameters: amounts, fees, rates, slippage percentages, and collateral factors requiring safe bounds enforcement\n- Address validation: zero addresses, contract vs. EOA assumptions, delegated or proxy addresses\n- Off-chain and signed data: signature validation, expiry checks, nonce replay prevention\n- Cross-chain payloads: message format verification, chain ID validation, sender verification\n- Admin/governance inputs: configuration values and upgrade parameters often wrongly treated as implicitly trusted\n\n**Exploitation Methods:**\n- Out-of-bounds values (fees exceeding 100%, zero amounts, maximum uint values) breaking invariants\n- Malformed addresses or payloads bypassing allowlists or causing unexpected behavior\n- Replay and ordering attacks when nonce, expiry, or chain ID validation is absent\n- Composability edge cases when contracts assume caller format or trust relayed data without verification",
+      "prevention_strategies": [
+        "Validate all external inputs comprehensively, including function parameters, off-chain-signed data, calldata payloads, and cross-chain messages.",
+        "Enforce tight invariants with documented ranges for fees, interest rates, leverage, and collateral factors.",
+        "Implement non-zero requirements for key addresses and critical limits.",
+        "Use custom errors and explicit checks for clarity and gas efficiency.",
+        "Treat admin and governance inputs as untrusted until validated, as misconfiguration poses equal risk to explicit exploits.",
+        "Include negative testing (fuzzing, property-based testing) to verify unexpected values are rejected."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Cetus Protocol (May 2025, $223M loss)",
+          "description": "The primary root cause involved a flawed overflow check in checked_shlw function. However, the protocol allowed extreme liquidity parameters (e.g., ~2^113) without bounds checks. When combined with arithmetic flaws, unvalidated extreme parameters created dangerous edge cases enabling pool drains."
+        },
+        {
+          "title": "Ionic Money (February 2025, ~$6.9M loss)",
+          "description": "Attackers exploited insufficient validation by using social engineering to convince the protocol to list a counterfeit LBTC token. The protocol accepted it as collateral without validating token authenticity on-chain. Attackers minted 250 counterfeit LBTC tokens and borrowed approximately $8.6M."
+        }
+      ],
+      "references": [
+        {"title": "Dedaub: Cetus AMM $200M Hack Analysis", "url": "https://dedaub.com/blog/the-cetus-amm-200m-hack-how-a-flawed-overflow-check-led-to-catastrophic-loss/"},
+        {"title": "Cyfrin: Inside the $223M Cetus Exploit", "url": "https://www.cyfrin.io/blog/inside-the-223m-cetus-exploit-root-cause-and-impact-analysis"},
+        {"title": "Halborn: Ionic Money Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-ionic-money-hack-february-2025"},
+        {"title": "Rekt News: Ionic Money", "url": "https://rekt.news/ionic-money-rekt"}
+      ]
+    },
+    {
+      "control_id": "SC06",
+      "title": "Unchecked External Calls",
+      "family": "External Calls",
+      "description": "Unchecked external calls occur when a smart contract invokes another contract or address via `call`, `delegatecall`, `staticcall`, or high-level calls like `transfer`/`send` without fully accounting for the callee's behavior, return value, or reentrancy potential. The calling contract assumes the callee will behave correctly, return success, avoid re-entering, and not execute arbitrary logic.\n\nThis vulnerability affects all contract types performing external interactions: DeFi protocols (token transfers, DEX swaps, vault deposits, flash loan callbacks), NFTs (transfers with hooks, marketplace payouts), DAOs (proposal execution), bridges (message relay, asset transfers), and composable protocols (callbacks, ERC-777/721/1155 receiver hooks, ERC-4626 hooks).\n\n**Exploitation Methods:**\n- Reentrancy: implementing malicious logic in callbacks or token transfer hooks\n- Silent failures: ignoring return values (e.g., non-returning ERC-20s) leaving state inconsistent\n- Unexpected code execution: calling user-supplied or protocol-configurable addresses",
+      "prevention_strategies": [
+        "Treat all external calls as untrusted — even standard tokens or well-known protocols can be upgraded or replaced.",
+        "Use the checks-effects-interactions pattern: validate pre-conditions, update internal state, then perform external calls.",
+        "Prefer pull over push for payments — allow users to withdraw rather than pushing funds to arbitrary addresses in loops.",
+        "Check return values and handle failure modes; use libraries like OpenZeppelin's SafeERC20 to wrap token operations.",
+        "Be extremely careful with low-level calls (call, delegatecall, callcode) and arbitrary callbacks (hooks, onERC721Received, onFlashLoan)."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "GMX (July 2025, $42M loss)",
+          "description": "The executeDecreaseOrder function transferred control to an attacker-supplied contract address during the refund process, enabling reentrancy. External call ordering, lacking proper checks, and trust in callee assumptions amplified impact."
+        },
+        {
+          "title": "Arcadia Finance (July 2025, $3.5M loss)",
+          "description": "The SwapLogic._swapRouter() and RebalancerSpot contracts allowed arbitrary external calls to user-supplied router addresses via swapData parameters, without validating the callee. The protocol assumed routers lacked elevated permissions — an assumption not enforced in code. Unchecked callbacks enabled the drain."
+        }
+      ],
+      "references": [
+        {"title": "SolidityScan: GMX V1 Hack Analysis", "url": "https://blog.solidityscan.com/gmx-v1-hack-analysis-ed0ab0c0dd0f"},
+        {"title": "Halborn: GMX Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-gmx-hack-july-2025"},
+        {"title": "SolidityScan: Arcadia Finance Hack Analysis", "url": "https://blog.solidityscan.com/arcadia-finance-hack-analysis-a03a722e554d"},
+        {"title": "Guardrail: Arcadia Finance Hack", "url": "https://www.guardrail.ai/blog/arcadia-finance-hack-july-2025"}
+      ]
+    },
+    {
+      "control_id": "SC07",
+      "title": "Arithmetic Errors",
+      "family": "Arithmetic",
+      "description": "Arithmetic errors encompass situations where smart contracts perform integer-based calculations that produce incorrect or exploitable results due to truncation, scaling, or unit conversion. The vulnerability applies to all contract types computing numeric values, including DeFi protocols (share minting/burning, LP tokens, interest accrual, swap outputs, AMM invariant updates), yield vaults and ERC-4626 implementations, rebasing tokens, reward distribution, and NFT/token economics.\n\n**Key Focus Areas:**\n- Share and LP token calculations (deposit/withdraw formulas, rounding direction)\n- Interest and reward accrual (compounding, time-weighted averages)\n- Swap and AMM math (constant product, concentrated liquidity, output calculations)\n- Fixed-point and scaling (1e18, 1e8 conventions, cross-token conversions)\n- Rebasing and proportional distribution (per-user vs. global accounting)\n\n**Exploitation Methods:**\n- Rounding bias: exploiting rounding that favors depositor or protocol under adversarial sequences\n- Repeated small gains via flash loans or high-frequency interactions\n- Edge cases: zero total supply, first depositor, extreme ratios where formulas break down\n- Precision loss accumulation: multi-step computations where imprecision compounds",
+      "prevention_strategies": [
+        "Use safe math patterns (Solidity 0.8+ has built-in checks, though surrounding logic remains critical).",
+        "Clearly document and test rounding strategy, deciding whether rounding favors protocol or users.",
+        "Prove that repeated interactions cannot create exploitable value.",
+        "Rely on well-reviewed math libraries for complex operations (fixed-point math, high-precision exponentiation/logarithms).",
+        "Incorporate invariant checks (e.g., totalAssets vs. user balance sums, share/value consistency).",
+        "Use fuzz testing and differential testing to discover edge cases around small/large values and repeated operations."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "zkLend (February 2025, $9.5M loss)",
+          "description": "A rounding error in the mint() function — integer division rounding down — caused a mismatch between recorded and actual values. A withdrawal rounding down by 1.5 tokens to 1.0 enabled attackers to artificially inflate the lending_accumulator via repeated deposit/withdrawal cycles, draining approximately $9.5M."
+        },
+        {
+          "title": "Bunni (September 2025, $8.4M loss)",
+          "description": "Precision bugs in the withdrawal function's rounding logic allowed attackers to decrease USDC balance by 85.7% while burning only 84.4% of liquidity, enabling disproportionate value extraction through repeated operations exploiting assumed-safe rounding assumptions."
+        }
+      ],
+      "references": [
+        {"title": "SolidityScan: zkLend Hack Analysis", "url": "https://blog.solidityscan.com/zklend-hack-analysis-e494cb794f71"},
+        {"title": "Halborn: zkLend Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-zklend-hack-february-2025"},
+        {"title": "Halborn: Bunni Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-bunni-hack-september-2025"},
+        {"title": "Bunni: Exploit Post-Mortem", "url": "https://blog.bunni.xyz/posts/exploit-post-mortem/"}
+      ]
+    },
+    {
+      "control_id": "SC08",
+      "title": "Reentrancy Attacks",
+      "family": "Reentrancy",
+      "description": "Reentrancy describes any situation where a smart contract performs an external call (to another contract or address), and the callee can call back into the original contract before the first invocation has completed and state has been fully updated.\n\nThe vulnerability affects DeFi protocols (token transfers, DEX swaps, vault operations, flash loan callbacks), NFT systems (ERC-721/1155 receiver hooks, marketplace payouts), DAOs (proposal execution), bridges (message relay, asset transfers), and composable protocols (ERC-777 hooks, ERC-4626 deposit/withdraw hooks).\n\n**Attack Variants:**\n- Single-function reentrancy (recursive calls to same function)\n- Cross-function reentrancy (callbacks into different functions)\n- Cross-contract reentrancy (callbacks traversing multiple contracts)\n- Read-only reentrancy (view functions or oracles reading stale state during callbacks)\n\n**Key Risk Areas:**\n- State changes occurring after external calls\n- Callback and hook interfaces creating unexpected reentry points\n- Read-your-writes assumptions between functions\n- Complex call graphs with mid-transaction state inconsistency",
+      "prevention_strategies": [
+        "Use OpenZeppelin's ReentrancyGuard (nonReentrant modifier) on all stateful functions that modify balances/accounting or perform external calls.",
+        "Apply the checks-effects-interactions pattern: verify preconditions, execute all state modifications, then invoke external contracts.",
+        "Validate transfer return values and revert on failure.",
+        "Treat ERC-777 hooks, ERC-4626 hooks, and other callbacks as potential reentrancy vectors.",
+        "Review cross-function interactions carefully (e.g., functions calling each other internally).",
+        "Examine multi-contract systems for reentrancy across module boundaries.",
+        "Implement reentrancy-focused fuzzing and unit testing."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "GMX V1 (July 2025, $42M loss)",
+          "description": "GMX V1 contracts were exploited via a classic yet sophisticated reentrancy vector in executeDecreaseOrder. The function accepted attacker-controlled contract addresses as parameters; during refund processing, re-entry enabled manipulation of global average short prices, AUM, and GLP valuations. The vulnerability existed due to state updates after external calls and absent reentrancy guards, introduced via an unaudited 2022 patch."
+        }
+      ],
+      "references": [
+        {"title": "SolidityScan: GMX V1 Hack Analysis", "url": "https://blog.solidityscan.com/gmx-v1-hack-analysis-ed0ab0c0dd0f"},
+        {"title": "Halborn: GMX Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-gmx-hack-july-2025"},
+        {"title": "VeriChains: GMX Exploit Root Cause Analysis", "url": "https://blog.verichains.io/p/gmx-42m-exploit-root-cause-analysis"}
+      ]
+    },
+    {
+      "control_id": "SC09",
+      "title": "Integer Overflow and Underflow",
+      "family": "Integer Safety",
+      "description": "Integer overflow and underflow occur when arithmetic operations produce values outside the representable range of the operand type. In Solidity 0.8+, arithmetic is checked by default and reverts on overflow/underflow. However, explicit `unchecked` blocks, assembly, and custom libraries can disable these checks.\n\nOn non-EVM platforms (Move, Sui, Solana, Rust-based chains), default overflow semantics differ significantly — some wrap silently, some abort — and incorrect assumptions or flawed custom checks can lead to wrapped values, miscomputed balances, and broken invariants.\n\nThis affects all contract types performing arithmetic: DeFi protocols (pool invariants, balances, interest calculations, share calculations), NFTs (supply tracking, token IDs), bridges (amounts, sequence numbers), and any logic involving large or user-controlled numeric inputs.\n\n**Key Focus Areas:**\n- EVM/Solidity: use of `unchecked`, assembly, pre-0.8 codebases\n- Non-EVM chains: Move, Sui, Aptos, Solana, and their default overflow semantics\n- Multiplication and exponentiation: high risk of overflow with large operands\n- Subtraction and decrement: underflow when subtrahend exceeds minuend\n- Casting and type conversion: downcasting (e.g., uint256 to uint128)",
+      "prevention_strategies": [
+        "Avoid unchecked arithmetic unless you have strong reasons and comprehensive tests proving safety.",
+        "Use explicit checks and custom errors for critical invariants.",
+        "Favor well-reviewed math libraries for fixed-point arithmetic, exponentiation, etc.",
+        "Upgrade to Solidity 0.8.0+ if using pre-0.8 versions, or implement SafeMath library.",
+        "On non-EVM environments (Move, Rust-based chains), understand the language's default overflow semantics and use safe arithmetic constructs.",
+        "Test with extreme value ranges (minimum and maximum values for all numeric types).",
+        "Implement fuzz tests that target edge cases near boundaries where overflow/underflow is likely.",
+        "Conduct formal verification of custom overflow checks."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Cetus Protocol (May 2025, $223M loss)",
+          "description": "The Cetus Protocol on Sui was exploited via a flawed checked_shlw function in the shared integer-mate library. The overflow check used the wrong threshold (0xFFFFFFFFFFFFFFFF << 192 instead of 1 << 192), allowing values >= 2^192 to pass. In Move, left shift operations do not abort on overflow — they truncate silently. The flawed check caused get_delta_a to calculate that only 1 token was required to mint enormous liquidity. Attackers exploited this across multiple pools using flash swaps, draining approximately $223M."
+        }
+      ],
+      "references": [
+        {"title": "Dedaub: Cetus AMM $200M Hack Analysis", "url": "https://dedaub.com/blog/the-cetus-amm-200m-hack-how-a-flawed-overflow-check-led-to-catastrophic-loss/"},
+        {"title": "Cyfrin: Inside the $223M Cetus Exploit", "url": "https://www.cyfrin.io/blog/inside-the-223m-cetus-exploit-root-cause-and-impact-analysis"},
+        {"title": "Halborn: Cetus Hack Explained", "url": "https://www.halborn.com/blog/post/explained-the-cetus-hack-may-2025"}
+      ]
+    },
+    {
+      "control_id": "SC10",
+      "title": "Proxy & Upgradeability Vulnerabilities",
+      "family": "Upgradeability",
+      "description": "Proxy and upgradeability vulnerabilities occur when smart contracts implementing upgradeable architectures have misdesigned or misconfigured upgrade paths, initialization, or admin controls. These systems separate a proxy (holding state and delegating calls) from an implementation (containing logic). When improperly secured, attackers can hijack proxy admin roles, deploy malicious implementations, re-initialize contracts to seize ownership, or bypass initialization checks.\n\nCommon patterns include Transparent Proxy, UUPS (EIP-1822), Beacon Proxy, and custom router-implementation designs. Non-EVM chains face analogous risks through mechanisms like Move modules and Solana program upgrades.\n\n**Key Focus Areas:**\n- Upgrade and admin roles: control over implementation changes and storage layout compatibility\n- Initialization and re-initialization: unprotected initialize functions, missing initializer guards, storage collisions\n- Proxy delegation: delegatecall context, msg.sender/msg.value propagation\n- Storage layout: slot collisions between proxy and implementation, append-only storage requirements\n- Timelocks and governance: upgrade processes and rollback capabilities\n\n**Exploitation Methods:**\n- Unprotected upgrade functions allowing any caller to redirect proxies to malicious implementations\n- Re-initialization to reset ownership, configuration, or access controls\n- Initialization through delegatecall where implementations can be initialized with attacker parameters\n- Storage collision between proxy and implementation causing data overwrites",
+      "prevention_strategies": [
+        "Employ well-established proxy patterns and libraries (e.g., OpenZeppelin UUPS/transparent proxies) instead of custom designs.",
+        "Restrict upgrade and admin roles with robust governance mechanisms or multisigs; never rely solely on EOAs without strong operational controls.",
+        "Correctly apply initializer and reinitializer modifiers; lock implementation contracts once deployed to prevent direct initialization.",
+        "Require timelocks and multi-step processes for all upgrades; announce upgrade proposals allowing review time before execution.",
+        "Create comprehensive upgrade runbooks and checklists including migration testing, new implementation code verification, storage layout validation, and on-chain upgrade step simulation."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Kinto Protocol (July 2025, $1.55M loss)",
+          "description": "Attackers exploited uninitialized ERC1967 proxy contracts. They detected freshly deployed proxy contracts that had not been properly initialized, then initialized them with malicious implementations containing dormant backdoors."
+        },
+        {
+          "title": "Uninitialized Proxy Campaign (2025, $10M+ across protocols)",
+          "description": "A broader campaign targeted uninitialized ERC1967 proxies across multiple EVM chains. Attackers used automated scanning to detect newly deployed proxies before legitimate developers could initialize them, then initialized with malicious implementations. The backdoors remained dormant for months before activation, allowing attackers to upgrade proxies and drain funds."
+        }
+      ],
+      "references": [
+        {"title": "Audita: The Proxy Hack — Uninitialized Contracts Costing DeFi $10M+", "url": "https://audita.io/blog-articles/the-proxy-hack-uninitialized-contracts-costing-defi-10m-in-losses"},
+        {"title": "Mamori Finance: Post-Mortem K Proxy Hack", "url": "https://medium.com/mamori-finance/post-mortem-k-proxy-hack-our-path-forward-c2c3809882c6"}
+      ]
+    }
+  ]
+}

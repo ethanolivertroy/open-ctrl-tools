@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { FullPageSearch } from '../components/search/FullPageSearch';
+---
+
+<BaseLayout title="Search" showSidebar={false}>
+  <div class="max-w-6xl mx-auto space-y-6 py-12 px-4">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-foreground">Search</span>
+      </div>
+
+      <h1 class="text-3xl font-bold tracking-tight">
+        Search
+      </h1>
+
+      <p class="text-muted-foreground max-w-2xl">
+        Search across all controls, frameworks, technology guides, crosswalks, and pages.
+        Use filters to narrow results. Share searches via URL.
+      </p>
+    </header>
+
+    <!-- Full Page Search -->
+    <FullPageSearch client:load />
+  </div>
+</BaseLayout>

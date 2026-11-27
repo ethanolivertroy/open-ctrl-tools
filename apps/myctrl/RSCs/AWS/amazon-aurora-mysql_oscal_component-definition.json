@@ -1,0 +1,409 @@
+{
+  "component-definition": {
+    "uuid": "d482a95e-ad0d-4d57-afee-9e84333586f5",
+    "metadata": {
+      "title": "Aurora Component Definition",
+      "last-modified": "2026-02-03T17:16:24.618151+00:00",
+      "version": "1.0.0.2026-02-03",
+      "oscal-version": "1.1.2",
+      "parties": [
+        {
+          "uuid": "badac675-d004-4f88-bb66-94c28bbf999e",
+          "type": "organization",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "remarks": "Original document title: Amazon Aurora MySQL\nLast updated: 2026-01-09"
+    },
+    "components": [
+      {
+        "uuid": "e2057ffd-883d-4114-963d-b97e56761360",
+        "type": "software",
+        "title": "Amazon Aurora MySQL",
+        "description": "Amazon Aurora MySQL security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements. This guidance covers top-level administrative user account security, MySQL-specific administrative operations, and privileged access controls for Aurora MySQL database operations.\n\n**Important Disclaimer**: This document provides {aws} recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. {aws} makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. {aws} services and features evolve rapidly. Customers should verify current service capabilities and limitations through official {aws} documentation before implementation.\n\n**Command and Configuration Disclaimer**: All {aws} CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. {aws} CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest {aws} CLI documentation and service-specific guides for current syntax and available options.",
+        "responsible-roles": [
+          {
+            "role-id": "provider",
+            "party-uuids": [
+              "badac675-d004-4f88-bb66-94c28bbf999e"
+            ]
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "96cacf58-dd2d-4294-8761-7adc3cdce228",
+            "source": "#fedramp-high-baseline",
+            "description": "FedRAMP control implementations for Aurora",
+            "implemented-requirements": []
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fedramp-high-baseline",
+          "description": "FedRAMP Revision 4 High Baseline Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/GSA/fedramp-automation/master/dist/content/rev4/baselines/json/FedRAMP_rev4_HIGH-baseline_profile.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "9cf01877-04a9-4b92-a41a-9dd5d8a8c609",
+          "title": "Document Information",
+          "description": "[cols=\"1,3\"]\n|===\n|Version |1.0.0\n|Last Updated |2026-01-09\n|Documentation URL |https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.AuroraMySQL.html\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "f93c0fa9-d8aa-4568-8ed3-72bef4064e06",
+          "title": "Overview",
+          "description": "Amazon Aurora MySQL security configuration involves implementing comprehensive security controls including encryption, access management, logging, and monitoring to meet FedRAMP compliance requirements. This guidance covers top-level administrative user account security, MySQL-specific administrative operations, and privileged access controls for Aurora MySQL database operations.\n\n**Important Disclaimer**: This document provides {aws} recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. {aws} makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. {aws} services and features evolve rapidly. Customers should verify current service capabilities and limitations through official {aws} documentation before implementation.\n\n**Command and Configuration Disclaimer**: All {aws} CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. {aws} CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest {aws} CLI documentation and service-specific guides for current syntax and available options.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "8d9814d6-a60d-430b-bd91-3e6b8b4aa256",
+          "title": "FedRAMP Requirements",
+          "description": "Amazon Aurora MySQL must comply with the following FedRAMP requirements:\n\n* FRR-RSC-01\n* FRR-RSC-02\n* FRR-RSC-03\n* FRR-RSC-04\n* FRR-RSC-05\n* FRR-RSC-06\n* FRR-RSC-07",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "f9564931-2b88-45a6-82cd-f1a7a9a0e601",
+          "title": "Administrative Account Model",
+          "description": "Amazon Aurora MySQL has an administrative account model.\n\n[cols=\"1,3\"]\n|===\n|Administrative Accounts |Yes\n|Account Type |Database Master User Account\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "780f9904-004a-4edd-8dbc-487aee373ee8",
+          "title": "FRR-RSC-01: Administrative Accounts",
+          "description": "*Applicable:* Yes\n\nAmazon Aurora MySQL Administrative Account Security Configuration is applicable as there is a default administrator account created at cluster creation for Amazon Aurora MySQL clusters. This account has full access for what's allowed in the Auror service. You can read more about these privileges in the {aws} Documentation. \n\nlink:/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.MasterAccounts.html[RDS Master account documentation,type=\"documentation\"]",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "5692f9b0-da8d-405d-aea1-d172ecac4bde",
+          "title": "Overview",
+          "description": "Amazon Aurora MySQL administrative access is managed through the Master database user account and AWS IAM roles. This guidance provides comprehensive security recommendations for securing administrative access to Aurora MySQL clusters.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "9d3ab32f-7375-494d-bae6-502cdfb863b2",
+          "title": "Master Database User Security",
+          "description": "1. Master User Account Configuration:\n   - Use strong, randomly generated passwords (minimum 20 characters)\n   - Rotate master passwords regularly (every 90 days maximum)\n   - Store passwords in AWS Secrets Manager with automatic rotation\n   - Never use default or predictable usernames (avoid 'admin', 'root', 'mysql')\n\n2. Authentication Methods:\n   - Enable IAM database authentication where supported\n   - Use AWS Secrets Manager for password management\n   - Implement MySQL-specific authentication mechanisms\n   - Where possible integrate with existing IdP solutions using Kerberos authentication",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "2d0f8d3f-7b07-4430-b054-8b6423958e98",
+          "title": "MySQL Administrative Security",
+          "description": "** MySQL-Specific Configuration **\n- Master user: Limit to necessary privileges, avoid SUPER privilege, existing priviliged are already limited in RDS, ensure you follow least privilege in your creation\n- Use secure authentication methods = Avoid MySQL native, leverage IAM and Kerberos authentication where possible\n- Enable SSL/TLS: require_secure_transport = ON\n- Enable comprehensive audit logging:\n  * server_audit_logging = ON\n  * server_audit_events = 'CONNECT,QUERY,TABLE'\n  * server_audit_incl_users = 'admin,root' - This shoudl reflect your master user name.\n- Set connection limits:\n  * max_connections appropriate for workload\n  * max_user_connections per user limits\n- Configure password validation if using MySQL native (avoid if possible):\n  * validate_password.policy = STRONG - Only if not using Kerberos or IAM\n  * validate_password.length = 20\n  * validate_password.mixed_case_count = 2",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "b1488ff9-bd88-4186-9e25-100b1c5cae6b",
+          "title": "FRR-RSC-02: Administrative Settings",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "8d2f8626-5a8c-4cf9-ab6c-7d4e572cd29e",
+          "title": "Security-Related Settings Restricted to Master User",
+          "description": "The master user account in Amazon Aurora MySQL has elevated privileges that cannot be delegated to regular database users. The following operations and their security implications are restricted to the master user:",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "54c50065-aaa5-4bf9-aa84-ee67dfb90469",
+          "title": "1. User and Privilege Management",
+          "description": "*Operations:*\n\n* CREATE USER\n* DROP USER\n* RENAME USER\n* GRANT ALL PRIVILEGES\n* REVOKE privileges\n* SET PASSWORD for other users\n* CREATE ROLE / DROP ROLE (Aurora MySQL 3.x)\n* GRANT/REVOKE role memberships (Aurora MySQL 3.x)\n\n*Security Implications:*\n\n* Controls database access and authentication\n* Determines privilege levels for all users\n* Manages password policies and authentication methods\n* Unauthorized user creation could lead to data breaches\n* Improper privilege grants violate least privilege principles\n* Role mismanagement could enable privilege escalation",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "a6ae2958-85aa-4115-8547-18536eb770d3",
+          "title": "2. Database Creation and Management",
+          "description": "*Operations:*\n\n* CREATE DATABASE\n* DROP DATABASE\n* ALTER DATABASE\n\n*Security Implications:*\n\n* Database owners have extensive privileges within their databases\n* Unauthorized database creation could consume resources\n* Database deletion could result in data loss\n* Database-level settings affect all objects and users",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "294e55dc-0a66-438a-a541-e6a571842bc8",
+          "title": "3. Replication Configuration",
+          "description": "*Operations:*\n\n* REPLICATION CLIENT privilege\n* REPLICATION SLAVE privilege\n* Binary log access and configuration\n* Read replica management\n\n*Security Implications:*\n\n* Replication access allows reading all database data\n* Binary logs contain all data modifications\n* Could be used for unauthorized data exfiltration\n* Improper replication configuration could expose sensitive data",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "cd38b72d-318f-4b9c-9be3-1b43752c2765",
+          "title": "4. Global System Variables",
+          "description": "*Operations:*\n\n* SET GLOBAL for security-related variables\n* Modification of authentication plugins\n* SSL/TLS configuration changes\n* Connection limits and timeouts\n\n*Security Implications:*\n\n* Global variables affect all database connections\n* Authentication changes could weaken security\n* SSL/TLS misconfiguration could expose data in transit\n* Connection limit changes could enable denial of service",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "36a44cb1-618c-44f0-ae43-3e2e5d6ef4d7",
+          "title": "5. Stored Procedure and Function Management",
+          "description": "*Operations:*\n\n* CREATE ROUTINE\n* ALTER ROUTINE\n* DROP ROUTINE\n* EXECUTE on privileged routines\n* SET_USER_ID privilege (Aurora MySQL 3.x)\n\n*Security Implications:*\n\n* Stored procedures can execute with elevated privileges\n* Definer-rights procedures can bypass access controls\n* Malicious procedures could compromise database security\n* SET_USER_ID allows impersonation of other users",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "fc39b5a2-53ba-451d-a4ef-a0fa0c10ce1e",
+          "title": "6. Event Scheduler Management",
+          "description": "*Operations:*\n\n* CREATE EVENT\n* ALTER EVENT\n* DROP EVENT\n* EVENT privilege\n\n*Security Implications:*\n\n* Events execute automatically with creator's privileges\n* Could be used to implement backdoors\n* Malicious events could modify or exfiltrate data\n* Event scheduler access requires careful auditing",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "1b8a9b81-a329-4e17-a020-edd95f432c98",
+          "title": "7. Audit Logging Configuration",
+          "description": "*Operations:*\n\n* Enabling/disabling server_audit plugin\n* Configuring audit log events and filters\n* Managing audit log retention\n\n*Security Implications:*\n\n* Disabling audit logging could hide malicious activity\n* Improper audit configuration may miss security events\n* Audit log tampering could compromise investigations\n* Audit settings are critical for compliance requirements",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "1da76bfa-26aa-4735-8640-dabd691dba3d",
+          "title": "8. Process and Connection Management",
+          "description": "*Operations:*\n\n* PROCESS privilege (view all connections)\n* RELOAD privilege (flush privileges, logs)\n* CONNECTION_ADMIN (Aurora MySQL 3.x)\n* KILL connections\n\n*Security Implications:*\n\n* PROCESS privilege reveals all active queries and data\n* RELOAD can disrupt service or clear security settings\n* CONNECTION_ADMIN allows bypassing connection limits\n* KILL privilege could be used for denial of service",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "3a6ecb65-622b-4d6a-8365-72c8ee88bc1e",
+          "title": "Best Practices for Master User Account Security",
+          "description": "1. *Minimize Master User Usage*\n   - Never use master user directly in applications\n   - Create application-specific users with minimal required privileges\n   - Reserve master user for administrative tasks only\n\n2. *Secure Master User Credentials*\n   - Use AWS Secrets Manager for password management\n   - Enable automatic password rotation (90 days maximum)\n   - Use strong, randomly generated passwords (minimum 20 characters)\n   - Never hardcode master credentials in application code\n\n3. *Enable Multi-Factor Authentication*\n   - Require MFA for AWS Console access to modify master password\n   - Implement MFA for IAM users who can modify DB clusters\n   - Use IAM database authentication where possible\n\n4. *Audit Master User Activity*\n   - Enable comprehensive database audit logging\n   - Monitor all master user connections and operations\n   - Set up CloudWatch alarms for master user activity\n   - Review audit logs regularly for unauthorized access\n\n5. *Implement Least Privilege*\n   - Create role-based access with minimal required privileges\n   - Grant privileges at the most granular level possible\n   - Regularly review and revoke unnecessary privileges\n   - Document all privilege grants and their justifications\n\n6. *Network Security*\n   - Deploy Aurora in private subnets only\n   - Use VPC security groups to restrict database access\n   - Never make Aurora clusters publicly accessible\n   - Use VPC endpoints for AWS service communications\n\n7. *Compliance and Documentation*\n   - Document all master user operations\n   - Maintain audit trail of privilege changes\n   - Conduct quarterly access reviews\n   - Implement change management for security settings",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "87840d33-59f7-4c9d-b839-63e13ae0d5fa",
+          "title": "FRR-RSC-03: Privileged Settings",
+          "description": "*Applicable:* Yes\n\nWithin Aurora you have two layers of privileged access. One layer is at the IAM layer, where you can limit what permissions a user has to operate within RDS. This section covers the priviliged settings for using the service itself and provides example IAM Policies that would allow for varying levels of access to the service. The second layer of privileged access is at the database engine layer itself which is covered in the other sections of this document.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "762e0f16-39cb-43cc-8fc6-462e98d11a56",
+          "title": "IAM Least Privilege Policies",
+          "description": "Sample IAM policies for least privilege access to Amazon Aurora MySQL\n\n\n*Read Only Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"rds:Get*\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n----\n\n\n*Operator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"rds:Get*\",\n        \"rds:Update*\",\n        \"rds:Put*\",\n        \"rds:Create*\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        }\n      }\n    }\n  ]\n}\n----\n\n\n*Administrator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"rds:*\",\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        },\n        \"NumericLessThan\": {\n          \"aws:MultiFactorAuthAge\": \"3600\"\n        }\n      }\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "5e01b6d0-4008-4b9f-86b8-6b1be76799c7",
+          "title": "Database Encryption",
+          "description": "Amazon Aurora MySQL requires encryption at rest using AWS KMS customer-managed keys and SSL/TLS encryption in transit for secure database operations.\n\n*Implementation Overview:* Aurora MySQL security involves encrypting data at rest and in transit, securing the master user account, implementing network access controls, and enabling comprehensive audit logging.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "d1f7276a-84d1-4b40-8cd4-c0cb38d3e453",
+          "title": "Implementation Examples",
+          "description": "The below are several items you should consider implementing. \n\n. *Create KMS Key for Aurora Encryption*\n+\nCreate dedicated KMS key for encrypting Aurora MySQL cluster\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create KMS key for Aurora encryption\naws kms create-key --description 'Aurora MySQL Encryption Key' --key-usage ENCRYPT_DECRYPT\n# Create alias for the key\naws kms create-alias --alias-name alias/aurora-mysql-key --target-key-id arn:aws:kms:region:account:key/key-id\n----\n\n. *Create Encrypted Aurora MySQL Cluster*\n+\nCreate Aurora cluster with encryption enabled and secure master user configuration\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create encrypted Aurora MySQL cluster\naws rds create-db-cluster \\\n  --db-cluster-identifier my-aurora-cluster \\\n  --engine aurora-mysql \\\n  --master-username admin \\\n  --manage-master-user-password \\\n  --master-user-secret-kms-key-id alias/aurora-mysql-key \\\n  --storage-encrypted \\\n  --kms-key-id alias/aurora-mysql-key \\\n  --vpc-security-group-ids sg-xxxxxxxxx \\\n  --db-subnet-group-name private-subnet-group\n----\n\n. *Configure SSL/TLS and Audit Logging*\n+\nEnable SSL enforcement and comprehensive audit logging\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create parameter group with SSL enforcement\naws rds create-db-cluster-parameter-group \\\n  --db-cluster-parameter-group-name aurora-mysql-secure \\\n  --db-parameter-group-family aurora-mysql8.0 \\\n  --description 'Secure Aurora MySQL parameters'\n\n# Enable SSL enforcement and audit logging\naws rds modify-db-cluster-parameter-group \\\n  --db-cluster-parameter-group-name aurora-mysql-secure \\\n  --parameters ParameterName=require_secure_transport,ParameterValue=ON \\\n  --parameters ParameterName=server_audit_logging,ParameterValue=1 \\\n  --parameters ParameterName=server_audit_events,ParameterValue=CONNECT,QUERY,TABLE\n----\n\n*API:* `aws rds create-db-cluster --storage-encrypted --kms-key-id alias/aurora-mysql-key`\n\n*Control:* SC-28",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "3119b234-8a3e-47f4-9567-8b3533b9569a",
+          "title": "Privileged Access Control",
+          "description": "Amazon Aurora MySQL requires implementation of privileged account security controls including least privilege access, multi-factor authentication for administrative operations, and comprehensive audit logging of privileged activities.\n\n*Implementation Overview:* Amazon Aurora MySQL privileged account security involves implementing strict access controls, monitoring privileged operations, and ensuring administrative activities are properly authenticated and logged.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "d7061283-3675-40c3-83c2-8677326b921d",
+          "title": "Implementation Examples",
+          "description": ". *Implement Least Privilege Access*\n+\nConfigure Amazon Aurora MySQL with minimal required permissions for administrative accounts\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create least privilege IAM policy for Amazon Aurora MySQL administration\naws iam create-policy --policy-name ServiceAdminPolicy --policy-document file://admin-policy.json\n# Attach policy to administrative role\naws iam attach-role-policy --role-name ServiceAdminRole --policy-arn arn:aws:iam::account:policy/ServiceAdminPolicy\n----\n\n. *Enable Multi-Factor Authentication*\n+\nRequire MFA for all privileged operations and administrative access\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create MFA-required policy condition\n# Add MFA condition to administrative policies\n# Verify MFA enforcement for privileged operations\n----\n\n. *Configure Privileged Activity Monitoring*\n+\nEnable comprehensive logging and monitoring of all privileged account activities\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Enable CloudTrail for API logging\naws cloudtrail create-trail --name ServicePrivilegedAccess --s3-bucket-name audit-logs\n# Configure CloudWatch alarms for privileged operations\naws logs create-log-group --log-group-name /aws/service/privileged-access\n----\n\n*API:* `Configure via IAM policies and amazon-aurora-mysql administrative APIs`\n\n*Control:* AC-6",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "a7fed7b0-dd19-467f-8db3-78f13053da1e",
+          "title": "FRR-RSC-04: Secure Defaults",
+          "description": "*Applicable:* Yes\n\nAWS services are designed with security in mind, providing multiple layers of security controls and encryption capabilities. However, AWS allows customers to define the security configuration of services and does not enforce a minimum security standard by default, enabling customers the flexibility to meet their specific business requirements and compliance needs.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "18ae23f3-1dd8-42ed-866a-e5a9be99cfee",
+          "title": "Implementation",
+          "description": "Ensure Aurora MySQL clusters are created with security-first configurations including encryption, access controls, and monitoring\n\n\n*Best Practices:*\n\n* Enable encryption at rest using customer-managed KMS keys\n* Use AWS Secrets Manager for master user password management\n* Enforce SSL/TLS connections for all database access\n* Enable comprehensive audit logging and monitoring\n* Deploy in private subnets with restrictive security groups\n* Implement automated backup encryption\n* Configure parameter groups with security-hardened settings",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "96a281f5-3e21-4b24-a453-cade97d5ddae",
+          "title": "FRR-RSC-05: Configuration Comparison",
+          "description": "*Applicable:* Yes\n\nUse AWS Config rules and custom scripts to compare current Aurora MySQL configuration against security baselines.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "c3389a59-5fab-41ef-a53a-b8147606ce16",
+          "title": "FRR-RSC-06: Configuration Export",
+          "description": "*Applicable:* Yes\n\nExport Aurora MySQL configuration using AWS CLI describe commands in JSON format.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "59b8fd5f-a649-46ac-b047-18d19b309289",
+          "title": "FRR-RSC-07: API Configuration",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "00049098-0963-499a-a5e3-caa65f959c9c",
+          "title": "Cluster Management",
+          "description": "*API Command:*\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\nConfigure via AWS RDS APIs for Aurora MySQL cluster management\n----\n\n*Control:* AC-6\n\n\n*Implementation Guidance:*\n\n* Create separate roles for different access levels (read-only, operator, administrator)\n* Always require MFA for privileged operations\n* Use time-based conditions to limit session duration\n* Implement resource-based restrictions where possible\n* Regular review and rotation of access permissions",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "7d6b65ac-ab60-46b8-b7e6-037b08202223",
+          "title": "Additional Resources",
+          "description": "For more information about {aws} security best practices, see the following resources:\n\n* link:https://docs.aws.amazon.com/security/[{aws} Security Documentation]\n* link:https://aws.amazon.com/compliance/fedramp/[{aws} FedRAMP Compliance]\n* link:https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html[{aws} Well-Architected Security Pillar]",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

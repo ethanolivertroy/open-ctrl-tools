@@ -1,0 +1,422 @@
+{
+  "framework": {
+    "id": "uk-caf",
+    "name": "UK CAF",
+    "version": "4.0",
+    "description": "UK CAF compliance framework"
+  },
+  "families": {
+    "A1": "A1",
+    "A2": "A2",
+    "A3": "A3",
+    "A4": "A4",
+    "B1": "B1",
+    "B2": "B2",
+    "B3": "B3",
+    "B4": "B4",
+    "B5": "B5",
+    "B6": "B6",
+    "C1": "C1",
+    "C2": "C2",
+    "D1": "D1",
+    "D2": "D2"
+  },
+  "controls": [
+    {
+      "control_id": "A1",
+      "title": "A1",
+      "family": "A1",
+      "description": "The organisation has appropriate management policies, processes and procedures in place to govern its approach to the security of network and information systems."
+    },
+    {
+      "control_id": "A1.a",
+      "title": "A1.a",
+      "family": "A1",
+      "description": "You have effective organisational security management led at board level and articulated clearly in corresponding policies."
+    },
+    {
+      "control_id": "A1.b",
+      "title": "A1.b",
+      "family": "A1",
+      "description": "Your organisation has established roles and responsibilities for the security of network and information systems at all levels, with clear and well-understood channels for communicating and escalating risks."
+    },
+    {
+      "control_id": "A1.c",
+      "title": "A1.c",
+      "family": "A1",
+      "description": "You have senior-level accountability for the security of network and information systems, and delegate decision-making authority appropriately and effectively. Risks to network and information systems related to the operation of your essential function(s) are considered in the context of other organisational risks."
+    },
+    {
+      "control_id": "A2",
+      "title": "A2",
+      "family": "A2",
+      "description": "The organisation takes appropriate steps to identify, assess and understand security risks to network and information systems supporting the operation of essential functions. This includes an overall organisational approach to risk management."
+    },
+    {
+      "control_id": "A2.a",
+      "title": "A2.a",
+      "family": "A2",
+      "description": "Your organisation has effective internal processes for managing risks to the security and resilience of network and information systems related to the operation of your essential function(s) and communicating associated activities."
+    },
+    {
+      "control_id": "A2.b",
+      "title": "A2.b",
+      "family": "A2",
+      "description": "You understand the capabilities, methods and techniques of threat actors and what network and information systems they may compromise to adversely impact your essential function(s)."
+    },
+    {
+      "control_id": "A2.c",
+      "title": "A2.c",
+      "family": "A2",
+      "description": "You have gained confidence in the effectiveness of the security of your technology, people, and processes relevant to the operation of network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "A3",
+      "title": "A3",
+      "family": "A3",
+      "description": "Everything required to deliver, maintain or support network and information systems necessary for the operation of essential functions is determined and understood. This includes data, people and systems, as well as any supporting infrastructure (such as power or cooling)."
+    },
+    {
+      "control_id": "A3.a (point 1)",
+      "title": "A3.a (point 1)",
+      "family": "A3",
+      "description": "All assets relevant to the secure operation of network and information systems supporting your essential function(s) are identified and inventoried (at a suitable level of detail). The inventory is kept up-todate."
+    },
+    {
+      "control_id": "A3.a (point 2)",
+      "title": "A3.a (point 2)",
+      "family": "A3",
+      "description": "Dependencies on supporting infrastructure (e.g. power, cooling etc) are recognised and recorded."
+    },
+    {
+      "control_id": "A3.a (point 3)",
+      "title": "A3.a (point 3)",
+      "family": "A3",
+      "description": "You have prioritised your assets according to their importance to the operation of network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "A3.a (point 4)",
+      "title": "A3.a (point 4)",
+      "family": "A3",
+      "description": "You have assigned responsibility for managing all assets, including physical assets, relevant to the operation of network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "A3.a (point 5)",
+      "title": "A3.a (point 5)",
+      "family": "A3",
+      "description": "Assets relevant to network and information systems supporting your essential function(s) are managed with cyber security in mind throughout their lifecycle, from creation through to eventual decommissioning or disposal."
+    },
+    {
+      "control_id": "A4",
+      "title": "A4",
+      "family": "A4",
+      "description": "The organisation understands and manages security risks to network and information systems supporting the operation of essential functions that arise as a result of dependencies on suppliers. This includes ensuring that appropriate measures are employed where third party services are used."
+    },
+    {
+      "control_id": "A4.a",
+      "title": "A4.a",
+      "family": "A4",
+      "description": "You understand and effectively manage the risks associated with suppliers to the security of network and information systems supporting the operation of your essential function(s)."
+    },
+    {
+      "control_id": "A4.b",
+      "title": "A4.b",
+      "family": "A4",
+      "description": "You actively maximise the use of secure and supported software, whether developed internally or sourced externally, within network and information systems supporting the operation of your essential function(s)."
+    },
+    {
+      "control_id": "B1",
+      "title": "B1",
+      "family": "B1",
+      "description": "The organisation defines, implements, communicates and enforces appropriate policies, processes and procedures that direct its overall approach to securing systems and data that support operation of essential functions."
+    },
+    {
+      "control_id": "B1.a",
+      "title": "B1.a",
+      "family": "B1",
+      "description": "You have developed and continue to improve a set of cyber security and resilience policies, processes and procedures that manage and mitigate the risk of adverse impact to network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "B1.b",
+      "title": "B1.b",
+      "family": "B1",
+      "description": "You have successfully implemented your security policies, processes and procedures and can demonstrate the security benefits achieved."
+    },
+    {
+      "control_id": "B2",
+      "title": "B2",
+      "family": "B2",
+      "description": "The organisation understands, documents and manages access to network and information systems supporting the operation of essential functions. Users (or automated functions) that can access data or systems are appropriately verified, authenticated and authorised."
+    },
+    {
+      "control_id": "B2.a",
+      "title": "B2.a",
+      "family": "B2",
+      "description": "You robustly verify, authenticate and authorise access to network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "B2.b",
+      "title": "B2.b",
+      "family": "B2",
+      "description": "You fully know and have trust in the devices that are used to access your networks, information systems and data that support your essential function(s)."
+    },
+    {
+      "control_id": "B2.c",
+      "title": "B2.c",
+      "family": "B2",
+      "description": "You closely manage privileged user access to network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "B2.d",
+      "title": "B2.d",
+      "family": "B2",
+      "description": "You closely manage and maintain identity and access control for users, devices and systems accessing network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "B3",
+      "title": "B3",
+      "family": "B3",
+      "description": "Data stored or transmitted electronically is protected from actions such as unauthorised access, modification, or deletion that may cause an adverse impact on essential functions. Such protection extends to the means by which authorised users, devices and systems access critical data necessary for the operation of essential functions. It also covers information that would assist a threat actor, such as design details of network and information systems"
+    },
+    {
+      "control_id": "B3.a",
+      "title": "B3.a",
+      "family": "B3",
+      "description": "You have a good understanding of data important to the operation of network and information systems supporting your essential function(s), where it is stored, where it travels and how unavailability or unauthorised access, uncontrolled release, modification or deletion would adversely impact the essential function(s). This also applies to third parties storing or accessing data important to the operation of your essential function(s)."
+    },
+    {
+      "control_id": "B3.b",
+      "title": "B3.b",
+      "family": "B3",
+      "description": "You have protected the transit of data important to the operation of network and information systems supporting your essential function(s). This includes the transfer of data to third parties."
+    },
+    {
+      "control_id": "B3.c",
+      "title": "B3.c",
+      "family": "B3",
+      "description": "You have protected stored soft and hard copy data important to the operation of network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "B3.d",
+      "title": "B3.d",
+      "family": "B3",
+      "description": "You have protected data important to the operation of network and information systems supporting your essential function(s) on mobile devices (e.g. smartphones, tablets and laptops)."
+    },
+    {
+      "control_id": "B3.e",
+      "title": "B3.e",
+      "family": "B3",
+      "description": "Before reuse and / or disposal you appropriately sanitise devices, equipment and removable media holding data important to the operation of network and information systems supporting your essential function(s)"
+    },
+    {
+      "control_id": "B4",
+      "title": "B4",
+      "family": "B4",
+      "description": "Network and information systems and technology critical for the operation of essential functions are protected from cyber attack. An organisational understanding of risk to essential functions informs the use of robust and reliable protective security measures to effectively limit opportunities for threat actors to compromise networks and systems."
+    },
+    {
+      "control_id": "B4.a",
+      "title": "B4.a",
+      "family": "B4",
+      "description": "You design security into network and information systems that support the operation of your essential function(s). You minimise their attack surface and ensure that the operation of your essential function(s) should not be impacted by the exploitation of any single vulnerability."
+    },
+    {
+      "control_id": "B4.b",
+      "title": "B4.b",
+      "family": "B4",
+      "description": "You securely configure network and information systems that support the operation of your essential function(s)."
+    },
+    {
+      "control_id": "B4.c",
+      "title": "B4.c",
+      "family": "B4",
+      "description": "You manage your organisation's network and information systems that support the operation of your essential function(s) to enable and maintain security."
+    },
+    {
+      "control_id": "B4.d",
+      "title": "B4.d",
+      "family": "B4",
+      "description": "You manage known vulnerabilities in network and information systems to prevent adverse impact on your essential function(s)."
+    },
+    {
+      "control_id": "B5",
+      "title": "B5",
+      "family": "B5",
+      "description": "The organisation builds resilience against cyber attack and system failure into the design, implementation, operation and management of systems that support the operation of your essential function(s)."
+    },
+    {
+      "control_id": "B5.a",
+      "title": "B5.a",
+      "family": "B5",
+      "description": "You are prepared to restore the operation of your essential function(s) following adverse impact to network and information systems"
+    },
+    {
+      "control_id": "B5.b",
+      "title": "B5.b",
+      "family": "B5",
+      "description": "You design network and information systems supporting your essential function(s) to be resilient to cyber security incidents. Systems are appropriately segregated and resource limitations are mitigated."
+    },
+    {
+      "control_id": "B5.c",
+      "title": "B5.c",
+      "family": "B5",
+      "description": "You hold accessible and secured current backups of data and information needed to recover operation of your essential function(s) following an adverse impact to network and information systems."
+    },
+    {
+      "control_id": "B6",
+      "title": "B6",
+      "family": "B6",
+      "description": "Staff have appropriate awareness, knowledge and skills to carry out their organisational roles effectively in relation to the security of network and information systems supporting the operation of your essential function(s)."
+    },
+    {
+      "control_id": "B6.a",
+      "title": "B6.a",
+      "family": "B6",
+      "description": "You develop and maintain a positive cyber security culture and a shared sense of responsibility"
+    },
+    {
+      "control_id": "B6.b",
+      "title": "B6.b",
+      "family": "B6",
+      "description": "The people who support the operation of network and information systems supporting your essential function(s) are appropriately trained in cyber security."
+    },
+    {
+      "control_id": "C1",
+      "title": "C1",
+      "family": "C1",
+      "description": "The organisation monitors the security status of network and information systems supporting the operation of essential function(s) in order to detect security events indicative of a security incident."
+    },
+    {
+      "control_id": "C1.a",
+      "title": "C1.a",
+      "family": "C1",
+      "description": "The data sources and tools that you include in your logging and monitoring allow for timely identification of events which might adversely affect the security or resiliency of network and information system(s) supporting the operation of your essential function(s)."
+    },
+    {
+      "control_id": "C1.b",
+      "title": "C1.b",
+      "family": "C1",
+      "description": "You hold log data securely and grant appropriate user and system access only to accounts with a business need. Log data is held for a suitable retention period, after which it is deleted."
+    },
+    {
+      "control_id": "C1.c",
+      "title": "C1.c",
+      "family": "C1",
+      "description": "Evidence of potential security incidents contained in your monitoring data is reliably identified and where appropriate triggers alerts."
+    },
+    {
+      "control_id": "C1.d",
+      "title": "C1.d",
+      "family": "C1",
+      "description": "You contextualise alerts with knowledge of the threat and your systems, to identify security incidents as well as responding to all alerts appropriately."
+    },
+    {
+      "control_id": "C1.e",
+      "title": "C1.e",
+      "family": "C1",
+      "description": "Monitoring and detection personnel skills and roles, including those outsourced, reflect governance and reporting requirements, expected threats and the complexities of the network or system data they need to use. Monitoring and detection personnel have sufficient knowledge of network and information systems and the essential function(s) they need to protect."
+    },
+    {
+      "control_id": "C1.f",
+      "title": "C1.f",
+      "family": "C1",
+      "description": "Threats to the operation of network and information systems, and corresponding user and system behaviour, are sufficiently understood. These are used to detect cyber security incidents"
+    },
+    {
+      "control_id": "C2",
+      "title": "C2",
+      "family": "C2",
+      "description": "The organisation proactively seeks to detect, within networks and information systems, adverse activity affecting, or with the potential to affect, the operation of essential functions even when the activity evades standard security prevent / detect solutions (or when standard solutions are not deployable)."
+    },
+    {
+      "control_id": "C2.a (point 1)",
+      "title": "C2.a (point 1)",
+      "family": "C2",
+      "description": "You understand the resources required to perform threat hunting and these are deployed as part of business as usual."
+    },
+    {
+      "control_id": "C2.a (point 2)",
+      "title": "C2.a (point 2)",
+      "family": "C2",
+      "description": "You deploy threat hunting resources at a frequency that matches the risks posed to network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "C2.a (point 3)",
+      "title": "C2.a (point 3)",
+      "family": "C2",
+      "description": "Your threat hunts follow pre-determined and documented methods (e.g. hypothesis driven, data driven, entity driven) designed to identify adverse activity not detected by automated detections."
+    },
+    {
+      "control_id": "C2.a (point 4)",
+      "title": "C2.a (point 4)",
+      "family": "C2",
+      "description": "You turn threat hunts into automated detections and alerting where appropriate"
+    },
+    {
+      "control_id": "C2.a (point 5)",
+      "title": "C2.a (point 5)",
+      "family": "C2",
+      "description": "You routinely record details of previous threat hunts and post hunt activities. You use these to drive improvements in your threat hunting and security posture"
+    },
+    {
+      "control_id": "C2.a (point 6)",
+      "title": "C2.a (point 6)",
+      "family": "C2",
+      "description": "You have justified confidence in the effectiveness of your threat hunts and the threat hunting process is reviewed and updated to match the risks posed to network and information systems supporting your essential function(s)."
+    },
+    {
+      "control_id": "C2.a (point 7)",
+      "title": "C2.a (point 7)",
+      "family": "C2",
+      "description": "You leverage automation to improve threat hunts where appropriate (e.g. some stages of the threat hunting process are automated)"
+    },
+    {
+      "control_id": "C2.a (point 8)",
+      "title": "C2.a (point 8)",
+      "family": "C2",
+      "description": "Your threat hunts focus on the tactics, techniques and procedures (TTPs) of threats over atomic IoCs (e.g. hashes, IP addresses, domain names etc)"
+    },
+    {
+      "control_id": "D1",
+      "title": "D1",
+      "family": "D1",
+      "description": "There are well-defined and tested incident management processes in place, that aim to ensure continuity of essential function(s) in the event of system or service failure. Mitigation activities designed to contain or limit the impact of compromise are also in place."
+    },
+    {
+      "control_id": "D1.a",
+      "title": "D1.a",
+      "family": "D1",
+      "description": "You have an up-to-date incident response plan that is grounded in a thorough risk assessment that takes account of network and information systems supporting the operation of your essential function(s) and covers a range of incident scenarios."
+    },
+    {
+      "control_id": "D1.b",
+      "title": "D1.b",
+      "family": "D1",
+      "description": "You have the capability to enact your incident response plan, including effective limitation of impact on the operation of your essential function(s). During an incident, you have access to timely information on which to base your response decisions."
+    },
+    {
+      "control_id": "D1.c",
+      "title": "D1.c",
+      "family": "D1",
+      "description": "Your organisation carries out exercises to test response plans, using past incidents that affected your (and other) organisation, and scenarios that draw on threat intelligence and your risk assessment."
+    },
+    {
+      "control_id": "D2",
+      "title": "D2",
+      "family": "D2",
+      "description": "When an incident occurs, steps are taken to understand its causes and to ensure remediating action is taken to protect against future incidents."
+    },
+    {
+      "control_id": "D2.a",
+      "title": "D2.a",
+      "family": "D2",
+      "description": "When an incident occurs, your organisation takes steps to understand its causes, informing appropriate remediating action."
+    },
+    {
+      "control_id": "D2.b",
+      "title": "D2.b",
+      "family": "D2",
+      "description": "Your organisation uses lessons learned from incidents to improve your security measures."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "framework": {
+    "id": "fipps",
+    "name": "FIPPs",
+    "version": "OMB Circular A-130",
+    "description": "Fair Information Practice Principles as used in U.S. federal privacy practice (OMB Circular A-130 Appendix II)"
+  },
+  "families": {
+    "1": "Access and Amendment",
+    "2": "Accountability",
+    "3": "Authority",
+    "4": "Minimization",
+    "5": "Quality and Integrity",
+    "6": "Individual Participation",
+    "7": "Purpose Specification and Use Limitation",
+    "8": "Security"
+  },
+  "controls": [
+    {
+      "control_id": "1",
+      "title": "Access and Amendment",
+      "family": "1",
+      "description": "Agencies should provide individuals with appropriate access to PII and appropriate opportunity to correct or amend PII."
+    },
+    {
+      "control_id": "2",
+      "title": "Accountability",
+      "family": "2",
+      "description": "Agencies should be accountable for complying with these principles and applicable privacy requirements, and should appropriately monitor, audit, and document compliance. Agencies should also clearly define the roles and responsibilities with respect to PII for all employees and contractors, and should provide appropriate training to all employees and contractors who have access to PII."
+    },
+    {
+      "control_id": "3",
+      "title": "Authority",
+      "family": "3",
+      "description": "Agencies should only create, collect, use, process, store, maintain, disseminate, or disclose PII if they have authority to do so, and should identify this authority in the appropriate notice."
+    },
+    {
+      "control_id": "4",
+      "title": "Minimization",
+      "family": "4",
+      "description": "Agencies should only create, collect, use, process, store, maintain, disseminate, or disclose PII that is directly relevant and necessary to accomplish a legally authorized purpose, and should only maintain PII for as long as is necessary to accomplish the purpose."
+    },
+    {
+      "control_id": "5",
+      "title": "Quality and Integrity",
+      "family": "5",
+      "description": "Agencies should create, collect, use, process, store, maintain, disseminate, or disclose PII with such accuracy, relevance, timeliness, and completeness as is reasonably necessary to ensure fairness to the individual."
+    },
+    {
+      "control_id": "6",
+      "title": "Individual Participation",
+      "family": "6",
+      "description": "Agencies should involve the individual in the process of using PII and, to the extent practicable, seek individual consent for the creation, collection, use, processing, storage, maintenance, dissemination, or disclosure of PII. Agencies should also establish procedures to receive and address individuals’ privacy-related complaints and inquiries."
+    },
+    {
+      "control_id": "7",
+      "title": "Purpose Specification and Use Limitation",
+      "family": "7",
+      "description": "Agencies should provide notice of the specific purpose for which PII is collected and should only use, process, store, maintain, disseminate, or disclose PII for a purpose that is explained in the notice and is compatible with the purpose for which the PII was collected, or that is otherwise legally authorized."
+    },
+    {
+      "control_id": "8",
+      "title": "Security",
+      "family": "8",
+      "description": "Agencies should establish administrative, technical, and physical safeguards to protect PII commensurate with the risk and magnitude of the harm that would result from its unauthorized access, use, modification, loss, destruction, dissemination, or disclosure."
+    }
+  ]
+}

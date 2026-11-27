@@ -1,0 +1,91 @@
+{
+  "framework": {
+    "id": "nv-reg5",
+    "name": "Nevada Regulation 5",
+    "version": "2024",
+    "description": "Nevada Regulation 5 compliance framework"
+  },
+  "families": {
+    "5": "5"
+  },
+  "controls": [
+    {
+      "control_id": "5.260.1",
+      "title": "5.260.1",
+      "family": "5",
+      "description": "In accordance with the public policy of the State set forth in NRS 463.0129 and the requirements set forth in chapter 603A of NRS, it is critical that gaming operators take all appropriate steps to secure and protect their information systems from the ongoing threat of cyber attacks. Gaming operators must not only secure and protect their own records and operations, but also the personal information of their patrons and employees as defined in NRS 603A.040."
+    },
+    {
+      "control_id": "5.260.2",
+      "title": "5.260.2",
+      "family": "5",
+      "description": "Definitions. As used in this section:\n(a) “Cyber attack” means any act or attempt to gain unauthorized access to an information system for purpose of disrupting, disabling, destroying, or controlling the system or destroying or gaining access to the information contained therein.\n(b) “Cybersecurity” means the process of protecting an information system by preventing, detecting, and responding to cyber attacks.\n(c) “Covered entity” means an entity required to comply with the requirements of this section. Each of the following qualify as a covered entity:\n(1) Holder of a nonrestricted license as defined in NRS 463.0177 who deals, operates, carries on, conducts, maintains, or exposes for play any game defined in NRS 463.0152;\n(2) Holder of a gaming license that allows for the operation of a race book;\n(3) Holder of a gaming license that allows for the operation of a sports pool; and\n(4) Holder of a gaming license that permits the operation of interactive gaming.\n(d) “Information system” means a set of resources organized for the collection, processing, maintenance, use, sharing, dissemination, or disposition of information. Elements of an information system include, without limit, hardware, software, information, data, applications, communications, and people.\n(e) “Risk assessment” means the process of identifying, estimating, and prioritizing risks to organizational operations and assets resulting from the operation of an information system. Guidance for conducting a risk assessment can be found in the Framework for Improving Critical Infrastructure Cybersecurity, version 1.1 or later, published by NIST."
+    },
+    {
+      "control_id": "5.260.3",
+      "title": "5.260.3",
+      "family": "5",
+      "description": "Except as otherwise provided herein, a covered entity shall perform an initial risk assessment of its business operation and develop the cybersecurity best practices it deems appropriate. After performing the initial risk assessment, the covered entity shall continue to monitor and evaluate cybersecurity risks to its business operation on an ongoing basis and shall modify its cybersecurity best practices and risk assessments as it deems appropriate. The risk assessment and ongoing monitoring and evaluation required pursuant to this subsection may be performed by an affiliate of the covered entity or a third-party with expertise in the field of cybersecurity. Examples of cybersecurity best practices include, without limit, CIS Version 8, COBIT 5, ISO/IEC 27001, and NIST SP 800-53, or later versions thereof. Covered entities shall fully comply with this subsection within 90 days of being licensed."
+    },
+    {
+      "control_id": "5.260.4",
+      "title": "5.260.4",
+      "family": "5",
+      "description": "A covered entity that experiences a cyber attack to its information system resulting in a material loss of control, compromise, unauthorized disclosure of data or information, or any other similar occurrence shall:"
+    },
+    {
+      "control_id": "5.260.4(a)",
+      "title": "5.260.4(a)",
+      "family": "5",
+      "description": "Provide written notification of the cyber attack to the Board as soon as practicable but no later than 72 hours after becoming aware of the cyber attack. Upon request, the covered entity shall provide the Board with specific information regarding the cyber attack;"
+    },
+    {
+      "control_id": "5.260.4(b)",
+      "title": "5.260.4(b)",
+      "family": "5",
+      "description": "Perform, or have a third-party perform, an investigation into the cyber attack, prepare a report documenting the results of the investigation, notify the Board of the completion of the report, and make the report available to the Board for review upon request. The report must include, without limit, the root cause of the cyber attack, the extent of the cyber attack, and any actions taken or planned to be taken to prevent similar events that allowed the cyber attack to occur; and"
+    },
+    {
+      "control_id": "5.260.4(c)",
+      "title": "5.260.4(c)",
+      "family": "5",
+      "description": "Notify the Board when any investigation or similar action taken by an entity external to the covered entity is completed and make the results of such investigation or similar action available to the Board upon request."
+    },
+    {
+      "control_id": "5.260.5",
+      "title": "5.260.5",
+      "family": "5",
+      "description": "A covered entity that has been classified as a Group I licensee as defined in subsection 8 of regulation 6.010 shall:"
+    },
+    {
+      "control_id": "5.260.5(a)",
+      "title": "5.260.5(a)",
+      "family": "5",
+      "description": "Designate a qualified individual to be responsible for developing, implementing, overseeing, and enforcing the covered entity’s cybersecurity best practices and procedures developed pursuant to subsection 3."
+    },
+    {
+      "control_id": "5.260.5(b)",
+      "title": "5.260.5(b)",
+      "family": "5",
+      "description": "At least annually, have its internal auditor or other independent entity with expertise in the field of cybersecurity perform and document observations, examinations, and inquiries of employees to verify the covered entity is following the cybersecurity best practices and procedures developed pursuant to subsection 3. A covered entity shall retain all documents prepared by the internal auditor pursuant to this paragraph in accordance with the requirements set forth in subsection 6. The same independent entity utilized under this paragraph may be utilized to perform the procedures set forth in paragraph (c) provided the procedures in this paragraph are performed by different employees."
+    },
+    {
+      "control_id": "5.260.5(c)",
+      "title": "5.260.5(c)",
+      "family": "5",
+      "description": "At least annually, engage an independent accountant or other independent entity with expertise in the field of cybersecurity to perform an independent review of the covered entity’s best practices and procedures developed pursuant to subsection 3 and attest in writing that those practices and procedures comply with the requirements of this section. The covered entity shall retain the written attestation, and any related documents provided therewith, in accordance with the requirements set forth in subsection 6. The same independent entity utilized under this paragraph may be utilized to perform the procedures set forth in paragraph (b) provided the procedures in this paragraph are performed by different employees."
+    },
+    {
+      "control_id": "5.260.6",
+      "title": "5.260.6",
+      "family": "5",
+      "description": "A covered entity shall document in writing all procedures taken to comply with this section and the results thereof. The covered entity shall retain all records required in this section for a minimum of five years from the date they are created unless the Chair approves otherwise in writing. The covered entity shall provide any record required in this section to the Board upon request."
+    },
+    {
+      "control_id": "5.260.7",
+      "title": "5.260.7",
+      "family": "5",
+      "description": "Failure to exercise proper due diligence in compliance with this section shall constitute an unsuitable method of operation and may result in disciplinary action. (Adopted: 12/22. Amended: 7/24.)"
+    }
+  ]
+}

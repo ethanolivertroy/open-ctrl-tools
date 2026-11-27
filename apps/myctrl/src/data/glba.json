@@ -1,0 +1,355 @@
+{
+  "framework": {
+    "id": "glba",
+    "name": "GLBA (16 CFR 314)",
+    "version": "2024",
+    "description": "GLBA (16 CFR 314) compliance framework"
+  },
+  "families": {
+    "314": "314"
+  },
+  "controls": [
+    {
+      "control_id": "314.2",
+      "title": "314.2",
+      "family": "314",
+      "description": "(see definitions section for details)"
+    },
+    {
+      "control_id": "314.3",
+      "title": "314.3",
+      "family": "314",
+      "description": "Standards for Safeguarding Customer Information"
+    },
+    {
+      "control_id": "314.3(a)",
+      "title": "314.3(a)",
+      "family": "314",
+      "description": "You shall develop, implement, and maintain a comprehensive information security program that is written in one or more readily accessible parts and contains administrative, technical, and physical safeguards that are appropriate to your size and complexity, the nature and scope of your activities, and the sensitivity of any customer information at issue. The information security program shall include the elements set forth in § 314.4 and shall be reasonably designed to achieve the objectives of this part, as set forth in paragraph (b) of this section."
+    },
+    {
+      "control_id": "314.3(b)",
+      "title": "314.3(b)",
+      "family": "314",
+      "description": "The objectives of section 501(b) of the Act, and of this part, are to:"
+    },
+    {
+      "control_id": "314.3(b)(1)",
+      "title": "314.3(b)(1)",
+      "family": "314",
+      "description": "Insure the security and confidentiality of customer information;"
+    },
+    {
+      "control_id": "314.3(b)(2)",
+      "title": "314.3(b)(2)",
+      "family": "314",
+      "description": "Protect against any anticipated threats or hazards to the security or integrity of such information; and"
+    },
+    {
+      "control_id": "314.3(b)(3)",
+      "title": "314.3(b)(3)",
+      "family": "314",
+      "description": "Protect against unauthorized access to or use of such information that could result in substantial harm or inconvenience to any customer"
+    },
+    {
+      "control_id": "314.4",
+      "title": "314.4",
+      "family": "314",
+      "description": "In order to develop, implement, and maintain your information security program, you shall:"
+    },
+    {
+      "control_id": "314.4(a)",
+      "title": "314.4(a)",
+      "family": "314",
+      "description": "Designate a qualified individual responsible for overseeing and implementing your information security program and enforcing your information security program (for purposes of this part, “Qualified Individual”). The Qualified Individual may be employed by you, an affiliate, or a service provider. To the extent the requirement in this paragraph (a) is met using a service provider or an affiliate, you shall:"
+    },
+    {
+      "control_id": "314.4(a)(1)",
+      "title": "314.4(a)(1)",
+      "family": "314",
+      "description": "Retain responsibility for compliance with this part;"
+    },
+    {
+      "control_id": "314.4(a)(2)",
+      "title": "314.4(a)(2)",
+      "family": "314",
+      "description": "Designate a senior member of your personnel responsible for direction and oversight of the Qualified Individual; and"
+    },
+    {
+      "control_id": "314.4(a)(3)",
+      "title": "314.4(a)(3)",
+      "family": "314",
+      "description": "Require the service provider or affiliate to maintain an information security program that protects you in accordance with the requirements of this part."
+    },
+    {
+      "control_id": "314.4(b)",
+      "title": "314.4(b)",
+      "family": "314",
+      "description": "Base your information security program on a risk assessment that identifies reasonably foreseeable internal and external risks to the security, confidentiality, and integrity of customer information that could result in the unauthorized disclosure, misuse, alteration, destruction, or other compromise of such information, and assesses the sufficiency of any safeguards in place to control these risks."
+    },
+    {
+      "control_id": "314.4(b)(1)",
+      "title": "314.4(b)(1)",
+      "family": "314",
+      "description": "The risk assessment shall be written and shall include:"
+    },
+    {
+      "control_id": "314.4(b)(1)(i)",
+      "title": "314.4(b)(1)(i)",
+      "family": "314",
+      "description": "Criteria for the evaluation and categorization of identified security risks or threats you face;"
+    },
+    {
+      "control_id": "314.4(b)(1)(ii)",
+      "title": "314.4(b)(1)(ii)",
+      "family": "314",
+      "description": "Criteria for the assessment of the confidentiality, integrity, and availability of your information systems and customer information, including the adequacy of the existing controls in the context of the identified risks or threats you face; and"
+    },
+    {
+      "control_id": "314.4(b)(1)(iii)",
+      "title": "314.4(b)(1)(iii)",
+      "family": "314",
+      "description": "Requirements describing how identified risks will be mitigated or accepted based on the risk assessment and how the information security program will address the risks."
+    },
+    {
+      "control_id": "314.4(b)(2)",
+      "title": "314.4(b)(2)",
+      "family": "314",
+      "description": "You shall periodically perform additional risk assessments that reexamine the reasonably foreseeable internal and external risks to the security, confidentiality, and integrity of customer information that could result in the unauthorized disclosure, misuse, alteration, destruction, or other compromise of such information, and reassess the sufficiency of any safeguards in place to control these risks."
+    },
+    {
+      "control_id": "314.4(c)",
+      "title": "314.4(c)",
+      "family": "314",
+      "description": "Design and implement safeguards to control the risks you identity through risk assessment, including by:"
+    },
+    {
+      "control_id": "314.4(c)(1)",
+      "title": "314.4(c)(1)",
+      "family": "314",
+      "description": "Implementing and periodically reviewing access controls, including technical and, as appropriate, physical controls to:"
+    },
+    {
+      "control_id": "314.4(c)(1)(i)",
+      "title": "314.4(c)(1)(i)",
+      "family": "314",
+      "description": "Authenticate and permit access only to authorized users to protect against the unauthorized acquisition of customer information; and"
+    },
+    {
+      "control_id": "314.4(c)(1)(ii)",
+      "title": "314.4(c)(1)(ii)",
+      "family": "314",
+      "description": "Limit authorized users' access only to customer information that they need to perform their duties and functions, or, in the case of customers, to access their own information;"
+    },
+    {
+      "control_id": "314.4(c)(2)",
+      "title": "314.4(c)(2)",
+      "family": "314",
+      "description": "Identify and manage the data, personnel, devices, systems, and facilities that enable you to achieve business purposes in accordance with their relative importance to business objectives and your risk strategy;"
+    },
+    {
+      "control_id": "314.4(c)(3)",
+      "title": "314.4(c)(3)",
+      "family": "314",
+      "description": "Protect by encryption all customer information held or transmitted by you both in transit over external networks and at rest. To the extent you determine that encryption of customer information, either in transit over external networks or at rest, is infeasible, you may instead secure such customer information using effective alternative compensating controls reviewed and approved by your Qualified Individual;"
+    },
+    {
+      "control_id": "314.4(c)(4)",
+      "title": "314.4(c)(4)",
+      "family": "314",
+      "description": "Adopt secure development practices for in-house developed applications utilized by you for transmitting, accessing, or storing customer information and procedures for evaluating, assessing, or testing the security of externally developed applications you utilize to transmit, access, or store customer information;"
+    },
+    {
+      "control_id": "314.4(c)(5)",
+      "title": "314.4(c)(5)",
+      "family": "314",
+      "description": "Implement multi-factor authentication for any individual accessing any information system, unless your Qualified Individual has approved in writing the use of reasonably equivalent or more secure access controls;"
+    },
+    {
+      "control_id": "314.4(c)(6)",
+      "title": "314.4(c)(6)",
+      "family": "314",
+      "description": "Change Management"
+    },
+    {
+      "control_id": "314.4(c)(6)(i)",
+      "title": "314.4(c)(6)(i)",
+      "family": "314",
+      "description": "Develop, implement, and maintain procedures for the secure disposal of customer information in any format no later than two years after the last date the information is used in connection with the provision of a product or service to the customer to which it relates, unless such information is necessary for business operations or for other legitimate business purposes, is otherwise required to be retained by law or regulation, or where targeted disposal is not reasonably feasible due to the manner in which the information is maintained; and"
+    },
+    {
+      "control_id": "314.4(c)(6)(ii)",
+      "title": "314.4(c)(6)(ii)",
+      "family": "314",
+      "description": "Periodically review your data retention policy to minimize the unnecessary retention of data;"
+    },
+    {
+      "control_id": "314.4(c)(7)",
+      "title": "314.4(c)(7)",
+      "family": "314",
+      "description": "Adopt procedures for change management; and"
+    },
+    {
+      "control_id": "314.4(c)(8)",
+      "title": "314.4(c)(8)",
+      "family": "314",
+      "description": "Implement policies, procedures, and controls designed to monitor and log the activity of authorized users and detect unauthorized access or use of, or tampering with, customer information by such users."
+    },
+    {
+      "control_id": "314.4(d)",
+      "title": "314.4(d)",
+      "family": "314",
+      "description": "Monitoring and Testing"
+    },
+    {
+      "control_id": "314.4(d)(1)",
+      "title": "314.4(d)(1)",
+      "family": "314",
+      "description": "Regularly test or otherwise monitor the effectiveness of the safeguards' key controls, systems, and procedures, including those to detect actual and attempted attacks on, or intrusions into, information systems."
+    },
+    {
+      "control_id": "314.4(d)(2)",
+      "title": "314.4(d)(2)",
+      "family": "314",
+      "description": "For information systems, the monitoring and testing shall include continuous monitoring or periodic penetration testing and vulnerability assessments. Absent effective continuous monitoring or other systems to detect, on an ongoing basis, changes in information systems that may create vulnerabilities, you shall conduct:"
+    },
+    {
+      "control_id": "314.4(d)(2)(i)",
+      "title": "314.4(d)(2)(i)",
+      "family": "314",
+      "description": "Annual penetration testing of your information systems determined each given year based on relevant identified risks in accordance with the risk assessment; and"
+    },
+    {
+      "control_id": "314.4(d)(2)(ii)",
+      "title": "314.4(d)(2)(ii)",
+      "family": "314",
+      "description": "Vulnerability assessments, including any systemic scans or reviews of information systems reasonably designed to identify publicly known security vulnerabilities in your information systems based on the risk assessment, at least every six months; and whenever there are material changes to your operations or business arrangements; and whenever there are circumstances you know or have reason to know may have a material impact on your information security program."
+    },
+    {
+      "control_id": "314.4(e)",
+      "title": "314.4(e)",
+      "family": "314",
+      "description": "Implement policies and procedures to ensure that personnel are able to enact your information security program by:"
+    },
+    {
+      "control_id": "314.4(e)(1)",
+      "title": "314.4(e)(1)",
+      "family": "314",
+      "description": "Providing your personnel with security awareness training that is updated as necessary to reflect risks identified by the risk assessment;"
+    },
+    {
+      "control_id": "314.4(e)(2)",
+      "title": "314.4(e)(2)",
+      "family": "314",
+      "description": "Utilizing qualified information security personnel employed by you or an affiliate or service provider sufficient to manage your information security risks and to perform or oversee the information security program;"
+    },
+    {
+      "control_id": "314.4(e)(3)",
+      "title": "314.4(e)(3)",
+      "family": "314",
+      "description": "Providing information security personnel with security updates and training sufficient to address relevant security risks; and"
+    },
+    {
+      "control_id": "314.4(e)(4)",
+      "title": "314.4(e)(4)",
+      "family": "314",
+      "description": "Verifying that key information security personnel take steps to maintain current knowledge of changing information security threats and countermeasures."
+    },
+    {
+      "control_id": "314.4(f)",
+      "title": "314.4(f)",
+      "family": "314",
+      "description": "Oversee service providers, by:"
+    },
+    {
+      "control_id": "314.4(f)(1)",
+      "title": "314.4(f)(1)",
+      "family": "314",
+      "description": "Taking reasonable steps to select and retain service providers that are capable of maintaining appropriate safeguards for the customer information at issue;"
+    },
+    {
+      "control_id": "314.4(f)(2)",
+      "title": "314.4(f)(2)",
+      "family": "314",
+      "description": "Requiring your service providers by contract to implement and maintain such safeguards; and"
+    },
+    {
+      "control_id": "314.4(f)(3)",
+      "title": "314.4(f)(3)",
+      "family": "314",
+      "description": "Periodically assessing your service providers based on the risk they present and the continued adequacy of their safeguards."
+    },
+    {
+      "control_id": "314.4(g)",
+      "title": "314.4(g)",
+      "family": "314",
+      "description": "Evaluate and adjust your information security program in light of the results of the testing and monitoring required by paragraph (d) of this section; any material changes to your operations or business arrangements; the results of risk assessments performed under paragraph (b)(2) of this section; or any other circumstances that you know or have reason to know may have a material impact on your information security program."
+    },
+    {
+      "control_id": "314.4(h)",
+      "title": "314.4(h)",
+      "family": "314",
+      "description": "Establish a written incident response plan designed to promptly respond to, and recover from, any security event materially affecting the confidentiality, integrity, or availability of customer information in your control. Such incident response plan shall address the following areas:"
+    },
+    {
+      "control_id": "314.4(h)(1)",
+      "title": "314.4(h)(1)",
+      "family": "314",
+      "description": "The goals of the incident response plan;"
+    },
+    {
+      "control_id": "314.4(h)(2)",
+      "title": "314.4(h)(2)",
+      "family": "314",
+      "description": "The internal processes for responding to a security event;"
+    },
+    {
+      "control_id": "314.4(h)(3)",
+      "title": "314.4(h)(3)",
+      "family": "314",
+      "description": "The definition of clear roles, responsibilities, and levels of decision-making authority;"
+    },
+    {
+      "control_id": "314.4(h)(4)",
+      "title": "314.4(h)(4)",
+      "family": "314",
+      "description": "External and internal communications and information sharing;"
+    },
+    {
+      "control_id": "314.4(h)(5)",
+      "title": "314.4(h)(5)",
+      "family": "314",
+      "description": "Identification of requirements for the remediation of any identified weaknesses in information systems and associated controls;"
+    },
+    {
+      "control_id": "314.4(h)(6)",
+      "title": "314.4(h)(6)",
+      "family": "314",
+      "description": "Documentation and reporting regarding security events and related incident response activities; and"
+    },
+    {
+      "control_id": "314.4(h)(7)",
+      "title": "314.4(h)(7)",
+      "family": "314",
+      "description": "The evaluation and revision as necessary of the incident response plan following a security event."
+    },
+    {
+      "control_id": "314.4(i)",
+      "title": "314.4(i)",
+      "family": "314",
+      "description": "Require your Qualified Individual to report in writing, regularly and at least annually, to your board of directors or equivalent governing body. If no such board of directors or equivalent governing body exists, such report shall be timely presented to a senior officer responsible for your information security program. The report shall include the following information:"
+    },
+    {
+      "control_id": "314.4(i)(1)",
+      "title": "314.4(i)(1)",
+      "family": "314",
+      "description": "The overall status of the information security program and your compliance with this part; and"
+    },
+    {
+      "control_id": "314.4(i)(2)",
+      "title": "314.4(i)(2)",
+      "family": "314",
+      "description": "Material matters related to the information security program, addressing issues such as risk assessment, risk management and control decisions, service provider arrangements, results of testing, security events or violations and management's responses thereto, and recommendations for changes in the information security program."
+    }
+  ]
+}

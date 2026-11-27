@@ -1031,3 +1031,19 @@ paths = ["^tools/grclanker/src/content/docs/docs/integrations/okta\\.md$"]
 regexes = [
   "^\\Q-----BEGIN PRIVATE KEY-----\\n...\"\nexport OKTA_CLIENT_PRIVATEKEYID=kid-optional\n```\n\ngrclanker signs an RS256 client assertion with `node:crypto` and requests `client_credentials` tokens from `/oauth2/v1/token`. It caches them until shortly before expiry and refreshes on 401.\n\nTo supply a pre-signed JWT instead, pass `client_assertion` (or `OKTA_CLIENT_CLIENTASSERTION`).\n\n### Config discovery order\n\nLater sources override earlier ones field by field:\n\n1. `~/.okta/okta.yaml`\n2. Project `.okta.yaml`\n3. Environment variables: `OKTA_CLIENT_ORGURL`, `OKTA_CLIENT_TOKEN`, `OKTA_CLIENT_AUTHORIZATIONMODE`, `OKTA_CLIENT_CLIENTID`, `OKTA_CLIENT_PRIVATEKEY`, `OKTA_CLIENT_PRIVATEKEYID`, `OKTA_CLIENT_CLIENTASSERTION`, `OKTA_CLIENT_SCOPES`.\n4. Explicit tool arguments: `org_url`, `auth_mode`, `api_token`, `client_id`, `private_key`, `private_key_id`, `client_assertion`, `scopes`, or `config_file` to bypass the default YAML locations.\n\nA missing YAML file is skipped. Other failures are reported as follows:\n\n- **File cannot be read:** The tool stops with `Unable to read Okta config file <path> (<errno code>)`.\n- **File cannot be parsed:** The tool stops with `Unable to parse Okta config file: invalid YAML in <path> at line N, column M (<code>)`.\n  - The code is the yaml package's own (`DUPLICATE_KEY`, `MISSING_CHAR`, `BAD_INDENT`, and so on).\n  - The code is `INVALID_YAML` when the parser threw something else, such as the unresolved alias `token: *value`.\n  - The position is omitted when the parser reports none.\n- **Private key:** A private key that `node:crypto` cannot load is reported as `Okta PrivateKey auth could not load the configured private key (<ERR_ code>)`.\n\nNone of these messages repeats a line, key, value, or key material from the file.\n\n```yaml\nokta:\n  client:\n    orgUrl: https://your-org.okta.com\n    authorizationMode: PrivateKey\n    clientId: 0oa...\n    privateKey: |\n      -----BEGIN PRIVATE KEY-----\\E$",
 ]
+
+[[allowlists]]
+description = "OWASP API10 filename hex-like prefix in scrape_owasp.py"
+condition = "AND"
+paths = ["^apps/myctrl/scripts/scrape_owasp\\.py$"]
+regexes = [
+  "^\\Q0xaa-unsafe-consumption-of-apis.md\\E$",
+]
+
+[[allowlists]]
+description = "Public XAI OAuth device-code client ID (not a secret)"
+condition = "AND"
+paths = ["^apps/myctrl/src/lib/ai/xai-oauth-protocol\\.ts$"]
+regexes = [
+  "^\\Qb1a00492-073a-47ea-816f-4c329264a828\\E$",
+]

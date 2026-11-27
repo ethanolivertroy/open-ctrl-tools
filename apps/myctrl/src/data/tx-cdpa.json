@@ -1,0 +1,1063 @@
+{
+  "framework": {
+    "id": "tx-cdpa",
+    "name": "Texas TDPSA",
+    "version": "2024",
+    "description": "Texas Data Privacy and Security Act (Business and Commerce Code Chapter 541)"
+  },
+  "families": {
+    "541": "541"
+  },
+  "controls": [
+    {
+      "control_id": "541.001",
+      "title": "541.001",
+      "family": "541",
+      "description": "See law for full content"
+    },
+    {
+      "control_id": "541.002",
+      "title": "541.002",
+      "family": "541",
+      "description": "See law for full content"
+    },
+    {
+      "control_id": "541.003",
+      "title": "541.003",
+      "family": "541",
+      "description": "See law for full content"
+    },
+    {
+      "control_id": "541.004",
+      "title": "541.004",
+      "family": "541",
+      "description": "This chapter does not apply to the processing of personal data by a person in the course of a purely personal or household activity."
+    },
+    {
+      "control_id": "541.005",
+      "title": "541.005",
+      "family": "541",
+      "description": "A controller or processor that complies with the verifiable parental consent requirements of the Children's Online Privacy Protection Act of 1998 (15 U.S.C. Section 6501 et seq.) with respect to data collected online is considered to be in compliance with any requirement to obtain parental consent under this chapter."
+    },
+    {
+      "control_id": "541.051(a)",
+      "title": "541.051(a)",
+      "family": "541",
+      "description": "A consumer is entitled to exercise the consumer rights authorized by this section at any time by submitting a request to a controller specifying the consumer rights the consumer wishes to exercise. With respect to the processing of personal data belonging to a known child, a parent or legal guardian of the child may exercise the consumer rights on behalf of the child."
+    },
+    {
+      "control_id": "541.051(b)",
+      "title": "541.051(b)",
+      "family": "541",
+      "description": "A controller shall comply with an authenticated consumer request to exercise the right to:"
+    },
+    {
+      "control_id": "541.051(b)(1)",
+      "title": "541.051(b)(1)",
+      "family": "541",
+      "description": "confirm whether a controller is processing the consumer's personal data and to access the personal data;"
+    },
+    {
+      "control_id": "541.051(b)(2)",
+      "title": "541.051(b)(2)",
+      "family": "541",
+      "description": "correct inaccuracies in the consumer's personal data, taking into account the nature of the personal data and the purposes of the processing of the consumer's personal data;"
+    },
+    {
+      "control_id": "541.051(b)(3)",
+      "title": "541.051(b)(3)",
+      "family": "541",
+      "description": "delete personal data provided by or obtained about the consumer;"
+    },
+    {
+      "control_id": "541.051(b)(4)",
+      "title": "541.051(b)(4)",
+      "family": "541",
+      "description": "if the data is available in a digital format, obtain a copy of the consumer's personal data that the consumer previously provided to the controller in a portable and, to the extent technically feasible, readily usable format that allows the consumer to transmit the data to another controller without hindrance; or"
+    },
+    {
+      "control_id": "541.051(b)(5)",
+      "title": "541.051(b)(5)",
+      "family": "541",
+      "description": "opt out of the processing of the personal data for purposes of:"
+    },
+    {
+      "control_id": "541.051(b)(5)(A)",
+      "title": "541.051(b)(5)(A)",
+      "family": "541",
+      "description": "targeted advertising;"
+    },
+    {
+      "control_id": "541.051(b)(5)(B)",
+      "title": "541.051(b)(5)(B)",
+      "family": "541",
+      "description": "the sale of personal data; or"
+    },
+    {
+      "control_id": "541.051(b)(5)(C)",
+      "title": "541.051(b)(5)(C)",
+      "family": "541",
+      "description": "profiling in furtherance of a decision that produces a legal or similarly significant effect concerning the consumer."
+    },
+    {
+      "control_id": "541.052(a)",
+      "title": "541.052(a)",
+      "family": "541",
+      "description": "Except as otherwise provided by this chapter, a controller shall comply with a request submitted by a consumer to exercise the consumer's rights pursuant to Section 541.051 as provided by this section."
+    },
+    {
+      "control_id": "541.052(b)",
+      "title": "541.052(b)",
+      "family": "541",
+      "description": "A controller shall respond to the consumer request without undue delay, which may not be later than the 45th day after the date of receipt of the request. The controller may extend the response period once by an additional 45 days when reasonably necessary, taking into account the complexity and number of the consumer's requests, so long as the controller informs the consumer of the extension within the initial 45-day response period, together with the reason for the extension."
+    },
+    {
+      "control_id": "541.052(c)",
+      "title": "541.052(c)",
+      "family": "541",
+      "description": "If a controller declines to take action regarding the consumer's request, the controller shall inform the consumer without undue delay, which may not be later than the 45th day after the date of receipt of the request, of the justification for declining to take action and provide instructions on how to appeal the decision in accordance with Section 541.053."
+    },
+    {
+      "control_id": "541.052(d)",
+      "title": "541.052(d)",
+      "family": "541",
+      "description": "A controller shall provide information in response to a consumer request free of charge, at least twice annually per consumer. If a request from a consumer is manifestly unfounded, excessive, or repetitive, the controller may charge the consumer a reasonable fee to cover the administrative costs of complying with the request or may decline to act on the request. The controller bears the burden of demonstrating for purposes of this subsection that a request is manifestly unfounded, excessive, or repetitive."
+    },
+    {
+      "control_id": "541.052(e)",
+      "title": "541.052(e)",
+      "family": "541",
+      "description": "If a controller is unable to authenticate the request using commercially reasonable efforts, the controller is not required to comply with a consumer request submitted under Section 541.051 and may request that the consumer provide additional information reasonably necessary to authenticate the consumer and the consumer's request."
+    },
+    {
+      "control_id": "541.052(f)",
+      "title": "541.052(f)",
+      "family": "541",
+      "description": "A controller that has obtained personal data about a consumer from a source other than the consumer is considered in compliance with a consumer's request to delete that personal data pursuant to Section 541.051(b)(3) by:"
+    },
+    {
+      "control_id": "541.052(f)(1)",
+      "title": "541.052(f)(1)",
+      "family": "541",
+      "description": "retaining a record of the deletion request and the minimum data necessary for the purpose of ensuring the consumer's personal data remains deleted from the business's records and not using the retained data for any other purpose under this chapter; or"
+    },
+    {
+      "control_id": "541.052(f)(2)",
+      "title": "541.052(f)(2)",
+      "family": "541",
+      "description": "opting the consumer out of the processing of that personal data for any purpose other than a purpose that is exempt under the provisions of this chapter."
+    },
+    {
+      "control_id": "541.053(a)",
+      "title": "541.053(a)",
+      "family": "541",
+      "description": "A controller shall establish a process for a consumer to appeal the controller's refusal to take action on a request within a reasonable period of time after the consumer's receipt of the decision under Section 541.052(c)."
+    },
+    {
+      "control_id": "541.053(b)",
+      "title": "541.053(b)",
+      "family": "541",
+      "description": "The appeal process must be conspicuously available and similar to the process for initiating action to exercise consumer rights by submitting a request under Section 541.051."
+    },
+    {
+      "control_id": "541.053(c)",
+      "title": "541.053(c)",
+      "family": "541",
+      "description": "A controller shall inform the consumer in writing of any action taken or not taken in response to an appeal under this section not later than the 60th day after the date of receipt of the appeal, including a written explanation of the reason or reasons for the decision."
+    },
+    {
+      "control_id": "541.053(d)",
+      "title": "541.053(d)",
+      "family": "541",
+      "description": "If the controller denies an appeal, the controller shall provide the consumer with the online mechanism described by Section 541.152 through which the consumer may contact the attorney general to submit a complaint."
+    },
+    {
+      "control_id": "541.054",
+      "title": "541.054",
+      "family": "541",
+      "description": "Any provision of a contract or agreement that waives or limits in any way a consumer right described by Sections 541.051, 541.052, and 541.053 is contrary to public policy and is void and unenforceable."
+    },
+    {
+      "control_id": "541.055(a)",
+      "title": "541.055(a)",
+      "family": "541",
+      "description": "A controller shall establish two or more secure and reliable methods to enable consumers to submit a request to exercise their consumer rights under this chapter. The methods must take into account:"
+    },
+    {
+      "control_id": "541.055(a)(1)",
+      "title": "541.055(a)(1)",
+      "family": "541",
+      "description": "the ways in which consumers normally interact with the controller;"
+    },
+    {
+      "control_id": "541.055(a)(2)",
+      "title": "541.055(a)(2)",
+      "family": "541",
+      "description": "the necessity for secure and reliable communications of those requests; and"
+    },
+    {
+      "control_id": "541.055(a)(3)",
+      "title": "541.055(a)(3)",
+      "family": "541",
+      "description": "the ability of the controller to authenticate the identity of the consumer making the request."
+    },
+    {
+      "control_id": "541.055(b)",
+      "title": "541.055(b)",
+      "family": "541",
+      "description": "A controller may not require a consumer to create a new account to exercise the consumer's rights under this subchapter but may require a consumer to use an existing account."
+    },
+    {
+      "control_id": "541.055(c)",
+      "title": "541.055(c)",
+      "family": "541",
+      "description": "Except as provided by Subsection (d), if the controller maintains an Internet website, the controller must provide a mechanism on the website for consumers to submit requests for information required to be disclosed under this chapter."
+    },
+    {
+      "control_id": "541.055(d)",
+      "title": "541.055(d)",
+      "family": "541",
+      "description": "A controller that operates exclusively online and has a direct relationship with a consumer from whom the controller collects personal information is only required to provide an e-mail address for the submission of requests described by Subsection (c)."
+    },
+    {
+      "control_id": "541.055(e)",
+      "title": "541.055(e)",
+      "family": "541",
+      "description": "A consumer may designate another person to serve as the consumer's authorized agent and act on the consumer's behalf to opt out of the processing of the consumer's personal data under Sections 541.051(b)(5)(A) and (B). A consumer may designate an authorized agent using a technology, including a link to an Internet website, an Internet browser setting or extension, or a global setting on an electronic device, that allows the consumer to indicate the consumer's intent to opt out of the processing. A controller shall comply with an opt-out request received from an authorized agent under this subsection if the controller is able to verify, with commercially reasonable effort, the identity of the consumer and the authorized agent's authority to act on the consumer's behalf. A controller is not required to comply with an opt-out request received from an authorized agent under this subsection if:"
+    },
+    {
+      "control_id": "541.055(e)(1)",
+      "title": "541.055(e)(1)",
+      "family": "541",
+      "description": "the authorized agent does not communicate the request to the controller in a clear and unambiguous manner;"
+    },
+    {
+      "control_id": "541.055(e)(2)",
+      "title": "541.055(e)(2)",
+      "family": "541",
+      "description": "the controller is not able to verify, with commercially reasonable effort, that the consumer is a resident of this state;"
+    },
+    {
+      "control_id": "541.055(e)(3)",
+      "title": "541.055(e)(3)",
+      "family": "541",
+      "description": "the controller does not possess the ability to process the request; or"
+    },
+    {
+      "control_id": "541.055(e)(4)",
+      "title": "541.055(e)(4)",
+      "family": "541",
+      "description": "the controller does not process similar or identical requests the controller receives from consumers for the purpose of complying with similar or identical laws or regulations of another state."
+    },
+    {
+      "control_id": "541.055(f)",
+      "title": "541.055(f)",
+      "family": "541",
+      "description": "A technology described by Subsection (e):"
+    },
+    {
+      "control_id": "541.055(f)(1)",
+      "title": "541.055(f)(1)",
+      "family": "541",
+      "description": "may not unfairly disadvantage another controller;"
+    },
+    {
+      "control_id": "541.055(f)(2)",
+      "title": "541.055(f)(2)",
+      "family": "541",
+      "description": "may not make use of a default setting, but must require the consumer to make an affirmative, freely given, and unambiguous choice to indicate the consumer's intent to opt out of any processing of a consumer's personal data; and"
+    },
+    {
+      "control_id": "541.055(f)(3)",
+      "title": "541.055(f)(3)",
+      "family": "541",
+      "description": "must be consumer-friendly and easy to use by the average consumer."
+    },
+    {
+      "control_id": "541.101(a)",
+      "title": "541.101(a)",
+      "family": "541",
+      "description": "A controller:"
+    },
+    {
+      "control_id": "541.101(a)(1)",
+      "title": "541.101(a)(1)",
+      "family": "541",
+      "description": "shall limit the collection of personal data to what is adequate, relevant, and reasonably necessary in relation to the purposes for which that personal data is processed, as disclosed to the consumer; and"
+    },
+    {
+      "control_id": "541.101(a)(2)",
+      "title": "541.101(a)(2)",
+      "family": "541",
+      "description": "for purposes of protecting the confidentiality, integrity, and accessibility of personal data, shall establish, implement, and maintain reasonable administrative, technical, and physical data security practices that are appropriate to the volume and nature of the personal data at issue."
+    },
+    {
+      "control_id": "541.101(b)",
+      "title": "541.101(b)",
+      "family": "541",
+      "description": "A controller may not:"
+    },
+    {
+      "control_id": "541.101(b)(1)",
+      "title": "541.101(b)(1)",
+      "family": "541",
+      "description": "except as otherwise provided by this chapter, process personal data for a purpose that is neither reasonably necessary to nor compatible with the disclosed purpose for which the personal data is processed, as disclosed to the consumer, unless the controller obtains the consumer's consent;"
+    },
+    {
+      "control_id": "541.101(b)(2)",
+      "title": "541.101(b)(2)",
+      "family": "541",
+      "description": "process personal data in violation of state and federal laws that prohibit unlawful discrimination against consumers;"
+    },
+    {
+      "control_id": "541.101(b)(3)",
+      "title": "541.101(b)(3)",
+      "family": "541",
+      "description": "discriminate against a consumer for exercising any of the consumer rights contained in this chapter, including by denying goods or services, charging different prices or rates for goods or services, or providing a different level of quality of goods or services to the consumer; or"
+    },
+    {
+      "control_id": "541.101(b)(4)",
+      "title": "541.101(b)(4)",
+      "family": "541",
+      "description": "process the sensitive data of a consumer without obtaining the consumer's consent, or, in the case of processing the sensitive data of a known child, without processing that data in accordance with the Children's Online Privacy Protection Act of 1998 (15 U.S.C. Section 6501 et seq.)."
+    },
+    {
+      "control_id": "541.101(c)",
+      "title": "541.101(c)",
+      "family": "541",
+      "description": "Subsection (b)(3) may not be construed to require a controller to provide a product or service that requires the personal data of a consumer that the controller does not collect or maintain or to prohibit a controller from offering a different price, rate, level, quality, or selection of goods or services to a consumer, including offering goods or services for no fee, if the consumer has exercised the consumer's right to opt out under Section 541.051 or the offer is related to a consumer's voluntary participation in a bona fide loyalty, rewards, premium features, discounts, or club card program."
+    },
+    {
+      "control_id": "541.102(a)",
+      "title": "541.102(a)",
+      "family": "541",
+      "description": "A controller shall provide consumers with a reasonably accessible and clear privacy notice that includes:"
+    },
+    {
+      "control_id": "541.102(a)(1)",
+      "title": "541.102(a)(1)",
+      "family": "541",
+      "description": "the categories of personal data processed by the controller, including, if applicable, any sensitive data processed by the controller;"
+    },
+    {
+      "control_id": "541.102(a)(2)",
+      "title": "541.102(a)(2)",
+      "family": "541",
+      "description": "the purpose for processing personal data;"
+    },
+    {
+      "control_id": "541.102(a)(3)",
+      "title": "541.102(a)(3)",
+      "family": "541",
+      "description": "how consumers may exercise their consumer rights under Subchapter B, including the process by which a consumer may appeal a controller's decision with regard to the consumer's request;"
+    },
+    {
+      "control_id": "541.102(a)(4)",
+      "title": "541.102(a)(4)",
+      "family": "541",
+      "description": "if applicable, the categories of personal data that the controller shares with third parties;"
+    },
+    {
+      "control_id": "541.102(a)(5)",
+      "title": "541.102(a)(5)",
+      "family": "541",
+      "description": "if applicable, the categories of third parties with whom the controller shares personal data; and"
+    },
+    {
+      "control_id": "541.102(a)(6)",
+      "title": "541.102(a)(6)",
+      "family": "541",
+      "description": "a description of the methods required under Section 541.055 through which consumers can submit requests to exercise their consumer rights under this chapter."
+    },
+    {
+      "control_id": "541.102(b)",
+      "title": "541.102(b)",
+      "family": "541",
+      "description": "If a controller engages in the sale of personal data that is sensitive data, the controller shall include the following notice:\n\"NOTICE: We may sell your sensitive personal data.\" \nThe notice must be posted in the same location and in the same manner as\nthe privacy notice described by Subsection (a)."
+    },
+    {
+      "control_id": "541.103",
+      "title": "541.103",
+      "family": "541",
+      "description": "If a controller sells personal data to third parties or processes personal data for targeted advertising, the controller shall clearly and conspicuously disclose that process and the manner in which a consumer may exercise the right to opt out of that process."
+    },
+    {
+      "control_id": "541.104(a)",
+      "title": "541.104(a)",
+      "family": "541",
+      "description": "A processor shall adhere to the instructions of a controller and shall assist the controller in meeting or complying with the controller's duties or requirements under this chapter, including:"
+    },
+    {
+      "control_id": "541.104(a)(1)",
+      "title": "541.104(a)(1)",
+      "family": "541",
+      "description": "assisting the controller in responding to consumer rights requests submitted under Section 541.051 by using appropriate technical and organizational measures, as reasonably practicable, taking into account the nature of processing and the information available to the processor;"
+    },
+    {
+      "control_id": "541.104(a)(2)",
+      "title": "541.104(a)(2)",
+      "family": "541",
+      "description": "assisting the controller with regard to complying with the requirement relating to the security of processing personal data and to the notification of a breach of security of the processor's system under Chapter 521, taking into account the nature of processing and the information available to the processor; and"
+    },
+    {
+      "control_id": "541.104(a)(3)",
+      "title": "541.104(a)(3)",
+      "family": "541",
+      "description": "providing necessary information to enable the controller to conduct and document data protection assessments under Section 541.105."
+    },
+    {
+      "control_id": "541.104(b)",
+      "title": "541.104(b)",
+      "family": "541",
+      "description": "A contract between a controller and a processor shall govern the processor's data processing procedures with respect to processing performed on behalf of the controller. The contract must include:"
+    },
+    {
+      "control_id": "541.104(b)(1)",
+      "title": "541.104(b)(1)",
+      "family": "541",
+      "description": "clear instructions for processing data;"
+    },
+    {
+      "control_id": "541.104(b)(2)",
+      "title": "541.104(b)(2)",
+      "family": "541",
+      "description": "the nature and purpose of processing;"
+    },
+    {
+      "control_id": "541.104(b)(3)",
+      "title": "541.104(b)(3)",
+      "family": "541",
+      "description": "the type of data subject to processing;"
+    },
+    {
+      "control_id": "541.104(b)(4)",
+      "title": "541.104(b)(4)",
+      "family": "541",
+      "description": "the duration of processing;"
+    },
+    {
+      "control_id": "541.104(b)(5)",
+      "title": "541.104(b)(5)",
+      "family": "541",
+      "description": "the rights and obligations of both parties; and"
+    },
+    {
+      "control_id": "541.104(b)(6)",
+      "title": "541.104(b)(6)",
+      "family": "541",
+      "description": "a requirement that the processor shall:"
+    },
+    {
+      "control_id": "541.104(b)(6)(A)",
+      "title": "541.104(b)(6)(A)",
+      "family": "541",
+      "description": "ensure that each person processing personal data is subject to a duty of confidentiality with respect to the data;"
+    },
+    {
+      "control_id": "541.104(b)(6)(B)",
+      "title": "541.104(b)(6)(B)",
+      "family": "541",
+      "description": "at the controller's direction, delete or return all personal data to the controller as requested after the provision of the service is completed, unless retention of the personal data is required by law;"
+    },
+    {
+      "control_id": "541.104(b)(6)(C)",
+      "title": "541.104(b)(6)(C)",
+      "family": "541",
+      "description": "make available to the controller, on reasonable request, all information in the processor's possession necessary to demonstrate the processor's compliance with the requirements of this chapter;"
+    },
+    {
+      "control_id": "541.104(b)(6)(D)",
+      "title": "541.104(b)(6)(D)",
+      "family": "541",
+      "description": "allow, and cooperate with, reasonable assessments by the controller or the controller's designated assessor; and"
+    },
+    {
+      "control_id": "541.104(b)(6)(E)",
+      "title": "541.104(b)(6)(E)",
+      "family": "541",
+      "description": "engage any subcontractor pursuant to a written contract that requires the subcontractor to meet the requirements of the processor with respect to the personal data."
+    },
+    {
+      "control_id": "541.104(c)",
+      "title": "541.104(c)",
+      "family": "541",
+      "description": "Notwithstanding the requirement described by Subsection (b)(6)(D), a processor, in the alternative, may arrange for a qualified and independent assessor to conduct an assessment of the processor's policies and technical and organizational measures in support of the requirements under this chapter using an appropriate and accepted control standard or framework and assessment procedure. The processor shall provide a report of the assessment to the controller on request."
+    },
+    {
+      "control_id": "541.104(d)",
+      "title": "541.104(d)",
+      "family": "541",
+      "description": "This section may not be construed to relieve a controller or a processor from the liabilities imposed on the controller or processor by virtue of its role in the processing relationship as described by this chapter."
+    },
+    {
+      "control_id": "541.104(e)",
+      "title": "541.104(e)",
+      "family": "541",
+      "description": "A determination of whether a person is acting as a controller or processor with respect to a specific processing of data is a fact-based determination that depends on the context in which personal data is to be processed. A processor that continues to adhere to a controller's instructions with respect to a specific processing of personal data remains in the role of a processor."
+    },
+    {
+      "control_id": "541.105(a)",
+      "title": "541.105(a)",
+      "family": "541",
+      "description": "A controller shall conduct and document a data protection assessment of each of the following processing activities involving personal data:"
+    },
+    {
+      "control_id": "541.105(a)(1)",
+      "title": "541.105(a)(1)",
+      "family": "541",
+      "description": "the processing of personal data for purposes of targeted advertising;"
+    },
+    {
+      "control_id": "541.105(a)(2)",
+      "title": "541.105(a)(2)",
+      "family": "541",
+      "description": "the sale of personal data;"
+    },
+    {
+      "control_id": "541.105(a)(3)",
+      "title": "541.105(a)(3)",
+      "family": "541",
+      "description": "the processing of personal data for purposes of profiling, if the profiling presents a reasonably foreseeable risk of:"
+    },
+    {
+      "control_id": "541.105(a)(3)(A)",
+      "title": "541.105(a)(3)(A)",
+      "family": "541",
+      "description": "unfair or deceptive treatment of or unlawful disparate impact on consumers;"
+    },
+    {
+      "control_id": "541.105(a)(3)(B)",
+      "title": "541.105(a)(3)(B)",
+      "family": "541",
+      "description": "financial, physical, or reputational injury to consumers;"
+    },
+    {
+      "control_id": "541.105(a)(3)(C)",
+      "title": "541.105(a)(3)(C)",
+      "family": "541",
+      "description": "a physical or other intrusion on the solitude or seclusion, or the private affairs or concerns, of consumers, if the intrusion would be offensive to a reasonable person; or"
+    },
+    {
+      "control_id": "541.105(a)(3)(D)",
+      "title": "541.105(a)(3)(D)",
+      "family": "541",
+      "description": "other substantial injury to consumers;"
+    },
+    {
+      "control_id": "541.105(a)(4)",
+      "title": "541.105(a)(4)",
+      "family": "541",
+      "description": "the processing of sensitive data; and"
+    },
+    {
+      "control_id": "541.105(a)(5)",
+      "title": "541.105(a)(5)",
+      "family": "541",
+      "description": "any processing activities involving personal data that present a heightened risk of harm to consumers."
+    },
+    {
+      "control_id": "541.105(b)",
+      "title": "541.105(b)",
+      "family": "541",
+      "description": "A data protection assessment conducted under Subsection (a) must:"
+    },
+    {
+      "control_id": "541.105(b)(1)",
+      "title": "541.105(b)(1)",
+      "family": "541",
+      "description": "identify and weigh the direct or indirect benefits that may flow from the processing to the controller, the consumer, other stakeholders, and the public, against the potential risks to the rights of the consumer associated with that processing, as mitigated by safeguards that can be employed by the controller to reduce the risks; and"
+    },
+    {
+      "control_id": "541.105(b)(2)",
+      "title": "541.105(b)(2)",
+      "family": "541",
+      "description": "factor into the assessment:"
+    },
+    {
+      "control_id": "541.105(b)(2)(A)",
+      "title": "541.105(b)(2)(A)",
+      "family": "541",
+      "description": "the use of deidentified data;"
+    },
+    {
+      "control_id": "541.105(b)(2)(B)",
+      "title": "541.105(b)(2)(B)",
+      "family": "541",
+      "description": "the reasonable expectations of consumers;"
+    },
+    {
+      "control_id": "541.105(b)(2)(C)",
+      "title": "541.105(b)(2)(C)",
+      "family": "541",
+      "description": "the context of the processing; and"
+    },
+    {
+      "control_id": "541.105(b)(2)(D)",
+      "title": "541.105(b)(2)(D)",
+      "family": "541",
+      "description": "the relationship between the controller and the consumer whose personal data will be processed."
+    },
+    {
+      "control_id": "541.105(c)",
+      "title": "541.105(c)",
+      "family": "541",
+      "description": "A controller shall make a data protection assessment requested under Section 541.153(b) available to the attorney general pursuant to a civil investigative demand under Section 541.153."
+    },
+    {
+      "control_id": "541.105(d)",
+      "title": "541.105(d)",
+      "family": "541",
+      "description": "A data protection assessment is confidential and exempt from public inspection and copying under Chapter 552, Government Code. Disclosure of a data protection assessment in compliance with a request from the attorney general does not constitute a waiver of attorney-client privilege or work product protection with respect to the assessment and any information contained in the assessment."
+    },
+    {
+      "control_id": "541.105(e)",
+      "title": "541.105(e)",
+      "family": "541",
+      "description": "A single data protection assessment may address a comparable set of processing operations that include similar activities."
+    },
+    {
+      "control_id": "541.105(f)",
+      "title": "541.105(f)",
+      "family": "541",
+      "description": "A data protection assessment conducted by a controller for the purpose of compliance with other laws or regulations may constitute compliance with the requirements of this section if the assessment has a reasonably comparable scope and effect."
+    },
+    {
+      "control_id": "541.106(a)",
+      "title": "541.106(a)",
+      "family": "541",
+      "description": "A controller in possession of deidentified data shall:"
+    },
+    {
+      "control_id": "541.106(a)(1)",
+      "title": "541.106(a)(1)",
+      "family": "541",
+      "description": "take reasonable measures to ensure that the data cannot be associated with an individual;"
+    },
+    {
+      "control_id": "541.106(a)(2)",
+      "title": "541.106(a)(2)",
+      "family": "541",
+      "description": "publicly commit to maintaining and using deidentified data without attempting to reidentify the data; and"
+    },
+    {
+      "control_id": "541.106(a)(3)",
+      "title": "541.106(a)(3)",
+      "family": "541",
+      "description": "contractually obligate any recipient of the deidentified data to comply with the provisions of this chapter."
+    },
+    {
+      "control_id": "541.106(b)",
+      "title": "541.106(b)",
+      "family": "541",
+      "description": "This chapter may not be construed to require a controller or processor to:"
+    },
+    {
+      "control_id": "541.106(b)(1)",
+      "title": "541.106(b)(1)",
+      "family": "541",
+      "description": "reidentify deidentified data or pseudonymous data;"
+    },
+    {
+      "control_id": "541.106(b)(2)",
+      "title": "541.106(b)(2)",
+      "family": "541",
+      "description": "maintain data in identifiable form or obtain, retain, or access any data or technology for the purpose of allowing the controller or processor to associate a consumer request with personal data; or"
+    },
+    {
+      "control_id": "541.106(b)(3)",
+      "title": "541.106(b)(3)",
+      "family": "541",
+      "description": "comply with an authenticated consumer rights request under Section 541.051, if the controller:"
+    },
+    {
+      "control_id": "541.106(b)(3)(A)",
+      "title": "541.106(b)(3)(A)",
+      "family": "541",
+      "description": "is not reasonably capable of associating the request with the personal data or it would be unreasonably burdensome for the controller to associate the request with the personal data;"
+    },
+    {
+      "control_id": "541.106(b)(3)(B)",
+      "title": "541.106(b)(3)(B)",
+      "family": "541",
+      "description": "does not use the personal data to recognize or respond to the specific consumer who is the subject of the personal data or associate the personal data with other personal data about the same specific consumer; and"
+    },
+    {
+      "control_id": "541.106(b)(3)(C)",
+      "title": "541.106(b)(3)(C)",
+      "family": "541",
+      "description": "does not sell the personal data to any third party or otherwise voluntarily disclose the personal data to any third party other than a processor, except as otherwise permitted by this section."
+    },
+    {
+      "control_id": "541.106(c)",
+      "title": "541.106(c)",
+      "family": "541",
+      "description": "The consumer rights under Sections 541.051(b)(1)-(4) and controller duties under Section 541.101 do not apply to pseudonymous data in cases in which the controller is able to demonstrate any information necessary to identify the consumer is kept separately and is subject to effective technical and organizational controls that prevent the controller from accessing the information."
+    },
+    {
+      "control_id": "541.106(d)",
+      "title": "541.106(d)",
+      "family": "541",
+      "description": "A controller that discloses pseudonymous data or deidentified data shall exercise reasonable oversight to monitor compliance with any contractual commitments to which the pseudonymous data or deidentified data is subject and shall take appropriate steps to address any breach of the contractual commitments."
+    },
+    {
+      "control_id": "541.107(a)",
+      "title": "541.107(a)",
+      "family": "541",
+      "description": "A person described by Section 541.002(a)(3) may not engage in the sale of personal data that is sensitive data without receiving prior consent from the consumer."
+    },
+    {
+      "control_id": "541.107(b)",
+      "title": "541.107(b)",
+      "family": "541",
+      "description": "A person who violates this section is subject to the penalty under Section 541.155."
+    },
+    {
+      "control_id": "541.151",
+      "title": "541.151",
+      "family": "541",
+      "description": "The attorney general has exclusive authority to enforce this chapter."
+    },
+    {
+      "control_id": "541.152",
+      "title": "541.152",
+      "family": "541",
+      "description": "The attorney general shall post on the attorney general's Internet\nwebsite:"
+    },
+    {
+      "control_id": "541.152(1)",
+      "title": "541.152(1)",
+      "family": "541",
+      "description": "information relating to:"
+    },
+    {
+      "control_id": "541.152(1)(A)",
+      "title": "541.152(1)(A)",
+      "family": "541",
+      "description": "the responsibilities of a controller under Subchapters B and C;"
+    },
+    {
+      "control_id": "541.152(1)(B)",
+      "title": "541.152(1)(B)",
+      "family": "541",
+      "description": "the responsibilities of a processor under Subchapter C; and"
+    },
+    {
+      "control_id": "541.152(1)(C)",
+      "title": "541.152(1)(C)",
+      "family": "541",
+      "description": "a consumer's rights under Subchapter B; and"
+    },
+    {
+      "control_id": "541.152(2)",
+      "title": "541.152(2)",
+      "family": "541",
+      "description": "an online mechanism through which a consumer may submit a complaint under this chapter to the attorney general."
+    },
+    {
+      "control_id": "541.153(a)",
+      "title": "541.153(a)",
+      "family": "541",
+      "description": "If the attorney general has reasonable cause to believe that a person has\nengaged in or is engaging in a violation of this chapter, the attorney general may issue a civil investigative demand. The procedures established for the issuance of a civil investigative demand under Section 15.10 apply to the same extent and manner to the issuance of a civil investigative demand under this section."
+    },
+    {
+      "control_id": "541.153(b)",
+      "title": "541.153(b)",
+      "family": "541",
+      "description": "The attorney general may request, pursuant to a civil investigative demand issued under Subsection (a), that a controller disclose any data protection assessment that is relevant to an investigation conducted by the attorney general. The attorney general may evaluate the data protection assessment for compliance with the requirements set forth in Sections 541.101, 541.102, and 541.103."
+    },
+    {
+      "control_id": "541.154",
+      "title": "541.154",
+      "family": "541",
+      "description": "Before bringing an action under Section 541.155, the attorney general shall notify a person in writing, not later than the 30th day before bringing the action, identifying the specific provisions of this chapter the attorney general alleges have been or are being violated. The attorney general may not bring an action against the person if:"
+    },
+    {
+      "control_id": "541.154(1)",
+      "title": "541.154(1)",
+      "family": "541",
+      "description": "within the 30-day period, the person cures the identified violation; and"
+    },
+    {
+      "control_id": "541.154(2)",
+      "title": "541.154(2)",
+      "family": "541",
+      "description": "the person provides the attorney general a written statement that the person:"
+    },
+    {
+      "control_id": "541.154(2)(A)",
+      "title": "541.154(2)(A)",
+      "family": "541",
+      "description": "cured the alleged violation;"
+    },
+    {
+      "control_id": "541.154(2)(B)",
+      "title": "541.154(2)(B)",
+      "family": "541",
+      "description": "notified the consumer that the consumer's privacy violation was addressed, if the consumer's contact information has been made available to the person;"
+    },
+    {
+      "control_id": "541.154(2)(C)",
+      "title": "541.154(2)(C)",
+      "family": "541",
+      "description": "provided supportive documentation to show how the privacy violation was cured; and"
+    },
+    {
+      "control_id": "541.154(2)(D)",
+      "title": "541.154(2)(D)",
+      "family": "541",
+      "description": "made changes to internal policies, if necessary, to ensure that no such further violations will occur."
+    },
+    {
+      "control_id": "541.155(a)",
+      "title": "541.155(a)",
+      "family": "541",
+      "description": "A person who violates this chapter following the cure period described by Section 541.154 or who breaches a written statement provided to the attorney general under that section is liable for a civil penalty in an amount not to exceed $7,500 for each violation."
+    },
+    {
+      "control_id": "541.155(b)",
+      "title": "541.155(b)",
+      "family": "541",
+      "description": "The attorney general may bring an action in the name of this state to:"
+    },
+    {
+      "control_id": "541.155(b)(1)",
+      "title": "541.155(b)(1)",
+      "family": "541",
+      "description": "recover a civil penalty under this section;"
+    },
+    {
+      "control_id": "541.155(b)(2)",
+      "title": "541.155(b)(2)",
+      "family": "541",
+      "description": "restrain or enjoin the person from violating this chapter; or"
+    },
+    {
+      "control_id": "541.155(b)(3)",
+      "title": "541.155(b)(3)",
+      "family": "541",
+      "description": "recover the civil penalty and seek injunctive relief."
+    },
+    {
+      "control_id": "541.155(c)",
+      "title": "541.155(c)",
+      "family": "541",
+      "description": "The attorney general may recover reasonable attorney's fees and other reasonable expenses incurred in investigating and bringing an action under this section."
+    },
+    {
+      "control_id": "541.155(d)",
+      "title": "541.155(d)",
+      "family": "541",
+      "description": "The attorney general shall deposit a civil penalty collected under this section in accordance with Section 402.007, Government Code."
+    },
+    {
+      "control_id": "541.156",
+      "title": "541.156",
+      "family": "541",
+      "description": "This chapter may not be construed as providing a basis for, or being subject to, a private right of action for a violation of this chapter or any other law."
+    },
+    {
+      "control_id": "541.201(a)",
+      "title": "541.201(a)",
+      "family": "541",
+      "description": "This chapter may not be construed to restrict a controller's or processor's ability to:"
+    },
+    {
+      "control_id": "541.201(a)(1)",
+      "title": "541.201(a)(1)",
+      "family": "541",
+      "description": "comply with federal, state, or local laws, rules, or regulations;"
+    },
+    {
+      "control_id": "541.201(a)(2)",
+      "title": "541.201(a)(2)",
+      "family": "541",
+      "description": "comply with a civil, criminal, or regulatory inquiry, investigation, subpoena, or summons by federal, state, local, or other governmental authorities;"
+    },
+    {
+      "control_id": "541.201(a)(3)",
+      "title": "541.201(a)(3)",
+      "family": "541",
+      "description": "investigate, establish, exercise, prepare for, or defend legal claims;"
+    },
+    {
+      "control_id": "541.201(a)(4)",
+      "title": "541.201(a)(4)",
+      "family": "541",
+      "description": "provide a product or service specifically requested by a consumer or the parent or guardian of a child, perform a contract to which the consumer is a party, including fulfilling the terms of a written warranty, or take steps at the request of the consumer before entering into a contract;"
+    },
+    {
+      "control_id": "541.201(a)(5)",
+      "title": "541.201(a)(5)",
+      "family": "541",
+      "description": "take immediate steps to protect an interest that is essential for the life or physical safety of the consumer or of another individual and in which the processing cannot be manifestly based on another legal basis;"
+    },
+    {
+      "control_id": "541.201(a)(6)",
+      "title": "541.201(a)(6)",
+      "family": "541",
+      "description": "prevent, detect, protect against, or respond to security incidents, identity theft, fraud, harassment, malicious or deceptive activities, or any illegal activity;"
+    },
+    {
+      "control_id": "541.201(a)(7)",
+      "title": "541.201(a)(7)",
+      "family": "541",
+      "description": "preserve the integrity or security of systems or investigate, report, or prosecute those responsible for breaches of system security;"
+    },
+    {
+      "control_id": "541.201(a)(8)",
+      "title": "541.201(a)(8)",
+      "family": "541",
+      "description": "engage in public or peer-reviewed scientific or statistical research in the public interest that adheres to all other applicable ethics and privacy laws and is approved, monitored, and governed by an institutional review board or similar independent oversight entity that determines:"
+    },
+    {
+      "control_id": "541.201(a)(8)(A)",
+      "title": "541.201(a)(8)(A)",
+      "family": "541",
+      "description": "if the deletion of the information is likely to provide substantial benefits that do not exclusively accrue to the controller;"
+    },
+    {
+      "control_id": "541.201(a)(8)(B)",
+      "title": "541.201(a)(8)(B)",
+      "family": "541",
+      "description": "whether the expected benefits of the research outweigh the privacy risks; and"
+    },
+    {
+      "control_id": "541.201(a)(8)(C)",
+      "title": "541.201(a)(8)(C)",
+      "family": "541",
+      "description": "if the controller has implemented reasonable safeguards to mitigate privacy risks associated with research, including any risks associated with reidentification; or"
+    },
+    {
+      "control_id": "541.201(a)(9)",
+      "title": "541.201(a)(9)",
+      "family": "541",
+      "description": "assist another controller, processor, or third party with any of the requirements under this subsection."
+    },
+    {
+      "control_id": "541.201(b)",
+      "title": "541.201(b)",
+      "family": "541",
+      "description": "This chapter may not be construed to prevent a controller or processor from providing personal data concerning a consumer to a person covered by an evidentiary privilege under the laws of this state as part of a privileged communication."
+    },
+    {
+      "control_id": "541.201(c)",
+      "title": "541.201(c)",
+      "family": "541",
+      "description": "This chapter may not be construed as imposing a requirement on controllers and processors that adversely affects the rights or freedoms of any person, including the right of free speech."
+    },
+    {
+      "control_id": "541.201(d)",
+      "title": "541.201(d)",
+      "family": "541",
+      "description": "This chapter may not be construed as requiring a controller, processor, third party, or consumer to disclose a trade secret."
+    },
+    {
+      "control_id": "541.202(a)",
+      "title": "541.202(a)",
+      "family": "541",
+      "description": "The requirements imposed on controllers and processors under this chapter may not restrict a controller's or processor's ability to collect, use, or retain data to:"
+    },
+    {
+      "control_id": "541.202(a)(1)",
+      "title": "541.202(a)(1)",
+      "family": "541",
+      "description": "conduct internal research to develop, improve, or repair products, services, or technology;"
+    },
+    {
+      "control_id": "541.202(a)(2)",
+      "title": "541.202(a)(2)",
+      "family": "541",
+      "description": "effect a product recall;"
+    },
+    {
+      "control_id": "541.202(a)(3)",
+      "title": "541.202(a)(3)",
+      "family": "541",
+      "description": "identify and repair technical errors that impair existing or intended functionality; or"
+    },
+    {
+      "control_id": "541.202(a)(4)",
+      "title": "541.202(a)(4)",
+      "family": "541",
+      "description": "perform internal operations that:"
+    },
+    {
+      "control_id": "541.202(a)(4)(A)",
+      "title": "541.202(a)(4)(A)",
+      "family": "541",
+      "description": "are reasonably aligned with the expectations of the consumer;"
+    },
+    {
+      "control_id": "541.202(a)(4)(B)",
+      "title": "541.202(a)(4)(B)",
+      "family": "541",
+      "description": "are reasonably anticipated based on the consumer's existing relationship with the controller; or"
+    },
+    {
+      "control_id": "541.202(a)(4)(C)",
+      "title": "541.202(a)(4)(C)",
+      "family": "541",
+      "description": "are otherwise compatible with processing data in furtherance of the provision of a product or service specifically requested by a consumer or the performance of a contract to which the consumer is a party."
+    },
+    {
+      "control_id": "541.202(b)",
+      "title": "541.202(b)",
+      "family": "541",
+      "description": "A requirement imposed on a controller or processor under this chapter does not apply if compliance with the requirement by the controller or processor, as applicable, would violate an evidentiary privilege under the laws of this state."
+    },
+    {
+      "control_id": "541.203(a)",
+      "title": "541.203(a)",
+      "family": "541",
+      "description": "A controller or processor that discloses personal data to a third-party controller or processor, in compliance with the requirements of this chapter, does not violate this chapter if the third-party controller or processor that receives and processes that personal data is in violation of this chapter, provided that, at the time of the data's disclosure, the disclosing controller or processor did not have actual knowledge that the recipient intended to commit a violation."
+    },
+    {
+      "control_id": "541.203(b)",
+      "title": "541.203(b)",
+      "family": "541",
+      "description": "A third-party controller or processor receiving personal data from a controller or processor in compliance with the requirements of this chapter does not violate this chapter for the transgressions of the controller or processor from which the third-party controller or processor receives the personal data."
+    },
+    {
+      "control_id": "541.204(a)",
+      "title": "541.204(a)",
+      "family": "541",
+      "description": "Personal data processed by a controller under this subchapter may not be processed for any purpose other than a purpose listed in this subchapter unless otherwise allowed by this chapter. Personal data processed by a controller under this subchapter may be processed to the extent that the processing of the data is:"
+    },
+    {
+      "control_id": "541.204(a)(1)",
+      "title": "541.204(a)(1)",
+      "family": "541",
+      "description": "reasonably necessary and proportionate to the purposes listed in this subchapter; and"
+    },
+    {
+      "control_id": "541.204(a)(2)",
+      "title": "541.204(a)(2)",
+      "family": "541",
+      "description": "adequate, relevant, and limited to what is necessary in relation to the specific purposes listed in this subchapter."
+    },
+    {
+      "control_id": "541.204(b)",
+      "title": "541.204(b)",
+      "family": "541",
+      "description": "Personal data collected, used, or retained under Section 541.202(a) must, where applicable, take into account the nature and purpose of such collection, use, or retention. The personal data described by this subsection is subject to reasonable administrative, technical, and physical measures to protect the confidentiality, integrity, and accessibility of the personal data and to reduce reasonably foreseeable risks of harm to consumers relating to the collection, use, or retention of personal data."
+    },
+    {
+      "control_id": "541.204(c)",
+      "title": "541.204(c)",
+      "family": "541",
+      "description": "A controller that processes personal data under an exemption in this subchapter bears the burden of demonstrating that the processing of the personal data qualifies for the exemption and complies with the requirements of Subsections (a) and (b)."
+    },
+    {
+      "control_id": "541.204(d)",
+      "title": "541.204(d)",
+      "family": "541",
+      "description": "The processing of personal data by an entity for the purposes described by Section 541.201 does not solely make the entity a controller with respect to the processing of the data."
+    },
+    {
+      "control_id": "541.205",
+      "title": "541.205",
+      "family": "541",
+      "description": "This chapter supersedes and preempts any ordinance, resolution, rule, or other regulation adopted by a political subdivision regarding the processing of personal data by a controller or processor."
+    }
+  ]
+}

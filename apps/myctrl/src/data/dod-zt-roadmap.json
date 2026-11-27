@@ -1,0 +1,1231 @@
+{
+  "framework": {
+    "id": "dod-zt-roadmap",
+    "name": "DoD Zero Trust Roadmap",
+    "version": "2024",
+    "description": "DoD Zero Trust Roadmap compliance framework"
+  },
+  "families": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7"
+  },
+  "controls": [
+    {
+      "control_id": "1",
+      "title": "1",
+      "family": "1",
+      "description": "User"
+    },
+    {
+      "control_id": "1.1",
+      "title": "1.1",
+      "family": "1",
+      "description": "Regular and Privileged users are identified and integrated into an inventory supporting regular modifications. Applications, software and services that have local users are all part of the inventory and highlighted."
+    },
+    {
+      "control_id": "1.1.1",
+      "title": "1.1.1",
+      "family": "1",
+      "description": "DoD Components utilize Enterprise authoritative source of (PE/NPE) identity (PE - AMID, NIS, AFID) and/or establish or augment with local authoritative source. Identity management can be done manually if needed, preparing for automated approach in later stages. Identity source is connected to identity life cycle management processes (i.e. joiner/mover/leaver/returner). IT privileged users are clearly identified."
+    },
+    {
+      "control_id": "1.2",
+      "title": "1.2",
+      "family": "1",
+      "description": "Through maturity levels Conditional Access works to create a dynamic level of access for users in the environment. This starts with traditional role based access controls across a federate ICAM, expands to be application focused roles and ultimately utilizes enterprise attributes to provide dynamic access rules."
+    },
+    {
+      "control_id": "1.2.1",
+      "title": "1.2.1",
+      "family": "1",
+      "description": "The DoD ICAM governance establishes a set of user attributes for authentication and authorization. These are integrated with the “Enterprise Identity Life-Cycle Management Pt1” activity process for a complete Enterprise standard. The Enterprise Identity, Credential and Access Management (ICAM) solution are enabled for adding/updating attributes within the solution to better support identity federation.\nRemaining Privileged Access Management (PAM) activities are approved and tailored as specified by roles."
+    },
+    {
+      "control_id": "1.2.2",
+      "title": "1.2.2",
+      "family": "1",
+      "description": "DoD Components utilize the rules from the \"Periodic Authentication\" activity to build rules enabling and disabling privileges dynamically. IT Privileged user accounts utilize the PAM solution to move to dynamic privileged access using Just-in-Time (JIT) access and Just-Enough- Administration (JEA) methods."
+    },
+    {
+      "control_id": "1.2.3",
+      "title": "1.2.3",
+      "family": "1",
+      "description": "DoD Components expand the development of rules for dynamic access decision making accounting for risk. Solutions used for dynamic access are integrated with cross pillar Machine Learning (ML) and Artificial Intelligence (AI) functionality enabling automated rule management."
+    },
+    {
+      "control_id": "1.2.4",
+      "title": "1.2.4",
+      "family": "1",
+      "description": "DoD Components federate remaining user and group attributes as appropriate to the Enterprise Identity, Credential and Access Management (ICAM) solution. The updated attribute set is used to create universal roles for Organizations to use. Core functions of the Identity Provider (IdP) and ICAM solutions are migrated to cloud services and/or environments enabling improved resilience and performance."
+    },
+    {
+      "control_id": "1.2.5",
+      "title": "1.2.5",
+      "family": "1",
+      "description": "DoD Components move all possible functions of the Identity Provider (IdP) and Identity, Credential and Access Management (ICAM) solutions to cloud environments. Enclave/Denied, Disrupted, Intermittent, and Limited (DDIL) environments utilize local capabilities to support disconnected functions but ultimately are managed by the centralized ICAM. Updated roles are now mandated for usage and exceptions are reviewed following a risk-based approach."
+    },
+    {
+      "control_id": "1.3",
+      "title": "1.3",
+      "family": "1",
+      "description": "This capability initially focuses on developing an organization focused MFA provider and Identity Provider to enable the centralization of users. Retirement of local  and/or built-in accounts and groups is a critical piece to this capability. At the later maturity levels alternative and flexible MFA tokens can be used to provide access for standard and external users."
+    },
+    {
+      "control_id": "1.3.1",
+      "title": "1.3.1",
+      "family": "1",
+      "description": "DoD Components or Identity Provider (IdP) solution using approved credential or approved alternative Multi-Factor Authentication (MFA). The IdP and MFA solution may be combined in a single application or separated as needed assuming automated integration is supported by both solutions. Both IdP and MFA support integration with the Enterprise PKI capability as well as enabling key pairs to be signed by the trusted root certificate authorities. Authentication for mission/task- critical applications and services authentication is MFA-Enabled and leverages the related authentication mechanisms to manage users and groups."
+    },
+    {
+      "control_id": "1.3.2",
+      "title": "1.3.2",
+      "family": "1",
+      "description": "DoD  Components Identity Provider (IdP) supports alternative methods of Multi-Factor Authentication (MFA) complying with Cyber Security requirements (e.g., FIPS 140-2, FIPS 197, etc.). Alternative tokens can be used for application-based authentication. MFA options support biometric capability and can be managed using a self-service approach.\nWhere possible MFA provider(s) are moved to cloud services instead of being hosted on-premise."
+    },
+    {
+      "control_id": "1.3.3",
+      "title": "1.3.3",
+      "family": "1",
+      "description": "Alternative Multi-Factor Authentication (MFA) methods utilize user activity patterns from cross pillar activities such as \"User Activity Monitoring (UAM) and User & Entity Behavior Analytics (UEBA)\" to assist with access decision making (e.g., not grant access when pattern deviation occurs)."
+    },
+    {
+      "control_id": "1.4",
+      "title": "1.4",
+      "family": "1",
+      "description": "The capability focuses on removal of permanent administrator/elevated privileges by first creating a Privileged Account Management (PAM) system and migrating privileged users to it. The capability is then expanded upon by using automation with privilege escalation approvals and feeding analytics into the system for anomaly detection."
+    },
+    {
+      "control_id": "1.4.1",
+      "title": "1.4.1",
+      "family": "1",
+      "description": "DoD Components procure and implement a Privileged Access Management (PAM) solution to support all critical privileged use cases. Application/Service integration points are identified to determine status of support for the PAM solution. Applications/Services that easily integrate with the PAM solution are transitioned to using the solution versus static and direct privileged permissions."
+    },
+    {
+      "control_id": "1.4.2",
+      "title": "1.4.2",
+      "family": "1",
+      "description": "DoD Components utilize the inventory of supported and unsupported Applications/Services for integration with the Privileged Access Management (PAM) solution to extend integrations. PAM is integrated with the more challenging Applications/Services to maximize PAM solution coverage. Exceptions are managed in a risk-based methodical approach with the goal of migration off and/or decommissioning Applications/Services that do not support the PAM solution."
+    },
+    {
+      "control_id": "1.4.3",
+      "title": "1.4.3",
+      "family": "1",
+      "description": "Identification of necessary attributes (Users, Groups, etc.) are automated and integrated into the Privileged Access Management (PAM) solution.  Privilege access requests are migrated to the PAM solution for automated approvals and denials."
+    },
+    {
+      "control_id": "1.4.4",
+      "title": "1.4.4",
+      "family": "1",
+      "description": "DoD Components integrate User & Entity Behavior Analytics (UEBA) and User Activity Monitoring (UAM) solutions with the Privileged Access Management (PAM) solution providing user pattern analytics for decision making."
+    },
+    {
+      "control_id": "1.5",
+      "title": "1.5",
+      "family": "1",
+      "description": "The initial scope of this capability focuses on standardizing the Identity Lifecycle Management (ILM) processes and integrating with the standard organizational IDP/IDM solution. Once completed the capability shifts to establishing an Enterprise ILM process/solution either through a single solution or identity federation."
+    },
+    {
+      "control_id": "1.5.1",
+      "title": "1.5.1",
+      "family": "1",
+      "description": "DoD Components establish a process for life cycle management of users both privileged and non-privileged. Utilizing an approved Identity Provider (IdP) the process is implemented and followed by the maximum number of users. Users falling outside of the standard process are approved through risk-based exceptions to be evaluated regularly for decommission."
+    },
+    {
+      "control_id": "1.5.2",
+      "title": "1.5.2",
+      "family": "1",
+      "description": "Specified policies and supporting process are followed by DoD Components. DoD Components implement the Enterprise Identity Life- Cycle Management process for the maximum number of identities, attributes, groups, credentials, and permissions. Exceptions to the policy are managed in a risk-based methodical approach."
+    },
+    {
+      "control_id": "1.5.3",
+      "title": "1.5.3",
+      "family": "1",
+      "description": "DoD Components further integrate the critical automation functions of the Identity Provider (IdP) and Identity, Credential and Access Management (ICAM) solutions following the Enterprise Identity Life- Cycle Management (ILM) process to enable Enterprise automation and analytics. ILM primary processes are integrated into the cloud-based Enterprise ICAM solution."
+    },
+    {
+      "control_id": "1.5.4",
+      "title": "1.5.4",
+      "family": "1",
+      "description": "DoD Components integrate remaining Identity Lifecycle Management (ILM) processes with the Enterprise Identity, Credential and Access Management (ICAM) solution. Enclave/DDIL environments, while still authorized to operate, integrate with the Enterprise ICAM using local connectors to the cloud environment."
+    },
+    {
+      "control_id": "1.6",
+      "title": "1.6",
+      "family": "1",
+      "description": "Utilizing the Enterprise IDP, user and entity behavioral analytics (UEBA) are enabled with basic user attributes. Once completed this is expanded into Organizational specific attributes using Organizational IDPs as available. Finally UEBA are integrated with the PAM and JIT/JEA systems to better detect anomalous and malicious activities."
+    },
+    {
+      "control_id": "1.6.1",
+      "title": "1.6.1",
+      "family": "1",
+      "description": "DoD Components procure and implement User & Entity Behavior Analytics (UEBA) and User Activity Monitoring (UAM) solutions. Initial integration point with Enterprise IdP is completed, enabling future usage in decision making."
+    },
+    {
+      "control_id": "1.6.2",
+      "title": "1.6.2",
+      "family": "1",
+      "description": "DoD Components integrate User & Entity Behavior Analytics (UEBA) and User Activity Monitoring (UAM) solutions with Identity Providers (IdP) for extended visibility as needed. Analytics and data generated by UEBA and UAM for critical applications/services are integrated with Just-in- Time (JIT) and Just-Enough-Access (JEA) solutions for improving decision."
+    },
+    {
+      "control_id": "1.6.3",
+      "title": "1.6.3",
+      "family": "1",
+      "description": "DoD Components continue the analytics usage from User & Entity Behavior Analytics (UEBA) and User Activity Monitoring (UAM) solutions by using generated data for all monitored applications and services when decision making occurs in the Just-in-Time (JIT) and Just-Enough- Access (JEA) solution."
+    },
+    {
+      "control_id": "1.7",
+      "title": "1.7",
+      "family": "1",
+      "description": "DoD organizations govern access to DAAS using the absolute minimum access required to perform routine, legitimate tasks or activities. DoD Application Owners identify the necessary roles and attributes for standard and privileged user access. Privileged access for all DoD organization DAAS is audited and removed when unneeded."
+    },
+    {
+      "control_id": "1.7.1",
+      "title": "1.7.1",
+      "family": "1",
+      "description": "DoD Components audit user and group usage for permissions and revoke permissions when appropriate. This activity includes the revocation and/or decommission of excess permissions and access for application/service-based identities and groups. Where possible, static privileged users are decommissioned or permission are reduced, preparing for future rule/dynamic based access. The implemented audit and governance functions are automated where possible."
+    },
+    {
+      "control_id": "1.8",
+      "title": "1.8",
+      "family": "1",
+      "description": "The DoD organizations and overall enterprise will methodically move towards continuous attribute based authentication.\nInitially the  capability focuses on standardizing legacy single authentication to a organizationally approved IDP with users and groups. The second stages adds in based rule based (time) authentication and ultimately matures to Continuous Authentication based on the application/software activities and privileges requested."
+    },
+    {
+      "control_id": "1.8.1",
+      "title": "1.8.1",
+      "family": "1",
+      "description": "DoD Components authenticate users and NPEs at least once per session (e.g., logon) using CAC and other DoD approved methods. Users being authenticated are managed by the parallel activity “Organizational MFA/IdP” with the Component Identity Provider (IdP). Components do not use application/service-based identities and groups."
+    },
+    {
+      "control_id": "1.8.2",
+      "title": "1.8.2",
+      "family": "1",
+      "description": "DoD Components enable periodic authentication for applications and services. Traditionally, these are based on duration and/or duration timeout, however, other period-based analytics can be used to enforce re-authentication of user sessions."
+    },
+    {
+      "control_id": "1.8.3",
+      "title": "1.8.3",
+      "family": "1",
+      "description": "DoD Components applications/services utilize multiple session authentications based on security attributes and access requested. Privilege changes and associational transaction requests require additional levels of authentication such as Multi-Factor Authentication (MFA) pushes to users."
+    },
+    {
+      "control_id": "1.8.4",
+      "title": "1.8.4",
+      "family": "1",
+      "description": "DoD Components continue usage of transaction-based authentication to include integration such as user patterns."
+    },
+    {
+      "control_id": "1.9",
+      "title": "1.9",
+      "family": "1",
+      "description": "DoD organizations and overall enterprise employ enterprise- level identity management and public key infrastructure (PKI) systems to track user, administrator and NPE identities across the network and ensure access is limited to only those who have the need and the right to know. Organizations can verify they need and have the right to access via credential management systems, identity governance and administration tools, and an access management tool. PKI systems can be federated but must either trust a central root certificate authority (CA) and/or cross-sign standardized organizational CA’s."
+    },
+    {
+      "control_id": "1.9.1",
+      "title": "1.9.1",
+      "family": "1",
+      "description": "The DoD Enterprise works with Components to implement Enterprise Public Key Infrastructure (PKI) solutions in a centralized and/or federated fashion. The Enterprise PKI solution utilizes a single or set of Enterprise level Root Certificate Authorities (CA) that can then be trusted by components to build Intermediate CA. Components PKI Certificated Authorities are integrated with the Enterprise PKI.\nAn Enterprise Identity Provider (IdP) platform is implemented. The IdP solution may either be a single solution or federated set of Component IdPs with standard level of access across Components and standardized set of attributes. Components IdPs are integrated with the Enterprise IdP."
+    },
+    {
+      "control_id": "1.9.2",
+      "title": "1.9.2",
+      "family": "1",
+      "description": "DoD Components enable biometric support in the Identity Provider (IdP) for mission/task-critical applications and services as appropriate.\nBiometric functionality is moved from Component solutions to the Enterprise. Multi-Factor Authentication (MFA) and Public Key Infrastructure (PKI) is decommissioned and migrated to the Enterprise as appropriate."
+    },
+    {
+      "control_id": "1.9.3",
+      "title": "1.9.3",
+      "family": "1",
+      "description": "DoD Components integrate the remaining applications/services with Biometrics functionalities. Alternative Multi-Factor Authentication (MFA) tokens can be used."
+    },
+    {
+      "control_id": "2",
+      "title": "2",
+      "family": "2",
+      "description": "Device"
+    },
+    {
+      "control_id": "2.1",
+      "title": "2.1",
+      "family": "2",
+      "description": "DoD organizations establish and maintain an approved inventory list of all devices authorized to access the network and enroll all devices on the network prior to network connection. Device attributes will include technical details such as the PKI (802.1x) machine certificate, device object, patch/vulnerability status and others to enable successor activities."
+    },
+    {
+      "control_id": "2.1.1",
+      "title": "2.1.1",
+      "family": "2",
+      "description": "DoD Components develop an inventory of devices within the environment, and device attributes are tracked."
+    },
+    {
+      "control_id": "2.1.2",
+      "title": "2.1.2",
+      "family": "2",
+      "description": "DoD Components utilize the DoD Enterprise PKI solution/service to deploy x509 certificates to all supported and managed devices. Other Non-Person Entities (NPEs) (e.g., web servers, network devices, routers, applications, etc.) that support x509 certificates are assigned them in the PKI and/or IdP systems."
+    },
+    {
+      "control_id": "2.1.3",
+      "title": "2.1.3",
+      "family": "2",
+      "description": "The DoD Enterprise Identity Provider (IdP), either using a centralized technology or federated organizational technologies, integrates Non- Person Entities (NPEs), such as devices and service accounts. Integration is tracked in the Enterprise Device Management solution when applicable as to whether it is integrated or not. NPEs not able to be integrated with the IdP are either marked for retirement or excepted using a risk-based methodical approach."
+    },
+    {
+      "control_id": "2.1.4",
+      "title": "2.1.4",
+      "family": "2",
+      "description": "The DoD Enterprise Identity Provider (IdP), either using a centralized technology or federated organizational technologies, adds additional attributes for Non-Person Entities (NPEs) (e.g., location, usage patterns, etc.) to device profiles."
+    },
+    {
+      "control_id": "2.2",
+      "title": "2.2",
+      "family": "2",
+      "description": "DoD organizations employ asset management systems for user devices to maintain and report on IT and Cybersecurity compliance. Managed devices (enterprise and mobile) attempting to connect to a DoD network or access a DAAS resource is detected and has its compliance status confirmed (via C2C)"
+    },
+    {
+      "control_id": "2.2.1",
+      "title": "2.2.1",
+      "family": "2",
+      "description": "The DoD Enterprise refines policy, standards, and requirements for Comply to Connect (C2C). Components implement and enforce compliance-based network authorization to meet ZT Target Level functionalities."
+    },
+    {
+      "control_id": "2.2.2",
+      "title": "2.2.2",
+      "family": "2",
+      "description": "DoD Components expand the deployment and usage of Comply to Connect (C2C) to all supported environments required to meet ZT advanced functionalities. C2C teams integrate their solution(s) with the Enterprise IdP and Authorization Gateways to better manage access and authorizations to resources."
+    },
+    {
+      "control_id": "2.3",
+      "title": "2.3",
+      "family": "2",
+      "description": "DoD Organizations conduct foundational and extended device tooling (NextGen AV, AppControl, File Integrity Monitoring (FIM), etc.) integration to better understand the risk posture.\nOrganizational PKI systems are integrated to expand the existing Enterprise PKI to devices as well. Lastly Entity Activity Monitoring is also integrated to identify anomalous activities."
+    },
+    {
+      "control_id": "2.3.1",
+      "title": "2.3.1",
+      "family": "2",
+      "description": "Using the developed User and Device baselines, DoD Components utilize the implemented User and Entity Behavioral Activity (UEBA) solution to integrate baselines. UEBA device attributes and baselines are available to be used for device authorization."
+    },
+    {
+      "control_id": "2.3.2",
+      "title": "2.3.2",
+      "family": "2",
+      "description": "DoD Components utilize the User and Entity Behavioral Activity (UEBA) solution with network access solutions to mandate UEBA attributes (e.g., device health, logon patterns, etc.) for accessing environments and resources."
+    },
+    {
+      "control_id": "2.3.3",
+      "title": "2.3.3",
+      "family": "2",
+      "description": "DoD Components procure and implement File Integrity Monitoring  (FIM) and Application control (e.g., execution deny/allow listing, containment, isolation) solutions. FIM ensures any data altered is authorized, and unauthorized changes are detected by FIM. Application containment is used to isolate any suspicious behavior or permissions to prevent any malicious lateral movement, expanding the capabilities and response of traditional executable containment. Both FIMS and application containment continues the development of the Device, Data, and Application & Workload pillars."
+    },
+    {
+      "control_id": "2.3.4",
+      "title": "2.3.4",
+      "family": "2",
+      "description": "DoD Component procures and implements an Endpoint Protection Platform (EPP). EPP should have the capabilities to use advanced analytics (e.g., artificial intelligence, behavioral detection, machine learning) to mitigate exploits (e.g., zero days, signatureless, fileless), provide Network Access Control, and protect against known and unknown threats. These solutions are orchestrated with the C2C or EDR solution for baseline status checks of signatures, updates, etc."
+    },
+    {
+      "control_id": "2.3.5",
+      "title": "2.3.5",
+      "family": "2",
+      "description": "DoD Components continue the deployment of Application Control to all environments and in prevention mode. File Integrity Monitoring (FIM) and Application Controls analytics are integrated into Comply to Connect (C2C) for expanded access decision making. C2C analytics are evaluated for further device/endpoint security stack data points such as UEDM and are integrated as necessary."
+    },
+    {
+      "control_id": "2.3.6",
+      "title": "2.3.6",
+      "family": "2",
+      "description": "The DoD Enterprise Public Key Infrastructure (PKI) is expanded to include the addition of NPE and device certificates. NPEs and devices that do not support PKI certificates are marked for retirement."
+    },
+    {
+      "control_id": "2.3.7",
+      "title": "2.3.7",
+      "family": "2",
+      "description": "DoD Components utilize certificates provisioned by the DoD Enterprise Public Key Infrastructure (PKI) for device authentication and machine to machine communications. Unsupported devices are retired and exceptions are approved and managed using a risk based methodical approach."
+    },
+    {
+      "control_id": "2.4",
+      "title": "2.4",
+      "family": "2",
+      "description": "DoD organizations audit existing device access processes and tooling to set a least privilege baseline. In phase 2 this access is expanded to cover basic BYOD and IOT support using the Enterprise IDP for approved applications. The final phases expand coverage to include all BYOD and IOT devices for services  using the approved set of device attributes."
+    },
+    {
+      "control_id": "2.4.1",
+      "title": "2.4.1",
+      "family": "2",
+      "description": "DoD Enterprise sets standards and requirements for overall policy, with Components tailoring to specific environmentse and mission requirements. DoD Components will block access from all unmanaged remote and local devices to resources. Managed compliant devices are provided risk-based, methodical access following ZT Target Level concepts."
+    },
+    {
+      "control_id": "2.4.2",
+      "title": "2.4.2",
+      "family": "2",
+      "description": "DoD Components utilize Enterprise Device Management Solution to ensure that managed Bring Your Own Device (BYOD) and Internet of Things (IoT) devices are fully integrated with Enterprise IdP. Enabling user and device-based authorization is supported. Device access requires dynamic access policies and the practice of least privilege."
+    },
+    {
+      "control_id": "2.4.3",
+      "title": "2.4.3",
+      "family": "2",
+      "description": "DoD Components utilize Unified Endpoint and Device Management (UEDM) and similar solutions to enable access for managed and approved devices to Mission and Operational Critical services/applications using dynamic access policies. BYOD and Internet of Things (IoT) devices are required to meet standard baseline checks before authorization."
+    },
+    {
+      "control_id": "2.4.4",
+      "title": "2.4.4",
+      "family": "2",
+      "description": "DoD Components utilize Unified Endpoint and Device Management (UEDM) and similar solutions to grant authorized managed devices access to all services and applications where possible. Unmanaged devices, upon meeting device checks and standard baselines, are granted access to services and applications following a risk-based authorization approach."
+    },
+    {
+      "control_id": "2.5",
+      "title": "2.5",
+      "family": "2",
+      "description": "DoD organizations establish processes to automatically test and deploy vendor patches for connected devices; hybrid patch management (both human and automated) is employed."
+    },
+    {
+      "control_id": "2.5.1",
+      "title": "2.5.1",
+      "family": "2",
+      "description": "DoD Components implement solution(s) for managing asset/device configurations, vulnerabilities, and patches. Using minimum compliance standards (e.g., STIGs, C2C, UEM etc.), teams can confirm or deny managed device compliance. As part of the procurement and implementation process for solutions, APIs or other programmatic interfaces will be in scope for future levels of automation and integration."
+    },
+    {
+      "control_id": "2.6",
+      "title": "2.6",
+      "family": "2",
+      "description": "DoD organizations establish a centralized UEM solution that provides the choices of agent and/or agentless management of computer and mobile devices to a single console regardless of device location. DoD-issued devices can be remotely managed and security policies are enforced."
+    },
+    {
+      "control_id": "2.6.1",
+      "title": "2.6.1",
+      "family": "2",
+      "description": "DoD Components will work closely with the “Implement Asset, Vulnerability, and Patch Management Tools” activity to procure a implement and Unified Endpoint Device Management (UEDM) solution ensuring that requirements are integrated with the procurement process. Once a solution is procured the UEDM team(s) ensure that critical ZT Target Level functionalities such as minimum compliance, asset management, and API support are in place."
+    },
+    {
+      "control_id": "2.6.2",
+      "title": "2.6.2",
+      "family": "2",
+      "description": "DoD Enterprise sets standards and policies for Enterprise Device Management (EDM). DoD Components migrate the manual device inventory to an automated approach using an EDM solution. Approved devices are able to be managed regardless of location. Devices part of critical services are managed by the EDM solution supporting automation."
+    },
+    {
+      "control_id": "2.6.3",
+      "title": "2.6.3",
+      "family": "2",
+      "description": "DoD Components migrate the remaining devices to Enterprise Device Management (EDM) solution. EDM solution is integrated with risk and compliance solutions as appropriate."
+    },
+    {
+      "control_id": "2.7",
+      "title": "2.7",
+      "family": "2",
+      "description": "DoD organizations use endpoint detection and response (EDR) tooling to monitor, detect, and remediate malicious activity on endpoints. Expanding the capability to include XDR tooling allows organizations to account for activity beyond the endpoints such as cloud and network as well."
+    },
+    {
+      "control_id": "2.7.1",
+      "title": "2.7.1",
+      "family": "2",
+      "description": "DoD Components procure and implement Endpoint Detection and Response (EDR) solution(s) within environments. EDR is protecting, monitoring, and responding to malicious and anomalous activities enabling ZT Target Level functionality and is sending data to the Comply to Connect (C2C) solution for expanded device and user checks."
+    },
+    {
+      "control_id": "2.7.2",
+      "title": "2.7.2",
+      "family": "2",
+      "description": "DoD Components procure and implement Extended Detection & Response (XDR) solution(s). Integration points with cross pillar capabilities (network, cloud services, applications) are identified and prioritized based on risk. XDR is aligned with C2C program. XDR capabilities either supplement or replace EDR implementations. Analysis and correlation capabilities are sent from the XDR solution stack to the SIEM."
+    },
+    {
+      "control_id": "2.7.3",
+      "title": "2.7.3",
+      "family": "2",
+      "description": "Extended Detection & Response (XDR) solution stack completes identification of integration points expanding coverage to the fullest amount possible. Exceptions are tracked and managed using a risk- based approach for continued operation. Extended analytics enabling ZT Advanced Level functionalities are integrated into the SIEM and other appropriate solutions."
+    },
+    {
+      "control_id": "3",
+      "title": "3",
+      "family": "3",
+      "description": "Application & Workload"
+    },
+    {
+      "control_id": "3.1",
+      "title": "3.1",
+      "family": "3",
+      "description": "System owners ensure that all applications and application components are identified and inventoried; only applications and application components that have been authorized by the appropriate authorizing official/CISO/CIO shall be utilized within the system owner's purview"
+    },
+    {
+      "control_id": "3.1.1",
+      "title": "3.1.1",
+      "family": "3",
+      "description": "DoD Components create an inventory of approved applications and code being used, including open-source, commercial, and in-house developed software. Each Component will track the supportability (i.e., active, legacy, etc.) hosted location (i.e., cloud, on-premises, hybrid, etc.) and record important data (i.e., name, version, team responsible, licensing and support, mapped dependencies)."
+    },
+    {
+      "control_id": "3.2",
+      "title": "3.2",
+      "family": "3",
+      "description": "Foundational software and application security processes and infrastructure are established following Zero Trust principles and best practices. Controls such as code review, runtime protection, secure API gateways, container and serverless security are integrated and automated."
+    },
+    {
+      "control_id": "3.2.1",
+      "title": "3.2.1",
+      "family": "3",
+      "description": "The DoD Enterprise provide best practices for modern DevSecOps processes and CI/CD pipelines. The concepts are applied in a standardized technology stack across DoD Components able to meet future Application Security requirements, including requirements gathering, design, development, testing and deployment."
+    },
+    {
+      "control_id": "3.2.2",
+      "title": "3.2.2",
+      "family": "3",
+      "description": "DoD Components use their approved CI/CD pipelines to develop most new applications. Any exceptions will follow a standardized approval process to be allowed to develop in a legacy fashion. DevSecOps processes are also used to develop all new applications and update existing applications. Continual validation functions are integrated into the CI/CD pipelines and DevSecOps processes and integrated with existing applications."
+    },
+    {
+      "control_id": "3.2.3",
+      "title": "3.2.3",
+      "family": "3",
+      "description": "A standardized approach to application security including code remediation is implemented across the DoD enterprise. Part one (1) of this activity includes the integration of securing API gateways (i.e., API management, WAF, continuous API testing, distributed enforcement not just perimeter) with applications utilizing API or similar calls. Code reviews are conducted in a methodical approach, and standardized protections for containers and their infrastructure are in place.\nAdditionally, any serverless functions where the 3rd party manages the infrastructure, such as Platform as a Service, utilize adequate serverless security monitoring and response functions. Code reviews, container and serverless security functions are integrated into the CI/CD and/or DevSecOps process, as appropriate."
+    },
+    {
+      "control_id": "3.2.4",
+      "title": "3.2.4",
+      "family": "3",
+      "description": "DoD Components modernize approaches to delivering internally developed and managed applications following best practice approaches such as a Microservices architecture. These approaches will enhance security and resilience by enabling rapid code updates within individual microservices to address vulnerabilities. Further enhance application security by integrating runtime security functions for containers where applicable, automating vulnerable library updates, and automating  CI/CD approvals during the release process."
+    },
+    {
+      "control_id": "3.3",
+      "title": "3.3",
+      "family": "3",
+      "description": "DoD organizations establish software/application risk management program. Foundational controls include Bill of Materials risk management, Supplier Risk Management, approved repositories and update channels, and vulnerability management program. Additional controls include Continual validation within the CI/CD pipelines and vulnerability maturation with external sources."
+    },
+    {
+      "control_id": "3.3.1",
+      "title": "3.3.1",
+      "family": "3",
+      "description": "The DoD Enterprise uses best practices to manage approved binaries and code in a methodical approac, including supplier sourcing risk management, approved repository usage, Software Bill of Materials (SBOM), supply chain risk management, and industry-standard vulnerability management."
+    },
+    {
+      "control_id": "3.3.2",
+      "title": "3.3.2",
+      "family": "3",
+      "description": "The DoD Enterprise collaborates with Components to establish and manage a comprehensive Vulnerability Management program. The program, at a minimum, encompasses the tracking and management of public vulnerabilities based on DoD applications and services. Each Component is responsible for establishing a vulnerability management team comprised of key stakeholders. This team convenes to discuss and manage vulnerabilities in accordance with established Enterprise policy and standards."
+    },
+    {
+      "control_id": "3.3.3",
+      "title": "3.3.3",
+      "family": "3",
+      "description": "Processes are established at the DoD Enterprise level for managing the disclosure of vulnerabilities in DoD maintained and operated services, both publicly and privately accessible. DoD Components expand the vulnerability management program to track and manage closed vulnerability repositories such as DIB-VDP, CERT, and others."
+    },
+    {
+      "control_id": "3.3.4",
+      "title": "3.3.4",
+      "family": "3",
+      "description": "DoD Components implement a continuous validation approach for application development, where security is constantly assessed throughout the development, integration, and deployment. Validation includes security principles when planning and designing, security testing (to include code reviews), incident response, and SIEM alerting/logging. These principles are integrated and continuously executed with the CI/CD pipeline. Applications developed outside of CI/CD process should still adhere to continuous validation in an ad hoc/manual manner."
+    },
+    {
+      "control_id": "3.4",
+      "title": "3.4",
+      "family": "3",
+      "description": "DoD establishes a standardized resource authorization gateway for authorizations via the CI/CD pipelines in a risk approach that reviews the User, Device and Data security posture.\nAuthorizations utilize a programmatic (e.g., Software Defined) approach in a live/production environment. Attributes are enriched utilizing other pillar activities and the API and Authorization gateway. Approved enterprise APIs are micro- segmented using authorizations."
+    },
+    {
+      "control_id": "3.4.1",
+      "title": "3.4.1",
+      "family": "3",
+      "description": "The DoD Enterprise standardizes policy enforcement approaches (e.g., Software Defined Perimeter) with the Components. At a minimum, the access and authorization gateways will be integrated with identities and devices once authentication is achieved. Components deploy approved resource authorization gateways and enable them for external facing applications and services. Additional applications for migration and applications unable to be migrated are identified for exception or decommission."
+    },
+    {
+      "control_id": "3.4.2",
+      "title": "3.4.2",
+      "family": "3",
+      "description": "Policy enforcements and decisions are used for all possible applications and services. Application unable to utilize gateways are either decommissioned or accepted using a risk-based methodical approach.\nAuthorizations are further integrated with the CI/CD pipeline for automated decision making."
+    },
+    {
+      "control_id": "3.4.3",
+      "title": "3.4.3",
+      "family": "3",
+      "description": "The DoD Enterprise establishes best practices for code-based compute management (i.e., Software Defined Compute(SDC)). Using risk-based approaches, baselines are created using the approved set of code libraires and packages. DoD Components work with the approved code/binaries activities to ensure that applications are identified which can and cannot support the approach. Applications that can support a modern software-based configuration and management approaches are identified, and transitioning begins. Applications that cannot follow software-based configuration and management approaches are identified and allowed through exception using a methodical approach."
+    },
+    {
+      "control_id": "3.4.4",
+      "title": "3.4.4",
+      "family": "3",
+      "description": "Components use approved and validated code/binaries via the Software Bill of Materials (SBOM) process to ensure that applications that can and cannot support the approach are identified. Applications which can support modern Software-Based Configuration and Management (SBCM) approaches are identified and transitioned. Applications that support SBCM have been transitioned to a production/live environment and are in normal operations. Applications which cannot SBCM are identified and allowed through exception using a risk-based approach."
+    },
+    {
+      "control_id": "3.4.5",
+      "title": "3.4.5",
+      "family": "3",
+      "description": "Initial attributes from various sources, such as User and Entity Activity Monitoring (UEAM), micro-segmentation services, Data Loss Prevention (DLP), and Digital Rights Management (DRM) tools are integrated with the Resource Authorization technology system and policies. Any additional attributes for later integration are identified and planned.\nAttributes are used to create basic risk posture of users, NPEs and devices allowing for authorization decisions  based on the evaluated risk."
+    },
+    {
+      "control_id": "3.4.6",
+      "title": "3.4.6",
+      "family": "3",
+      "description": "Extended identified attributes are integrated with the resource authorization technology and policy. Confidence scoring system is introduced for identified attributes to create a more advanced method of authorization decision making supporting."
+    },
+    {
+      "control_id": "3.4.7",
+      "title": "3.4.7",
+      "family": "3",
+      "description": "Using the DoD Enterprise approved API gateway(s), application calls are micro-segmented, only allowing authenticated and authorized access to specific destinations (e.g., microservices). When possible, API micro- segmentation consoles are integrated and aware of other micro- segmentation consoles such as Software Defined Perimeter (SDP)controllers and/or Software Defined Networking (SDN) consoles."
+    },
+    {
+      "control_id": "3.5",
+      "title": "3.5",
+      "family": "3",
+      "description": "DoD organizations employ automated tools and processes to continuously monitor applications and assess their authorization to operate."
+    },
+    {
+      "control_id": "3.5.1",
+      "title": "3.5.1",
+      "family": "3",
+      "description": "DoD Components utilize automation solutions within the environment to standardize the monitoring of controls and offer the capability to identify deviations. Where appropriate, monitoring and testing is integrated with DevSecOps processes."
+    },
+    {
+      "control_id": "3.5.2",
+      "title": "3.5.2",
+      "family": "3",
+      "description": "DoD Components fully automate control derivation, testing and monitoring processes. Deviations are automatically tested and resolved using existing cross pillar automation infrastructure. Dashboards are used to monitor the status of authorizations; analytics are integrated with the responsible authorizing officials."
+    },
+    {
+      "control_id": "4",
+      "title": "4",
+      "family": "4",
+      "description": "Data"
+    },
+    {
+      "control_id": "4.1",
+      "title": "4.1",
+      "family": "4",
+      "description": "Data owners ensure that data is identified and inventoried and any changes to the data landscape are automatically detected and included within the catalog. The data landscape must then be reviewed to identify potential risks related to data loss, attack, or any other unauthorized alteration and/or access."
+    },
+    {
+      "control_id": "4.1.1",
+      "title": "4.1.1",
+      "family": "4",
+      "description": "The DoD Enterprise will develop algorithm(s) for components to map data for tagging and labeling, and establish the governing body for oversight. Data at a Component level should be categorized and analyzed by an overseeing governing body."
+    },
+    {
+      "control_id": "4.2",
+      "title": "4.2",
+      "family": "4",
+      "description": "DoD establishes enterprise data labeling/tagging and DAAS access control/sharing policies (e.g., SDS policy) that are enforceable. Developed enterprise standards ensure an appropriate level of interoperability between DoD Organizations."
+    },
+    {
+      "control_id": "4.2.1",
+      "title": "4.2.1",
+      "family": "4",
+      "description": "Data tagging standard for identifying ZT labels must be defined.  The DoD Enterprise works with Components to establish data tagging and classification standards based on industry best practices. Classifications are agreed upon and implemented in processes. Tags are identified as manual and automated for future activities."
+    },
+    {
+      "control_id": "4.2.2",
+      "title": "4.2.2",
+      "family": "4",
+      "description": "The DoD Enterprise, collaborating with Components, develops interoperability standards methods including  mandatory Data Rights Management (DRM) overlays and Protection mechanisms with necessary technologies to enable ZT Target Level functionality."
+    },
+    {
+      "control_id": "4.2.3",
+      "title": "4.2.3",
+      "family": "4",
+      "description": "The DoD enterprise will work with Components to determine if software define storage (SDS) is in use.  DoD Components develop policy and standards based on industry best practices, and evaluate current data storage strategy and technology for implementation of SDS.Components assess their existing data storage strategies and technologies to determine the suitability for implementing SDS. If deemed appropriate, the identified storage technologies are considered for SDS implementation."
+    },
+    {
+      "control_id": "4.3",
+      "title": "4.3",
+      "family": "4",
+      "description": "Data owners label and tag data in compliance with DoD enterprise governance on labeling/tagging policy. As phases advance automation is used to meet scaling demands and provide better accuracy."
+    },
+    {
+      "control_id": "4.3.1",
+      "title": "4.3.1",
+      "family": "4",
+      "description": "DoD Components implement a solution to create new rules, modify existing rules, delete existing rules, check for rule collision, rule deviation, or compound rule inconsistency, and testing of collective rule sets for an outcome. Tools must be adaptable to advanced analytic techniques."
+    },
+    {
+      "control_id": "4.3.2",
+      "title": "4.3.2",
+      "family": "4",
+      "description": "Components map DoD Enterprise ZT tags to local labeling to meet minimum essential metadata criteria for compliance."
+    },
+    {
+      "control_id": "4.3.3",
+      "title": "4.3.3",
+      "family": "4",
+      "description": "DoD Component specific data level attributes are integrated into the manual data tagging process. DoD Enterprise and Components collaborate to decide which attributes are required to meet ZT Advanced Level functionality. Data level attributes for ZT Advanced Level functionality is standardized across the Enterprise and incorporated."
+    },
+    {
+      "control_id": "4.3.4",
+      "title": "4.3.4",
+      "family": "4",
+      "description": "DoD Components use Data Loss Prevention (DLP), Data Rights Management (DRM), and/or protection solutions to conduct scanning of data repositories. Standardized tags are applied to supported data repositories and data types. Unsupported data repositories and types are identified."
+    },
+    {
+      "control_id": "4.3.5",
+      "title": "4.3.5",
+      "family": "4",
+      "description": "Remaining supported data repositories have basic and extended data tags applied using Machine Learning (ML) and Artificial Intelligence (AI). Extended data tags are applied to existing repositories. Unsupported data repositories and data types are evaluated for decommissioning using a risk-based methodical approach. Approved exceptions utilize manual data tagging approaches with data owners and/or custodians to manage tagging."
+    },
+    {
+      "control_id": "4.4",
+      "title": "4.4",
+      "family": "4",
+      "description": "Data owners will capture active metadata that includes information about the access, sharing, transformation, and use of their data assets. Data Loss Prevention (DLP) and Data Rights Management (DRM) enforcement point analysis is conducted to determine where tooling will be deployed. Data outside of DLP and DRM scope such as File Shares and Databases is actively monitored for anomalous and malicious activity using alternative tooling."
+    },
+    {
+      "control_id": "4.4.1",
+      "title": "4.4.1",
+      "family": "4",
+      "description": "DoD Components identify business rules for managing data loss prevention (DLP) enforcement points, such as specific services and user endpoints. Using the established DoD Enterprise cybersecurity incident response standard, DoD Components ensure the appropriate level of detail of data is captured. Additionally, protection, detection, and response use cases are developed to better outline solution coverage."
+    },
+    {
+      "control_id": "4.4.2",
+      "title": "4.4.2",
+      "family": "4",
+      "description": "DoD Components identify business rules for managing the accepted use of the assets managing Data Rights Management (DRM) enforcement points, such as specific services and user endpoints. Using the established DoD Enterprise cybersecurity incident response standard, DoD Components ensure the appropriate detail of data is captured.\nAdditionally, protection, detection, and response use cases are developed to better outline solution coverage."
+    },
+    {
+      "control_id": "4.4.3",
+      "title": "4.4.3",
+      "family": "4",
+      "description": "DoD Components utilize File Monitoring tools to monitor the most critical data classification levels in applications, services, and repositories. Analytics from monitoring is fed into the SIEM with basic  data attributes to accomplish ZT Target Level functionality."
+    },
+    {
+      "control_id": "4.4.4",
+      "title": "4.4.4",
+      "family": "4",
+      "description": "DoD Components utilize File Monitoring tools to monitor all regulatory protected data (e.g., CUI, PII, PHI, etc.) in applications, services, and repositories. Extended integration is used to send data to appropriate inter/intra-pillar solutions such as Data Loss Prevention, Data Rights Management/Protection and User & Entity Behavior Analytics."
+    },
+    {
+      "control_id": "4.4.5",
+      "title": "4.4.5",
+      "family": "4",
+      "description": "DoD Components procure, implement, and utilize database monitoring solutions to monitor all databases containing regulated data types (e.g., CUI, PII, PHI, etc.). Logs and analytics from the database monitoring solution are provided to the SIEM for monitoring and response.\nAnalytics are utilized in cross pillar activities such as \"Enterprise Security Profile Pt 1, Pt 2\" and \"Real Time Access Decisions\" to better direct decision making."
+    },
+    {
+      "control_id": "4.4.6",
+      "title": "4.4.6",
+      "family": "4",
+      "description": "DoD Components expand monitoring of data repositories including databases as appropriate, based on a methodical risk-based approach. Additional data attributes to meet the ZT Advanced Level functionalities are integrated into the analytics for additional integrations."
+    },
+    {
+      "control_id": "4.5",
+      "title": "4.5",
+      "family": "4",
+      "description": "DoD organizations establish and implement a strategy for encrypting data at rest and in transit using Data Rights Management (DRM) tooling. The DRM solution utilizes data tags to determine protection and lastly integrates with ML and AI to automate protection."
+    },
+    {
+      "control_id": "4.5.1",
+      "title": "4.5.1",
+      "family": "4",
+      "description": "DoD Components procure and implement DRM and Protection solution(s) as needed, following the DoD Enterprise standard and requirements. Newly implement DRM and protection solution(s) are applied with high-risk data objects."
+    },
+    {
+      "control_id": "4.5.2",
+      "title": "4.5.2",
+      "family": "4",
+      "description": "DRM and protection coverage is expanded to cover all required data objects. Protection mechanisms are automatically managed to meet best practices (e.g., FIPS). Extended data protection attributes are implemented based on the environment classification."
+    },
+    {
+      "control_id": "4.5.3",
+      "title": "4.5.3",
+      "family": "4",
+      "description": "DoD Enterprise provides a standard for data access control and protections. Components establish data rights management (DRM) and protection solutions that are used with data tags defined by the data producer. High-risk data objects are identified and monitored with protect and response actions enabled. Data at rest is encrypted and protected (e.g.,  hardware/object/disk encryption, access control) in repositories."
+    },
+    {
+      "control_id": "4.5.4",
+      "title": "4.5.4",
+      "family": "4",
+      "description": "Extended data repositories are protected with DRM and protection solutions. DoD Components implement extended data tags applicable to Components versus Enterprise. Data is encrypted in extended repositories using additional tags."
+    },
+    {
+      "control_id": "4.5.5",
+      "title": "4.5.5",
+      "family": "4",
+      "description": "DRM and protection solutions integrate with AI and ML tooling for encryption, rights management, and protection functions."
+    },
+    {
+      "control_id": "4.6",
+      "title": "4.6",
+      "family": "4",
+      "description": "DoD organizations utilize the  identified enforcement points to deploy approved DLP tools and integrate tagged data attributes with DLP. Initially the DLP solution is put into a \"monitor-only\" mode to limit business impact and later using analytics is put into a \"prevent\" mode. Extended data tag attributes are used to feed the DLP solution and lastly integrate with ML and AI."
+    },
+    {
+      "control_id": "4.6.1",
+      "title": "4.6.1",
+      "family": "4",
+      "description": "Data loss prevention (DLP) is aligned to and strengthened by Data Privacy and Protection (DPP). Then through attribution, attributes can be injected that address where data is coming from, its movement across ZT control boundaries, and the invocation of protection measures (e.g., encryption, obfuscation, etc.). Data loss prevention (DLP) solution is deployed to the in-scope enforcement points. It is recommended to start with “monitor-only” and/or “learning” mode limiting impact.\nCollaboration with cyber functions should occur with respect to any observed data loss activity."
+    },
+    {
+      "control_id": "4.6.2",
+      "title": "4.6.2",
+      "family": "4",
+      "description": "Data loss prevention (DLP) solution is updated from monitor only mode to prevention mode. Zero Trust tagging incorporates indicators to facilitate DLP through cooperative cyber enforcement."
+    },
+    {
+      "control_id": "4.6.3",
+      "title": "4.6.3",
+      "family": "4",
+      "description": "Data Loss Prevention (DLP) solution is updated to include extended data tags based on parallel automation activities."
+    },
+    {
+      "control_id": "4.6.4",
+      "title": "4.6.4",
+      "family": "4",
+      "description": "Data Loss Prevention (DLP) solution is integrated with automated data tagging techniques, to include any missing enforcement points and tags."
+    },
+    {
+      "control_id": "4.7",
+      "title": "4.7",
+      "family": "4",
+      "description": "DoD organizations ensure appropriate access to and use of data based on the data and user/NPE/device properties. Software Defined Storage (SDS) is utilized to scale manage permissions to DAAS. Lastly the SDS solution(s) is integrated with DRM tooling improving protections."
+    },
+    {
+      "control_id": "4.7.1",
+      "title": "4.7.1",
+      "family": "4",
+      "description": "Governance mechanisms ensure that component DAAS policy is sufficient for Zero Trust outcomes as established by the SDS policy, if deemed appropriate as established in \"4.2.3 Develop Software Defined\nStorage (SDS) Policy\"."
+    },
+    {
+      "control_id": "4.7.2",
+      "title": "4.7.2",
+      "family": "4",
+      "description": "DoD Components implement the DAAS policy in an automated fashion."
+    },
+    {
+      "control_id": "4.7.3",
+      "title": "4.7.3",
+      "family": "4",
+      "description": "Newly implemented SDS technology and/or functionalities are integrated with the DAAS policy in a risk-based fashion. A phased approach is taken during implementation to measure results and adjust\naccordingly."
+    },
+    {
+      "control_id": "4.7.4",
+      "title": "4.7.4",
+      "family": "4",
+      "description": "DoD Components integrate attributes associated with access control and data location, and establishes a means for interoperability across DLP, DRM, and storage infrastructure solutions with Enterprise IdP."
+    },
+    {
+      "control_id": "4.7.5",
+      "title": "4.7.5",
+      "family": "4",
+      "description": "Newly implemented SDS technology and/or functionalities are integrated with the Enterprise Identity Provider (IdP) following the integration plan. Identity attributes required to meet ZT Target Level\nfunctionalities are required for integration."
+    },
+    {
+      "control_id": "4.7.6",
+      "title": "4.7.6",
+      "family": "4",
+      "description": "Depending on the need for a Software Defined Storage (SDS) tool, a new solution is implemented, or an existing solution is identified, meeting  the functionality requirements to be integrated with DLP, DRM, and ML solutions."
+    },
+    {
+      "control_id": "4.7.7",
+      "title": "4.7.7",
+      "family": "4",
+      "description": "DoD Components configure the SDS functionality and/or solution to be integrated with the underlying DLP and DRM infrastructure as appropriate. Lower-level integrations enable more effective protection and response."
+    },
+    {
+      "control_id": "5",
+      "title": "5",
+      "family": "5",
+      "description": "Network & Environment"
+    },
+    {
+      "control_id": "5.1",
+      "title": "5.1",
+      "family": "5",
+      "description": "DoD organizations reconcile data flows by gathering, mapping, and visualizing network traffic data flows and patterns to ensure authorized access and protection for network and DAAS resources specifically tagging programmatic (e.g., API) access\nwhen possible."
+    },
+    {
+      "control_id": "5.1.1",
+      "title": "5.1.1",
+      "family": "5",
+      "description": "The DoD Enterprise working with the Components creates granular network access rules and policies. Associated Concept of Operations (ConOps) are developed in alignment with access policies as well ensure future supportability. Once agreed upon, DoD Components will implement these access policies into existing network technologies (e.g., Next Generation Firewalls, Intrusion Prevention Systems, etc.) to improve initial risk levels and ensure future interoperability."
+    },
+    {
+      "control_id": "5.1.2",
+      "title": "5.1.2",
+      "family": "5",
+      "description": "DoD Components utilize data tagging and classification standards to develop data filters for API access to the SDN or alternative networking approach. API Decision Points are formalized within the SDN or alternative network architecture and implemented with non- mission/task critical applications and services."
+    },
+    {
+      "control_id": "5.2",
+      "title": "5.2",
+      "family": "5",
+      "description": "DoD organizations define API decision points and implement SDN programmable infrastructure to separate the control and data planes and centrally manage and control the elements in the data plane. Integrations are conducted with decision points and segmentation gateway to accomplish the plane separation. Analytics are then integrated to real time decision making for access to resources."
+    },
+    {
+      "control_id": "5.2.1",
+      "title": "5.2.1",
+      "family": "5",
+      "description": "The DoD Enterprise works with Components to define the necessary APIs and other programmatic interfaces that enable Software Defined Networking (SDN) or alternative networking approach functionalities. These APIs will enable authentication decision point, application delivery control proxy and ssegmentation gateways automation."
+    },
+    {
+      "control_id": "5.2.2",
+      "title": "5.2.2",
+      "family": "5",
+      "description": "Following the API standards, requirements, and SDN API functionalities, DoD Components will implement SoftwareDefined Networking (SDN) or alternative networking approach infrastructure to enable automation tasks. Segmentation gateways and authentication decision points are integrated into the SDN or alternative networking approach infrastructure along with output logging into a standardized repository (e.g., SIEM, Log Analytics) for monitoring and alerting."
+    },
+    {
+      "control_id": "5.2.3",
+      "title": "5.2.3",
+      "family": "5",
+      "description": "Network infrastructure and flows are segmented either physically or logically into separate and distinct control, management, and data planes. Segmentation using IPv6/VLAN approaches is implemented to better organize traffic across data planes. Analytics and NetFlow from the updated infrastructure is automatically fed into Operations Centers and analytics tools."
+    },
+    {
+      "control_id": "5.2.4",
+      "title": "5.2.4",
+      "family": "5",
+      "description": "DoD Components automate network asset discovery through the SDN infrastructure, limiting access to devices based on risk-based methodical approaches. Optimization is conducted based on the SDN analytics to improve overall performance along with providing approved access to resources."
+    },
+    {
+      "control_id": "5.2.5",
+      "title": "5.2.5",
+      "family": "5",
+      "description": "SDN infrastructure utilizes cross pillar data sources such as User Activity Monitoring (UAM), Entity Activity Monitoring (EAM), Enterprise security profiles, and more, for real-time access decisions. Machine Learning (ML) is used to assist decision making based on advanced network analytics (i.e., full packet capture, etc.). Policies are consistently implemented across the Enterprise using unified access standards."
+    },
+    {
+      "control_id": "5.3",
+      "title": "5.3",
+      "family": "5",
+      "description": "DoD organizations establish network boundaries and provide security against networked assets located within an environment by validating the device, user, or NPE on each attempt of accessing a remote resource prior to connection."
+    },
+    {
+      "control_id": "5.3.1",
+      "title": "5.3.1",
+      "family": "5",
+      "description": "DoD Components implement service-based architectures to restrict lateral movement between public and private components of a solutions architecture. Proxy and/or enforcement checks are integrated with the SDN or alternative networking approach solution(s) based on device attributes and behavior."
+    },
+    {
+      "control_id": "5.3.2",
+      "title": "5.3.2",
+      "family": "5",
+      "description": "DoD Components implement mission/organization-based macro- segmentation using logical network zones that limit lateral movement.\nProxy and/or enforcement checks are integrated with the SDN or alternative networking approach solution(s) based on device attributes and behavior."
+    },
+    {
+      "control_id": "5.4",
+      "title": "5.4",
+      "family": "5",
+      "description": "DoD organizations define and document network segmentation based on identity and / or application access in their virtualized and/or cloud environments. Automation is used to apply policy changes through programmatic (e.g., API) approaches. Lastly where possible organizations will utilize host-level process micro segmentation."
+    },
+    {
+      "control_id": "5.4.1",
+      "title": "5.4.1",
+      "family": "5",
+      "description": "DoD Components implement micro-segmentation infrastructure into SDN or alternative networking approach environment, enabling basic segmentation of service components (e.g., web, app, DB), ports, and protocols. Basic automation is accepted for policy changes, including API decision making. Virtual hosting environments implement micro- segmentation at the host/container-level."
+    },
+    {
+      "control_id": "5.4.2",
+      "title": "5.4.2",
+      "family": "5",
+      "description": "DoD Components utilize Software Defined Networking (SDN) or alternative networking approach solution(s) to establish infrastructure meeting the ZT Target Level functionalities - i.e., logical network zones; Role, Attribute, and Condition-Based Access Control for Users and Devices, Privileged Access Management (PAM) services for network resources, and policy-based control on API access."
+    },
+    {
+      "control_id": "5.4.3",
+      "title": "5.4.3",
+      "family": "5",
+      "description": "DoD Components utilize existing micro-segmentation and SDN automation infrastructure enabling process micro-segmentation. Host- level processes are segmented based on security policies and access is granted using real-time access decision making."
+    },
+    {
+      "control_id": "5.4.4",
+      "title": "5.4.4",
+      "family": "5",
+      "description": "Based on the data flow mappings and monitoring standards provided by DoD Enterprise, policies are enabled by DoD Components to mandate protection of data in transit. Common use cases, such as Coalition Information Sharing, sharing across system boundaries and protection across architectural components, are included in protection policies."
+    },
+    {
+      "control_id": "6",
+      "title": "6",
+      "family": "6",
+      "description": "Automation & Orchestration"
+    },
+    {
+      "control_id": "6.1",
+      "title": "6.1",
+      "family": "6",
+      "description": "DoD organizations initially collect and document all rule based policies to orchestrate across the security stack for effective automation; DAAS access procedures and policies will be defined, implemented, and updated. Organizations mature this capability by establishing PDPs and PEPs (including the Next Generation Firewall) to make DAAS resource determinations and enable, monitor, and terminate connections between a user/device and DAAS resources according to predefined policy."
+    },
+    {
+      "control_id": "6.1.1",
+      "title": "6.1.1",
+      "family": "6",
+      "description": "The DoD Enterprise works with Components to catalog and inventory existing cybersecurity policies and standards. Policies are updated and created in cross-pillar activities as needed to meet critical ZT Target Level functionality."
+    },
+    {
+      "control_id": "6.1.2",
+      "title": "6.1.2",
+      "family": "6",
+      "description": "DoD Components develop access profile rules for mission/task and non- mission/task DAAS access using the data from the User, Data, Network & Environment, and Device pillars.  The DoD Enterprise works with the Components to develop an Enterprise security profile rules using the existing Component security profiles to create a common access approach to DAAS. A phased approach can be used by Components to limit risk to mission/task critical DAAS access once the security profile(s) are created."
+    },
+    {
+      "control_id": "6.1.3",
+      "title": "6.1.3",
+      "family": "6",
+      "description": "Enterprise security profile rules covers the User, Data, Network & Environment, and Device pillars initially. Existing Component security profile rules are integrated for non-mission/task DAAS access following an iterative approach to tuning access."
+    },
+    {
+      "control_id": "6.1.4",
+      "title": "6.1.4",
+      "family": "6",
+      "description": "The minimum number of Enterprise security profile(s) exist that grant access to the widest range of DAAS within the DoD Compontents.\nMission/task Component profiles are integrated with the Enterprise security profile(s) and exceptions are managed in a risk-based methodical approach."
+    },
+    {
+      "control_id": "6.2",
+      "title": "6.2",
+      "family": "6",
+      "description": "DoD organizations employ automation methods, such as RPA, to address repetitive, predictable tasks for critical functions such as data enrichment, security controls, and incident response workflows according to system security engineering principles."
+    },
+    {
+      "control_id": "6.2.1",
+      "title": "6.2.1",
+      "family": "6",
+      "description": "DoD Components identify and enumerate all task activities that can be executed both manually and in an automated fashion. Task activities are organized into automated and manual categories. Manual activities are analyzed for retirement."
+    },
+    {
+      "control_id": "6.2.2",
+      "title": "6.2.2",
+      "family": "6",
+      "description": "The DoD Enterprise establishes baseline integration and interoperability within the Security Orchestration, Automation, and Response (SOAR) solution required to enable ZTA Target Level functionality, where actionable and relevant information resides. DoD Components identify instrument, integration, and interoperability points and prioritization per the Enterprise baseline. The necessary integrations in User, Device, Application & Workload, Network & Environment, and Device pillars to automate IR functions are completed."
+    },
+    {
+      "control_id": "6.2.3",
+      "title": "6.2.3",
+      "family": "6",
+      "description": "DoD Components integrate remaining services to meet baseline requirements and ZT Advanced Level functionality requirements. Service provisioning is integrated and automated into workflows, where required, meeting ZT Target Level functionalities."
+    },
+    {
+      "control_id": "6.3",
+      "title": "6.3",
+      "family": "6",
+      "description": "DoD organizations employ ML to execute (and enhance execution of) critical functions such as incident response, anomaly detection, user baselining, and data tagging."
+    },
+    {
+      "control_id": "6.3.1",
+      "title": "6.3.1",
+      "family": "6",
+      "description": "DoD Components utilize existing Data Tagging and Classification standards and requirements to integrate Machine Learning (ML) solution(s)/capability as needed. ML solution(s) is implemented by Components, and existing tagged and classified data repositories are used to establish baselines. ML solution(s) applies data tags in a supervised approach to continually improve analysis."
+    },
+    {
+      "control_id": "6.4",
+      "title": "6.4",
+      "family": "6",
+      "description": "DoD organizations employ AI to execute (and enhance execution of) critical functions - particularly risk and access determinations and environmental analysis."
+    },
+    {
+      "control_id": "6.4.1",
+      "title": "6.4.1",
+      "family": "6",
+      "description": "DoD Components identify areas of improvement based on existing Machine Learning (ML) techniques for Artificial Intelligence (AI). AI solutions are identified, procured, and implemented using the identified areas as requirements."
+    },
+    {
+      "control_id": "6.4.2",
+      "title": "6.4.2",
+      "family": "6",
+      "description": "DoD Components, utilizing existing Machine Learning (ML) functions, implement and use AI technology, such as neural networks, to drive automation and orchestration decisions. Decision making is moved to AI as much as possible, freeing up human staff for other efforts. Utilizing historical patterns, AI will make anticipatory changes in the environment to better reduce risk."
+    },
+    {
+      "control_id": "6.5",
+      "title": "6.5",
+      "family": "6",
+      "description": "DoD organizations achieve initial operational capability of security technologies to orchestrate and automate policies (e.g., PEPs and PDPs) and rulesets to improve security operations, threat and vulnerability management, and security incident response by ingesting alert data, triggering playbooks for automated response and remediation."
+    },
+    {
+      "control_id": "6.5.1",
+      "title": "6.5.1",
+      "family": "6",
+      "description": "DoD Components identify and enumerate all response activities that are executed both manually and in an automated fashion. Response activities are organized into automated and manual categories."
+    },
+    {
+      "control_id": "6.5.2",
+      "title": "6.5.2",
+      "family": "6",
+      "description": "DoD Enterprise, working with Components, develops a standard set of requirements for Security Orchestration, Automation, and Response (SOAR) tooling to enable ZT Target Level functionallity. DoD Components use approved requirements to procure and implement a SOAR solutions. Iinfrastructure integrations for future SOAR functionality is completed."
+    },
+    {
+      "control_id": "6.5.3",
+      "title": "6.5.3",
+      "family": "6",
+      "description": "DoD Components review all existing playbooks to identify for future automation. Existing manual and automated processes missing playbooks have playbooks developed. Playbooks are prioritized for automation to be integrated with the \"Automated Workflows\" activities covering critical processes. Manual processes without playbooks are authorized using a risk-based methodical approach."
+    },
+    {
+      "control_id": "6.6",
+      "title": "6.6",
+      "family": "6",
+      "description": "DoD establishes and enforces enterprise-wide programmatic interface (e.g., API ) standards; all non-compliant APIs are identified and replaced."
+    },
+    {
+      "control_id": "6.6.1",
+      "title": "6.6.1",
+      "family": "6",
+      "description": "Automation and Orchestration tooling and solutions are analyzed for compliance and capabilities based on the DoD Enterprise API machine- readable patterns and protocols."
+    },
+    {
+      "control_id": "6.6.2",
+      "title": "6.6.2",
+      "family": "6",
+      "description": "The DoD Enterprise works with components to establish an API standard (or equivalent automated interchange mechanism), which at least outlines the approved patterns and protocols. DoD Components identify existing APIs and update to the standard."
+    },
+    {
+      "control_id": "6.6.3",
+      "title": "6.6.3",
+      "family": "6",
+      "description": "DoD Components will ensure that all ZT applications/services (i.e., PEP, PDP, PIP) adopt the API standard. Information Systems required to follow ZT Target or Advanced Levels prioritize integration with the API standard to simplify automation."
+    },
+    {
+      "control_id": "6.7",
+      "title": "6.7",
+      "family": "6",
+      "description": "In the event a computer network defense service provider (CNDSP) does not exist, DoD organizations define and stand up security operations centers (SOC) to deploy, operate, and maintain security monitoring, protections and response for DAAS; SOCs provide security management visibility for status (upward visibility) and tactical implementation (downward visibility). Workflows within the SOC are automated using automation tooling and enrichment occurs between service providers and technologies."
+    },
+    {
+      "control_id": "6.7.1",
+      "title": "6.7.1",
+      "family": "6",
+      "description": "DoD Enterprise works with Components to establish cybersecurity incident response guidance using industry best practices, such as NIST and a list of approved threat data sources as specified in \"Cyber Threat Intelligence Program Pt 1\". DoD Components enable workflows for security events using internal context, past threat events, and other threat intelligence. Approved external sources of enrichment are identified for future integration. These workflows are used to determine incident response procedures."
+    },
+    {
+      "control_id": "6.7.2",
+      "title": "6.7.2",
+      "family": "6",
+      "description": "DoD Components identify and establish extended workflows for additional incident response types in alignment with the activity \"Threat Alerting Pt 2\". Initial enrichment data sources are used for existing workflows. Additional enrichment sources (e.g., UAM, UEBA, profiles, and baselines) are identified for future integrations."
+    },
+    {
+      "control_id": "6.7.3",
+      "title": "6.7.3",
+      "family": "6",
+      "description": "DoD Components use enrichment data sources on basic and extended threat response workflows."
+    },
+    {
+      "control_id": "6.7.4",
+      "title": "6.7.4",
+      "family": "6",
+      "description": "DoD Components focus on automating Security Orchestration, Automation, and Response (SOAR) functions and playbooks. Manual processes within security operations are identified and fully automated as possible. Remaining manual processes are decommissioned when possible or marked for exception using a risk-based approach."
+    },
+    {
+      "control_id": "7",
+      "title": "7",
+      "family": "7",
+      "description": "Visibility & Analytics"
+    },
+    {
+      "control_id": "7.1",
+      "title": "7.1",
+      "family": "7",
+      "description": "DoD organizations collect and process all logs including network, data, application, device, and user logs and make those logs available to the appropriate Computer Network Defense Service Provider (CNDSP) or security operations center (SOC). Logs and events follow a standardized format and rules/analytics are developed as needed."
+    },
+    {
+      "control_id": "7.1.1",
+      "title": "7.1.1",
+      "family": "7",
+      "description": "DoD Components conduct analysis to determine current and future scaling needs for monitoring, detection, and response. This requires a prioritization plan aligned with Component business/mission considerations and associated risk alignment. Scaling is analyzed following common industry best practice and aligns with  ZT Pillar requirements. The team works with existing Business Continuity Planning (BCP) and Disaster Recovery Planning (DRP) groups to determine distributed environment needs in emergencies and Component growth."
+    },
+    {
+      "control_id": "7.1.2",
+      "title": "7.1.2",
+      "family": "7",
+      "description": "DoD Components identify and prioritize log and flow sources (e.g., firewalls, Endpoint Detection & Response, Active Directory, switches, routers, etc.) and develop a plan for collection of high-priority logs first, then low-priority. An open industry-standard log format is agreed upon at the DoD Enterprise level with the Components, and implemented in future procurement requirements. Existing solutions and technologies are migrated to this format on a continual basis."
+    },
+    {
+      "control_id": "7.1.3",
+      "title": "7.1.3",
+      "family": "7",
+      "description": "Enterprise develops common user and device activities. Components identify and prioritize activities based on risk. Events/flows deemed the most simplistic and risky have analytics created using different data sources, such as logs. Trends and patterns are developed over longer periods of time."
+    },
+    {
+      "control_id": "7.2",
+      "title": "7.2",
+      "family": "7",
+      "description": "Computer Network Defense Service Provider (CNDSP) or security operations centers (SOC) monitor, detect, and analyze data logged into a security information and event management (SIEM) tool. User and device baselines are created using security controls and integrated with the SIEM. Alerting within the SIEM is matured over the phases to support more advanced data points (e.g., Cyber Threat Intel, Baselines, etc.)"
+    },
+    {
+      "control_id": "7.2.1",
+      "title": "7.2.1",
+      "family": "7",
+      "description": "DoD Components utilize existing Security Information and Event Management (SIEM) solution to develop rules and alerts for common threat events (e.g., malware, phishing, etc.) Alerts and/or rule triggers are fed into the parallel “Asset ID & Alert Correlation” activity to begin automation of responses."
+    },
+    {
+      "control_id": "7.2.2",
+      "title": "7.2.2",
+      "family": "7",
+      "description": "DoD Components expand threat alerting in the Security Information and Event Management (SIEM) solution to include Cyber Threat Intelligence (CTI) data feeds. Deviation and anomaly rules are developed in the SIEM to detect advanced threats."
+    },
+    {
+      "control_id": "7.2.3",
+      "title": "7.2.3",
+      "family": "7",
+      "description": "Threat alerting is expanded to include advanced data sources, such as Extended Detection & Response (XDR), User & Entity Behavior Analytics (UEBA), and User Activity Monitoring (UAM). These advanced data sources are used to develop improved anomalous and pattern activity detections."
+    },
+    {
+      "control_id": "7.2.4",
+      "title": "7.2.4",
+      "family": "7",
+      "description": "All assets in SIEM are identified and correlated to alerts in order to provide security teams with accurate and detailed information. This information contributes to the incident response speed. Asset ID's also allow better visibility while preforming vulnerability assessments."
+    },
+    {
+      "control_id": "7.2.5",
+      "title": "7.2.5",
+      "family": "7",
+      "description": "DoD Components develop a subject/attribute baseline approach based on typical pattern and behavior in activity \"Establish User Baseline Behavior\". This approach will serve as a benchmark for security when identifying and responding to abnormal or malicious activity."
+    },
+    {
+      "control_id": "7.3",
+      "title": "7.3",
+      "family": "7",
+      "description": "Computer Network Defense Service Provider (CNDSP) or security operations centers (SOC) employ data tools across their enterprises for multiple data types to unify data collection and examine events, activities, and behaviors."
+    },
+    {
+      "control_id": "7.3.1",
+      "title": "7.3.1",
+      "family": "7",
+      "description": "The DOD Enterprise provides minimum requirements for analytics tool capabilities to analyze data across all ZT pillars. Components procure and implement an analytics tool in order to provide actionable insights and intelligence."
+    },
+    {
+      "control_id": "7.3.2",
+      "title": "7.3.2",
+      "family": "7",
+      "description": "Utilizing the analytics tools implemented, subject behavior patterns are analyzed to identify patterns and deviations from normality. Techniques in analytics involve machine learning and UEBA."
+    },
+    {
+      "control_id": "7.4",
+      "title": "7.4",
+      "family": "7",
+      "description": "DoD organizations initially employ analytics to profile and baseline activity of users and entities and to correlate user activities and behaviors and detect anomalies. Computer Network Defense Service Provider (CNDSP) or security operations centers (SOC) mature this capability through the employment of advanced analytics to profile and baseline activity of users and entities and to correlate user activities and behaviors, and detect anomalies."
+    },
+    {
+      "control_id": "7.4.1",
+      "title": "7.4.1",
+      "family": "7",
+      "description": "Utilizing the baselines developed in the \"User/Device Baselines\" activity, threat profiles are created to assess the level of risk for individual subjects associated to the overall Component security. Profiles should be integrated into  the \"Orginization Access Profile\" activity for decision making."
+    },
+    {
+      "control_id": "7.4.2",
+      "title": "7.4.2",
+      "family": "7",
+      "description": "DoD Components expand baselines and profiles to include unmanaged and non-standard device types, including Internet of Things (IoT) and Operational Technology (OT), through data output monitoring. These devices are again profiled based on standardized attributes and use cases. Analytics are updated to consider the new baselines and profiles, accordingly enabling further detections and response. Specific risky users and devices are automatically prioritized for increased monitoring based on risk. Detection and response are integrated with cross pillar functionalities."
+    },
+    {
+      "control_id": "7.4.3",
+      "title": "7.4.3",
+      "family": "7",
+      "description": "User & Entity Behavior Analytics (UEBA) within DoD Components expands monitoring to advanced analytics such as Machine Learning (ML). These results are in turn reviewed and provided back into ML algorithms to improve detection and response."
+    },
+    {
+      "control_id": "7.4.4",
+      "title": "7.4.4",
+      "family": "7",
+      "description": "User & Entity Behavior Analytics (UEBA) within DoD Components completes it expansion by using traditional and Machine Learning (ML) based results to be provided to Artificial Intelligence (AI) algorithms. AI based detections are supervised, but ultimately, using advanced techniques such as neural networks, UEBA operators are not part of the learning process."
+    },
+    {
+      "control_id": "7.5",
+      "title": "7.5",
+      "family": "7",
+      "description": "Computer Network Defense Service Provider (CNDSP) or security operations centers (SOC) integrate threat intelligence information and streams about identities, motivations, characteristics, and tactics, techniques and procedures (TTPs) with data collected in the SIEM."
+    },
+    {
+      "control_id": "7.5.1",
+      "title": "7.5.1",
+      "family": "7",
+      "description": "The DoD Enterprise works with Components to develop a Cyber Threat Intelligence (CTI) program policy, standard, and process.  Components utilize this documentation to develop organizational CTI teams with key mission/task stakeholders. CTI teams gather intelligence from common data feeds across ZT Pillars and aggregate all intelligence to a centralized repository (e.g. SIEM)."
+    },
+    {
+      "control_id": "7.5.2",
+      "title": "7.5.2",
+      "family": "7",
+      "description": "DoD Components expand their Cyber Threat Intelligence (CTI) teams to include new stakeholders as appropriate. Existing and authenticated, private and controlled threat intelligence is analyzed, and appropriate actions and controls are enforced across ZT Pillars. CTI Program adapts strategy over time with expansion of threat intelligence developed in solutions and program maturity."
+    },
+    {
+      "control_id": "7.6",
+      "title": "7.6",
+      "family": "7",
+      "description": "DoD Organization ML & AI solutions dynamically and automatically update security profiles and device configuration through continuous security posture monitoring, risk and confidence scoring, and automated patch management."
+    }
+  ]
+}

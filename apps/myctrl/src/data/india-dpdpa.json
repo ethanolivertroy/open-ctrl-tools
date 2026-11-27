@@ -1,0 +1,2056 @@
+{
+  "framework": {
+    "id": "india-dpdpa",
+    "name": "India DPDPA",
+    "version": "2023",
+    "description": "India DPDPA compliance framework"
+  },
+  "families": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8",
+    "9": "9",
+    "10": "10",
+    "11": "11",
+    "12": "12",
+    "13": "13",
+    "14": "14",
+    "15": "15",
+    "16": "16",
+    "17": "17",
+    "18": "18",
+    "19": "19",
+    "20": "20",
+    "21": "21",
+    "22": "22",
+    "23": "23",
+    "24": "24",
+    "25": "25",
+    "26": "26",
+    "27": "27",
+    "28": "28",
+    "29": "29",
+    "30": "30",
+    "31": "31",
+    "32": "32",
+    "33": "33",
+    "34": "34",
+    "35": "35",
+    "36": "36",
+    "37": "37",
+    "38": "38",
+    "39": "39",
+    "40": "40",
+    "41": "41",
+    "42": "42",
+    "43": "43",
+    "44": "44",
+    "3(a)": "3(a)",
+    "3(a)(i)": "3(a)(i)",
+    "3(a)(ii)": "3(a)(ii)",
+    "3(b)": "3(b)",
+    "3(c)": "3(c)",
+    "3(c)(i)": "3(c)(i)",
+    "3(c)(ii)": "3(c)(ii)",
+    "3(c)(ii)(A)": "3(c)(ii)(A)",
+    "3(c)(ii)(B)": "3(c)(ii)(B)",
+    "4(1)": "4(1)",
+    "4(1)(a)": "4(1)(a)",
+    "4(1)(b)": "4(1)(b)",
+    "4(2)": "4(2)",
+    "5(1)": "5(1)",
+    "5(1)(i)": "5(1)(i)",
+    "5(1)(ii)": "5(1)(ii)",
+    "5(1)(iii)": "5(1)(iii)",
+    "5(2)": "5(2)",
+    "5(2)(a)": "5(2)(a)",
+    "5(2)(a)(i)": "5(2)(a)(i)",
+    "5(2)(a)(ii)": "5(2)(a)(ii)",
+    "5(2)(a)(iii)": "5(2)(a)(iii)",
+    "5(2)(b)": "5(2)(b)",
+    "5(3)": "5(3)",
+    "6(1)": "6(1)",
+    "6(2)": "6(2)",
+    "6(3)": "6(3)",
+    "6(4)": "6(4)",
+    "6(5)": "6(5)",
+    "6(6)": "6(6)",
+    "6(7)": "6(7)",
+    "6(8)": "6(8)",
+    "6(9)": "6(9)",
+    "6(10)": "6(10)",
+    "7(a)": "7(a)",
+    "7(b)": "7(b)",
+    "7(b)(i)": "7(b)(i)",
+    "7(b)(ii)": "7(b)(ii)",
+    "7(c)": "7(c)",
+    "7(d)": "7(d)",
+    "7(e)": "7(e)",
+    "7(f)": "7(f)",
+    "7(g)": "7(g)",
+    "7(h)": "7(h)",
+    "7(i)": "7(i)",
+    "8(1)": "8(1)",
+    "8(2)": "8(2)",
+    "8(3)": "8(3)",
+    "8(3)(a)": "8(3)(a)",
+    "8(3)(b)": "8(3)(b)",
+    "8(4)": "8(4)",
+    "8(5)": "8(5)",
+    "8(6)": "8(6)",
+    "8(7)": "8(7)",
+    "8(7)(a)": "8(7)(a)",
+    "8(7)(b)": "8(7)(b)",
+    "8(8)": "8(8)",
+    "8(8)(a)": "8(8)(a)",
+    "8(8)(b)": "8(8)(b)",
+    "8(9)": "8(9)",
+    "8(10)": "8(10)",
+    "8(11)": "8(11)",
+    "9(1)": "9(1)",
+    "9(2)": "9(2)",
+    "9(3)": "9(3)",
+    "9(4)": "9(4)",
+    "9(5)": "9(5)",
+    "10(1)": "10(1)",
+    "10(1)(a)": "10(1)(a)",
+    "10(1)(b)": "10(1)(b)",
+    "10(1)(c)": "10(1)(c)",
+    "10(1)(d)": "10(1)(d)",
+    "10(1)(e)": "10(1)(e)",
+    "10(1)(f)": "10(1)(f)",
+    "10(2)": "10(2)",
+    "10(2)(a)": "10(2)(a)",
+    "10(2)(a)(i)": "10(2)(a)(i)",
+    "10(2)(a)(ii)": "10(2)(a)(ii)",
+    "10(2)(a)(iii)": "10(2)(a)(iii)",
+    "10(2)(a)(iv)": "10(2)(a)(iv)",
+    "10(2)(b)": "10(2)(b)",
+    "10(2)(c)": "10(2)(c)",
+    "10(2)(c)(i)": "10(2)(c)(i)",
+    "10(2)(c)(ii)": "10(2)(c)(ii)",
+    "10(2)(c)(iii)": "10(2)(c)(iii)",
+    "11(1)": "11(1)",
+    "11(1)(a)": "11(1)(a)",
+    "11(1)(b)": "11(1)(b)",
+    "11(1)(c)": "11(1)(c)",
+    "11(2)": "11(2)",
+    "12(1)": "12(1)",
+    "12(2)": "12(2)",
+    "12(2)(a)": "12(2)(a)",
+    "12(2)(b)": "12(2)(b)",
+    "12(2)(c)": "12(2)(c)",
+    "12(3)": "12(3)",
+    "13(1)": "13(1)",
+    "13(2)": "13(2)",
+    "13(3)": "13(3)",
+    "14(1)": "14(1)",
+    "14(2)": "14(2)",
+    "15(a)": "15(a)",
+    "15(b)": "15(b)",
+    "15(c)": "15(c)",
+    "15(d)": "15(d)",
+    "15(e)": "15(e)",
+    "16(1)": "16(1)",
+    "16(2)": "16(2)",
+    "17(1)": "17(1)",
+    "17(1)(a)": "17(1)(a)",
+    "17(1)(b)": "17(1)(b)",
+    "17(1)(c)": "17(1)(c)",
+    "17(1)(d)": "17(1)(d)",
+    "17(1)(e)": "17(1)(e)",
+    "17(1)(f)": "17(1)(f)",
+    "17(2)": "17(2)",
+    "17(2)(a)": "17(2)(a)",
+    "17(2)(b)": "17(2)(b)",
+    "17(3)": "17(3)",
+    "17(4)": "17(4)",
+    "17(5)": "17(5)",
+    "18(1)": "18(1)",
+    "18(2)": "18(2)",
+    "18(3)": "18(3)",
+    "19(1)": "19(1)",
+    "19(2)": "19(2)",
+    "19(3)": "19(3)",
+    "20(1)": "20(1)",
+    "20(2)": "20(2)",
+    "21(1)": "21(1)",
+    "21(1)(a)": "21(1)(a)",
+    "21(1)(b)": "21(1)(b)",
+    "21(1)(c)": "21(1)(c)",
+    "21(1)(d)": "21(1)(d)",
+    "21(1)(e)": "21(1)(e)",
+    "21(2)": "21(2)",
+    "22(1)": "22(1)",
+    "22(2)": "22(2)",
+    "22(3)": "22(3)",
+    "23(1)": "23(1)",
+    "23(2)": "23(2)",
+    "23(2)(a)": "23(2)(a)",
+    "23(2)(b)": "23(2)(b)",
+    "23(2)(c)": "23(2)(c)",
+    "23(3)": "23(3)",
+    "26(a)": "26(a)",
+    "26(b)": "26(b)",
+    "26(c)": "26(c)",
+    "27(1)": "27(1)",
+    "27(1)(a)": "27(1)(a)",
+    "27(1)(b)": "27(1)(b)",
+    "27(1)(c)": "27(1)(c)",
+    "27(1)(d)": "27(1)(d)",
+    "27(1)(e)": "27(1)(e)",
+    "27(2)": "27(2)",
+    "27(3)": "27(3)",
+    "28(1)": "28(1)",
+    "28(2)": "28(2)",
+    "28(3)": "28(3)",
+    "28(4)": "28(4)",
+    "28(5)": "28(5)",
+    "28(6)": "28(6)",
+    "28(7)": "28(7)",
+    "28(7)(a)": "28(7)(a)",
+    "28(7)(b)": "28(7)(b)",
+    "28(7)(c)": "28(7)(c)",
+    "28(7)(d)": "28(7)(d)",
+    "28(8)": "28(8)",
+    "28(9)": "28(9)",
+    "28(10)": "28(10)",
+    "28(11)": "28(11)",
+    "28(12)": "28(12)",
+    "29(1)": "29(1)",
+    "29(2)": "29(2)",
+    "29(3)": "29(3)",
+    "29(4)": "29(4)",
+    "29(5)": "29(5)",
+    "29(6)": "29(6)",
+    "29(7)": "29(7)",
+    "29(8)": "29(8)",
+    "29(9)": "29(9)",
+    "29(10)": "29(10)",
+    "30(1)": "30(1)",
+    "30(2)": "30(2)",
+    "32(1)": "32(1)",
+    "32(2)": "32(2)",
+    "32(3)": "32(3)",
+    "32(4)": "32(4)",
+    "32(5)": "32(5)",
+    "33(1)": "33(1)",
+    "33(2)": "33(2)",
+    "33(2)(a)": "33(2)(a)",
+    "33(2)(b)": "33(2)(b)",
+    "33(2)(c)": "33(2)(c)",
+    "33(2)(d)": "33(2)(d)",
+    "33(2)(e)": "33(2)(e)",
+    "33(2)(f)": "33(2)(f)",
+    "33(2)(g)": "33(2)(g)",
+    "37(1)": "37(1)",
+    "37(1)(a)": "37(1)(a)",
+    "37(1)(b)": "37(1)(b)",
+    "37(2)": "37(2)",
+    "37(3)": "37(3)",
+    "38(1)": "38(1)",
+    "38(2)": "38(2)",
+    "40(1)": "40(1)",
+    "40(2)": "40(2)",
+    "40(2)(a)": "40(2)(a)",
+    "40(2)(b)": "40(2)(b)",
+    "40(2)(c)": "40(2)(c)",
+    "40(2)(d)": "40(2)(d)",
+    "40(2)(e)": "40(2)(e)",
+    "40(2)(f)": "40(2)(f)",
+    "40(2)(g)": "40(2)(g)",
+    "40(2)(h)": "40(2)(h)",
+    "40(2)(i)": "40(2)(i)",
+    "40(2)(j)": "40(2)(j)",
+    "40(2)(k)": "40(2)(k)",
+    "40(2)(l)": "40(2)(l)",
+    "40(2)(m)": "40(2)(m)",
+    "40(2)(n)": "40(2)(n)",
+    "40(2)(o)": "40(2)(o)",
+    "40(2)(p)": "40(2)(p)",
+    "40(2)(q)": "40(2)(q)",
+    "40(2)(r)": "40(2)(r)",
+    "40(2)(s)": "40(2)(s)",
+    "40(2)(t)": "40(2)(t)",
+    "40(2)(u)": "40(2)(u)",
+    "40(2)(v)": "40(2)(v)",
+    "40(2)(w)": "40(2)(w)",
+    "40(2)(x)": "40(2)(x)",
+    "40(2)(y)": "40(2)(y)",
+    "40(2)(z)": "40(2)(z)",
+    "42(1)": "42(1)",
+    "42(2)": "42(2)",
+    "43(1)": "43(1)",
+    "43(2)": "43(2)",
+    "43(3)": "43(3)",
+    "44(1)": "44(1)",
+    "44(1)(i)": "44(1)(i)",
+    "44(1)(ii)": "44(1)(ii)",
+    "44(1)(iii)": "44(1)(iii)",
+    "44(2)": "44(2)",
+    "44(2)(a)": "44(2)(a)",
+    "44(2)(b)": "44(2)(b)",
+    "44(2)(c)": "44(2)(c)",
+    "44(3)": "44(3)",
+    "44(3)(i)": "44(3)(i)"
+  },
+  "controls": [
+    {
+      "control_id": "1",
+      "title": "1",
+      "family": "1",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "2",
+      "title": "2",
+      "family": "2",
+      "description": "See law for full details"
+    },
+    {
+      "control_id": "3",
+      "title": "3",
+      "family": "3",
+      "description": "Subject to the provisions of this Act, it shall—"
+    },
+    {
+      "control_id": "3(a)",
+      "title": "3(a)",
+      "family": "3(a)",
+      "description": "apply to the processing of digital personal data within the territory of India where the personal data is collected––"
+    },
+    {
+      "control_id": "3(a)(i)",
+      "title": "3(a)(i)",
+      "family": "3(a)(i)",
+      "description": "in digital form; or"
+    },
+    {
+      "control_id": "3(a)(ii)",
+      "title": "3(a)(ii)",
+      "family": "3(a)(ii)",
+      "description": "in non-digital form and digitised subsequently;"
+    },
+    {
+      "control_id": "3(b)",
+      "title": "3(b)",
+      "family": "3(b)",
+      "description": "also apply to processing of digital personal data outside the territory of India, if such processing is in connection with any activity related to offering of goods or services to Data Principals within the territory of India;"
+    },
+    {
+      "control_id": "3(c)",
+      "title": "3(c)",
+      "family": "3(c)",
+      "description": "not apply to—"
+    },
+    {
+      "control_id": "3(c)(i)",
+      "title": "3(c)(i)",
+      "family": "3(c)(i)",
+      "description": "personal data processed by an individual for any personal or domestic purpose; and"
+    },
+    {
+      "control_id": "3(c)(ii)",
+      "title": "3(c)(ii)",
+      "family": "3(c)(ii)",
+      "description": "personal data that is made or caused to be made publicly available by—"
+    },
+    {
+      "control_id": "3(c)(ii)(A)",
+      "title": "3(c)(ii)(A)",
+      "family": "3(c)(ii)(A)",
+      "description": "the Data Principal to whom such personal data relates; or"
+    },
+    {
+      "control_id": "3(c)(ii)(B)",
+      "title": "3(c)(ii)(B)",
+      "family": "3(c)(ii)(B)",
+      "description": "any other person who is under an obligation under any law for the time being in force in India to make such personal data publicly available."
+    },
+    {
+      "control_id": "4",
+      "title": "4",
+      "family": "4",
+      "description": ""
+    },
+    {
+      "control_id": "4(1)",
+      "title": "4(1)",
+      "family": "4(1)",
+      "description": "A person may process the personal data of a Data Principal only in accordance with the provisions of this Act and for a lawful purpose,—"
+    },
+    {
+      "control_id": "4(1)(a)",
+      "title": "4(1)(a)",
+      "family": "4(1)(a)",
+      "description": "for which the Data Principal has given her consent; or"
+    },
+    {
+      "control_id": "4(1)(b)",
+      "title": "4(1)(b)",
+      "family": "4(1)(b)",
+      "description": "for certain legitimate uses."
+    },
+    {
+      "control_id": "4(2)",
+      "title": "4(2)",
+      "family": "4(2)",
+      "description": "For the purposes of this section, the expression “lawful purpose” means any purpose which is not expressly forbidden by law."
+    },
+    {
+      "control_id": "5",
+      "title": "5",
+      "family": "5",
+      "description": ""
+    },
+    {
+      "control_id": "5(1)",
+      "title": "5(1)",
+      "family": "5(1)",
+      "description": "Every request made to a Data Principal under section 6 for consent shall be accompanied or preceded by a notice given by the Data Fiduciary to the Data Principal, informing her,—"
+    },
+    {
+      "control_id": "5(1)(i)",
+      "title": "5(1)(i)",
+      "family": "5(1)(i)",
+      "description": "the personal data and the purpose for which the same is proposed to be processed;"
+    },
+    {
+      "control_id": "5(1)(ii)",
+      "title": "5(1)(ii)",
+      "family": "5(1)(ii)",
+      "description": "the manner in which she may exercise her rights under sub-section (4) of section 6 and section 13; and"
+    },
+    {
+      "control_id": "5(1)(iii)",
+      "title": "5(1)(iii)",
+      "family": "5(1)(iii)",
+      "description": "the manner in which the Data Principal may make a complaint to the Board, in such manner and as may be prescribed."
+    },
+    {
+      "control_id": "5(2)",
+      "title": "5(2)",
+      "family": "5(2)",
+      "description": "Where a Data Principal has given her consent for the processing of her personal data before the date of commencement of this Act,—"
+    },
+    {
+      "control_id": "5(2)(a)",
+      "title": "5(2)(a)",
+      "family": "5(2)(a)",
+      "description": "the Data Fiduciary shall, as soon as it is reasonably practicable, give to the Data Principal a notice informing her,––"
+    },
+    {
+      "control_id": "5(2)(a)(i)",
+      "title": "5(2)(a)(i)",
+      "family": "5(2)(a)(i)",
+      "description": "the personal data and the purpose for which the same has been processed;"
+    },
+    {
+      "control_id": "5(2)(a)(ii)",
+      "title": "5(2)(a)(ii)",
+      "family": "5(2)(a)(ii)",
+      "description": "the manner in which she may exercise her rights under sub-section (4) of section 6 and section 13; and"
+    },
+    {
+      "control_id": "5(2)(a)(iii)",
+      "title": "5(2)(a)(iii)",
+      "family": "5(2)(a)(iii)",
+      "description": "the manner in which the Data Principal may make a complaint to the Board,"
+    },
+    {
+      "control_id": "5(2)(b)",
+      "title": "5(2)(b)",
+      "family": "5(2)(b)",
+      "description": "the Data Fiduciary may continue to process the personal data until and unless the Data Principal withdraws her consent."
+    },
+    {
+      "control_id": "5(3)",
+      "title": "5(3)",
+      "family": "5(3)",
+      "description": "The Data Fiduciary shall give the Data Principal the option to access the contents of the notice referred to in sub-sections (1) and (2) in English or any language specified in the Eighth Schedule to the Constitution."
+    },
+    {
+      "control_id": "6",
+      "title": "6",
+      "family": "6",
+      "description": ""
+    },
+    {
+      "control_id": "6(1)",
+      "title": "6(1)",
+      "family": "6(1)",
+      "description": "The consent given by the Data Principal shall be free, specific, informed, unconditional and unambiguous with a clear affirmative action, and shall signify an agreement to the processing of her personal data for the specified purpose and be limited to such personal data as is necessary for such specified purpose."
+    },
+    {
+      "control_id": "6(2)",
+      "title": "6(2)",
+      "family": "6(2)",
+      "description": "Any part of consent referred in sub-section (1) which constitutes an infringement of the provisions of this Act or the rules made thereunder or any other law for the time being in force shall be invalid to the extent of such infringement."
+    },
+    {
+      "control_id": "6(3)",
+      "title": "6(3)",
+      "family": "6(3)",
+      "description": "Every request for consent under the provisions of this Act or the rules made thereunder shall be presented to the Data Principal in a clear and plain language, giving her the option to access such request in English or any language specified in the Eighth Schedule to the Constitution and providing the contact details of a Data Protection Officer, where applicable, or of any other person authorised by the Data Fiduciary to respond to any communication from the Data Principal for the purpose of exercise of her rights under the provisions of this Act."
+    },
+    {
+      "control_id": "6(4)",
+      "title": "6(4)",
+      "family": "6(4)",
+      "description": "Where consent given by the Data Principal is the basis of processing of personal data, such Data Principal shall have the right to withdraw her consent at any time, with the ease of doing so being comparable to the ease with which such consent was given."
+    },
+    {
+      "control_id": "6(5)",
+      "title": "6(5)",
+      "family": "6(5)",
+      "description": "The consequences of the withdrawal referred to in sub-section (4) shall be borne by the Data Principal, and such withdrawal shall not affect the legality of processing of the personal data based on consent before its withdrawal."
+    },
+    {
+      "control_id": "6(6)",
+      "title": "6(6)",
+      "family": "6(6)",
+      "description": "If a Data Principal withdraws her consent to the processing of personal data under sub-section (5), the Data Fiduciary shall, within a reasonable time, cease and cause its Data Processors to cease processing the personal data of such Data Principal unless such processing without her consent is required or authorised under the provisions of this Act or the rules made thereunder or any other law for the time being in force in India."
+    },
+    {
+      "control_id": "6(7)",
+      "title": "6(7)",
+      "family": "6(7)",
+      "description": "The Data Principal may give, manage, review or withdraw her consent to the Data Fiduciary through a Consent Manager."
+    },
+    {
+      "control_id": "6(8)",
+      "title": "6(8)",
+      "family": "6(8)",
+      "description": "The Consent Manager shall be accountable to the Data Principal and shall act on her behalf in such manner and subject to such obligations as may be prescribed."
+    },
+    {
+      "control_id": "6(9)",
+      "title": "6(9)",
+      "family": "6(9)",
+      "description": "Every Consent Manager shall be registered with the Board in such manner and subject to such technical, operational, financial and other conditions as may be prescribed."
+    },
+    {
+      "control_id": "6(10)",
+      "title": "6(10)",
+      "family": "6(10)",
+      "description": "Where a consent given by the Data Principal is the basis of processing of personal data and a question arises in this regard in a proceeding, the Data Fiduciary shall be obliged to prove that a notice was given by her to the Data Principal and consent was given by such Data Principal to the Data Fiduciary in accordance with the provisions of this Act and the rules made thereunder."
+    },
+    {
+      "control_id": "7",
+      "title": "7",
+      "family": "7",
+      "description": "A Data Fiduciary may process personal data of a Data Principal for any of following uses, namely:—"
+    },
+    {
+      "control_id": "7(a)",
+      "title": "7(a)",
+      "family": "7(a)",
+      "description": "for the specified purpose for which the Data Principal has voluntarily provided her personal data to the Data Fiduciary, and in respect of which she has not indicated to the Data Fiduciary that she does not consent to the use of her personal data."
+    },
+    {
+      "control_id": "7(b)",
+      "title": "7(b)",
+      "family": "7(b)",
+      "description": "for the State and any of its instrumentalities to provide or issue to the Data Principal such subsidy, benefit, service, certificate, licence or permit as may be prescribed, where––\nsubject to standards followed for processing being in accordance with the policy issued by the Central Government or any law for the time being in force for governance of personal data."
+    },
+    {
+      "control_id": "7(b)(i)",
+      "title": "7(b)(i)",
+      "family": "7(b)(i)",
+      "description": "she has previously consented to the processing of her personal data by the State or any of its instrumentalities for any subsidy, benefit, service, certificate, licence or permit; or"
+    },
+    {
+      "control_id": "7(b)(ii)",
+      "title": "7(b)(ii)",
+      "family": "7(b)(ii)",
+      "description": "such personal data is available in digital form in, or in non-digital form and digitised subsequently from, any database, register, book or other document which is maintained by the State or any of its instrumentalities and is notified by the Central Government,"
+    },
+    {
+      "control_id": "7(c)",
+      "title": "7(c)",
+      "family": "7(c)",
+      "description": "for the performance by the State or any of its instrumentalities of any function under any law for the time being in force in India or in the interest of sovereignty and integrity of India or security of the State;"
+    },
+    {
+      "control_id": "7(d)",
+      "title": "7(d)",
+      "family": "7(d)",
+      "description": "for fulfilling any obligation under any law for the time being in force in India on any person to disclose any information to the State or any of its instrumentalities, subject to such processing being in accordance with the provisions regarding disclosure of such information in any other law for the time being in force;"
+    },
+    {
+      "control_id": "7(e)",
+      "title": "7(e)",
+      "family": "7(e)",
+      "description": "for compliance with any judgment or decree or order issued under any law for the time being in force in India, or any judgment or order relating to claims of a contractual or civil nature under any law for the time being in force outside India;"
+    },
+    {
+      "control_id": "7(f)",
+      "title": "7(f)",
+      "family": "7(f)",
+      "description": "for responding to a medical emergency involving a threat to the life or immediate threat to the health of the Data Principal or any other individual;"
+    },
+    {
+      "control_id": "7(g)",
+      "title": "7(g)",
+      "family": "7(g)",
+      "description": "for taking measures to provide medical treatment or health services to any individual during an epidemic, outbreak of disease, or any other threat to public health;"
+    },
+    {
+      "control_id": "7(h)",
+      "title": "7(h)",
+      "family": "7(h)",
+      "description": "for taking measures to ensure safety of, or provide assistance or services to, any individual during any disaster, or any breakdown of public order."
+    },
+    {
+      "control_id": "7(i)",
+      "title": "7(i)",
+      "family": "7(i)",
+      "description": "for the purposes of employment or those related to safeguarding the employer from loss or liability, such as prevention of corporate espionage, maintenance of confidentiality of trade secrets, intellectual property, classified information or provision of any service or benefit sought by a Data Principal who is an employee."
+    },
+    {
+      "control_id": "8",
+      "title": "8",
+      "family": "8",
+      "description": ""
+    },
+    {
+      "control_id": "8(1)",
+      "title": "8(1)",
+      "family": "8(1)",
+      "description": "A Data Fiduciary shall, irrespective of any agreement to the contrary or failure of a Data Principal to carry out the duties provided under this Act, be responsible for complying with the provisions of this Act and the rules made thereunder in respect of any processing undertaken by it or on its behalf by a Data Processor."
+    },
+    {
+      "control_id": "8(2)",
+      "title": "8(2)",
+      "family": "8(2)",
+      "description": "A Data Fiduciary may engage, appoint, use or otherwise involve a Data Processor to process personal data on its behalf for any activity related to offering of goods or services to Data Principals only under a valid contract."
+    },
+    {
+      "control_id": "8(3)",
+      "title": "8(3)",
+      "family": "8(3)",
+      "description": "Where personal data processed by a Data Fiduciary is likely to be—\nthe Data Fiduciary processing such personal data shall ensure its completeness, accuracy and consistency."
+    },
+    {
+      "control_id": "8(3)(a)",
+      "title": "8(3)(a)",
+      "family": "8(3)(a)",
+      "description": "used to make a decision that affects the Data Principal; or"
+    },
+    {
+      "control_id": "8(3)(b)",
+      "title": "8(3)(b)",
+      "family": "8(3)(b)",
+      "description": "disclosed to another Data Fiduciary,"
+    },
+    {
+      "control_id": "8(4)",
+      "title": "8(4)",
+      "family": "8(4)",
+      "description": "A Data Fiduciary shall implement appropriate technical and organisational measures to ensure effective observance of the provisions of this Act and the rules made thereunder."
+    },
+    {
+      "control_id": "8(5)",
+      "title": "8(5)",
+      "family": "8(5)",
+      "description": "A Data Fiduciary shall protect personal data in its possession or under its control, including in respect of any processing undertaken by it or on its behalf by a Data Processor, by taking reasonable security safeguards to prevent personal data breach."
+    },
+    {
+      "control_id": "8(6)",
+      "title": "8(6)",
+      "family": "8(6)",
+      "description": "In the event of a personal data breach, the Data Fiduciary shall give the Board and each affected Data Principal, intimation of such breach in such form and manner as may be prescribed."
+    },
+    {
+      "control_id": "8(7)",
+      "title": "8(7)",
+      "family": "8(7)",
+      "description": "A Data Fiduciary shall, unless retention is necessary for compliance with any law for the time being in force,—"
+    },
+    {
+      "control_id": "8(7)(a)",
+      "title": "8(7)(a)",
+      "family": "8(7)(a)",
+      "description": "erase personal data, upon the Data Principal withdrawing her consent or as soon as it is reasonable to assume that the specified purpose is no longer being served, whichever is earlier; and"
+    },
+    {
+      "control_id": "8(7)(b)",
+      "title": "8(7)(b)",
+      "family": "8(7)(b)",
+      "description": "cause its Data Processor to erase any personal data that was made available by the Data Fiduciary for processing to such Data Processor."
+    },
+    {
+      "control_id": "8(8)",
+      "title": "8(8)",
+      "family": "8(8)",
+      "description": "The purpose referred to in clause (a) of sub-section (7) shall be deemed to no longer be served, if the Data Principal does not––\nfor such time period as may be prescribed, and different time periods may be prescribed for different classes of Data Fiduciaries and for different purposes."
+    },
+    {
+      "control_id": "8(8)(a)",
+      "title": "8(8)(a)",
+      "family": "8(8)(a)",
+      "description": "the Data Fiduciary for the performance of the specified purpose; and"
+    },
+    {
+      "control_id": "8(8)(b)",
+      "title": "8(8)(b)",
+      "family": "8(8)(b)",
+      "description": "exercise any of her rights in relation to such processing,"
+    },
+    {
+      "control_id": "8(9)",
+      "title": "8(9)",
+      "family": "8(9)",
+      "description": "A Data Fiduciary shall publish, in such manner as may be prescribed, the business contact information of a Data Protection Officer, if applicable, or a person who is able to answer on behalf of the Data Fiduciary, the questions, if any, raised by the Data Principal about the processing of her personal data."
+    },
+    {
+      "control_id": "8(10)",
+      "title": "8(10)",
+      "family": "8(10)",
+      "description": "A Data Fiduciary shall establish an effective mechanism to redress the grievances of Data Principals."
+    },
+    {
+      "control_id": "8(11)",
+      "title": "8(11)",
+      "family": "8(11)",
+      "description": "For the purposes of this section, it is hereby clarified that a Data Principal shall be considered as not having approached the Data Fiduciary for the performance of the specified purpose, in any period during which she has not initiated contact with the Data Fiduciary for such performance, in person or by way of communication in electronic or physical form."
+    },
+    {
+      "control_id": "9",
+      "title": "9",
+      "family": "9",
+      "description": ""
+    },
+    {
+      "control_id": "9(1)",
+      "title": "9(1)",
+      "family": "9(1)",
+      "description": "The Data Fiduciary shall, before processing any personal data of a child or a person with disability who has a lawful guardian obtain verifiable consent of the parent of such child or the lawful guardian, as the case may be, in such manner as may be prescribed."
+    },
+    {
+      "control_id": "9(2)",
+      "title": "9(2)",
+      "family": "9(2)",
+      "description": "A Data Fiduciary shall not undertake such processing of personal data that is likely to cause any detrimental effect on the well-being of a child."
+    },
+    {
+      "control_id": "9(3)",
+      "title": "9(3)",
+      "family": "9(3)",
+      "description": "A Data Fiduciary shall not undertake tracking or behavioural monitoring of children or targeted advertising directed at children."
+    },
+    {
+      "control_id": "9(4)",
+      "title": "9(4)",
+      "family": "9(4)",
+      "description": "The provisions of sub-sections (1) and (3) shall not be applicable to processing of personal data of a child by such classes of Data Fiduciaries or for such purposes, and subject to such conditions, as may be prescribed."
+    },
+    {
+      "control_id": "9(5)",
+      "title": "9(5)",
+      "family": "9(5)",
+      "description": "The Central Government may, if satisfied that a Data Fiduciary has ensured that its processing of personal data of children is done in a manner that is verifiably safe, notify for such processing by such Data Fiduciary the age above which that Data Fiduciary shall be exempt from the applicability of all or any of the obligations under sub-sections (1) and (3) in respect of processing by that Data Fiduciary as the notification may specify."
+    },
+    {
+      "control_id": "10",
+      "title": "10",
+      "family": "10",
+      "description": ""
+    },
+    {
+      "control_id": "10(1)",
+      "title": "10(1)",
+      "family": "10(1)",
+      "description": "The Central Government may notify any Data Fiduciary or class of Data Fiduciaries as Significant Data Fiduciary, on the basis of an assessment of such relevant factors as it may determine, including—"
+    },
+    {
+      "control_id": "10(1)(a)",
+      "title": "10(1)(a)",
+      "family": "10(1)(a)",
+      "description": "the volume and sensitivity of personal data processed;"
+    },
+    {
+      "control_id": "10(1)(b)",
+      "title": "10(1)(b)",
+      "family": "10(1)(b)",
+      "description": "risk to the rights of Data Principal;"
+    },
+    {
+      "control_id": "10(1)(c)",
+      "title": "10(1)(c)",
+      "family": "10(1)(c)",
+      "description": "potential impact on the sovereignty and integrity of India;"
+    },
+    {
+      "control_id": "10(1)(d)",
+      "title": "10(1)(d)",
+      "family": "10(1)(d)",
+      "description": "risk to electoral democracy;"
+    },
+    {
+      "control_id": "10(1)(e)",
+      "title": "10(1)(e)",
+      "family": "10(1)(e)",
+      "description": "security of the State; and"
+    },
+    {
+      "control_id": "10(1)(f)",
+      "title": "10(1)(f)",
+      "family": "10(1)(f)",
+      "description": "public order."
+    },
+    {
+      "control_id": "10(2)",
+      "title": "10(2)",
+      "family": "10(2)",
+      "description": "The Significant Data Fiduciary shall—"
+    },
+    {
+      "control_id": "10(2)(a)",
+      "title": "10(2)(a)",
+      "family": "10(2)(a)",
+      "description": "appoint a Data Protection Officer who shall—"
+    },
+    {
+      "control_id": "10(2)(a)(i)",
+      "title": "10(2)(a)(i)",
+      "family": "10(2)(a)(i)",
+      "description": "represent the Significant Data Fiduciary under the provisions of this Act;"
+    },
+    {
+      "control_id": "10(2)(a)(ii)",
+      "title": "10(2)(a)(ii)",
+      "family": "10(2)(a)(ii)",
+      "description": "be based in India;"
+    },
+    {
+      "control_id": "10(2)(a)(iii)",
+      "title": "10(2)(a)(iii)",
+      "family": "10(2)(a)(iii)",
+      "description": "be an individual responsible to the Board of Directors or similar governing body of the Significant Data Fiduciary; and"
+    },
+    {
+      "control_id": "10(2)(a)(iv)",
+      "title": "10(2)(a)(iv)",
+      "family": "10(2)(a)(iv)",
+      "description": "be the point of contact for the grievance redressal mechanism under the provisions of this Act;"
+    },
+    {
+      "control_id": "10(2)(b)",
+      "title": "10(2)(b)",
+      "family": "10(2)(b)",
+      "description": "appoint an independent data auditor to carry out data audit, who shall evaluate the compliance of the Significant Data Fiduciary in accordance with the provisions of this Act; and"
+    },
+    {
+      "control_id": "10(2)(c)",
+      "title": "10(2)(c)",
+      "family": "10(2)(c)",
+      "description": "undertake the following other measures, namely:—"
+    },
+    {
+      "control_id": "10(2)(c)(i)",
+      "title": "10(2)(c)(i)",
+      "family": "10(2)(c)(i)",
+      "description": "periodic Data Protection Impact Assessment, which shall be a process comprising a description of the rights of Data Principals and the purpose of processing of their personal data, assessment and management of the risk to the rights of the Data Principals, and such other matters regarding such process as may be prescribed;"
+    },
+    {
+      "control_id": "10(2)(c)(ii)",
+      "title": "10(2)(c)(ii)",
+      "family": "10(2)(c)(ii)",
+      "description": "periodic audit; and"
+    },
+    {
+      "control_id": "10(2)(c)(iii)",
+      "title": "10(2)(c)(iii)",
+      "family": "10(2)(c)(iii)",
+      "description": "such other measures, consistent with the provisions of this Act, as may be prescribed."
+    },
+    {
+      "control_id": "11",
+      "title": "11",
+      "family": "11",
+      "description": ""
+    },
+    {
+      "control_id": "11(1)",
+      "title": "11(1)",
+      "family": "11(1)",
+      "description": "The Data Principal shall have the right to obtain from the Data Fiduciary to whom she has previously given consent, including consent as referred to in clause (a) of section 7 (hereinafter referred to as the said Data Fiduciary), for processing of personal data, upon making to it a request in such manner as may be prescribed,—"
+    },
+    {
+      "control_id": "11(1)(a)",
+      "title": "11(1)(a)",
+      "family": "11(1)(a)",
+      "description": "a summary of personal data which is being processed by such Data Fiduciary and the processing activities undertaken by that Data Fiduciary with respect to such personal data;"
+    },
+    {
+      "control_id": "11(1)(b)",
+      "title": "11(1)(b)",
+      "family": "11(1)(b)",
+      "description": "the identities of all other Data Fiduciaries and Data Processors with whom the personal data has been shared by such Data Fiduciary, along with a description of the personal data so shared; and"
+    },
+    {
+      "control_id": "11(1)(c)",
+      "title": "11(1)(c)",
+      "family": "11(1)(c)",
+      "description": "any other information related to the personal data of such Data Principal and its processing, as may be prescribed."
+    },
+    {
+      "control_id": "11(2)",
+      "title": "11(2)",
+      "family": "11(2)",
+      "description": "Nothing contained in clause (b) or clause (c) of sub-section (1) shall apply in respect of the sharing of any personal data by the said Data Fiduciary with any other Data Fiduciary authorised by law to obtain such personal data, where such sharing is pursuant to a request made in writing by such other Data Fiduciary for the purpose of prevention or detection or investigation of offences or cyber incidents, or for prosecution or punishment of offences."
+    },
+    {
+      "control_id": "12",
+      "title": "12",
+      "family": "12",
+      "description": ""
+    },
+    {
+      "control_id": "12(1)",
+      "title": "12(1)",
+      "family": "12(1)",
+      "description": "A Data Principal shall have the right to correction, completion, updating and erasure of her personal data for the processing of which she has previously given consent, including consent as referred to in clause (a) of section 7, in accordance with any requirement or procedure under any law for the time being in force."
+    },
+    {
+      "control_id": "12(2)",
+      "title": "12(2)",
+      "family": "12(2)",
+      "description": "A Data Fiduciary shall, upon receiving a request for correction, completion or updating from a Data Principal,—"
+    },
+    {
+      "control_id": "12(2)(a)",
+      "title": "12(2)(a)",
+      "family": "12(2)(a)",
+      "description": "correct the inaccurate or misleading personal data;"
+    },
+    {
+      "control_id": "12(2)(b)",
+      "title": "12(2)(b)",
+      "family": "12(2)(b)",
+      "description": "complete the incomplete personal data; and"
+    },
+    {
+      "control_id": "12(2)(c)",
+      "title": "12(2)(c)",
+      "family": "12(2)(c)",
+      "description": "update the personal data."
+    },
+    {
+      "control_id": "12(3)",
+      "title": "12(3)",
+      "family": "12(3)",
+      "description": "A Data Principal shall make a request in such manner as may be prescribed to the Data Fiduciary for erasure of her personal data, and upon receipt of such a request, the Data Fiduciary shall erase her personal data unless retention of the same is necessary for the specified purpose or for compliance with any law for the time being in force."
+    },
+    {
+      "control_id": "13",
+      "title": "13",
+      "family": "13",
+      "description": ""
+    },
+    {
+      "control_id": "13(1)",
+      "title": "13(1)",
+      "family": "13(1)",
+      "description": "A Data Principal shall have the right to have readily available means of grievance redressal provided by a Data Fiduciary or Consent Manager in respect of any act or omission of such Data Fiduciary or Consent Manager regarding the performance of its obligations in relation to the personal data of such Data Principal or the exercise of her rights under the provisions of this Act and the rules made thereunder."
+    },
+    {
+      "control_id": "13(2)",
+      "title": "13(2)",
+      "family": "13(2)",
+      "description": "The Data Fiduciary or Consent Manager shall respond to any grievances referred to in sub-section (1) within such period as may be prescribed from the date of its receipt for all or any class of Data Fiduciaries."
+    },
+    {
+      "control_id": "13(3)",
+      "title": "13(3)",
+      "family": "13(3)",
+      "description": "The Data Principal shall exhaust the opportunity of redressing her grievance under this section before approaching the Board."
+    },
+    {
+      "control_id": "14",
+      "title": "14",
+      "family": "14",
+      "description": ""
+    },
+    {
+      "control_id": "14(1)",
+      "title": "14(1)",
+      "family": "14(1)",
+      "description": "A Data Principal shall have the right to nominate, in such manner as may be prescribed, any other individual, who shall, in the event of death or incapacity of the Data Principal, exercise the rights of the Data Principal in accordance with the provisions of this Act and the rules made thereunder."
+    },
+    {
+      "control_id": "14(2)",
+      "title": "14(2)",
+      "family": "14(2)",
+      "description": "For the purposes of this section, the expression “incapacity” means inability to exercise the rights of the Data Principal under the provisions of this Act or the rules made thereunder due to unsoundness of mind or infirmity of body."
+    },
+    {
+      "control_id": "15",
+      "title": "15",
+      "family": "15",
+      "description": "A Data Principal shall perform the following duties, namely:—"
+    },
+    {
+      "control_id": "15(a)",
+      "title": "15(a)",
+      "family": "15(a)",
+      "description": "comply with the provisions of all applicable laws for the time being in force while exercising rights under the provisions of this Act;"
+    },
+    {
+      "control_id": "15(b)",
+      "title": "15(b)",
+      "family": "15(b)",
+      "description": "to ensure not to impersonate another person while providing her personal data for a specified purpose;"
+    },
+    {
+      "control_id": "15(c)",
+      "title": "15(c)",
+      "family": "15(c)",
+      "description": "to ensure not to suppress any material information while providing her personal data for any document, unique identifier, proof of identity or proof of address issued by the State or any of its instrumentalities;"
+    },
+    {
+      "control_id": "15(d)",
+      "title": "15(d)",
+      "family": "15(d)",
+      "description": "to ensure not to register a false or frivolous grievance or complaint with a Data Fiduciary or the Board; and"
+    },
+    {
+      "control_id": "15(e)",
+      "title": "15(e)",
+      "family": "15(e)",
+      "description": "to furnish only such information as is verifiably authentic, while exercising the right to correction or erasure under the provisions of this Act or the rules made thereunder."
+    },
+    {
+      "control_id": "16",
+      "title": "16",
+      "family": "16",
+      "description": ""
+    },
+    {
+      "control_id": "16(1)",
+      "title": "16(1)",
+      "family": "16(1)",
+      "description": "The Central Government may, by notification, restrict the transfer of personal data by a Data Fiduciary for processing to such country or territory outside India as may be so notified."
+    },
+    {
+      "control_id": "16(2)",
+      "title": "16(2)",
+      "family": "16(2)",
+      "description": "Nothing contained in this section shall restrict the applicability of any law for the time being in force in India that provides for a higher degree of protection for or restriction on transfer of personal data by a Data Fiduciary outside India in relation to any personal data or Data Fiduciary or class thereof."
+    },
+    {
+      "control_id": "17",
+      "title": "17",
+      "family": "17",
+      "description": ""
+    },
+    {
+      "control_id": "17(1)",
+      "title": "17(1)",
+      "family": "17(1)",
+      "description": "The provisions of Chapter II, except sub-sections (1) and (5) of section 8, and those of Chapter III and section 16 shall not apply where—"
+    },
+    {
+      "control_id": "17(1)(a)",
+      "title": "17(1)(a)",
+      "family": "17(1)(a)",
+      "description": "the processing of personal data is necessary for enforcing any legal right or claim;"
+    },
+    {
+      "control_id": "17(1)(b)",
+      "title": "17(1)(b)",
+      "family": "17(1)(b)",
+      "description": "the processing of personal data by any court or tribunal or any other body in India which is entrusted by law with the performance of any judicial or quasi-judicial or regulatory or supervisory function, where such processing is necessary for the performance of such function;"
+    },
+    {
+      "control_id": "17(1)(c)",
+      "title": "17(1)(c)",
+      "family": "17(1)(c)",
+      "description": "personal data is processed in the interest of prevention, detection, investigation or prosecution of any offence or contravention of any law for the time being in force in India;"
+    },
+    {
+      "control_id": "17(1)(d)",
+      "title": "17(1)(d)",
+      "family": "17(1)(d)",
+      "description": "personal data of Data Principals not within the territory of India is processed pursuant to any contract entered into with any person outside the territory of India by any person based in India;"
+    },
+    {
+      "control_id": "17(1)(e)",
+      "title": "17(1)(e)",
+      "family": "17(1)(e)",
+      "description": "the processing is necessary for a scheme of compromise or arrangement or merger or amalgamation of two or more companies or a reconstruction by way of demerger or otherwise of a company, or transfer of undertaking of one or more company to another company, or involving division of one or more companies, approved by a court or tribunal or other authority competent to do so by any law for the time being in force; and"
+    },
+    {
+      "control_id": "17(1)(f)",
+      "title": "17(1)(f)",
+      "family": "17(1)(f)",
+      "description": "the processing is for the purpose of ascertaining the financial information and assets and liabilities of any person who has defaulted in payment due on account of a loan or advance taken from a financial institution, subject to such processing being in accordance with the provisions regarding disclosure of information or data in any other law for the time being in force."
+    },
+    {
+      "control_id": "17(2)",
+      "title": "17(2)",
+      "family": "17(2)",
+      "description": "The provisions of this Act shall not apply in respect of the processing of personal data—"
+    },
+    {
+      "control_id": "17(2)(a)",
+      "title": "17(2)(a)",
+      "family": "17(2)(a)",
+      "description": "by such instrumentality of the State as the Central Government may notify, in the interests of sovereignty and integrity of India, security of the State, friendly relations with foreign States, maintenance of public order or preventing incitement to any cognizable offence relating to any of these, and the processing by the Central Government of any personal data that such instrumentality may furnish to it; and"
+    },
+    {
+      "control_id": "17(2)(b)",
+      "title": "17(2)(b)",
+      "family": "17(2)(b)",
+      "description": "necessary for research, archiving or statistical purposes if the personal data is not to be used to take any decision specific to a Data Principal and such processing is carried on in accordance with such standards as may be prescribed."
+    },
+    {
+      "control_id": "17(3)",
+      "title": "17(3)",
+      "family": "17(3)",
+      "description": "The Central Government may, having regard to the volume and nature of personal data processed, notify certain Data Fiduciaries or class of Data Fiduciaries, including startups, as Data Fiduciaries to whom the provisions of section 5, sub-sections (3) and (7) of section 8 and sections 10 and 11 shall not apply."
+    },
+    {
+      "control_id": "17(4)",
+      "title": "17(4)",
+      "family": "17(4)",
+      "description": "In respect of processing by the State or any instrumentality of the State, the provisions of sub-section (7) of section 8 and sub-section (3) of section 12 and, where such processing is for a purpose that does not include making of a decision that affects the Data Principal, sub-section (2) of section 12 shall not apply."
+    },
+    {
+      "control_id": "17(5)",
+      "title": "17(5)",
+      "family": "17(5)",
+      "description": "The Central Government may, before expiry of five years from the date of commencement of this Act, by notification, declare that any provision of this Act shall not apply to such Data Fiduciary or classes of Data Fiduciaries for such period as may be specified in the notification."
+    },
+    {
+      "control_id": "18",
+      "title": "18",
+      "family": "18",
+      "description": ""
+    },
+    {
+      "control_id": "18(1)",
+      "title": "18(1)",
+      "family": "18(1)",
+      "description": "With effect from such date as the Central Government may, by notification, appoint, there shall be established, for the purposes of this Act, a Board to be called the Data Protection Board of India."
+    },
+    {
+      "control_id": "18(2)",
+      "title": "18(2)",
+      "family": "18(2)",
+      "description": "The Board shall be a body corporate by the name aforesaid, having perpetual succession and a common seal, with power, subject to the provisions of this Act, to acquire, hold and dispose of property, both movable and immovable, and to contract and shall, by the said name, sue or be sued."
+    },
+    {
+      "control_id": "18(3)",
+      "title": "18(3)",
+      "family": "18(3)",
+      "description": "The headquarters of the Board shall be at such place as the Central Government may notify."
+    },
+    {
+      "control_id": "19",
+      "title": "19",
+      "family": "19",
+      "description": ""
+    },
+    {
+      "control_id": "19(1)",
+      "title": "19(1)",
+      "family": "19(1)",
+      "description": "The Board shall consist of a Chairperson and such number of other Members as the Central Government may notify."
+    },
+    {
+      "control_id": "19(2)",
+      "title": "19(2)",
+      "family": "19(2)",
+      "description": "The Chairperson and other Members shall be appointed by the Central Government in such manner as may be prescribed."
+    },
+    {
+      "control_id": "19(3)",
+      "title": "19(3)",
+      "family": "19(3)",
+      "description": "The Chairperson and other Members shall be a person of ability, integrity and standing who possesses special knowledge or practical experience in the fields of data governance, administration or implementation of laws related to social or consumer protection, dispute resolution, information and communication technology, digital economy, law, regulation or techno-regulation, or in any other field which in the opinion of the Central Government may be useful to the Board, and at least one among them shall be an expert in the field of law."
+    },
+    {
+      "control_id": "20",
+      "title": "20",
+      "family": "20",
+      "description": ""
+    },
+    {
+      "control_id": "20(1)",
+      "title": "20(1)",
+      "family": "20(1)",
+      "description": "The salary, allowances and other terms and conditions of service of the Chairperson and other Members shall be such as may be prescribed, and shall not be varied to their disadvantage after their appointment."
+    },
+    {
+      "control_id": "20(2)",
+      "title": "20(2)",
+      "family": "20(2)",
+      "description": "The Chairperson and other Members shall hold office for a term of two years and shall be eligible for re-appointment."
+    },
+    {
+      "control_id": "21",
+      "title": "21",
+      "family": "21",
+      "description": ""
+    },
+    {
+      "control_id": "21(1)",
+      "title": "21(1)",
+      "family": "21(1)",
+      "description": "A person shall be disqualified for being appointed and continued as the Chairperson or a Member, if she—"
+    },
+    {
+      "control_id": "21(1)(a)",
+      "title": "21(1)(a)",
+      "family": "21(1)(a)",
+      "description": "has been adjudged as an insolvent;"
+    },
+    {
+      "control_id": "21(1)(b)",
+      "title": "21(1)(b)",
+      "family": "21(1)(b)",
+      "description": "has been convicted of an offence, which in the opinion of the Central Government, involves moral turpitude;"
+    },
+    {
+      "control_id": "21(1)(c)",
+      "title": "21(1)(c)",
+      "family": "21(1)(c)",
+      "description": "has become physically or mentally incapable of acting as a Member;"
+    },
+    {
+      "control_id": "21(1)(d)",
+      "title": "21(1)(d)",
+      "family": "21(1)(d)",
+      "description": "has acquired such financial or other interest, as is likely to affect prejudicially her functions as a Member; or"
+    },
+    {
+      "control_id": "21(1)(e)",
+      "title": "21(1)(e)",
+      "family": "21(1)(e)",
+      "description": "has so abused her position as to render her continuance in office prejudicial to the public interest."
+    },
+    {
+      "control_id": "21(2)",
+      "title": "21(2)",
+      "family": "21(2)",
+      "description": "The Chairperson or Member shall not be removed from her office by the Central Government unless she has been given an opportunity of being heard in the matter."
+    },
+    {
+      "control_id": "22",
+      "title": "22",
+      "family": "22",
+      "description": ""
+    },
+    {
+      "control_id": "22(1)",
+      "title": "22(1)",
+      "family": "22(1)",
+      "description": "The Chairperson or any other Member may give notice in writing to the Central Government of resigning from her office, and such resignation shall be effective from the date on which the Central Government permits her to relinquish office, or upon expiry of a period of three months from the date of receipt of such notice, or upon a duly appointed successor entering upon her office, or upon the expiry of the term of her office, whichever is earliest."
+    },
+    {
+      "control_id": "22(2)",
+      "title": "22(2)",
+      "family": "22(2)",
+      "description": "A vacancy caused by the resignation or removal or death of the Chairperson or any other Member, or otherwise, shall be filled by fresh appointment in accordance with the provisions of this Act."
+    },
+    {
+      "control_id": "22(3)",
+      "title": "22(3)",
+      "family": "22(3)",
+      "description": "The Chairperson and any other Member shall not, for a period of one year from the date on which they cease to hold such office, except with the previous approval of the Central Government, accept any employment, and shall also disclose to the Central Government any subsequent acceptance of employment with any Data Fiduciary against whom proceedings were initiated by or before such Chairperson or other Member."
+    },
+    {
+      "control_id": "23",
+      "title": "23",
+      "family": "23",
+      "description": ""
+    },
+    {
+      "control_id": "23(1)",
+      "title": "23(1)",
+      "family": "23(1)",
+      "description": "The Board shall observe such procedure in regard to the holding of and transaction of business at its meetings, including by digital means, and authenticate its orders, directions and instruments in such manner as may be prescribed."
+    },
+    {
+      "control_id": "23(2)",
+      "title": "23(2)",
+      "family": "23(2)",
+      "description": "No act or proceeding of the Board shall be invalid merely by reason of—"
+    },
+    {
+      "control_id": "23(2)(a)",
+      "title": "23(2)(a)",
+      "family": "23(2)(a)",
+      "description": "any vacancy in or any defect in the constitution of the Board;"
+    },
+    {
+      "control_id": "23(2)(b)",
+      "title": "23(2)(b)",
+      "family": "23(2)(b)",
+      "description": "any defect in the appointment of a person acting as the Chairperson or other Member of the Board; or"
+    },
+    {
+      "control_id": "23(2)(c)",
+      "title": "23(2)(c)",
+      "family": "23(2)(c)",
+      "description": "any irregularity in the procedure of the Board, which does not affect the merits of the case."
+    },
+    {
+      "control_id": "23(3)",
+      "title": "23(3)",
+      "family": "23(3)",
+      "description": "When the Chairperson is unable to discharge her functions owing to absence, illness or any other cause, the senior-most Member shall discharge the functions of the Chairperson until the date on which the Chairperson resumes her duties."
+    },
+    {
+      "control_id": "24",
+      "title": "24",
+      "family": "24",
+      "description": "The Board may, with previous approval of the Central Government, appoint such officers and employees as it may deem necessary for the efficient discharge of its functions under the provisions of this Act, on such terms and conditions of appointment and service as may be prescribed."
+    },
+    {
+      "control_id": "25",
+      "title": "25",
+      "family": "25",
+      "description": "The Chairperson, Members, officers and employees of the Board shall be deemed, when acting or purporting to act in pursuance of provisions of this Act, to be public servants within the meaning of section 21 of the Indian Penal Code."
+    },
+    {
+      "control_id": "26",
+      "title": "26",
+      "family": "26",
+      "description": "The Chairperson shall exercise the following powers, namely:—"
+    },
+    {
+      "control_id": "26(a)",
+      "title": "26(a)",
+      "family": "26(a)",
+      "description": "general superintendence and giving direction in respect of all administrative matters of the Board;"
+    },
+    {
+      "control_id": "26(b)",
+      "title": "26(b)",
+      "family": "26(b)",
+      "description": "authorise any officer of the Board to scrutinise any intimation, complaint, reference or correspondence addressed to the Board; and"
+    },
+    {
+      "control_id": "26(c)",
+      "title": "26(c)",
+      "family": "26(c)",
+      "description": "authorise performance of any of the functions of the Board and conduct any of its proceedings, by an individual Member or groups of Members and to allocate proceedings among them."
+    },
+    {
+      "control_id": "27",
+      "title": "27",
+      "family": "27",
+      "description": ""
+    },
+    {
+      "control_id": "27(1)",
+      "title": "27(1)",
+      "family": "27(1)",
+      "description": "The Board shall exercise and perform the following powers and functions, namely:—"
+    },
+    {
+      "control_id": "27(1)(a)",
+      "title": "27(1)(a)",
+      "family": "27(1)(a)",
+      "description": "on receipt of an intimation of personal data breach under sub-section (6) of section 8, to direct any urgent remedial or mitigation measures in the event of a personal data breach, and to inquire into such personal data breach and impose penalty as provided in this Act;"
+    },
+    {
+      "control_id": "27(1)(b)",
+      "title": "27(1)(b)",
+      "family": "27(1)(b)",
+      "description": "on a complaint made by a Data Principal in respect of a personal data breach or a breach in observance by a Data Fiduciary of its obligations in relation to her personal data or the exercise of her rights under the provisions of this Act, or on a reference made to it by the Central Government or a State Government, or in compliance of the directions of any court, to inquire into such breach and impose penalty as provided in this Act;"
+    },
+    {
+      "control_id": "27(1)(c)",
+      "title": "27(1)(c)",
+      "family": "27(1)(c)",
+      "description": "on a complaint made by a Data Principal in respect of a breach in observance by a Consent Manager of its obligations in relation to her personal data, to inquire into such breach and impose penalty as provided in this Act;"
+    },
+    {
+      "control_id": "27(1)(d)",
+      "title": "27(1)(d)",
+      "family": "27(1)(d)",
+      "description": "on receipt of an intimation of breach of any condition of registration of a Consent Manager, to inquire into such breach and impose penalty as provided in this Act; and"
+    },
+    {
+      "control_id": "27(1)(e)",
+      "title": "27(1)(e)",
+      "family": "27(1)(e)",
+      "description": "on a reference made by the Central Government in respect of the breach in observance of the provisions of sub-section (2) of section 37 by an intermediary, to inquire into such breach and impose penalty as provided in this Act."
+    },
+    {
+      "control_id": "27(2)",
+      "title": "27(2)",
+      "family": "27(2)",
+      "description": "The Board may, for the effective discharge of its functions under the provisions of this Act, after giving the person concerned an opportunity of being heard and after recording reasons in writing, issue such directions as it may consider necessary to such person, who shall be bound to comply with the same."
+    },
+    {
+      "control_id": "27(3)",
+      "title": "27(3)",
+      "family": "27(3)",
+      "description": "The Board may, on a representation made to it by a person affected by a direction issued under sub-section (1) or sub-section (2), or on a reference made by the Central Government, modify, suspend, withdraw or cancel such direction and, while doing so, impose such conditions as it may deem fit, subject to which the modification, suspension, withdrawal or cancellation shall have effect."
+    },
+    {
+      "control_id": "28",
+      "title": "28",
+      "family": "28",
+      "description": ""
+    },
+    {
+      "control_id": "28(1)",
+      "title": "28(1)",
+      "family": "28(1)",
+      "description": "The Board shall function as an independent body and shall, as far as practicable, function as a digital office, with the receipt of complaints and the allocation, hearing and pronouncement of decisions in respect of the same being digital by design, and adopt such techno-legal measures as may be prescribed."
+    },
+    {
+      "control_id": "28(2)",
+      "title": "28(2)",
+      "family": "28(2)",
+      "description": "The Board may, on receipt of an intimation or complaint or reference or directions as referred to in sub-section (1) of section 27, take action in accordance with the provisions of this Act and the rules made thereunder."
+    },
+    {
+      "control_id": "28(3)",
+      "title": "28(3)",
+      "family": "28(3)",
+      "description": "The Board shall determine whether there are sufficient grounds to proceed with an inquiry."
+    },
+    {
+      "control_id": "28(4)",
+      "title": "28(4)",
+      "family": "28(4)",
+      "description": "In case the Board determines that there are insufficient grounds, it may, for reasons to be recorded in writing, close the proceedings."
+    },
+    {
+      "control_id": "28(5)",
+      "title": "28(5)",
+      "family": "28(5)",
+      "description": "In case the Board determines that there are sufficient grounds to proceed with inquiry, it may, for reasons to be recorded in writing, inquire into the affairs of any person for ascertaining whether such person is complying with or has complied with the provisions of this Act."
+    },
+    {
+      "control_id": "28(6)",
+      "title": "28(6)",
+      "family": "28(6)",
+      "description": "The Board shall conduct such inquiry following the principles of natural justice and shall record reasons for its actions during the course of such inquiry."
+    },
+    {
+      "control_id": "28(7)",
+      "title": "28(7)",
+      "family": "28(7)",
+      "description": "For the purposes of discharging its functions under this Act, the Board shall have the same powers as are vested in a civil court under the Code of Civil Procedure, 1908, in respect of matters relating to—"
+    },
+    {
+      "control_id": "28(7)(a)",
+      "title": "28(7)(a)",
+      "family": "28(7)(a)",
+      "description": "summoning and enforcing the attendance of any person and examining her on oath;"
+    },
+    {
+      "control_id": "28(7)(b)",
+      "title": "28(7)(b)",
+      "family": "28(7)(b)",
+      "description": "receiving evidence of affidavit requiring the discovery and production of documents;"
+    },
+    {
+      "control_id": "28(7)(c)",
+      "title": "28(7)(c)",
+      "family": "28(7)(c)",
+      "description": "inspecting any data, book, document, register, books of account or any other document; and"
+    },
+    {
+      "control_id": "28(7)(d)",
+      "title": "28(7)(d)",
+      "family": "28(7)(d)",
+      "description": "such other matters as may be prescribed."
+    },
+    {
+      "control_id": "28(8)",
+      "title": "28(8)",
+      "family": "28(8)",
+      "description": "The Board or its officers shall not prevent access to any premises or take into custody any equipment or any item that may adversely affect the day-to-day functioning of a person."
+    },
+    {
+      "control_id": "28(9)",
+      "title": "28(9)",
+      "family": "28(9)",
+      "description": "The Board may require the services of any police officer or any officer of the Central Government or a State Government to assist it for the purposes of this section and it shall be the duty of every such officer to comply with such requisition."
+    },
+    {
+      "control_id": "28(10)",
+      "title": "28(10)",
+      "family": "28(10)",
+      "description": "During the course of the inquiry, if the Board considers it necessary, it may for reasons to be recorded in writing, issue interim orders after giving the person concerned an opportunity of being heard."
+    },
+    {
+      "control_id": "28(11)",
+      "title": "28(11)",
+      "family": "28(11)",
+      "description": "On completion of the inquiry and after giving the person concerned an opportunity of being heard, the Board may for reasons to be recorded in writing, either close the proceedings or proceed in accordance with section 33."
+    },
+    {
+      "control_id": "28(12)",
+      "title": "28(12)",
+      "family": "28(12)",
+      "description": "At any stage after receipt of a complaint, if the Board is of the opinion that the complaint is false or frivolous, it may issue a warning or impose costs on the complainant."
+    },
+    {
+      "control_id": "29",
+      "title": "29",
+      "family": "29",
+      "description": "Any person aggrieved by an order or direction made by the Board under this Act may prefer an appeal before the Appellate Tribunal."
+    },
+    {
+      "control_id": "29(1)",
+      "title": "29(1)",
+      "family": "29(1)",
+      "description": "Every appeal under sub-section (1) shall be filed within a period of sixty days from the date of receipt of the order or direction appealed against and it shall be in such form and manner and shall be accompanied by such fee as may be prescribed."
+    },
+    {
+      "control_id": "29(2)",
+      "title": "29(2)",
+      "family": "29(2)",
+      "description": "Every appeal under sub-section (1) shall be filed within a period of sixty days from the date of receipt of the order or direction appealed against and it shall be in such form and manner and shall be accompanied by such fee as may be prescribed."
+    },
+    {
+      "control_id": "29(3)",
+      "title": "29(3)",
+      "family": "29(3)",
+      "description": "The Appellate Tribunal may entertain an appeal after the expiry of the period specified in sub-section (2), if it is satisfied that there was sufficient cause for not preferring the appeal within that period."
+    },
+    {
+      "control_id": "29(4)",
+      "title": "29(4)",
+      "family": "29(4)",
+      "description": "On receipt of an appeal under sub-section (1), the Appellate Tribunal may, after giving the parties to the appeal, an opportunity of being heard, pass such orders thereon as it thinks fit, confirming, modifying or setting aside the order appealed against."
+    },
+    {
+      "control_id": "29(5)",
+      "title": "29(5)",
+      "family": "29(5)",
+      "description": "The Appellate Tribunal shall send a copy of every order made by it to the Board and to the parties to the appeal."
+    },
+    {
+      "control_id": "29(6)",
+      "title": "29(6)",
+      "family": "29(6)",
+      "description": "The appeal filed before the Appellate Tribunal under sub-section (1) shall be dealt with by it as expeditiously as possible and endeavour shall be made by it to dispose of the appeal finally within six months from the date on which the appeal is presented to it."
+    },
+    {
+      "control_id": "29(7)",
+      "title": "29(7)",
+      "family": "29(7)",
+      "description": "Where any appeal under sub-section (6) could not be disposed of within the period of six months, the Appellate Tribunal shall record its reasons in writing for not disposing of the appeal within that period."
+    },
+    {
+      "control_id": "29(8)",
+      "title": "29(8)",
+      "family": "29(8)",
+      "description": "Without prejudice to the provisions of section 14A and section 16 of the Telecom Regulatory Authority of India Act, 1997, the Appellate Tribunal shall deal with an appeal under this section in accordance with such procedure as may be prescribed."
+    },
+    {
+      "control_id": "29(9)",
+      "title": "29(9)",
+      "family": "29(9)",
+      "description": "Where an appeal is filed against the orders of the Appellate Tribunal under this Act, the provisions of section 18 of the Telecom Regulatory Authority of India Act, 1997 shall apply."
+    },
+    {
+      "control_id": "29(10)",
+      "title": "29(10)",
+      "family": "29(10)",
+      "description": "In respect of appeals filed under the provisions of this Act, the Appellate Tribunal shall, as far as practicable, function as a digital office, with the receipt of appeal, hearing and pronouncement of decisions in respect of the same being digital by design."
+    },
+    {
+      "control_id": "30",
+      "title": "30",
+      "family": "30",
+      "description": ""
+    },
+    {
+      "control_id": "30(1)",
+      "title": "30(1)",
+      "family": "30(1)",
+      "description": "An order passed by the Appellate Tribunal under this Act shall be executable by it as a decree of civil court, and for this purpose, the Appellate Tribunal shall have all the powers of a civil court."
+    },
+    {
+      "control_id": "30(2)",
+      "title": "30(2)",
+      "family": "30(2)",
+      "description": "Notwithstanding anything contained in sub-section (1), the Appellate Tribunal may transmit any order made by it to a civil court having local jurisdiction and such civil court shall execute the order as if it were a decree made by that court."
+    },
+    {
+      "control_id": "31",
+      "title": "31",
+      "family": "31",
+      "description": "If the Board is of the opinion that any complaint may be resolved by mediation, it may direct the parties concerned to attempt resolution of the dispute through such mediation by such mediator as the parties may mutually agree upon, or as provided for under any law for the time being in force in India."
+    },
+    {
+      "control_id": "32",
+      "title": "32",
+      "family": "32",
+      "description": ""
+    },
+    {
+      "control_id": "32(1)",
+      "title": "32(1)",
+      "family": "32(1)",
+      "description": "The Board may accept a voluntary undertaking in respect of any matter related to observance of the provisions of this Act from any person at any stage of a proceeding under section 28."
+    },
+    {
+      "control_id": "32(2)",
+      "title": "32(2)",
+      "family": "32(2)",
+      "description": "The voluntary undertaking referred to in sub-section (1) may include an undertaking to take such action within such time as may be determined by the Board, or refrain from taking such action, and or publicising such undertaking."
+    },
+    {
+      "control_id": "32(3)",
+      "title": "32(3)",
+      "family": "32(3)",
+      "description": "The Board may, after accepting the voluntary undertaking and with the consent of the person who gave the voluntary undertaking vary the terms included in the voluntary undertaking."
+    },
+    {
+      "control_id": "32(4)",
+      "title": "32(4)",
+      "family": "32(4)",
+      "description": "The acceptance of the voluntary undertaking by the Board shall constitute a bar on proceedings under the provisions of this Act as regards the contents of the voluntary undertaking, except in cases covered by sub-section (5)."
+    },
+    {
+      "control_id": "32(5)",
+      "title": "32(5)",
+      "family": "32(5)",
+      "description": "Where a person fails to adhere to any term of the voluntary undertaking accepted by the Board, such breach shall be deemed to be breach of the provisions of this Act and the Board may, after giving such person an opportunity of being heard, proceed in accordance with the provisions of section 33."
+    },
+    {
+      "control_id": "33",
+      "title": "33",
+      "family": "33",
+      "description": ""
+    },
+    {
+      "control_id": "33(1)",
+      "title": "33(1)",
+      "family": "33(1)",
+      "description": "If the Board determines on conclusion of an inquiry that breach of the provisions of this Act or the rules made thereunder by a person is significant, it may, after giving the person an opportunity of being heard, impose such monetary penalty specified in the Schedule."
+    },
+    {
+      "control_id": "33(2)",
+      "title": "33(2)",
+      "family": "33(2)",
+      "description": "While determining the amount of monetary penalty to be imposed under sub-section (1), the Board shall have regard to the following matters, namely:—"
+    },
+    {
+      "control_id": "33(2)(a)",
+      "title": "33(2)(a)",
+      "family": "33(2)(a)",
+      "description": "the nature, gravity and duration of the breach;"
+    },
+    {
+      "control_id": "33(2)(b)",
+      "title": "33(2)(b)",
+      "family": "33(2)(b)",
+      "description": "the type and nature of the personal data affected by the breach;"
+    },
+    {
+      "control_id": "33(2)(c)",
+      "title": "33(2)(c)",
+      "family": "33(2)(c)",
+      "description": "repetitive nature of the breach;"
+    },
+    {
+      "control_id": "33(2)(d)",
+      "title": "33(2)(d)",
+      "family": "33(2)(d)",
+      "description": "whether the person, as a result of the breach, has realised a gain or avoided any loss;"
+    },
+    {
+      "control_id": "33(2)(e)",
+      "title": "33(2)(e)",
+      "family": "33(2)(e)",
+      "description": "whether the person took any action to mitigate the effects and consequences of the breach, and the timeliness and effectiveness of such action;"
+    },
+    {
+      "control_id": "33(2)(f)",
+      "title": "33(2)(f)",
+      "family": "33(2)(f)",
+      "description": "whether the monetary penalty to be imposed is proportionate and effective, having regard to the need to secure observance of and deter breach of the provisions of this Act; and"
+    },
+    {
+      "control_id": "33(2)(g)",
+      "title": "33(2)(g)",
+      "family": "33(2)(g)",
+      "description": "the likely impact of the imposition of the monetary penalty on the person."
+    },
+    {
+      "control_id": "34",
+      "title": "34",
+      "family": "34",
+      "description": "All sums realised by way of penalties imposed by the Board under this Act, shall be credited to the Consolidated Fund of India."
+    },
+    {
+      "control_id": "35",
+      "title": "35",
+      "family": "35",
+      "description": "No suit, prosecution or other legal proceedings shall lie against the Central Government, the Board, its Chairperson and any Member, officer or employee thereof for anything which is done or intended to be done in good faith under the provisions of this Act or the rules made thereunder."
+    },
+    {
+      "control_id": "36",
+      "title": "36",
+      "family": "36",
+      "description": "The Central Government may, for the purposes of this Act, require the Board and any Data Fiduciary or intermediary to furnish such information as it may call for."
+    },
+    {
+      "control_id": "37",
+      "title": "37",
+      "family": "37",
+      "description": ""
+    },
+    {
+      "control_id": "37(1)",
+      "title": "37(1)",
+      "family": "37(1)",
+      "description": "The Central Government or any of its officers specially authorised by it in this behalf may, upon receipt of a reference in writing from the Board that—\nafter giving an opportunity of being heard to that Data Fiduciary, on being satisfied that it is necessary or expedient so to do, in the interests of the general public, for reasons to be recorded in writing, by order, direct any agency of the Central Government or any intermediary to block for access by the public or cause to be blocked for access by the public any such information."
+    },
+    {
+      "control_id": "37(1)(a)",
+      "title": "37(1)(a)",
+      "family": "37(1)(a)",
+      "description": "intimates the imposition of monetary penalty by the Board on a Data Fiduciary in two or more instances; and"
+    },
+    {
+      "control_id": "37(1)(b)",
+      "title": "37(1)(b)",
+      "family": "37(1)(b)",
+      "description": "advises, in the interests of the general public, the blocking for access by the public to any information generated, transmitted, received, stored or hosted, in any computer resource that enables such Data Fiduciary to carry on any activity relating to offering of goods or services to Data Principals within the territory of India,"
+    },
+    {
+      "control_id": "37(2)",
+      "title": "37(2)",
+      "family": "37(2)",
+      "description": "Every intermediary who receives a direction issued under sub-section (1) shall be bound to comply with the same."
+    },
+    {
+      "control_id": "37(3)",
+      "title": "37(3)",
+      "family": "37(3)",
+      "description": "For the purposes of this section, the expressions “computer resource”, “information” and “intermediary” shall have the meanings respectively assigned to them in the Information Technology Act, 2000."
+    },
+    {
+      "control_id": "38",
+      "title": "38",
+      "family": "38",
+      "description": ""
+    },
+    {
+      "control_id": "38(1)",
+      "title": "38(1)",
+      "family": "38(1)",
+      "description": "The provisions of this Act shall be in addition to and not in derogation of any other law for the time being in force."
+    },
+    {
+      "control_id": "38(2)",
+      "title": "38(2)",
+      "family": "38(2)",
+      "description": "In the event of any conflict between a provision of this Act and a provision of any other law for the time being in force, the provision of this Act shall prevail to the extent of such conflict."
+    },
+    {
+      "control_id": "39",
+      "title": "39",
+      "family": "39",
+      "description": "No civil court shall have the jurisdiction to entertain any suit or proceeding in respect of any matter for which the Board is empowered under the provisions of this Act and no injunction shall be granted by any court or other authority in respect of any action taken or to be taken in pursuance of any power under the provisions of this Act."
+    },
+    {
+      "control_id": "40",
+      "title": "40",
+      "family": "40",
+      "description": ""
+    },
+    {
+      "control_id": "40(1)",
+      "title": "40(1)",
+      "family": "40(1)",
+      "description": "The Central Government may, by notification, and subject to the condition of previous publication, make rules not inconsistent with the provisions of this Act, to carry out the purposes of this Act."
+    },
+    {
+      "control_id": "40(2)",
+      "title": "40(2)",
+      "family": "40(2)",
+      "description": "In particular and without prejudice to the generality of the foregoing power, such rules may provide for all or any of the following matters, namely:—"
+    },
+    {
+      "control_id": "40(2)(a)",
+      "title": "40(2)(a)",
+      "family": "40(2)(a)",
+      "description": "the manner in which the notice given by the Data Fiduciary to a Data Principal shall inform her, under sub-section (1) of section 5;"
+    },
+    {
+      "control_id": "40(2)(b)",
+      "title": "40(2)(b)",
+      "family": "40(2)(b)",
+      "description": "the manner in which the notice given by the Data Fiduciary to a Data Principal shall inform her, under sub-section (2) of section 5;"
+    },
+    {
+      "control_id": "40(2)(c)",
+      "title": "40(2)(c)",
+      "family": "40(2)(c)",
+      "description": "the manner of accountability and the obligations of Consent Manager under sub-section (8) of section 6;"
+    },
+    {
+      "control_id": "40(2)(d)",
+      "title": "40(2)(d)",
+      "family": "40(2)(d)",
+      "description": "the manner of registration of Consent Manager and the conditions relating thereto, under sub-section (9) of section 6;"
+    },
+    {
+      "control_id": "40(2)(e)",
+      "title": "40(2)(e)",
+      "family": "40(2)(e)",
+      "description": "the subsidy, benefit, service, certificate, licence or permit for the provision or issuance of which, personal data may be processed under clause (b) of section 7;"
+    },
+    {
+      "control_id": "40(2)(f)",
+      "title": "40(2)(f)",
+      "family": "40(2)(f)",
+      "description": "the form and manner of intimation of personal data breach to the Board under sub-section (6) of section 8;"
+    },
+    {
+      "control_id": "40(2)(g)",
+      "title": "40(2)(g)",
+      "family": "40(2)(g)",
+      "description": "the time period for the specified purpose to be deemed as no longer being served, under sub-section (8) of section 8;"
+    },
+    {
+      "control_id": "40(2)(h)",
+      "title": "40(2)(h)",
+      "family": "40(2)(h)",
+      "description": "the manner of publishing the business contact information of a Data Protection Officer under sub-section (9) of section 8;"
+    },
+    {
+      "control_id": "40(2)(i)",
+      "title": "40(2)(i)",
+      "family": "40(2)(i)",
+      "description": "the manner of obtaining verifiable consent under sub-section (1) of section 9;"
+    },
+    {
+      "control_id": "40(2)(j)",
+      "title": "40(2)(j)",
+      "family": "40(2)(j)",
+      "description": "the classes of Data Fiduciaries, the purposes of processing of personal data of a child and the conditions relating thereto, under sub-section (4) of section 9;"
+    },
+    {
+      "control_id": "40(2)(k)",
+      "title": "40(2)(k)",
+      "family": "40(2)(k)",
+      "description": "the other matters comprising the process of Data Protection Impact Assessment under sub-clause (i) of clause (c) of sub-section (2) of section 10;"
+    },
+    {
+      "control_id": "40(2)(l)",
+      "title": "40(2)(l)",
+      "family": "40(2)(l)",
+      "description": "the other measures that the Significant Data Fiduciary shall undertake under sub-clause (iii) of clause (c) of sub-section (2) of section 10;"
+    },
+    {
+      "control_id": "40(2)(m)",
+      "title": "40(2)(m)",
+      "family": "40(2)(m)",
+      "description": "the manner in which a Data Principal shall make a request to the Data Fiduciary to obtain information and any other information related to the personal data of such Data Principal and its processing, under sub-section (1) of section 11;"
+    },
+    {
+      "control_id": "40(2)(n)",
+      "title": "40(2)(n)",
+      "family": "40(2)(n)",
+      "description": "the manner in which a Data Principal shall make a request to the Data Fiduciary for erasure of her personal data under sub-section (3) of section 12;"
+    },
+    {
+      "control_id": "40(2)(o)",
+      "title": "40(2)(o)",
+      "family": "40(2)(o)",
+      "description": "the period within which the Data Fiduciary shall respond to any grievances under sub-section (2) of section 13;"
+    },
+    {
+      "control_id": "40(2)(p)",
+      "title": "40(2)(p)",
+      "family": "40(2)(p)",
+      "description": "the manner of nomination of any other individual by the Data Principal under sub-section (1) of section 14;"
+    },
+    {
+      "control_id": "40(2)(q)",
+      "title": "40(2)(q)",
+      "family": "40(2)(q)",
+      "description": "the standards for processing the personal data for exemption under clause (b) of sub-section (2) of section 17;"
+    },
+    {
+      "control_id": "40(2)(r)",
+      "title": "40(2)(r)",
+      "family": "40(2)(r)",
+      "description": "the manner of appointment of the Chairperson and other Members of the Board under sub-section (2) of section 19;"
+    },
+    {
+      "control_id": "40(2)(s)",
+      "title": "40(2)(s)",
+      "family": "40(2)(s)",
+      "description": "the salary, allowances and other terms and conditions of services of the Chairperson and other Members of the Board under sub-section (1) of section 20;"
+    },
+    {
+      "control_id": "40(2)(t)",
+      "title": "40(2)(t)",
+      "family": "40(2)(t)",
+      "description": "the manner of authentication of orders, directions and instruments under sub-section (1) of section 23;"
+    },
+    {
+      "control_id": "40(2)(u)",
+      "title": "40(2)(u)",
+      "family": "40(2)(u)",
+      "description": "the terms and conditions of appointment and service of officers and employees of the Board under section 24;"
+    },
+    {
+      "control_id": "40(2)(v)",
+      "title": "40(2)(v)",
+      "family": "40(2)(v)",
+      "description": "the techno-legal measures to be adopted by the Board under sub-section (1) of section 28;"
+    },
+    {
+      "control_id": "40(2)(w)",
+      "title": "40(2)(w)",
+      "family": "40(2)(w)",
+      "description": "the other matters under clause (d) of sub-section (7) of section 28;"
+    },
+    {
+      "control_id": "40(2)(x)",
+      "title": "40(2)(x)",
+      "family": "40(2)(x)",
+      "description": "the form, manner and fee for filing an appeal under sub-section (2) of section 29;"
+    },
+    {
+      "control_id": "40(2)(y)",
+      "title": "40(2)(y)",
+      "family": "40(2)(y)",
+      "description": "the procedure for dealing an appeal under sub-section (8) of section 29;"
+    },
+    {
+      "control_id": "40(2)(z)",
+      "title": "40(2)(z)",
+      "family": "40(2)(z)",
+      "description": "any other matter which is to be or may be prescribed or in respect of which provision is to be, or may be, made by rules."
+    },
+    {
+      "control_id": "41",
+      "title": "41",
+      "family": "41",
+      "description": "Every rule made and every notification issued under section 16 and section 42 of this Act shall be laid, as soon as may be after it is made, before each House of Parliament, while it is in session, for a total period of thirty days which may be comprised in one session or in two or more successive sessions, and if before the expiry of the session immediately following the session or the successive sessions aforesaid, both Houses agree in making any modification in the rule or notification or both Houses agree that the rule or notification should not be made or issued, the rule or notification shall thereafter have effect only in such modified form or be of no effect, as the case may be; so, however, that any such modification or annulment shall be without prejudice to the validity of anything previously done under that rule or notification."
+    },
+    {
+      "control_id": "42",
+      "title": "42",
+      "family": "42",
+      "description": ""
+    },
+    {
+      "control_id": "42(1)",
+      "title": "42(1)",
+      "family": "42(1)",
+      "description": "The Central Government may, by notification, amend the Schedule, subject to the restriction that no such notification shall have the effect of increasing any penalty specified therein to more than twice of what was specified in it when this Act was originally enacted."
+    },
+    {
+      "control_id": "42(2)",
+      "title": "42(2)",
+      "family": "42(2)",
+      "description": "Any amendment notified under sub-section (1) shall have effect as if enacted in this Act and shall come into force on the date of the notification."
+    },
+    {
+      "control_id": "43",
+      "title": "43",
+      "family": "43",
+      "description": ""
+    },
+    {
+      "control_id": "43(1)",
+      "title": "43(1)",
+      "family": "43(1)",
+      "description": "If any difficulty arises in giving effect to the provisions of this Act, the Central Government may, by order published in the Official Gazette, make such provisions not inconsistent with the provisions of this Act as may appear to it to be necessary or expedient for removing the difficulty."
+    },
+    {
+      "control_id": "43(2)",
+      "title": "43(2)",
+      "family": "43(2)",
+      "description": "No order as referred to in sub-section (1) shall be made after the expiry of three years from the date of commencement of this Act."
+    },
+    {
+      "control_id": "43(3)",
+      "title": "43(3)",
+      "family": "43(3)",
+      "description": "Every order made under this section shall be laid, as soon as may be after it is made, before each House of Parliament."
+    },
+    {
+      "control_id": "44",
+      "title": "44",
+      "family": "44",
+      "description": ""
+    },
+    {
+      "control_id": "44(1)",
+      "title": "44(1)",
+      "family": "44(1)",
+      "description": "In section 14 of the Telecom Regulatory Authority of India Act, 1997, in clause (c), for sub-clauses (i) and (ii), the following sub-clauses shall be substituted, namely:—"
+    },
+    {
+      "control_id": "44(1)(i)",
+      "title": "44(1)(i)",
+      "family": "44(1)(i)",
+      "description": "the Appellate Tribunal under the Information Technology Act, 2000;"
+    },
+    {
+      "control_id": "44(1)(ii)",
+      "title": "44(1)(ii)",
+      "family": "44(1)(ii)",
+      "description": "the Appellate Tribunal under the Airports Economic Regulatory Authority of India Act, 2008; and"
+    },
+    {
+      "control_id": "44(1)(iii)",
+      "title": "44(1)(iii)",
+      "family": "44(1)(iii)",
+      "description": "the Appellate Tribunal under the Digital Personal Data Protection Act, 2023."
+    },
+    {
+      "control_id": "44(2)",
+      "title": "44(2)",
+      "family": "44(2)",
+      "description": "The Information Technology Act, 2000 shall be amended in the following manner, namely:—"
+    },
+    {
+      "control_id": "44(2)(a)",
+      "title": "44(2)(a)",
+      "family": "44(2)(a)",
+      "description": "section 43A shall be omitted;"
+    },
+    {
+      "control_id": "44(2)(b)",
+      "title": "44(2)(b)",
+      "family": "44(2)(b)",
+      "description": "in section 81, in the proviso, after the words and figures “the Patents Act, 1970”, the words and figures “or the Digital Personal Data Protection Act, 2023” shall be inserted; and"
+    },
+    {
+      "control_id": "44(2)(c)",
+      "title": "44(2)(c)",
+      "family": "44(2)(c)",
+      "description": "in section 87, in sub-section (2), clause (ob) shall be omitted."
+    },
+    {
+      "control_id": "44(3)",
+      "title": "44(3)",
+      "family": "44(3)",
+      "description": "In section 8 of the Right to Information Act, 2005, in sub-section (1), for clause (j), the following clause shall be substituted, namely:—"
+    },
+    {
+      "control_id": "44(3)(i)",
+      "title": "44(3)(i)",
+      "family": "44(3)(i)",
+      "description": "information which relates to personal information;"
+    }
+  ]
+}

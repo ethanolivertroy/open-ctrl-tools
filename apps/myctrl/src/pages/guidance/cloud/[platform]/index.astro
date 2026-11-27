@@ -1,0 +1,25 @@
+---
+import TechGuidePage from '@/components/guidance/TechGuidePage.astro';
+import {
+  getTechnologiesByCategory,
+  getTechnologyById,
+  getCategoryMeta,
+} from '@/data/technology-guides';
+
+export function getStaticPaths() {
+  return getTechnologiesByCategory('cloud').map((tech) => ({
+    params: { platform: tech.id },
+  }));
+}
+
+const { platform } = Astro.params;
+const tech = getTechnologyById(platform);
+
+if (!tech || tech.category !== 'cloud') {
+  return Astro.redirect('/guidance/cloud');
+}
+
+const categoryMeta = getCategoryMeta('cloud');
+---
+
+<TechGuidePage tech={tech} categoryMeta={categoryMeta} categoryHref={categoryMeta?.path} />

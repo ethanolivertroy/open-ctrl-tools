@@ -1,0 +1,401 @@
+---
+/**
+ * FrameworkFilterBadges — the single source of truth for filter URL patterns
+ * (baseline / impact / impact-level / ig / severity / level / risk-tier),
+ * rendered in two variants:
+ *
+ * - 'page': the pill strip on /frameworks/[framework] (includes the "All" pill)
+ * - 'card': the compact badges inside FrameworkCard (includes the family-count
+ *   fallback when a framework has no filter dimensions)
+ *
+ * NOTE: severity URLs are cat-i / cat-ii / cat-iii — never high/medium/low.
+ */
+import type { FrameworkConfig } from '@/data/types';
+import { getStats } from '@/data/controls';
+
+type FrameworkStats = ReturnType<typeof getStats>;
+
+interface Props {
+  config: FrameworkConfig;
+  stats: FrameworkStats;
+  variant: 'page' | 'card';
+}
+
+const { config, stats, variant } = Astro.props;
+const frameworkId = config.id;
+
+// URL pattern helpers — the ONE place these filter URLs are constructed.
+const baselineUrl = (level: string) => `/frameworks/${frameworkId}/baseline/${level}`;
+const impactUrl = (level: string) => `/frameworks/${frameworkId}/impact/${level}`;
+const dodImpactUrl = (level: string) => `/frameworks/${frameworkId}/impact-level/${level}`;
+const igUrl = (level: string) => `/frameworks/${frameworkId}/ig/${level}`;
+const severityUrl = (level: 'cat-i' | 'cat-ii' | 'cat-iii') =>
+  `/frameworks/${frameworkId}/severity/${level}`;
+const levelUrl = (level: string) => `/frameworks/${frameworkId}/level/${level}`;
+const riskTierUrl = (tier: string) => `/frameworks/${frameworkId}/risk-tier/${tier}`;
+
+const hasBaselines = config.hasBaselines && stats.low !== undefined;
+const hasImpactLevels = config.hasImpactLevels && stats.low !== undefined;
+const hasDoDImpactLevels = frameworkId === 'dod-srg' && stats.il4_mod !== undefined;
+const hasIG = config.hasImplementationGroups && stats.ig1 !== undefined;
+const hasSeverity = config.hasSeverityLevels && stats.cat_i !== undefined;
+const hasCMMC = config.hasCMMCLevels && stats.level1 !== undefined;
+const hasRiskTiers = config.hasRiskTiers && stats.prohibited !== undefined;
+const hasTXRAMP = config.hasTXRAMPLevels && stats.tx_level1 !== undefined;
+const hasSpecialBadges =
+  hasBaselines || hasImpactLevels || hasIG || hasSeverity || hasCMMC || hasRiskTiers || hasTXRAMP;
+const isTBD = config.tags?.includes('TBD');
+
+// Pluralized family label for the card-variant fallback badge
+const familyPlural =
+  stats.families === 1
+    ? config.familyLabel
+    : config.familyLabel.endsWith('y')
+      ? config.familyLabel.slice(0, -1) + 'ies'
+      : config.familyLabel + 's';
+
+const pagePill = 'flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all duration-200';
+const cardBadge =
+  'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-semibold font-mono hover:border-current/40 transition-colors';
+---
+
+{variant === 'page' ? (
+  <div class="flex flex-wrap gap-3 text-sm pt-2">
+    <div class={`${pagePill} bg-primary/20 border-primary text-primary`}>
+      <span class="font-mono">{stats.total}</span>
+      <span>All</span>
+    </div>
+    {hasBaselines && (
+      <>
+        {stats.li_saas !== undefined && stats.li_saas > 0 && (
+          <a
+            href={baselineUrl('li-saas')}
+            class={`${pagePill} border-border bg-transparent text-muted-foreground opacity-80 hover:opacity-100 hover:border-foreground/50`}
+          >
+            <span class="font-mono">{stats.li_saas}</span>
+            <span>LI-SaaS</span>
+          </a>
+        )}
+        <a href={baselineUrl('low')} class={`${pagePill} badge-low opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.low}</span>
+          <span>Low</span>
+        </a>
+        <a href={baselineUrl('moderate')} class={`${pagePill} badge-moderate opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.moderate}</span>
+          <span>Moderate</span>
+        </a>
+        {stats.high !== undefined && stats.high > 0 && (
+          <a href={baselineUrl('high')} class={`${pagePill} badge-high opacity-80 hover:opacity-100`}>
+            <span class="font-mono">{stats.high}</span>
+            <span>High</span>
+          </a>
+        )}
+        {stats.privacy !== undefined && stats.privacy > 0 && (
+          <a href={baselineUrl('privacy')} class={`${pagePill} badge-privacy opacity-80 hover:opacity-100`}>
+            <span class="font-mono">{stats.privacy}</span>
+            <span>Privacy</span>
+          </a>
+        )}
+      </>
+    )}
+    {/* FedRAMP KSI impact levels */}
+    {hasImpactLevels && frameworkId !== 'dod-srg' && (
+      <>
+        <a href={impactUrl('low')} class={`${pagePill} badge-low opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.low}</span>
+          <span>Low</span>
+        </a>
+        <a href={impactUrl('moderate')} class={`${pagePill} badge-moderate opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.moderate}</span>
+          <span>Moderate</span>
+        </a>
+      </>
+    )}
+    {/* DoD SRG impact levels */}
+    {hasDoDImpactLevels && (
+      <>
+        <a
+          href={dodImpactUrl('il4-mod')}
+          class={`${pagePill} bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.il4_mod}</span>
+          <span>IL4 Mod</span>
+        </a>
+        <a
+          href={dodImpactUrl('il4-high')}
+          class={`${pagePill} bg-indigo-500/10 border-indigo-500/30 text-indigo-700 dark:text-indigo-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.il4_high}</span>
+          <span>IL4 High</span>
+        </a>
+        <a
+          href={dodImpactUrl('il5')}
+          class={`${pagePill} bg-purple-500/10 border-purple-500/30 text-purple-700 dark:text-purple-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.il5}</span>
+          <span>IL5</span>
+        </a>
+        <a
+          href={dodImpactUrl('il6')}
+          class={`${pagePill} bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.il6}</span>
+          <span>IL6</span>
+        </a>
+      </>
+    )}
+    {hasIG && (
+      <>
+        <a href={igUrl('1')} class={`${pagePill} badge-low opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.ig1}</span>
+          <span>IG1</span>
+        </a>
+        <a href={igUrl('2')} class={`${pagePill} badge-moderate opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.ig2}</span>
+          <span>IG2</span>
+        </a>
+        <a href={igUrl('3')} class={`${pagePill} badge-high opacity-80 hover:opacity-100`}>
+          <span class="font-mono">{stats.ig3}</span>
+          <span>IG3</span>
+        </a>
+      </>
+    )}
+    {/* STIG severity levels */}
+    {hasSeverity && (
+      <>
+        <a
+          href={severityUrl('cat-i')}
+          class={`${pagePill} bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.cat_i}</span>
+          <span>CAT I</span>
+        </a>
+        <a
+          href={severityUrl('cat-ii')}
+          class={`${pagePill} bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.cat_ii}</span>
+          <span>CAT II</span>
+        </a>
+        <a
+          href={severityUrl('cat-iii')}
+          class={`${pagePill} bg-blue-500/10 border-blue-500/20 text-blue-700 dark:text-blue-400 opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.cat_iii}</span>
+          <span>CAT III</span>
+        </a>
+      </>
+    )}
+    {/* EU AI Act risk tiers */}
+    {hasRiskTiers && (
+      <>
+        <a
+          href={riskTierUrl('prohibited')}
+          class={`${pagePill} border-[var(--ctp-red)]/30 bg-[var(--ctp-red)]/5 text-[var(--ctp-red)] opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.prohibited}</span>
+          <span>Prohibited</span>
+        </a>
+        <a
+          href={riskTierUrl('high-risk')}
+          class={`${pagePill} border-[var(--ctp-maroon)]/30 bg-[var(--ctp-maroon)]/5 text-[var(--ctp-maroon)] opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.high_risk}</span>
+          <span>High-Risk</span>
+        </a>
+        <a
+          href={riskTierUrl('limited-risk')}
+          class={`${pagePill} border-[var(--ctp-yellow)]/30 bg-[var(--ctp-yellow)]/5 text-[var(--ctp-yellow)] opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.limited_risk}</span>
+          <span>Limited-Risk</span>
+        </a>
+        {stats.minimal_risk !== undefined && stats.minimal_risk > 0 && (
+          <a
+            href={riskTierUrl('minimal-risk')}
+            class={`${pagePill} border-[var(--ctp-green)]/30 bg-[var(--ctp-green)]/5 text-[var(--ctp-green)] opacity-80 hover:opacity-100`}
+          >
+            <span class="font-mono">{stats.minimal_risk}</span>
+            <span>Minimal-Risk</span>
+          </a>
+        )}
+        <a
+          href={riskTierUrl('gpai')}
+          class={`${pagePill} border-[var(--ctp-sapphire)]/30 bg-[var(--ctp-sapphire)]/5 text-[var(--ctp-sapphire)] opacity-80 hover:opacity-100`}
+        >
+          <span class="font-mono">{stats.gpai}</span>
+          <span>GPAI</span>
+        </a>
+      </>
+    )}
+  </div>
+) : (
+  <>
+    {/* Baseline badges (NIST, FedRAMP, GovRAMP) */}
+    {hasBaselines && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        {stats.low !== undefined && stats.low > 0 && (
+          <a href={baselineUrl('low')} class={`badge-low ${cardBadge}`}>
+            <span>{stats.low}</span>
+            <span class="opacity-70">Low</span>
+          </a>
+        )}
+        {stats.moderate !== undefined && stats.moderate > 0 && (
+          <a href={baselineUrl('moderate')} class={`badge-moderate ${cardBadge}`}>
+            <span>{stats.moderate}</span>
+            <span class="opacity-70">Moderate</span>
+          </a>
+        )}
+        {stats.high !== undefined && stats.high > 0 && (
+          <a href={baselineUrl('high')} class={`badge-high ${cardBadge}`}>
+            <span>{stats.high}</span>
+            <span class="opacity-70">High</span>
+          </a>
+        )}
+        {stats.li_saas !== undefined && stats.li_saas > 0 && (
+          <a
+            href={baselineUrl('li-saas')}
+            class="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs font-semibold font-mono text-muted-foreground hover:border-foreground/50 transition-all"
+          >
+            <span>{stats.li_saas}</span>
+            <span class="opacity-70">LI-SaaS</span>
+          </a>
+        )}
+        {stats.privacy !== undefined && stats.privacy > 0 && (
+          <a href={baselineUrl('privacy')} class={`badge-privacy ${cardBadge}`}>
+            <span>{stats.privacy}</span>
+            <span class="opacity-70">Privacy</span>
+          </a>
+        )}
+      </div>
+    )}
+
+    {/* Impact level badges (FedRAMP KSI) */}
+    {hasImpactLevels && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        {stats.low !== undefined && stats.low > 0 && (
+          <a href={impactUrl('low')} class={`badge-low ${cardBadge}`}>
+            <span>{stats.low}</span>
+            <span class="opacity-70">Low</span>
+          </a>
+        )}
+        {stats.moderate !== undefined && stats.moderate > 0 && (
+          <a href={impactUrl('moderate')} class={`badge-moderate ${cardBadge}`}>
+            <span>{stats.moderate}</span>
+            <span class="opacity-70">Moderate</span>
+          </a>
+        )}
+      </div>
+    )}
+
+    {/* IG badges (CIS Controls) */}
+    {hasIG && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        <a href={igUrl('1')} class={`badge-low ${cardBadge}`}>
+          <span>{stats.ig1}</span>
+          <span class="opacity-70">IG1</span>
+        </a>
+        <a href={igUrl('2')} class={`badge-moderate ${cardBadge}`}>
+          <span>{stats.ig2}</span>
+          <span class="opacity-70">IG2</span>
+        </a>
+        <a href={igUrl('3')} class={`badge-high ${cardBadge}`}>
+          <span>{stats.ig3}</span>
+          <span class="opacity-70">IG3</span>
+        </a>
+      </div>
+    )}
+
+    {/* Severity badges (STIGs) */}
+    {hasSeverity && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        <a href={severityUrl('cat-i')} class={`badge-high ${cardBadge}`}>
+          <span>{stats.cat_i}</span>
+          <span class="opacity-70">CAT I</span>
+        </a>
+        <a href={severityUrl('cat-ii')} class={`badge-moderate ${cardBadge}`}>
+          <span>{stats.cat_ii}</span>
+          <span class="opacity-70">CAT II</span>
+        </a>
+        <a href={severityUrl('cat-iii')} class={`badge-low ${cardBadge}`}>
+          <span>{stats.cat_iii}</span>
+          <span class="opacity-70">CAT III</span>
+        </a>
+      </div>
+    )}
+
+    {/* CMMC level badges */}
+    {hasCMMC && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        <a href={levelUrl('1')} class={`badge-low ${cardBadge}`}>
+          <span>{stats.level1}</span>
+          <span class="opacity-70">Level 1</span>
+        </a>
+        <a href={levelUrl('2')} class={`badge-moderate ${cardBadge}`}>
+          <span>{stats.level2}</span>
+          <span class="opacity-70">Level 2</span>
+        </a>
+        {stats.level3 !== undefined && stats.level3 > 0 && (
+          <a href={levelUrl('3')} class={`badge-high ${cardBadge}`}>
+            <span>{stats.level3}</span>
+            <span class="opacity-70">Level 3</span>
+          </a>
+        )}
+      </div>
+    )}
+
+    {/* EU AI Act risk tier badges */}
+    {hasRiskTiers && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        {stats.prohibited !== undefined && stats.prohibited > 0 && (
+          <a href={riskTierUrl('prohibited')} class={`badge-high ${cardBadge}`}>
+            <span>{stats.prohibited}</span>
+            <span class="opacity-70">Prohibited</span>
+          </a>
+        )}
+        {stats.high_risk !== undefined && stats.high_risk > 0 && (
+          <a href={riskTierUrl('high-risk')} class={`badge-moderate ${cardBadge}`}>
+            <span>{stats.high_risk}</span>
+            <span class="opacity-70">High Risk</span>
+          </a>
+        )}
+        {stats.limited_risk !== undefined && stats.limited_risk > 0 && (
+          <a href={riskTierUrl('limited-risk')} class={`badge-low ${cardBadge}`}>
+            <span>{stats.limited_risk}</span>
+            <span class="opacity-70">Limited Risk</span>
+          </a>
+        )}
+        {stats.gpai !== undefined && stats.gpai > 0 && (
+          <a href={riskTierUrl('gpai')} class={`badge-privacy ${cardBadge}`}>
+            <span>{stats.gpai}</span>
+            <span class="opacity-70">GPAI</span>
+          </a>
+        )}
+      </div>
+    )}
+
+    {/* TX-RAMP level badges */}
+    {hasTXRAMP && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        <span class={`badge-low inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-semibold font-mono`}>
+          <span>{stats.tx_level1}</span>
+          <span class="opacity-70">Level 1</span>
+        </span>
+        <span class={`badge-moderate inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-semibold font-mono`}>
+          <span>{stats.tx_level2}</span>
+          <span class="opacity-70">Level 2</span>
+        </span>
+      </div>
+    )}
+
+    {/* Family count fallback (no special badges) */}
+    {!hasSpecialBadges && !isTBD && (
+      <div class="flex flex-wrap items-center gap-2 pt-1">
+        <span class="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs font-semibold font-mono">
+          <span>{stats.families}</span>
+          <span class="opacity-70">{familyPlural}</span>
+        </span>
+      </div>
+    )}
+  </>
+)}

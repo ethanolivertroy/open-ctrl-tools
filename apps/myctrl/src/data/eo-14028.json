@@ -1,0 +1,124 @@
+{
+  "framework": {
+    "id": "eo-14028",
+    "name": "Executive Order 14028",
+    "version": "2021",
+    "description": "Executive Order 14028 compliance framework"
+  },
+  "families": {
+    "4e(i)": "4e(i)",
+    "4e(i)(A)": "4e(i)(A)",
+    "4e(i)(B)": "4e(i)(B)",
+    "4e(i)(C)": "4e(i)(C)",
+    "4e(i)(D)": "4e(i)(D)",
+    "4e(i)(E)": "4e(i)(E)",
+    "4e(i)(F)": "4e(i)(F)",
+    "4e(ii)": "4e(ii)",
+    "4e(iii)": "4e(iii)",
+    "4e(iv)": "4e(iv)",
+    "4e(v)": "4e(v)",
+    "4e(vi)": "4e(vi)",
+    "4e(vii)": "4e(vii)",
+    "4e(viii)": "4e(viii)",
+    "4e(ix)": "4e(ix)",
+    "4e(x)": "4e(x)"
+  },
+  "controls": [
+    {
+      "control_id": "4e(i)",
+      "title": "4e(i)",
+      "family": "4e(i)",
+      "description": "secure software development environments, including such actions as:"
+    },
+    {
+      "control_id": "4e(i)(A)",
+      "title": "4e(i)(A)",
+      "family": "4e(i)(A)",
+      "description": "using administratively separate build environments;"
+    },
+    {
+      "control_id": "4e(i)(B)",
+      "title": "4e(i)(B)",
+      "family": "4e(i)(B)",
+      "description": "auditing trust relationships;"
+    },
+    {
+      "control_id": "4e(i)(C)",
+      "title": "4e(i)(C)",
+      "family": "4e(i)(C)",
+      "description": "establishing multi-factor, risk-based authentication and conditional access across the enterprise;"
+    },
+    {
+      "control_id": "4e(i)(D)",
+      "title": "4e(i)(D)",
+      "family": "4e(i)(D)",
+      "description": "documenting and minimizing dependencies on enterprise products that are part of the environments used to develop, build, and edit software;"
+    },
+    {
+      "control_id": "4e(i)(E)",
+      "title": "4e(i)(E)",
+      "family": "4e(i)(E)",
+      "description": "employing encryption for data; and"
+    },
+    {
+      "control_id": "4e(i)(F)",
+      "title": "4e(i)(F)",
+      "family": "4e(i)(F)",
+      "description": "monitoring operations and alerts and responding to attempted and actual cyber incidents;"
+    },
+    {
+      "control_id": "4e(ii)",
+      "title": "4e(ii)",
+      "family": "4e(ii)",
+      "description": "generating and, when requested by a purchaser, providing artifacts that demonstrate conformance to the processes set forth in subsection (e)(i) of this section;"
+    },
+    {
+      "control_id": "4e(iii)",
+      "title": "4e(iii)",
+      "family": "4e(iii)",
+      "description": "employing automated tools, or comparable processes, to maintain trusted source code supply chains, thereby ensuring the integrity of the code;"
+    },
+    {
+      "control_id": "4e(iv)",
+      "title": "4e(iv)",
+      "family": "4e(iv)",
+      "description": "employing automated tools, or comparable processes, that check for known and potential vulnerabilities and remediate them, which shall operate regularly, or at a minimum prior to product, version, or update release;"
+    },
+    {
+      "control_id": "4e(v)",
+      "title": "4e(v)",
+      "family": "4e(v)",
+      "description": "providing, when requested by a purchaser, artifacts of the execution of the tools and processes described in subsection (e)(iii) and (iv) of this section, and making publicly available summary information on completion of these actions, to include a summary description of the risks assessed and mitigated;"
+    },
+    {
+      "control_id": "4e(vi)",
+      "title": "4e(vi)",
+      "family": "4e(vi)",
+      "description": "maintaining accurate and up-to-date data, provenance (i.e., origin) of software code or components, and controls on internal and third-party software components, tools, and services present in software development processes, and performing audits and enforcement of these controls on a recurring basis;"
+    },
+    {
+      "control_id": "4e(vii)",
+      "title": "4e(vii)",
+      "family": "4e(vii)",
+      "description": "providing a purchaser a Software Bill of Materials (SBOM) for each product directly or by publishing it on a public website;"
+    },
+    {
+      "control_id": "4e(viii)",
+      "title": "4e(viii)",
+      "family": "4e(viii)",
+      "description": "participating in a vulnerability disclosure program that includes a reporting and disclosure process;"
+    },
+    {
+      "control_id": "4e(ix)",
+      "title": "4e(ix)",
+      "family": "4e(ix)",
+      "description": "attesting to conformity with secure software development practices; and"
+    },
+    {
+      "control_id": "4e(x)",
+      "title": "4e(x)",
+      "family": "4e(x)",
+      "description": "ensuring and attesting, to the extent practicable, to the integrity and provenance of open source software used within any portion of a product."
+    }
+  ]
+}

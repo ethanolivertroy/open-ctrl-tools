@@ -1,0 +1,729 @@
+{
+  "framework": {
+    "id": "eu-ai-act",
+    "name": "EU AI Act",
+    "version": "2024/1689",
+    "description": "European Union Artificial Intelligence Act - Risk-based regulatory framework for AI systems"
+  },
+  "families": {
+    "prohibited": "Prohibited AI Practices",
+    "risk-management": "Risk Management",
+    "data-governance": "Data Governance",
+    "documentation": "Technical Documentation",
+    "transparency": "Transparency Obligations",
+    "human-oversight": "Human Oversight",
+    "security": "Accuracy, Robustness & Security",
+    "gpai": "General-Purpose AI Models"
+  },
+  "controls": [
+    {
+      "control_id": "Art. 5(1)(a)",
+      "title": "Subliminal Manipulation Prohibited",
+      "family": "prohibited",
+      "description": "AI systems that deploy subliminal techniques beyond a person's consciousness or purposefully manipulative or deceptive techniques, with the objective or effect of materially distorting the behaviour of a person or group, causing significant harm.",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How does your AI use case review process screen systems for subliminal, manipulative, or deceptive techniques that could materially distort a person's behaviour?",
+            "Who is accountable for deciding whether a proposed system falls within the Article 5 prohibition on subliminal manipulation, and what expertise informs that judgement?",
+            "What steps did you complete before the February 2, 2025 applicability date to confirm that no in-scope systems deploy these techniques?",
+            "How are design changes to already deployed systems reassessed against this prohibition?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What documented assessments show that your AI systems were evaluated against the prohibition on subliminal and purposefully manipulative techniques?",
+            "What records would you provide to demonstrate that a system flagged during review was withdrawn, redesigned, or confirmed out of scope?",
+            "How do you evidence that the potential for significant harm from behavioural distortion was considered for each assessed system?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(b)",
+      "title": "Exploitation of Vulnerabilities Prohibited",
+      "family": "prohibited",
+      "description": "AI systems that exploit vulnerabilities of persons due to their age, disability, or specific social or economic situation, with the objective or effect of materially distorting behaviour and causing significant harm.",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you evaluate whether an AI system could exploit vulnerabilities of persons related to age, disability, or a specific social or economic situation?",
+            "What additional review applies to systems whose user populations include children, older adults, persons with disabilities, or economically vulnerable groups?",
+            "Who signs off that a system does not have the objective or effect of materially distorting the behaviour of vulnerable persons in a way that causes significant harm?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What documentation shows how vulnerable user groups were identified during the design and assessment of each system?",
+            "What evidence do you retain of assessments completed ahead of the February 2, 2025 prohibition deadline?",
+            "How do you record decisions where a system was modified or rejected because of potential harm to vulnerable persons?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(c)",
+      "title": "Social Scoring Prohibited",
+      "family": "prohibited",
+      "description": "AI systems for evaluation or classification of natural persons based on their social behaviour or personal characteristics, leading to detrimental or unfavourable treatment in unrelated contexts or disproportionate to their behaviour.",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How does your governance process identify systems that evaluate or classify natural persons based on their social behaviour or personal characteristics?",
+            "What criteria distinguish permissible scoring models from prohibited social scoring that leads to detrimental or unfavourable treatment?",
+            "Who reviews new profiling or analytics initiatives for social scoring characteristics before development begins?"
+          ]
+        },
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you monitor deployed classification systems for outcomes that produce detrimental or unfavourable treatment of individuals or groups?",
+            "What controls detect scope creep where a permissible scoring model starts drawing on unrelated social behaviour data?",
+            "How would you identify and escalate a system at risk of crossing into prohibited social scoring after deployment?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(d)",
+      "title": "Criminal Risk Assessment Prohibited",
+      "family": "prohibited",
+      "description": "AI systems for making risk assessments of natural persons to predict the risk of committing a criminal offence, based solely on profiling or personality traits (except when supporting human assessment based on objective facts).",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you screen AI initiatives for functionality that predicts a natural person's risk of committing a criminal offence?",
+            "Where a system supports human assessment, how do you verify that conclusions rest on objective facts rather than solely on profiling or personality traits?",
+            "Who approves any system operating in this domain, and how is the exception for supporting human assessment bounded and controlled?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What documented analysis distinguishes any risk assessment functionality you operate from the prohibited practice defined in Article 5?",
+            "What records show the role of human assessors and the objective facts underpinning any assessments the system supports?",
+            "What evidence exists that this prohibition was assessed across your AI portfolio before the February 2, 2025 deadline?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(e)",
+      "title": "Untargeted Facial Image Scraping Prohibited",
+      "family": "prohibited",
+      "description": "AI systems that create or expand facial recognition databases through untargeted scraping of facial images from the internet or CCTV footage.",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "What policies prohibit creating or expanding facial recognition databases through untargeted scraping of facial images from the internet or CCTV footage?",
+            "How are data acquisition and web scraping activities reviewed to confirm that facial images are not being collected indiscriminately?",
+            "How do you assess third-party datasets and vendors to confirm their facial data was not sourced through untargeted scraping?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What provenance records exist for any facial image datasets used in your systems?",
+            "What documentation shows your review of data suppliers against this prohibition?",
+            "What evidence demonstrates that CCTV footage under your control is not being repurposed to populate facial recognition databases?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(f)",
+      "title": "Emotion Inference in Workplace/Education Prohibited",
+      "family": "prohibited",
+      "description": "AI systems to infer emotions of natural persons in areas of workplace and education institutions, except where for medical or safety reasons.",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you identify AI capabilities that infer the emotions of natural persons in workplace or education settings?",
+            "Where emotion inference is justified by medical or safety reasons, who validates that justification and how narrowly is the use scoped?",
+            "What approval steps prevent workplace or education monitoring tools with emotion inference features from being procured or deployed?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What documentation identifies which deployed tools include emotion inference functionality and in which settings they operate?",
+            "What records support any medical or safety exception you rely on for this practice?",
+            "What evidence shows this prohibition was communicated to HR, procurement, and education programme owners before the February 2, 2025 deadline?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(g)",
+      "title": "Biometric Categorization Prohibited",
+      "family": "prohibited",
+      "description": "AI systems for biometric categorisation to infer race, political opinions, trade union membership, religious or philosophical beliefs, sex life or sexual orientation (except lawful labeling or filtering of biometric data).",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you review biometric systems for functionality that infers race, political opinions, trade union membership, religious or philosophical beliefs, sex life, or sexual orientation?",
+            "What controls prevent biometric categorisation features from being enabled in vendor products you deploy?",
+            "How is the exception for lawful labelling or filtering of biometric data interpreted and approved within your organisation?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What inventory documents the biometric processing capabilities present in your AI systems?",
+            "What assessment records show these systems were evaluated against the prohibited categorisation purposes?",
+            "Where you rely on the lawful labelling or filtering exception, what documentation defines its legal basis and boundaries?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 5(1)(h)",
+      "title": "Real-time Remote Biometric ID for Law Enforcement",
+      "family": "prohibited",
+      "description": "Real-time remote biometric identification systems in publicly accessible spaces for law enforcement purposes, except for specific exempt cases (missing children, terrorism threats, serious crimes).",
+      "article": "5",
+      "risk_tier": "prohibited",
+      "deadline": "February 2, 2025",
+      "penalty_tier": "€35M or 7% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you determine whether any deployment constitutes real-time remote biometric identification in publicly accessible spaces for law enforcement purposes?",
+            "If you supply biometric identification technology, how do you assess and restrict customer use cases that could fall under this prohibition?",
+            "Where an exempt case such as searching for missing children or responding to a terrorism threat is invoked, who authorises it and against what criteria?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What documentation defines the intended purpose of your biometric identification systems and excludes prohibited real-time law enforcement uses?",
+            "What contractual terms or use restrictions can you evidence for customers deploying this technology?",
+            "What records would demonstrate that any exempt use was authorised, scoped, and time-bound?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 9",
+      "title": "Risk Management System",
+      "family": "risk-management",
+      "description": "High-risk AI systems shall have a risk management system established, implemented, documented and maintained as a continuous iterative process throughout the entire lifecycle. The system shall identify and analyse known and reasonably foreseeable risks, estimate and evaluate risks, adopt appropriate management measures, and ensure residual risks are acceptable.",
+      "article": "9",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Continuous iterative risk management throughout lifecycle",
+        "Identification and analysis of known and foreseeable risks",
+        "Risk estimation and evaluation",
+        "Adoption of appropriate risk management measures",
+        "Testing to identify most appropriate risk management measures",
+        "Consideration of effects on marginalized groups and children"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How is the risk management system for your high-risk AI systems established as a continuous iterative process across the entire lifecycle rather than a one-time exercise?",
+            "Who owns the identification and analysis of known and reasonably foreseeable risks, and how often is that analysis revisited?",
+            "How does your process consider effects on marginalised groups and children when evaluating risks?",
+            "How do risk management findings feed decisions to release, update, or withdraw a system ahead of the August 2, 2026 compliance deadline?"
+          ]
+        },
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you estimate and evaluate risks that may emerge when the system is used as intended and under reasonably foreseeable misuse?",
+            "What testing do you perform to identify the most appropriate risk management measures?",
+            "How do you determine that residual risks are acceptable, and who makes that judgement?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 10",
+      "title": "Data and Data Governance",
+      "family": "data-governance",
+      "description": "High-risk AI systems using techniques involving training with data shall be developed on the basis of training, validation and testing data sets that meet specified quality criteria. Data governance and management practices shall address design choices, data collection processes, data preparation, formulation of assumptions, assessment of availability and suitability, examination of biases, and identification of data gaps.",
+      "article": "10",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Training, validation and testing data sets meeting quality criteria",
+        "Appropriate data governance and management practices",
+        "Relevant, sufficiently representative, and free of errors data",
+        "Appropriate statistical properties for intended purpose",
+        "Consideration of characteristics specific to deployment geography",
+        "Bias detection and correction measures"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "What data governance and management practices cover design choices, data collection processes, and data preparation for your high-risk AI systems?",
+            "How do you formulate and record the assumptions behind your training, validation, and testing data sets?",
+            "Who assesses the availability and suitability of data sets before they are used, and how are identified data gaps escalated?"
+          ]
+        },
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How do you verify that training, validation, and testing data sets are relevant, sufficiently representative, and appropriately free of errors for the intended purpose?",
+            "What methods do you use to examine data sets for possible biases and to detect and correct them?",
+            "How do you account for characteristics specific to the geographical or contextual setting where the system will be deployed?",
+            "How do you confirm that data sets have appropriate statistical properties for the system's intended purpose?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 11",
+      "title": "Technical Documentation",
+      "family": "documentation",
+      "description": "Technical documentation of a high-risk AI system shall be drawn up before that system is placed on the market or put into service and shall be kept up to date. The documentation shall demonstrate compliance with the requirements and provide authorities and notified bodies with necessary information.",
+      "article": "11",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Documentation before market placement or service",
+        "Kept up to date throughout lifecycle",
+        "Demonstrates compliance with requirements",
+        "Provides information for competent authorities",
+        "Minimum content requirements per Annex IV",
+        "SME-appropriate simplified documentation permitted"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "Can you show the technical documentation drawn up before the high-risk AI system was placed on the market or put into service?",
+            "How does your documentation address the minimum content requirements set out in Annex IV?",
+            "How does the documentation demonstrate compliance with the high-risk requirements in a form usable by competent authorities and notified bodies?",
+            "If you qualify as an SME, how did you decide whether to use the simplified documentation format?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "Who is responsible for keeping the technical documentation up to date as the system changes throughout its lifecycle?",
+            "What events trigger a documentation update, and how is the revision history controlled?",
+            "How is documentation readiness tracked against the August 2, 2026 deadline for high-risk obligations?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 12",
+      "title": "Record-Keeping",
+      "family": "documentation",
+      "description": "High-risk AI systems shall be designed and developed with capabilities enabling the automatic recording of events (logs) while the system is operating. Logging capabilities shall ensure traceability of the AI system's functioning, enable monitoring, and facilitate post-market analysis.",
+      "article": "12",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Automatic recording of events (logs) during operation",
+        "Traceability of AI system functioning",
+        "Enable monitoring of operation",
+        "Facilitate post-market monitoring and incident investigation",
+        "Recording of usage period and reference database",
+        "Input data logging for high-risk cases"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How is the automatic recording of events designed into your high-risk AI system so that logs are generated throughout its operation?",
+            "What log content ensures traceability of the system's functioning, including usage periods and reference database records where required?",
+            "How is input data logged for high-risk cases, and how is the integrity of those logs protected?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What evidence shows your logging capabilities enable monitoring of operation and support post-market analysis?",
+            "How are log retention periods defined, and how do you demonstrate they are met?",
+            "What records show logs have actually been used to investigate incidents or anomalies in the system's functioning?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 13",
+      "title": "Transparency and Information to Deployers",
+      "family": "transparency",
+      "description": "High-risk AI systems shall be designed and developed to ensure their operation is sufficiently transparent to enable deployers to interpret the system's output and use it appropriately. Instructions for use shall include information about provider identity, system characteristics, capabilities, limitations, and human oversight measures.",
+      "article": "13",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Sufficiently transparent operation for appropriate use",
+        "Instructions for use accompanying the system",
+        "Provider identity and contact details",
+        "System characteristics, capabilities and limitations",
+        "Performance levels for intended purpose",
+        "Known or foreseeable circumstances affecting performance",
+        "Human oversight measures and recommendations"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "Can you show the instructions for use that accompany the system, including provider identity and contact details?",
+            "How do the instructions describe the system's characteristics, capabilities, limitations, and performance levels for its intended purpose?",
+            "Where are known or foreseeable circumstances that could affect performance documented for deployers?",
+            "How are the human oversight measures and related recommendations communicated in the instructions?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you verify that the system's operation is sufficiently transparent for deployers to interpret its output and use it appropriately?",
+            "What process updates deployer-facing information when the system's capabilities or limitations change?",
+            "How do you collect feedback from deployers on whether the transparency information is adequate in practice?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 14",
+      "title": "Human Oversight",
+      "family": "human-oversight",
+      "description": "High-risk AI systems shall be designed and developed to be effectively overseen by natural persons during their use. Human oversight shall aim to prevent or minimise risks to health, safety or fundamental rights when the AI system is used in accordance with its intended purpose or under conditions of reasonably foreseeable misuse.",
+      "article": "14",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers",
+        "deployers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Effective oversight by natural persons during use",
+        "Prevent or minimize risks to health, safety, fundamental rights",
+        "Ability to understand AI system capabilities and limitations",
+        "Awareness of automation bias tendency",
+        "Correct interpretation of AI output",
+        "Ability to decide not to use or disregard AI output",
+        "Ability to interrupt or stop the AI system"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How have you defined the human oversight measures for the system, and who is assigned to carry them out during use?",
+            "How do you prepare overseers to understand the system's capabilities and limitations and to stay alert to automation bias?",
+            "What governance confirms that oversight arrangements are effective at preventing or minimising risks to health, safety, and fundamental rights?"
+          ]
+        },
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "What interface features enable a human to correctly interpret the system's output and to decide not to use it or to disregard it?",
+            "How can an overseer interrupt or stop the system, and how has that capability been tested?",
+            "How does the system design support oversight under conditions of reasonably foreseeable misuse, not only intended use?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 15",
+      "title": "Accuracy, Robustness and Cybersecurity",
+      "family": "security",
+      "description": "High-risk AI systems shall be designed and developed to achieve appropriate levels of accuracy, robustness and cybersecurity, and perform consistently throughout their lifecycle. Accuracy levels shall be declared in instructions for use and systems shall be resilient against errors, faults, inconsistencies, and malicious third-party attempts.",
+      "article": "15",
+      "risk_tier": "high-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Appropriate levels of accuracy for intended purpose",
+        "Accuracy levels declared in instructions for use",
+        "Resilient to errors, faults, or inconsistencies",
+        "Robust against unauthorized third-party attempts",
+        "Protection against data poisoning and adversarial attacks",
+        "Appropriate cybersecurity measures",
+        "Fail-safe mechanisms for continuous learning systems"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How were the appropriate levels of accuracy determined for the system's intended purpose, and how are they maintained consistently across the lifecycle?",
+            "What design measures make the system resilient to errors, faults, and inconsistencies in its environment or inputs?",
+            "What protections address data poisoning, adversarial inputs, and other malicious third-party attempts to alter the system's behaviour?",
+            "For systems that continue learning after deployment, what fail-safe mechanisms limit unsafe drift?"
+          ]
+        },
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you monitor production accuracy against the levels declared in the instructions for use?",
+            "What testing regime validates robustness and cybersecurity before release and after significant changes?",
+            "How are performance degradations or attacks detected, triaged, and fed back into remediation?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 50(1)",
+      "title": "AI System Interaction Disclosure",
+      "family": "transparency",
+      "description": "Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed so that the persons concerned are informed that they are interacting with an AI system, unless obvious from the circumstances.",
+      "article": "50",
+      "risk_tier": "limited-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How is the disclosure that a person is interacting with an AI system built into the interface at the point of interaction?",
+            "How do you handle channels such as voice or chat where the AI nature of the interaction may not be obvious from the circumstances?",
+            "How is the disclosure preserved when your system is embedded into downstream products or third-party channels?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What design documentation or interface captures evidence the disclosure as it is experienced by users?",
+            "How do you document your assessment of when the AI nature of an interaction is obvious enough that disclosure is not required?",
+            "What testing or review records confirm the disclosure appears consistently across supported platforms and languages?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 50(2)",
+      "title": "Synthetic Content Marking",
+      "family": "transparency",
+      "description": "Providers of AI systems that generate synthetic audio, image, video or text content shall ensure that outputs are marked in a machine-readable format and detectable as artificially generated or manipulated.",
+      "article": "50",
+      "risk_tier": "limited-risk",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How are synthetic audio, image, video, and text outputs marked in a machine-readable format at the time of generation?",
+            "What techniques, such as watermarking or embedded metadata, make outputs detectable as artificially generated or manipulated?",
+            "How robust is the marking against common transformations such as compression, cropping, or format conversion?",
+            "How is marking coverage maintained across every output modality your systems generate?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What technical documentation describes the marking scheme and the method for detecting it?",
+            "What test results demonstrate that generated outputs are reliably detectable as artificial?",
+            "How do you evidence marking coverage across product versions and any APIs offered to customers?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 50(3)",
+      "title": "Emotion Recognition & Biometric Categorisation Disclosure",
+      "family": "transparency",
+      "description": "Deployers of AI systems that perform emotion recognition or biometric categorisation shall inform natural persons exposed thereto of the operation of the system and process personal data in accordance with applicable Union and national law.",
+      "article": "50",
+      "risk_tier": "limited-risk",
+      "applies_to": [
+        "deployers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you inform natural persons exposed to your emotion recognition or biometric categorisation systems about the operation of those systems?",
+            "Who confirms that the personal data processed by these systems is handled in accordance with applicable Union and national law?",
+            "How is this notification obligation coordinated with your privacy and data protection functions?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What notices, signage, or interface text evidence how exposed persons are informed about the system's operation?",
+            "What records connect the deployment of these systems to the data protection assessments covering their personal data processing?",
+            "How do you document which locations, systems, and populations fall within the scope of this disclosure duty?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 50(4)",
+      "title": "Deepfake Disclosure",
+      "family": "transparency",
+      "description": "Deployers of AI systems generating or manipulating image, audio or video content constituting a deep fake shall disclose that the content has been artificially generated or manipulated. Deployers of AI systems that generate or manipulate text published to inform the public on matters of public interest shall also disclose that the text was artificially generated or manipulated. Exempt for law enforcement and clearly artistic, creative, satirical, or fictional works.",
+      "article": "50",
+      "risk_tier": "limited-risk",
+      "applies_to": [
+        "deployers"
+      ],
+      "deadline": "August 2, 2026",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "assessment_questions": [
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "How do you determine when generated or manipulated image, audio, or video content constitutes a deep fake requiring disclosure?",
+            "What process governs disclosure for AI-generated text published to inform the public on matters of public interest?",
+            "How are the exemptions for law enforcement use and clearly artistic, creative, satirical, or fictional works applied and approved?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What examples can you show of the disclosure applied to published synthetic content?",
+            "How do you document decisions where content was judged exempt as artistic, creative, satirical, or fictional work?",
+            "What records show that editorial or publishing teams were trained on the deep fake disclosure requirement?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 53",
+      "title": "General-Purpose AI Model Obligations",
+      "family": "gpai",
+      "description": "Providers of general-purpose AI models shall draw up and keep up-to-date technical documentation including training and testing process information, make information and documentation available to downstream providers, establish a policy for respecting copyright, and draw up and make publicly available a sufficiently detailed summary about training content.",
+      "article": "53",
+      "risk_tier": "gpai",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2025",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Technical documentation of model",
+        "Training and testing process information",
+        "Information available to downstream providers",
+        "Copyright compliance policy",
+        "Publicly available training content summary"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "Can you show the technical documentation for the general-purpose AI model, including information on its training and testing process?",
+            "What documentation package do you make available to downstream providers who build on the model?",
+            "Where is your publicly available summary of training content, and how was its level of detail decided?",
+            "How is this documentation kept up to date as the model is retrained or revised?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "What policy have you established to respect copyright in the collection and use of training data?",
+            "Who owns the obligations tied to the August 2, 2025 applicability date for general-purpose AI model providers, and how was readiness tracked?",
+            "How do you handle downstream provider requests for information about the model?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "Art. 55",
+      "title": "Systemic Risk GPAI Obligations",
+      "family": "gpai",
+      "description": "Providers of general-purpose AI models with systemic risk shall perform model evaluation including adversarial testing, assess and mitigate systemic risks, track and report serious incidents, and ensure adequate cybersecurity protection. Systemic risk models are those with high impact capabilities based on cumulative compute or Commission designation.",
+      "article": "55",
+      "risk_tier": "gpai",
+      "applies_to": [
+        "providers"
+      ],
+      "deadline": "August 2, 2025",
+      "penalty_tier": "€15M or 3% of global turnover",
+      "key_requirements": [
+        "Model evaluation including adversarial testing",
+        "Assessment and mitigation of systemic risks",
+        "Serious incident tracking and reporting",
+        "Adequate cybersecurity protection",
+        "Applies to models >10^25 FLOPs training compute"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you assess whether your general-purpose AI model has high impact capabilities that place it in the systemic risk category, including against the cumulative training compute threshold?",
+            "What is your process for assessing and mitigating the systemic risks arising from the model?",
+            "How are serious incidents involving the model tracked, and how do you report them?"
+          ]
+        },
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "What model evaluations do you perform, and how is adversarial testing incorporated into them?",
+            "What cybersecurity protections secure the model, its weights, and the infrastructure it runs on?",
+            "How do evaluation and adversarial testing results drive concrete mitigations before and after release?"
+          ]
+        }
+      ]
+    }
+  ]
+}

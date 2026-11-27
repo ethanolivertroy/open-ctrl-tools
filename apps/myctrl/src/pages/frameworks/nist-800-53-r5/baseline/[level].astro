@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'nist-800-53-r5';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('nist-800-53-r5');
+}
+
+const { level } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={level!} />

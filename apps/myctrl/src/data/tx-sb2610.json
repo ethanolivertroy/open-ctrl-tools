@@ -1,0 +1,271 @@
+{
+  "framework": {
+    "id": "tx-sb2610",
+    "name": "Texas SB 2610",
+    "version": "2024",
+    "description": "Texas SB 2610 compliance framework"
+  },
+  "families": {
+    "542": "542"
+  },
+  "controls": [
+    {
+      "control_id": "542.001",
+      "title": "542.001",
+      "family": "542",
+      "description": "In this chapter:"
+    },
+    {
+      "control_id": "542.001(1)",
+      "title": "542.001(1)",
+      "family": "542",
+      "description": "\"Breach of system security\" has the meaning \tassigned by Section 521.053."
+    },
+    {
+      "control_id": "542.001(2)",
+      "title": "542.001(2)",
+      "family": "542",
+      "description": "\"Exemplary damages\" has the meaning assigned by \tSection 41.001, Civil Practice and Remedies Code."
+    },
+    {
+      "control_id": "542.001(3)",
+      "title": "542.001(3)",
+      "family": "542",
+      "description": "\"Personal identifying information\" and \"sensitive \tpersonal information\" have the meanings assigned by Section \t521.002."
+    },
+    {
+      "control_id": "542.002",
+      "title": "542.002",
+      "family": "542",
+      "description": "This chapter \tapplies only to a business entity in this state that:"
+    },
+    {
+      "control_id": "542.002(1)",
+      "title": "542.002(1)",
+      "family": "542",
+      "description": "has fewer than 250 employees; and"
+    },
+    {
+      "control_id": "542.002(2)",
+      "title": "542.002(2)",
+      "family": "542",
+      "description": "owns or licenses computerized data that includes \tsensitive personal information."
+    },
+    {
+      "control_id": "542.003",
+      "title": "542.003",
+      "family": "542",
+      "description": "Notwithstanding any other law, in an action \tarising from a breach of system security, a person harmed as a \tresult of the breach may not recover exemplary damages from a \tbusiness entity to which this chapter applies if the entity \tdemonstrates that at the time of the breach the entity implemented \tand maintained a cybersecurity program in compliance with Section \t542.004."
+    },
+    {
+      "control_id": "542.004",
+      "title": "542.004",
+      "family": "542",
+      "description": "Cybersecurity Program Requirements"
+    },
+    {
+      "control_id": "542.004(a)",
+      "title": "542.004(a)",
+      "family": "542",
+      "description": "For purposes of \tSection 542.003, a cybersecurity program must:"
+    },
+    {
+      "control_id": "542.004(a)(1)",
+      "title": "542.004(a)(1)",
+      "family": "542",
+      "description": "contain administrative, technical, and physical \tsafeguards for the protection of personal identifying information \tand sensitive personal information;"
+    },
+    {
+      "control_id": "542.004(a)(2)",
+      "title": "542.004(a)(2)",
+      "family": "542",
+      "description": "conform to an industry-recognized cybersecurity \tframework as described by Subsection (b);"
+    },
+    {
+      "control_id": "542.004(a)(3)",
+      "title": "542.004(a)(3)",
+      "family": "542",
+      "description": "be designed to:"
+    },
+    {
+      "control_id": "542.004(a)(3)(A)",
+      "title": "542.004(a)(3)(A)",
+      "family": "542",
+      "description": "protect the security of personal identifying \tinformation and sensitive personal information;"
+    },
+    {
+      "control_id": "542.004(a)(3)(B)",
+      "title": "542.004(a)(3)(B)",
+      "family": "542",
+      "description": "protect against any threat or hazard to the \tintegrity of personal identifying information and sensitive \tpersonal information; and"
+    },
+    {
+      "control_id": "542.004(a)(3)(C)",
+      "title": "542.004(a)(3)(C)",
+      "family": "542",
+      "description": "protect against unauthorized access to or \tacquisition of personal identifying information and sensitive \tpersonal information that would result in a material risk of \tidentity theft or other fraud to the individual to whom the \tinformation relates; and"
+    },
+    {
+      "control_id": "542.004(a)(4)",
+      "title": "542.004(a)(4)",
+      "family": "542",
+      "description": "with regard to the scale and scope, meet the \tfollowing requirements:"
+    },
+    {
+      "control_id": "542.004(a)(4)(A)",
+      "title": "542.004(a)(4)(A)",
+      "family": "542",
+      "description": "for a business entity with fewer than 20 \temployees, simplified requirements, including password policies \tand appropriate employee cybersecurity training;"
+    },
+    {
+      "control_id": "542.004(a)(4)(B)",
+      "title": "542.004(a)(4)(B)",
+      "family": "542",
+      "description": "for a business entity with at least 20 \temployees but fewer than 100 employees, moderate requirements, \tincluding the requirements of the Center for Internet Security \tControls Implementation Group 1; and"
+    },
+    {
+      "control_id": "542.004(a)(4)(C)",
+      "title": "542.004(a)(4)(C)",
+      "family": "542",
+      "description": "for a business entity with at least 100 \temployees but fewer than 250 employees, compliance with the \trequirements of Subsection (b)."
+    },
+    {
+      "control_id": "542.004(b)",
+      "title": "542.004(b)",
+      "family": "542",
+      "description": "A cybersecurity program under this section conforms to \tan industry-recognized cybersecurity framework for purposes of \tthis section if the program conforms to:"
+    },
+    {
+      "control_id": "542.004(b)(1)",
+      "title": "542.004(b)(1)",
+      "family": "542",
+      "description": "a current version of or any combination of current \tversions of the following:"
+    },
+    {
+      "control_id": "542.004(b)(1)(A)",
+      "title": "542.004(b)(1)(A)",
+      "family": "542",
+      "description": "the Framework for Improving Critical \tInfrastructure Cybersecurity published by the National Institute \tof Standards and Technology (NIST);"
+    },
+    {
+      "control_id": "542.004(b)(1)(B)",
+      "title": "542.004(b)(1)(B)",
+      "family": "542",
+      "description": "the NIST's special publication 800-171;"
+    },
+    {
+      "control_id": "542.004(b)(1)(C)",
+      "title": "542.004(b)(1)(C)",
+      "family": "542",
+      "description": "the NIST's special publications 800-53 and \t800-53a;"
+    },
+    {
+      "control_id": "542.004(b)(1)(D)",
+      "title": "542.004(b)(1)(D)",
+      "family": "542",
+      "description": "the Federal Risk and Authorization \tManagement Program's FedRAMP Security Assessment Framework;"
+    },
+    {
+      "control_id": "542.004(b)(1)(E)",
+      "title": "542.004(b)(1)(E)",
+      "family": "542",
+      "description": "the Center for Internet Security Critical \tSecurity Controls for Effective Cyber Defense;"
+    },
+    {
+      "control_id": "542.004(b)(1)(F)",
+      "title": "542.004(b)(1)(F)",
+      "family": "542",
+      "description": "the ISO/IEC 27000-series information \tsecurity standards published by the International Organization for \tStandardization and the International Electrotechnical Commission;"
+    },
+    {
+      "control_id": "542.004(b)(1)(G)",
+      "title": "542.004(b)(1)(G)",
+      "family": "542",
+      "description": "the Health Information Trust Alliance's \tCommon Security Framework;"
+    },
+    {
+      "control_id": "542.004(b)(1)(H)",
+      "title": "542.004(b)(1)(H)",
+      "family": "542",
+      "description": "the Secure Controls Framework;"
+    },
+    {
+      "control_id": "542.004(b)(1)(I)",
+      "title": "542.004(b)(1)(I)",
+      "family": "542",
+      "description": "the Service Organization Control Type 2 \tFramework; or"
+    },
+    {
+      "control_id": "542.004(b)(1)(J)",
+      "title": "542.004(b)(1)(J)",
+      "family": "542",
+      "description": "other similar frameworks or standards of the \tcybersecurity industry;"
+    },
+    {
+      "control_id": "542.004(b)(2)",
+      "title": "542.004(b)(2)",
+      "family": "542",
+      "description": "if the business entity is subject to its \trequirements, the current version of the following:"
+    },
+    {
+      "control_id": "542.004(b)(2)(A)",
+      "title": "542.004(b)(2)(A)",
+      "family": "542",
+      "description": "the Health Insurance Portability and \tAccountability Act of 1996 (42 U.S.C. Section 1320d et seq.);"
+    },
+    {
+      "control_id": "542.004(b)(2)(B)",
+      "title": "542.004(b)(2)(B)",
+      "family": "542",
+      "description": "Title V, Gramm-Leach-Bliley Act (15 U.S.C. \tSection 6801 et seq.);"
+    },
+    {
+      "control_id": "542.004(b)(2)(C)",
+      "title": "542.004(b)(2)(C)",
+      "family": "542",
+      "description": "the Federal Information Security \tModernization Act of 2014 (Pub. L. No. 113-283); or"
+    },
+    {
+      "control_id": "542.004(b)(2)(D)",
+      "title": "542.004(b)(2)(D)",
+      "family": "542",
+      "description": "the Health Information Technology for \tEconomic and Clinical Health Act (Division A, Title XIII, and \tDivision B, Title IV, Pub. L. No. 111-5); and"
+    },
+    {
+      "control_id": "542.004(b)(3)",
+      "title": "542.004(b)(3)",
+      "family": "542",
+      "description": "if applicable to the business entity, a current \tversion of the Payment Card Industry Data Security Standard."
+    },
+    {
+      "control_id": "542.004(c)",
+      "title": "542.004(c)",
+      "family": "542",
+      "description": "If any standard described by Subsection (b)(1) is \tpublished and updated, a business entity's cybersecurity program \tcontinues to meet the requirements of a program under this section \tif the entity updates the program to meet the updated standard not \tlater than the later of:"
+    },
+    {
+      "control_id": "542.004(c)(1)",
+      "title": "542.004(c)(1)",
+      "family": "542",
+      "description": "the implementation date published in the updated \tstandard; or"
+    },
+    {
+      "control_id": "542.004(c)(2)",
+      "title": "542.004(c)(2)",
+      "family": "542",
+      "description": "the first anniversary of the date on which the \tupdated standard is published."
+    },
+    {
+      "control_id": "542.005",
+      "title": "542.005",
+      "family": "542",
+      "description": "This chapter may not be construed to limit the authority of the \tattorney general to seek any legal or equitable remedy under the \tlaws of this state."
+    },
+    {
+      "control_id": "542.006",
+      "title": "542.006",
+      "family": "542",
+      "description": "This chapter does not affect the certification of an action as a \tclass action."
+    }
+  ]
+}

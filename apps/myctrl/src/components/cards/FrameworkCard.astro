@@ -1,0 +1,170 @@
+---
+/**
+ * FrameworkCard — Glassmorphic card for displaying a framework or risk list.
+ *
+ * Replaces the inline card HTML that was duplicated across 13+ category pages.
+ * Filter badge rows (baselines, impact levels, IG, severity, CMMC, risk tiers,
+ * TX-RAMP, family count fallback) are rendered by FrameworkFilterBadges so
+ * badge URL patterns have a single source of truth.
+ */
+import type { FrameworkConfig } from '../../data/types';
+import { getBasePath, getStats, hasFrameworkData, isLocalFrameworkData } from '../../data/controls';
+import { FavoriteButton } from '../ui/FavoriteButton';
+import FrameworkFilterBadges from '../frameworks/FrameworkFilterBadges.astro';
+
+interface Props {
+  config: FrameworkConfig;
+  stats: ReturnType<typeof getStats>;
+  index?: number;
+}
+
+const { config, stats, index = 0 } = Astro.props;
+const basePath = getBasePath(config.id);
+const href = `${basePath}/${config.id}`;
+const isLoaded = hasFrameworkData(config.id);
+const isLocal = isLocalFrameworkData(config.id);
+// Cap the stagger: only the first few cards (roughly one viewport row) get a
+// delay. An unbounded index * 0.1s left deep cards invisible for seconds
+// after they scrolled into view on long lists like /all.
+const delay = Math.min(index, 5) * 0.06;
+
+const isTBD = config.tags?.includes('TBD');
+---
+
+<div
+  class:list={[
+    'glass-card rounded-xl border overflow-hidden group relative scroll-reveal',
+    isTBD && 'opacity-60',
+  ]}
+  style={`transition-delay: ${delay}s`}
+>
+  <div class="p-4 sm:p-6">
+    <div class="absolute top-3 right-12">
+      <FavoriteButton client:visible frameworkId={config.id} showOnHover={true} />
+    </div>
+
+    <div class="flex items-start justify-between gap-4">
+      <div class="space-y-4">
+        {/* Badge row */}
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+          <span class="px-2 py-1 bg-primary/10 text-primary text-xs font-mono rounded border border-primary/20">
+            v{config.version}
+          </span>
+
+          {/* Tag badges */}
+          {config.tags?.includes('Federal') && (
+            <a href="/us-federal" class="px-2 py-1 text-xs font-mono rounded border border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-400 hover:bg-blue-500/20 transition-colors">
+              Federal
+            </a>
+          )}
+          {config.tags?.includes('DoD') && (
+            <span class="px-2 py-1 text-xs font-mono rounded border bg-purple-500/10 border-purple-500/30 text-purple-700 dark:text-purple-400">
+              DoD
+            </span>
+          )}
+          {config.tags?.includes('AI') && (
+            <a href="/ai" class="badge-ai px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              AI
+            </a>
+          )}
+          {config.tags?.includes('Web') && (
+            <span class="px-2 py-1 text-xs font-mono rounded border border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-400">
+              Web
+            </span>
+          )}
+          {config.tags?.includes('API') && (
+            <span class="px-2 py-1 text-xs font-mono rounded border border-green-500/30 bg-green-500/10 text-green-700 dark:text-green-400">
+              API
+            </span>
+          )}
+          {config.tags?.includes('Mobile') && (
+            <span class="px-2 py-1 text-xs font-mono rounded border border-orange-500/30 bg-orange-500/10 text-orange-700 dark:text-orange-400">
+              Mobile
+            </span>
+          )}
+          {config.tags?.includes('Meta-Framework') && (
+            <span class="badge-meta px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              Meta-Framework
+            </span>
+          )}
+          {config.tags?.includes('TBD') && (
+            <span class="badge-tbd px-2 py-1 text-xs font-mono rounded border">
+              Coming Soon
+            </span>
+          )}
+
+          {/* License badges */}
+          {config.license === 'public-domain' && (
+            <a href="/public-domain" class="badge-public-domain px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              Public Domain
+            </a>
+          )}
+          {config.license === 'proprietary' && (
+            <a href="/proprietary" class="badge-proprietary px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              Proprietary
+            </a>
+          )}
+          {config.license === 'open-license' && (
+            <a href="/open-license" class="badge-open-license px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              Open License
+            </a>
+          )}
+          {config.license === 'cc-by-nd' && (
+            <a href="/open-license" class="badge-open-license px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              CC BY-ND
+            </a>
+          )}
+          {config.license === 'cc-by-nc-sa' && (
+            <a href="/open-license" class="badge-open-license px-2 py-1 text-xs font-mono rounded border hover:opacity-80 transition-opacity">
+              CC BY-NC-SA
+            </a>
+          )}
+
+          {isLoaded ? (
+            <span class="text-xs text-muted-foreground">
+              {stats.total.toLocaleString()} {config.itemLabel}
+              {isLocal && (
+                <span class="ml-1.5 px-1.5 py-0.5 text-[10px] font-mono rounded border border-green-500/30 bg-green-500/10 text-green-700 dark:text-green-400">
+                  Local overlay
+                </span>
+              )}
+            </span>
+          ) : (
+            <span class="text-xs text-muted-foreground font-mono">
+              External source · BYO local
+            </span>
+          )}
+        </div>
+
+        {/* Title */}
+        <a href={href} class="block">
+          <h3 class="text-xl font-semibold hover:text-primary transition-colors">
+            {config.name}
+          </h3>
+        </a>
+
+        {/* Description */}
+        <p class="text-muted-foreground text-sm">
+          {config.description}
+        </p>
+
+        {/* Filter badges (baselines / IG / severity / CMMC / risk tiers / ...) */}
+        {!isTBD && isLoaded && <FrameworkFilterBadges config={config} stats={stats} variant="card" />}
+      </div>
+
+      {/* Arrow link */}
+      {!isTBD && (
+        <a href={href} class="shrink-0 p-2 rounded-lg hover:bg-muted/50 transition-colors">
+          <svg
+            class="w-6 h-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      )}
+    </div>
+  </div>
+</div>

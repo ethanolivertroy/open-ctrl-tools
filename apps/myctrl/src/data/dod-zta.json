@@ -1,0 +1,368 @@
+{
+  "framework": {
+    "id": "dod-zta",
+    "name": "DoD ZTA Reference Architecture",
+    "version": "2.0",
+    "description": "DoD ZTA Reference Architecture compliance framework"
+  },
+  "families": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8"
+  },
+  "controls": [
+    {
+      "control_id": "1.0",
+      "title": "1.0",
+      "family": "1",
+      "description": "The ability validate network users are the ones who they claim to be throughout an entire session at every step."
+    },
+    {
+      "control_id": "1.1",
+      "title": "1.1",
+      "family": "1",
+      "description": "The ability to conduct authentication using two or more different factors to achieve authentication. Factors include: something you know (e.g., password/PIN); something you have (e.g., cryptographic identification device, token); or something you are (e.g., biometric), something you do. Continuous means just-in-time authentication (just -in time usually refers to authorization)."
+    },
+    {
+      "control_id": "1.2",
+      "title": "1.2",
+      "family": "1",
+      "description": "Observing activities of users, information systems, and processes and measuring the activities against organizational policies and rule, baselines of normal activity, thresholds, and trends."
+    },
+    {
+      "control_id": "2.0",
+      "title": "2.0",
+      "family": "2",
+      "description": "The ability to grant authorization to a resource contingent upon the continued trustworthiness of the supplicant. This trustworthiness can affect by the device hygiene, user and entity behavior, and other factors."
+    },
+    {
+      "control_id": "2.1",
+      "title": "2.1",
+      "family": "2",
+      "description": "An access control method where subject requests to perform operations on objects are granted or denied based on assigned attributes of the subject, assigned attributes of the object, environment conditions, and a set of policies that are specified in terms of those attributes and conditions."
+    },
+    {
+      "control_id": "2.2",
+      "title": "2.2",
+      "family": "2",
+      "description": "The ability to determine the compliance status of managed and unmanaged assets."
+    },
+    {
+      "control_id": "2.2.1",
+      "title": "2.2.1",
+      "family": "2",
+      "description": "The ability to locate and identify devices connected to an environment, detect their removal/addition, to accurately know the totality of assets that need to be monitored and protected within the enterprise, and to obtain information about them. [CIS] Also support identifying unauthorized and unmanaged assets to remove or remediate."
+    },
+    {
+      "control_id": "2.2.2",
+      "title": "2.2.2",
+      "family": "2",
+      "description": "The ability to poll devices for status, state, and configuration via remote management function or installation of agents/code on the device bymanagement."
+    },
+    {
+      "control_id": "2.2.3",
+      "title": "2.2.3",
+      "family": "2",
+      "description": "The ability to remotely install new configurations and services on a device in order to bring the device into conformity or compliance with existing policy."
+    },
+    {
+      "control_id": "2.3",
+      "title": "2.3",
+      "family": "2",
+      "description": "Just in Time Authorization allows a timed expiration of group membership. In practice, this allows administrative rights to be given at the time of need for as long as an action or duty needs them. As a result, access to administrative privileges becomes limited and abuse must be timed for when those privileges are given."
+    },
+    {
+      "control_id": "2.4",
+      "title": "2.4",
+      "family": "2",
+      "description": "Privileged Access Management (PAM) refers to a class of solutions that help secure, control, manage and monitor privileged access to critical assets."
+    },
+    {
+      "control_id": "3.0",
+      "title": "3.0",
+      "family": "3",
+      "description": "Infrastructure capabilities that enable ZT"
+    },
+    {
+      "control_id": "3.1",
+      "title": "3.1",
+      "family": "3",
+      "description": "Similar in concept to physical network segmentation, macro-segmentation can be achieved through the application of additional hardware or VLANs."
+    },
+    {
+      "control_id": "3.2",
+      "title": "3.2",
+      "family": "3",
+      "description": "Micro-segmentation is the practice of dividing (isolating) the network into small logical segments by enabling granular access control, whereby users, applications, workloads and devices are segmented based on logical, not physical, attributes. This also provides an advantage over traditional perimeter security, as the smaller segments present a reduced attack surface (for malicious actors). In a ZT Architecture, security settings can be applied to different types of traffic, creating policies that limit network and application flows between workloads to those that are explicitly permitted."
+    },
+    {
+      "control_id": "3.2.1",
+      "title": "3.2.1",
+      "family": "3",
+      "description": "The ability to define the objectives, compute requirements, and communication pathways required for a specific application workload."
+    },
+    {
+      "control_id": "3.2.2",
+      "title": "3.2.2",
+      "family": "3",
+      "description": "The ability to segment out an application workload so as to only allow the required connections be made between processes, network traffic, and api calls. As a subset of micro-segmentation the capability is limiting east west traffic preventing lateral movement."
+    },
+    {
+      "control_id": "3.3",
+      "title": "3.3",
+      "family": "3",
+      "description": "The ability to control access to resources based on identity and a need-to-know model in which device state and identity are verified before access to application infrastructure is granted."
+    },
+    {
+      "control_id": "4.0",
+      "title": "4.0",
+      "family": "4",
+      "description": "The ability to secure and manage the application layer as well as compute containers and virtual machines. The ability to identify and control the technology stack to facilitate more granular and accurate access decisions."
+    },
+    {
+      "control_id": "4.1",
+      "title": "4.1",
+      "family": "4",
+      "description": "The ability to allow or block communication of API calls and process to process communication on both remote and local systems."
+    },
+    {
+      "control_id": "4.2",
+      "title": "4.2",
+      "family": "4",
+      "description": "The ability to prevent or arrest software supply chain attacks, which occur \"when a cyber threat actor infiltrates a software vendor’s network and employs malicious code to compromise the software before the vendor sends it to their customers.\""
+    },
+    {
+      "control_id": "4.2.1",
+      "title": "4.2.1",
+      "family": "4",
+      "description": "A process capability that improves the lead time and frequency of delivery outcomes through enhanced engineering practices; promoting a more cohesive collaboration between Development, Security, and Operations teams as they work towards continuous integration and delivery."
+    },
+    {
+      "control_id": "4.2.2",
+      "title": "4.2.2",
+      "family": "4",
+      "description": "The ability to reach agreement and publish, locally, the application programming interface for a commonly used service. Enforcement of compliance in the use of commonly agreed API's."
+    },
+    {
+      "control_id": "4.3",
+      "title": "4.3",
+      "family": "4",
+      "description": "An application proxy or application proxy server receives requests intended for another server and acts as the proxy of the client to obtain the requested service."
+    },
+    {
+      "control_id": "4.4",
+      "title": "4.4",
+      "family": "4",
+      "description": "In Risk-adaptive Application Access, access privileges are granted based on a combination of a user’s identity, mission need, and the level of security risk that exists between the system being accessed and a user. RAdAC will use security metrics, such as the strength of the authentication method, the level of assurance of the session connection between the system and a user, and the physical location of a user, to make its risk determination."
+    },
+    {
+      "control_id": "5.0",
+      "title": "5.0",
+      "family": "5",
+      "description": "Processes and technical controls to identify, classify, securely handle, retain, and dispose of data."
+    },
+    {
+      "control_id": "5.1",
+      "title": "5.1",
+      "family": "5",
+      "description": "A procedure used in cryptography to convert plaintext into ciphertext to prevent anyone but the intended recipient from reading that data."
+    },
+    {
+      "control_id": "5.1.1",
+      "title": "5.1.1",
+      "family": "5",
+      "description": "The ability to protect data if communications are intercepted while data moves between sites or services. This protection is achieved by encrypting the data before transmission; authenticating the endpoints; and decrypting and verifying the data on arrival."
+    },
+    {
+      "control_id": "5.1.2",
+      "title": "5.1.2",
+      "family": "5",
+      "description": "The ability to protect data from a system compromise or data exfiltration by encrypting data while stored."
+    },
+    {
+      "control_id": "5.2",
+      "title": "5.2",
+      "family": "5",
+      "description": "The ability to adapt policy and configurations, and enforce that change, in near real time based on environmental circumstances and indications of user and network behavior."
+    },
+    {
+      "control_id": "5.3",
+      "title": "5.3",
+      "family": "5",
+      "description": "DRM is a set of access control technologies and policies that proactively detect and protect access to data and proprietary hardware and prevent unauthorized modification or redistribution of protected data."
+    },
+    {
+      "control_id": "5.4",
+      "title": "5.4",
+      "family": "5",
+      "description": "The ability to detect and prevent the unauthorized use and transmission of information."
+    },
+    {
+      "control_id": "5.5",
+      "title": "5.5",
+      "family": "5",
+      "description": "The ability to provide a column-level security feature that uses masking policies to selectively mask tables and columns at query time."
+    },
+    {
+      "control_id": "5.6",
+      "title": "5.6",
+      "family": "5",
+      "description": "The ability to discover, classify, label, and report upon the sensitive data in your databases."
+    },
+    {
+      "control_id": "5.6.1",
+      "title": "5.6.1",
+      "family": "5",
+      "description": "The ability to associate a data object with characterizing metadata for a defined purpose."
+    },
+    {
+      "control_id": "6.0",
+      "title": "6.0",
+      "family": "6",
+      "description": "The ability to systematically apply statistical and /or logical techniques to describe and illustrate, condense, and recap, and evaluate data."
+    },
+    {
+      "control_id": "6.1",
+      "title": "6.1",
+      "family": "6",
+      "description": "The ability to represent information graphically, highlighting patterns and trends in data and helping the reader to achieve quick insights."
+    },
+    {
+      "control_id": "6.2",
+      "title": "6.2",
+      "family": "6",
+      "description": "The ability to centrally collect event and incident alerts across disparate sources, analyze them, and provide reports, situational awareness, and notifications. It is frequently used in support of incidence response, compliance, and reporting."
+    },
+    {
+      "control_id": "6.3",
+      "title": "6.3",
+      "family": "6",
+      "description": "The ability to enable enhanced insight, decision making, and process automation by consuming high- volume, high-velocity and/or high-variety information assets."
+    },
+    {
+      "control_id": "6.4",
+      "title": "6.4",
+      "family": "6",
+      "description": "The ability to collect status, state, and configuration of a service or device via the use of active or passive probes or other analytic activities on the device."
+    },
+    {
+      "control_id": "6.5",
+      "title": "6.5",
+      "family": "6",
+      "description": "The ability to determine if the complete set of planned, required, and deployed security controls within an information system or inherited by the system continue to be effective over time in light of the inevitable changes that occur."
+    },
+    {
+      "control_id": "6.6",
+      "title": "6.6",
+      "family": "6",
+      "description": "The ability to apply machine learning algorithms composed of many technologies (such as deep learning, neural networks and natural language processing), in unsupervised and supervised learning, that operate guided by lessons from existing information."
+    },
+    {
+      "control_id": "6.7",
+      "title": "6.7",
+      "family": "6",
+      "description": "The ability to conduct \"Monitoring for anomalous or suspicious behavior ...with signatures, statistical analysis, analytics or machine learning on user activity events. The analysis seeks to find patterns amongst data generated by user activity."
+    },
+    {
+      "control_id": "7.0",
+      "title": "7.0",
+      "family": "7",
+      "description": "A set of processes that ensures that ZT assets are formally managed throughout the enterprise. A ZT governance model establishes authority and management and decision making parameters related to ZT policies produced or managed by the enterprise."
+    },
+    {
+      "control_id": "8.0",
+      "title": "8.0",
+      "family": "8",
+      "description": "The ability to coordinate and automate disparate Zero Trust services, systems, and activities as part of of Cybersecurity Domain Orchestrator."
+    },
+    {
+      "control_id": "8.1",
+      "title": "8.1",
+      "family": "8",
+      "description": "The ability to create and apply application technology to monitor and control the production and delivery of otherwise manual services."
+    },
+    {
+      "control_id": "8.1.1",
+      "title": "8.1.1",
+      "family": "8",
+      "description": "The capability of computer processes to perform functions that are normally associated with human intelligence such as reasoning, learning, and self- improvement."
+    },
+    {
+      "control_id": "8.1.2",
+      "title": "8.1.2",
+      "family": "8",
+      "description": "The ability to use software tools that partially or fully automate human activities that are manual, rule- based, and repetitive."
+    },
+    {
+      "control_id": "8.1.3",
+      "title": "8.1.3",
+      "family": "8",
+      "description": "A component with the ability to establish and/or shut down the communication path between a subject and a resource (via commands to relevant Policy Enforcement Points). The ability to direct Policy Enforcement Points to grant or deny access to resources based on policies created by the policy engine."
+    },
+    {
+      "control_id": "8.2",
+      "title": "8.2",
+      "family": "8",
+      "description": "The ability for a component responsible for the ultimate decision to grant access to a resource for a given subject."
+    },
+    {
+      "control_id": "8.3",
+      "title": "8.3",
+      "family": "8",
+      "description": "The ability to coordinate and enforce policy created by the ZT policy engine by translating it to settings and configurations at designated policy enforcement points (PEPs)."
+    },
+    {
+      "control_id": "8.4",
+      "title": "8.4",
+      "family": "8",
+      "description": "The ability to create a virtualized layer over physical infrastructure, and centrally manage it in an automated manner, utilizing a policy-based access control to dynamically create, configure, provision, and decommission virtualized network functions, system functions, security functions, and workflows."
+    },
+    {
+      "control_id": "8.4.1",
+      "title": "8.4.1",
+      "family": "8",
+      "description": "The ability to coordinate services and operations, for a specific domain, across multiple types of devices and systems."
+    },
+    {
+      "control_id": "8.4.2",
+      "title": "8.4.2",
+      "family": "8",
+      "description": "The ability direct or command elements and associated systems to perform specific actions within a specified domain."
+    },
+    {
+      "control_id": "8.4.3",
+      "title": "8.4.3",
+      "family": "8",
+      "description": "The ability to separate the control and data planes and centrally manage and control the elements in the data plane."
+    },
+    {
+      "control_id": "8.4.5",
+      "title": "8.4.5",
+      "family": "8",
+      "description": "The ability to virtualize the  enterprise connection of local networks into a wide-area network through the use of central routing, management, control & configuration of virtualized, distributed network and security services."
+    },
+    {
+      "control_id": "8.4.6",
+      "title": "8.4.6",
+      "family": "8",
+      "description": "The ability to decouple network functions (VNF) and security functions (VSF) from hardware appliances and deliver those functions as software in virtual machines."
+    },
+    {
+      "control_id": "8.5",
+      "title": "8.5",
+      "family": "8",
+      "description": "A set of processes that ensures that data assets are formally managed throughout the enterprise. A data governance model establishes authority and management and decision making parameters related to the data produced or managed by the enterprise."
+    },
+    {
+      "control_id": "8.6",
+      "title": "8.6",
+      "family": "8",
+      "description": "Provides a comprehensive, flexible, repeatable, and measurable process that any organization can use to manage information security and privacy risk for organizations and systems and links to a suite of NIST standards and guidelines to support implementation of risk management programs tomeet the requirements of the Federal Information Security Modernization Act (FISMA)."
+    }
+  ]
+}

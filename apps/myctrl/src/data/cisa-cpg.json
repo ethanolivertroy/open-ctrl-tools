@@ -1,0 +1,245 @@
+{
+  "framework": {
+    "id": "cisa-cpg",
+    "name": "CISA CPG",
+    "version": "2024",
+    "description": "CISA Cross-Sector Cybersecurity Performance Goals - baseline cybersecurity practices for critical infrastructure"
+  },
+  "families": {
+    "1": "Account Security",
+    "2": "Device Security",
+    "3": "Data Security",
+    "4": "Governance and Training",
+    "5": "Vulnerability Management"
+  },
+  "controls": [
+    {
+      "control_id": "1.A",
+      "title": "Asset Inventory",
+      "family": "1",
+      "description": "Better identify known, unknown (shadow), and unmanaged assets, and more rapidly detect and respond to new vulnerabilities."
+    },
+    {
+      "control_id": "1.B",
+      "title": "Cybersecurity Leadership",
+      "family": "1",
+      "description": "A single leader is responsible and accountable for cybersecurity within an organization."
+    },
+    {
+      "control_id": "1.C",
+      "title": "OT Cybersecurity Leadership",
+      "family": "1",
+      "description": "A single leader is responsible and accountable for OT-specific cybersecurity within an organization with OT assets."
+    },
+    {
+      "control_id": "1.D",
+      "title": "OT Cybersecurity Improvements",
+      "family": "1",
+      "description": "Improve OT cybersecurity and more rapidly and effectively respond to OT cyber incidents."
+    },
+    {
+      "control_id": "1.E",
+      "title": "Mitigate Known Vulnerabilities",
+      "family": "1",
+      "description": "Reduce the likelihood of threat actors exploiting known vulnerabilities to breach organizational networks."
+    },
+    {
+      "control_id": "1.F",
+      "title": "Validate Cyber Defenses",
+      "family": "1",
+      "description": "Identify TTPs that lack proper defenses and establish confidence in organizational cyber defenses."
+    },
+    {
+      "control_id": "1.G",
+      "title": "Vendor Incident Notification",
+      "family": "1",
+      "description": "Organizations more rapidly learn about and respond to known incidents or breaches across vendors and service providers."
+    },
+    {
+      "control_id": "1.H",
+      "title": "Vendor Vulnerability Notification",
+      "family": "1",
+      "description": "Organizations more rapidly learn about and respond to vulnerabilities in assets provided by vendors and service providers."
+    },
+    {
+      "control_id": "1.I",
+      "title": "Secure Procurement",
+      "family": "1",
+      "description": "Reduce risk by buying more secure products and services from more secure suppliers."
+    },
+    {
+      "control_id": "2.A",
+      "title": "Change Default Passwords",
+      "family": "2",
+      "description": "Prevent threat actors from using default passwords to achieve initial access or move laterally in a network."
+    },
+    {
+      "control_id": "2.B",
+      "title": "Minimum Password Strength",
+      "family": "2",
+      "description": "Organizational passwords are harder for threat actors to guess or crack."
+    },
+    {
+      "control_id": "2.C",
+      "title": "Unique Credentials",
+      "family": "2",
+      "description": "Attackers are unable to reuse compromised credentials to move laterally across the organization, particularly between IT and OT networks."
+    },
+    {
+      "control_id": "2.D",
+      "title": "Revoke Credentials for Departing Staff",
+      "family": "2",
+      "description": "Prevent unauthorized access to organizational accounts or resources by former employees."
+    },
+    {
+      "control_id": "2.E",
+      "title": "Separate User and Privileged Accounts",
+      "family": "2",
+      "description": "Make it harder for threat actors to gain access to administrator or privileged accounts, even if common user accounts are compromised."
+    },
+    {
+      "control_id": "2.F",
+      "title": "Network Segmentation",
+      "family": "2",
+      "description": "Reduce the likelihood of threat actors accessing the OT network after compromising the IT network."
+    },
+    {
+      "control_id": "2.G",
+      "title": "Unsuccessful Login Attempts",
+      "family": "2",
+      "description": "Protect organizations from automated, credential-based attacks."
+    },
+    {
+      "control_id": "2.H",
+      "title": "Multi-Factor Authentication",
+      "family": "2",
+      "description": "Add a critical, additional layer of security to protect assets accounts whose credentials have been compromised."
+    },
+    {
+      "control_id": "2.I",
+      "title": "Cybersecurity Training",
+      "family": "2",
+      "description": "Organizational users learn and perform more secure behaviors."
+    },
+    {
+      "control_id": "2.J",
+      "title": "OT Cybersecurity Training",
+      "family": "2",
+      "description": "Personnel responsible for securing OT assets received specialized OT-focused cybersecurity training."
+    },
+    {
+      "control_id": "2.K",
+      "title": "Strong Encryption",
+      "family": "2",
+      "description": "Effective encryption deployed to maintain confidentiality of sensitive data and integrity of IT and OT traffic."
+    },
+    {
+      "control_id": "2.L",
+      "title": "Sensitive Data Protection",
+      "family": "2",
+      "description": "Protect sensitive information from unauthorized access."
+    },
+    {
+      "control_id": "2.M",
+      "title": "Email Security",
+      "family": "2",
+      "description": "Reduce risk from common email-based threats, such as spoofing, phishing, and interception."
+    },
+    {
+      "control_id": "2.N",
+      "title": "Macro Security",
+      "family": "2",
+      "description": "Reduce the risk from embedded macros and similar executive code, a common and highly effective threat actor TTP."
+    },
+    {
+      "control_id": "2.O",
+      "title": "Incident Response Planning",
+      "family": "2",
+      "description": "More efficiently and effectively manage, respond to, and recover from cyberattacks against the organization and maintain service continuity."
+    },
+    {
+      "control_id": "2.P",
+      "title": "Incident Response Testing",
+      "family": "2",
+      "description": "More efficiently and effectively respond to cyberattacks and maintain service continuity."
+    },
+    {
+      "control_id": "2.Q",
+      "title": "Hardware and Software Approval",
+      "family": "2",
+      "description": "Increase visibility into deployed technology assets and reduce the likelihood of breach by users installing unapproved hardware, firmware, or software."
+    },
+    {
+      "control_id": "2.R",
+      "title": "System Backups",
+      "family": "2",
+      "description": "Organizations reduce the likelihood and duration of data loss at loss of service delivery or operations."
+    },
+    {
+      "control_id": "2.S",
+      "title": "Incident Response Plan Maintenance",
+      "family": "2",
+      "description": "Organizations maintain, practice, and update cybersecurity incident response plans for relevant threat scenarios."
+    },
+    {
+      "control_id": "2.T",
+      "title": "Log Collection and Storage",
+      "family": "2",
+      "description": "Achieve better visibility to detect and effectively respond to cyberattacks."
+    },
+    {
+      "control_id": "2.U",
+      "title": "Log Protection",
+      "family": "2",
+      "description": "Organizations' security logs are protected from unauthorized access and tampering."
+    },
+    {
+      "control_id": "2.V",
+      "title": "Portable Media Security",
+      "family": "2",
+      "description": "Prevent malicious actors from achieving initial access or data exfiltration via unauthorized portable media devices."
+    },
+    {
+      "control_id": "2.W",
+      "title": "Secure Internet-Facing Assets",
+      "family": "2",
+      "description": "Unauthorized users cannot gain an initial system foothold by exploiting known weaknesses in public-facing assets."
+    },
+    {
+      "control_id": "2.X",
+      "title": "OT Internet-Facing Asset Protection",
+      "family": "2",
+      "description": "Reduce the risk of threat actors exploiting or interrupting OT assets connected to the public internet."
+    },
+    {
+      "control_id": "3.A",
+      "title": "Detect Relevant Threats and TTPs",
+      "family": "3",
+      "description": "Organizations are aware of and able to detect relevant threats and TTPs."
+    },
+    {
+      "control_id": "4.A",
+      "title": "Incident Reporting",
+      "family": "4",
+      "description": "CISA and other organizations are better able to provide assistance or understand the broader scope of a cyberattack."
+    },
+    {
+      "control_id": "4.B",
+      "title": "Vulnerability Disclosure",
+      "family": "4",
+      "description": "Organizations more rapidly learn about vulnerabilities or weaknesses in their assets discovered by security researchers; researchers are more incentivized to responsibly share their findings."
+    },
+    {
+      "control_id": "4.C",
+      "title": "Vulnerability Reporting",
+      "family": "4",
+      "description": "Allow security researchers to submit discovered weaknesses or vulnerabilities faster."
+    },
+    {
+      "control_id": "5.A",
+      "title": "Incident Recovery Planning",
+      "family": "5",
+      "description": "Organizations are capable of safely and effectively recovering from a cybersecurity incident."
+    }
+  ]
+}

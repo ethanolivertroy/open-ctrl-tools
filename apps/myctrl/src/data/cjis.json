@@ -1,0 +1,1414 @@
+{
+  "framework": {
+    "id": "cjis",
+    "name": "FBI CJIS",
+    "version": "5.9.3",
+    "description": "FBI CJIS compliance framework"
+  },
+  "families": {
+    "4": "Criminal Justice Information",
+    "5": "Policy and Implementation",
+    "AC": "Access Control",
+    "AT": "Awareness and Training",
+    "IA": "Identification and Authentication",
+    "IR": "Incident Response",
+    "MA": "Maintenance",
+    "MP": "Media Protection",
+    "SA": "System and Services Acquisition",
+    "SI": "System and Information Integrity"
+  },
+  "controls": [
+    {
+      "control_id": "4.1",
+      "title": "Criminal Justice Information (CJI)",
+      "family": "4",
+      "description": "Criminal Justice Information is the term used to refer to all of the FBI CJIS provided data necessary for law enforcement and civil agencies to perform their missions including, but not limited to biometric, identity history, biographic, property, and case/incident history data. The following categories of CJI describe the various data sets housed by the FBI CJIS architecture:\n1. Biometric Data—data derived from one or more intrinsic physical or behavioral traits of humans typically for the purpose of uniquely identifying individuals from within a population. Used to identify individuals, to include: fingerprints, palm prints, iris scans, and facial recognition data.\n2. Identity History Data—textual data that corresponds with an individual’s biometric data, providing a history of criminal and/or civil events for the identified individual.\n3. Biographic Data—information about individuals associated with a unique case, and not necessarily connected to identity data. Biographic data does not provide a history of an individual, only information related to a unique case.\n4. Property Data—information about vehicles and property associated with crime when accompanied by any personally identifiable information (PII).\n5. Case/Incident History—information about the history of criminal incidents.\nThe following type of data are exempt from the protection levels required for CJI: transaction control type numbers (e.g., ORI, NIC, UCN, etc.) when not accompanied by information that reveals CJI or PII.\nThe intent of the CJIS Security Policy is to ensure the protection of the aforementioned CJI until the information is: released to the public via authorized dissemination (e.g., within a court system; presented in crime reports data; released in the interest of public safety); purged or destroyed in accordance with applicable record retention rules. CJI introduced into the court system pursuant to a judicial proceeding that can be released to the public via a public records request is not subject to the CJIS Security Policy."
+    },
+    {
+      "control_id": "4.1.1",
+      "title": "Criminal History Record Information (CHRI)",
+      "family": "4",
+      "description": "Criminal History Record Information (CHRI), sometimes informally referred to as “restricted data”, is a subset of CJI. Due to its comparatively sensitive nature, additional controls are required for the access, use and dissemination of CHRI. In addition to the dissemination restrictions outlined below, Title 28, Part 20, Code of Federal Regulations (CFR), defines CHRI and provides the regulatory guidance for dissemination of CHRI. While the CJIS Security Policy attempts to be architecturally independent, the III and the NCIC are specifically identified in Title 28, Part 20, CFR, and the NCIC Operating Manual, as associated with CHRI."
+    },
+    {
+      "control_id": "4.2",
+      "title": "Access, Use and Dissemination of CJI",
+      "family": "4",
+      "description": "This section describes the requirements for the access, use and dissemination of CHRI, NCIC restricted files information, and NCIC non-restricted files information."
+    },
+    {
+      "control_id": "4.2.1",
+      "title": "Proper Access to III Data",
+      "family": "4",
+      "description": "Information obtained from the III is considered CHRI. Rules governing the access, use, and dissemination of CHRI are found in Title 28, Part 20, CFR. The III shall be accessed only for an authorized purpose. Further, CHRI shall only be used for an authorized purpose consistent with the purpose for which III was accessed. Dissemination to another agency is authorized if (a) the other agency is an Authorized Recipient of such information and is being serviced by the accessing agency, or (b) the other agency is performing personnel and appointment functions for criminal justice employment applicants."
+    },
+    {
+      "control_id": "4.2.2",
+      "title": "NCIC Restricted Files",
+      "family": "4",
+      "description": "The NCIC hosts restricted files and non-restricted files. NCIC restricted files are distinguished from NCIC non-restricted files by the policies governing their access and use. Proper access to, use, and dissemination of data from restricted files shall be consistent with the access, use, and dissemination policies concerning the III described in Title 28, Part 20, CFR, and the NCIC Operating Manual. The restricted files, which shall be protected as CHRI, are as follows:\n1. Gang Files\n2. Threat Screening Center Files\n3. Supervised Release Files\n4. National Sex Offender Registry Files\n5. Historical Protection Order Files of the NCIC\n6. Identity Theft Files\n7. Protective Interest Files\n8. Person With Information (PWI) data in the Missing Person Files\n9. Violent Person File\n10. NICS Denied Transactions File\nThe remaining NCIC files are considered non-restricted files."
+    },
+    {
+      "control_id": "4.2.3",
+      "title": "NCIC Non-Restricted Files",
+      "family": "4",
+      "description": "Access to and use of NCIC non-restricted files information, including requirements for authorized purposes, dissemination to government and private entities, and restrictions on commercial use."
+    },
+    {
+      "control_id": "4.2.3.1",
+      "title": "Non-Restricted Files Access and Use",
+      "family": "4",
+      "description": "NCIC non-restricted files are those not listed as restricted files in Section 4.2.2. NCIC non-restricted files information may be accessed and used for any authorized purpose consistent with the inquiring agency’s responsibility. Information obtained may be disseminated to (a) other government agencies or (b) private entities authorized by law to receive such information for any purpose consistent with their responsibilities."
+    },
+    {
+      "control_id": "4.2.3.2",
+      "title": "Non-Restricted Files Dissemination Limits",
+      "family": "4",
+      "description": "NCIC non-restricted files may be accessed for other purposes consistent with the resources of the inquiring agency; however, requests for bulk data are discouraged. Information derived from NCIC non-restricted files for other than law enforcement purposes can be used by authorized criminal justice personnel only to confirm the status of a person or property (i.e., wanted or stolen). An inquiring agency is authorized to charge a nominal administrative fee for such service. Non-restricted files information shall not be disseminated commercially.\nA response to a NCIC person inquiry may include NCIC restricted files information as well as NCIC non-restricted files information. Agencies shall not disseminate restricted files information for purposes other than law enforcement."
+    },
+    {
+      "control_id": "4.2.3.3",
+      "title": "CSO Discretion for Non-Restricted Files",
+      "family": "4",
+      "description": "If no federal, state or local law or policy prohibition exists, the CSO may exercise discretion to approve or deny dissemination of NCIC non-restricted file information."
+    },
+    {
+      "control_id": "4.2.4",
+      "title": "Storage of CHRI",
+      "family": "4",
+      "description": "When CHRI is stored, agencies shall establish appropriate administrative, technical and physical safeguards to ensure the security and confidentiality of the information. These records shall be stored for extended periods only when they are key elements for the integrity and/or utility of case files and/or criminal record files. See Section 5.9 for physical security controls."
+    },
+    {
+      "control_id": "4.2.5",
+      "title": "Accountability for III Inquiries",
+      "family": "4",
+      "description": "Accountability requirements for III inquiries, including providing reasons for inquiries upon request and sanctions for improper access, use, or dissemination of CHRI and NCIC information."
+    },
+    {
+      "control_id": "4.2.5.1",
+      "title": "Inquiry Reason Requirements",
+      "family": "4",
+      "description": "In addition to the use of purpose codes and logging information, all users shall provide a reason for all III inquiries whenever requested by NCIC System Managers, CSAs, local agency administrators, or their representatives."
+    },
+    {
+      "control_id": "4.2.5.2",
+      "title": "Sanctions for Improper Access",
+      "family": "4",
+      "description": "Improper access, use or dissemination of CHRI and NCIC Non-Restricted Files information is serious and may result in administrative sanctions including, but not limited to, termination of services and state and federal criminal penalties."
+    },
+    {
+      "control_id": "4.3",
+      "title": "Personally Identifiable Information (PII)",
+      "family": "4",
+      "description": "For the purposes of this document, PII is information which can be used to distinguish or trace an individual’s identity, such as name, social security number, or biometric records, alone or when combined with other personal or identifying information which is linked or linkable to a specific individual, such as date and place of birth, or mother’s maiden name. Any FBI CJIS provided data maintained by an agency, including but not limited to, education, financial transactions, medical history, and criminal or employment history may include PII. A criminal history record for example inherently contains PII as would a Law Enforcement National Data Exchange (N-DEx) case file.\nPII shall be extracted from CJI for the purpose of official business only. Agencies shall develop policies, based on state and local privacy rules, to ensure appropriate controls are applied when handling PII extracted from CJI. Due to the expansive nature of PII, this Policy does not specify auditing, logging, or personnel security requirements associated with the life cycle of PII."
+    },
+    {
+      "control_id": "5.1",
+      "title": "Information Exchange Agreements",
+      "family": "5",
+      "description": "The information shared through communication mediums shall be protected with appropriate security safeguards. The agreements established by entities sharing information across systems and communications mediums are vital to ensuring all parties fully understand and agree to a set of security standards."
+    },
+    {
+      "control_id": "5.1.1",
+      "title": "Information Exchange Agreement Types",
+      "family": "5",
+      "description": "Before exchanging CJI, agencies shall put formal agreements in place that specify security controls. The exchange of information may take several forms including electronic mail, instant messages, web services, facsimile, hard copy, and information systems sending, receiving and storing CJI.\nInformation exchange agreements outline the roles, responsibilities, and data ownership between agencies and any external parties. Information exchange agreements for agencies sharing CJI data that is sent to and/or received from the FBI CJIS shall specify the security controls and conditions described in this document.\nInformation exchange agreements shall be supported by documentation committing both parties to the terms of information exchange. As described in subsequent sections, different agreements and policies apply, depending on whether the parties involved are CJAs or NCJAs. See Appendix D for examples of Information Exchange Agreements.\nThere may be instances, on an ad-hoc basis, where CJI is authorized for further dissemination to Authorized Recipients not covered by an information exchange agreement with the releasing agency. In these instances the dissemination of CJI is considered to be secondary dissemination. Law Enforcement and civil agencies shall have a local policy to validate a requestor of CJI as an authorized recipient before disseminating CJI. See Section 5.1.3 for secondary dissemination guidance."
+    },
+    {
+      "control_id": "5.1.1.1",
+      "title": "Information Handling and Protection",
+      "family": "5",
+      "description": "Procedures for handling and storage of information shall be established to protect that information from unauthorized disclosure, alteration or misuse. Using the requirements in this Policy as a starting point, the procedures shall apply to the handling, processing, storing, and communication of CJI. These procedures apply to the exchange of CJI no matter the form of exchange.\nThe policies for information handling and protection also apply to using CJI shared with or received from FBI CJIS for noncriminal justice purposes. In general, a noncriminal justice purpose includes the use of criminal history records for purposes authorized by federal or state law other than purposes relating to the administration of criminal justice, including – but not limited to - employment suitability, licensing determinations, immigration and naturalization matters, and national security clearances."
+    },
+    {
+      "control_id": "5.1.1.2",
+      "title": "State and Federal Agency User Agreements",
+      "family": "5",
+      "description": "Each CSA head or SIB Chief shall execute a signed written user agreement with the FBI CJIS Division stating their willingness to demonstrate conformity with this Policy before accessing and participating in CJIS records information programs. This agreement shall include the standards and sanctions governing utilization of CJIS systems. As coordinated through the particular CSA or SIB Chief, each Interface Agency shall also allow the FBI to periodically test the ability to penetrate the FBI’s network through the external network connection or system. All user agreements with the FBI CJIS Division shall be coordinated with the CSA head."
+    },
+    {
+      "control_id": "5.1.1.3",
+      "title": "Criminal Justice Agency Agreements",
+      "family": "5",
+      "description": "Any CJA receiving access to CJI shall enter into a signed written agreement with the appropriate signatory authority of the CSA providing the access. The written agreement shall specify the FBI CJIS systems and services to which the agency will have access, and the FBI CJIS Division policies to which the agency must adhere. These agreements shall include:\n1. Audit.\n2. Dissemination.\n3. Hit confirmation.\n4. Logging.\n5. Quality Assurance (QA).\n6. Screening (Pre-Employment).\n7. Security.\n8. Timeliness.\n9. Training.\n10. Use of the system.\n11. Validation."
+    },
+    {
+      "control_id": "5.1.1.4",
+      "title": "Interagency and Management Control Agreements",
+      "family": "5",
+      "description": "A NCJA (government) designated to perform criminal justice functions for a CJA shall be eligible for access to the CJI. Access shall be permitted when such designation is authorized pursuant to executive order, statute, regulation, or interagency agreement. The NCJA shall sign and execute a management control agreement (MCA) with the CJA, which stipulates management control of the criminal justice function remains solely with the CJA. The MCA may be a separate document or included with the language of an interagency agreement. An example of an NCJA (government) is a city information technology (IT) department."
+    },
+    {
+      "control_id": "5.1.1.5",
+      "title": "Private Contractor User Agreements and CJIS Security Addendum",
+      "family": "5",
+      "description": "The CJIS Security Addendum is a uniform addendum to an agreement between the government agency and a private contractor, approved by the Attorney General of the United States, which specifically authorizes access to CHRI, limits the use of the information to the purposes for which it is provided, ensures the security and confidentiality of the information is consistent with existing regulations and the CJIS Security Policy, provides for sanctions, and contains such other provisions as the Attorney General may require.\nPrivate contractors who perform criminal justice functions shall meet the same training and certification criteria required by governmental agencies performing a similar function, and shall be subject to the same extent of audit review as are local user agencies. All private contractors who perform criminal justice functions shall acknowledge, via signing of the CJIS Security\nAddendum Certification page, and abide by all aspects of the CJIS Security Addendum. The CJIS Security Addendum is presented in Appendix H. Modifications to the CJIS Security Addendum shall be enacted only by the FBI.\n1. Private contractors designated to perform criminal justice functions for a CJA shall be eligible for access to CJI. Access shall be permitted pursuant to an agreement which specifically identifies the agency’s purpose and scope of providing services for the administration of criminal justice. The agreement between the CJA and the private contractor shall incorporate the CJIS Security Addendum approved by the Director of the FBI, acting for the U.S. Attorney General, as referenced in Title 28 CFR 20.33 (a)(7).\n2. Private contractors designated to perform criminal justice functions on behalf of a NCJA (government) shall be eligible for access to CJI. Access shall be permitted pursuant to an agreement which specifically identifies the agency’s purpose and scope of providing services for the administration of criminal justice. The agreement between the NCJA and the private contractor shall incorporate the CJIS Security Addendum approved by the Director of the FBI, acting for the U.S. Attorney General, as referenced in Title 28 CFR 20.33 (a)(7)."
+    },
+    {
+      "control_id": "5.1.1.6",
+      "title": "Agency User Agreements",
+      "family": "5",
+      "description": "A NCJA (public) designated to request civil fingerprint-based background checks, with the full consent of the individual to whom a background check is taking place, for noncriminal justice functions, shall be eligible for access to CJI. Access shall be permitted when such designation is authorized pursuant to federal law or state statute approved by the U.S. Attorney General. A NCJA (public) receiving access to CJI shall enter into a signed written agreement with the appropriate signatory authority of the CSA/SIB providing the access. An example of a NCJA (public) is a county school board.\nA NCJA (private) designated to request civil fingerprint-based background checks, with the full consent of the individual to whom a background check is taking place, for noncriminal justice functions, shall be eligible for access to CJI. Access shall be permitted when such designation is authorized pursuant to federal law or state statute approved by the U.S. Attorney General. A NCJA (private) receiving access to CJI shall enter into a signed written agreement with the appropriate signatory authority of the CSA, SIB, or authorized agency providing the access. An example of a NCJA (private) is a local bank.\nAll NCJAs accessing CJI shall be subject to all pertinent areas of the CJIS Security Policy (see Appendix J for supplemental guidance). Each NCJA that directly accesses FBI CJI shall also allow the FBI to periodically test the ability to penetrate the FBI’s network through the external network connection or system."
+    },
+    {
+      "control_id": "5.1.1.7",
+      "title": "Channeler User Agreements",
+      "family": "5",
+      "description": "Channelers designated to request civil fingerprint-based background checks or noncriminal justice ancillary functions on behalf of a NCJA (public) or NCJA (private) for noncriminal justice functions shall be eligible for access to CJI. Access shall be permitted when such designation is authorized pursuant to federal law or state statute approved by the U.S. Attorney General. All Channelers accessing CJI shall be subject to the terms and conditions described in the Compact Council Security and Management Control Outsourcing Standard. Each Channeler that directly accesses CJI shall also allow the FBI to conduct periodic penetration testing.\nChannelers leveraging CJI to perform civil functions on behalf of an Authorized Recipient shall meet the same training and certification criteria required by governmental agencies performing a similar function, and shall be subject to the same extent of audit review as are local user agencies."
+    },
+    {
+      "control_id": "5.1.1.8",
+      "title": "Contractor Agreements for Noncriminal Justice Functions",
+      "family": "5",
+      "description": "Contractors designated to perform noncriminal justice ancillary functions on behalf of a NCJA (public) or NCJA (private) for noncriminal justice functions shall be eligible for access to CJI. Access shall be permitted when such designation is authorized pursuant to federal law or state statute approved by the U.S. Attorney General. All contractors accessing CJI shall be subject to the terms and conditions described in the Compact Council Outsourcing Standard for Non-Channelers. Contractors leveraging CJI to perform civil functions on behalf of an Authorized Recipient shall meet the same training and certification criteria required by governmental agencies performing a similar function, and shall be subject to the same extent of audit review as are local user agencies."
+    },
+    {
+      "control_id": "5.1.2",
+      "title": "Monitoring, Review, and Delivery of Services",
+      "family": "5",
+      "description": "As specified in the interagency agreements, MCAs, and contractual agreements with private contractors, the services, reports and records provided by the service provider shall be regularly monitored and reviewed. The CJA, authorized agency, or FBI shall maintain sufficient overall control and visibility into all security aspects to include, but not limited to, identification of vulnerabilities and information security incident reporting/response. The incident reporting/response process used by the service provider shall conform to the incident reporting/response specifications provided in this Policy."
+    },
+    {
+      "control_id": "5.1.2.1",
+      "title": "Managing Changes to Service Providers",
+      "family": "5",
+      "description": "Any changes to services provided by a service provider shall be managed by the CJA, authorized agency, or FBI. This includes provision of services, changes to existing services, and new services. Evaluation of the risks to the agency shall be undertaken based on the criticality of the data, system, and the impact of the change."
+    },
+    {
+      "control_id": "5.1.3",
+      "title": "Secondary Dissemination",
+      "family": "5",
+      "description": "If CHRI is released to another authorized agency, and that agency was not part of the releasing agency’s primary information exchange agreement(s), the releasing agency shall log such dissemination."
+    },
+    {
+      "control_id": "5.1.4",
+      "title": "Secondary Dissemination of Non-CHRI CJI",
+      "family": "5",
+      "description": "If CJI does not contain CHRI and is not part of an information exchange agreement then it does not need to be logged. Dissemination shall conform to the local policy validating the requestor of the CJI as an employee and/or contractor of a law enforcement agency or civil agency requiring the CJI to perform their mission or a member of the public receiving CJI via authorized dissemination."
+    },
+    {
+      "control_id": "5.2",
+      "title": "Security Awareness Training",
+      "family": "5",
+      "description": "Security training is key to the human element of information security. All users with authorized access to CJI should be made aware of their individual responsibilities and expected behavior when accessing CJI and the systems which process CJI. LASOs require enhanced training on the specific duties and responsibilities of those positions and the impact those positions have on the overall security of information systems."
+    },
+    {
+      "control_id": "5.3",
+      "title": "Security Awareness Training Requirements",
+      "family": "5",
+      "description": "Security awareness training requirements for all personnel with authorized access to CJI, including role-based training for Local Agency Security Officers (LASOs) on their specific duties, responsibilities, and their impact on overall information system security."
+    },
+    {
+      "control_id": "5.4",
+      "title": "Auditing and Accountability",
+      "family": "5",
+      "description": "Agencies shall implement audit and accountability controls to increase the probability of authorized users conforming to a prescribed pattern of behavior. Agencies shall carefully assess the inventory of components that compose their information systems to determine which security controls are applicable to the various components.\nAuditing controls are typically applied to the components of an information system that provide auditing capability (servers, etc.) and would not necessarily be applied to every user-level workstation within the agency. As technology advances, more powerful and diverse functionality can be found in such devices as personal digital assistants and cellular telephones, which may require the application of security controls in accordance with an agency assessment of risk.\nRefer to Section 5.13.6 for additional audit requirements related to mobile devices used to access CJI."
+    },
+    {
+      "control_id": "5.4.1",
+      "title": "Auditable Events and Content",
+      "family": "5",
+      "description": "The agency’s information system shall generate audit records for defined events. These defined events include identifying significant events which need to be audited as relevant to the security of the information system. The agency shall specify which information system components carry out auditing activities. Auditing activity can affect information system performance and this issue must be considered as a separate factor during the acquisition of information systems.\nThe agency’s information system shall produce, at the application and/or operating system level, audit records containing sufficient information to establish what events occurred, the sources of the events, and the outcomes of the events. The agency shall periodically review and update the list of agency-defined auditable events. In the event an agency does not use an automated system, manual recording of activities shall still take place."
+    },
+    {
+      "control_id": "5.4.1.1",
+      "title": "Events to be Logged",
+      "family": "5",
+      "description": "The following events shall be logged:\n1. Successful and unsuccessful system log-on attempts.\n2. Successful and unsuccessful attempts to use:\na. access permission on a user account, file, directory or other system resource;\nb. create permission on a user account, file, directory or other system resource;\nc. write permission on a user account, file, directory or other system resource;\nd. delete permission on a user account, file, directory or other system resource;\ne. change permission on a user account, file, directory or other system resource.\n3. Successful and unsuccessful attempts to change account passwords.\n4. Successful and unsuccessful actions by privileged accounts (i.e., root, Oracle, DBA, admin, etc.).\n5. Successful and unsuccessful attempts for users to:\na. access the audit log file;\nb. modify the audit log file;\nc. destroy the audit log file."
+    },
+    {
+      "control_id": "5.4.1.1.1",
+      "title": "Content of Audit Records",
+      "family": "5",
+      "description": "The following content shall be included with every audited event:\n1. Date and time of the event.\n2. The component of the information system (e.g., software component, hardware component) where the event occurred.\n3. Type of event.\n4. User/subject identity.\n5. Outcome (success or failure) of the event."
+    },
+    {
+      "control_id": "5.4.2",
+      "title": "Response to Audit Processing Failures",
+      "family": "5",
+      "description": "The agency’s information system shall provide alerts to appropriate agency officials in the event of an audit processing failure. Audit processing failures include, for example: software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded."
+    },
+    {
+      "control_id": "5.4.3",
+      "title": "Audit Monitoring, Analysis, and Reporting",
+      "family": "5",
+      "description": "The responsible management official shall designate an individual or position to review/analyze information system audit records for indications of inappropriate or unusual activity, investigate suspicious activity or suspected violations, to report findings to appropriate officials, and to take necessary actions. Audit review/analysis shall be conducted at a minimum once a week. The frequency of review/analysis should be increased when the volume of an agency’s processing indicates an elevated need for audit review. The agency shall increase the level of audit monitoring and analysis activity within the information system whenever there is an indication of increased risk to agency operations, agency assets, or individuals based on law enforcement information, intelligence information, or other credible sources of information."
+    },
+    {
+      "control_id": "5.4.4",
+      "title": "Time Stamps",
+      "family": "5",
+      "description": "The agency’s information system shall provide time stamps for use in audit record generation. The time stamps shall include the date and time values generated by the internal system clocks in the audit records. The agency shall synchronize internal information system clocks on an annual basis."
+    },
+    {
+      "control_id": "5.4.5",
+      "title": "Protection of Audit Information",
+      "family": "5",
+      "description": "The agency’s information system shall protect audit information and audit tools from modification, deletion and unauthorized access."
+    },
+    {
+      "control_id": "5.4.6",
+      "title": "Audit Record Retention",
+      "family": "5",
+      "description": "The agency shall retain audit records for at least one (1) year. Once the minimum retention time period has passed, the agency shall continue to retain audit records until it is determined they are no longer needed for administrative, legal, audit, or other operational purposes. This includes, for example, retention and availability of audit records relative to Freedom of Information Act (FOIA) requests, subpoena, and law enforcement actions."
+    },
+    {
+      "control_id": "5.4.7",
+      "title": "Logging NCIC and III Transactions",
+      "family": "5",
+      "description": "A log shall be maintained for a minimum of one (1) year on all NCIC and III transactions. The III portion of the log shall clearly identify both the operator and the authorized receiving agency. III logs shall also clearly identify the requester and the secondary recipient. The identification on the log shall take the form of a unique identifier that shall remain unique to the individual requester and to the secondary recipient throughout the minimum one year retention period."
+    },
+    {
+      "control_id": "5.5",
+      "title": "Access Control",
+      "family": "5",
+      "description": "Access control provides the planning and implementation of mechanisms to restrict reading, writing, processing, and transmission of CJIS information and the modification of information systems, applications, services, and communication configurations allowing access to CJIS information.\nRefer to Section 5.13.6 for additional access control requirements related to mobile devices used to access CJI."
+    },
+    {
+      "control_id": "5.6",
+      "title": "Identification and Authentication",
+      "family": "5",
+      "description": "Identification is a unique, auditable representation of an identity within an information system usually in the form of a simple character string for each individual user, machine, software component, or any other entity. Authentication refers to mechanisms or processes to verify the identity of a user, process, or device, as a prerequisite to allowing access to a system’s resources."
+    },
+    {
+      "control_id": "5.7",
+      "title": "Configuration Management",
+      "family": "5",
+      "description": "Configuration management requirements for information systems processing CJI, including controls for system changes, least functionality, software restrictions, and access restrictions for changes."
+    },
+    {
+      "control_id": "5.7.1",
+      "title": "Access Restrictions for Changes",
+      "family": "5",
+      "description": "Planned or unplanned changes to the hardware, software, and/or firmware components of the information system can have significant effects on the overall security of the system. The goal is to allow only qualified and authorized individuals access to information system components for purposes of initiating changes, including upgrades, and modifications. Section 5.5, Access Control, describes agency requirements for control of privileges and restrictions."
+    },
+    {
+      "control_id": "5.7.1.1",
+      "title": "Least Functionality",
+      "family": "5",
+      "description": "The agency shall configure the application, service, or information system to provide only essential capabilities and shall specifically prohibit and/or restrict the use of specified functions, ports, protocols, and/or services."
+    },
+    {
+      "control_id": "5.7.1.2",
+      "title": "Network Diagram",
+      "family": "5",
+      "description": "The agency shall ensure that a complete topological drawing depicting the interconnectivity of the agency network, to criminal justice information, systems and services is maintained in a current status. See Appendix C for sample network diagrams.\nThe network topological drawing shall include the following:\n1. All communications paths, circuits, and other components used for the interconnection, beginning with the agency-owned system(s) and traversing through all interconnected systems to the agency end-point.\n2. The logical location of all components (e.g., firewalls, routers, switches, hubs, servers, encryption devices, and computer workstations). Individual workstations (clients) do not have to be shown; the number of clients is sufficient.\n3. “For Official Use Only” (FOUO) markings.\n4. The agency name and date (day, month, and year) drawing was created or updated."
+    },
+    {
+      "control_id": "5.7.2",
+      "title": "Security of Configuration Documentation",
+      "family": "5",
+      "description": "The system configuration documentation often contains sensitive details (e.g., descriptions of applications, processes, procedures, data structures, authorization processes, data flow, etc.) Agencies shall protect the system documentation from unauthorized access consistent with the provisions described in Section 5.5 Access Control."
+    },
+    {
+      "control_id": "5.8",
+      "title": "Media Protection",
+      "family": "5",
+      "description": "Documented and implemented media protection policies and procedures ensure that access to digital and non-digital media in all forms is restricted to authorized individuals using authorized methods and processes."
+    },
+    {
+      "control_id": "5.9",
+      "title": "Physical Protection",
+      "family": "5",
+      "description": "Physical protection policy and procedures shall be documented and implemented to ensure CJI and information system hardware, software, and media are physically protected through access control measures."
+    },
+    {
+      "control_id": "5.9.1",
+      "title": "Physically Secure Location",
+      "family": "5",
+      "description": "A physically secure location is a facility, a criminal justice conveyance, or an area, a room, or a group of rooms within a facility with both the physical and personnel security controls sufficient to protect CJI and associated information systems. The physically secure location is subject to criminal justice agency management control; SIB control; FBI CJIS Security addendum; or a combination thereof.\nSections 5.9.1.1 – 5.9.1.8 describe the physical controls required in order to be considered a physically secure location, while Sections 5.2 and 5.12, respectively, describe the minimum security awareness training and personnel security controls required for unescorted access to a physically secure location. Sections 5.5, 5.6.2.2.1, and 5.10 describe the requirements for technical security controls required to access CJI from within the perimeter of a physically secure location without AA."
+    },
+    {
+      "control_id": "5.9.1.1",
+      "title": "Security Perimeter",
+      "family": "5",
+      "description": "The perimeter of a physically secure location shall be prominently posted and separated from non-secure locations by physical controls. Security perimeters shall be defined, controlled and secured in a manner acceptable to the CSA or SIB."
+    },
+    {
+      "control_id": "5.9.1.2",
+      "title": "Physical Access Authorizations",
+      "family": "5",
+      "description": "The agency shall develop and keep current a list of personnel with authorized access to the physically secure location (except for those areas within the permanent facility officially designated as publicly accessible) or shall issue credentials to authorized personnel."
+    },
+    {
+      "control_id": "5.9.1.3",
+      "title": "Physical Access Control",
+      "family": "5",
+      "description": "The agency shall control all physical access points (except for those areas within the facility officially designated as publicly accessible) and shall verify individual access authorizations before granting access."
+    },
+    {
+      "control_id": "5.9.1.4",
+      "title": "Access Control for Transmission Medium",
+      "family": "5",
+      "description": "The agency shall control physical access to information system distribution and transmission lines within the physically secure location."
+    },
+    {
+      "control_id": "5.9.1.5",
+      "title": "Access Control for Output Devices",
+      "family": "5",
+      "description": "The agency shall control physical access to information system devices that display CJI and shall position information system devices in such a way as to prevent unauthorized individuals from accessing and viewing CJI."
+    },
+    {
+      "control_id": "5.9.1.6",
+      "title": "Monitoring Physical Access",
+      "family": "5",
+      "description": "The agency shall monitor physical access to the information system to detect and respond to physical security incidents."
+    },
+    {
+      "control_id": "5.9.1.7",
+      "title": "Visitor Control",
+      "family": "5",
+      "description": "The agency shall control physical access by authenticating visitors before authorizing escorted access to the physically secure location (except for those areas designated as publicly accessible). The agency shall escort visitors at all times and monitor visitor activity."
+    },
+    {
+      "control_id": "5.9.1.8",
+      "title": "Access Records",
+      "family": "5",
+      "description": "The agency shall authorize and control information system-related items entering and exiting the physically secure location."
+    },
+    {
+      "control_id": "5.9.2",
+      "title": "Controlled Area",
+      "family": "5",
+      "description": "If an agency cannot meet all of the controls required for establishing a physically secure location, but has an operational need to access or store CJI, the agency shall designate an area, a room, or a storage container, as a controlled area for the purpose of day-to-day CJI access or storage. The agency shall, at a minimum:\n1. Limit access to the controlled area during CJI processing times to only those personnel authorized by the agency to access or view CJI.\n2. Lock the area, room, or storage container when unattended.\n3. Position information system devices and documents containing CJI in such a way as to prevent unauthorized individuals from access and view.\n4. Follow the encryption requirements found in Section 5.10.1.2 for electronic storage (i.e., data “at rest”) of CJI."
+    },
+    {
+      "control_id": "5.10",
+      "title": "Systems and Communications Protection and Information Integrity",
+      "family": "5",
+      "description": "Examples of systems and communications safeguards range from boundary and transmission protection to securing an agency’s virtualized environment. In addition, applications, services, or information systems must have the capability to ensure system integrity through the detection and protection against unauthorized changes to software and information. This section details the policy for protecting systems and communications infrastructures.\nRefer to Section 5.13.4 for additional system integrity requirements related to mobile devices used to access CJI."
+    },
+    {
+      "control_id": "5.10.1",
+      "title": "Information Flow Enforcement",
+      "family": "5",
+      "description": "The network infrastructure shall control the flow of information between interconnected systems. Information flow control regulates where information is allowed to travel within an information system and between information systems (as opposed to who is allowed to access the information) and without explicit regard to subsequent accesses to that information. In other words, controlling how data moves from one place to the next in a secure manner. Examples of controls that are better expressed as flow control than access control (see Section 5.5) are:\n1. Prevent CJI from being transmitted unencrypted across the public network.\n2. Block outside traffic that claims to be from within the agency.\n3. Do not pass any web requests to the public network that are not from the internal web proxy.\nSpecific examples of flow control enforcement can be found in boundary protection devices (e.g., proxies, gateways, guards, encrypted tunnels, firewalls, and routers) that employ rule sets or establish configuration settings that restrict information system services or provide a packet filtering capability."
+    },
+    {
+      "control_id": "5.10.1.1",
+      "title": "Boundary Protection",
+      "family": "5",
+      "description": "The agency shall:\n1. Control access to networks processing CJI.\n2. Monitor and control communications at the external boundary of the information system and at key internal boundaries within the system.\n3. Ensure any connections to the Internet, other external networks, or information systems occur through controlled interfaces (e.g., proxies, gateways, routers, firewalls, encrypted tunnels). See Section 5.13.4.3 for guidance on personal firewalls.\n4. Employ tools and techniques to monitor network events, detect attacks, and provide identification of unauthorized use.\n5. Ensure the operational failure of the boundary protection mechanisms do not result in any unauthorized release of information outside of the information system boundary (i.e., the device “fails closed” vs. “fails open”).\n6. Allocate publicly accessible information system components (e.g., public Web servers) to separate sub networks with separate, network interfaces. Publicly accessible information systems residing on a virtual host shall follow the guidance in Section 5.10.3.2 to achieve separation."
+    },
+    {
+      "control_id": "5.10.1.2",
+      "title": "Encryption",
+      "family": "5",
+      "description": "Encryption is a form of cryptology that applies a cryptographic operation to provide confidentiality of (sensitive) information. Decryption is the reversing of the cryptographic operation to convert the information back into a plaintext (readable) format. There are two main types of encryption: symmetric encryption and asymmetric encryption (also known as public key encryption). Hybrid encryption solutions do exist and use both asymmetric encryption for client/server certificate exchange – session integrity and symmetric encryption for bulk data encryption – data confidentiality."
+    },
+    {
+      "control_id": "5.10.1.2.1",
+      "title": "Encryption in Transit",
+      "family": "5",
+      "description": "When CJI is transmitted outside the boundary of the physically secure location, the data shall be immediately protected via encryption. When encryption is employed, the cryptographic module used shall be FIPS 140-2 certified and use a symmetric cipher key strength of at least 128 bit strength to protect CJI.\nNOTE: Subsequent versions of approved cryptographic modules that are under current review for FIPS 140-2 compliancy can be used in the interim until certification is complete.\nEXCEPTIONS:\n1. See Sections 5.13.1.2.2 and 5.10.2.\n2. Encryption shall not be required if the transmission medium meets all of the following requirements:\na. The agency owns, operates, manages, or protects the medium.\nb. Medium terminates within physically secure locations at both ends with no interconnections between.\nc. Physical access to the medium is controlled by the agency using the requirements in Sections 5.9.1 and 5.12.\nd. Protection includes safeguards (e.g., acoustic, electric, electromagnetic, and physical) and if feasible countermeasures (e.g., alarms, notifications) to permit its use for the transmission of unencrypted information through an area of lesser classification or control.\ne. With prior approval of the CSO.\nExamples:\n• A campus is completely owned and controlled by a criminal justice agency (CJA) – If line-of-sight between buildings exists where a cable is buried, encryption is not required.\n• A multi-story building is completely owned and controlled by a CJA – If floors are physically secure or cable runs through non-secure areas are protected, encryption is not required.\n• A multi-story building is occupied by a mix of CJAs and non-CJAs – If floors are physically secure or cable runs through the non-secure areas are protected, encryption is not required."
+    },
+    {
+      "control_id": "5.10.1.2.2",
+      "title": "Encryption at Rest",
+      "family": "5",
+      "description": "When CJI is at rest (i.e., stored digitally) outside the boundary of the physically secure location, the data shall be protected via encryption. When encryption is employed, agencies shall either encrypt CJI in accordance with the standard in Section 5.10.1.2.1 above, or use a symmetric cipher that is FIPS 197 certified (AES) and at least 256 bit strength.\n1. When agencies implement encryption on CJI at rest, the passphrase used to unlock the cipher shall meet the following requirements:\na. Be at least 10 characters\nb. Not be a dictionary word.\nc. Include at least one (1) upper case letter, one (1) lower case letter, one (1) number, and one (1) special character.\nd. Be changed when previously authorized personnel no longer require access.\n2. Multiple files maintained in the same unencrypted folder shall have separate and distinct passphrases. A single passphrase may be used to encrypt an entire folder or disk containing multiple files. All audit requirements found in Section 5.4.1 Auditable Events and Content (Information Systems) shall be applied.\nNOTE: Commonly available encryption tools often use a key to unlock the cipher to allow data access; this key is called a passphrase. While similar to a password, a passphrase is not used for user authentication. Additionally, the passphrase contains stringent character requirements making it more secure and thus providing a higher level of confidence that the passphrase will not be compromised."
+    },
+    {
+      "control_id": "5.10.1.2.3",
+      "title": "Public Key Infrastructure",
+      "family": "5",
+      "description": "For agencies using public key infrastructure (PKI) technology, the agency shall develop and implement a certificate policy and certification practice statement for the issuance of public key certificates used in the information system. Registration to receive a public key certificate shall:\n1. Include authorization by a supervisor or a responsible official.\n2. Be accomplished by a secure process that verifies the identity of the certificate holder.\n3. Ensure the certificate is issued to the intended party."
+    },
+    {
+      "control_id": "5.10.1.3",
+      "title": "Voice over IP",
+      "family": "5",
+      "description": "Voice over Internet Protocol (VoIP) has been embraced by organizations globally as an addition to, or replacement for, public switched telephone network (PSTN) and private branch exchange (PBX) telephone systems. The immediate benefits are lower costs than traditional telephone services and VoIP can be installed in-line with an organization’s existing Internet Protocol (IP) services. Among VoIP’s risks that have to be considered carefully are: myriad security concerns, cost issues associated with new networking hardware requirements, and overarching quality of service (QoS) factors.\nIn addition to the security controls described in this document, the following additional controls shall be implemented when an agency deploys VoIP within a network that contains unencrypted CJI:\n1. Establish usage restrictions and implementation guidance for VoIP technologies.\n2. Change the default administrative password on the IP phones and VoIP switches.\n3. Utilize Virtual Local Area Network (VLAN) technology to segment VoIP traffic from data traffic.\nAppendix G.2 outlines threats, vulnerabilities, mitigations, and NIST best practices for VoIP."
+    },
+    {
+      "control_id": "5.10.1.4",
+      "title": "Cloud Computing",
+      "family": "5",
+      "description": "Organizations transitioning to a cloud environment are presented unique opportunities and challenges (e.g., purported cost savings and increased efficiencies versus a loss of control over the data). Reviewing the cloud computing white paper (Appendix G.3), the cloud assessment located within the security policy resource center on FBI.gov, NIST Special Publications (800-144, 800-145, and 800-146), as well as the cloud provider’s policies and capabilities will enable organizations to make informed decisions on whether or not the cloud provider can offer service that maintains compliance with the requirements of the CJIS Security Policy.\nThe storage of CJI, regardless of encryption status, shall only be permitted in cloud environments (e.g., government or third-party/commercial datacenters, etc.) which reside within the physical boundaries of APB-member country (i.e., U.S., U.S. territories, Indian Tribes, and Canada) and legal authority of an APB-member agency (i.e., U.S. – federal/state/territory, Indian Tribe, or the Royal Canadian Mounted Police (RCMP)).\nNote: This restriction does not apply to exchanges of CJI with foreign government agencies under international exchange agreements (i.e., the Preventing and Combating Serious Crime (PCSC) agreements, fugitive extracts, and exchanges made for humanitarian and criminal investigatory purposes in particular circumstances).\nMetadata derived from unencrypted CJI shall be protected in the same manner as CJI and shall not be used for any advertising or other commercial purposes by any cloud service provider or other associated entity.\nThe agency may permit limited use of metadata derived from unencrypted CJI when specifically approved by the agency and its “intended use” is detailed within the service agreement. Such authorized uses of metadata may include, but are not limited to the following: spam and spyware filtering, data loss prevention, spillage reporting, transaction logs (events and content – similar to Section 5.4), data usage/indexing metrics, and diagnostic/syslog data."
+    },
+    {
+      "control_id": "5.10.2",
+      "title": "Facsimile Transmission of CJI",
+      "family": "5",
+      "description": "CJI transmitted via a single or multi-function device over a standard telephone line is exempt from encryption requirements. CJI transmitted external to a physically secure location using a facsimile server, application or service which implements email-like technology, shall meet the encryption requirements for CJI in transit as defined in Section 5.10."
+    },
+    {
+      "control_id": "5.10.3",
+      "title": "Partitioning and Virtualization",
+      "family": "5",
+      "description": "As resources grow scarce, agencies are increasing the centralization of applications, services, and system administration. Advanced software now provides the ability to create virtual machines that allows agencies to reduce the amount of hardware needed. Although the concepts of partitioning and virtualization have existed for a while, the need for securing the partitions and virtualized machines has evolved due to the increasing amount of distributed processing and federated information sources now available across the Internet."
+    },
+    {
+      "control_id": "5.10.3.1",
+      "title": "Application Partitioning",
+      "family": "5",
+      "description": "The application, service, or information system shall separate user functionality (including user interface services) from information system management functionality.\nThe application, service, or information system shall physically or logically separate user interface services (e.g., public web pages) from information storage and management services (e.g., database management). Separation may be accomplished through the use of one or more of the following:\n1. Different computers.\n2. Different central processing units.\n3. Different instances of the operating system.\n4. Different network addresses.\n5. Other methods approved by the FBI CJIS ISO."
+    },
+    {
+      "control_id": "5.10.3.2",
+      "title": "Virtual Environment Security",
+      "family": "5",
+      "description": "Virtualization refers to a methodology of dividing the resources of a computer (hardware and software) into multiple execution environments. Virtualized environments are authorized for criminal justice and noncriminal justice activities. In addition to the security controls described in this Policy, the following additional controls shall be implemented in a virtual environment:\n1. Isolate the host from the virtual machine. In other words, virtual machine users cannot access host files, firmware, etc.\n2. Maintain audit logs for all virtual machines and hosts and store the logs outside the hosts’ virtual environment.\n3. Virtual Machines that are Internet facing (web servers, portal servers, etc.) shall be physically separate from Virtual Machines (VMs) that process CJI internally or be separated by a virtual firewall.\n4. Drivers that serve critical functions shall be stored within the specific VM they service. In other words, do not store these drivers within the hypervisor, or host operating system, for sharing. Each VM is to be treated as an independent system – secured as independently as possible.\nThe following additional technical security controls shall be applied in virtual environments where CJI is comingled with non-CJI:\n1. Encrypt CJI when stored in a virtualized environment where CJI is comingled with non-CJI or segregate and store unencrypted CJI within its own secure VM.\n2. Encrypt network traffic within the virtual environment.\nThe following are additional technical security control best practices and should be implemented wherever feasible:\n1. Implement IDS and/or IPS monitoring within the virtual environment.\n2. Virtually or physically firewall each VM within the virtual environment to ensure that only allowed protocols will transact.\n3. Segregate the administrative duties for the host.\nAppendix G-1 provides some reference and additional background information on virtualization."
+    },
+    {
+      "control_id": "5.11",
+      "title": "Formal Audits",
+      "family": "5",
+      "description": "Formal audits are conducted to ensure compliance with applicable statutes, regulations and policies."
+    },
+    {
+      "control_id": "5.11.1",
+      "title": "FBI CJIS Division Audit Authority",
+      "family": "5",
+      "description": "FBI CJIS Division audit authority and requirements, including triennial compliance audits of CSAs, CJAs, and NCJAs, and the authority to conduct unannounced security inspections of contractor facilities."
+    },
+    {
+      "control_id": "5.11.1.1",
+      "title": "Triennial Compliance Audits",
+      "family": "5",
+      "description": "The FBI CJIS Division is authorized to conduct audits, once every three (3) years as a minimum, to assess agency compliance with applicable statutes, regulations and policies. The CJIS Audit Unit (CAU) shall conduct a triennial audit of each CSA in order to verify compliance with applicable statutes, regulations and policies. This audit shall include a sample of CJAs and, in coordination with the SIB, the NCJAs. Audits may be conducted on a more frequent basis if the audit reveals that an agency has not complied with applicable statutes, regulations and policies. The FBI CJIS Division shall also have the authority to conduct unannounced security inspections and scheduled audits of Contractor facilities."
+    },
+    {
+      "control_id": "5.11.1.2",
+      "title": "Triennial Security Audits",
+      "family": "5",
+      "description": "The FBI CJIS Division is authorized to conduct security audits of the CSA and SIB networks and systems, once every three (3) years as a minimum, to assess agency compliance with the CJIS Security Policy. This audit shall include a sample of CJAs and NCJAs. Audits may be conducted on a more frequent basis if the audit reveals that an agency has not complied with the CJIS Security Policy."
+    },
+    {
+      "control_id": "5.11.2",
+      "title": "CSA Audit Responsibilities",
+      "family": "5",
+      "description": "Each CSA shall:\n1. At a minimum, triennially audit all CJAs and NCJAs which have direct access to the state system in order to ensure compliance with applicable statutes, regulations and policies.\n2. In coordination with the SIB, establish a process to periodically audit all NCJAs, with access to CJI, in order to ensure compliance with applicable statutes, regulations and policies.\n3. Have the authority to conduct unannounced security inspections and scheduled audits of Contractor facilities.\n4. Have the authority, on behalf of another CSA, to conduct a CSP compliance audit of contractor facilities and provide the results to the requesting CSA. If a subsequent CSA requests an audit of the same contractor facility, the CSA may provide the results of the previous audit unless otherwise notified by the requesting CSA that a new audit be performed.\nNote: This authority does not apply to the audit requirement outlined in the Security and Management Control Outsourcing Standard for Non-Channeler and Channelers related to outsourcing noncriminal justice administrative functions."
+    },
+    {
+      "control_id": "5.11.3",
+      "title": "Special Security Inquiries and Audits",
+      "family": "5",
+      "description": "All agencies having access to CJI shall permit an inspection team to conduct an appropriate inquiry and audit of any alleged security violations. The inspection team shall be appointed by the APB and shall include at least one representative of the CJIS Division. All results of the inquiry and audit shall be reported to the APB with appropriate recommendations."
+    },
+    {
+      "control_id": "5.11.4",
+      "title": "Compliance Evaluation",
+      "family": "5",
+      "description": "The Criminal Justice Information Services (CJIS) Advisory Policy Board (APB) established the Compliance Evaluation Subcommittee (CES) to evaluate the results of audits conducted by the CJIS Audit Unit (CAU). The CES makes specific recommendations to the APB concerning compliance with applicable policies and regulations. The most current information regarding the CAU audits that are within the purview of the CES and detailed CES sanctions process procedures are available at CJIS.gov (Law Enforcement Enterprise Portal) CJIS Special Interest Groups CES Section and CJIS Section of FBI.gov.\nThe National Crime Prevention and Privacy Compact (Compact) Council at Article VI established the Compact Council (Council). The Compact Council Sanctions Committee is responsible for ensuring the use of the Interstate Identification Index System for noncriminal justice purposes complies with the Compact and with rules, standards, and procedures established by the Compact Council. As such, the Sanctions Committee reviews the results of audits conducted by the Federal Bureau of Investigation (FBI) of participants in the FBI’s Criminal Justice Services (CJIS) Division programs. The Sanctions Committee reviews the audit results and the participant’s response to determine a course of action necessary to bring the participant into compliance and make recommendations to the Compact Council or the FBI. Additional information on the Compact Council Sanctions process is available on the Compact Council’s web-site."
+    },
+    {
+      "control_id": "5.12",
+      "title": "Personnel Security",
+      "family": "5",
+      "description": "Having proper security measures against the insider threat is a critical component for the CJIS Security Policy. This section’s security terms and requirements apply to all personnel who have unescorted access to unencrypted CJI. Regardless of the implementation model – physical data center, virtual cloud solution, or a hybrid model – unescorted access to unencrypted CJI must be determined by the agency taking into consideration if those individuals have unescorted logical or physical access to any information system resulting in the ability, right, or privilege to view, modify, or make use of unencrypted CJI."
+    },
+    {
+      "control_id": "5.12.1",
+      "title": "Personnel Security Screening",
+      "family": "5",
+      "description": "1. To verify identification, state of residency and national fingerprint-based record checks shall be conducted prior to granting access to CJI for all personnel who have unescorted access to unencrypted CJI or unescorted access to physically secure locations or controlled areas (during times of CJI processing). However, if the person resides in a different state than that of the assigned agency, the agency shall conduct state (of the agency) and national fingerprint-based record checks and execute a NLETS CHRI IQ/FQ/AQ query using purpose code C, E, or J depending on the circumstances. When appropriate, the screening shall be consistent with:\na. 5 CFR 731.106; and/or\nb. Office of Personnel Management policy, regulations, and guidance; and/or\nc. agency policy, regulations, and guidance.\nSupplemental Guidance:\na. Federal entities bypassing state repositories in compliance with federal law may not be required to conduct a state fingerprint-based record check.\nb. See Appendix J for applicable guidance regarding noncriminal justice agencies performing adjudication of civil fingerprint submissions.\nc. Fingerprint-based record checks may not be required for all cloud provider personnel depending upon the type of service offering and access to encryption keys.\nd. See Appendix G.3 for guidance on personnel screening requirements specific to cloud environments.\n2. All requests for access shall be made as specified by the CSO. The CSO, or their designee, is authorized to approve access to CJI. All CSO designees shall be from an authorized criminal justice agency.\n3. If a record of any kind exists, access to CJI shall not be granted until the CSO or his/her designee reviews the matter to determine if access is appropriate.\na. If a felony conviction of any kind exists, the Interface Agency shall deny access to CJI. However, the Interface Agency may ask for a review by the CSO in 1. To verify identification, state of residency and national fingerprint-based record checks shall be conducted prior to granting access to CJI for all personnel who have unescorted access to unencrypted CJI or unescorted access to physically secure locations or controlled areas (during times of CJI processing). However, if the person resides in a different state than that of the assigned agency, the agency shall conduct state (of the agency) and national fingerprint-based record checks and execute a NLETS CHRI IQ/FQ/AQ query using purpose code C, E, or J depending on the circumstances. When appropriate, the screening shall be consistent with:\na. 5 CFR 731.106; and/or\nb. Office of Personnel Management policy, regulations, and guidance; and/or\nc. agency policy, regulations, and guidance.\nSupplemental Guidance:\na. Federal entities bypassing state repositories in compliance with federal law may not be required to conduct a state fingerprint-based record check.\nb. See Appendix J for applicable guidance regarding noncriminal justice agencies performing adjudication of civil fingerprint submissions.\nc. Fingerprint-based record checks may not be required for all cloud provider personnel depending upon the type of service offering and access to encryption keys.\nd. See Appendix G.3 for guidance on personnel screening requirements specific to cloud environments.\n2. All requests for access shall be made as specified by the CSO. The CSO, or their designee, is authorized to approve access to CJI. All CSO designees shall be from an authorized criminal justice agency.\n3. If a record of any kind exists, access to CJI shall not be granted until the CSO or his/her designee reviews the matter to determine if access is appropriate.\na. If a felony conviction of any kind exists, the Interface Agency shall deny access to CJI. However, the Interface Agency may ask for a review by the CSO in 1. To verify identification, state of residency and national fingerprint-based record checks shall be conducted prior to granting access to CJI for all personnel who have unescorted access to unencrypted CJI or unescorted access to physically secure locations or controlled areas (during times of CJI processing). However, if the person resides in a different state than that of the assigned agency, the agency shall conduct state (of the agency) and national fingerprint-based record checks and execute a NLETS CHRI IQ/FQ/AQ query using purpose code C, E, or J depending on the circumstances. When appropriate, the screening shall be consistent with:\na. 5 CFR 731.106; and/or\nb. Office of Personnel Management policy, regulations, and guidance; and/or\nc. agency policy, regulations, and guidance.\nSupplemental Guidance:\na. Federal entities bypassing state repositories in compliance with federal law may not be required to conduct a state fingerprint-based record check.\nb. See Appendix J for applicable guidance regarding noncriminal justice agencies performing adjudication of civil fingerprint submissions.\nc. Fingerprint-based record checks may not be required for all cloud provider personnel depending upon the type of service offering and access to encryption keys.\nd. See Appendix G.3 for guidance on personnel screening requirements specific to cloud environments.\n2. All requests for access shall be made as specified by the CSO. The CSO, or their designee, is authorized to approve access to CJI. All CSO designees shall be from an authorized criminal justice agency.\n3. If a record of any kind exists, access to CJI shall not be granted until the CSO or his/her designee reviews the matter to determine if access is appropriate.\na. If a felony conviction of any kind exists, the Interface Agency shall deny access to CJI. However, the Interface Agency may ask for a review by the CSO in extenuating circumstances where the severity of the offense and the time that has passed would support a possible variance.\nb. Applicants with a record of misdemeanor offense(s) may be granted access if the CSO, or his or her designee, determines the nature or severity of the misdemeanor offense(s) do not warrant disqualification. The Interface Agency may request the CSO review a denial of access determination. This same procedure applies if the person is found to be a fugitive or has an arrest history without conviction.\nc. If a record of any kind is found on a contractor, the CGA shall be formally notified and system access shall be delayed pending review of the criminal history record information. The CGA shall in turn notify the contractor’s security officer.\n4. If the person appears to be a fugitive or has an arrest history without conviction, the CSO or his/her designee shall review the matter to determine if access to CJI is appropriate.\n5. If the person already has access to CJI and is subsequently arrested and or convicted, continued access to CJI shall be determined by the CSO. This does not implicitly grant hiring/firing authority with the CSA, only the authority to grant access to CJI. For offenses other than felonies, the CSO has the latitude to delegate continued access determinations to his or her designee.\n6. If the CSO or his/her designee determines that access to CJI by the person would not be in the public interest, access shall be denied and the person's appointing authority shall be notified in writing of the access denial.\n7. The granting agency shall maintain a list of personnel who have been authorized unescorted access to unencrypted CJI and shall, upon request, provide a current copy of the access list to the CSO.\nIt is recommended individual background re-investigations be conducted every five years unless Rap Back is implemented."
+    },
+    {
+      "control_id": "5.12.2",
+      "title": "Personnel Termination",
+      "family": "5",
+      "description": "Upon termination of personnel by an interface agency, the agency shall immediately terminate access to local agency systems with access to CJI. Furthermore, the interface agency shall provide notification or other action to ensure access to state and other agency systems is terminated. If the employee is an employee of a NCJA or a Contractor, the employer shall notify all Interface Agencies that may be affected by the personnel change."
+    },
+    {
+      "control_id": "5.12.3",
+      "title": "Personnel Transfer",
+      "family": "5",
+      "description": "The agency shall review CJI access authorizations when personnel are reassigned or transferred to other positions within the agency and initiate appropriate actions such as closing and establishing accounts and changing system access authorizations."
+    },
+    {
+      "control_id": "5.12.4",
+      "title": "Personnel Sanctions",
+      "family": "5",
+      "description": "The agency shall employ a formal sanctions process for personnel failing to comply with established information security policies and procedures."
+    },
+    {
+      "control_id": "5.13",
+      "title": "Mobile Devices",
+      "family": "5",
+      "description": "This policy area describes considerations and requirements for mobile devices including smartphones and tablets. Mobile devices are not limited to a single form factor or communications medium. The requirements in this section augment those in other areas of the Policy to address the gaps introduced by using mobile devices.\nThe agency shall: (i) establish usage restrictions and implementation guidance for mobile devices; and (ii) authorize, monitor, control wireless access to the information system. Wireless technologies, in the simplest sense, enable one or more devices to communicate without physical connections—without requiring network or peripheral cabling.\nAppendix G provides reference material and additional information on mobile devices."
+    },
+    {
+      "control_id": "5.13.1",
+      "title": "Mobile Device Management",
+      "family": "5",
+      "description": "Examples of wireless communication technologies include, but are not limited to: 802.11, cellular, Bluetooth, satellite, microwave, and land mobile radio (LMR). Wireless technologies require at least the minimum security applied to wired technology and, based upon the specific technology or implementation, wireless technologies may require additional security controls as described below."
+    },
+    {
+      "control_id": "5.13.1.1",
+      "title": "Authorized Use",
+      "family": "5",
+      "description": "Wired Equivalent Privacy (WEP) and Wi-Fi Protected Access (WPA) cryptographic algorithms, used by all pre-802.11i protocols, do not meet the requirements for FIPS 140-2 and shall not be used.\nAgencies shall implement the following controls for all agency-managed wireless access points with access to an agency’s network that processes unencrypted CJI:\n1. Perform validation testing to ensure rogue APs (Access Points) do not exist in the 802.11 Wireless Local Area Network (WLAN) and to fully understand the wireless network security posture.\n2. Maintain a complete inventory of all Access Points (APs) and 802.11 wireless devices.\n3. Place APs in secured areas to prevent unauthorized physical access and user manipulation.\n4. Test AP range boundaries to determine the precise extent of the wireless coverage and design the AP wireless coverage to limit the coverage area to only what is needed for operational purposes.\n5. Enable user authentication and encryption mechanisms for the management interface of the AP.\n6. Ensure that all APs have strong administrative passwords and ensure that all passwords are changed in accordance with Section 5.6.2.1.\n7. Ensure the reset function on APs is used only when needed and is only invoked by authorized personnel. Restore the APs to the latest security settings, when the reset functions are used, to ensure the factory default settings are not utilized.\n8. Change the default service set identifier (SSID) in the APs. Disable the broadcast SSID feature so that the client SSID must match that of the AP. Validate that the SSID character string does not contain any agency identifiable information (division, department, street, etc.) or services.\n9. Enable all security features of the wireless product, including the cryptographic authentication, firewall, and other available privacy features.\n10. Ensure that encryption key sizes are at least 128-bits and the default shared keys are replaced by unique keys.\n11. Ensure that the ad hoc mode has been disabled.\n12. Disable all nonessential management protocols on the APs.\n13. Ensure all management access and authentication occurs via FIPS compliant secure protocols (e.g., SFTP, HTTPS, SNMP over TLS, etc.). Disable non-FIPS compliant secure access to the management interface.\n14. Enable logging (if supported) and review the logs on a recurring basis per local policy. At a minimum, logs shall be reviewed monthly.\n15. Insulate, virtually (e.g., virtual local area network (VLAN) and ACLs) or physically (e.g., firewalls), the wireless network from the operational wired infrastructure. Limit access between wireless networks and the wired network to only operational needs.\n16. When disposing of access points that will no longer be used by the agency, clear access point configuration to prevent disclosure of network configuration, keys, passwords, etc."
+    },
+    {
+      "control_id": "5.13.1.2",
+      "title": "Personally Owned Mobile Devices",
+      "family": "5",
+      "description": "Cellular telephones, smartphones (i.e., Blackberry, iPhones, etc.), tablets, personal digital assistants (PDA), and “aircards” are examples of cellular handheld devices or devices that are capable of employing cellular technology. Additionally, cellular handheld devices typically include Bluetooth, infrared, and other wireless protocols capable of joining infrastructure networks or creating dynamic ad hoc networks.\nThreats to cellular handheld devices stem mainly from their size, portability, and available wireless interfaces and associated services. Examples of threats to cellular handheld devices include:\n1. Loss, theft, or disposal.\n2. Unauthorized access.\n3. Malware.\n4. Spam.\n5. Electronic eavesdropping.\n6. Electronic tracking (threat to security of data and safety of the criminal justice professional).\n7. Cloning (not as prevalent with later generation cellular technologies).\n8. Server-resident data."
+    },
+    {
+      "control_id": "5.13.1.2.1",
+      "title": "Official Use Mobile Devices",
+      "family": "5",
+      "description": "Certain internal functions on cellular devices may be modified or compromised by the cellular carrier during international use as the devices are intended to have certain parameters configured by the cellular provider which is considered a “trusted” entity by the device.\nWhen devices are authorized to access CJI outside the U.S., agencies shall perform an inspection to ensure that all controls are in place and functioning properly in accordance with the agency’s policies prior to and after deployment outside of the U.S."
+    },
+    {
+      "control_id": "5.13.1.2.2",
+      "title": "Personal Use Mobile Devices",
+      "family": "5",
+      "description": "Any cellular device used to transmit CJI via voice is exempt from the encryption and authentication requirements."
+    },
+    {
+      "control_id": "5.13.1.3",
+      "title": "Mobile Device Supplemental Guidance",
+      "family": "5",
+      "description": "Bluetooth is an open standard for short-range radio frequency (RF) communication. Bluetooth is used primarily to establish wireless personal area networks (WPAN). Bluetooth technology has been integrated into many types of business and consumer devices, including cell phones, laptops, automobiles, medical devices, printers, keyboards, mice, headsets, and biometric capture devices.\nBluetooth technology and associated devices are susceptible to general wireless networking threats (e.g., denial of service [DoS] attacks, eavesdropping, man-in-the-middle [MITM] attacks, message modification, and resource misappropriation) as well as specific Bluetooth-related attacks that target known vulnerabilities in Bluetooth implementations and specifications. Organizational security policy shall be used to dictate the use of Bluetooth and its associated devices based on the agency’s operational and business processes."
+    },
+    {
+      "control_id": "5.13.1.4",
+      "title": "Mobile Device Disposal",
+      "family": "5",
+      "description": "Many mobile devices include the capability to function as a Wi-Fi hotspot that allows other devices to connect through the device to the internet over the devices cellular network.\nWhen an agency allows mobile devices that are approved to access or store CJI to function as a Wi-Fi hotspot connecting to the Internet, they shall be configured:\n1. Enable encryption on the hotspot\n2. Change the hotspot’s default SSID\na. Ensure the hotspot SSID does not identify the device make/model or agency ownership\n3. Create a wireless network password (pre-shared key)\n4. Enable the hotspot’s port filtering/blocking features if present\n5. Only allow connections from agency-controlled devices\nNote: Refer to the requirements in Section 5.10.1.2 Encryption for item #1. Refer to the requirements in Section 5.6.2.1.1.1 Basic Password Standards for item #3. Only password attributes #1, #2 and #3 are required.\nOR\n1. Have a MDM solution to provide the same security as identified in items 1 – 5 above."
+    },
+    {
+      "control_id": "5.13.2",
+      "title": "Wireless Device Risk Mitigations",
+      "family": "5",
+      "description": "Mobile Device Management (MDM) facilitates the implementation of sound security controls for mobile devices and allows for centralized oversight of configuration control, application usage, and device protection and recovery, if so desired by the agency.\nDue to the potential for inconsistent network access or monitoring capability on mobile devices, methods used to monitor and manage the configuration of full-featured operating systems may not function properly on devices with limited-feature operating systems. MDM systems and applications coupled with device specific technical policy can provide a robust method for device configuration management if properly implemented.\nDevices that have had any unauthorized changes made to them (including but not limited to being rooted or jailbroken) shall not be used to process, store, or transmit CJI data at any time. User agencies shall implement the following controls when directly accessing CJI from devices running a limited-feature operating system:\n1. Ensure that CJI is only transferred between CJI authorized applications and storage areas of the device.\n2. MDM with centralized administration configured and implemented to perform at least the following controls:\na. Remote locking of device\nb. Remote wiping of device\nc. Setting and locking device configuration\nd. Detection of “rooted” and “jailbroken” devices\ne. Enforcement of folder or disk level encryption\nf. Application of mandatory policy settings on the device\ng. Detection of unauthorized configurations\nh. Detection of unauthorized software or applications\ni. Ability to determine the location of agency-controlled devices\nj. Prevention of unpatched devices from accessing CJI or CJI systems\nk. Automatic device wiping after a specified number of failed access attempts\nEXCEPTION: An MDM is not required when receiving CJI from an indirect access information system (i.e., the system provides no capability to conduct transactional activities on state and national repositories, applications or services). However, it is incumbent upon the authorized agency to ensure CJI is delivered to the appropriate requesting agency or individual. The CSO will make the final determination of whether access is considered indirect."
+    },
+    {
+      "control_id": "5.13.3",
+      "title": "Cellular Devices",
+      "family": "5",
+      "description": "Organizations shall, at a minimum, ensure that wireless devices:\n1. Apply available critical patches and upgrades to the operating system as soon as they become available for the device and after necessary testing as described in Section 5.10.4.1.\n2. Are configured for local device authentication (see Section 5.13.7.1).\n3. Use advanced authentication or CSO approved compensating controls as per Section 5.13.7.2.1.\n4. Encrypt all CJI resident on the device.\n5. Erase cached information, to include authenticators (see Section 5.6.2.1) in applications, when session is terminated.\n6. Employ personal firewalls on full-featured operating system devices or run a Mobile Device Management (MDM) system that facilitates the ability to provide firewall services from the agency level.\n7. Employ malicious code protection on full-featured operating system devices or run a MDM system that facilitates the ability to provide anti-malware services from the agency level."
+    },
+    {
+      "control_id": "5.13.4",
+      "title": "Mobile Device Integrity",
+      "family": "5",
+      "description": "Managing system integrity on limited function mobile operating systems may require methods and technologies significantly different from traditional full-featured operating systems. In many cases, the requirements of Section 5.10 of the CJIS Security Policy cannot be met with a mobile device without the installation of a third-party MDM, application, or supporting service infrastructure."
+    },
+    {
+      "control_id": "5.13.4.1",
+      "title": "Patch and Vulnerability Management",
+      "family": "5",
+      "description": "Based on the varying connection methods for mobile devices, an always on connection cannot be guaranteed for patching and updating. Devices without always-on cellular connections may not be reachable for extended periods of time by the MDM or solution either to report status or initiate patching.\nAgencies shall monitor mobile devices to ensure their patch and update state is current."
+    },
+    {
+      "control_id": "5.13.4.2",
+      "title": "Malware Protection",
+      "family": "5",
+      "description": "Appropriately configured MDM software is capable of checking the installed applications on the device and reporting the software inventory to a central management console in a manner analogous to traditional virus scan detection of unauthorized software and can provide a high degree of confidence that only known software or applications are installed on the device.\nAgencies that allow smartphones and tablets to access CJI shall have a process to approve the use of specific software or applications on the devices. Any device natively capable of performing these functions without a MDM solution is acceptable under this section."
+    },
+    {
+      "control_id": "5.13.4.3",
+      "title": "Personal Firewall",
+      "family": "5",
+      "description": "For the purpose of this policy, a personal firewall is an application that controls network traffic to and from a user device, permitting or denying communications based on policy. A personal firewall shall be employed on all mobile devices that have a full-feature operating system (i.e., laptops or tablets with Windows or Linux/Unix operating systems). At a minimum, the personal firewall shall perform the following activities:\n1. Manage program access to the Internet.\n2. Block unsolicited requests to connect to the user device.\n3. Filter incoming traffic by IP address or protocol.\n4. Filter incoming traffic by destination ports.\n5. Maintain an IP traffic log.\nMobile devices with limited-feature operating systems (i.e., tablets, smartphones) may not support a personal firewall. However, these operating systems have a limited number of system services installed, carefully controlled network access, and to a certain extent, perform functions similar to a personal firewall on a device with a full-feature operating system. Appropriately configured MDM software is capable of controlling which applications are allowed on the device."
+    },
+    {
+      "control_id": "5.13.5",
+      "title": "Mobile Device Incident Reporting",
+      "family": "5",
+      "description": "In addition to the requirements in Section 5.3 Incident Response, agencies shall develop additional or enhanced incident reporting and handling procedures to address mobile device operating scenarios. Rapid response to mobile device related incidents can significantly mitigate the risks associated with illicit data access either on the device itself or within online data resources associated with the device through an application or specialized interface.\nSpecial reporting procedures for mobile devices shall apply in any of the following situations:\n1. Loss of device control. For example:\na. Device known to be locked, minimal duration of loss\nb. Device lock state unknown, minimal duration of loss\nc. Device lock state unknown, extended duration of loss\nd. Device known to be unlocked, more than momentary duration of loss\n2. Total loss of device\n3. Device compromise\n4. Device loss or compromise outside the United States"
+    },
+    {
+      "control_id": "5.13.6",
+      "title": "Mobile Device Audit and Accountability",
+      "family": "5",
+      "description": "Multiple user accounts are not generally supported on limited-feature mobile operating systems. Access control (Section 5.5 Access Control) shall be accomplished by the application that accesses CJI."
+    },
+    {
+      "control_id": "5.13.7",
+      "title": "Mobile Device Access Control",
+      "family": "5",
+      "description": "Due to the technical methods used for identification and authentication on many limited-feature mobile operating systems, achieving compliance may require many different components."
+    },
+    {
+      "control_id": "5.13.7.1",
+      "title": "Mobile Device Session Lock",
+      "family": "5",
+      "description": "When mobile devices are authorized for use in accessing CJI, local device authentication shall be used to unlock the device for use. The authenticator used shall meet the requirements in section 5.6.2.1 Standard Authenticators."
+    },
+    {
+      "control_id": "5.13.7.2",
+      "title": "Mobile Device Authentication",
+      "family": "5",
+      "description": "When accessing CJI from an authorized mobile device, advanced authentication shall be used by the authorized user unless the access to CJI is indirect as described in Section 5.6.2.2.1. If access is indirect, then AA is not required."
+    },
+    {
+      "control_id": "5.13.7.2.1",
+      "title": "Advanced Authentication on Mobile Devices",
+      "family": "5",
+      "description": "CSO approved compensating controls to meet the AA requirement on agency-issued smartphones and tablets with limited-feature operating systems are permitted. Compensating controls are temporary control measures that are implemented in lieu of the required AA control measures when an agency cannot meet a requirement due to legitimate technical or business constraints. Before CSOs consider approval of compensating controls, Mobile Device Management (MDM) shall be implemented per Section 5.13.2. The compensating controls shall:\n1. Meet the intent of the CJIS Security Policy AA requirement\n2. Provide a similar level of protection or security as the original AA requirement\n3. Not rely upon the existing requirements for AA as compensating controls\n4. Expire upon the CSO approved date or when a compliant AA solution is implemented.\nAdditionally, compensating controls may rely upon other, non-AA, existing requirements as compensating controls and/or be combined with new controls to create compensating controls.\nThe compensating controls for AA are a combination of controls providing acceptable assurance only the authorized user is authenticating and not an impersonator or (in the case of agency-issued device used by multiple users) controls that reduce the risk of exposure if information is accessed by an unauthorized party.\nThe following minimum controls shall be implemented as part of the CSO approved compensating controls:\n- Possession and registration of an agency issued smartphone or tablet as an indication it is the authorized user\n- Use of device certificates per Section 5.13.7.3 Device Certificates\n- Implemented CJIS Security Policy compliant standard authenticator protection on the secure location where CJI is stored"
+    },
+    {
+      "control_id": "5.13.7.3",
+      "title": "Mobile Device Remote Wipe",
+      "family": "5",
+      "description": "Device certificates are often used to uniquely identify mobile devices using part of a public key pair on the device in the form of a public key certificate. While there is value to ensuring the device itself can authenticate to a system supplying CJI, and may provide a critical layer of device identification or authentication in a larger scheme, a device certificate alone placed on the device shall not be considered valid proof that the device is being operated by an authorized user.\nWhen certificates or cryptographic keys used to authenticate a mobile device are used in lieu of compensating controls for advanced authentication, they shall be:\n1. Protected against being extracted from the device\n2. Configured for remote wipe on demand or self-deletion based on a number of unsuccessful login or access attempts\n3. Configured to use a secure authenticator (i.e., password, PIN) to unlock the key for use."
+    },
+    {
+      "control_id": "5.14",
+      "title": "Security Incident Reporting",
+      "family": "5",
+      "description": "Requirements for referring potential security violations to the ISO and CSO for investigation and appropriate action, including reporting obligations and incident handling procedures."
+    },
+    {
+      "control_id": "5.15",
+      "title": "Criminal Justice Agency User Agreements",
+      "family": "5",
+      "description": "Criminal justice agency user agreement requirements for access to CJI systems, including the terms and conditions for authorized use and the obligations of personnel with access to criminal justice information."
+    },
+    {
+      "control_id": "5.16",
+      "title": "Cloud Computing",
+      "family": "5",
+      "description": "Cloud computing requirements for organizations accessing, processing, storing, or transmitting CJI using cloud services, including security controls for cloud service providers and shared responsibility models."
+    },
+    {
+      "control_id": "AC-1",
+      "title": "Policy and Procedures",
+      "family": "AC",
+      "description": "a. Develop, document, and disseminate to: organizational personnel with access control responsibilities\n1. Agency-level access control policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the access control policy and the associated access controls;\nb. Designate an individual with security responsibilities to manage the development, documentation, and dissemination of the access control policy and procedures; and\nc. Review and update the current access control:\n1. Policy annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI; and\n2. Procedures annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "AC-2",
+      "title": "Account Management",
+      "family": "AC",
+      "description": "a. Define and document the types of accounts allowed and specifically prohibited for use within the system;\nb. Assign account managers;\nc. Require conditions for group and role membership;\nd. Specify:\n1. Authorized users of the system;\n2. Group and role membership; and\n3. Access authorizations (i.e., privileges) and attributes listed for each account;\nAttribute Name\nEmail Address Text\nEmployer Name\nFederation Id\nGiven Name\nIdentity Provider Id\nSur Name\nTelephone Number\nIdentity Provider Id\nUnique Subject Id\nCounter Terrorism Data Self Search Home Privilege Indicator\nCriminal History Data Self Search Home Privilege Indicator\nCriminal Intelligence Data Self Search Home Privilege Indicator\nCriminal Investigative Data Self Search Home Privilege Indicator\nDisplay Name\nGovernment Data Self Search Home Privilege Indicator\nLocal Id\nNCIC Certification Indicator\nN-DEx Privilege Indicator\nPCII Certification Indicator\n28 CFR Certification Indicator\nEmployer ORI\nEmployer Organization General Category Code\nEmployer State Code\nPublic Safety Officer Indicator\nSworn Law Enforcement Officer Indicator\nAuthenticator Assurance Level\nFederation Assurance Level\nIdentity Assurance Level\nIntelligence Analyst Indicator\ne. Require approvals by organizational personnel with account management responsibilities for requests to create accounts;\nf. Create, enable, modify, disable, and remove accounts in accordance with agency policy;\ng. Monitor the use of accounts;\nh. Notify account managers and system/network administrators within: 3\n1. One day when accounts are no longer required;\n2. One day when users are terminated or transferred; and\n3. One day when system usage or need-to-know changes for an individual;\ni. Authorize access to the system based on:\n1. A valid access authorization;\n2. Intended system usage; and\n3. Attributes as listed in AC-2(d)(3); 3\nj. Review accounts for compliance with account management requirements at least annually;\nk. Establish and implement a process for changing shared or group account authenticators (if deployed) when individuals are removed from the group; and\nl. Align account management processes with personnel termination and transfer processes."
+    },
+    {
+      "control_id": "AC-2(1)",
+      "title": "Account Management (1)",
+      "family": "AC",
+      "description": "Support the management of system accounts using automated mechanisms including email, phone, and text notifications."
+    },
+    {
+      "control_id": "AC-2(2)",
+      "title": "Account Management (2)",
+      "family": "AC",
+      "description": "Automatically remove temporary and emergency accounts within 72 hours."
+    },
+    {
+      "control_id": "AC-2(3)",
+      "title": "Account Management (3)",
+      "family": "AC",
+      "description": "Disable accounts within one (1) week when the accounts:\n(a) Have expired;\n(b) Are no longer associated with a user or individual;\n(c) Are in violation of organizational policy; or\n(d) Have been inactive for 90 calendar days."
+    },
+    {
+      "control_id": "AC-2(4)",
+      "title": "Account Management (4)",
+      "family": "AC",
+      "description": "Automatically audit account creation, modification, enabling, disabling, and removal actions."
+    },
+    {
+      "control_id": "AC-2(5)",
+      "title": "Account Management (5)",
+      "family": "AC",
+      "description": "Require that users log out when a work period has been completed."
+    },
+    {
+      "control_id": "AC-2(13)",
+      "title": "Account Management (13)",
+      "family": "AC",
+      "description": "Disable accounts of individuals within 30 minutes of discovery of direct threats to the confidentiality, integrity, or availability of CJI."
+    },
+    {
+      "control_id": "AC-3",
+      "title": "Access Enforcement",
+      "family": "AC",
+      "description": "Enforce approved authorizations for logical access to information and system resources in accordance with applicable access control policies."
+    },
+    {
+      "control_id": "AC-3(14)",
+      "title": "Access Enforcement (14)",
+      "family": "AC",
+      "description": "Provide automated or manual processes to enable individuals to have access to elements of their personally identifiable information."
+    },
+    {
+      "control_id": "AC-4",
+      "title": "Information Flow Enforcement",
+      "family": "AC",
+      "description": "Enforce approved authorizations for controlling the flow of information within the system and between connected systems by preventing CJI from being transmitted unencrypted across the public network, blocking outside traffic that claims to be from within the agency, and not passing any web requests to the public network that are not from the agency-controlled or internal boundary protection devices (e.g., proxies, gateways, firewalls, or routers)."
+    },
+    {
+      "control_id": "AC-5",
+      "title": "Separation of Duties",
+      "family": "AC",
+      "description": "a. Identify and document separation of duties based on specific duties, operations, or information systems, as necessary, to mitigate risk to CJI; and\nb. Define system access authorizations to support separation of duties."
+    },
+    {
+      "control_id": "AC-6",
+      "title": "Least Privilege",
+      "family": "AC",
+      "description": "Employ the principle of least privilege, allowing only authorized accesses for users (or processes acting on behalf of users) that are necessary to accomplish assigned organizational tasks."
+    },
+    {
+      "control_id": "AC-6(1)",
+      "title": "Least Privilege (1)",
+      "family": "AC",
+      "description": "Authorize access for personnel including security administrators, system and network administrators, and other privileged users with access to system control, monitoring, or administration functions (e.g., system administrators, information security personnel, maintainers, system programmers, etc.) to:\n(a) Established system accounts, configured access authorizations (i.e., permissions, privileges), set events to be audited, set intrusion detection parameters, and other security functions; and\n(b) Security-relevant information in hardware, software, and firmware."
+    },
+    {
+      "control_id": "AC-6(2)",
+      "title": "Least Privilege (2)",
+      "family": "AC",
+      "description": "Require that users of system accounts (or roles) with access to privileged security functions or security-relevant information (e.g., audit logs), use non-privileged accounts or roles, when accessing non-security functions."
+    },
+    {
+      "control_id": "AC-6(5)",
+      "title": "Least Privilege (5)",
+      "family": "AC",
+      "description": "Restrict privileged accounts on the system to privileged users."
+    },
+    {
+      "control_id": "AC-6(7)",
+      "title": "Least Privilege (7)",
+      "family": "AC",
+      "description": "a. Review annually the privileges assigned to non-privileged and privileged users to validate the need for such privileges; and\nb. Reassign or remove privileges, if necessary, to correctly reflect organizational mission and business needs."
+    },
+    {
+      "control_id": "AC-6(9)",
+      "title": "Least Privilege (9)",
+      "family": "AC",
+      "description": "Log the execution of privileged functions."
+    },
+    {
+      "control_id": "AC-6(10)",
+      "title": "Least Privilege (10)",
+      "family": "AC",
+      "description": "Prevent non-privileged users from executing privileged functions."
+    },
+    {
+      "control_id": "AC-7",
+      "title": "Unsuccessful Logon Attempts",
+      "family": "AC",
+      "description": "a. Enforce a limit of five (5) consecutive invalid logon attempts by a user during a 15-minute time period; and3\nb. Automatically lock the account or node until released by an administrator when the maximum number of unsuccessful attempts is exceeded."
+    },
+    {
+      "control_id": "AC-8",
+      "title": "System Use Notification",
+      "family": "AC",
+      "description": "a. Display a system use notification message to users before granting access to the system that provides privacy and security notices consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines and state that:\n1. Users are accessing a restricted information system;\n2. System usage may be monitored, recorded, and subject to audit;\n3. Unauthorized use of the system is prohibited and subject to criminal and civil penalties; and\n4. Use of the system indicates consent to monitoring and recording;\nb. Retain the notification message or banner on the screen until users acknowledge the usage conditions and take explicit actions to log on to or further access the system; and\nc. For publicly accessible systems:\n1. Display system use information consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines, before granting further access to the publicly accessible system;\n2. Display references, if any, to monitoring, recording, or auditing that are consistent with privacy accommodations for such systems that generally prohibit those activities; and\n3. Include a description of the authorized uses of the system."
+    },
+    {
+      "control_id": "AC-11",
+      "title": "Device Lock",
+      "family": "AC",
+      "description": "a. Prevent further access to the system by initiating a device lock after a maximum of 30 minutes of inactivity and requiring the user to initiate a device lock before leaving the system unattended.\nNOTE: In the interest of safety, devices that are: (1) part of a criminal justice conveyance; or \n(2) used to perform dispatch functions and located within a physically secure location; or\n(3) terminals designated solely for the purpose of receiving alert notifications (i.e., receive only terminals or ROT) used within physically secure location facilities that remain staffed when in operation, are exempt from this requirement.\nb. Retain the device lock until the user reestablishes access using established identification and authentication procedures."
+    },
+    {
+      "control_id": "AC-11(1)",
+      "title": "Device Lock (1)",
+      "family": "AC",
+      "description": "Conceal, via the device lock, information previously visible on the display with a publicly viewable image."
+    },
+    {
+      "control_id": "AC-12",
+      "title": "Session Termination",
+      "family": "AC",
+      "description": "Automatically terminate a user session after a user has been logged out."
+    },
+    {
+      "control_id": "AC-14",
+      "title": "Permitted Actions Without Identification or Authentication",
+      "family": "AC",
+      "description": "a. Identify any specific user actions that can be performed on the system without identification or authentication consistent with organizational mission and business functions; and\nb. Document and provide supporting rationale in the security plan for the system, user actions not requiring identification or authentication."
+    },
+    {
+      "control_id": "AC-17",
+      "title": "Remote Access",
+      "family": "AC",
+      "description": "a. Establish and document usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed; and\nb. Authorize each type of remote access to the system prior to allowing such connections."
+    },
+    {
+      "control_id": "AC-17(1)",
+      "title": "Remote Access (1)",
+      "family": "AC",
+      "description": "Employ automated mechanisms to monitor and control remote access methods."
+    },
+    {
+      "control_id": "AC-17(2)",
+      "title": "Remote Access (2)",
+      "family": "AC",
+      "description": "Implement cryptographic mechanisms to protect the confidentiality and integrity of remote access sessions."
+    },
+    {
+      "control_id": "AC-17(3)",
+      "title": "Remote Access (3)",
+      "family": "AC",
+      "description": "Route remote accesses through authorized and managed network access control points."
+    },
+    {
+      "control_id": "AC-17(4)",
+      "title": "Remote Access (4)",
+      "family": "AC",
+      "description": "a. Authorize the execution of privileged commands and access to security-relevant information via remote access only in a format that provides assessable evidence and for the following needs: compelling operational needs; and\nb. Document the rationale for remote access in the security plan for the system."
+    },
+    {
+      "control_id": "AC-18",
+      "title": "Wireless Access",
+      "family": "AC",
+      "description": "a. Establish configuration requirements, connection requirements, and implementation guidance for each type of wireless access; and\nb. Authorize each type of wireless access to the system prior to allowing such connections."
+    },
+    {
+      "control_id": "AC-18(1)",
+      "title": "Wireless Access (1)",
+      "family": "AC",
+      "description": "Protect wireless access to the system using authentication of authorized users and agency-controlled devices, and encryption."
+    },
+    {
+      "control_id": "AC-18(3)",
+      "title": "Wireless Access (3)",
+      "family": "AC",
+      "description": "Disable, when not intended for use, wireless networking capabilities embedded within system components prior to issuance and deployment."
+    },
+    {
+      "control_id": "AC-19",
+      "title": "Access Control for Mobile Devices",
+      "family": "AC",
+      "description": "a. Establish configuration requirements, connection requirements, and implementation guidance for organization-controlled mobile devices, to include when such devices are outside of controlled areas; and\nb. Authorize the connection of mobile devices to organizational systems."
+    },
+    {
+      "control_id": "AC-19(5)",
+      "title": "Access Control for Mobile Devices (5)",
+      "family": "AC",
+      "description": "Employ full-device encryption to protect the confidentiality and integrity of information on full- and limited-feature operating system mobile devices authorized to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "AC-20",
+      "title": "Use of External Systems",
+      "family": "AC",
+      "description": "a. Establish agency-level policies governing the use of external systems consistent with the trust relationships established with other organizations owning, operating, and/or maintaining external systems, allowing authorized individuals to:\n1. Access the system from external systems; and\n2. Process, store, or transmit organization-controlled information using external systems; or\nb. Prohibit the use of personally-owned information systems including mobile devices (i.e., bring your own device [BYOD]) and publicly accessible systems for accessing, processing, storing, or transmitting CJI."
+    },
+    {
+      "control_id": "AC-20(1)",
+      "title": "Use of External Systems (1)",
+      "family": "AC",
+      "description": "Permit authorized individuals to use an external system to access the system or to process, store, or transmit organization-controlled information only after:\na. Verification of the implementation of controls on the external system as specified in the organization’s security and privacy policies and security and privacy plans; or\nb. Retention of approved system connection or processing agreements with the organizational entity hosting the external system."
+    },
+    {
+      "control_id": "AC-20(2)",
+      "title": "Use of External Systems (2)",
+      "family": "AC",
+      "description": "Restrict the use of organization-controlled portable storage devices by authorized individuals on external systems."
+    },
+    {
+      "control_id": "AC-21",
+      "title": "Information Sharing",
+      "family": "AC",
+      "description": "a. Enable authorized users to determine whether access authorizations assigned to a sharing partner match the information’s access and use restrictions as defined in an executed information exchange agreement; and\nb. Employ attribute-based access control (see AC-2(d)(3)) or manual processes as defined in information exchange ag"
+    },
+    {
+      "control_id": "AC-22",
+      "title": "Publicly Accessible Content",
+      "family": "AC",
+      "description": "a. Designate individuals authorized to make information publicly accessible;\nb. Train authorized individuals to ensure that publicly accessible information does not contain nonpublic information;\nc. Review the proposed content of information prior to posting onto the publicly accessible system to ensure that nonpublic information is not included; and\nd. Review the content on the publicly accessible system for nonpublic information quarterly and remove such information, if discovered."
+    },
+    {
+      "control_id": "AT-1",
+      "title": "Policy and Procedures",
+      "family": "AT",
+      "description": "a. Develop, document, and disseminate to all personnel when their unescorted logical or physical access to any information system results in the ability, right, or privilege to view, modify, or make use of unencrypted CJI:\n1. Organization-level awareness and training policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the awareness and training policy and the associated awareness and training controls;\nb. Designate organizational personnel with information security awareness and training responsibilities to manage the development, documentation, and dissemination of the awareness and training policy and procedures; and\nc. Review and update the current awareness and training:\n1. Policy annually and following changes in the information system operating environment, when security incidents occur, or when changes to the CJIS Security Policy are made; and\n2. Procedures annually and following changes in the information system operating environment, when security incidents occur, or when changes to the CJIS Security Policy are made."
+    },
+    {
+      "control_id": "AT-2",
+      "title": "Literacy Training and Awareness",
+      "family": "AT",
+      "description": "a. Provide security and privacy literacy training to system users (including managers, senior executives, and contractors):\n1. As part of initial training for new users prior to accessing CJI and annually thereafter; and\n2. When required by system changes or within 30 days of any security event for individuals involved in the event;\nb. Employ one or more of the following techniques to increase the security and privacy awareness of system users:\n1. Displaying posters\n2. Offering supplies inscribed with security and privacy reminders\n3. Displaying logon screen messages\n4. Generating email advisories or notices from organizational officials\n5. Conducting awareness events\nc. Update literacy training and awareness content annually and following changes in the information system operating environment, when security incidents occur, or when changes are made in the CJIS Security Policy; and\nd. Incorporate lessons learned from internal or external security incidents or breaches into literacy training and awareness techniques."
+    },
+    {
+      "control_id": "AT-2(2)",
+      "title": "Literacy Training and Awareness (2)",
+      "family": "AT",
+      "description": "Provide literacy training on recognizing and reporting potential indicators of insider threat."
+    },
+    {
+      "control_id": "AT-2(3)",
+      "title": "Literacy Training and Awareness (3)",
+      "family": "AT",
+      "description": "Provide literacy training on recognizing and reporting potential and actual instances of social engineering and social mining."
+    },
+    {
+      "control_id": "AT-3",
+      "title": "Role-Based Training",
+      "family": "AT",
+      "description": "a. Provide role-based security and privacy training to personnel with the following roles and responsibilities:\n• All individuals with unescorted access to a physically secure location;\n• General User: A user, but not a process, who is authorized to use an information system;\n• Privileged User: A user that is authorized (and, therefore, trusted) to perform security-relevant functions that general users are not authorized to perform;\n• Organizational Personnel with Security Responsibilities: Personnel with the responsibility to ensure the confidentiality, integrity, and availability of CJI and the implementation of technology in a manner compliant with the CJISSECPOL.\n1. Before authorizing access to the system, information, or performing assigned duties, and annually thereafter; and\n2. When required by system changes.\nb. Update role-based training content annually and following audits of the CSA and local agencies; changes in the information system operating environment; security incidents; or when changes are made to the CJIS Security Policy;\nc. Incorporate lessons learned from internal or external security incidents or breaches into role-based training;\nd. Incorporate the minimum following topics into the appropriate role-based training content:\n1. All individuals with unescorted access to a physically secure location\na. Access, Use and Dissemination of Criminal History Record Information (CHRI), NCIC Restricted Files Information, and NCIC Non-Restricted Files Information Penalties\nb. Reporting Security Events\nc. Incident Response Training\nd. System Use Notification\ne. Physical Access Authorizations\nf. Physical Access Control\ng. Monitoring Physical Access\nh. Visitor Control\ni. Personnel Sanctions\n2. General User: A user, but not a process, who is authorized to use an information system. In addition to AT-3 (d) (1) above, include the following topics:\na. Criminal Justice Information\nb. Proper Access, Use, and Dissemination of NCIC Non-Restricted Files Information\nc. Personally Identifiable Information\nd. Information Handling\ne. Media Storage\nf. Media Access\ng. Audit Monitoring, Analysis, and Reporting\nh. Access Enforcement\ni. Least Privilege\nj. System Access Control\nk. Access Control Criteria\nl. System Use Notification\nm. Session Lock\nn. Personally Owned Information Systems\no. Password\np. Access Control for Display Medium\nq. Encryption\nr. Malicious Code Protection\ns. Spam and Spyware Protection\nt. Cellular Devices\nu. Mobile Device Management\nv. Wireless Device Risk Mitigations\nw. Wireless Device Malicious Code Protection\nx. Literacy Training and Awareness/Social Engineering and Mining\ny. Identification and Authentication (Organizational Users)\nz. Media Protection\n3. Privileged User: A user that is authorized (and, therefore, trusted) to perform security-relevant functions that general users are not authorized to perform. In addition to AT-3 (d) (1) and (2) above, include the following topics:\na. Access Control\nb. System and Communications Protection and Information Integrity\nc. Patch Management\nd. Data backup and storage—centralized or decentralized approach\ne. Most recent changes to the CJIS Security Policy\n4. Organizational Personnel with Security Responsibilities: Personnel with the responsibility to ensure the confidentiality, integrity, and availability of CJI and the implementation of technology in a manner compliant with the CJISSECPOL. In addition to AT-3 (d) (1), (2), and (3) above, include the following topics:\na. Local Agency Security Officer Role\nb. Authorized Recipient Security Officer Role2\nc. Additional state/local/tribal/territorial or federal agency roles and responsibilities\nd. Summary of audit findings from previous state audits of local agencies\ne. Findings from the last FBI CJIS Division audit"
+    },
+    {
+      "control_id": "AT-3(5)",
+      "title": "Role-Based Training (5)",
+      "family": "AT",
+      "description": "Provide all personnel when their unescorted logical or physical access to any information system results in the ability, right, or privilege to view, modify, or make use of unencrypted CJI with initial and annual training in the employment and operation of personally identifiable information processing and transparency controls."
+    },
+    {
+      "control_id": "AT-4",
+      "title": "Training Records",
+      "family": "AT",
+      "description": "a. Document and monitor information security and privacy training activities, including security and privacy awareness training and specific role-based security and privacy training; and\nb. Retain individual training records for a minimum of three years."
+    },
+    {
+      "control_id": "IA-0",
+      "title": "ORI Use and Validation",
+      "family": "IA",
+      "description": "An FBI authorized originating agency identifier (ORI) shall be used in each transaction on CJIS systems in order to identify the sending agency and to ensure the proper level of access for each transaction. The original identifier between the requesting agency and the CSA/SIB/Channeler shall be the ORI, and other agency identifiers, such as user identification or personal identifier, an access device mnemonic, or the Internet Protocol (IP) address.\nAgencies may act as a servicing agency and perform transactions on behalf of authorized agencies requesting the service. Servicing agencies performing inquiry transactions on behalf of another agency may do so using the requesting agency’s ORI. Servicing agencies may also use their own ORI to perform inquiry transactions on behalf of a requesting agency if the means and procedures are in place to provide an audit trail for the current specified retention period. Because the agency performing the transaction may not necessarily be the same as the agency requesting the transaction, the CSA/SIB/Channeler shall ensure that the ORI for each transaction can be traced, via audit trail, to the specific agency which is requesting the transaction.\nAudit trails can be used to identify the requesting agency if there is a reason to inquire into the details surrounding why an agency ran an inquiry on a subject. Agencies assigned a limited access ORI shall not use the full access ORI of another agency to conduct an inquiry transaction.\nNOTE: This control will be included in AC-3 Access Enforcement when modernized."
+    },
+    {
+      "control_id": "IA-1",
+      "title": "Policy and Procedures",
+      "family": "IA",
+      "description": "a. Develop, document, and disseminate to authorized personnel:\n1. Agency/Entity identification and authentication policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the identification and authentication policy and the associated identification and authentication controls;\nb. Designate an individual with security responsibilities to manage the development, documentation, and dissemination of the identification and authentication policy and procedures; and\nc. Review and update the current identification and authentication:\n1. Policy annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI; and\n2. Procedures annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "IA-2",
+      "title": "Identification and Authentication (Organizational Users)",
+      "family": "IA",
+      "description": "Uniquely identify and authenticate organizational users and associate that unique identification with processes acting on behalf of those users."
+    },
+    {
+      "control_id": "IA-2(1)",
+      "title": "Identification and Authentication (Organizational Users) (1)",
+      "family": "IA",
+      "description": "Implement multi-factor authentication for access to privileged accounts."
+    },
+    {
+      "control_id": "IA-2(2)",
+      "title": "Identification and Authentication (Organizational Users) (2)",
+      "family": "IA",
+      "description": "Implement multi-factor authentication for access to non-privileged accounts."
+    },
+    {
+      "control_id": "IA-2(8)",
+      "title": "Identification and Authentication (Organizational Users) (8)",
+      "family": "IA",
+      "description": "Implement replay-resistant authentication mechanisms for access to privileged and non-privileged accounts."
+    },
+    {
+      "control_id": "IA-2(12)",
+      "title": "Identification and Authentication (Organizational Users) (12)",
+      "family": "IA",
+      "description": "Accept and electronically verify Personal Identity Verification-compliant credentials."
+    },
+    {
+      "control_id": "IA-3",
+      "title": "Device Identification and Authentication",
+      "family": "IA",
+      "description": "Uniquely identify and authenticate agency-managed devices before establishing network connections. In the instance of local connection, the device must be approved by the agency and the device must be identified and authenticated prior to connection to an agency asset."
+    },
+    {
+      "control_id": "IA-4",
+      "title": "Identifier Management",
+      "family": "IA",
+      "description": "Manage system identifiers by:\na. Receiving authorization from organizational personnel with identifier management responsibilities to assign an individual, group, role, service, or device identifier;\nb. Selecting an identifier that identifies an individual, group, role, service, or device;\nc. Assigning the identifier to the intended individual, group, role, service, or device; and\nd. Preventing reuse of identifiers for one (1) year."
+    },
+    {
+      "control_id": "IA-4(4)",
+      "title": "Identifier Management (4)",
+      "family": "IA",
+      "description": "Manage individual identifiers by uniquely identifying each individual as agency or nonagency."
+    },
+    {
+      "control_id": "IA-5",
+      "title": "Authenticator Management",
+      "family": "IA",
+      "description": "Manage system authenticators by:\na. Verifying, as part of the initial authenticator distribution, the identity of the individual, group, role, service, or device receiving the authenticator;3\nb. Establishing initial authenticator content for any authenticators issued by the organization;\nc. Ensuring that authenticators have sufficient strength of mechanism for their intended use;3\nd. Establishing and implementing administrative procedures for initial authenticator distribution, for lost or compromised or damaged authenticators, and for revoking authenticators;\ne. Changing default authenticators prior to first use;\nf. Changing or refreshing authenticators annually or when there is evidence of authenticator compromise;\ng. Protecting authenticator content from unauthorized disclosure and modification;\nh. Requiring individuals to take, and having devices implement, specific controls to protect authenticators; and3\ni. Changing authenticators for group or role accounts when membership to those accounts changes.3\nj. AAL2 Specific Requirements"
+    },
+    {
+      "control_id": "IA-5(1)",
+      "title": "Authenticator Management (1)",
+      "family": "IA",
+      "description": "(a) Memorized Secret Authenticators and Verifiers:\n1. Maintain a list of commonly-used, expected, or compromised passwords and update the list quarterly and when organizational passwords are suspected to have been compromised directly or indirectly;\n2. Require immediate selection of a new password upon account recovery;3\n3. Allow user selection of long passwords and passphrases, including spaces and all printable characters;3\n4. Employ automated tools to assist the user in selecting strong password authenticators;3\n5. Enforce the following composition and complexity rules when agencies elect to follow basic password standards:\n(a) Not be a proper name.\n(b) Not be the same as the Userid.\n(c) Expire within a maximum of 90 calendar days.\n(d) Not be identical to the previous ten (10) passwords.\n(e) Not be displayed when entered.\n6. If chosen by the subscriber, memorized secrets SHALL be at least 8 characters in length."
+    },
+    {
+      "control_id": "IA-5(2)",
+      "title": "Authenticator Management (2)",
+      "family": "IA",
+      "description": "(a) For public key-based authentication:\n1. Enforce authorized access to the corresponding private key; and\n2. Map the authenticated identity to the account of the individual or group; and\n(b) When public key infrastructure (PKI) is used:\n1. Validate certificates by constructing and verifying a certification path to an accepted trust anchor, including checking certificate status information; and\n2. Implement a local cache of revocation data to support path discovery and validation."
+    },
+    {
+      "control_id": "IA-5(6)",
+      "title": "Authenticator Management (6)",
+      "family": "IA",
+      "description": "Protect authenticators commensurate with the security category of the information to which use of the authenticator permits access."
+    },
+    {
+      "control_id": "IA-6",
+      "title": "Authentication Feedback",
+      "family": "IA",
+      "description": "Obscure feedback of authentication information during the authentication process to protect the information from possible exploitation and use by unauthorized individuals."
+    },
+    {
+      "control_id": "IA-7",
+      "title": "Cryptographic Module Authentication",
+      "family": "IA",
+      "description": "Implement mechanisms for authentication to a cryptographic module that meet the requirements of applicable laws, executive orders, directives, policies, regulations, standards, and guidelines for such authentication."
+    },
+    {
+      "control_id": "IA-8",
+      "title": "Identification and Authentication (Non-Organizational Users)",
+      "family": "IA",
+      "description": "Uniquely identify and authenticate non-organizational users or processes acting on behalf of non-organizational users."
+    },
+    {
+      "control_id": "IA-8(1)",
+      "title": "Identification and Authentication (Non-Organizational Users) (1)",
+      "family": "IA",
+      "description": "Accept and electronically verify Personal Identity Verification-compliant credentials from other federal, state, local, tribal, or territorial (SLTT) agencies."
+    },
+    {
+      "control_id": "IA-8(2)",
+      "title": "Identification and Authentication (Non-Organizational Users) (2)",
+      "family": "IA",
+      "description": "(a) Accept only external authenticators that are NIST-compliant; and\n(b) Document and maintain a list of accepted external authenticators."
+    },
+    {
+      "control_id": "IA-8(4)",
+      "title": "Identification and Authentication (Non-Organizational Users) (4)",
+      "family": "IA",
+      "description": "Conform to the following profiles for identity management: Security Assertion Markup Language (SAML) or OpenID Connect."
+    },
+    {
+      "control_id": "IA-11",
+      "title": "Re-Authentication",
+      "family": "IA",
+      "description": "Require users to re-authenticate when: roles, authenticators, or credentials change, security categories of systems change, the execution of privileged functions occur, or every 12 hours."
+    },
+    {
+      "control_id": "IA-12",
+      "title": "Identity Proofing",
+      "family": "IA",
+      "description": "a. Identity proof users that require accounts for logical access to systems based on appropriate identity assurance level requirements as specified in applicable standards and guidelines;\nb. Resolve user identities to a unique individual; and\nc. Collect, validate, and verify identity evidence."
+    },
+    {
+      "control_id": "IA-12(2)",
+      "title": "Identity Proofing (2)",
+      "family": "IA",
+      "description": "Require evidence of individual identification be presented to the registration authority."
+    },
+    {
+      "control_id": "IA-12(3)",
+      "title": "Identity Proofing (3)",
+      "family": "IA",
+      "description": "a. Require that the presented identity evidence be validated and verified through agency-defined resolution, validation, and verification methods.\nb. Identity proofing SHALL NOT be performed to determine suitability or entitlement to gain access to services or benefits.\nc. 1. Collection of PII SHALL be limited to the minimum necessary to resolve to a unique identity in a given context.\n2. Collection of PII SHALL be limited to the minimum necessary to validate the existence of the claimed identity and associate the claimed identity with the applicant providing identity evidence for appropriate identity resolution, validation, and verification..."
+    },
+    {
+      "control_id": "IA-12(5)",
+      "title": "Identity Proofing (5)",
+      "family": "IA",
+      "description": "a. Require that a registration code or notice of proofing be delivered through an out-of-band channel to verify the users address (physical or digital) of record.\nb. The CSP SHALL confirm address of record…"
+    },
+    {
+      "control_id": "IR-1",
+      "title": "Policy and Procedures",
+      "family": "IR",
+      "description": "a. Develop, document, and disseminate to all personnel when their unescorted logical or physical access to any information system results in the ability, right, or privilege to view, modify, or make use of unencrypted CJI:\n1. Agency-level incident response policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the incident response policy and the associated incident response controls;\nb. Designate an individual with security responsibilities to manage the development, documentation, and dissemination of the incident response policy and procedures; and\nc. Review and update the current incident response: 3\n1. Policy annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI; and\n2. Procedures annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "IR-2",
+      "title": "Incident Response Training",
+      "family": "IR",
+      "description": "a. Provide incident response training to system users consistent with assigned roles and responsibilities:\n1. Prior to assuming an incident response role or responsibility or acquiring system access;\n2. When required by system changes; and\n3. Annually thereafter; and\nb. Review and update incident response training content annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "IR-2(3)",
+      "title": "Incident Response Training (3)",
+      "family": "IR",
+      "description": "Provide incident response training on how to identify and respond to a breach, including the organization’s process for reporting a breach."
+    },
+    {
+      "control_id": "IR-3",
+      "title": "Incident Response Testing",
+      "family": "IR",
+      "description": "Test the effectiveness of the incident response capability for the system annually using the following tests: tabletop or walk-through exercises; simulations; or other agency-appropriate tests."
+    },
+    {
+      "control_id": "IR-3(2)",
+      "title": "Incident Response Testing (2)",
+      "family": "IR",
+      "description": "Coordinate incident response testing with organizational elements responsible for related plans."
+    },
+    {
+      "control_id": "IR-4",
+      "title": "Incident Handling",
+      "family": "IR",
+      "description": "a. Implement an incident handling capability for incidents that is consistent with the incident response plan and includes preparation, detection and analysis, containment, eradication, and recovery;\nb. Coordinate incident handling activities with contingency planning activities;\nc. Incorporate lessons learned from ongoing incident handling activities into incident response procedures, training, and testing, and implement the resulting changes accordingly; and\nd. Ensure the rigor, intensity, scope, and results of incident handling activities are comparable and predictable across the organization."
+    },
+    {
+      "control_id": "IR-4(1)",
+      "title": "Incident Handling (1)",
+      "family": "IR",
+      "description": "Support the incident handling process using automated mechanisms (e.g., online incident management systems and tools that support the collection of live response data, full network packet capture, and forensic analysis."
+    },
+    {
+      "control_id": "IR-5",
+      "title": "Incident Monitoring",
+      "family": "IR",
+      "description": "Track and document incidents."
+    },
+    {
+      "control_id": "IR-6",
+      "title": "Incident Reporting",
+      "family": "IR",
+      "description": "a. Require personnel to report suspected incidents to the organizational incident response capability immediately but not to exceed one (1) hour after discovery; and\nb. Report incident information to organizational personnel with incident handling responsibilities, and if confirmed, notify the CSO, SIB Chief, or Interface Agency Official."
+    },
+    {
+      "control_id": "IR-6(1)",
+      "title": "Incident Reporting (1)",
+      "family": "IR",
+      "description": "Report incidents using automated mechanisms."
+    },
+    {
+      "control_id": "IR-6(3)",
+      "title": "Incident Reporting (3)",
+      "family": "IR",
+      "description": "Provide incident information to the provider of the product or service and other organizations involved in the supply chain or supply chain governance for systems or system components related to the incident."
+    },
+    {
+      "control_id": "IR-7",
+      "title": "Incident Response Assistance",
+      "family": "IR",
+      "description": "Provide an incident response support resource, integral to the organizational incident response capability, that offers advice and assistance to users of the system for the handling and reporting of incidents."
+    },
+    {
+      "control_id": "IR-7(1)",
+      "title": "Incident Response Assistance (1)",
+      "family": "IR",
+      "description": "Increase the availability of incident response information and support using automated mechanisms described in the discussion."
+    },
+    {
+      "control_id": "IR-8",
+      "title": "Incident Response Plan",
+      "family": "IR",
+      "description": "a. Develop an incident response plan that:\n1. Provides the organization with a roadmap for implementing its incident response capability;\n2. Describes the structure and organization of the incident response capability;\n3. Provides a high-level approach for how the incident response capability fits into the overall organization;\n4. Meets the unique requirements of the organization, which relate to mission, size, structure, and functions;\n5. Defines reportable incidents;\n6. Provides metrics for measuring the incident response capability within the organization;\n7. Defines the resources and management support needed to effectively maintain and mature an incident response capability;\n8. Addresses the sharing of incident information;\n9. Is reviewed and approved by the organization’s/agency’s executive leadership annually; and\n10. Explicitly designates responsibility for incident response to organizational personnel with incident reporting responsibilities and CSO or CJIS WAN Official.\nb. Distribute copies of the incident response plan to organizational personnel with incident handling responsibilities;\nc. Update the incident response plan to address system and organizational changes or problems encountered during plan implementation, execution, or testing;\nd. Communicate incident response plan changes to organizational personnel with incident handling responsibilities; and\ne. Protect the incident response plan from unauthorized disclosure and modification."
+    },
+    {
+      "control_id": "IR-8(1)",
+      "title": "Incident Response Plan (1)",
+      "family": "IR",
+      "description": "Include the following in the Incident Response Plan for breaches involving personally identifiable information:\na. A process to determine if notice to individuals or other organizations, including oversight organizations, is needed;\nb. An assessment process to determine the extent of the harm, embarrassment, inconvenience, or unfairness to affected individuals and any mechanisms to mitigate such harms; and\nc. Identification of applicable privacy requirements."
+    },
+    {
+      "control_id": "MA-1",
+      "title": "Policy and Procedures",
+      "family": "MA",
+      "description": "a. Develop, document, and disseminate to organizational personnel with system maintenance responsibilities:\n1. Agency-level maintenance policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the maintenance policy and the associated maintenance controls;\nb. Designate an individual with security responsibilities to manage the development, documentation, and dissemination of the maintenance policy and procedures; and\nc. Review and update the current maintenance:\n1. Policy annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI; and\n2. Procedures annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "MA-2",
+      "title": "Controlled Maintenance",
+      "family": "MA",
+      "description": "a. Schedule, document, and review records of maintenance, repair, and replacement on system components in accordance with manufacturer or vendor specifications and/or organizational requirements;\nb. Approve and monitor all maintenance activities, whether performed on site or remotely and whether the system or system components are serviced on site or removed to another location;\nc. Require that organizational personnel with information security and privacy responsibilities explicitly approve the removal of the system or system components from organizational facilities for off-site maintenance, repair, or replacement;\nd. Sanitize equipment to remove information from associated media prior to removal from organizational facilities for off-site maintenance, repair, replacement, or destruction;\ne. Check all potentially impacted controls to verify that the controls are still functioning properly following maintenance, repair, or replacement actions; and\nf. Include the following information in organizational maintenance records:\n1. Component name\n2. Component serial number\n3. Date/time of maintenance\n4. Maintenance performed\n5. Name(s) of entity performing maintenance including escort if required."
+    },
+    {
+      "control_id": "MA-3",
+      "title": "Maintenance Tools",
+      "family": "MA",
+      "description": "a. Approve, control, and monitor the use of system maintenance tools; and\nb. Review previously approved system maintenance tools prior to each use."
+    },
+    {
+      "control_id": "MA-3(1)",
+      "title": "Maintenance Tools (1)",
+      "family": "MA",
+      "description": "Inspect the maintenance tools used by maintenance personnel for improper or unauthorized modifications."
+    },
+    {
+      "control_id": "MA-3(2)",
+      "title": "Maintenance Tools (2)",
+      "family": "MA",
+      "description": "Check media containing diagnostic and test programs for malicious code before the media are used in the system."
+    },
+    {
+      "control_id": "MA-3(3)",
+      "title": "Maintenance Tools (3)",
+      "family": "MA",
+      "description": "Prevent the removal of maintenance equipment containing organizational information by:\na. Verifying that there is no organizational information contained on the equipment;\nb. Sanitizing or destroying the equipment;\nc. Retaining the equipment within the facility; or\nd. Obtaining an exemption from organizational personnel with system maintenance responsibilities explicitly authorizing removal of the equipment from the facility."
+    },
+    {
+      "control_id": "MA-4",
+      "title": "Nonlocal Maintenance",
+      "family": "MA",
+      "description": "a. Approve and monitor nonlocal maintenance and diagnostic activities;\nb. Allow the use of nonlocal maintenance and diagnostic tools only as consistent with organizational policy and documented in the security plan for the system;\nc. Employ strong authentication in the establishment of nonlocal maintenance and diagnostic sessions;\nd. Maintain records for nonlocal maintenance and diagnostic activities; and\ne. Terminate session and network connections when nonlocal maintenance is completed."
+    },
+    {
+      "control_id": "MA-5",
+      "title": "Maintenance Personnel",
+      "family": "MA",
+      "description": "a. Establish a process for maintenance personnel authorization and maintain a list of authorized maintenance organizations or personnel;\nb. Verify that non-escorted personnel performing maintenance on the system possess the required access authorizations; and\nc. Designate organizational personnel with required access authorizations and technical competence to supervise the maintenance activities of personnel who do not possess the required access authorizations."
+    },
+    {
+      "control_id": "MA-6",
+      "title": "Timely Maintenance",
+      "family": "MA",
+      "description": "Obtain timely maintenance support and/or spare parts for key system components to ensure continued system availability and mission capability."
+    },
+    {
+      "control_id": "MP-1",
+      "title": "Policy and Procedures",
+      "family": "MP",
+      "description": "a. Develop, document, and disseminate to authorized individuals:\n1. Agency-level media protection policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among agency entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the media protection policy and the associated media protection controls;\nb. Designate an individual with security responsibilities to manage the development, documentation, and dissemination of the media protection policy and procedures; and\nc. Review and update the current media protection: 2\n1. Policy at least annually and following any security incidents involving digital and/or non-digital media; and\n2. Procedures at least annually and following any security incidents involving digital and/or non-digital media."
+    },
+    {
+      "control_id": "MP-2",
+      "title": "Media Access",
+      "family": "MP",
+      "description": "Restrict access to digital and non-digital media to authorized individuals."
+    },
+    {
+      "control_id": "MP-4",
+      "title": "Media Storage",
+      "family": "MP",
+      "description": "a. Physically control and securely store digital and non-digital media within physically secure locations or controlled areas and encrypt CJI on digital media when physical and personnel restrictions are not feasible; and\nb. Protect system media types defined in MP-4a until the media are destroyed or sanitized using approved equipment, techniques, and procedures."
+    },
+    {
+      "control_id": "MP-5",
+      "title": "Media Transport",
+      "family": "MP",
+      "description": "a. Protect and control digital and non-digital media to help prevent compromise of the data during transport outside of the physically secure locations or controlled areas using encryption, as defined in Section 5.10.1.2 of this Policy. Physical media will be protected at the same level as the information would be protected in electronic form. Restrict the activities associated with transport of electronic and physical media to authorized personnel;\nb. Maintain accountability for system media during transport outside of the physically secure location or controlled areas;\nc. Document activities associated with the transport of system media; and\nd. Restrict the activities associated with the transport of system media to authorized personnel."
+    },
+    {
+      "control_id": "MP-6",
+      "title": "Media Sanitization",
+      "family": "MP",
+      "description": "a. Sanitize or destroy digital and non-digital media prior to disposal, release out of agency control, or release for reuse using overwrite technology at least three times or degauss digital media prior to disposal or release for reuse by unauthorized individuals. Inoperable digital media will be destroyed (cut up, shredded, etc.). Physical media will be securely disposed of when no longer needed for investigative or security purposes, whichever is later. Physical media will be destroyed by crosscut shredding or incineration; and\nb. Employ sanitization mechanisms with the strength and integrity commensurate with the security category or classification of the information."
+    },
+    {
+      "control_id": "MP-7",
+      "title": "Media Use",
+      "family": "MP",
+      "description": "a. Restrict the use of digital and non-digital media on agency owned systems that have been approved for use in the storage, processing, or transmission of criminal justice information by using technical, physical, or administrative controls (examples below); and\nb. Prohibit the use of personally owned digital media devices on all agency owned or controlled systems that store, process, or transmit criminal justice information; and\nc. Prohibit the use of digital media devices on all agency owned or controlled systems that store, process, or transmit criminal justice information when such devices have no identifiable owner."
+    },
+    {
+      "control_id": "SA-22",
+      "title": "Unsupported System Components",
+      "family": "SA",
+      "description": "a. Replace system components when support for the components is no longer available from the developer, vendor, or manufacturer; or\nb. Provide the following options for alternative sources for continued support for unsupported components: original manufacturer support, or original contracted vendor support."
+    },
+    {
+      "control_id": "SI-1",
+      "title": "Policy and Procedures",
+      "family": "SI",
+      "description": "a. Develop, document, and disseminate to all organizational personnel with system and information integrity responsibilities and information system owners:\n1. Agency-level system and information integrity policy that:\n(a) Addresses purpose, scope, roles, responsibilities, management commitment, coordination among organizational entities, and compliance; and\n(b) Is consistent with applicable laws, executive orders, directives, regulations, policies, standards, and guidelines; and\n2. Procedures to facilitate the implementation of the system and information integrity policy and the associated system and information integrity controls;\nb. Designate organizational personnel with system and information integrity responsibilities to manage the development, documentation, and dissemination of the system and information integrity policy and procedures; and\nc. Review and update the current system and information integrity:\n1. Policy annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI; and\n2. Procedures annually and following any security incidents involving unauthorized access to CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "SI-2",
+      "title": "Flaw Remediation",
+      "family": "SI",
+      "description": "a. Identify, report, and correct system flaws;\nb. Test software and firmware updates related to flaw remediation for effectiveness and potential side effects before installation; 2\nc. Install security-relevant software and firmware updates within the number of days listed after the release of the updates;5\n• Critical – 15 days\n• High – 30 days\n• Medium – 60 days\n• Low – 90 days; and\nd. Incorporate flaw remediation into the organizational configuration management process."
+    },
+    {
+      "control_id": "SI-2(2)",
+      "title": "Flaw Remediation (2)",
+      "family": "SI",
+      "description": "Determine if system components have applicable security-relevant software and firmware updates installed using vulnerability scanning tools as least quarterly or following any security incidents involving CJI or systems used to process, store, or transmit CJI."
+    },
+    {
+      "control_id": "SI-3",
+      "title": "Malicious Code Protection",
+      "family": "SI",
+      "description": "a. Implement signature-based malicious code protection mechanisms at system entry and exit points to detect and eradicate malicious code; 2\nb. Automatically update malicious code protection mechanisms as new releases are available in accordance with organizational configuration management policy and procedures;\nc. Configure malicious code protection mechanisms to:\n1. Perform periodic scans of the system at least daily and real-time scans of files from external sources at network entry and exit points and on all servers and endpoint devices as the files are downloaded, opened, or executed in accordance with organizational policy; and\n2. Block or quarantine malicious code, take mitigating action(s), and when necessary, implement incident response procedures; and send alert to system/network administrators and/or organizational personnel with information security responsibilities in response to malicious code detection; and5\nd. Address the receipt of false positives during malicious code detection and eradication and the resulting potential impact on the availability of the system."
+    },
+    {
+      "control_id": "SI-4",
+      "title": "System Monitoring",
+      "family": "SI",
+      "description": "a. Monitor the system to detect:\n1. Attacks and indicators of potential attacks in accordance with the following monitoring objectives:\na. Intrusion detection and prevention\nb. Malicious code protection\nc. Vulnerability scanning\nd. Audit record monitoring\ne. Network monitoring\nf. Firewall monitoring;\nand\n2. Unauthorized local, network, and remote connections;\nb. Identify unauthorized use of the system through the following techniques and methods: event logging (ref. 5.4 Audit and Accountability);\nc. Invoke internal monitoring capabilities or deploy monitoring devices:\n1. Strategically within the system to collect organization-determined essential information; and\n2. At ad hoc locations within the system to track specific types of transactions of interest to the organization;\nd. Analyze detected events and anomalies;\ne. Adjust the level of system monitoring activity when there is a change in risk to organizational operations and assets, individuals, other organizations, or the Nation;\nf. Obtain legal opinion regarding system monitoring activities; and\ng. Provide intrusion detection and prevention systems, malicious code protection software, scanning tools, audit record monitoring software, network monitoring, and firewall monitoring software logs to organizational personnel with information security responsibilities weekly."
+    },
+    {
+      "control_id": "SI-4(2)",
+      "title": "System Monitoring (2)",
+      "family": "SI",
+      "description": "Employ automated tools and mechanisms to support near real-time analysis of events."
+    },
+    {
+      "control_id": "SI-4(4)",
+      "title": "System Monitoring (4)",
+      "family": "SI",
+      "description": "a. Determine criteria for unusual or unauthorized activities or conditions for inbound and outbound communications traffic;\nb. Monitor inbound and outbound communications traffic continuously for unusual or unauthorized activities or conditions such as: the presence of malicious code or unauthorized use of legitimate code or credentials within organizational systems or propagating among system components, signaling to external systems, and the unauthorized exporting of information."
+    },
+    {
+      "control_id": "SI-4(5)",
+      "title": "System Monitoring (5)",
+      "family": "SI",
+      "description": "Alert organizational personnel with system monitoring responsibilities when the following system-generated indications of compromise or potential compromise occur: inappropriate or unusual activities with security or privacy implications."
+    },
+    {
+      "control_id": "SI-5",
+      "title": "Security Alerts, Advisories, and Directives",
+      "family": "SI",
+      "description": "a. Receive system security alerts, advisories, and directives from external source(s) (e.g., CISA, Multi-State Information Sharing & Analysis Center [MS-ISAC], U.S. Computer Emergency Readiness Team [USCERT], hardware/software providers, federal/state advisories, etc.) on an ongoing basis;\nb. Generate internal security alerts, advisories, and directives as deemed necessary;\nc. Disseminate security alerts, advisories, and directives to: organizational personnel implementing, operating, maintaining, and using the system; and\nd. Implement security directives in accordance with established time frames, or notify the issuing organization of the degree of noncompliance."
+    },
+    {
+      "control_id": "SI-7",
+      "title": "Software, Firmware, and Information Integrity",
+      "family": "SI",
+      "description": "a. Employ integrity verification tools to detect unauthorized changes to software, firmware, and information systems that contain or process CJI; and\nb. Take the following actions when unauthorized changes to the software, firmware, and information are detected: notify organizational personnel responsible for software, firmware, and/or information integrity and implement incident response procedures as appropriate."
+    },
+    {
+      "control_id": "SI-7(1)",
+      "title": "Software, Firmware, and Information Integrity (1)",
+      "family": "SI",
+      "description": "Perform an integrity check of software, firmware, and information systems that contain or process CJI at agency-defined transitional states or security relevant events at least weekly or in an automated fashion."
+    },
+    {
+      "control_id": "SI-7(7)",
+      "title": "Software, Firmware, and Information Integrity (7)",
+      "family": "SI",
+      "description": "Incorporate the detection of the following unauthorized changes into the organizational incident response capability: unauthorized changes to established configuration setting or the unauthorized elevation of system privileges."
+    },
+    {
+      "control_id": "SI-8",
+      "title": "Spam Protection",
+      "family": "SI",
+      "description": "a. Employ spam protection mechanisms at system entry and exit points to detect and act on unsolicited messages; and\nb. Update spam protection mechanisms when new releases are available in accordance with organizational configuration management policy and procedures."
+    },
+    {
+      "control_id": "SI-8(2)",
+      "title": "Spam Protection (2)",
+      "family": "SI",
+      "description": "Automatically update spam protection mechanisms at least daily."
+    },
+    {
+      "control_id": "SI-10",
+      "title": "Information Input Validation",
+      "family": "SI",
+      "description": "Check the validity of the following information inputs: all inputs to web/application servers, database servers, and any system or application input that might receive or process CJI."
+    },
+    {
+      "control_id": "SI-11",
+      "title": "Error Handling",
+      "family": "SI",
+      "description": "a. Generate error messages that provide information necessary for corrective actions without revealing information that could be exploited; and\nb. Reveal error messages only to organizational personnel with information security responsibilities."
+    },
+    {
+      "control_id": "SI-12",
+      "title": "Information Management and Retention",
+      "family": "SI",
+      "description": "Manage and retain information within the system and information output from the system in accordance with applicable laws, executive orders, directives, regulations, policies, standards, guidelines and operational requirements."
+    },
+    {
+      "control_id": "SI-12(1)",
+      "title": "Information Management and Retention (1)",
+      "family": "SI",
+      "description": "Limit personally identifiable information being processed in the information life cycle to the minimum PII necessary to achieve the purpose for which it is collected (see Section 4.3)."
+    },
+    {
+      "control_id": "SI-12(2)",
+      "title": "Information Management and Retention (2)",
+      "family": "SI",
+      "description": "Use the following techniques to minimize the use of personally identifiable information for research, testing, or training: data obfuscation, randomization, anonymization, or use of synthetic data."
+    },
+    {
+      "control_id": "SI-12(3)",
+      "title": "Information Management and Retention (3)",
+      "family": "SI",
+      "description": "Use the following techniques to dispose of, destroy, or erase information following the retention period: as defined in MP-6."
+    },
+    {
+      "control_id": "SI-16",
+      "title": "Memory Protection",
+      "family": "SI",
+      "description": "Implement the following controls to protect the system memory from unauthorized code execution: data execution prevention and address space layout randomization."
+    }
+  ]
+}

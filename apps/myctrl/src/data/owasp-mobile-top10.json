@@ -1,0 +1,268 @@
+{
+  "framework": {
+    "id": "owasp-mobile-top10",
+    "name": "OWASP Mobile Top 10",
+    "version": "2024",
+    "description": "The OWASP Mobile Top 10 represents the most critical security risks to mobile applications"
+  },
+  "families": {
+    "Credential Management": "Risks related to credential management",
+    "Supply Chain": "Risks related to supply chain",
+    "Authentication": "Risks related to authentication",
+    "Input Validation": "Risks related to input validation",
+    "Communication": "Risks related to communication",
+    "Privacy": "Risks related to privacy",
+    "Binary Protection": "Risks related to binary protection",
+    "Configuration": "Risks related to configuration",
+    "Data Storage": "Risks related to data storage",
+    "Cryptography": "Risks related to cryptography"
+  },
+  "controls": [
+    {
+      "control_id": "M1",
+      "title": "Improper Credential Usage",
+      "family": "Credential Management",
+      "description": "**Application Specific**\n\nThreat agents exploiting hardcoded credentials and improper credential usage in mobile applications can include automated attacks using publicly available or custom-built tools. Such agents could potentially locate and exploit hardcoded credentials or exploit weaknesses due to improper credential usage.",
+      "prevention_strategies": [
+        "Avoid hardcoded credentials in the app's source code or configuration files; use secure credential vaults or environment-based injection instead.",
+        "Encrypt credentials during transmission using TLS and never send them over insecure channels.",
+        "Do not store user credentials on the device; use secure, revocable access tokens instead.",
+        "Implement strong user authentication protocols such as multi-factor authentication (MFA).",
+        "Regularly update and rotate any API keys or tokens used by the application.",
+        "Use platform-provided secure storage mechanisms (Keychain on iOS, Keystore on Android) for any secrets that must be stored locally."
+      ],
+      "attack_scenarios": [
+        "An attacker discovers hardcoded credentials within the mobile app's source code or decompiled binary and uses them to gain unauthorized access to sensitive functionality or backend systems.",
+        "An attacker intercepts insecurely transmitted credentials between the mobile app and its backend systems, then impersonates a legitimate user to gain unauthorized access.",
+        "An attacker gains physical access to a user's device and extracts stored credentials from the mobile app's local storage to take over the user's account."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m1-improper-credential-usage.html",
+        "https://www.owasp.org/index.php/OWASP_Top_Ten",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M2",
+      "title": "Inadequate Supply Chain Security",
+      "family": "Supply Chain",
+      "description": "**Application Specific**\n\nAn attacker can manipulate application functionality by exploiting vulnerabilities in the mobile app supply chain. For example, an attacker can insert malicious code into the mobile app's codebase or modify the code during the build process to introduce backdoors, spyware, or other malicious code.\n\nThis can allow the attacker to steal data, spy on users, or take control of the mobile device. Moreover, an attacker can exploit vulnerabilities in third-party software libraries, SDKs, vendors, or hardcoded credentials to gain access to the mobile app or the backend servers. \n\nThis can lead to unauthorized data access or manipulation, denial of service, or complete takeover of the mobile app or device.",
+      "prevention_strategies": [
+        "Implement secure coding practices, code review, and testing throughout the mobile app development lifecycle to identify and mitigate vulnerabilities.",
+        "Ensure secure app signing and distribution processes to prevent attackers from signing and distributing malicious code.",
+        "Use only trusted and validated third-party libraries or components to reduce the risk of vulnerabilities.",
+        "Establish security controls for app updates, patches, and releases to prevent attackers from exploiting vulnerabilities in the app.",
+        "Monitor and detect supply chain security incidents through security testing, scanning, or other techniques to detect and respond to incidents in a timely manner."
+      ],
+      "attack_scenarios": [
+        "An attacker injects malware into a popular mobile app during the development phase, signs it with a valid certificate, and distributes it to the app store bypassing security checks. Users download the infected app which steals their login credentials and sensitive data.",
+        "An attacker exploits vulnerabilities in a third-party SDK used by the mobile app to gain access to the backend servers, leading to unauthorized data access or complete takeover of the mobile app.",
+        "A malicious insider within the development team introduces a backdoor into the app's codebase during the build process, enabling the attacker to spy on users and exfiltrate data."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m2-inadequate-supply-chain-security.html",
+        "https://owasp.org/www-project-kubernetes-top-ten/2022/en/src/K02-supply-chain-vulnerabilities",
+        "https://owasp.org/www-project-dependency-check/",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M3",
+      "title": "Insecure Authentication/Authorization",
+      "family": "Authentication",
+      "description": "**Application Specific**\n\nThreat agents that exploit authentication and authorization vulnerabilities typically do so through automated attacks that use available or custom-built tools.",
+      "prevention_strategies": [
+        "Perform all authentication requests server-side; ensure mobile authentication requirements match those of the web application counterpart.",
+        "Never store user passwords on the device; use device-specific, revocable authentication tokens instead.",
+        "Implement strong authentication protocols and avoid weak 4-digit PINs; use multi-factor authentication where possible.",
+        "Backend systems must independently verify authenticated user roles and permissions; never rely on role or permission data transmitted from the mobile device.",
+        "Use FaceID/TouchID to unlock biometrically locked secrets and protect sensitive authentication materials like session tokens.",
+        "Implement local integrity checks to detect unauthorized code changes when offline authentication is required."
+      ],
+      "attack_scenarios": [
+        "An adversary submits service requests directly to the backend server, bypassing the mobile app entirely. The server fails to verify that the request is associated with a known, authenticated user, allowing anonymous execution of functionality.",
+        "An adversary with a low-privilege account force-browses to a privileged endpoint. The backend does not verify whether the identity associated with the request is entitled to the requested functionality, enabling privilege escalation.",
+        "A user's API endpoint request includes an actor ID and OAuth bearer token. The backend validates the bearer token but fails to validate the actor ID, allowing the user to change the actor ID and access other users' account information (Insecure Direct Object Reference)."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m3-insecure-authentication-authorization.html",
+        "https://www.owasp.org/index.php/OWASP_Top_Ten",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M4",
+      "title": "Insufficient Input/Output Validation",
+      "family": "Input Validation",
+      "description": "**Application Specific**\n\nInsufficient validation and sanitization of data from external sources, such as user inputs or network data, in a mobile application can introduce severe security vulnerabilities. Mobile apps that fail to properly validate and sanitize such data are at risk of being exploited through attacks specific to mobile environments, including SQL injection, Command Injection, and cross-site scripting (XSS) attacks.\n\nThese vulnerabilities can have detrimental consequences, including unauthorized access to sensitive data, manipulation of app functionality, and potential compromise of the entire mobile system.\n\nInadequate output validation can result in data corruption or presentation vulnerabilities, allowing malicious actors to inject malicious code or manipulate sensitive information displayed to users.",
+      "prevention_strategies": [
+        "Validate and sanitize all user input using strict validation techniques; implement input length restrictions and reject unexpected or malicious data.",
+        "Properly sanitize output data to prevent cross-site scripting (XSS) attacks; use output encoding techniques when displaying or transmitting data.",
+        "Perform context-specific validation based on data context (e.g., file uploads, database queries) to prevent path traversal and injection attacks.",
+        "Implement data integrity checks to detect and prevent data corruption or unauthorized modifications.",
+        "Follow secure coding practices such as using parameterized queries and prepared statements to prevent SQL injection.",
+        "Conduct regular security assessments including penetration testing and code reviews to identify and address validation vulnerabilities."
+      ],
+      "attack_scenarios": [
+        "An attacker crafts malicious input containing unexpected characters against a mobile app lacking proper input validation, leading to arbitrary code execution and unauthorized access to the device's resources and sensitive data.",
+        "An attacker exploits inadequate output validation by injecting malicious scripts (HTML, JavaScript, SQL) through user-generated content entry points, enabling cross-site scripting (XSS) or SQL injection attacks that compromise data integrity.",
+        "An attacker submits specially formatted data to a mobile app that generates dynamic output without proper output validation, achieving remote code execution and gaining control over the mobile device."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m4-insufficient-input-output-validation.html",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+        "https://owasp.org/www-community/vulnerabilities/Improper_Data_Validation",
+        "https://cwe.mitre.org/data/definitions/20.html"
+      ]
+    },
+    {
+      "control_id": "M5",
+      "title": "Insecure Communication",
+      "family": "Communication",
+      "description": "**Application Specific**\n\nMost modern mobile applications exchange data with one or more remote servers. When the data transmission takes place, it typically goes through the mobile device's carrier network and the internet, a threat agent listening on the wire can intercept and modify the data if it transmitted in plaintext or using a deprecated encryption protocol. Threat agents might have different motives such as stealing sensitive information, conducting espionage, identity theft and more. The following threat agents exist:\n\n- An adversary that shares your local network (compromised or monitored Wi-Fi);\n- Rogue carrier or network devices (routers, cell towers, proxy's, etc); or\n- Malware on your mobile device.",
+      "prevention_strategies": [
+        "Apply SSL/TLS to all transport channels the mobile app uses to transmit data to backend APIs or web services; never transmit sensitive data in plaintext.",
+        "Use strong, industry-standard cipher suites with appropriate key lengths and certificates signed by a trusted CA provider.",
+        "Never allow bad certificates (self-signed, expired, untrusted root, revoked, wrong host); always require SSL chain verification.",
+        "Consider certificate pinning to establish trust with known-good server certificates and prevent man-in-the-middle attacks.",
+        "Do not send sensitive data over alternate channels (SMS, MMS, push notifications); apply a separate layer of encryption to sensitive data before passing it to the SSL channel.",
+        "Alert users through the UI if the mobile app detects an invalid certificate; avoid overriding SSL verification methods during development."
+      ],
+      "attack_scenarios": [
+        "A mobile app fails to inspect the server certificate during a TLS handshake and unconditionally accepts any certificate, making it susceptible to man-in-the-middle attacks through a TLS proxy that can intercept and modify all traffic.",
+        "A mobile app negotiates a weak cipher suite with the server during the TLS handshake, resulting in weak encryption that an adversary can easily decrypt to compromise the confidentiality of the channel.",
+        "A mobile app transmits user credentials or session tokens over non-secure channels instead of SSL/TLS, allowing an adversary to intercept those credentials in cleartext and bypass two-factor authentication."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m5-insecure-communication.html",
+        "https://www.owasp.org/",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M6",
+      "title": "Inadequate Privacy Controls",
+      "family": "Privacy",
+      "description": "**Application Specific**\n\nPrivacy controls are concerned with protecting Personally Identifiable Information (PII), e.g., names and addresses, credit card information, e-mail and IP addresses, information about health, religion, sexuality and political opinions. \n\nThis information is valuable to attackers for several reasons. For example, an attacker could \n- Impersonate the victim to commit a fraud, \n- Misuse the victim's payment data, \n- Blackmail the victim with sensitive information or \n- Harm the victim by destroying or manipulating the victim's critical data. \n\nIn general, PII could either be leaked (i.e., a violation of confidentiality), manipulated (violation of integrity) or destroyed/blocked (violation of availability).",
+      "prevention_strategies": [
+        "Minimize the amount and variety of PII processed; assess whether all PII collected is truly necessary for the app's functionality.",
+        "Replace fine-grained PII with less critical information where possible (e.g., coarse-grained location instead of precise coordinates).",
+        "Anonymize or blur PII using techniques like hashing, bucketing, or adding noise; delete PII after an appropriate expiration period.",
+        "Sanitize logs and error messages to ensure they do not contain PII; ensure third-party libraries do not leak PII in their log output.",
+        "Never transmit PII as URL query parameters; send sensitive information in request headers or body instead.",
+        "Explicitly configure backup settings and the hasFragileUserData flag (Android) to control PII exposure through device backups."
+      ],
+      "attack_scenarios": [
+        "An app logs sensitive data including user PII in crash reports and error messages. An attacker accessing the logging platform or device logs extracts personal information such as database query results containing user data.",
+        "An app transmits PII (e.g., user IDs, email addresses) as URL query parameters, exposing them in server logs, browser history, and analytics platforms where they can be harvested by attackers.",
+        "An attacker obtains a device backup containing sandbox data from an app that did not explicitly exclude sensitive PII from backups, extracting personal information from the unprotected backup files."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m6-inadequate-privacy-controls.html",
+        "https://cheatsheetseries.owasp.org/cheatsheets/User_Privacy_Protection_Cheat_Sheet.html",
+        "https://mas.owasp.org/MASTG/General/0x04i-Testing-User-Privacy-Protection/",
+        "https://owasp.org/www-project-top-10-privacy-risks/",
+        "https://gdpr.eu/"
+      ]
+    },
+    {
+      "control_id": "M7",
+      "title": "Insufficient Binary Protections",
+      "family": "Binary Protection",
+      "description": "**Application Specific**\n\nAttackers who target app binaries are motivated by various reasons. \n\nThe binary could contain valuable secrets, such as commercial API keys or hardcoded cryptographic secrets that an attacker could misuse. In addition, the code in the binary could be valuable on its own, for example, because it contains critical business logic or pre-trained AI models. Some attackers might also not target the app itself but use it to explore potential weaknesses of the corresponding backend to prepare for an attack. \n\nBesides collecting information, attackers could also manipulate app binaries to access paid features for free or to bypass other security checks. In the worst case, popular apps could be modified to contain malicious code and be distributed via third-party app stores or under a new name to exploit unsuspecting users. One common attack example is reconfiguring the payment identifiers in an app, repackaging it, and distributing it via app stores. Then, when users download this unauthorized copy from the app store, the attacker receives the payments instead of the original provider.",
+      "prevention_strategies": [
+        "Apply obfuscation to the app binary using free or commercial obfuscation tools to make reverse engineering significantly harder.",
+        "Compile sensitive parts of apps natively (iOS and Android) or use interpreters/nested virtual machines to resist decompilation.",
+        "Enforce critical security checks on both the client and the backend; never rely solely on local security checks that can be bypassed.",
+        "Implement runtime integrity checks to detect code tampering and binary modification, rendering tampered installations unusable.",
+        "Implement mechanisms to detect redistribution of modified app binaries and automatically report unauthorized copies for removal from app stores.",
+        "Avoid hardcoding secrets (API keys, cryptographic keys, AI models) in the binary; retrieve them securely from a server at runtime when possible."
+      ],
+      "attack_scenarios": [
+        "An attacker reverse engineers an unprotected app binary using free tools like Ghidra or apktool and extracts a hardcoded commercial API key, then misuses it at scale causing substantial financial damage to the app provider.",
+        "An attacker decompiles a mobile game binary, locates the license/payment check, replaces it with a static success statement, repackages the app, and distributes it for free or sells it under another name in app stores.",
+        "An attacker extracts a proprietary AI model embedded in a medical app's unprotected binary and sells the model along with its training parameters to competitors."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m7-insufficient-binary-protection.html",
+        "https://mas.owasp.org/MASTG/General/0x04c-Tampering-and-Reverse-Engineering/",
+        "https://mas.owasp.org/MASTG/iOS/0x06c-Reverse-Engineering-and-Tampering/",
+        "https://mas.owasp.org/MASTG/Android/0x05c-Reverse-Engineering-and-Tampering/",
+        "https://wiki.owasp.org/index.php/OWASP_Reverse_Engineering_and_Code_Modification_Prevention_Project"
+      ]
+    },
+    {
+      "control_id": "M8",
+      "title": "Security Misconfiguration",
+      "family": "Configuration",
+      "description": "**Application Specific**\n\nSecurity misconfiguration in mobile apps refers to the improper configuration of security settings, permissions, and controls that can lead to vulnerabilities and unauthorized access. Threat agents who can exploit security misconfigurations are attackers aiming to gain unauthorized access to sensitive data or perform malicious actions. Threat agents can be an attacker with physical access to the device, a malicious app on the device that exploits security misconfiguration to execute unauthorized actions on the target vulnerable application context.",
+      "prevention_strategies": [
+        "Review and secure default configurations; ensure default settings do not expose sensitive information or provide unnecessary permissions.",
+        "Refrain from using hardcoded default credentials; change all default usernames and passwords before release.",
+        "Apply the least privilege principle: request only the permissions necessary for the app's core functionality.",
+        "Configure secure network settings: disallow cleartext traffic and use certificate pinning when possible.",
+        "Disable debugging features in production builds and disable backup mode (Android) to prevent sensitive data exposure.",
+        "Limit the application's attack surface by only exporting activities, content providers, and services that are necessary; avoid exposing internal file provider paths."
+      ],
+      "attack_scenarios": [
+        "A mobile app ships with insecure default settings including debug mode enabled and default credentials unchanged. Attackers exploit these misconfigurations to gain unauthorized access to sensitive data and backend functionality.",
+        "A mobile app exposes its root path in an exported file content provider, allowing other malicious apps on the device to access all of the app's internal resources and files.",
+        "A mobile app stores shared preferences with world-readable permissions, enabling any other app on the device to read sensitive configuration data including session tokens and user preferences."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m8-security-misconfiguration.html",
+        "https://owasp.org/API-Security/editions/2023/en/0xa8-security-misconfiguration/",
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M9",
+      "title": "Insecure Data Storage",
+      "family": "Data Storage",
+      "description": "**Application Specific**\n\nInsecure data storage in a mobile application can attract various threat agents who aim to exploit the vulnerabilities and gain unauthorised access to sensitive information. These threat agents include skilled adversaries who target mobile apps to extract valuable data, malicious insiders within the organisation or app development team who misuse their privileges, state-sponsored actors conducting cyber espionage, cybercriminals seeking financial gain through data theft or ransom, script kiddies utilising pre-built tools for simple attacks, data brokers looking to exploit insecure storage for selling personal information, competitors and industrial spies aiming to gain a competitive advantage, and activists or hacktivists with ideological motives.\n\nThese threat agents exploit vulnerabilities like weak encryption, insufficient data protection, insecure data storage mechanisms, and improper handling of user credentials. It is crucial for mobile app developers and organisations to implement strong security measures, such as robust encryption, secure data storage practices, and adherence to best practices for mobile application security, to mitigate the risks associated with insecure data storage.",
+      "prevention_strategies": [
+        "Use strong encryption algorithms to protect sensitive data both at rest and in transit; ensure encryption keys are securely stored and managed.",
+        "Use platform-specific secure storage mechanisms such as Keychain (iOS) or Keystore (Android) for sensitive data that must be stored locally.",
+        "Implement strong access controls to restrict unauthorized access to sensitive data; authenticate users securely and enforce role-based access controls.",
+        "Apply secure session management techniques including randomly generated session tokens, proper session timeouts, and secure storage of session data.",
+        "Implement input validation and data sanitization to prevent injection attacks and ensure only valid data is stored.",
+        "Regularly update and patch all libraries, frameworks, and third-party dependencies to address known security vulnerabilities."
+      ],
+      "attack_scenarios": [
+        "A mobile application stores user passwords in plain text format within a local database. An attacker with physical or remote access to the device retrieves and abuses these credentials to take over user accounts.",
+        "A mobile app caches sensitive data such as authentication tokens or session information without proper security measures. An attacker gains access to the device's cache and uses the stolen tokens to impersonate the user.",
+        "A mobile app uses cloud storage services but misconfigures the storage permissions, allowing unauthorized access to stored user data including personally identifiable information and financial records."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m9-insecure-data-storage.html",
+        "https://www.owasp.org/",
+        "https://cwe.mitre.org/"
+      ]
+    },
+    {
+      "control_id": "M10",
+      "title": "Insufficient Cryptography",
+      "family": "Cryptography",
+      "description": "**Application Specific**\n\nThreat agents who exploit insecure cryptography in mobile applications can undermine the confidentiality, integrity, and authenticity of sensitive information. These threat agents include attackers who target cryptographic algorithms or implementations to decrypt sensitive data, malicious insiders who manipulate cryptographic processes or leak encryption keys, state-sponsored actors engaged in cryptanalysis for intelligence purposes, cybercriminals who exploit weak encryption to steal valuable data or conduct financial fraud, and attackers who leverage vulnerabilities in cryptographic protocols or libraries.",
+      "prevention_strategies": [
+        "Use strong, widely accepted encryption algorithms such as AES, RSA, or Elliptic Curve Cryptography (ECC); avoid deprecated or weak algorithms.",
+        "Select encryption keys with appropriate lengths following industry recommendations (e.g., AES-256, RSA-2048+) for the specific algorithm being used.",
+        "Follow secure key management practices: use key vaults or hardware security modules (HSMs), restrict key access to authorized personnel, and encrypt keys at rest.",
+        "Use strong hash functions like SHA-256 or bcrypt with proper salting; use Key Derivation Functions (KDFs) like PBKDF2 or scrypt for password hashing.",
+        "Employ secure transport layer protocols (HTTPS) for transmitting encrypted data; implement proper certificate validation and secure communication channels.",
+        "Conduct regular security testing including cryptographic vulnerability assessments, and stay updated with cryptographic standards from NIST and IETF."
+      ],
+      "attack_scenarios": [
+        "An attacker performs a man-in-the-middle attack by intercepting communication between the mobile app and server. Weak cryptography enables the attacker to decrypt the intercepted data, modify it, and re-encrypt it before forwarding it to the recipient.",
+        "An attacker exploits weak encryption with insufficient key lengths to perform a brute-force attack, systematically trying key combinations until finding the correct one to decrypt sensitive data stored by the mobile app.",
+        "A mobile application supports multiple encryption protocols as fallback options. An attacker forces a cryptographic downgrade attack, making the app use a weak encryption protocol that allows easy decryption of intercepted data."
+      ],
+      "references": [
+        "https://owasp.org/www-project-mobile-top-10/2023-risks/m10-insufficient-cryptography.html",
+        "https://www.owasp.org/index.php/OWASP_Top_Ten",
+        "https://cwe.mitre.org/"
+      ]
+    }
+  ]
+}

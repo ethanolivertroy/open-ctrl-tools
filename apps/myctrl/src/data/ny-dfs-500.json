@@ -1,0 +1,1381 @@
+{
+  "framework": {
+    "id": "ny-dfs-500",
+    "name": "NY DFS 23 NYCRR 500",
+    "version": "Amendment 2",
+    "description": "NY DFS 23 NYCRR 500 compliance framework"
+  },
+  "families": {
+    "500": "500"
+  },
+  "controls": [
+    {
+      "control_id": "500.1",
+      "title": "500.1",
+      "family": "500",
+      "description": "[see full text of 23 NYCRR 500 for definitions]"
+    },
+    {
+      "control_id": "500.2",
+      "title": "500.2",
+      "family": "500",
+      "description": "Cybersecurity Program"
+    },
+    {
+      "control_id": "500.2(a)",
+      "title": "500.2(a)",
+      "family": "500",
+      "description": "Each covered entity shall maintain a cybersecurity program designed to protect the confidentiality, integrity and availability of the covered entity’s information systems and nonpublic information stored on those information systems."
+    },
+    {
+      "control_id": "500.2(b)",
+      "title": "500.2(b)",
+      "family": "500",
+      "description": "The cybersecurity program shall be based on the covered entity’s risk assessment and designed to perform the following core cybersecurity functions:"
+    },
+    {
+      "control_id": "500.2(b)(1)",
+      "title": "500.2(b)(1)",
+      "family": "500",
+      "description": "identify and assess internal and external cybersecurity risks that may threaten the security or integrity of nonpublic information stored on the covered entity’s information systems;"
+    },
+    {
+      "control_id": "500.2(b)(2)",
+      "title": "500.2(b)(2)",
+      "family": "500",
+      "description": "use defensive infrastructure and the implementation of policies and procedures to protect the covered entity’s information systems, and the nonpublic information stored on those information systems, from unauthorized access, use or other malicious acts;"
+    },
+    {
+      "control_id": "500.2(b)(3)",
+      "title": "500.2(b)(3)",
+      "family": "500",
+      "description": "detect cybersecurity events;"
+    },
+    {
+      "control_id": "500.2(b)(4)",
+      "title": "500.2(b)(4)",
+      "family": "500",
+      "description": "respond to identified or detected cybersecurity events to mitigate any negative effects;"
+    },
+    {
+      "control_id": "500.2(b)(5)",
+      "title": "500.2(b)(5)",
+      "family": "500",
+      "description": "recover from cybersecurity events and restore normal operations and services; and"
+    },
+    {
+      "control_id": "500.2(b)(6)",
+      "title": "500.2(b)(6)",
+      "family": "500",
+      "description": "fulfill applicable regulatory reporting obligations."
+    },
+    {
+      "control_id": "500.2(c)",
+      "title": "500.2(c)",
+      "family": "500",
+      "description": "Each class A company shall design and conduct independent audits of its cybersecurity program based on its risk assessment."
+    },
+    {
+      "control_id": "500.2(d)",
+      "title": "500.2(d)",
+      "family": "500",
+      "description": "A covered entity may meet the requirement(s) of this Part by adopting the relevant and applicable provisions of a cybersecurity program maintained by an affiliate, provided that such provisions satisfy the requirements of this Part, as applicable to the covered entity."
+    },
+    {
+      "control_id": "500.2(e)",
+      "title": "500.2(e)",
+      "family": "500",
+      "description": "All documentation and information relevant to the covered entity’s cybersecurity program, including the relevant and applicable provisions of a cybersecurity program maintained by an affiliate and adopted by the covered entity, shall be made available to the superintendent upon request."
+    },
+    {
+      "control_id": "500.3",
+      "title": "500.3",
+      "family": "500",
+      "description": "Each covered entity shall implement and maintain a written policy or policies, approved at least annually by a senior officer or the covered entity’s senior governing body for the protection of its information systems and nonpublic information stored on those information systems. Procedures shall be developed, documented and implemented in accordance with the written policy or policies. The cybersecurity policy or policies and procedures shall be based on the covered entity’s risk assessment and address, at a minimum, the following areas to the extent applicable to the covered entity’s operations:"
+    },
+    {
+      "control_id": "500.3(a)",
+      "title": "500.3(a)",
+      "family": "500",
+      "description": "information security;"
+    },
+    {
+      "control_id": "500.3(b)",
+      "title": "500.3(b)",
+      "family": "500",
+      "description": "data governance, classification and retention;"
+    },
+    {
+      "control_id": "500.3(c)",
+      "title": "500.3(c)",
+      "family": "500",
+      "description": "asset inventory, device management and end of life management;"
+    },
+    {
+      "control_id": "500.3(d)",
+      "title": "500.3(d)",
+      "family": "500",
+      "description": "access controls, including remote access and identity management;"
+    },
+    {
+      "control_id": "500.3(e)",
+      "title": "500.3(e)",
+      "family": "500",
+      "description": "business continuity and disaster recovery planning and resources;"
+    },
+    {
+      "control_id": "500.3(f)",
+      "title": "500.3(f)",
+      "family": "500",
+      "description": "systems operations and availability concerns;"
+    },
+    {
+      "control_id": "500.3(g)",
+      "title": "500.3(g)",
+      "family": "500",
+      "description": "systems and network security and monitoring;"
+    },
+    {
+      "control_id": "500.3(h)",
+      "title": "500.3(h)",
+      "family": "500",
+      "description": "security awareness and training;"
+    },
+    {
+      "control_id": "500.3(i)",
+      "title": "500.3(i)",
+      "family": "500",
+      "description": "systems and application security and development and quality assurance;"
+    },
+    {
+      "control_id": "500.3(j)",
+      "title": "500.3(j)",
+      "family": "500",
+      "description": "physical security and environmental controls;"
+    },
+    {
+      "control_id": "500.3(k)",
+      "title": "500.3(k)",
+      "family": "500",
+      "description": "customer data privacy;"
+    },
+    {
+      "control_id": "500.3(l)",
+      "title": "500.3(l)",
+      "family": "500",
+      "description": "vendor and third-party service provider management;"
+    },
+    {
+      "control_id": "500.3(m)",
+      "title": "500.3(m)",
+      "family": "500",
+      "description": "risk assessment;"
+    },
+    {
+      "control_id": "500.3(n)",
+      "title": "500.3(n)",
+      "family": "500",
+      "description": "incident response and notification; and"
+    },
+    {
+      "control_id": "500.3(o)",
+      "title": "500.3(o)",
+      "family": "500",
+      "description": "vulnerability management."
+    },
+    {
+      "control_id": "500.4",
+      "title": "500.4",
+      "family": "500",
+      "description": "Chief Information Security Officer"
+    },
+    {
+      "control_id": "500.4(a)",
+      "title": "500.4(a)",
+      "family": "500",
+      "description": "Each covered entity shall designate a CISO. The CISO may be employed by the covered entity, one of its affiliates or a third-party service provider. If the CISO is employed by a third-party service provider or an affiliate, the covered entity shall:"
+    },
+    {
+      "control_id": "500.4(a)(1)",
+      "title": "500.4(a)(1)",
+      "family": "500",
+      "description": "retain responsibility for compliance with this Part;"
+    },
+    {
+      "control_id": "500.4(a)(2)",
+      "title": "500.4(a)(2)",
+      "family": "500",
+      "description": "designate a senior member of the covered entity’s personnel responsible for direction and oversight of the third-party service provider; and"
+    },
+    {
+      "control_id": "500.4(a)(3)",
+      "title": "500.4(a)(3)",
+      "family": "500",
+      "description": "require the third-party service provider or affiliate to maintain a cybersecurity program that protects the covered entity in accordance with the requirements of this Part."
+    },
+    {
+      "control_id": "500.4(b)",
+      "title": "500.4(b)",
+      "family": "500",
+      "description": "Report. The CISO of each covered entity shall report in writing at least annually to the senior governing body on the covered entity’s cybersecurity program, including to the extent applicable:"
+    },
+    {
+      "control_id": "500.4(b)(1)",
+      "title": "500.4(b)(1)",
+      "family": "500",
+      "description": "the confidentiality of nonpublic information and the integrity and security of the covered entity’s information systems;"
+    },
+    {
+      "control_id": "500.4(b)(2)",
+      "title": "500.4(b)(2)",
+      "family": "500",
+      "description": "the covered entity’s cybersecurity policies and procedures;"
+    },
+    {
+      "control_id": "500.4(b)(3)",
+      "title": "500.4(b)(3)",
+      "family": "500",
+      "description": "material cybersecurity risks to the covered entity;"
+    },
+    {
+      "control_id": "500.4(b)(4)",
+      "title": "500.4(b)(4)",
+      "family": "500",
+      "description": "overall effectiveness of the covered entity’s cybersecurity program;"
+    },
+    {
+      "control_id": "500.4(b)(5)",
+      "title": "500.4(b)(5)",
+      "family": "500",
+      "description": "material cybersecurity events involving the covered entity during the time period addressed by the report; and"
+    },
+    {
+      "control_id": "500.4(b)(6)",
+      "title": "500.4(b)(6)",
+      "family": "500",
+      "description": "plans for remediating material inadequacies."
+    },
+    {
+      "control_id": "500.4(c)",
+      "title": "500.4(c)",
+      "family": "500",
+      "description": "The CISO shall timely report to the senior governing body or senior officer(s) on material cybersecurity issues, such as significant cybersecurity events and significant changes to the covered entity’s cybersecurity program."
+    },
+    {
+      "control_id": "500.4(d)",
+      "title": "500.4(d)",
+      "family": "500",
+      "description": "The senior governing body of the covered entity shall exercise oversight of the covered entity’s cybersecurity risk management, including by:"
+    },
+    {
+      "control_id": "500.4(d)(1)",
+      "title": "500.4(d)(1)",
+      "family": "500",
+      "description": "having sufficient understanding of cybersecurity-related matters to exercise such oversight, which may include the use of advisors;"
+    },
+    {
+      "control_id": "500.4(d)(2)",
+      "title": "500.4(d)(2)",
+      "family": "500",
+      "description": "requiring the covered entity’s executive management or its designees to develop, implement and maintain the covered entity’s cybersecurity program;"
+    },
+    {
+      "control_id": "500.4(d)(3)",
+      "title": "500.4(d)(3)",
+      "family": "500",
+      "description": "regularly receiving and reviewing management reports about cybersecurity matters; and"
+    },
+    {
+      "control_id": "500.4(d)(4)",
+      "title": "500.4(d)(4)",
+      "family": "500",
+      "description": "confirming that the covered entity’s management has allocated sufficient resources to implement and maintain an effective cybersecurity program."
+    },
+    {
+      "control_id": "500.5",
+      "title": "500.5",
+      "family": "500",
+      "description": "Each covered entity shall, in accordance with its risk assessment, develop and implement written policies and procedures for vulnerability management that are designed to assess and maintain the effectiveness of its cybersecurity program. These policies and procedures shall be designed to ensure that covered entities:"
+    },
+    {
+      "control_id": "500.5(a)",
+      "title": "500.5(a)",
+      "family": "500",
+      "description": "conduct, at a minimum:"
+    },
+    {
+      "control_id": "500.5(a)(1)",
+      "title": "500.5(a)(1)",
+      "family": "500",
+      "description": "penetration testing of their information systems from both inside and outside the information systems’ boundaries by a qualified internal or external party at least annually; and"
+    },
+    {
+      "control_id": "500.5(a)(2)",
+      "title": "500.5(a)(2)",
+      "family": "500",
+      "description": "automated scans of information systems, and a manual review of systems not covered by such scans, for the purpose of discovering, analyzing and reporting vulnerabilities at a frequency determined by the risk assessment, and promptly after any material system changes;"
+    },
+    {
+      "control_id": "500.5(b)",
+      "title": "500.5(b)",
+      "family": "500",
+      "description": "are promptly informed of new security vulnerabilities by having a monitoring process in place; and"
+    },
+    {
+      "control_id": "500.5(c)",
+      "title": "500.5(c)",
+      "family": "500",
+      "description": "timely remediate vulnerabilities, giving priority to vulnerabilities based on the risk they pose to the covered entity."
+    },
+    {
+      "control_id": "500.6",
+      "title": "500.6",
+      "family": "500",
+      "description": "Audit Trail"
+    },
+    {
+      "control_id": "500.6(a)",
+      "title": "500.6(a)",
+      "family": "500",
+      "description": "Each covered entity shall securely maintain systems that, to the extent applicable and based on its risk assessment:"
+    },
+    {
+      "control_id": "500.6(a)(1)",
+      "title": "500.6(a)(1)",
+      "family": "500",
+      "description": "are designed to reconstruct material financial transactions sufficient to support normal operations and obligations of the covered entity; and"
+    },
+    {
+      "control_id": "500.6(a)(2)",
+      "title": "500.6(a)(2)",
+      "family": "500",
+      "description": "include audit trails designed to detect and respond to cybersecurity events that have a reasonable likelihood of materially harming any material part of the normal operations of the covered entity."
+    },
+    {
+      "control_id": "500.6(b)",
+      "title": "500.6(b)",
+      "family": "500",
+      "description": "Each covered entity shall maintain records required by paragraph (a)(1) of this section for not fewer than five years and shall maintain records required by paragraph (a)(2) of this section for not fewer than three years."
+    },
+    {
+      "control_id": "500.7",
+      "title": "500.7",
+      "family": "500",
+      "description": "Access Privileges and Management"
+    },
+    {
+      "control_id": "500.7(a)",
+      "title": "500.7(a)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, based on the covered entity’s risk assessment each covered entity shall:"
+    },
+    {
+      "control_id": "500.7(a)(1)",
+      "title": "500.7(a)(1)",
+      "family": "500",
+      "description": "limit user access privileges to information systems that provide access to nonpublic information to only those necessary to perform the user’s job;"
+    },
+    {
+      "control_id": "500.7(a)(2)",
+      "title": "500.7(a)(2)",
+      "family": "500",
+      "description": "limit the number of privileged accounts and limit the access functions of privileged accounts to only those necessary to perform the user’s job;"
+    },
+    {
+      "control_id": "500.7(a)(3)",
+      "title": "500.7(a)(3)",
+      "family": "500",
+      "description": "limit the use of privileged accounts to only when performing functions requiring the use of such access;"
+    },
+    {
+      "control_id": "500.7(a)(4)",
+      "title": "500.7(a)(4)",
+      "family": "500",
+      "description": "periodically, but at a minimum annually, review all user access privileges and remove or disable accounts and access that are no longer necessary;"
+    },
+    {
+      "control_id": "500.7(a)(5)",
+      "title": "500.7(a)(5)",
+      "family": "500",
+      "description": "disable or securely configure all protocols that permit remote control of devices; and"
+    },
+    {
+      "control_id": "500.7(a)(6)",
+      "title": "500.7(a)(6)",
+      "family": "500",
+      "description": "promptly terminate access following departures."
+    },
+    {
+      "control_id": "500.7(b)",
+      "title": "500.7(b)",
+      "family": "500",
+      "description": "To the extent passwords are employed as a method of authentication, the covered entity shall implement a written password policy that meets industry standards."
+    },
+    {
+      "control_id": "500.7(c)",
+      "title": "500.7(c)",
+      "family": "500",
+      "description": "Each class A company shall monitor privileged access activity and shall implement:"
+    },
+    {
+      "control_id": "500.7(c)(1)",
+      "title": "500.7(c)(1)",
+      "family": "500",
+      "description": "a privileged access management solution; and"
+    },
+    {
+      "control_id": "500.7(c)(2)",
+      "title": "500.7(c)(2)",
+      "family": "500",
+      "description": "an automated method of blocking commonly used passwords for all accounts on information systems owned or controlled by the class A company and wherever feasible for all other accounts. To the extent the class A company determines that blocking commonly used passwords is infeasible, the covered entity’s CISO may instead approve in writing at least annually the infeasibility and the use of reasonably equivalent or more secure compensating controls."
+    },
+    {
+      "control_id": "500.8",
+      "title": "500.8",
+      "family": "500",
+      "description": "Application Security"
+    },
+    {
+      "control_id": "500.8(a)",
+      "title": "500.8(a)",
+      "family": "500",
+      "description": "Each covered entity’s cybersecurity program shall include written procedures, guidelines and standards designed to ensure the use of secure development practices for in-house developed applications utilized by the covered entity, and procedures for evaluating, assessing or testing the security of externally developed applications utilized by the covered entity within the context of the covered entity’s technology environment."
+    },
+    {
+      "control_id": "500.8(b)",
+      "title": "500.8(b)",
+      "family": "500",
+      "description": "All such procedures, guidelines and standards shall be reviewed, assessed and updated as necessary by the CISO (or a qualified designee) of the covered entity at least annually."
+    },
+    {
+      "control_id": "500.9",
+      "title": "500.9",
+      "family": "500",
+      "description": "Risk Assessment"
+    },
+    {
+      "control_id": "500.9(a)",
+      "title": "500.9(a)",
+      "family": "500",
+      "description": "Each covered entity shall conduct a periodic risk assessment of the covered entity’s information systems sufficient to inform the design of the cybersecurity program as required by this Part. Such risk assessment shall be reviewed and updated as reasonably necessary, but at a minimum annually, and whenever a change in the business or technology causes a material change to the covered entity’s cyber risk. The covered entity’s risk assessment shall allow for revision of controls to respond to technological developments and evolving threats and shall consider the particular risks of the covered entity’s business operations related to cybersecurity, nonpublic information collected or stored, information systems utilized and the availability and effectiveness of controls to protect nonpublic information and information systems."
+    },
+    {
+      "control_id": "500.9(b)",
+      "title": "500.9(b)",
+      "family": "500",
+      "description": "The risk assessment shall be carried out in accordance with written policies and procedures and shall be documented. Such policies and procedures shall include:"
+    },
+    {
+      "control_id": "500.9(b)(1)",
+      "title": "500.9(b)(1)",
+      "family": "500",
+      "description": "criteria for the evaluation and categorization of identified cybersecurity risks or threats facing the covered entity;"
+    },
+    {
+      "control_id": "500.9(b)(2)",
+      "title": "500.9(b)(2)",
+      "family": "500",
+      "description": "criteria for the assessment of the confidentiality, integrity, security and availability of the covered entity’s information systems and nonpublic information, including the adequacy of existing controls in the context of identified risks; and"
+    },
+    {
+      "control_id": "500.9(b)(3)",
+      "title": "500.9(b)(3)",
+      "family": "500",
+      "description": "requirements describing how identified risks will be mitigated or accepted based on the risk assessment and how the cybersecurity program will address the risks."
+    },
+    {
+      "control_id": "500.10",
+      "title": "500.10",
+      "family": "500",
+      "description": "Cybersecurity Personnel and Intelligence"
+    },
+    {
+      "control_id": "500.10(a)",
+      "title": "500.10(a)",
+      "family": "500",
+      "description": "In addition to the requirements set forth in section 500.4(a) of this Part, each covered entity shall:"
+    },
+    {
+      "control_id": "500.10(a)(1)",
+      "title": "500.10(a)(1)",
+      "family": "500",
+      "description": "utilize qualified cybersecurity personnel of the covered entity, an affiliate or a thirdparty service provider sufficient to manage the covered entity’s cybersecurity risks and to perform or oversee the performance of the core cybersecurity functions specified in section 500.2(b)(1)–(6) of this Part;"
+    },
+    {
+      "control_id": "500.10(a)(2)",
+      "title": "500.10(a)(2)",
+      "family": "500",
+      "description": "provide cybersecurity personnel with cybersecurity updates and training sufficient to address relevant cybersecurity risks; and"
+    },
+    {
+      "control_id": "500.10(a)(3)",
+      "title": "500.10(a)(3)",
+      "family": "500",
+      "description": "verify that key cybersecurity personnel take steps to maintain current knowledge of changing cybersecurity threats and countermeasures."
+    },
+    {
+      "control_id": "500.10(b)",
+      "title": "500.10(b)",
+      "family": "500",
+      "description": "A covered entity may choose to utilize an affiliate or qualified third-party service provider to assist in complying with the requirements set forth in this Part, subject to the requirements set forth in sections 500.4 and 500.11 of this Part."
+    },
+    {
+      "control_id": "500.11",
+      "title": "500.11",
+      "family": "500",
+      "description": "Third-Party Service Provider Security Policy"
+    },
+    {
+      "control_id": "500.11(a)",
+      "title": "500.11(a)",
+      "family": "500",
+      "description": "Each covered entity shall implement written policies and procedures designed to ensure the security of information systems and nonpublic information that are accessible to, or held by, third-party service providers. Such policies and procedures shall be based on the risk assessment of the covered entity and shall address to the extent applicable:"
+    },
+    {
+      "control_id": "500.11(a)(1)",
+      "title": "500.11(a)(1)",
+      "family": "500",
+      "description": "the identification and risk assessment of third-party service providers;"
+    },
+    {
+      "control_id": "500.11(a)(2)",
+      "title": "500.11(a)(2)",
+      "family": "500",
+      "description": "minimum cybersecurity practices required to be met by such third-party service providers in order for them to do business with the covered entity;"
+    },
+    {
+      "control_id": "500.11(a)(3)",
+      "title": "500.11(a)(3)",
+      "family": "500",
+      "description": "due diligence processes used to evaluate the adequacy of cybersecurity practices of such third-party service providers; and"
+    },
+    {
+      "control_id": "500.11(a)(4)",
+      "title": "500.11(a)(4)",
+      "family": "500",
+      "description": "periodic assessment of such third-party service providers based on the risk they present and the continued adequacy of their cybersecurity practices."
+    },
+    {
+      "control_id": "500.11(b)",
+      "title": "500.11(b)",
+      "family": "500",
+      "description": "Such policies and procedures shall include relevant guidelines for due diligence and/or contractual protections relating to third-party service providers including to the extent applicable guidelines addressing:"
+    },
+    {
+      "control_id": "500.11(b)(1)",
+      "title": "500.11(b)(1)",
+      "family": "500",
+      "description": "the third-party service provider’s policies and procedures for access controls, including its use of multi-factor authentication as required by section 500.12 of this Part, to limit access to relevant information systems and nonpublic information;"
+    },
+    {
+      "control_id": "500.11(b)(2)",
+      "title": "500.11(b)(2)",
+      "family": "500",
+      "description": "the third-party service provider’s policies and procedures for use of encryption as required by section 500.15 of this Part to protect nonpublic information in transit and at rest;"
+    },
+    {
+      "control_id": "500.11(b)(3)",
+      "title": "500.11(b)(3)",
+      "family": "500",
+      "description": "notice to be provided to the covered entity in the event of a cybersecurity event directly impacting the covered entity’s information systems or the covered entity’s nonpublic information being held by the third-party service provider; and"
+    },
+    {
+      "control_id": "500.11(b)(4)",
+      "title": "500.11(b)(4)",
+      "family": "500",
+      "description": "representations and warranties addressing the third-party service provider’s cybersecurity policies and procedures that relate to the security of the covered entity’s information systems or nonpublic information."
+    },
+    {
+      "control_id": "500.12",
+      "title": "500.12",
+      "family": "500",
+      "description": "Multi-Factor Authentication"
+    },
+    {
+      "control_id": "500.12(a)",
+      "title": "500.12(a)",
+      "family": "500",
+      "description": "Multi-factor authentication shall be utilized for any individual accessing any information systems of a covered entity, unless the covered entity qualifies for a limited exemption pursuant to section 500.19(a) of this Part in which case multi-factor authentication shall be utilized for:"
+    },
+    {
+      "control_id": "500.12(a)(1)",
+      "title": "500.12(a)(1)",
+      "family": "500",
+      "description": "remote access to the covered entity’s information systems;"
+    },
+    {
+      "control_id": "500.12(a)(2)",
+      "title": "500.12(a)(2)",
+      "family": "500",
+      "description": "remote access to third-party applications, including but not limited to those that are cloud based, from which nonpublic information is accessible; and"
+    },
+    {
+      "control_id": "500.12(a)(3)",
+      "title": "500.12(a)(3)",
+      "family": "500",
+      "description": "all privileged accounts other than service accounts that prohibit interactive login."
+    },
+    {
+      "control_id": "500.12(b)",
+      "title": "500.12(b)",
+      "family": "500",
+      "description": "If the covered entity has a CISO, the CISO may approve in writing the use of reasonably equivalent or more secure compensating controls. Such controls shall be reviewed periodically, but at a minimum annually."
+    },
+    {
+      "control_id": "500.13",
+      "title": "500.13",
+      "family": "500",
+      "description": "Asset Management and Data Governance"
+    },
+    {
+      "control_id": "500.13(a)",
+      "title": "500.13(a)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, each covered entity shall implement written policies and procedures designed to produce and maintain a complete, accurate and documented asset inventory of the covered entity’s information systems. The asset inventory shall be maintained in accordance with written policies and procedures. At a minimum, such policies and procedures shall include:"
+    },
+    {
+      "control_id": "500.13(a)(1)",
+      "title": "500.13(a)(1)",
+      "family": "500",
+      "description": "a method to track key information for each asset, including, as applicable, the following:"
+    },
+    {
+      "control_id": "500.13(a)(1)(i)",
+      "title": "500.13(a)(1)(i)",
+      "family": "500",
+      "description": "owner;"
+    },
+    {
+      "control_id": "500.13(a)(1)(ii)",
+      "title": "500.13(a)(1)(ii)",
+      "family": "500",
+      "description": "location;"
+    },
+    {
+      "control_id": "500.13(a)(1)(iii)",
+      "title": "500.13(a)(1)(iii)",
+      "family": "500",
+      "description": "classification or sensitivity;"
+    },
+    {
+      "control_id": "500.13(a)(1)(iv)",
+      "title": "500.13(a)(1)(iv)",
+      "family": "500",
+      "description": "support expiration date; and"
+    },
+    {
+      "control_id": "500.13(a)(1)(v)",
+      "title": "500.13(a)(1)(v)",
+      "family": "500",
+      "description": "recovery time objectives; and"
+    },
+    {
+      "control_id": "500.13(a)(2)",
+      "title": "500.13(a)(2)",
+      "family": "500",
+      "description": "the frequency required to update and validate the covered entity’s asset inventory."
+    },
+    {
+      "control_id": "500.13(b)",
+      "title": "500.13(b)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, each covered entity shall include policies and procedures for the secure disposal on a periodic basis of any nonpublic information identified in section 500.1(k)(2)–(3) of this Part that is no longer necessary for business operations or for other legitimate business purposes of the covered entity, except where such information is otherwise required to be retained by law or regulation, or where targeted disposal is not reasonably feasible due to the manner in which the information is maintained."
+    },
+    {
+      "control_id": "500.14",
+      "title": "500.14",
+      "family": "500",
+      "description": "Monitoring and Training"
+    },
+    {
+      "control_id": "500.14(a)",
+      "title": "500.14(a)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, each covered entity shall:"
+    },
+    {
+      "control_id": "500.14(a)(1)",
+      "title": "500.14(a)(1)",
+      "family": "500",
+      "description": "implement risk-based policies, procedures and controls designed to monitor the activity of authorized users and detect unauthorized access or use of, or tampering with, nonpublic information by such authorized users;"
+    },
+    {
+      "control_id": "500.14(a)(2)",
+      "title": "500.14(a)(2)",
+      "family": "500",
+      "description": "implement risk-based controls designed to protect against malicious code, including those that monitor and filter web traffic and electronic mail to block malicious content; and"
+    },
+    {
+      "control_id": "500.14(a)(3)",
+      "title": "500.14(a)(3)",
+      "family": "500",
+      "description": "provide periodic, but at a minimum annual, cybersecurity awareness training that includes social engineering for all personnel that is updated to reflect risks identified by the covered entity in its risk assessment."
+    },
+    {
+      "control_id": "500.14(b)",
+      "title": "500.14(b)",
+      "family": "500",
+      "description": "Each class A company shall implement, unless the CISO has approved in writing the use of reasonably equivalent or more secure compensating controls:"
+    },
+    {
+      "control_id": "500.14(b)(1)",
+      "title": "500.14(b)(1)",
+      "family": "500",
+      "description": "an endpoint detection and response solution to monitor anomalous activity, including but not limited to lateral movement; and"
+    },
+    {
+      "control_id": "500.14(b)(2)",
+      "title": "500.14(b)(2)",
+      "family": "500",
+      "description": "a solution that centralizes logging and security event alerting."
+    },
+    {
+      "control_id": "500.15",
+      "title": "500.15",
+      "family": "500",
+      "description": "Encryption of Nonpublic Information"
+    },
+    {
+      "control_id": "500.15(a)",
+      "title": "500.15(a)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, each covered entity shall implement a written policy requiring encryption that meets industry standards, to protect nonpublic information held or transmitted by the covered entity both in transit over external networks and at rest."
+    },
+    {
+      "control_id": "500.15(b)",
+      "title": "500.15(b)",
+      "family": "500",
+      "description": "To the extent a covered entity determines that encryption of nonpublic information at rest is infeasible, the covered entity may instead secure such nonpublic information using effective alternative compensating controls that have been reviewed and approved by the covered entity’s CISO in writing. The feasibility of encryption and effectiveness of the compensating controls shall be reviewed by the CISO at least annually."
+    },
+    {
+      "control_id": "500.16",
+      "title": "500.16",
+      "family": "500",
+      "description": "Incident Response and Business Continuity Management"
+    },
+    {
+      "control_id": "500.16(a)",
+      "title": "500.16(a)",
+      "family": "500",
+      "description": "As part of its cybersecurity program, each covered entity shall establish written plans that contain proactive measures to investigate and mitigate cybersecurity events and to ensure operational resilience, including but not limited to incident response, business continuity and disaster recovery plans."
+    },
+    {
+      "control_id": "500.16(a)(1)",
+      "title": "500.16(a)(1)",
+      "family": "500",
+      "description": "Incident response plan. Incident response plans shall be reasonably designed to enable prompt response to, and recovery from, any cybersecurity event materially affecting the confidentiality, integrity or availability of the covered entity’s information systems or the continuing functionality of any aspect of the covered entity’s business or operations. Such plans shall address the following areas with respect to different types of cybersecurity events, including disruptive events such as ransomware incidents:"
+    },
+    {
+      "control_id": "500.16(a)(1)(i)",
+      "title": "500.16(a)(1)(i)",
+      "family": "500",
+      "description": "the goals of the incident response plan;"
+    },
+    {
+      "control_id": "500.16(a)(1)(ii)",
+      "title": "500.16(a)(1)(ii)",
+      "family": "500",
+      "description": "the internal processes for responding to a cybersecurity event;"
+    },
+    {
+      "control_id": "500.16(a)(1)(iii)",
+      "title": "500.16(a)(1)(iii)",
+      "family": "500",
+      "description": "the definition of clear roles, responsibilities and levels of decision-making authority;"
+    },
+    {
+      "control_id": "500.16(a)(1)(iv)",
+      "title": "500.16(a)(1)(iv)",
+      "family": "500",
+      "description": "external and internal communications and information sharing;"
+    },
+    {
+      "control_id": "500.16(a)(1)(v)",
+      "title": "500.16(a)(1)(v)",
+      "family": "500",
+      "description": "identification of requirements for the remediation of any identified weaknesses in information systems and associated controls;"
+    },
+    {
+      "control_id": "500.16(a)(1)(vi)",
+      "title": "500.16(a)(1)(vi)",
+      "family": "500",
+      "description": "documentation and reporting regarding cybersecurity events and related incident response activities;"
+    },
+    {
+      "control_id": "500.16(a)(1)(vii)",
+      "title": "500.16(a)(1)(vii)",
+      "family": "500",
+      "description": "recovery from backups;"
+    },
+    {
+      "control_id": "500.16(a)(1)(viii)",
+      "title": "500.16(a)(1)(viii)",
+      "family": "500",
+      "description": "preparation of root cause analysis that describes how and why the event occurred, what business impact it had, and what will be done to prevent reoccurrence; and"
+    },
+    {
+      "control_id": "500.16(a)(1)(ix)",
+      "title": "500.16(a)(1)(ix)",
+      "family": "500",
+      "description": "updating of incident response plans as necessary."
+    },
+    {
+      "control_id": "500.16(a)(2)",
+      "title": "500.16(a)(2)",
+      "family": "500",
+      "description": "Business continuity and disaster recovery (BCDR) plan. BCDR plans shall be reasonably designed to ensure the availability and functionality of the covered entity’s information systems and material services and protect the covered entity’s personnel, assets and nonpublic information in the event of a cybersecurity-related disruption to its normal business activities. Such plans shall, at  minimum:"
+    },
+    {
+      "control_id": "500.16(a)(2)(i)",
+      "title": "500.16(a)(2)(i)",
+      "family": "500",
+      "description": "identify documents, data, facilities, infrastructure, services, personnel and competencies essential to the continued operations of the covered entity’s business;"
+    },
+    {
+      "control_id": "500.16(a)(2)(ii)",
+      "title": "500.16(a)(2)(ii)",
+      "family": "500",
+      "description": "identify the supervisory personnel responsible for implementing each aspect of the BCDR plan;"
+    },
+    {
+      "control_id": "500.16(a)(2)(iii)",
+      "title": "500.16(a)(2)(iii)",
+      "family": "500",
+      "description": "include a plan to communicate with essential persons in the event of a cybersecurity-related disruption to the operations of the covered entity, including employees, counterparties, regulatory authorities, third-party service providers, disaster recovery specialists, the senior governing body and any other persons essential to the recovery of documentation and data and the resumption of operations;"
+    },
+    {
+      "control_id": "500.16(a)(2)(iv)",
+      "title": "500.16(a)(2)(iv)",
+      "family": "500",
+      "description": "include procedures for the timely recovery of critical data and information systems and to resume operations as soon as reasonably possible following a cybersecurity-related disruption to normal business activities;"
+    },
+    {
+      "control_id": "500.16(a)(2)(v)",
+      "title": "500.16(a)(2)(v)",
+      "family": "500",
+      "description": "include procedures for backing up or copying, with sufficient frequency, information essential to the operations of the covered entity and storing such information offsite; and"
+    },
+    {
+      "control_id": "500.16(a)(2)(vi)",
+      "title": "500.16(a)(2)(vi)",
+      "family": "500",
+      "description": "identify third parties that are necessary to the continued operations of the covered entity’s information systems."
+    },
+    {
+      "control_id": "500.16(b)",
+      "title": "500.16(b)",
+      "family": "500",
+      "description": "Each covered entity shall ensure that current copies of the plans or relevant portions therein are distributed or are otherwise accessible, including during a cybersecurity event, to all employees necessary to implement such plans."
+    },
+    {
+      "control_id": "500.16(c)",
+      "title": "500.16(c)",
+      "family": "500",
+      "description": "Each covered entity shall provide relevant training to all employees responsible for implementing the plans regarding their roles and responsibilities."
+    },
+    {
+      "control_id": "500.16(d)",
+      "title": "500.16(d)",
+      "family": "500",
+      "description": "Each covered entity shall periodically, but at a minimum annually, test its:"
+    },
+    {
+      "control_id": "500.16(d)(1)",
+      "title": "500.16(d)(1)",
+      "family": "500",
+      "description": "incident response and BCDR plans with all staff and management critical to the response, and shall revise the plan as necessary; and"
+    },
+    {
+      "control_id": "500.16(d)(2)",
+      "title": "500.16(d)(2)",
+      "family": "500",
+      "description": "ability to restore its critical data and information systems from backups."
+    },
+    {
+      "control_id": "500.16(e)",
+      "title": "500.16(e)",
+      "family": "500",
+      "description": "Each covered entity shall maintain backups necessary to restore material operations. The backups shall be adequately protected from unauthorized alterations or destruction."
+    },
+    {
+      "control_id": "500.17",
+      "title": "500.17",
+      "family": "500",
+      "description": "Notices to Superintendent"
+    },
+    {
+      "control_id": "500.17(a)",
+      "title": "500.17(a)",
+      "family": "500",
+      "description": "Notice of cybersecurity incident."
+    },
+    {
+      "control_id": "500.17(a)(1)",
+      "title": "500.17(a)(1)",
+      "family": "500",
+      "description": "Each covered entity shall notify the superintendent electronically in the form set forth on the department’s website as promptly as possible but in no event later than 72 hours after determining that a cybersecurity incident has occurred at the covered entity, its affiliates, or a third-party service provider."
+    },
+    {
+      "control_id": "500.17(a)(2)",
+      "title": "500.17(a)(2)",
+      "family": "500",
+      "description": "Each covered entity shall promptly provide to the superintendent any information requested regarding such incident. Covered entities shall have a continuing obligation to update the superintendent with material changes or new information previously unavailable."
+    },
+    {
+      "control_id": "500.17(b)",
+      "title": "500.17(b)",
+      "family": "500",
+      "description": "Notice of compliance."
+    },
+    {
+      "control_id": "500.17(b)(1)",
+      "title": "500.17(b)(1)",
+      "family": "500",
+      "description": "Annually each covered entity shall submit to the superintendent electronically by April 15 either:"
+    },
+    {
+      "control_id": "500.17(b)(1)(i)",
+      "title": "500.17(b)(1)(i)",
+      "family": "500",
+      "description": "a written certification that:"
+    },
+    {
+      "control_id": "500.17(b)(1)(i)(a)",
+      "title": "500.17(b)(1)(i)(a)",
+      "family": "500",
+      "description": "certifies that the covered entity materially complied with the requirements set forth in this Part during the prior calendar year; and"
+    },
+    {
+      "control_id": "500.17(b)(1)(i)(b)",
+      "title": "500.17(b)(1)(i)(b)",
+      "family": "500",
+      "description": "shall be based upon data and documentation sufficient to accurately determine and demonstrate such material compliance, including, to the extent necessary, documentation of officers, employees, representatives, outside vendors and other individuals or entities, as well as other documentation, whether in the form of reports, certifications, schedules or otherwise; or"
+    },
+    {
+      "control_id": "500.17(b)(1)(ii)",
+      "title": "500.17(b)(1)(ii)",
+      "family": "500",
+      "description": "a written acknowledgment that:"
+    },
+    {
+      "control_id": "500.17(b)(1)(ii)(a)",
+      "title": "500.17(b)(1)(ii)(a)",
+      "family": "500",
+      "description": "acknowledges that, for the prior calendar year, the covered entity did not materially comply with all the requirements of this Part;"
+    },
+    {
+      "control_id": "500.17(b)(1)(ii)(b)",
+      "title": "500.17(b)(1)(ii)(b)",
+      "family": "500",
+      "description": "identifies all sections of this Part that the entity has not materially complied with and describes the nature and extent of such noncompliance; and"
+    },
+    {
+      "control_id": "500.17(b)(1)(ii)(c)",
+      "title": "500.17(b)(1)(ii)(c)",
+      "family": "500",
+      "description": "provides a remediation timeline or confirmation that remediation has been completed."
+    },
+    {
+      "control_id": "500.17(b)(2)",
+      "title": "500.17(b)(2)",
+      "family": "500",
+      "description": "Such certification or acknowledgment shall be submitted electronically in the form set forth on the department’s website and shall be signed by the covered entity’s highestranking executive and its CISO. If the covered entity does not have a CISO, the certification or acknowledgment shall be signed by the highest-ranking executive and by the senior officer responsible for the cybersecurity program of the covered entity."
+    },
+    {
+      "control_id": "500.17(b)(3)",
+      "title": "500.17(b)(3)",
+      "family": "500",
+      "description": "Each covered entity shall maintain for examination and inspection by the department upon request all records, schedules and other documentation and data supporting the certification or acknowledgment for a period of five years, including the identification of all areas, systems and processes that require or required material improvement, updating or redesign, all remedial efforts undertaken to address such areas, systems and processes, and remediation plans and timelines for their implementation."
+    },
+    {
+      "control_id": "500.17(c)",
+      "title": "500.17(c)",
+      "family": "500",
+      "description": "Notice and explanation of extortion payment. Each covered entity, in the event of an extortion payment made in connection with a cybersecurity event involving the covered entity, shall provide the superintendent electronically, in the form set forth on the department’s website, with the following:"
+    },
+    {
+      "control_id": "500.17(c)(1)",
+      "title": "500.17(c)(1)",
+      "family": "500",
+      "description": "within 24 hours of the extortion payment, notice of the payment; and"
+    },
+    {
+      "control_id": "500.17(c)(2)",
+      "title": "500.17(c)(2)",
+      "family": "500",
+      "description": "within 30 days of the extortion payment, a written description of the reasons payment was necessary, a description of alternatives to payment considered, all diligence performed to find alternatives to payment and all diligence performed to ensure compliance with applicable rules and regulations including those of the Office of Foreign Assets Control."
+    },
+    {
+      "control_id": "500.18",
+      "title": "500.18",
+      "family": "500",
+      "description": "Information provided by a covered entity pursuant to this Part is subject to exemptions from disclosure under the Banking Law, Insurance Law, Financial Services Law, Public Officers Law or any other applicable State or Federal law."
+    },
+    {
+      "control_id": "500.19",
+      "title": "500.19",
+      "family": "500",
+      "description": "Exemptions"
+    },
+    {
+      "control_id": "500.19(a)",
+      "title": "500.19(a)",
+      "family": "500",
+      "description": "Limited exemption. Each covered entity with:\n...shall be exempt from the requirements of sections 500.4, 500.5, 500.6, 500.8, 500.10, 500.14(a)(1), (a)(2), and (b), 500.15 and 500.16 of this Part."
+    },
+    {
+      "control_id": "500.19(a)(1)",
+      "title": "500.19(a)(1)",
+      "family": "500",
+      "description": "fewer than 20 employees and independent contractors of the covered entity and its affiliates;"
+    },
+    {
+      "control_id": "500.19(a)(2)",
+      "title": "500.19(a)(2)",
+      "family": "500",
+      "description": "less than $7,500,000 in gross annual revenue in each of the last three fiscal years from all business operations of the covered entity and the business operations in this State of the covered entity’s affiliates; or"
+    },
+    {
+      "control_id": "500.19(a)(3)",
+      "title": "500.19(a)(3)",
+      "family": "500",
+      "description": "less than $15,000,000 in year-end total assets, calculated in accordance with generally accepted accounting principles, including assets of all affiliates,"
+    },
+    {
+      "control_id": "500.19(b)",
+      "title": "500.19(b)",
+      "family": "500",
+      "description": "An employee, agent, wholly owned subsidiary, representative or designee of a covered entity, who is itself a covered entity, is exempt from this Part and need not develop its own cybersecurity program to the extent that the employee, agent, wholly owned subsidiary, representative or designee is covered by the cybersecurity program of the covered entity."
+    },
+    {
+      "control_id": "500.19(c)",
+      "title": "500.19(c)",
+      "family": "500",
+      "description": "A covered entity that does not directly or indirectly operate, maintain, utilize or control any information systems, and that does not, and is not required to, directly or indirectly control, own, access, generate, receive or possess nonpublic information shall be exempt from the requirements of sections 500.2, 500.3, 500.4, 500.5, 500.6, 500.7, 500.8, 500.10, 500.12, 500.14, 500.15 and 500.16 of this Part."
+    },
+    {
+      "control_id": "500.19(d)",
+      "title": "500.19(d)",
+      "family": "500",
+      "description": "A covered entity under article 70 of the Insurance Law that does not and is not required to directly or indirectly control, own, access, generate, receive or possess nonpublic information other than information relating to its corporate parent company (or affiliates) shall be exempt from the requirements of sections 500.2, 500.3, 500.4, 500.5, 500.6, 500.7, 500.8, 500.10, 500.12, 500.14, 500.15 and 500.16 of this Part."
+    },
+    {
+      "control_id": "500.19(e)",
+      "title": "500.19(e)",
+      "family": "500",
+      "description": "An individual insurance broker subject to Insurance Law section 2104 who qualifies for the exemption pursuant to subdivision 500.19(c) of this Part and has not, for any compensation, commission or other thing of value, acted or aided in any manner in  soliciting, negotiating or selling any policy or contract or in placing risks or taking out insurance on behalf of another person for at least one year shall be exempt from the requirements of this Part, provided such individuals do not otherwise qualify as a covered entity for purposes of this Part."
+    },
+    {
+      "control_id": "500.19(f)",
+      "title": "500.19(f)",
+      "family": "500",
+      "description": "A covered entity that qualifies for any of the above exemptions pursuant to this section shall file electronically a Notice of Exemption in the form set forth on the department’s website within 30 days of the determination that the covered entity is exempt."
+    },
+    {
+      "control_id": "500.19(g)",
+      "title": "500.19(g)",
+      "family": "500",
+      "description": "The following persons are exempt from the requirements of this Part, provided such persons do not otherwise qualify as a covered entity for purposes of this Part: persons subject to Insurance Law section 1110; persons subject to Insurance Law section 5904; any accredited reinsurer, certified reinsurer or reciprocal jurisdiction reinsurer that has been so recognized pursuant to 11 NYCRR Part 125; individual insurance agents who are placed in inactive status under Insurance Law section 2103; and individual licensees placed in inactive status under Banking Law section 599-i."
+    },
+    {
+      "control_id": "500.19(h)",
+      "title": "500.19(h)",
+      "family": "500",
+      "description": "In the event that a covered entity ceases to qualify for an exemption, such covered entity shall have 180 days from the date that it ceases to so qualify to comply with all applicable requirements of this Part."
+    },
+    {
+      "control_id": "500.20",
+      "title": "500.20",
+      "family": "500",
+      "description": "Enforcement"
+    },
+    {
+      "control_id": "500.20(a)",
+      "title": "500.20(a)",
+      "family": "500",
+      "description": "This regulation will be enforced by the superintendent pursuant to, and is not intended to limit, the superintendent’s authority under any applicable laws."
+    },
+    {
+      "control_id": "500.20(b)",
+      "title": "500.20(b)",
+      "family": "500",
+      "description": "The commission of a single act prohibited by this Part or the failure to act to satisfy an obligation required by this Part shall constitute a violation hereof. Such acts or failures include, without limitation:"
+    },
+    {
+      "control_id": "500.20(b)(1)",
+      "title": "500.20(b)(1)",
+      "family": "500",
+      "description": "the failure to secure or prevent unauthorized access to an individual’s or an entity’s nonpublic information due to noncompliance with any section of this Part; or"
+    },
+    {
+      "control_id": "500.20(b)(2)",
+      "title": "500.20(b)(2)",
+      "family": "500",
+      "description": "the material failure to comply for any 24-hour period with any section of this Part."
+    },
+    {
+      "control_id": "500.20(c)",
+      "title": "500.20(c)",
+      "family": "500",
+      "description": "In assessing any penalty for a violation of this Part pursuant to the Banking Law, Insurance Law or Financial Services Law, the superintendent shall take into account, without limitation, factors including:"
+    },
+    {
+      "control_id": "500.20(c)(1)",
+      "title": "500.20(c)(1)",
+      "family": "500",
+      "description": "the extent to which the covered entity has cooperated with the superintendent in the investigation of such acts;"
+    },
+    {
+      "control_id": "500.20(c)(2)",
+      "title": "500.20(c)(2)",
+      "family": "500",
+      "description": "the good faith of the entity;"
+    },
+    {
+      "control_id": "500.20(c)(3)",
+      "title": "500.20(c)(3)",
+      "family": "500",
+      "description": "whether the violations resulted from conduct that was unintentional or inadvertent, reckless or intentional and deliberate;"
+    },
+    {
+      "control_id": "500.20(c)(4)",
+      "title": "500.20(c)(4)",
+      "family": "500",
+      "description": "whether the violation was a result of failure to remedy previous examination matters requiring attention, or failing to adhere to any disciplinary letter, letter of instructions or similar;"
+    },
+    {
+      "control_id": "500.20(c)(5)",
+      "title": "500.20(c)(5)",
+      "family": "500",
+      "description": "any history of prior violations;"
+    },
+    {
+      "control_id": "500.20(c)(6)",
+      "title": "500.20(c)(6)",
+      "family": "500",
+      "description": "whether the violation involved an isolated incident, repeat violations, systemic violations or a pattern of violations;"
+    },
+    {
+      "control_id": "500.20(c)(7)",
+      "title": "500.20(c)(7)",
+      "family": "500",
+      "description": "whether the covered entity provided false or misleading information;"
+    },
+    {
+      "control_id": "500.20(c)(8)",
+      "title": "500.20(c)(8)",
+      "family": "500",
+      "description": "the extent of harm to consumers;"
+    },
+    {
+      "control_id": "500.20(c)(9)",
+      "title": "500.20(c)(9)",
+      "family": "500",
+      "description": "whether required, accurate and timely disclosures were made to affected consumers;"
+    },
+    {
+      "control_id": "500.20(c)(10)",
+      "title": "500.20(c)(10)",
+      "family": "500",
+      "description": "the gravity of the violations;"
+    },
+    {
+      "control_id": "500.20(c)(11)",
+      "title": "500.20(c)(11)",
+      "family": "500",
+      "description": "the number of violations and the length of time over which they occurred;"
+    },
+    {
+      "control_id": "500.20(c)(12)",
+      "title": "500.20(c)(12)",
+      "family": "500",
+      "description": "the extent, if any, to which the senior governing body participated therein;"
+    },
+    {
+      "control_id": "500.20(c)(13)",
+      "title": "500.20(c)(13)",
+      "family": "500",
+      "description": "any penalty or sanction imposed by any other regulatory agency;"
+    },
+    {
+      "control_id": "500.20(c)(14)",
+      "title": "500.20(c)(14)",
+      "family": "500",
+      "description": "the financial resources, net worth and annual business volume of the covered entity and its affiliates;"
+    },
+    {
+      "control_id": "500.20(c)(15)",
+      "title": "500.20(c)(15)",
+      "family": "500",
+      "description": "the extent to which the relevant policies and procedures of the company are consistent with nationally recognized cybersecurity frameworks, such as NIST; and"
+    },
+    {
+      "control_id": "500.20(c)(16)",
+      "title": "500.20(c)(16)",
+      "family": "500",
+      "description": "such other matters as justice and the public interest require."
+    },
+    {
+      "control_id": "500.21",
+      "title": "500.21",
+      "family": "500",
+      "description": "Effective Date; Transitional Periods"
+    },
+    {
+      "control_id": "500.21(a)",
+      "title": "500.21(a)",
+      "family": "500",
+      "description": "This Part will be effective March 1, 2017. Covered entities will be required to annually prepare and submit to the superintendent a certification of compliance with New York State Department of Financial Services Cybersecurity Regulations under section 500.17(b) of this Part commencing February 15, 2018."
+    },
+    {
+      "control_id": "500.21(b)",
+      "title": "500.21(b)",
+      "family": "500",
+      "description": "The second amendment to this Part shall become effective November 1, 2023."
+    },
+    {
+      "control_id": "500.22",
+      "title": "500.22",
+      "family": "500",
+      "description": "Severability"
+    },
+    {
+      "control_id": "500.22(a)",
+      "title": "500.22(a)",
+      "family": "500",
+      "description": "Transitional period.\nCovered entities shall have 180 days from the effective date of this Part to comply with the requirements set forth in this Part, except as otherwise specified."
+    },
+    {
+      "control_id": "500.22(b)",
+      "title": "500.22(b)",
+      "family": "500",
+      "description": "The following provisions shall include additional transitional periods. Covered entities shall have:"
+    },
+    {
+      "control_id": "500.22(b)(1)",
+      "title": "500.22(b)(1)",
+      "family": "500",
+      "description": "one year from the effective date of this Part to comply with the requirements of sections 500.4(b), 500.5, 500.9, 500.12 and 500.14(b) of this Part;"
+    },
+    {
+      "control_id": "500.22(b)(2)",
+      "title": "500.22(b)(2)",
+      "family": "500",
+      "description": "eighteen months from the effective date of this Part to comply with the requirements of sections 500.6, 500.8, 500.13, 500.14(a) and 500.15 of this Part;"
+    },
+    {
+      "control_id": "500.22(b)(3)",
+      "title": "500.22(b)(3)",
+      "family": "500",
+      "description": "two years from the effective date of this Part to comply with the requirements of section 500.11 of this Part."
+    },
+    {
+      "control_id": "500.22(c)",
+      "title": "500.22(c)",
+      "family": "500",
+      "description": "Covered entities shall have 180 days from the effective date of the second amendment to this Part to comply with the new requirements set forth in the second amendment to this Part, except as otherwise specified in subdivisions (d) and (e) below."
+    },
+    {
+      "control_id": "500.22(d)",
+      "title": "500.22(d)",
+      "family": "500",
+      "description": "The following provisions shall include different transitional periods. Covered entities shall have:"
+    },
+    {
+      "control_id": "500.22(d)(1)",
+      "title": "500.22(d)(1)",
+      "family": "500",
+      "description": "30 days from the effective date of the second amendment to this Part to comply with the new requirements specified in section 500.17 of this Part;"
+    },
+    {
+      "control_id": "500.22(d)(2)",
+      "title": "500.22(d)(2)",
+      "family": "500",
+      "description": "one year from the effective date of the second amendment to this Part to comply with the new requirements specified in sections 500.4, 500.15, 500.16 and 500.19(a) of this Part;"
+    },
+    {
+      "control_id": "500.22(d)(3)",
+      "title": "500.22(d)(3)",
+      "family": "500",
+      "description": "18 months from the effective date of the second amendment to this Part to comply with the new requirements specified in sections 500.5(a)(2), 500.7, 500.14(a)(2) and 500.14(b) of this Part; and"
+    },
+    {
+      "control_id": "500.22(d)(4)",
+      "title": "500.22(d)(4)",
+      "family": "500",
+      "description": "two years from the effective date of the second amendment to this Part to comply with the new requirements specified in sections 500.12 and 500.13(a) of this Part."
+    },
+    {
+      "control_id": "500.22(e)",
+      "title": "500.22(e)",
+      "family": "500",
+      "description": "The new requirements specified in sections 500.19(e)-(h), 500.20, 500.21, 500.22 and 500.24 of this Part shall become effective November 1, 2023."
+    },
+    {
+      "control_id": "500.23",
+      "title": "500.23",
+      "family": "500",
+      "description": "If any provision of this Part or the application thereof to any person or circumstance is adjudged invalid by a court of competent jurisdiction, such judgment shall not affect or impair the validity of the other provisions of this Part or the application thereof to other persons or circumstances."
+    },
+    {
+      "control_id": "500.24",
+      "title": "500.24",
+      "family": "500",
+      "description": "Exemptions from Certain Requirements"
+    },
+    {
+      "control_id": "500.24(a)",
+      "title": "500.24(a)",
+      "family": "500",
+      "description": "A filer required to make an electronic filing or a submission pursuant to this Part may apply to the superintendent for an exemption from the requirement that the filing or submission be electronic by submitting a written request to the superintendent for approval at least 30 days before the filer shall submit to the superintendent the particular filing or submission that is the subject of the request."
+    },
+    {
+      "control_id": "500.24(b)",
+      "title": "500.24(b)",
+      "family": "500",
+      "description": "The request for an exemption shall:"
+    },
+    {
+      "control_id": "500.24(b)(1)",
+      "title": "500.24(b)(1)",
+      "family": "500",
+      "description": "set forth the filer’s DFS license number, NAIC number, Nationwide Multistate Licensing System number or institution number;"
+    },
+    {
+      "control_id": "500.24(b)(2)",
+      "title": "500.24(b)(2)",
+      "family": "500",
+      "description": "identify the specific filing or submission for which the filer is applying for the exemption;"
+    },
+    {
+      "control_id": "500.24(b)(3)",
+      "title": "500.24(b)(3)",
+      "family": "500",
+      "description": "specify whether the filer is making the request for an exemption based upon undue hardship, impracticability or good cause, and set forth a detailed explanation as to the reason that the superintendent should approve the request; and"
+    },
+    {
+      "control_id": "500.24(b)(4)",
+      "title": "500.24(b)(4)",
+      "family": "500",
+      "description": "specify whether the request for an exemption extends to future filings or submissions, in addition to the specific filing or submission identified in paragraph (2) of this subdivision."
+    },
+    {
+      "control_id": "500.24(c)",
+      "title": "500.24(c)",
+      "family": "500",
+      "description": "The filer requesting an exemption shall submit, upon the superintendent’s request, any additional information necessary for the superintendent to evaluate the filer’s request for an exemption."
+    },
+    {
+      "control_id": "500.24(d)",
+      "title": "500.24(d)",
+      "family": "500",
+      "description": "The filer shall be exempt from the electronic filing or submission requirement upon the superintendent’s written determination so exempting the filer, where the determination specifies the basis upon which the superintendent is granting the request and to which filings or submissions the exemption applies."
+    },
+    {
+      "control_id": "500.24(e)",
+      "title": "500.24(e)",
+      "family": "500",
+      "description": "If the superintendent approves a filer’s request for an exemption from the electronic filing or submission requirement, then the filer shall make a filing or submission in a form and manner acceptable to the superintendent."
+    }
+  ]
+}

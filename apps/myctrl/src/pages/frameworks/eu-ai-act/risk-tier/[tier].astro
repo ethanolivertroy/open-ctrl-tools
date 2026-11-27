@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'eu-ai-act';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('eu-ai-act');
+}
+
+const { tier } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={tier!} />

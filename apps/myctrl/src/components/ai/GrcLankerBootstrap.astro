@@ -1,0 +1,19 @@
+---
+interface Props {
+  frameworkId?: string;
+  controlSlug?: string;
+}
+
+const { frameworkId, controlSlug } = Astro.props;
+---
+
+<div
+  id="myctrl-grclanker-root"
+  data-framework-id={frameworkId ?? ''}
+  data-control-slug={controlSlug ?? ''}
+></div>
+
+<script>
+  import { registerGrcLankerBootstrap } from './grclanker-bootstrap';
+  registerGrcLankerBootstrap();
+</script>

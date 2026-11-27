@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { ControlCardCompact } from '../../../../components/controls/ControlCard';
+import { ExportButton } from '../../../../components/export/ExportButton';
+import {
+  getAllFamilies,
+  getControlsByFamily,
+  getFamilyName,
+  getFrameworks,
+  getFrameworkConfig,
+  isValidFramework,
+} from '../../../../data/controls';
+
+export async function getStaticPaths() {
+  const frameworks = getFrameworks();
+  const paths: { params: { framework: string; family: string }; props: { frameworkId: string; familyAbbr: string } }[] = [];
+
+  for (const config of frameworks) {
+    const families = getAllFamilies(config.id);
+    for (const family of families) {
+      paths.push({
+        params: { framework: config.id, family: family.toLowerCase() },
+        props: { frameworkId: config.id, familyAbbr: family },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { frameworkId, familyAbbr } = Astro.props;
+
+if (!isValidFramework(frameworkId)) {
+  return Astro.redirect('/');
+}
+
+const config = getFrameworkConfig(frameworkId);
+const familyName = getFamilyName(frameworkId, familyAbbr);
+const controls = getControlsByFamily(frameworkId, familyAbbr);
+---
+
+<BaseLayout title={`${familyAbbr} - ${familyName} | ${config.name}`} showSidebar={true} frameworkId={frameworkId}>
+  <div class="space-y-8">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span>Frameworks</span>
+        <span>/</span>
+        <a href={`/frameworks/${frameworkId}`} class="hover:text-foreground transition-colors">{config.name}</a>
+        <span>/</span>
+        <span class="text-foreground">{familyAbbr} — {familyName}</span>
+      </div>
+
+      <div class="flex items-center justify-between gap-4">
+        <h1 class="text-3xl font-bold tracking-tight">
+          <span class="font-mono text-primary">{familyAbbr}</span>
+          <span class="text-muted-foreground mx-3">—</span>
+          {familyName}
+        </h1>
+        <ExportButton
+          client:idle
+          controls={controls}
+          config={config}
+          filters={{ family: familyAbbr }}
+        />
+      </div>
+
+      <p class="text-muted-foreground">
+        {controls.length} {config.itemLabel} in the {familyName} {config.familyLabel.toLowerCase()}
+      </p>
+    </header>
+
+    <!-- Controls List -->
+    <section class="space-y-2">
+      {controls.map((control) => (
+        <ControlCardCompact control={control} />
+      ))}
+    </section>
+
+    <!-- Back link -->
+    <div class="pt-4 border-t">
+      <a
+        href={`/frameworks/${frameworkId}`}
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Back to all {config.itemLabel}
+      </a>
+    </div>
+  </div>
+</BaseLayout>

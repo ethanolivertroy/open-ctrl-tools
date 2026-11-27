@@ -1,0 +1,105 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import GuidanceSectionCard from '@/components/guidance/GuidanceSectionCard.astro';
+import { TECHNOLOGY_CATEGORIES, getTechnologiesByCategory } from '@/data/technology-guides';
+
+const sections = TECHNOLOGY_CATEGORIES.filter((category) => category.path).map((category) => {
+  const technologies = getTechnologiesByCategory(category.id);
+  return {
+    ...category,
+    count: technologies.length,
+    highlights: technologies.slice(0, 4).map((tech) => tech.name),
+  };
+});
+---
+
+<BaseLayout
+  title="Technology Guidance"
+  description="Technology-specific security guidance with authoritative sources and verification commands"
+  showSidebar={false}
+>
+  <div class="space-y-8 sm:space-y-12">
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-foreground">Technology Guidance</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-lg bg-primary/10">
+          <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+          </svg>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          Technology Guidance
+        </h1>
+      </div>
+
+      <p class="text-muted-foreground max-w-2xl text-lg">
+        Security implementation and testing guidance organized by domain. Each guide aggregates authoritative sources
+        with practical verification commands.
+      </p>
+
+      <div class="flex items-start gap-3 p-4 rounded-lg border border-border bg-muted/30 text-sm">
+        <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="space-y-1">
+          <p class="font-medium text-foreground">About Technology Guides</p>
+          <p class="text-muted-foreground">
+            Each domain page narrows the scope so you can focus on the technologies that matter to your stack.
+            Guides link to authoritative sources and provide verification commands for implementation checks.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-lg warning-banner">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 warning-banner-icon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p class="text-sm warning-banner-text">
+            <strong>Under Construction:</strong> This guidance is being actively developed and verified. Content may change.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="space-y-4">
+      <div>
+        <h2 class="text-lg sm:text-xl font-semibold">Browse by domain</h2>
+        <p class="text-sm text-muted-foreground">
+          Choose a domain to see focused guidance and platform-specific subpages.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {sections.map((section) => (
+          <GuidanceSectionCard
+            title={section.name}
+            description={section.description}
+            href={section.path}
+            icon={section.icon}
+            count={section.count}
+            highlights={section.highlights}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="pt-8 border-t border-border">
+      <h2 class="text-lg font-semibold mb-4">Coming Soon</h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        More technology guides are being developed. Check back for:
+      </p>
+      <div class="flex flex-wrap gap-2">
+        {['HashiCorp Vault', 'Wiz', 'GitLab CI', 'Jenkins', 'Terraform', 'Cloudflare', 'New Relic', 'Sumo Logic'].map((name) => (
+          <span class="px-3 py-1.5 text-sm rounded-full bg-muted text-muted-foreground">
+            {name}
+          </span>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

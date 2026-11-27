@@ -1,0 +1,1198 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./diffs-static.css";
+
+/* Geist Sans — variable weight */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/GeistVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Mono — variable weight */
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMonoVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   Catppuccin Color Themes
+   ============================================ */
+
+/* Mocha (Default Dark) */
+:root,
+[data-theme="mocha"] {
+  --ctp-rosewater: #f5e0dc;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-pink: #f5c2e7;
+  --ctp-mauve: #cba6f7;
+  --ctp-red: #f38ba8;
+  --ctp-maroon: #eba0ac;
+  --ctp-peach: #fab387;
+  --ctp-yellow: #f9e2af;
+  --ctp-green: #a6e3a1;
+  --ctp-teal: #94e2d5;
+  --ctp-sky: #89dceb;
+  --ctp-sapphire: #74c7ec;
+  --ctp-blue: #89b4fa;
+  --ctp-lavender: #b4befe;
+  --ctp-text: #cdd6f4;
+  --ctp-subtext1: #bac2de;
+  --ctp-subtext0: #a6adc8;
+  --ctp-overlay2: #9399b2;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay0: #6c7086;
+  --ctp-surface2: #585b70;
+  --ctp-surface1: #45475a;
+  --ctp-surface0: #313244;
+  --ctp-base: #1e1e2e;
+  --ctp-mantle: #181825;
+  --ctp-crust: #11111b;
+
+  color-scheme: dark;
+}
+
+/* Macchiato (Dark - Medium Contrast) */
+[data-theme="macchiato"] {
+  --ctp-rosewater: #f4dbd6;
+  --ctp-flamingo: #f0c6c6;
+  --ctp-pink: #f5bde6;
+  --ctp-mauve: #c6a0f6;
+  --ctp-red: #ed8796;
+  --ctp-maroon: #ee99a0;
+  --ctp-peach: #f5a97f;
+  --ctp-yellow: #eed49f;
+  --ctp-green: #a6da95;
+  --ctp-teal: #8bd5ca;
+  --ctp-sky: #91d7e3;
+  --ctp-sapphire: #7dc4e4;
+  --ctp-blue: #8aadf4;
+  --ctp-lavender: #b7bdf8;
+  --ctp-text: #cad3f5;
+  --ctp-subtext1: #b8c0e0;
+  --ctp-subtext0: #a5adcb;
+  --ctp-overlay2: #939ab7;
+  --ctp-overlay1: #8087a2;
+  --ctp-overlay0: #6e738d;
+  --ctp-surface2: #5b6078;
+  --ctp-surface1: #494d64;
+  --ctp-surface0: #363a4f;
+  --ctp-base: #24273a;
+  --ctp-mantle: #1e2030;
+  --ctp-crust: #181926;
+
+  color-scheme: dark;
+}
+
+/* Frappe (Dark - Muted) */
+[data-theme="frappe"] {
+  --ctp-rosewater: #f2d5cf;
+  --ctp-flamingo: #eebebe;
+  --ctp-pink: #f4b8e4;
+  --ctp-mauve: #ca9ee6;
+  --ctp-red: #e78284;
+  --ctp-maroon: #ea999c;
+  --ctp-peach: #ef9f76;
+  --ctp-yellow: #e5c890;
+  --ctp-green: #a6d189;
+  --ctp-teal: #81c8be;
+  --ctp-sky: #99d1db;
+  --ctp-sapphire: #85c1dc;
+  --ctp-blue: #8caaee;
+  --ctp-lavender: #babbf1;
+  --ctp-text: #c6d0f5;
+  --ctp-subtext1: #b5bfe2;
+  --ctp-subtext0: #a5adce;
+  --ctp-overlay2: #949cbb;
+  --ctp-overlay1: #838ba7;
+  --ctp-overlay0: #737994;
+  --ctp-surface2: #626880;
+  --ctp-surface1: #51576d;
+  --ctp-surface0: #414559;
+  --ctp-base: #303446;
+  --ctp-mantle: #292c3c;
+  --ctp-crust: #232634;
+
+  color-scheme: dark;
+}
+
+/* Latte (Light) */
+[data-theme="latte"] {
+  --ctp-rosewater: #dc8a78;
+  --ctp-flamingo: #dd7878;
+  --ctp-pink: #ea76cb;
+  --ctp-mauve: #8839ef;
+  --ctp-red: #d20f39;
+  --ctp-maroon: #e64553;
+  --ctp-peach: #fe640b;
+  --ctp-yellow: #df8e1d;
+  --ctp-green: #40a02b;
+  --ctp-teal: #179299;
+  --ctp-sky: #04a5e5;
+  --ctp-sapphire: #209fb5;
+  --ctp-blue: #1e66f5;
+  --ctp-lavender: #7287fd;
+  --ctp-text: #4c4f69;
+  --ctp-subtext1: #5c5f77;
+  --ctp-subtext0: #6c6f85;
+  --ctp-overlay2: #7c7f93;
+  --ctp-overlay1: #8c8fa1;
+  --ctp-overlay0: #9ca0b0;
+  --ctp-surface2: #acb0be;
+  --ctp-surface1: #bcc0cc;
+  --ctp-surface0: #ccd0da;
+  --ctp-base: #eff1f5;
+  --ctp-mantle: #e6e9ef;
+  --ctp-crust: #dce0e8;
+
+  color-scheme: light;
+}
+
+/* ============================================
+   Additional Color Themes
+   ============================================ */
+
+/* Neo-Terminal (Original Green-on-Black) */
+[data-theme="neo-terminal"] {
+  --ctp-rosewater: #f5c2e7;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-pink: #f5c2e7;
+  --ctp-mauve: #22c55e;       /* Primary green accent */
+  --ctp-red: #ef4444;
+  --ctp-maroon: #f87171;
+  --ctp-peach: #fb923c;
+  --ctp-yellow: #eab308;
+  --ctp-green: #22c55e;
+  --ctp-teal: #14b8a6;
+  --ctp-sky: #38bdf8;
+  --ctp-sapphire: #3b82f6;
+  --ctp-blue: #3b82f6;
+  --ctp-lavender: #a78bfa;
+  --ctp-text: #e4e4e7;
+  --ctp-subtext1: #d4d4d8;
+  --ctp-subtext0: #a1a1aa;
+  --ctp-overlay2: #71717a;
+  --ctp-overlay1: #52525b;
+  --ctp-overlay0: #3f3f46;
+  --ctp-surface2: #27272a;
+  --ctp-surface1: #27272a;
+  --ctp-surface0: #18181b;
+  --ctp-base: #0a0a0a;
+  --ctp-mantle: #111111;
+  --ctp-crust: #000000;
+
+  color-scheme: dark;
+}
+
+/* Nord (Arctic, North-Bluish) */
+[data-theme="nord"] {
+  /* Polar Night - Backgrounds */
+  --ctp-base: #2e3440;        /* nord0 */
+  --ctp-mantle: #3b4252;      /* nord1 */
+  --ctp-crust: #2e3440;       /* nord0 */
+  --ctp-surface0: #3b4252;    /* nord1 */
+  --ctp-surface1: #434c5e;    /* nord2 */
+  --ctp-surface2: #4c566a;    /* nord3 */
+  --ctp-overlay0: #4c566a;    /* nord3 */
+  --ctp-overlay1: #616e88;
+  --ctp-overlay2: #7b88a1;
+
+  /* Snow Storm - Text */
+  --ctp-text: #eceff4;        /* nord6 */
+  --ctp-subtext1: #e5e9f0;    /* nord5 */
+  --ctp-subtext0: #d8dee9;    /* nord4 */
+
+  /* Frost - Accents */
+  --ctp-mauve: #88c0d0;       /* nord8 - Primary cyan */
+  --ctp-blue: #5e81ac;        /* nord10 */
+  --ctp-lavender: #81a1c1;    /* nord9 */
+  --ctp-sapphire: #81a1c1;    /* nord9 */
+  --ctp-sky: #88c0d0;         /* nord8 */
+  --ctp-teal: #8fbcbb;        /* nord7 */
+
+  /* Aurora - Semantic */
+  --ctp-red: #bf616a;         /* nord11 */
+  --ctp-maroon: #bf616a;      /* nord11 */
+  --ctp-peach: #d08770;       /* nord12 */
+  --ctp-yellow: #ebcb8b;      /* nord13 */
+  --ctp-green: #a3be8c;       /* nord14 */
+  --ctp-pink: #b48ead;        /* nord15 */
+  --ctp-flamingo: #d08770;    /* nord12 */
+  --ctp-rosewater: #d08770;   /* nord12 */
+
+  color-scheme: dark;
+}
+
+/* Dracula (Dark Purple/Pink) */
+[data-theme="dracula"] {
+  --ctp-base: #282a36;        /* Background */
+  --ctp-mantle: #21222c;
+  --ctp-crust: #191a21;
+  --ctp-surface0: #44475a;    /* Current Line / Selection */
+  --ctp-surface1: #44475a;
+  --ctp-surface2: #6272a4;    /* Comment */
+  --ctp-overlay0: #6272a4;
+  --ctp-overlay1: #7082b4;
+  --ctp-overlay2: #8292c4;
+
+  --ctp-text: #f8f8f2;        /* Foreground */
+  --ctp-subtext1: #f8f8f2;
+  --ctp-subtext0: #bfbfbf;
+
+  --ctp-mauve: #bd93f9;       /* Purple - Primary */
+  --ctp-pink: #ff79c6;        /* Pink */
+  --ctp-red: #ff5555;         /* Red */
+  --ctp-maroon: #ff5555;
+  --ctp-peach: #ffb86c;       /* Orange */
+  --ctp-yellow: #f1fa8c;      /* Yellow */
+  --ctp-green: #50fa7b;       /* Green */
+  --ctp-teal: #8be9fd;        /* Cyan */
+  --ctp-sky: #8be9fd;         /* Cyan */
+  --ctp-sapphire: #8be9fd;    /* Cyan */
+  --ctp-blue: #6272a4;        /* Comment blue */
+  --ctp-lavender: #bd93f9;    /* Purple */
+  --ctp-flamingo: #ffb86c;    /* Orange */
+  --ctp-rosewater: #ff79c6;   /* Pink */
+
+  color-scheme: dark;
+}
+
+/* Zinc (Vercel/shadcn - Pure Black & White) */
+[data-theme="zinc"] {
+  --ctp-base: #09090b;        /* zinc-950 */
+  --ctp-mantle: #18181b;      /* zinc-900 */
+  --ctp-crust: #09090b;       /* zinc-950 */
+  --ctp-surface0: #27272a;    /* zinc-800 */
+  --ctp-surface1: #3f3f46;    /* zinc-700 */
+  --ctp-surface2: #52525b;    /* zinc-600 */
+  --ctp-overlay0: #52525b;    /* zinc-600 */
+  --ctp-overlay1: #71717a;    /* zinc-500 */
+  --ctp-overlay2: #a1a1aa;    /* zinc-400 */
+
+  --ctp-text: #fafafa;        /* zinc-50 */
+  --ctp-subtext1: #f4f4f5;    /* zinc-100 */
+  --ctp-subtext0: #e4e4e7;    /* zinc-200 */
+
+  /* Minimal accent - white/gray */
+  --ctp-mauve: #fafafa;       /* Primary - white */
+  --ctp-blue: #a1a1aa;        /* zinc-400 */
+  --ctp-lavender: #d4d4d8;    /* zinc-300 */
+  --ctp-sapphire: #a1a1aa;    /* zinc-400 */
+  --ctp-sky: #e4e4e7;         /* zinc-200 */
+  --ctp-teal: #a1a1aa;        /* zinc-400 */
+
+  /* Semantic colors - muted */
+  --ctp-red: #ef4444;         /* red-500 */
+  --ctp-maroon: #f87171;      /* red-400 */
+  --ctp-peach: #fb923c;       /* orange-400 */
+  --ctp-yellow: #facc15;      /* yellow-400 */
+  --ctp-green: #22c55e;       /* green-500 */
+  --ctp-pink: #d4d4d8;        /* zinc-300 */
+  --ctp-flamingo: #d4d4d8;    /* zinc-300 */
+  --ctp-rosewater: #e4e4e7;   /* zinc-200 */
+
+  color-scheme: dark;
+}
+
+/* Zinc Light (Vercel/shadcn - Pure White & Black) */
+[data-theme="zinc-light"] {
+  --ctp-base: #fafafa;        /* zinc-50 */
+  --ctp-mantle: #f4f4f5;      /* zinc-100 */
+  --ctp-crust: #e4e4e7;       /* zinc-200 */
+  --ctp-surface0: #e4e4e7;    /* zinc-200 */
+  --ctp-surface1: #d4d4d8;    /* zinc-300 */
+  --ctp-surface2: #a1a1aa;    /* zinc-400 */
+  --ctp-overlay0: #a1a1aa;    /* zinc-400 */
+  --ctp-overlay1: #71717a;    /* zinc-500 */
+  --ctp-overlay2: #52525b;    /* zinc-600 */
+
+  --ctp-text: #09090b;        /* zinc-950 */
+  --ctp-subtext1: #18181b;    /* zinc-900 */
+  --ctp-subtext0: #27272a;    /* zinc-800 */
+
+  /* Minimal accent - black/gray */
+  --ctp-mauve: #18181b;       /* Primary - near black */
+  --ctp-blue: #52525b;        /* zinc-600 */
+  --ctp-lavender: #3f3f46;    /* zinc-700 */
+  --ctp-sapphire: #52525b;    /* zinc-600 */
+  --ctp-sky: #27272a;         /* zinc-800 */
+  --ctp-teal: #52525b;        /* zinc-600 */
+
+  /* Semantic colors - darker for light bg */
+  --ctp-red: #dc2626;         /* red-600 */
+  --ctp-maroon: #ef4444;      /* red-500 */
+  --ctp-peach: #ea580c;       /* orange-600 */
+  --ctp-yellow: #ca8a04;      /* yellow-600 */
+  --ctp-green: #16a34a;       /* green-600 */
+  --ctp-pink: #3f3f46;        /* zinc-700 */
+  --ctp-flamingo: #3f3f46;    /* zinc-700 */
+  --ctp-rosewater: #27272a;   /* zinc-800 */
+
+  color-scheme: light;
+}
+
+/* Gruvbox Dark */
+[data-theme="gruvbox-dark"] {
+  --ctp-base: #282828;        /* bg0 */
+  --ctp-mantle: #1d2021;      /* bg0_h (hard) */
+  --ctp-crust: #1d2021;
+  --ctp-surface0: #3c3836;    /* bg1 */
+  --ctp-surface1: #504945;    /* bg2 */
+  --ctp-surface2: #665c54;    /* bg3 */
+  --ctp-overlay0: #665c54;    /* bg3 */
+  --ctp-overlay1: #7c6f64;    /* bg4 */
+  --ctp-overlay2: #928374;    /* gray */
+
+  --ctp-text: #ebdbb2;        /* fg */
+  --ctp-subtext1: #d5c4a1;    /* fg2 */
+  --ctp-subtext0: #bdae93;    /* fg3 */
+
+  /* Gruvbox accents */
+  --ctp-mauve: #d3869b;       /* purple - primary */
+  --ctp-red: #fb4934;         /* bright red */
+  --ctp-maroon: #cc241d;      /* red */
+  --ctp-peach: #fe8019;       /* bright orange */
+  --ctp-yellow: #fabd2f;      /* bright yellow */
+  --ctp-green: #b8bb26;       /* bright green */
+  --ctp-teal: #8ec07c;        /* aqua */
+  --ctp-sky: #83a598;         /* bright blue */
+  --ctp-sapphire: #83a598;    /* bright blue */
+  --ctp-blue: #83a598;        /* bright blue */
+  --ctp-lavender: #d3869b;    /* purple */
+  --ctp-pink: #d3869b;        /* purple */
+  --ctp-flamingo: #fe8019;    /* orange */
+  --ctp-rosewater: #fe8019;   /* orange */
+
+  color-scheme: dark;
+}
+
+/* Gruvbox Light */
+[data-theme="gruvbox-light"] {
+  --ctp-base: #fbf1c7;        /* bg0 */
+  --ctp-mantle: #f2e5bc;      /* bg0_s (soft) */
+  --ctp-crust: #ebdbb2;       /* bg1 */
+  --ctp-surface0: #ebdbb2;    /* bg1 */
+  --ctp-surface1: #d5c4a1;    /* bg2 */
+  --ctp-surface2: #bdae93;    /* bg3 */
+  --ctp-overlay0: #bdae93;    /* bg3 */
+  --ctp-overlay1: #a89984;    /* bg4 */
+  --ctp-overlay2: #928374;    /* gray */
+
+  --ctp-text: #3c3836;        /* fg */
+  --ctp-subtext1: #504945;    /* fg2 */
+  --ctp-subtext0: #665c54;    /* fg3 */
+
+  /* Gruvbox accents - darker for light bg */
+  --ctp-mauve: #b16286;       /* purple - primary */
+  --ctp-red: #cc241d;         /* red */
+  --ctp-maroon: #9d0006;      /* dark red */
+  --ctp-peach: #d65d0e;       /* orange */
+  --ctp-yellow: #d79921;      /* yellow */
+  --ctp-green: #98971a;       /* green */
+  --ctp-teal: #689d6a;        /* aqua */
+  --ctp-sky: #458588;         /* blue */
+  --ctp-sapphire: #458588;    /* blue */
+  --ctp-blue: #458588;        /* blue */
+  --ctp-lavender: #b16286;    /* purple */
+  --ctp-pink: #b16286;        /* purple */
+  --ctp-flamingo: #d65d0e;    /* orange */
+  --ctp-rosewater: #d65d0e;   /* orange */
+
+  color-scheme: light;
+}
+
+/* Earth Light ("opening a book" — warm parchment) */
+[data-theme="earth-light"] {
+  --ctp-base: #f5efe0;        /* warm parchment */
+  --ctp-mantle: #ebe5d6;      /* aged paper */
+  --ctp-crust: #e0d9c8;       /* paper edge */
+  --ctp-surface0: #ddd5c4;
+  --ctp-surface1: #d4ccb8;
+  --ctp-surface2: #b8ad96;
+  --ctp-overlay0: #a69d8a;
+  --ctp-overlay1: #9c917a;
+  --ctp-overlay2: #7d7263;
+
+  --ctp-text: #3b3228;        /* espresso — ~10:1 contrast */
+  --ctp-subtext1: #4a4035;
+  --ctp-subtext0: #5c5145;
+
+  /* Earth accents — leather & natural tones */
+  --ctp-mauve: #8b5e3c;       /* leather/sienna — PRIMARY accent */
+  --ctp-red: #b04040;         /* brick */
+  --ctp-maroon: #8b3030;
+  --ctp-peach: #c07040;       /* terra cotta */
+  --ctp-yellow: #a68b2e;      /* antique gold */
+  --ctp-green: #5e7a3a;       /* olive */
+  --ctp-teal: #4a7a6a;        /* sage */
+  --ctp-sky: #5a7a8a;
+  --ctp-sapphire: #4a6580;    /* dusty steel */
+  --ctp-blue: #4a6580;
+  --ctp-lavender: #8b5e3c;    /* matches primary */
+  --ctp-pink: #a06850;
+  --ctp-flamingo: #c07040;
+  --ctp-rosewater: #c07040;
+
+  color-scheme: light;
+}
+
+/* Earth Dark ("leather-bound book at night") */
+[data-theme="earth-dark"] {
+  --ctp-base: #2a231c;        /* dark walnut */
+  --ctp-mantle: #221c16;
+  --ctp-crust: #1a1510;
+  --ctp-surface0: #342c24;
+  --ctp-surface1: #3e352c;
+  --ctp-surface2: #504538;
+  --ctp-overlay0: #6b5e50;
+  --ctp-overlay1: #7a6d5e;
+  --ctp-overlay2: #8a7b6a;
+
+  --ctp-text: #e8dcc8;        /* warm cream */
+  --ctp-subtext1: #d4c8b4;
+  --ctp-subtext0: #bfb3a0;
+
+  /* Earth accents — warm amber & natural tones */
+  --ctp-mauve: #c4956a;       /* golden amber — PRIMARY accent */
+  --ctp-red: #d47070;
+  --ctp-maroon: #b05050;
+  --ctp-peach: #d4a070;
+  --ctp-yellow: #d4b850;      /* gold */
+  --ctp-green: #8aaa60;       /* sage */
+  --ctp-teal: #6aaa8a;
+  --ctp-sky: #7a9ab0;
+  --ctp-sapphire: #6a8aaa;
+  --ctp-blue: #6a8aaa;
+  --ctp-lavender: #c4956a;    /* matches primary */
+  --ctp-pink: #c48a7a;
+  --ctp-flamingo: #d4a070;
+  --ctp-rosewater: #d4a070;
+
+  color-scheme: dark;
+}
+
+/* Tokyo Night */
+[data-theme="tokyo-night"] {
+  --ctp-base: #1a1b26;        /* bg */
+  --ctp-mantle: #16161e;      /* bg_dark */
+  --ctp-crust: #16161e;
+  --ctp-surface0: #24283b;    /* bg_highlight */
+  --ctp-surface1: #292e42;
+  --ctp-surface2: #3b4261;    /* terminal_black */
+  --ctp-overlay0: #3b4261;
+  --ctp-overlay1: #545c7e;    /* dark5 */
+  --ctp-overlay2: #565f89;    /* comment */
+
+  --ctp-text: #c0caf5;        /* fg */
+  --ctp-subtext1: #a9b1d6;    /* fg_dark */
+  --ctp-subtext0: #9aa5ce;    /* fg_gutter */
+
+  /* Tokyo Night accents */
+  --ctp-mauve: #bb9af7;       /* purple - signature primary */
+  --ctp-red: #f7768e;         /* red */
+  --ctp-maroon: #f7768e;      /* red */
+  --ctp-peach: #ff9e64;       /* orange */
+  --ctp-yellow: #e0af68;      /* yellow */
+  --ctp-green: #9ece6a;       /* green */
+  --ctp-teal: #73daca;        /* teal */
+  --ctp-sky: #7dcfff;         /* cyan */
+  --ctp-sapphire: #2ac3de;    /* cyan */
+  --ctp-blue: #7aa2f7;        /* blue */
+  --ctp-lavender: #bb9af7;    /* purple */
+  --ctp-pink: #ff007c;        /* magenta */
+  --ctp-flamingo: #ff9e64;    /* orange */
+  --ctp-rosewater: #ff9e64;   /* orange */
+
+  color-scheme: dark;
+}
+
+/* Rosé Pine */
+[data-theme="rose-pine"] {
+  --ctp-base: #191724;        /* base */
+  --ctp-mantle: #1f1d2e;      /* surface */
+  --ctp-crust: #26233a;       /* overlay */
+  --ctp-surface0: #1f1d2e;    /* surface */
+  --ctp-surface1: #26233a;    /* overlay */
+  --ctp-surface2: #403d52;    /* highlight_low */
+  --ctp-overlay0: #524f67;    /* highlight_med */
+  --ctp-overlay1: #6e6a86;    /* muted */
+  --ctp-overlay2: #908caa;    /* subtle */
+
+  --ctp-text: #e0def4;        /* text */
+  --ctp-subtext1: #908caa;    /* subtle */
+  --ctp-subtext0: #6e6a86;    /* muted */
+
+  /* Rosé Pine accents */
+  --ctp-mauve: #c4a7e7;       /* iris - primary */
+  --ctp-red: #eb6f92;         /* love */
+  --ctp-maroon: #eb6f92;      /* love */
+  --ctp-peach: #ebbcba;       /* rose */
+  --ctp-yellow: #f6c177;      /* gold */
+  --ctp-green: #9ccfd8;       /* foam */
+  --ctp-teal: #9ccfd8;        /* foam */
+  --ctp-sky: #9ccfd8;         /* foam */
+  --ctp-sapphire: #31748f;    /* pine */
+  --ctp-blue: #31748f;        /* pine */
+  --ctp-lavender: #c4a7e7;    /* iris */
+  --ctp-pink: #ebbcba;        /* rose */
+  --ctp-flamingo: #ebbcba;    /* rose */
+  --ctp-rosewater: #ebbcba;   /* rose */
+
+  color-scheme: dark;
+}
+
+/* Solarized Dark */
+[data-theme="solarized-dark"] {
+  --ctp-base: #002b36;        /* base03 */
+  --ctp-mantle: #073642;      /* base02 */
+  --ctp-crust: #002b36;
+  --ctp-surface0: #073642;    /* base02 */
+  --ctp-surface1: #586e75;    /* base01 */
+  --ctp-surface2: #657b83;    /* base00 */
+  --ctp-overlay0: #657b83;    /* base00 */
+  --ctp-overlay1: #839496;    /* base0 */
+  --ctp-overlay2: #93a1a1;    /* base1 */
+
+  --ctp-text: #839496;        /* base0 */
+  --ctp-subtext1: #93a1a1;    /* base1 */
+  --ctp-subtext0: #657b83;    /* base00 */
+
+  /* Solarized accents */
+  --ctp-mauve: #268bd2;       /* blue - primary */
+  --ctp-red: #dc322f;         /* red */
+  --ctp-maroon: #dc322f;      /* red */
+  --ctp-peach: #cb4b16;       /* orange */
+  --ctp-yellow: #b58900;      /* yellow */
+  --ctp-green: #859900;       /* green */
+  --ctp-teal: #2aa198;        /* cyan */
+  --ctp-sky: #2aa198;         /* cyan */
+  --ctp-sapphire: #268bd2;    /* blue */
+  --ctp-blue: #268bd2;        /* blue */
+  --ctp-lavender: #6c71c4;    /* violet */
+  --ctp-pink: #d33682;        /* magenta */
+  --ctp-flamingo: #cb4b16;    /* orange */
+  --ctp-rosewater: #cb4b16;   /* orange */
+
+  color-scheme: dark;
+}
+
+/* Solarized Light */
+[data-theme="solarized-light"] {
+  --ctp-base: #fdf6e3;        /* base3 */
+  --ctp-mantle: #eee8d5;      /* base2 */
+  --ctp-crust: #eee8d5;
+  --ctp-surface0: #eee8d5;    /* base2 */
+  --ctp-surface1: #93a1a1;    /* base1 */
+  --ctp-surface2: #839496;    /* base0 */
+  --ctp-overlay0: #839496;    /* base0 */
+  --ctp-overlay1: #657b83;    /* base00 */
+  --ctp-overlay2: #586e75;    /* base01 */
+
+  --ctp-text: #657b83;        /* base00 */
+  --ctp-subtext1: #586e75;    /* base01 */
+  --ctp-subtext0: #839496;    /* base0 */
+
+  /* Solarized accents - same as dark */
+  --ctp-mauve: #268bd2;       /* blue - primary */
+  --ctp-red: #dc322f;         /* red */
+  --ctp-maroon: #dc322f;      /* red */
+  --ctp-peach: #cb4b16;       /* orange */
+  --ctp-yellow: #b58900;      /* yellow */
+  --ctp-green: #859900;       /* green */
+  --ctp-teal: #2aa198;        /* cyan */
+  --ctp-sky: #2aa198;         /* cyan */
+  --ctp-sapphire: #268bd2;    /* blue */
+  --ctp-blue: #268bd2;        /* blue */
+  --ctp-lavender: #6c71c4;    /* violet */
+  --ctp-pink: #d33682;        /* magenta */
+  --ctp-flamingo: #cb4b16;    /* orange */
+  --ctp-rosewater: #cb4b16;   /* orange */
+
+  color-scheme: light;
+}
+
+/* Kanagawa */
+[data-theme="kanagawa"] {
+  --ctp-base: #1f1f28;        /* sumiInk1 */
+  --ctp-mantle: #16161d;      /* sumiInk0 */
+  --ctp-crust: #16161d;
+  --ctp-surface0: #2a2a37;    /* sumiInk3 */
+  --ctp-surface1: #363646;    /* sumiInk4 */
+  --ctp-surface2: #54546d;    /* sumiInk5 */
+  --ctp-overlay0: #54546d;    /* sumiInk5 */
+  --ctp-overlay1: #727169;    /* fujiGray */
+  --ctp-overlay2: #c8c093;    /* oldWhite */
+
+  --ctp-text: #dcd7ba;        /* fujiWhite */
+  --ctp-subtext1: #c8c093;    /* oldWhite */
+  --ctp-subtext0: #727169;    /* fujiGray */
+
+  /* Kanagawa accents */
+  --ctp-mauve: #957fb8;       /* oniViolet - signature primary */
+  --ctp-red: #e46876;         /* waveRed */
+  --ctp-maroon: #c34043;      /* autumnRed */
+  --ctp-peach: #ffa066;       /* surimiOrange */
+  --ctp-yellow: #e6c384;      /* carpYellow */
+  --ctp-green: #98bb6c;       /* springGreen */
+  --ctp-teal: #7aa89f;        /* waveAqua1 */
+  --ctp-sky: #7fb4ca;         /* springBlue */
+  --ctp-sapphire: #7e9cd8;    /* crystalBlue */
+  --ctp-blue: #7e9cd8;        /* crystalBlue */
+  --ctp-lavender: #957fb8;    /* oniViolet */
+  --ctp-pink: #d27e99;        /* sakuraPink */
+  --ctp-flamingo: #ffa066;    /* surimiOrange */
+  --ctp-rosewater: #d27e99;   /* sakuraPink */
+
+  color-scheme: dark;
+}
+
+/* ============================================
+   Semantic Color Mappings (Tailwind Theme)
+   ============================================ */
+
+@theme {
+  /* Background & Foreground */
+  --color-background: var(--ctp-base);
+  --color-foreground: var(--ctp-text);
+
+  /* Card */
+  --color-card: var(--ctp-mantle);
+  --color-card-foreground: var(--ctp-text);
+
+  /* Popover */
+  --color-popover: var(--ctp-surface0);
+  --color-popover-foreground: var(--ctp-text);
+
+  /* Primary (Accent) */
+  --color-primary: var(--ctp-mauve);
+  --color-primary-foreground: var(--ctp-base);
+
+  /* Secondary */
+  --color-secondary: var(--ctp-surface1);
+  --color-secondary-foreground: var(--ctp-text);
+
+  /* Muted */
+  --color-muted: var(--ctp-surface0);
+  --color-muted-foreground: var(--ctp-subtext0);
+
+  /* Accent */
+  --color-accent: var(--ctp-mauve);
+  --color-accent-foreground: var(--ctp-base);
+
+  /* Destructive */
+  --color-destructive: var(--ctp-red);
+  --color-destructive-foreground: var(--ctp-base);
+
+  /* Border & Input */
+  --color-border: var(--ctp-surface2);
+  --color-input: var(--ctp-surface1);
+  --color-ring: var(--ctp-mauve);
+
+  /* Baseline Badge Colors */
+  --color-low: var(--ctp-green);
+  --color-moderate: var(--ctp-yellow);
+  --color-high: var(--ctp-red);
+  --color-privacy: var(--ctp-sapphire);
+
+  /* Typography */
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Monospace elements */
+  code, kbd, pre, samp, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* Subtle accent on hover */
+  .glow-accent {
+    transition: border-color 0.2s ease-in-out;
+  }
+  .glow-accent:hover {
+    border-color: color-mix(in srgb, var(--ctp-mauve) 50%, transparent);
+  }
+
+  /* Terminal-style prefix */
+  .terminal-prefix::before {
+    content: '> ';
+    color: var(--ctp-mauve);
+    font-family: var(--font-mono);
+  }
+
+  /* Scan line effect */
+  .scan-lines {
+    position: relative;
+  }
+  .scan-lines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Grid background pattern */
+  .grid-pattern {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--ctp-mauve) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--ctp-mauve) 8%, transparent) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Dot pattern background */
+  .dot-pattern {
+    background-image: radial-gradient(color-mix(in srgb, var(--ctp-mauve) 15%, transparent) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Pulsing status indicator */
+  .pulse-accent {
+    animation: pulse-accent 2s ease-in-out infinite;
+  }
+  @keyframes pulse-accent {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* Typing cursor effect for typewriter animation
+   * Animation budget: This is 1 of 2-3 essential micro-interactions (PERF-02)
+   * Purpose: Demonstrate search functionality, invite interaction
+   */
+  .typing-cursor::after {
+    content: '|';
+    color: var(--ctp-mauve);
+    margin-left: 1px;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  /* Slower blink when paused (between phrases) */
+  .typing-cursor.paused::after {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typing-cursor::after,
+    .typing-cursor.paused::after {
+      animation: none;
+    }
+  }
+
+  /* Control card hover effect */
+  .control-card {
+    transition: border-color 0.2s ease-in-out;
+  }
+  .control-card:hover {
+    border-color: color-mix(in srgb, var(--ctp-mauve) 50%, transparent);
+  }
+
+  /* Table row hover */
+  .table-row-hover:hover {
+    background-color: color-mix(in srgb, var(--ctp-mauve) 5%, transparent);
+  }
+
+  /* Sidebar active state */
+  .sidebar-active {
+    border-left: 2px solid var(--ctp-mauve);
+    background-color: color-mix(in srgb, var(--ctp-mauve) 10%, transparent);
+    color: var(--ctp-mauve);
+  }
+
+  /* Badge variants using Catppuccin colors */
+  .badge-low {
+    border-color: color-mix(in srgb, var(--ctp-green) 50%, transparent);
+    color: var(--ctp-green);
+    background-color: color-mix(in srgb, var(--ctp-green) 10%, transparent);
+  }
+  .badge-moderate {
+    border-color: color-mix(in srgb, var(--ctp-yellow) 50%, transparent);
+    color: var(--ctp-yellow);
+    background-color: color-mix(in srgb, var(--ctp-yellow) 10%, transparent);
+  }
+  .badge-high {
+    border-color: color-mix(in srgb, var(--ctp-red) 50%, transparent);
+    color: var(--ctp-red);
+    background-color: color-mix(in srgb, var(--ctp-red) 10%, transparent);
+  }
+  .badge-privacy {
+    border-color: color-mix(in srgb, var(--ctp-sapphire) 50%, transparent);
+    color: var(--ctp-sapphire);
+    background-color: color-mix(in srgb, var(--ctp-sapphire) 10%, transparent);
+  }
+  /* Tag badges */
+  .badge-ai {
+    border-color: color-mix(in srgb, var(--ctp-lavender) 50%, transparent);
+    color: var(--ctp-lavender);
+    background-color: color-mix(in srgb, var(--ctp-lavender) 10%, transparent);
+  }
+  /* License badges */
+  .badge-public-domain {
+    border-color: color-mix(in srgb, var(--ctp-green) 50%, transparent);
+    color: var(--ctp-green);
+    background-color: color-mix(in srgb, var(--ctp-green) 10%, transparent);
+  }
+  .badge-proprietary {
+    border-color: color-mix(in srgb, var(--ctp-peach) 50%, transparent);
+    color: var(--ctp-peach);
+    background-color: color-mix(in srgb, var(--ctp-peach) 10%, transparent);
+  }
+  .badge-open-license {
+    border-color: color-mix(in srgb, var(--ctp-teal) 50%, transparent);
+    color: var(--ctp-teal);
+    background-color: color-mix(in srgb, var(--ctp-teal) 10%, transparent);
+  }
+  .badge-meta {
+    border-color: color-mix(in srgb, var(--ctp-yellow) 50%, transparent);
+    color: var(--ctp-yellow);
+    background-color: color-mix(in srgb, var(--ctp-yellow) 10%, transparent);
+  }
+  .badge-tbd {
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 50%, transparent);
+    color: var(--ctp-overlay0);
+    background-color: color-mix(in srgb, var(--ctp-overlay0) 10%, transparent);
+  }
+
+  /* ── Card surface base ── */
+  .glass-card {
+    background: var(--ctp-mantle);
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 20%, transparent);
+    transition: border-color 0.2s ease-out;
+  }
+  .glass-card:hover {
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 40%, transparent);
+  }
+
+  /* Prominent surface variant for large panels */
+  .glass-card-thick {
+    background: var(--ctp-mantle);
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 20%, transparent);
+    transition: border-color 0.2s ease-out;
+  }
+  .glass-card-thick:hover {
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 40%, transparent);
+  }
+
+  /* Glow overlay — now a no-op; kept for markup compat */
+  .glass-glow {
+    display: none;
+  }
+
+  /* ── Fade-in-up entrance (hero, toasts, graph panels) ── */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+      animation: none;
+    }
+  }
+
+  /* ── Reveal-rise: interruptible entrance for toggled content ── */
+  .reveal-rise {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    @starting-style {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-rise {
+      /* Gentler, not zero: keep the fade, drop the travel */
+      transform: none !important;
+      transition: opacity 200ms ease;
+    }
+  }
+
+  /* ── Scroll-reveal animations ── */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: transform, opacity;
+  }
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ── Section numbering (mazehq 01/02/03 style) ── */
+
+  /* ── Light theme card adjustments ── */
+  [data-theme="latte"] .glass-card,
+  [data-theme="zinc-light"] .glass-card,
+  [data-theme="gruvbox-light"] .glass-card,
+  [data-theme="solarized-light"] .glass-card,
+  [data-theme="earth-light"] .glass-card,
+  [data-theme="latte"] .glass-card-thick,
+  [data-theme="zinc-light"] .glass-card-thick,
+  [data-theme="gruvbox-light"] .glass-card-thick,
+  [data-theme="solarized-light"] .glass-card-thick,
+  [data-theme="earth-light"] .glass-card-thick {
+    background: var(--ctp-mantle);
+    border-color: color-mix(in srgb, var(--ctp-overlay0) 30%, transparent);
+  }
+
+  /* Warning banner - theme adaptive */
+  .warning-banner {
+    border: 1px solid color-mix(in srgb, var(--ctp-yellow) 30%, transparent);
+    background-color: color-mix(in srgb, var(--ctp-yellow) 10%, transparent);
+  }
+  .warning-banner-text {
+    color: var(--ctp-yellow);
+  }
+  .warning-banner-icon {
+    color: var(--ctp-yellow);
+  }
+
+  /* Light theme overrides - use dark text for readability */
+  [data-theme="zinc-light"] .warning-banner-text,
+  [data-theme="latte"] .warning-banner-text,
+  [data-theme="gruvbox-light"] .warning-banner-text,
+  [data-theme="solarized-light"] .warning-banner-text,
+  [data-theme="earth-light"] .warning-banner-text {
+    color: #92400e; /* amber-800 - dark amber, high contrast on light bg */
+  }
+  [data-theme="zinc-light"] .warning-banner-icon,
+  [data-theme="latte"] .warning-banner-icon,
+  [data-theme="gruvbox-light"] .warning-banner-icon,
+  [data-theme="solarized-light"] .warning-banner-icon,
+  [data-theme="earth-light"] .warning-banner-icon {
+    color: #b45309; /* amber-700 */
+  }
+}
+
+/* Badge styles when inside selected command items (outside @layer to prevent purging)
+   Uses solid base background for contrast against accent selection */
+[data-selected="true"] .badge-low,
+[data-selected="true"] .badge-moderate,
+[data-selected="true"] .badge-high,
+[data-selected="true"] .badge-privacy,
+[data-selected="true"] .badge-ai,
+[data-selected="true"] .badge-public-domain,
+[data-selected="true"] .badge-proprietary,
+[data-selected="true"] .badge-open-license,
+[data-selected="true"] .badge-meta,
+[data-selected="true"] .badge-tbd {
+  background-color: var(--ctp-base);
+}
+
+[data-selected="true"] .badge-low,
+[data-selected="true"] .badge-public-domain {
+  color: var(--ctp-green);
+  border-color: var(--ctp-green);
+}
+
+[data-selected="true"] .badge-moderate,
+[data-selected="true"] .badge-meta {
+  color: var(--ctp-yellow);
+  border-color: var(--ctp-yellow);
+}
+
+[data-selected="true"] .badge-high {
+  color: var(--ctp-red);
+  border-color: var(--ctp-red);
+}
+
+[data-selected="true"] .badge-privacy {
+  color: var(--ctp-sapphire);
+  border-color: var(--ctp-sapphire);
+}
+
+[data-selected="true"] .badge-ai {
+  color: var(--ctp-lavender);
+  border-color: var(--ctp-lavender);
+}
+
+[data-selected="true"] .badge-proprietary {
+  color: var(--ctp-peach);
+  border-color: var(--ctp-peach);
+}
+
+[data-selected="true"] .badge-open-license {
+  color: var(--ctp-teal);
+  border-color: var(--ctp-teal);
+}
+
+[data-selected="true"] .badge-tbd {
+  color: var(--ctp-overlay0);
+  border-color: var(--ctp-overlay0);
+}
+
+/* Framework identifier badge (NIST, PCI, etc.) - outline badges inside selected command items */
+[data-selected="true"] [data-slot="badge"][data-variant="outline"] {
+  background-color: var(--ctp-base);
+  color: var(--ctp-text);
+  border-color: var(--ctp-overlay0);
+}
+
+/* Light theme contrast tweaks for selected-row badges */
+[data-theme="zinc-light"] [data-selected="true"] [data-slot="badge"],
+[data-theme="latte"] [data-selected="true"] [data-slot="badge"],
+[data-theme="gruvbox-light"] [data-selected="true"] [data-slot="badge"],
+[data-theme="solarized-light"] [data-selected="true"] [data-slot="badge"],
+[data-theme="earth-light"] [data-selected="true"] [data-slot="badge"] {
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--ctp-text) 25%, transparent);
+}
+[data-theme="zinc-light"] [data-selected="true"] [data-slot="badge"][data-variant="outline"],
+[data-theme="latte"] [data-selected="true"] [data-slot="badge"][data-variant="outline"],
+[data-theme="gruvbox-light"] [data-selected="true"] [data-slot="badge"][data-variant="outline"],
+[data-theme="solarized-light"] [data-selected="true"] [data-slot="badge"][data-variant="outline"],
+[data-theme="earth-light"] [data-selected="true"] [data-slot="badge"][data-variant="outline"] {
+  background-color: color-mix(in srgb, var(--ctp-base) 70%, var(--ctp-text) 30%);
+  border-color: color-mix(in srgb, var(--ctp-overlay0) 70%, var(--ctp-text) 30%);
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ctp-surface2) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--ctp-surface2);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: var(--ctp-overlay0);
+  }
+
+  /* Text glow - accent color */
+  .text-glow-accent {
+    text-shadow: 0 0 10px color-mix(in srgb, var(--ctp-mauve) 50%, transparent);
+  }
+
+  /* Accent text color utility */
+  .text-accent {
+    color: var(--ctp-mauve);
+  }
+
+  /* Baseline badge color utilities */
+  .text-low {
+    color: var(--ctp-green);
+  }
+  .text-moderate {
+    color: var(--ctp-yellow);
+  }
+  .text-high {
+    color: var(--ctp-red);
+  }
+  .text-privacy {
+    color: var(--ctp-sapphire);
+  }
+  .text-sky {
+    color: var(--ctp-sky);
+  }
+
+  /* Control ID in search - dark on selected, primary otherwise */
+  .control-id {
+    color: var(--ctp-mauve);
+  }
+  [data-selected="true"] .control-id {
+    color: var(--ctp-crust);
+  }
+
+  /* Background baseline color utilities */
+  .bg-low {
+    background-color: var(--ctp-green);
+  }
+  .bg-moderate {
+    background-color: var(--ctp-yellow);
+  }
+  .bg-high {
+    background-color: var(--ctp-red);
+  }
+  .bg-privacy {
+    background-color: var(--ctp-sapphire);
+  }
+
+  /* Before/After section color utilities */
+  .text-red {
+    color: var(--ctp-red);
+  }
+  .text-green {
+    color: var(--ctp-green);
+  }
+  .border-red {
+    border-color: var(--ctp-red);
+  }
+  .border-green {
+    border-color: var(--ctp-green);
+  }
+}

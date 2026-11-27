@@ -1,0 +1,347 @@
+{
+  "framework": {
+    "id": "owasp-api-top10",
+    "name": "OWASP API Security Top 10",
+    "version": "2023",
+    "description": "The OWASP API Security Top 10 represents the most critical security risks to APIs"
+  },
+  "families": {
+    "Authorization": "Risks related to authorization",
+    "Authentication": "Risks related to authentication",
+    "Resource Management": "Risks related to resource management",
+    "Business Logic": "Risks related to business logic",
+    "Server Security": "Risks related to server security",
+    "Configuration": "Risks related to configuration",
+    "Asset Management": "Risks related to asset management",
+    "Integration Security": "Risks related to integration security"
+  },
+  "controls": [
+    {
+      "control_id": "API1",
+      "title": "Broken Object Level Authorization",
+      "family": "Authorization",
+      "description": "Object-level authorization is an access control mechanism usually implemented at the code level to validate that a user can only access objects that they should have permission to access. Every API endpoint that receives an ID of an object and performs any action on the object should implement object-level authorization checks. The checks should validate that the logged-in user has permissions to perform the requested action on the requested object. Failures in this mechanism typically lead to unauthorized information disclosure, modification, or destruction of all data.",
+      "prevention_strategies": [
+        "Implement a proper authorization mechanism that relies on the user policies and hierarchy.",
+        "Use the authorization mechanism to check if the logged-in user has access to perform the requested action on the record in every function that uses an input from the client to access a record in the database.",
+        "Prefer the use of random and unpredictable values as GUIDs for records' IDs.",
+        "Write tests to evaluate the vulnerability of the authorization mechanism. Do not deploy changes that make the tests fail."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "E-commerce revenue data exposure",
+          "description": "An e-commerce platform for online stores provides a listing page with revenue charts for hosted shops. Inspecting browser requests, an attacker identifies the API endpoints used as a data source for those charts and their pattern: /shops/{shopName}/revenue_data.json. Using another API endpoint, the attacker gets the list of all hosted shop names. With a simple script, the attacker gains access to the sales data of thousands of online stores by manipulating the shop name in the URL."
+        },
+        {
+          "title": "Vehicle remote control via VIN manipulation",
+          "description": "An automobile manufacturer has enabled remote control of its vehicles via a mobile API for the driver. The API enables the driver to remotely start and stop the engine and lock and unlock the doors. As part of this flow, the user sends the Vehicle Identification Number (VIN) to the API. The API fails to validate that the VIN represents a vehicle that belongs to the logged-in user, which leads to a BOLA vulnerability. An attacker can access vehicles that don't belong to them."
+        },
+        {
+          "title": "Document deletion without ownership check",
+          "description": "An online document storage service allows users to view, edit, store, and delete their documents. When a user's document is deleted, a GraphQL mutation with the document ID is sent to the API. Since the API does not perform any further permission checks, a user is able to delete another user's document."
+        }
+      ],
+      "references": [
+        {"title": "Authorization Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"},
+        {"title": "Authorization Testing Automation Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html"}
+      ],
+      "related_cwes": ["CWE-285", "CWE-639"]
+    },
+    {
+      "control_id": "API2",
+      "title": "Broken Authentication",
+      "family": "Authentication",
+      "description": "Authentication endpoints and flows are assets that need to be protected. Additionally, \"Forgot password / reset password\" should be treated the same way as authentication mechanisms. An API is vulnerable if it permits credential stuffing with lists of valid usernames and passwords, permits brute force attacks without captcha or account lockout, permits weak passwords, sends sensitive authentication details such as auth tokens and passwords in the URL, allows changing email or password without requiring password confirmation, doesn't validate token authenticity, accepts unsigned or weakly signed JWT tokens, doesn't validate JWT expiration dates, uses plain text or weakly hashed passwords, or uses weak encryption keys.",
+      "prevention_strategies": [
+        "Make sure you know all the possible flows to authenticate to the API (mobile, web, one-click authentication, etc.).",
+        "Read about your authentication mechanisms. Make sure you understand what and how they are used. OAuth is not authentication, and neither are API keys.",
+        "Don't reinvent the wheel in authentication, token generation, or password storage. Use the standards.",
+        "Credential recovery/forgot password endpoints should be treated as login endpoints in terms of brute force, rate limiting, and lockout protections.",
+        "Require re-authentication for sensitive operations (e.g. changing the account owner email address/2FA phone number).",
+        "Use the OWASP Authentication Cheatsheet.",
+        "Where possible, implement multi-factor authentication.",
+        "Implement anti-brute force mechanisms to mitigate credential stuffing, dictionary attacks, and brute force attacks on your authentication endpoints. This mechanism should be stricter than the regular rate limiting mechanisms on your APIs.",
+        "Implement account lockout/captcha mechanisms to prevent brute force attacks against specific users. Implement weak-password checks.",
+        "API keys should not be used for user authentication. They should only be used for API client authentication."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "GraphQL batching brute force",
+          "description": "To perform user authentication, the API expects a GraphQL mutation with username and password. Because the login has rate limiting of three requests per minute per IP, an attacker exploits GraphQL query batching to send many login credential combinations in a single request, bypassing the rate limiting restriction and accelerating brute force attacks."
+        },
+        {
+          "title": "Account takeover via unprotected email change",
+          "description": "An attacker starts the password reset workflow by issuing a POST request to /api/reset-password. The API does not require the current password or an auth token. By changing the email address tied to the user account using a separate endpoint that doesn't validate ownership, the attacker gains full control of the account by resetting the password via the newly assigned email."
+        }
+      ],
+      "references": [
+        {"title": "Authentication Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"},
+        {"title": "Key Management Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html"},
+        {"title": "Credential Stuffing", "url": "https://owasp.org/www-community/attacks/Credential_stuffing"}
+      ],
+      "related_cwes": ["CWE-204", "CWE-307"]
+    },
+    {
+      "control_id": "API3",
+      "title": "Broken Object Property Level Authorization",
+      "family": "Authorization",
+      "description": "This category combines API3:2019 Excessive Data Exposure and API6:2019 Mass Assignment, focusing on the root cause: the lack of or improper authorization validation at the object property level. This leads to information exposure or manipulation by unauthorized parties. An API endpoint is vulnerable if it exposes properties of an object that are considered sensitive and should not be read by the user, or if it allows a user to change, add, or delete the value of a sensitive object's property which the user should not be able to access.",
+      "prevention_strategies": [
+        "When exposing an object using an API endpoint, always make sure that the user should have access to the object's properties you expose.",
+        "Avoid using generic methods such as to_json() and to_string(). Instead, cherry-pick the specific object properties you want to return.",
+        "If possible, avoid using functions that automatically bind a client's input into code variables, internal objects, or object properties (Mass Assignment).",
+        "Allow changes only to the object's properties that should be updated by the client.",
+        "Implement a schema-based response validation mechanism as an extra layer of security. As part of this mechanism, define and enforce data returned by all API methods.",
+        "Keep returned data structures to the bare minimum, according to the business/functional requirements for the endpoint."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Dating app sensitive data exposure",
+          "description": "A user of a dating application reports another user for inappropriate behavior. The reporting endpoint includes the reported user's profile data in the response. By inspecting the API traffic, the attacker discovers sensitive properties such as fullName and recentLocation are exposed in the response, which should not be visible to the reporting user."
+        },
+        {
+          "title": "Marketplace price manipulation via mass assignment",
+          "description": "An online marketplace host intercepts the API request when approving a booking. The host adds the total_stay_price property to the request body, manipulating the guest's charge to a higher amount. Because the API does not validate which properties can be modified by the host, the inflated price is accepted."
+        },
+        {
+          "title": "Social network content unblocking",
+          "description": "A social network allows users to upload short videos. A user notices that blocked content includes a property 'blocked': true. The user replays the content upload request and adds 'blocked': false to the request body. Because the API does not enforce property-level authorization, the previously blocked content is now published."
+        }
+      ],
+      "references": [
+        {"title": "API3:2019 Excessive Data Exposure", "url": "https://owasp.org/API-Security/editions/2019/en/0xa3-excessive-data-exposure/"},
+        {"title": "API6:2019 Mass Assignment", "url": "https://owasp.org/API-Security/editions/2019/en/0xa6-mass-assignment/"},
+        {"title": "Mass Assignment Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"}
+      ],
+      "related_cwes": ["CWE-213", "CWE-915"]
+    },
+    {
+      "control_id": "API4",
+      "title": "Unrestricted Resource Consumption",
+      "family": "Resource Management",
+      "description": "Satisfying API requests requires resources such as network bandwidth, CPU, memory, and storage. Other resources such as emails, SMS, phone calls, or biometrics validation are made available by service providers via API integrations, and paid for per request. Successful attacks can lead to Denial of Service or an increase of operational costs. An API is vulnerable if it is missing or has improperly set limits on execution timeouts, maximum allocable memory, maximum number of file descriptors, maximum number of processes, maximum upload file size, number of operations to perform in a single request, number of records per page to return in a single response, or third-party service providers' spending limits.",
+      "prevention_strategies": [
+        "Use a solution that makes it easy to limit memory, CPU, number of restarts, file descriptors, and processes such as containers or serverless code.",
+        "Define and enforce a maximum size of data on all incoming parameters and payloads, such as maximum length for strings, maximum number of elements in arrays, and maximum upload file size.",
+        "Implement a limit on how often a client can interact with the API within a defined timeframe (rate limiting).",
+        "Rate limiting should be fine tuned based on the business needs. Some API endpoints might require stricter policies.",
+        "Limit/throttle how many times or how often a single API client/user can execute a single operation (e.g. validate an OTP, or request password recovery without visiting the one-time URL).",
+        "Add proper server-side validation for query string and request body parameters, specifically the one that controls the number of records to be returned in the response.",
+        "Configure spending limits for all service providers/API integrations. When spending limits cannot be set, billing alerts should be configured instead."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "SMS-based password reset cost abuse",
+          "description": "An attacker targets a forgot-password flow that sends an SMS. The attacker writes a script that issues tens of thousands of API requests, causing the backend to send tens of thousands of SMS messages at $0.05 each. Within minutes, the company loses thousands of dollars in SMS charges."
+        },
+        {
+          "title": "GraphQL batching memory exhaustion",
+          "description": "A GraphQL endpoint allows users to upload profile pictures. The API limits each request to a maximum of three per minute. An attacker bypasses the rate limit by batching 999 upload mutations into a single GraphQL request. The server attempts to generate thumbnails for all 999 images simultaneously, exhausting available memory and causing denial of service."
+        },
+        {
+          "title": "Uncapped cloud storage costs",
+          "description": "A service provider allows clients to download arbitrarily large files via its API. An update increases a cached file from under the caching threshold to 18GB. All API clients immediately begin downloading the new version. Because there were no spending alerts or cost caps on the cloud storage account, the monthly bill increases from $13 to $8,000."
+        }
+      ],
+      "references": [
+        {"title": "Availability - Web Service Security Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html#availability"},
+        {"title": "DoS Prevention - GraphQL Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html#dos-prevention"},
+        {"title": "Mitigating Batching Attacks - GraphQL Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html#mitigating-batching-attacks"}
+      ],
+      "related_cwes": ["CWE-770", "CWE-400", "CWE-799"]
+    },
+    {
+      "control_id": "API5",
+      "title": "Broken Function Level Authorization",
+      "family": "Authorization",
+      "description": "Authorization flaws tend to be different from authentication flaws. Best way to find broken function level authorization issues is to perform deep analysis of the authorization mechanism while keeping in mind the user hierarchy, different roles or groups in the application, and asking questions such as: Can a regular user access administrative endpoints? Can a user perform sensitive actions that they should not have access to simply by changing the HTTP method? Can a user from group X access a function that should be exposed only to users from group Y by simply guessing the endpoint URL and parameters? Don't assume that an API endpoint is regular or administrative only based on the URL path.",
+      "prevention_strategies": [
+        "The enforcement mechanism(s) should deny all access by default, requiring explicit grants to specific roles for access to every function.",
+        "Review your API endpoints against function level authorization flaws, while keeping in mind the business logic of the application and groups hierarchy.",
+        "Make sure that all of your administrative controllers inherit from an administrative abstract controller that implements authorization checks based on the user's group/role.",
+        "Make sure that administrative functions inside a regular controller implement authorization checks based on the user's group and role."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Admin invite endpoint exploitation",
+          "description": "During the registration process for an application that only allows invited users to join, the mobile application triggers an API call to GET /api/invites/{invite_guid}. The attacker discovers this endpoint and manipulates it to POST /api/invites/new, which is an administrative endpoint that should not be accessible to regular users. Because the endpoint doesn't implement function level authorization checks, the attacker creates an invite and grants themselves admin privileges."
+        },
+        {
+          "title": "Unprotected admin user listing",
+          "description": "An attacker identifies an administrative API endpoint GET /api/admin/v1/users/all by guessing common URL patterns. Because the endpoint does not implement function level authorization checks, the attacker gains access to sensitive details of all users in the system."
+        }
+      ],
+      "references": [
+        {"title": "Forced Browsing", "url": "https://owasp.org/www-community/attacks/Forced_browsing"},
+        {"title": "OWASP Top 10 2013 - A7 Missing Function Level Access Control", "url": "https://www.owasp.org/index.php/Top_10_2013-A7-Missing_Function_Level_Access_Control"}
+      ],
+      "related_cwes": ["CWE-285"]
+    },
+    {
+      "control_id": "API6",
+      "title": "Unrestricted Access to Sensitive Business Flows",
+      "family": "Business Logic",
+      "description": "When creating an API Endpoint, it is important to understand which business flow it exposes. Some business flows are more sensitive than others in the sense that excessive access to them may harm the business. Common examples of sensitive business flows and the risk of excessive access associated with them include purchasing a product flow that could allow an attacker to buy all limited-stock items and resell at a higher price (scalping), creating a comment/post flow that could enable spam, and making a reservation that could enable an attacker to reserve all available time slots. The risk of excessive access might change between industries and businesses. For example, creating posts by a script might be considered spam by one social network but encouraged by another.",
+      "prevention_strategies": [
+        "The mitigation planning should be done in two layers: Business - identify the business flows that might harm the business if they are excessively used.",
+        "Engineering - choose the right protection mechanisms to mitigate the business risk.",
+        "Device fingerprinting: denying service to unexpected client devices (e.g. headless browsers) tends to make threat actors use more sophisticated solutions, thus more costly for them.",
+        "Human detection: using either captcha or more advanced biometric solutions (e.g. typing patterns).",
+        "Non-human patterns: analyze the user flow to detect non-human patterns (e.g. the user accessed the 'add to cart' and 'complete purchase' functions in less than one second).",
+        "Consider blocking IP addresses of Tor exit nodes and well-known proxies.",
+        "Secure and limit access to APIs that are consumed directly by machines (such as developer and B2B APIs). They tend to be an easy target for attackers because they often don't implement all the required protection mechanisms."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Gaming console scalping",
+          "description": "A technology company announces they are going to release a new gaming console on Thanksgiving. The product has very limited stock. An attacker writes code to automatically buy the new product and complete the transaction using multiple IP addresses distributed across different locations. On release day, the attacker's script runs and buys all available stock before legitimate customers can purchase the product. Later, the attacker sells the entire stock on another platform for a much higher price."
+        },
+        {
+          "title": "Airline ticket price manipulation",
+          "description": "An airline offers online ticket purchasing with no cancellation fee. A user with malicious intent books 90% of the seats on a desired flight. A few days before the flight, the user cancels all tickets at once, which forces the airline to discount ticket prices in order to fill the flight. The user purchases a single ticket at a much lower price than the original."
+        },
+        {
+          "title": "Ride-sharing referral fraud",
+          "description": "A ride-sharing app provides a referral program offering credit for inviting new users. The credit can later be used for rides. An attacker exploits this flow by writing a script to automate the registration process, with each new account adding credit to the attacker's wallet. The attacker then either enjoys free rides or sells the accounts with excessive credits."
+        }
+      ],
+      "references": [
+        {"title": "OWASP Automated Threats to Web Applications", "url": "https://owasp.org/www-project-automated-threats-to-web-applications/"},
+        {"title": "API10:2019 Insufficient Logging & Monitoring", "url": "https://owasp.org/API-Security/editions/2019/en/0xaa-insufficient-logging-monitoring/"}
+      ],
+      "related_cwes": []
+    },
+    {
+      "control_id": "API7",
+      "title": "Server Side Request Forgery",
+      "family": "Server Security",
+      "description": "Server-Side Request Forgery (SSRF) flaws occur when an API is fetching a remote resource without validating the user-supplied URL. It allows an attacker to coerce the application to send a crafted request to an unexpected destination, even when protected by a firewall or a VPN. Modern concepts in application development make SSRF more common and more dangerous. More common because of webhooks, file fetching from URLs, custom SSO, and URL previews. More dangerous because modern technologies like cloud providers, Kubernetes, and Docker expose management and control channels over HTTP on predictable, well-known paths. Those channels are an easy target for an SSRF attack.",
+      "prevention_strategies": [
+        "Isolate the resource fetching mechanism in your network: usually these features are aimed at retrieving remote resources and not internal ones.",
+        "Whenever possible, use allow lists for remote origins that users are expected to download resources from (e.g. Google Drive, Gravatar).",
+        "Use allow lists for URL schemes and ports.",
+        "Use allow lists for accepted media types for a given functionality.",
+        "Disable HTTP redirections.",
+        "Use a well-tested and maintained URL parser to avoid issues caused by URL parsing inconsistencies.",
+        "Validate and sanitize all client-supplied input data.",
+        "Do not send raw responses to clients."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Internal port scanning via profile picture URL",
+          "description": "An attacker exploits a social network that allows users to upload profile pictures by providing a URL. The attacker provides a URL targeting an internal service (e.g. http://localhost:8080). By observing the response time differences, the attacker can determine which internal ports are open, effectively performing an internal port scan from the server."
+        },
+        {
+          "title": "Cloud metadata service credential theft",
+          "description": "A security product generates events by receiving inputs from networks. For each event, several enrichments are performed by fetching information from internal services. An attacker sends a crafted event to the product with a payload URL pointing to the cloud instance metadata service (http://169.254.169.254/latest/meta-data/iam/security-credentials/). The API blindly fetches the URL and returns the sensitive cloud credentials to the attacker."
+        }
+      ],
+      "references": [
+        {"title": "Server Side Request Forgery", "url": "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery"},
+        {"title": "Server-Side Request Forgery Prevention Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"},
+        {"title": "URL confusion vulnerabilities in the wild (Snyk)", "url": "https://snyk.io/blog/url-confusion-vulnerabilities/"}
+      ],
+      "related_cwes": ["CWE-918"]
+    },
+    {
+      "control_id": "API8",
+      "title": "Security Misconfiguration",
+      "family": "Configuration",
+      "description": "The API might be vulnerable if appropriate security hardening is missing across any part of the API stack, or if there are improperly configured permissions on cloud services. If the latest security patches are missing or the systems are out of date. If unnecessary features are enabled (e.g. HTTP verbs, logging features). If there are discrepancies in the way incoming requests are processed by servers in the HTTP server chain. If Transport Layer Security (TLS) is missing. If security or cache control directives are not sent to clients. If a Cross-Origin Resource Sharing (CORS) policy is missing or improperly set. If error messages include stack traces or expose other sensitive information.",
+      "prevention_strategies": [
+        "The API life cycle should include a repeatable hardening process leading to fast and easy deployment of a properly locked down environment.",
+        "Have a task to review and update configurations across the entire API stack. The review should include: orchestration files, API components, and cloud services (e.g. S3 bucket permissions).",
+        "An automated process to continuously assess the effectiveness of the configuration and settings in all environments.",
+        "Ensure that all API communications from the client to the API server and any downstream/upstream components happen over an encrypted communication channel (TLS), regardless of whether it is an internal or public-facing API.",
+        "Be specific about which HTTP verbs each API can be accessed by: all other HTTP verbs should be disabled (e.g. HEAD).",
+        "Implement a proper Cross-Origin Resource Sharing (CORS) policy for APIs accessed from browser-based clients (e.g., WebApp front-end).",
+        "Include applicable Security Headers for APIs accessed from browser-based clients.",
+        "Restrict incoming content types/data formats to those that meet the business/functional requirements.",
+        "Ensure all servers in the HTTP server chain (e.g. load balancers, reverse and forward proxies, and back-end servers) process incoming requests in a uniform way to avoid desync issues.",
+        "Where applicable, define and enforce all API response payload schemas, including error responses, to prevent exception traces and other valuable information from being sent back to the attacker."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "JNDI injection via logging utility",
+          "description": "An API back-end server uses a popular third-party logging utility with JNDI (Java Naming and Directory Interface) lookups enabled by default. For each request, the logger writes a new log entry containing the request header value for X-Api-Version. An attacker sends a crafted request with X-Api-Version containing a JNDI lookup expression that the logger evaluates, causing Remote Code Execution (RCE) on the server."
+        },
+        {
+          "title": "Browser cache exposing private messages",
+          "description": "An API serving a messaging application does not include the Cache-Control header in responses containing private direct messages. As a result, private messages are cached by the browser. A malicious user retrieves cached conversation data by reading browser cache files from the filesystem of a shared computer."
+        }
+      ],
+      "references": [
+        {"title": "OWASP Secure Headers Project", "url": "https://owasp.org/www-project-secure-headers/"},
+        {"title": "Configuration and Deployment Management Testing - Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/README"},
+        {"title": "Testing for Error Handling - Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/README"},
+        {"title": "Testing for Cross Site Request Forgery - Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery"}
+      ],
+      "related_cwes": ["CWE-2", "CWE-16", "CWE-209", "CWE-319", "CWE-388", "CWE-444", "CWE-942"]
+    },
+    {
+      "control_id": "API9",
+      "title": "Improper Inventory Management",
+      "family": "Asset Management",
+      "description": "APIs tend to expose more endpoints than traditional web applications, making proper and updated documentation highly important. A proper inventory of hosts and deployed API versions also play an important role to mitigate issues such as deprecated API versions and exposed debug endpoints. The API is vulnerable when the purpose of an API host is unclear, there is no documentation or the documentation is not updated, there is no retirement plan for each API version, and the hosts inventory is missing. Additionally, there is risk when there is no visibility on how data is shared with third parties, including what sensitive data is shared, there is no business justification for the data flow, and there is no inventory or visibility of the data flows.",
+      "prevention_strategies": [
+        "Inventory all API hosts and document the API environment (e.g. production, staging, test, development), who should have network access to the host (e.g. public, internal, partners), and the API version.",
+        "Inventory integrated services and document their role in the system, what data is exchanged (data flow), and its sensitivity.",
+        "Document all aspects of your API including authentication, errors, redirects, rate limiting, CORS policy, and endpoints with their parameters, requests, and responses.",
+        "Generate documentation automatically by adopting open standards. Include the documentation build in your CI/CD pipeline.",
+        "Make API documentation available only to those authorized to use the API.",
+        "Use external protection measures such as API security specific solutions for all exposed versions of your APIs, not just for the current production version.",
+        "Avoid using production data with non-production API deployments. If this is unavoidable, these endpoints should get the same security treatment as the production ones.",
+        "When newer versions of APIs include security improvements, perform a risk analysis to inform the mitigation actions required for the older versions."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "Beta API missing rate limiting",
+          "description": "A social network implemented a rate-limiting mechanism that blocks attackers from using brute force to guess reset password tokens. This mechanism was not implemented as part of the API code itself, but in a separate component between the client and the official API (api.socialnetwork.owasp.org). A researcher found a beta API host (beta.api.socialnetwork.owasp.org) that runs the same API but without the rate limiting mechanism. The researcher was able to reset the password of any user by using a simple brute force to guess the 6-digit token."
+        },
+        {
+          "title": "Third-party data sharing abuse",
+          "description": "A social network allowed a third-party developer application to access user data. However, there were no proper controls limiting the scope of data accessible through the API. The malicious app gained access to sensitive information of 50 million users beyond the 270,000 who explicitly consented. The company behind the app sold the data for malicious purposes."
+        }
+      ],
+      "references": [
+        {"title": "CWE-1059: Incomplete Documentation", "url": "https://cwe.mitre.org/data/definitions/1059.html"}
+      ],
+      "related_cwes": ["CWE-1059"]
+    },
+    {
+      "control_id": "API10",
+      "title": "Unsafe Consumption of APIs",
+      "family": "Integration Security",
+      "description": "Developers tend to trust data received from third-party APIs more than user input. This is especially true for APIs offered by well-known companies. Because of that, developers tend to adopt weaker security standards, for instance in regard to input validation and sanitization. The API might be vulnerable if it interacts with other APIs over an unencrypted channel, does not properly validate and sanitize data gathered from other APIs prior to processing it or passing it to downstream components, blindly follows redirections, does not limit the number of resources available to process third-party services responses, or does not implement timeouts for interactions with third-party services.",
+      "prevention_strategies": [
+        "When evaluating service providers, assess their API security posture.",
+        "Ensure all API interactions happen over a secure communication channel (TLS).",
+        "Always validate and properly sanitize data received from integrated APIs before using it.",
+        "Maintain an allowlist of well-known locations integrated APIs may redirect yours to: do not blindly follow redirects."
+      ],
+      "attack_scenarios": [
+        {
+          "title": "SQL injection via third-party enrichment service",
+          "description": "An API integrates with a third-party service provider to enrich user-provided business addresses. When an address is supplied by the end user, it is sent to the third-party service and the returned data is then stored in a local SQL-enabled database. An attacker uses the third-party service to store an SQL injection payload associated with a business they created. The malicious payload is later retrieved by the vulnerable API, which trusts the third-party data and stores it without validation, leading to SQL injection."
+        },
+        {
+          "title": "Sensitive data exfiltration via redirect following",
+          "description": "An API integrates with a third-party service provider to store sensitive user medical information. Data is sent over a secure connection using an HTTP request like: POST /user/store_genome_data. An attacker compromises the third-party server and makes it respond with a 308 Permanent Redirect to an attacker-controlled server. Because the API blindly follows the third-party redirect, it repeats the exact same request including the user's sensitive data to the attacker's server."
+        },
+        {
+          "title": "Repository name SQL injection",
+          "description": "An attacker creates a source code repository named '; drop db;--. When an integration application fetches data from the malicious repository, it uses the repository name in an SQL query without proper sanitization, treating it as trusted input from the well-known source code hosting provider. The SQL injection payload executes, dropping the database."
+        }
+      ],
+      "references": [
+        {"title": "Web Service Security Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html"},
+        {"title": "Injection Flaws", "url": "https://owasp.org/www-community/Injection_Flaws"},
+        {"title": "Input Validation Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"},
+        {"title": "Injection Prevention Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html"},
+        {"title": "Transport Layer Protection Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html"},
+        {"title": "Unvalidated Redirects and Forwards Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html"}
+      ],
+      "related_cwes": ["CWE-20", "CWE-200", "CWE-319"]
+    }
+  ]
+}

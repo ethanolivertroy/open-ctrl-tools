@@ -7,6 +7,7 @@ A monorepo of GRC engineering tools, cloud and identity auditors, agent skills, 
 | Package | Stack | Description |
 | --- | --- | --- |
 | [`goog-sec`](./apps/goog-sec) | Astro / Starlight | Community-maintained security guidance for Google Workspace, Google Cloud, and Chrome. |
+| [`myctrl`](./apps/myctrl) | Astro / React / Cloudflare Workers | Open-source security & compliance control reference (`myctrl.tools`), crosswalk visualizer, GRC assessment workspace, and bring-your-own local standards overlay. |
 | [`trust-me-bro-center`](./apps/trust-me-bro-center) | TypeScript / Cloudflare Workers | Self-hosted trust center on Workers, D1, R2, and optional Workers AI with an admin UI and MCP server. |
 
 ## Auditors
@@ -62,11 +63,11 @@ A monorepo of GRC engineering tools, cloud and identity auditors, agent skills, 
 
 ## Cloudflare Workers
 
-This repository intentionally omits a root `package.json` or workspace file so Cloudflare Workers projects (`apps/trust-me-bro-center` and `demos/flue-grc-engineer-demo`) stay self-contained with their own lockfiles and `wrangler.jsonc` configs:
+This repository intentionally omits a root `package.json` or workspace file so Cloudflare Workers projects (`apps/myctrl`, `apps/trust-me-bro-center`, and `demos/flue-grc-engineer-demo`) stay self-contained with their own lockfiles and `wrangler.jsonc` configs:
 
 - **Deploy Button:** Point to a standalone Worker tree URL, such as `https://deploy.workers.cloudflare.com/?url=https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/apps/trust-me-bro-center`.
-- **Cloudflare Workers Builds:** Set **Root directory** to `apps/trust-me-bro-center` (or `demos/flue-grc-engineer-demo`) and **Build watch paths** to that directory (`apps/trust-me-bro-center/*`) so changes in other packages do not trigger Worker rebuilds.
+- **Cloudflare Workers Builds:** Set **Root directory** to `apps/myctrl` or `apps/trust-me-bro-center` (or `demos/flue-grc-engineer-demo`) and **Build watch paths** to that directory (e.g. `apps/myctrl/*`) so changes in other packages do not trigger Worker rebuilds.
 
 ## License
 
-MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE), bundled Drata OpenAPI specifications in `drata-cli` retain Drata's terms in [`tools/drata-cli/NOTICE`](./tools/drata-cli/NOTICE), and third-party notices for `grclanker` (including Pi, SIL OFL 1.1 Helix Mono fonts, vendored `picomatch`, and U.S. federal public-domain NIST OSCAL / FedRAMP materials) are in [`tools/grclanker/NOTICE`](./tools/grclanker/NOTICE).
+MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE), bundled Drata OpenAPI specifications in `drata-cli` retain Drata's terms in [`tools/drata-cli/NOTICE`](./tools/drata-cli/NOTICE), third-party notices for `grclanker` (including Pi, SIL OFL 1.1 Helix Mono fonts, vendored `picomatch`, and U.S. federal public-domain NIST OSCAL / FedRAMP materials) are in [`tools/grclanker/NOTICE`](./tools/grclanker/NOTICE), and framework/data notices (public-domain, open-license attributions, SIL OFL 1.1 Geist fonts, and non-redistribution details) for `myctrl` are in [`apps/myctrl/NOTICE`](./apps/myctrl/NOTICE).

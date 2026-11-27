@@ -1,0 +1,235 @@
+{
+  "framework": {
+    "id": "imo-maritime",
+    "name": "IMO Maritime Cyber Risk",
+    "version": "2024",
+    "description": "International Maritime Organization Guidelines on Maritime Cyber Risk Management (MSC-FAL.1/Circ.3/Rev.2), providing functional elements and minimum cybersecurity controls for safe and secure shipping operations."
+  },
+  "families": {
+    "3": "Cyber Risk Management"
+  },
+  "controls": [
+    {
+      "control_id": "3",
+      "title": "Elements of Cyber Risk Management",
+      "family": "3",
+      "description": "Elements of Cyber Risk Management"
+    },
+    {
+      "control_id": "3.1",
+      "title": "Cyber Risk Management Definition",
+      "family": "3",
+      "description": "For the purpose of these Guidelines, cyber risk management means the process of identifying, analysing, assessing and communicating a cyber-related risk and tolerating, terminating, transferring or treating it to an acceptable level, considering costs and benefits of actions taken by stakeholders."
+    },
+    {
+      "control_id": "3.2",
+      "title": "Goal of Maritime Cyber Risk Management",
+      "family": "3",
+      "description": "The goal of maritime cyber risk management is to support safe and secure shipping, which is operationally resilient to cyberthreats and risks. Safeguarding ships and ship-port interfacing systems from emerging threats should involve a range of controls that are continually evolving. Therefore, cyber resilient security features should be incorporated in the ship's equipment and systems at the design, manufacturing, integration, operation and maintenance stages."
+    },
+    {
+      "control_id": "3.3",
+      "title": "Senior Management Responsibility",
+      "family": "3",
+      "description": "Effective cyber risk management should start at the senior management level. Senior management should follow the relevant training and embed a culture of cyber risk awareness into all levels of an organization and ensure a holistic and flexible cyber risk management regime that is in continuous operation and constantly evaluated through effective feedback mechanisms."
+    },
+    {
+      "control_id": "3.4",
+      "title": "Risk-Based Approach to Cyber Resilience",
+      "family": "3",
+      "description": "One accepted approach to achieve the above is to comprehensively assess and compare an organization's current, and desired, cyber risk management postures. Such a comparison may reveal cybersecurity gaps in CBSs that can be addressed to achieve cyber resilience objectives through a risk-based approach. This risk-based approach is to evaluate the cyber risks, considering ship type and operational profile as well as onboard systems' complexity and connectivity, which will enable an organization to best apply its resources in the most cost-effective and efficient manner"
+    },
+    {
+      "control_id": "3.5",
+      "title": "Functional Elements of Cyber Risk Management",
+      "family": "3",
+      "description": "These Guidelines present the functional elements that support effective cyber risk management. These functional elements are not sequential - all should be concurrent and continuous in practice and should be incorporated appropriately in a risk management framework. The functional/technical cybersecurity controls listed under each of the functional elements represent the minimum controls that should be implemented. Additional cybersecurity controls may be considered depending on the evaluation of the identified cyber risks."
+    },
+    {
+      "control_id": "3.5.1",
+      "title": "Govern",
+      "family": "3",
+      "description": "Govern: Establish and monitor risk management strategy, expectations and policies. Define personnel roles and responsibilities for cyber risk management. Ensure business continuity, such as backup management and disaster recovery, and crisis management."
+    },
+    {
+      "control_id": "3.5.1.1",
+      "title": "Designate Cybersecurity Accountability",
+      "family": "3",
+      "description": "Designate a person or entity accountable for the planning, resourcing and execution of cybersecurity activities."
+    },
+    {
+      "control_id": "3.5.1.2",
+      "title": "Cybersecurity Authority and Expertise",
+      "family": "3",
+      "description": "Ensure that the designated person or entity is given the necessary authority and support to fulfil their duties and that they have sufficient knowledge and expertise in cyber risk management."
+    },
+    {
+      "control_id": "3.5.2",
+      "title": "Identify",
+      "family": "3",
+      "description": "Identify: Determine the current cyber risk to ships and ship/port interfaces"
+    },
+    {
+      "control_id": "3.5.2.1",
+      "title": "Identify Critical Systems and Assets",
+      "family": "3",
+      "description": "Identify the systems, assets, services, data and capabilities, interdependencies between safety critical systems (including the information flow) that, when disrupted, pose risks to ship operations, human safety, safety of the ship and/or a threat to the environment, including those related to the software and hardware supply chains"
+    },
+    {
+      "control_id": "3.5.2.2",
+      "title": "Digital Systems Inventory",
+      "family": "3",
+      "description": "Establish and maintain an inventory of digital systems on board the ship. These systems and assets could include the systems listed in paragraph 2.2.1 of these guidelines. Identify internal and external systems dependencies and network connections."
+    },
+    {
+      "control_id": "3.5.2.3",
+      "title": "Cyber Risk Assessment",
+      "family": "3",
+      "description": "Carry out a risk assessment of those systems, services, assets, data and capabilities critical to ship operations, the sudden operational failure of which may result in hazardous situations. Identify cyber-related threats. Identify vulnerabilities to systems, services, assets, data and capabilities. Assess the likelihood and impact of a cyber incident on the safety, availability, integrity and confidentiality of those elements."
+    },
+    {
+      "control_id": "3.5.3",
+      "title": "Protect",
+      "family": "3",
+      "description": "Protect: Implement risk control processes and measures to protect CBSs, and contingency planning to protect against a cyber incident and ensure business continuity of shipping operations, human safety, safety of the vessel and/or threat to the environment."
+    },
+    {
+      "control_id": "3.5.3.1",
+      "title": "User Access Credential Management",
+      "family": "3",
+      "description": "Assign unique credentials for all users, separate user and privileged accounts, collect security devices and deactivate accounts for departing employees or users."
+    },
+    {
+      "control_id": "3.5.3.2",
+      "title": "Password and Authentication Controls",
+      "family": "3",
+      "description": "Change all default passwords on all devices, enforce a strong password policy and consider establishing other user account access control management measures to safeguard against malicious attempts such as brute force attacks, phishing, etc. Use multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate."
+    },
+    {
+      "control_id": "3.5.3.3",
+      "title": "Network Security and Segmentation",
+      "family": "3",
+      "description": "Limit exploitable services on the Internet, establish a hardware and software approval process, collect and securely store logs for intrusion detection and incident response, and segment OT device networks from IT networks. Ensure security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure."
+    },
+    {
+      "control_id": "3.5.3.4",
+      "title": "Internet and Intranet Security Measures",
+      "family": "3",
+      "description": "Implement security measures (such as firewall or antivirus) for any ship digital systems and devices that have access to the Internet or the company's intranet, or any interaction with third party or landside network and information systems, particularly those of ship/port interfaces. Implement policies and procedures regarding the use of cryptography."
+    },
+    {
+      "control_id": "3.5.3.5",
+      "title": "Removable Media Controls",
+      "family": "3",
+      "description": "Establish controls to protect systems from the use of unauthorized removable media."
+    },
+    {
+      "control_id": "3.5.3.6",
+      "title": "Cybersecurity Training and Awareness",
+      "family": "3",
+      "description": "Mandate annual basic cybersecurity training for all employees and OT-specific cybersecurity training for OT users, and cybersecurity familiarization to all crew members upon engagement on board the ship. This training for all employees and OT users should include elements on cyber hygiene, the recognition and detection of an ongoing cyber incident, as well as response and recovery. Knowledge on cybersecurity should occasionally be tested, for example through drills and exercises"
+    },
+    {
+      "control_id": "3.5.3.7",
+      "title": "System Backups and Incident Response Planning",
+      "family": "3",
+      "description": "Perform regular system backups, software updates, and develop and maintain incident response (IR) plans."
+    },
+    {
+      "control_id": "3.5.3.8",
+      "title": "Supply Chain Security Policies",
+      "family": "3",
+      "description": "Establish policies on software and hardware supply chain security for those systems and assets that have been identified as critical."
+    },
+    {
+      "control_id": "3.5.3.9",
+      "title": "Cybersecurity Effectiveness Assessment",
+      "family": "3",
+      "description": "Establish policies and procedures to assess the effectiveness of cyber risk management measures, such as audits, and to periodically review and update these measures."
+    },
+    {
+      "control_id": "3.5.4",
+      "title": "Detect",
+      "family": "3",
+      "description": "Detect: Develop, implement and practise activities necessary to detect a cyber incident in a timely manner. Implement appropriate measures to detect unintended activity on CBS and timely identification of a cyber incident."
+    },
+    {
+      "control_id": "3.5.4.1",
+      "title": "Threat Monitoring",
+      "family": "3",
+      "description": "Maintain a list of relevant threats, threat actor tactics, techniques and procedures and actively monitor systems for those threats."
+    },
+    {
+      "control_id": "3.5.4.2",
+      "title": "Cyber Incident Detection Training",
+      "family": "3",
+      "description": "Annual basic cybersecurity training for all employees should include training on recognizing and detecting an ongoing cyber incident."
+    },
+    {
+      "control_id": "3.5.5",
+      "title": "Respond",
+      "family": "3",
+      "description": "Respond: Develop, implement and practise activities and plans to provide resilience and to restore systems necessary for shipping and ship-port operations or services impaired due to a cyber incident. Implement appropriate measures to minimize the effect of a detected cyber incident to other parts of ship systems."
+    },
+    {
+      "control_id": "3.5.5.1",
+      "title": "Incident Reporting",
+      "family": "3",
+      "description": "Report incidents to necessary parties within required time frames as defined by the Administration."
+    },
+    {
+      "control_id": "3.5.5.2",
+      "title": "Incident Record Keeping",
+      "family": "3",
+      "description": "Records of cyber incidents should be kept."
+    },
+    {
+      "control_id": "3.5.5.3",
+      "title": "Cyber Incident Response Training",
+      "family": "3",
+      "description": "Annual basic cybersecurity training for all employees should include training on responding to a cyber incident."
+    },
+    {
+      "control_id": "3.5.6",
+      "title": "Recover",
+      "family": "3",
+      "description": "Recover: Identify and implement measures to restore onboard CBS including networks necessary for shipping operations impacted by a cyber incident."
+    },
+    {
+      "control_id": "3.5.6.1",
+      "title": "Recovery Strategy Development",
+      "family": "3",
+      "description": "Develop, maintain and implement strategies for the recovery and reinstatement of essential business or mission critical assets or systems that might be impacted by a cyber incident."
+    },
+    {
+      "control_id": "3.5.6.2",
+      "title": "Cyber Incident Recovery Training",
+      "family": "3",
+      "description": "Annual basic cybersecurity training for all employees should include training on recovering from a cyber incident."
+    },
+    {
+      "control_id": "3.5.6.3",
+      "title": "Root Cause Analysis",
+      "family": "3",
+      "description": "Carry out root cause analysis of cyber incidents, with the objective of resolving underlying issues and vulnerabilities to prevent similar recurrence."
+    },
+    {
+      "control_id": "3.6",
+      "title": "Document Protection for Functional Elements",
+      "family": "3",
+      "description": "These functional elements encompass the activities and desired outcomes of effective cyber risk management across critical systems affecting maritime operations and information exchange, and constitute an ongoing process with effective feedback mechanisms. Any documents, or sections of documents, developed to satisfy these functional elements should be protected by procedures aimed at preventing unauthorized access, deletion, destruction or amendment."
+    },
+    {
+      "control_id": "3.7",
+      "title": "Cyber Risk Awareness at All Levels",
+      "family": "3",
+      "description": "Effective cyber risk management should ensure an appropriate level of awareness of cyber risks at all levels of an organization. The level of awareness and preparedness should be appropriate to roles and responsibilities in the cyber risk management system."
+    },
+    {
+      "control_id": "3.8",
+      "title": "Cyber Resilient Equipment and Systems",
+      "family": "3",
+      "description": "Implementation of cyber resilient equipment and systems is to be considered. As part of technical measures, equipment and systems should be designed and tested as per international standards and guidance to assure cyber resilience on board ships."
+    }
+  ]
+}

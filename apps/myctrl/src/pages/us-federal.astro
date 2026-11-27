@@ -1,0 +1,24 @@
+---
+import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
+import { getStats, getByTag } from '../data/controls';
+
+const federalContent = getByTag('Federal').map(config => ({
+  config,
+  stats: getStats(config.id),
+}));
+
+const totalItems = federalContent.reduce((sum, { stats }) => sum + stats.total, 0);
+const description =
+  `U.S. Federal government security frameworks including NIST, FedRAMP, and DoD requirements. ` +
+  `${totalItems} controls across ${federalContent.length} framework${federalContent.length !== 1 ? 's' : ''}.`;
+---
+
+<FrameworkCategoryPage
+  title="U.S. Federal Frameworks"
+  breadcrumbLabel="U.S. Federal"
+  heading="U.S. Federal Security Frameworks"
+  badge={{ label: 'U.S. Federal', class: 'bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-400' }}
+  description={description}
+  groups={[{ frameworks: federalContent }]}
+  emptyMessage="No Federal frameworks available yet."
+/>
