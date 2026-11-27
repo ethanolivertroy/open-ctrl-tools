@@ -58,22 +58,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          FILES_LIST=$(mktemp)
+          trap 'rm -f "$FILES_LIST"' EXIT
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            FILES=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+            git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > "$FILES_LIST"
           elif [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ] || [ -z "${{ github.event.before }}" ]; then
-            FILES=$(git ls-files)
+            git ls-files > "$FILES_LIST"
           else
-            FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+            git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" > "$FILES_LIST"
           fi
 
           RUN_ALL=false
-          if printf '%s\n' "$FILES" | grep -qE '^\.github/workflows/ci\.yml$'; then
+          if grep -qE '^\.github/workflows/ci\.yml$' "$FILES_LIST"; then
             RUN_ALL=true
           fi
 
           has_match() {
             local pattern="$1"
-            if [ "$RUN_ALL" = "true" ] || printf '%s\n' "$FILES" | grep -qE "$pattern"; then
+            if [ "$RUN_ALL" = "true" ] || grep -qE "$pattern" "$FILES_LIST"; then
               echo "true"
             else
               echo "false"
@@ -96,7 +98,7 @@ jobs:
 
           GO_DIRS=()
           for dir in auditors/go-go-okta-inspector auditors/gws-inspector-py tools/cmvp-tui tools/fedramp-browser tools/oscal-cli; do
-            if [ "$RUN_ALL" = "true" ] || printf '%s\n' "$FILES" | grep -qE "^${dir}/"; then
+            if [ "$RUN_ALL" = "true" ] || grep -qE "^${dir}/" "$FILES_LIST"; then
               GO_DIRS+=("$dir")
             fi
           done
