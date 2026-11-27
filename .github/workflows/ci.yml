@@ -43,7 +43,9 @@ jobs:
       python_scripts: ${{ steps.filter.outputs.python_scripts }}
       wilma: ${{ steps.filter.outputs.wilma }}
       controlbot: ${{ steps.filter.outputs.controlbot }}
+      drata_cli: ${{ steps.filter.outputs.drata_cli }}
       mesh_security_trainer: ${{ steps.filter.outputs.mesh_security_trainer }}
+      nist_cmvp_api: ${{ steps.filter.outputs.nist_cmvp_api }}
       pi_kevin: ${{ steps.filter.outputs.pi_kevin }}
       go_dirs: ${{ steps.filter.outputs.go_dirs }}
     steps:
@@ -85,7 +87,9 @@ jobs:
           echo "python_scripts=$(has_match '^(auditors/duo-audit/|auditors/okta-inspector-py/|auditors/slack-audit/|auditors/splunk-audit/|skills/nist-cybersecurity-skills/scripts/|skills/security-skills/skills/iac-security-scanner/scripts/|demos/bsidesorl-2025-grcengcloud/|demos/codex-grc-agent-demo/|demos/databricks-grc-demo/|demos/nist-cybersecurity-mlx-pipeline/|demos/pcidss-mcp-training/)')" >> "$GITHUB_OUTPUT"
           echo "wilma=$(has_match '^auditors/wilma/')" >> "$GITHUB_OUTPUT"
           echo "controlbot=$(has_match '^tools/controlbot/')" >> "$GITHUB_OUTPUT"
+          echo "drata_cli=$(has_match '^tools/drata-cli/')" >> "$GITHUB_OUTPUT"
           echo "mesh_security_trainer=$(has_match '^tools/mesh-security-trainer/')" >> "$GITHUB_OUTPUT"
+          echo "nist_cmvp_api=$(has_match '^tools/nist-cmvp-api/')" >> "$GITHUB_OUTPUT"
           echo "pi_kevin=$(has_match '^tools/pi-kevin/')" >> "$GITHUB_OUTPUT"
 
           GO_DIRS=()
@@ -260,6 +264,21 @@ jobs:
       - run: npm ci
       - run: npm test && npm run typecheck
 
+  drata-cli:
+    name: tools/drata-cli
+    needs: changes
+    if: needs.changes.outputs.drata_cli == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/drata-cli
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: npm test
+
   mesh-security-trainer:
     name: tools/mesh-security-trainer
     needs: changes
@@ -277,6 +296,28 @@ jobs:
           cache-dependency-path: tools/mesh-security-trainer/package-lock.json
       - run: npm ci
       - run: npm test
+
+  nist-cmvp-api:
+    name: tools/nist-cmvp-api
+    needs: changes
+    if: needs.changes.outputs.nist_cmvp_api == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/nist-cmvp-api
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: tools/nist-cmvp-api/requirements-dev.lock
+      - run: python -m pip install --disable-pip-version-check --require-hashes -r requirements-dev.lock
+      - run: python -m py_compile scraper.py modal_scrape.py modal_scrape_helpers.py validate_api.py test_scraper.py
+      - run: python -m ruff check .
+      - run: python -m pytest test_scraper.py -q
+      - run: python -m pip_audit --require-hashes --disable-pip -r requirements-dev.lock
+      - run: python -m pip_audit --require-hashes --disable-pip -r requirements.lock
 
   pi-kevin:
     name: tools/pi-kevin

@@ -1,0 +1,21 @@
+Source: https://csrc.nist.gov/CSRC/media/projects/cryptographic-module-validation-program/documents/security-policies/140sp9902.pdf
+Certificate: 9902
+Standard: FIPS 140-2
+
+3.4 Algorithms
+Table 10 lists the FIPS Approved cryptographic algorithms used by the module.
+Algorithm
+AES Cert. #A9002
+DRBG Cert. #A9002
+ECDSA Cert. #A9002
+HMAC Cert. #A9002
+KAS Cert. #A9002
+KDF TLS
+RSA Cert. #A9002
+SHS Cert. #A9002
+SSH KDF
+
+Allowed Algorithms
+Table 11 describes the non-approved but allowed algorithms in FIPS mode.
+Algorithm
+Triple-DES

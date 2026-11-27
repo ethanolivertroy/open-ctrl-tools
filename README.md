@@ -30,9 +30,11 @@ A monorepo of GRC engineering tools, cloud and identity auditors, agent skills, 
 | --- | --- | --- |
 | [`cmvp-tui`](./tools/cmvp-tui) | Go | Terminal UI for searching NIST CMVP validated cryptographic modules. |
 | [`controlbot`](./tools/controlbot) | TypeScript | Terraform PR compliance reviewer combining Checkov static scans, NIST 800-53 mapping, and optional Cursor review. |
+| [`drata-cli`](./tools/drata-cli) | Node.js | Unofficial OpenAPI-driven CLI and agent workflow skill for Drata's public v1/v2 APIs. |
 | [`fedramp-browser`](./tools/fedramp-browser) | Go | Terminal UI for browsing FedRAMP requirements, definitions, and Key Security Indicators. |
 | [`mesh-security`](./tools/mesh-security) | TypeScript | Monorepo toolkit (core library, VS Code extension, MCP server) for checking Istio, Consul, and Linkerd configs. |
 | [`mesh-security-trainer`](./tools/mesh-security-trainer) | Node.js | Interactive browser trainer for spotting Istio, Consul, and Linkerd security misconfigurations. |
+| [`nist-cmvp-api`](./tools/nist-cmvp-api) | Python | Self-hosted scraper, validator, Modal runner, workflow templates, and agent skill for publishing a NIST CMVP static JSON API. |
 | [`oscal-cli`](./tools/oscal-cli) | Go | CLI to validate and convert OSCAL 1.1.3 documents across XML, JSON, and YAML. |
 | [`pi-kevin`](./tools/pi-kevin) | TypeScript | Pi extension and skill for browsing and analyzing CISA Known Exploited Vulnerabilities (KEV). |
 
@@ -66,4 +68,4 @@ This repository intentionally omits a root `package.json` or workspace file so C
 
 ## License
 
-MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE).
+MIT License. See [`LICENSE`](./LICENSE). Embedded public-domain NIST OSCAL schemas in `oscal-cli` retain their attribution in [`tools/oscal-cli/NOTICE`](./tools/oscal-cli/NOTICE), and bundled Drata OpenAPI specifications in `drata-cli` retain Drata's terms in [`tools/drata-cli/NOTICE`](./tools/drata-cli/NOTICE).
