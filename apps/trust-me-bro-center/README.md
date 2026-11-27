@@ -6,6 +6,8 @@ This Worker only hosts the public trust page and request workflow; it does not c
 
 Local setups ship with fictional **Northstar Labs** placeholder content. Replace every claim, contact, date, and uploaded document before exposing a site externally.
 
+![Trust Me Bro Center overview showing Northstar Labs demonstration content](./screenshot.png)
+
 ## Reviewer experience
 
 Public views cover Overview, Resources, Controls, Media, FAQ, Subprocessors, and Updates. Overview displays compliance frameworks, resources, and data-collected disclosures alongside controls, FAQs, subprocessors, and updates. Public files open directly, while request-only documents require admin approval first. Subscriptions use a confirmation button on `/confirm` so link scanners do not auto-confirm addresses, and the "Ask a question" drawer answers strictly from published records.
