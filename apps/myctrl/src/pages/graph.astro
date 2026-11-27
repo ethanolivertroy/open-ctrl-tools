@@ -1,0 +1,13 @@
+---
+import GraphLayout from '../layouts/GraphLayout.astro';
+import KnowledgeGraph from '../components/graph/KnowledgeGraph';
+---
+
+<GraphLayout title="Compliance Knowledge Graph">
+  <!-- Full-screen graph -->
+  <KnowledgeGraph
+    client:only="react"
+    mode="galaxy"
+    fullscreen={true}
+  />
+</GraphLayout>

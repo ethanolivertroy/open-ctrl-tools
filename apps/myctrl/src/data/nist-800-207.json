@@ -1,0 +1,188 @@
+{
+  "framework": {
+    "id": "nist-800-207",
+    "name": "NIST SP 800-207 Zero Trust",
+    "version": "2020",
+    "description": "NIST SP 800-207 defines the Zero Trust Architecture (ZTA) model, providing a set of tenets that serve as the foundation for designing and deploying zero trust enterprise networks. It shifts security focus from network perimeter defense to resource-level protection."
+  },
+  "families": {
+    "NIST": "Zero Trust Tenets"
+  },
+  "controls": [
+    {
+      "control_id": "NIST Tenet 1",
+      "title": "All Data Sources and Computing Services Are Considered Resources",
+      "family": "NIST",
+      "description": "All data sources and computing services are considered resources.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How does your architecture inventory every data source and computing service so that each one is treated as a protected resource?",
+            "What mechanism ensures that newly deployed services, databases, and SaaS applications are automatically registered as resources subject to zero trust policy?",
+            "Where does your policy engine obtain its authoritative list of resources when it evaluates an access request?",
+            "How do policy enforcement points mediate access to non-traditional resources such as APIs and serverless functions, not just servers and applications?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "Who owns the process for classifying data sources and computing services as enterprise resources, and how often is that classification reviewed?",
+            "What criteria determine whether an asset falls within the scope of your zero trust resource definition?",
+            "How does your decommissioning process ensure retired services are removed from the resource inventory and their access policies revoked?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 2",
+      "title": "All Communication Is Secured Regardless of Network Location",
+      "family": "NIST",
+      "description": "All communication is secured regardless of network location.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "What encryption and authentication controls protect traffic between internal services, and how do they compare with the protections applied to external connections?",
+            "How does your architecture prevent implicit trust for requests that originate on enterprise-owned network infrastructure?",
+            "Which technologies, such as mutual TLS or encrypted overlays, secure communication in transit across every network segment?",
+            "How are legacy systems that cannot support encrypted transport identified, and what compensating controls protect their traffic?"
+          ]
+        },
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you detect unencrypted or improperly authenticated traffic within your environment?",
+            "What monitoring confirms that confidentiality and integrity protections stay in place as workloads move between on-premises and cloud locations?",
+            "How are exceptions to the secure communication requirement recorded, risk-assessed, and tracked to closure?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 3",
+      "title": "Per-Session Access to Individual Enterprise Resources",
+      "family": "NIST",
+      "description": "Access to individual enterprise resources is granted on a per-session basis.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How does your policy enforcement point grant access to a single resource for a single session rather than issuing broad, long-lived network access?",
+            "What limits session lifetime, and what triggers a fresh trust evaluation before a new session to the same resource is established?",
+            "How do you ensure that access granted to one enterprise resource does not automatically extend to other resources?",
+            "How is least privilege applied when scoping the permissions granted within an individual session?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "What policy defines acceptable session durations and re-authentication thresholds for resources of different sensitivity levels?",
+            "How do you confirm that the entitlements evaluated at session establishment reflect a user's current role and need?",
+            "Who approves any deviation that permits persistent or multi-resource sessions, and how are those decisions revisited?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 4",
+      "title": "Dynamic Policy-Based Resource Access",
+      "family": "NIST",
+      "description": "Access to resources is determined by dynamic policy -- including the observable state of client identity, application/service, and the requesting asset -- and may include other behavioral and environmental attributes.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "Which attributes of client identity, the application or service, and the requesting asset does your policy engine evaluate when deciding an access request?",
+            "How are behavioral and environmental attributes, such as location or usage patterns, incorporated into dynamic access decisions?",
+            "How does the policy engine obtain the observable state of the requesting asset, such as software version or patch level, at decision time?",
+            "How quickly do changes in identity or device state propagate into the policies applied to subsequent access requests?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "Where are your dynamic access policies documented, and how do they show the attributes and rules the policy engine applies?",
+            "What records demonstrate that a specific access decision was based on the client, application, and asset state observed at the time of the request?",
+            "How do you document changes to policy rules, and what evidence shows they were tested before enforcement?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 5",
+      "title": "Integrity and Security Posture Monitoring of All Assets",
+      "family": "NIST",
+      "description": "The enterprise monitors and measures the integrity and security posture of all owned and associated assets.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "What tooling continuously measures the integrity and security posture of enterprise-owned and associated assets?",
+            "How is posture data, such as patch level and configuration state, fed into the policy engine that decides resource access?",
+            "How does your access control plane treat assets whose measured posture has degraded or that carry known vulnerabilities?",
+            "How do you monitor devices your enterprise does not own but that are associated with access to enterprise resources?"
+          ]
+        },
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "How do you identify assets that appear subverted, lack expected patches, or fall outside your monitoring coverage?",
+            "What thresholds trigger denial or restriction of access based on an asset's measured security posture?",
+            "How is monitoring coverage itself measured so that gaps in asset visibility are surfaced and remediated?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 6",
+      "title": "Dynamic Authentication and Authorization Enforcement",
+      "family": "NIST",
+      "description": "All resource authentication and authorization are dynamic and strictly enforced before access is allowed.",
+      "assessment_questions": [
+        {
+          "category": "Technical Implementation",
+          "questions": [
+            "How are authentication and authorization enforced before every resource access rather than only at initial network entry?",
+            "What mechanisms support re-evaluating trust during an ongoing session, such as reauthentication triggers or continuous risk scoring?",
+            "How does your identity, credential, and access management stack integrate with policy enforcement points so decisions are applied in real time?",
+            "How is multifactor authentication applied dynamically based on the sensitivity of the requested resource?"
+          ]
+        },
+        {
+          "category": "Process & Governance",
+          "questions": [
+            "What policy governs the ongoing cycle of granting access, assessing threats, and re-evaluating trust for active sessions?",
+            "How are the criteria for stepping up authentication or revoking access decided, and who approves them?",
+            "How do you verify that enforcement is strict, meaning no access paths exist that bypass authentication and authorization checks?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "NIST Tenet 7",
+      "title": "Comprehensive Data Collection for Security Posture Improvement",
+      "family": "NIST",
+      "description": "The enterprise collects as much information as possible about the current state of assets, network infrastructure and communications and uses it to improve its security posture.",
+      "assessment_questions": [
+        {
+          "category": "Risk & Monitoring",
+          "questions": [
+            "What information do you collect about the current state of assets, network infrastructure, and communications across the enterprise?",
+            "How is the collected data analyzed to produce insight that improves policy creation and enforcement?",
+            "How does this telemetry refine the policy engine's access decisions over time?",
+            "What gaps exist in your current collection coverage, and how are they being addressed?"
+          ]
+        },
+        {
+          "category": "Documentation & Evidence",
+          "questions": [
+            "What records show that insight from collected data has led to concrete improvements in your security posture or access policies?",
+            "How is the data collection scope documented, including the systems in scope and retention periods for the telemetry?",
+            "What evidence demonstrates a working feedback loop between operational telemetry and policy updates?"
+          ]
+        }
+      ]
+    }
+  ]
+}

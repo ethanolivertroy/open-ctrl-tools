@@ -1,0 +1,126 @@
+/* ============================================
+   Static code blocks (@pierre/diffs)
+   Build-time FileRenderer output rendered by
+   src/components/ui/StaticCode.astro.
+
+   This is a hand-maintained subset of the library's
+   shadow-DOM stylesheet covering file rendering only (no
+   diff, selection, or editor states). The library's core
+   CSS is :host-scoped inside its dist/style.js and is not
+   reachable through the package's exports map, so the
+   zero-JS light-DOM path must mirror it here.
+
+   LOCKSTEP WARNING: these selectors target @pierre/diffs'
+   private DOM contract ([data-code], [data-gutter],
+   [data-line], ...). The dependency is pinned to an exact
+   version in package.json for this reason. When bumping
+   it, re-derive this subset from the [data-*] rules in
+   node_modules/@pierre/diffs/dist/style.js and update the
+   two together.
+
+   Token colors are baked into the markup as
+   --diffs-token-dark/light pairs; light-dark() resolution
+   follows the site theme's color-scheme (set per theme in
+   globals.css), so these blocks flip with the active
+   theme's light/dark class.
+   ============================================ */
+.diffs-static {
+  --diffs-bg: light-dark(var(--diffs-light-bg, #fff), var(--diffs-dark-bg, #000));
+  --diffs-fg: light-dark(var(--diffs-light, #000), var(--diffs-dark, #fff));
+  --diffs-fg-number: color-mix(in lab, var(--diffs-fg) 65%, var(--diffs-bg));
+  font-size: var(--diffs-font-size, 13px);
+  line-height: var(--diffs-line-height, 20px);
+  background-color: var(--diffs-bg);
+  color: var(--diffs-fg);
+  display: block;
+}
+
+.diffs-static pre,
+.diffs-static code {
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-color: var(--diffs-bg);
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.diffs-static [data-code] {
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: minmax(min-content, max-content) 1fr;
+  overflow-x: auto;
+  overflow-y: clip;
+  overscroll-behavior-x: none;
+  tab-size: var(--diffs-tab-size, 2);
+  padding-block: 10px;
+}
+
+.diffs-static [data-gutter] {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-template-columns: subgrid;
+  grid-column: 1;
+  background-color: var(--diffs-bg);
+}
+
+.diffs-static [data-overflow='scroll'] [data-gutter] {
+  position: sticky;
+  left: 0;
+}
+
+.diffs-static [data-content] {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-template-columns: subgrid;
+  grid-column: 2;
+  min-width: 0;
+  background-color: var(--diffs-bg);
+}
+
+.diffs-static [data-line],
+.diffs-static [data-column-number] {
+  padding-inline: 1ch;
+  position: relative;
+}
+
+.diffs-static [data-overflow='wrap'] [data-line] {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.diffs-static [data-overflow='scroll'] [data-line] {
+  white-space: pre;
+  min-height: 1lh;
+}
+
+.diffs-static [data-line] span {
+  color: light-dark(
+    var(--diffs-token-light, var(--diffs-light)),
+    var(--diffs-token-dark, var(--diffs-dark))
+  );
+  font-weight: var(--diffs-token-dark-font-weight, inherit);
+  font-style: var(--diffs-token-dark-font-style, inherit);
+}
+
+.diffs-static [data-column-number] {
+  box-sizing: content-box;
+  text-align: right;
+  user-select: none;
+  color: var(--diffs-fg-number);
+  padding-left: 2ch;
+}
+
+.diffs-static [data-line-number-content] {
+  min-width: var(--diffs-min-number-column-width, var(--diffs-min-number-column-width-default, 3ch));
+  display: inline-block;
+}
+
+.diffs-static [data-disable-line-numbers] [data-column-number] {
+  min-width: 0;
+  padding: 0;
+  border-right: 0;
+}
+
+.diffs-static [data-disable-line-numbers] [data-line-number-content] {
+  display: none;
+}

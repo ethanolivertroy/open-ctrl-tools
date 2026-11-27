@@ -1,0 +1,2864 @@
+{
+  "framework": {
+    "id": "nis2",
+    "name": "NIS2 Directive",
+    "version": "2022/2555",
+    "description": "Network and Information Security Directive 2 - EU cybersecurity legislation"
+  },
+  "families": {
+    "Chapter I": "General provisions",
+    "Chapter II": "Coordination",
+    "Chapter III": "Cooperation",
+    "Chapter IV": "Risk management & reporting",
+    "Chapter V": "Jurisdiction & registration",
+    "Chapter VI": "Information sharing",
+    "Chapter VII": "Supervision & enforcement",
+    "Chapter VIII": "Delegated & implementing acts",
+    "Chapter IX": "Final provisions",
+    "Annex I": "Essential entities sectors",
+    "Annex II": "Important entities sectors",
+    "Annex III": "Categories of important entities",
+    "Annex IV": "Domains covered",
+    "Other": "Implementing Regulation technical requirements"
+  },
+  "controls": [
+    {
+      "control_id": "Article 21.1",
+      "title": "Article 21.1",
+      "family": "Chapter IV",
+      "description": "Member States shall ensure that essential and important entities take appropriate and proportionate technical, operational and organisational measures to manage the risks posed to the security of network and information systems which those entities use for their operations or for the provision of their services, and to prevent or minimise the impact of incidents on recipients of their services and on other services.\nTaking into account the state-of-the-art and, where applicable, relevant European and international standards, as well as the cost of implementation, the measures referred to in the first subparagraph shall ensure a level of security of network and information systems appropriate to the risks posed. When assessing the proportionality of those measures, due account shall be taken of the degree of the entity’s exposure to risks, the entity’s size and the likelihood of occurrence of incidents and their severity, including their societal and economic impact."
+    },
+    {
+      "control_id": "Article 21.2",
+      "title": "Article 21.2",
+      "family": "Chapter IV",
+      "description": "The measures referred to in paragraph 1 shall be based on an all-hazards approach that aims to protect network and information systems and the physical environment of those systems from incidents, and shall include at least the following:"
+    },
+    {
+      "control_id": "Article 21.2(a)",
+      "title": "Article 21.2(a)",
+      "family": "Chapter IV",
+      "description": "policies on risk analysis and information system security;"
+    },
+    {
+      "control_id": "Article 21.2(b)",
+      "title": "Article 21.2(b)",
+      "family": "Chapter IV",
+      "description": "incident handling;"
+    },
+    {
+      "control_id": "Article 21.2(c)",
+      "title": "Article 21.2(c)",
+      "family": "Chapter IV",
+      "description": "business continuity, such as backup management and disaster recovery, and crisis management;"
+    },
+    {
+      "control_id": "Article 21.2(d)",
+      "title": "Article 21.2(d)",
+      "family": "Chapter IV",
+      "description": "supply chain security, including security-related aspects concerning the relationships between each entity and its direct suppliers or service providers;"
+    },
+    {
+      "control_id": "Article 21.2(e)",
+      "title": "Article 21.2(e)",
+      "family": "Chapter IV",
+      "description": "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure;"
+    },
+    {
+      "control_id": "Article 21.2(f)",
+      "title": "Article 21.2(f)",
+      "family": "Chapter IV",
+      "description": "policies and procedures to assess the effectiveness of cybersecurity risk-management measures;"
+    },
+    {
+      "control_id": "Article 21.2(g)",
+      "title": "Article 21.2(g)",
+      "family": "Chapter IV",
+      "description": "basic cyber hygiene practices and cybersecurity training;"
+    },
+    {
+      "control_id": "Article 21.2(h)",
+      "title": "Article 21.2(h)",
+      "family": "Chapter IV",
+      "description": "policies and procedures regarding the use of cryptography and, where appropriate, encryption;"
+    },
+    {
+      "control_id": "Article 21.2(i)",
+      "title": "Article 21.2(i)",
+      "family": "Chapter IV",
+      "description": "human resources security, access control policies and asset management;"
+    },
+    {
+      "control_id": "Article 21.2(j)",
+      "title": "Article 21.2(j)",
+      "family": "Chapter IV",
+      "description": "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate."
+    },
+    {
+      "control_id": "Article 21.3",
+      "title": "Article 21.3",
+      "family": "Chapter IV",
+      "description": "Member States shall ensure that, when considering which measures referred to in paragraph 2, point (d), of this Article are appropriate, entities take into account the vulnerabilities specific to each direct supplier and service provider and the overall quality of products and cybersecurity practices of their suppliers and service providers, including their secure development procedures. Member States shall also ensure that, when considering which measures referred to in that point are appropriate, entities are required to take into account the results of the coordinated security risk assessments of critical supply chains carried out in accordance with Article 22(1)."
+    },
+    {
+      "control_id": "Article 21.4",
+      "title": "Article 21.4",
+      "family": "Chapter IV",
+      "description": "Member States shall ensure that an entity that finds that it does not comply with the measures provided for in paragraph 2 takes, without undue delay, all necessary, appropriate and proportionate corrective measures."
+    },
+    {
+      "control_id": "Article 21.5",
+      "title": "Article 21.5",
+      "family": "Chapter IV",
+      "description": "By 17 October 2024, the Commission shall adopt implementing acts laying down the technical and the methodological requirements of the measures referred to in paragraph 2 with regard to DNS service providers, TLD name registries, cloud computing service providers, data centre service providers, content delivery network providers, managed service providers, managed security service providers, providers of online market places, of online search engines and of social networking services platforms, and trust service providers."
+    },
+    {
+      "control_id": "Article 23.1",
+      "title": "Article 23.1",
+      "family": "Chapter IV",
+      "description": "Each Member State shall ensure that essential and important entities notify, without undue delay, its CSIRT or, where applicable, its competent authority in accordance with paragraph 4 of any incident that has a significant impact on the provision of their services as referred to in paragraph 3 (significant incident). Where appropriate, entities concerned shall notify, without undue delay, the recipients of their services of significant incidents that are likely to adversely affect the provision of those services. Each Member State shall ensure that those entities report, inter alia, any information enabling the CSIRT or, where applicable, the competent authority to determine any cross-border impact of the incident. The mere act of notification shall not subject the notifying entity to increased liability.\nWhere the entities concerned notify the competent authority of a significant incident under the first subparagraph, the Member State shall ensure that that competent authority forwards the notification to the CSIRT upon receipt.\nIn the case of a cross-border or cross-sectoral significant incident, Member States shall ensure that their single points of contact are provided in due time with relevant information notified in accordance with paragraph 4."
+    },
+    {
+      "control_id": "Article 23.2",
+      "title": "Article 23.2",
+      "family": "Chapter IV",
+      "description": "Where applicable, Member States shall ensure that essential and important entities communicate, without undue delay, to the recipients of their services that are potentially affected by a significant cyber threat any measures or remedies that those recipients are able to take in response to that threat. Where appropriate, the entities shall also inform those recipients of the significant cyber threat itself."
+    },
+    {
+      "control_id": "Article 23.3",
+      "title": "Article 23.3",
+      "family": "Chapter IV",
+      "description": "An incident shall be considered to be significant if:"
+    },
+    {
+      "control_id": "Article 23.3(a)",
+      "title": "Article 23.3(a)",
+      "family": "Chapter IV",
+      "description": "it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity concerned;"
+    },
+    {
+      "control_id": "Article 23.3(b)",
+      "title": "Article 23.3(b)",
+      "family": "Chapter IV",
+      "description": "it has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage."
+    },
+    {
+      "control_id": "Article 23.4",
+      "title": "Article 23.4",
+      "family": "Chapter IV",
+      "description": "Member States shall ensure that, for the purpose of notification under paragraph 1, the entities concerned submit to the CSIRT or, where applicable, the competent authority:\nBy way of derogation from the first subparagraph, point (b), a trust service provider shall, with regard to significant incidents that have an impact on the provision of its trust services, notify the CSIRT or, where applicable, the competent authority, without undue delay and in any event within 24 hours of becoming aware of the significant incident."
+    },
+    {
+      "control_id": "Article 23.4(a)",
+      "title": "Article 23.4(a)",
+      "family": "Chapter IV",
+      "description": "without undue delay and in any event within 24 hours of becoming aware of the significant incident, an early warning, which, where applicable, shall indicate whether the significant incident is suspected of being caused by unlawful or malicious acts or could have a cross-border impact;"
+    },
+    {
+      "control_id": "Article 23.4(b)",
+      "title": "Article 23.4(b)",
+      "family": "Chapter IV",
+      "description": "without undue delay and in any event within 72 hours of becoming aware of the significant incident, an incident notification, which, where applicable, shall update the information referred to in point (a) and indicate an initial assessment of the significant incident, including its severity and impact, as well as, where available, the indicators of compromise;"
+    },
+    {
+      "control_id": "Article 23.4(c)",
+      "title": "Article 23.4(c)",
+      "family": "Chapter IV",
+      "description": "upon the request of a CSIRT or, where applicable, the competent authority, an intermediate report on relevant status updates;"
+    },
+    {
+      "control_id": "Article 23.4(d)",
+      "title": "Article 23.4(d)",
+      "family": "Chapter IV",
+      "description": "a final report not later than one month after the submission of the incident notification under point (b), including the following:"
+    },
+    {
+      "control_id": "Article 23.4(d)(i)",
+      "title": "Article 23.4(d)(i)",
+      "family": "Chapter IV",
+      "description": "a detailed description of the incident, including its severity and impact;"
+    },
+    {
+      "control_id": "Article 23.4(d)(ii)",
+      "title": "Article 23.4(d)(ii)",
+      "family": "Chapter IV",
+      "description": "the type of threat or root cause that is likely to have triggered the incident;"
+    },
+    {
+      "control_id": "Article 23.4(d)(iii)",
+      "title": "Article 23.4(d)(iii)",
+      "family": "Chapter IV",
+      "description": "applied and ongoing mitigation measures;"
+    },
+    {
+      "control_id": "Article 23.4(d)(iv)",
+      "title": "Article 23.4(d)(iv)",
+      "family": "Chapter IV",
+      "description": "where applicable, the cross-border impact of the incident;"
+    },
+    {
+      "control_id": "Article 23.4(e)",
+      "title": "Article 23.4(e)",
+      "family": "Chapter IV",
+      "description": "in the event of an ongoing incident at the time of the submission of the final report referred to in point (d), Member States shall ensure that entities concerned provide a progress report at that time and a final report within one month of their handling of the incident."
+    },
+    {
+      "control_id": "Article 23.5",
+      "title": "Article 23.5",
+      "family": "Chapter IV",
+      "description": "The CSIRT or the competent authority shall provide, without undue delay and where possible within 24 hours of receiving the early warning referred to in paragraph 4, point (a), a response to the notifying entity, including initial feedback on the significant incident and, upon request of the entity, guidance or operational advice on the implementation of possible mitigation measures. Where the CSIRT is not the initial recipient of the notification referred to in paragraph 1, the guidance shall be provided by the competent authority in cooperation with the CSIRT. The CSIRT shall provide additional technical support if the entity concerned so requests. Where the significant incident is suspected to be of criminal nature, the CSIRT or the competent authority shall also provide guidance on reporting the significant incident to law enforcement authorities."
+    },
+    {
+      "control_id": "Article 23.6",
+      "title": "Article 23.6",
+      "family": "Chapter IV",
+      "description": "Where appropriate, and in particular where the significant incident concerns two or more Member States, the CSIRT, the competent authority or the single point of contact shall inform, without undue delay, the other affected Member States and ENISA of the significant incident. Such information shall include the type of information received in accordance with paragraph 4. In so doing, the CSIRT, the competent authority or the single point of contact shall, in accordance with Union or national law, preserve the entity’s security and commercial interests as well as the confidentiality of the information provided."
+    },
+    {
+      "control_id": "Article 23.7",
+      "title": "Article 23.7",
+      "family": "Chapter IV",
+      "description": "Where public awareness is necessary to prevent a significant incident or to deal with an ongoing significant incident, or where disclosure of the significant incident is otherwise in the public interest, a Member State’s CSIRT or, where applicable, its competent authority, and, where appropriate, the CSIRTs or the competent authorities of other Member States concerned, may, after consulting the entity concerned, inform the public about the significant incident or require the entity to do so."
+    },
+    {
+      "control_id": "Article 23.8",
+      "title": "Article 23.8",
+      "family": "Chapter IV",
+      "description": "At the request of the CSIRT or the competent authority, the single point of contact shall forward notifications received pursuant to paragraph 1 to the single points of contact of other affected Member States."
+    },
+    {
+      "control_id": "Article 23.9",
+      "title": "Article 23.9",
+      "family": "Chapter IV",
+      "description": "The single point of contact shall submit to ENISA every three months a summary report, including anonymised and aggregated data on significant incidents, incidents, cyber threats and near misses notified in accordance with paragraph 1 of this Article and with Article 30. In order to contribute to the provision of comparable information, ENISA may adopt technical guidance on the parameters of the information to be included in the summary report. ENISA shall inform the Cooperation Group and the CSIRTs network about its findings on notifications received every six months."
+    },
+    {
+      "control_id": "Article 23.10",
+      "title": "Article 23.10",
+      "family": "Chapter IV",
+      "description": "The CSIRTs or, where applicable, the competent authorities shall provide to the competent authorities under Directive (EU) 2022/2557 information about significant incidents, incidents, cyber threats and near misses notified in accordance with paragraph 1 of this Article and with Article 30 by entities identified as critical entities under Directive (EU) 2022/2557."
+    },
+    {
+      "control_id": "Article 23.11",
+      "title": "Article 23.11",
+      "family": "Chapter IV",
+      "description": "The Commission may adopt implementing acts further specifying the type of information, the format and the procedure of a notification submitted pursuant to paragraph 1 of this Article and to Article 30 and of a communication submitted pursuant to paragraph 2 of this Article.\nBy 17 October 2024, the Commission shall, with regard to DNS service providers, TLD name registries, cloud computing service providers, data centre service providers, content delivery network providers, managed service providers, managed security service providers, as well as providers of online marketplaces, of online search engines and of social networking services platforms, adopt implementing acts further specifying the cases in which an incident shall be considered to be significant as referred to in paragraph 3. The Commission may adopt such implementing acts with regard to other essential and important entities.\nThe Commission shall exchange advice and cooperate with the Cooperation Group on the draft implementing acts referred to in the first and second subparagraphs of this paragraph in accordance with Article 14(4), point (e).\nThose implementing acts shall be adopted in accordance with the examination procedure referred to in Article 39(2)."
+    },
+    {
+      "control_id": "1",
+      "title": "POLICY ON THE SECURITY OF NETWORK AND INFORMATION SYSTEMS (ARTICLE 21(2), POINT (A) OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "1.1",
+      "title": "Policy on the security of network and information systems",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "1.1.1",
+      "title": "1.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (a) of Directive (EU) 2022/2555, the policy on the security of network and information systems shall:"
+    },
+    {
+      "control_id": "1.1.1(a)",
+      "title": "1.1.1(a)",
+      "family": "Other",
+      "description": "set out the relevant entities’ approach to managing the security of their network and information systems;"
+    },
+    {
+      "control_id": "1.1.1(b)",
+      "title": "1.1.1(b)",
+      "family": "Other",
+      "description": "be appropriate to and complementary with the relevant entities’ business strategy and objectives;"
+    },
+    {
+      "control_id": "1.1.1(c)",
+      "title": "1.1.1(c)",
+      "family": "Other",
+      "description": "set out network and information security objectives;"
+    },
+    {
+      "control_id": "1.1.1(d)",
+      "title": "1.1.1(d)",
+      "family": "Other",
+      "description": "include a commitment to continual improvement of the security of network and information systems;"
+    },
+    {
+      "control_id": "1.1.1(e)",
+      "title": "1.1.1(e)",
+      "family": "Other",
+      "description": "include a commitment to provide the appropriate resources needed for its implementation, including the necessary staff, financial resources, processes, tools and technologies;"
+    },
+    {
+      "control_id": "1.1.1(f)",
+      "title": "1.1.1(f)",
+      "family": "Other",
+      "description": "be communicated to and acknowledged by relevant employees and relevant interested external parties;"
+    },
+    {
+      "control_id": "1.1.1(g)",
+      "title": "1.1.1(g)",
+      "family": "Other",
+      "description": "lay down roles and responsibilities pursuant to point 1.2.;"
+    },
+    {
+      "control_id": "1.1.1(h)",
+      "title": "1.1.1(h)",
+      "family": "Other",
+      "description": "list the documentation to be kept and the duration of retention of the documentation;"
+    },
+    {
+      "control_id": "1.1.1(i)",
+      "title": "1.1.1(i)",
+      "family": "Other",
+      "description": "list the topic-specific policies;"
+    },
+    {
+      "control_id": "1.1.1(j)",
+      "title": "1.1.1(j)",
+      "family": "Other",
+      "description": "lay down indicators and measures to monitor its implementation and the current status of relevant entities’ maturity level of network and information security;"
+    },
+    {
+      "control_id": "1.1.1(k)",
+      "title": "1.1.1(k)",
+      "family": "Other",
+      "description": "indicate the date of the formal approval by the management bodies of the relevant entities (the ‘management bodies’)."
+    },
+    {
+      "control_id": "1.1.2",
+      "title": "1.1.2",
+      "family": "Other",
+      "description": "The network and information system security policy shall be reviewed and, where appropriate, updated by management bodies at least annually and when significant incidents or significant changes to operations or risks occur. The result of the reviews shall be documented."
+    },
+    {
+      "control_id": "1.2",
+      "title": "Roles, responsibilities and authorities",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "1.2.1",
+      "title": "1.2.1",
+      "family": "Other",
+      "description": "As part of their policy on the security of network and information systems referred to in point 1.1., the relevant entities shall lay down responsibilities and authorities for network and information system security and assign them to roles, allocate them according to the relevant entities’ needs, and communicate them to the management bodies."
+    },
+    {
+      "control_id": "1.2.2",
+      "title": "1.2.2",
+      "family": "Other",
+      "description": "The relevant entities shall require all personnel and third parties to apply network and information system security in accordance with the established network and information security policy, topic-specific policies and procedures of the relevant entities."
+    },
+    {
+      "control_id": "1.2.3",
+      "title": "1.2.3",
+      "family": "Other",
+      "description": "At least one person shall report directly to the management bodies on matters of network and information system security."
+    },
+    {
+      "control_id": "1.2.4",
+      "title": "1.2.4",
+      "family": "Other",
+      "description": "Depending on the size of the relevant entities, network and information system security shall be covered by dedicated roles or duties carried out in addition to existing roles."
+    },
+    {
+      "control_id": "1.2.5",
+      "title": "1.2.5",
+      "family": "Other",
+      "description": "Conflicting duties and conflicting areas of responsibility shall be segregated, where applicable."
+    },
+    {
+      "control_id": "1.2.6",
+      "title": "1.2.6",
+      "family": "Other",
+      "description": "Roles, responsibilities and authorities shall be reviewed and, where appropriate, updated by management bodies at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "2",
+      "title": "RISK MANAGEMENT POLICY (ARTICLE 21(2), POINT (A) OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "2.1",
+      "title": "Risk management framework",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "2.1.1",
+      "title": "2.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (a) of Directive (EU) 2022/2555, the relevant entities shall establish and maintain an appropriate risk management framework to identify and address the risks posed to the security of network and information systems. The relevant entities shall perform and document risk assessments and, based on the results, establish, implement and monitor a risk treatment plan. Risk assessment results and residual risks shall be accepted by management bodies or, where applicable, by persons who are accountable and have the authority to manage risks, provided that the relevant entities ensure adequate reporting to the management bodies."
+    },
+    {
+      "control_id": "2.1.2",
+      "title": "2.1.2",
+      "family": "Other",
+      "description": "For the purpose of point 2.1.1., the relevant entities shall establish procedures for identification, analysis, assessment and treatment of risks (‘cybersecurity risk management process’). The cybersecurity risk management process shall be an integral part of the relevant entities’ overall risk management process, where applicable. As part of the cybersecurity risk management process, the relevant entities shall:"
+    },
+    {
+      "control_id": "2.1.2(a)",
+      "title": "2.1.2(a)",
+      "family": "Other",
+      "description": "follow a risk management methodology;"
+    },
+    {
+      "control_id": "2.1.2(b)",
+      "title": "2.1.2(b)",
+      "family": "Other",
+      "description": "establish the risk tolerance level in accordance with the risk appetite of the relevant entities;"
+    },
+    {
+      "control_id": "2.1.2(c)",
+      "title": "2.1.2(c)",
+      "family": "Other",
+      "description": "establish and maintain relevant risk criteria;"
+    },
+    {
+      "control_id": "2.1.2(d)",
+      "title": "2.1.2(d)",
+      "family": "Other",
+      "description": "in line with an all-hazards approach, identify and document the risks posed to the security of network and information systems, in particular in relation to third parties and risks that could lead to disruptions in the availability, integrity, authenticity and confidentiality of the network and information systems, including the identification of single point of failures;"
+    },
+    {
+      "control_id": "2.1.2(e)",
+      "title": "2.1.2(e)",
+      "family": "Other",
+      "description": "analyse the risks posed to the security of network and information systems, including threat, likelihood, impact, and risk level, taking into account cyber threat intelligence and vulnerabilities;"
+    },
+    {
+      "control_id": "2.1.2(f)",
+      "title": "2.1.2(f)",
+      "family": "Other",
+      "description": "evaluate the identified risks based on the risk criteria;"
+    },
+    {
+      "control_id": "2.1.2(g)",
+      "title": "2.1.2(g)",
+      "family": "Other",
+      "description": "identify and prioritise appropriate risk treatment options and measures;"
+    },
+    {
+      "control_id": "2.1.2(h)",
+      "title": "2.1.2(h)",
+      "family": "Other",
+      "description": "continuously monitor the implementation of the risk treatment measures;"
+    },
+    {
+      "control_id": "2.1.2(i)",
+      "title": "2.1.2(i)",
+      "family": "Other",
+      "description": "identify who is responsible for implementing the risk treatment measures and when they should be implemented;"
+    },
+    {
+      "control_id": "2.1.2(j)",
+      "title": "2.1.2(j)",
+      "family": "Other",
+      "description": "document the chosen risk treatment measures in a risk treatment plan and the reasons justifying the acceptance of residual risks in a comprehensible manner."
+    },
+    {
+      "control_id": "2.1.3",
+      "title": "2.1.3",
+      "family": "Other",
+      "description": "When identifying and prioritising appropriate risk treatment options and measures, the relevant entities shall take into account the risk assessment results, the results of the procedure to assess the effectiveness of cybersecurity risk-management measures, the cost of implementation in relation to the expected benefit, the asset classification referred to in point 12.1., and the business impact analysis referred to in point 4.1.3."
+    },
+    {
+      "control_id": "2.1.4",
+      "title": "2.1.4",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the risk assessment results and the risk treatment plan at planned intervals and at least annually, and when significant changes to operations or risks or significant incidents occur."
+    },
+    {
+      "control_id": "2.2",
+      "title": "RISK MANAGEMENT POLICY (ARTICLE 21(2), POINT (A) OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "Compliance monitoring"
+    },
+    {
+      "control_id": "2.2.1",
+      "title": "2.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall regularly review the compliance with their policies on network and information system security, topic-specific policies, rules, and standards. The management bodies shall be informed of the status of network and information security on the basis of the compliance reviews by means of regular reporting."
+    },
+    {
+      "control_id": "2.2.2",
+      "title": "2.2.2",
+      "family": "Other",
+      "description": "The relevant entities shall put in place an effective compliance reporting system which shall be appropriate to their structures, operating environments and threat landscapes. The compliance reporting system shall be capable to provide to the management bodies an informed view of the current state of the relevant entities’ management of risks."
+    },
+    {
+      "control_id": "2.2.3",
+      "title": "2.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall perform the compliance monitoring at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "2.3",
+      "title": "RISK MANAGEMENT POLICY (ARTICLE 21(2), POINT (A) OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "Independent review of information and network security"
+    },
+    {
+      "control_id": "2.3.1",
+      "title": "2.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall review independently their approach to managing network and information system security and its implementation including people, processes and technologies."
+    },
+    {
+      "control_id": "2.3.2",
+      "title": "2.3.2",
+      "family": "Other",
+      "description": "The relevant entities shall develop and maintain processes to conduct independent reviews which shall be carried out by individuals with appropriate audit competence. Where the independent review is conducted by staff members of the relevant entity, the persons conducting the reviews shall not be in the line of authority of the personnel of the area under review. If the size of the relevant entities does not allow such separation of line of authority, the relevant entities shall put in place alternative measures to guarantee the impartiality of the reviews."
+    },
+    {
+      "control_id": "2.3.3",
+      "title": "2.3.3",
+      "family": "Other",
+      "description": "The results of the independent reviews, including the results from the compliance monitoring pursuant to point 2.2. and the monitoring and measurement pursuant to point 7, shall be reported to the management bodies. Corrective actions shall be taken or residual risk accepted according to the relevant entities’ risk acceptance criteria."
+    },
+    {
+      "control_id": "2.3.4",
+      "title": "2.3.4",
+      "family": "Other",
+      "description": "The independent reviews shall take place at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "3",
+      "title": "INCIDENT HANDLING (ARTICLE 21(2), POINT (B), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.1",
+      "title": "Incident handling policy",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.1.1",
+      "title": "3.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (b) of Directive (EU) 2022/2555, the relevant entities shall establish and implement an incident handling policy laying down the roles, responsibilities, and procedures for detecting, analysing, containing or responding to, recovering from, documenting and reporting of incidents in a timely manner."
+    },
+    {
+      "control_id": "3.1.2",
+      "title": "3.1.2",
+      "family": "Other",
+      "description": "The policy referred to in point 3.1.1 shall be coherent with the business continuity and disaster recovery plan referred to in point 4.1. The policy shall include:"
+    },
+    {
+      "control_id": "3.1.2(a)",
+      "title": "3.1.2(a)",
+      "family": "Other",
+      "description": "a categorisation system for incidents that is consistent with the event assessment and classification carried out pursuant to point 3.4.1.;"
+    },
+    {
+      "control_id": "3.1.2(b)",
+      "title": "3.1.2(b)",
+      "family": "Other",
+      "description": "effective communication plans including for escalation and reporting;"
+    },
+    {
+      "control_id": "3.1.2(c)",
+      "title": "3.1.2(c)",
+      "family": "Other",
+      "description": "assignment of roles to detect and appropriately respond to incidents to competent employees;"
+    },
+    {
+      "control_id": "3.1.2(d)",
+      "title": "3.1.2(d)",
+      "family": "Other",
+      "description": "documents to be used in the course of incident detection and response such as incident response manuals, escalation charts, contact lists and templates."
+    },
+    {
+      "control_id": "3.1.3",
+      "title": "3.1.3",
+      "family": "Other",
+      "description": "The roles, responsibilities and procedures laid down in the policy shall be tested and reviewed and, where appropriate, updated at planned intervals and after significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "3.2",
+      "title": "Monitoring and logging",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.2.1",
+      "title": "3.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall lay down procedures and use tools to monitor and log activities on their network and information systems to detect events that could be considered as incidents and respond accordingly to mitigate the impact."
+    },
+    {
+      "control_id": "3.2.2",
+      "title": "3.2.2",
+      "family": "Other",
+      "description": "To the extent feasible, monitoring shall be automated and carried out either continuously or in periodic intervals, subject to business capabilities. The relevant entities shall implement their monitoring activities in a way which minimises false positives and false negatives."
+    },
+    {
+      "control_id": "3.2.3",
+      "title": "3.2.3",
+      "family": "Other",
+      "description": "Based on the procedures referred to in point 3.2.1., the relevant entities shall maintain, document, and review logs. The relevant entities shall establish a list of assets to be subject to logging based on the results of the risk assessment carried out pursuant to point 2.1. Where appropriate, logs shall include:"
+    },
+    {
+      "control_id": "3.2.3(a)",
+      "title": "3.2.3(a)",
+      "family": "Other",
+      "description": "relevant outbound and inbound network traffic;"
+    },
+    {
+      "control_id": "3.2.3(b)",
+      "title": "3.2.3(b)",
+      "family": "Other",
+      "description": "creation, modification or deletion of users of the relevant entities’ network and information systems and extension of the permissions;"
+    },
+    {
+      "control_id": "3.2.3(c)",
+      "title": "3.2.3(c)",
+      "family": "Other",
+      "description": "access to systems and applications;"
+    },
+    {
+      "control_id": "3.2.3(d)",
+      "title": "3.2.3(d)",
+      "family": "Other",
+      "description": "authentication-related events;"
+    },
+    {
+      "control_id": "3.2.3(e)",
+      "title": "3.2.3(e)",
+      "family": "Other",
+      "description": "all privileged access to systems and applications, and activities performed by administrative accounts;"
+    },
+    {
+      "control_id": "3.2.3(f)",
+      "title": "3.2.3(f)",
+      "family": "Other",
+      "description": "access or changes to critical configuration and backup files;"
+    },
+    {
+      "control_id": "3.2.3(g)",
+      "title": "3.2.3(g)",
+      "family": "Other",
+      "description": "event logs and logs from security tools, such as antivirus, intrusion detection systems or firewalls;"
+    },
+    {
+      "control_id": "3.2.3(h)",
+      "title": "3.2.3(h)",
+      "family": "Other",
+      "description": "use of system resources, as well as their performance;"
+    },
+    {
+      "control_id": "3.2.3(i)",
+      "title": "3.2.3(i)",
+      "family": "Other",
+      "description": "physical access to facilities;"
+    },
+    {
+      "control_id": "3.2.3(j)",
+      "title": "3.2.3(j)",
+      "family": "Other",
+      "description": "access to and use of their network equipment and devices;"
+    },
+    {
+      "control_id": "3.2.3(k)",
+      "title": "3.2.3(k)",
+      "family": "Other",
+      "description": "activation, stopping and pausing of the various logs;"
+    },
+    {
+      "control_id": "3.2.3(l)",
+      "title": "3.2.3(l)",
+      "family": "Other",
+      "description": "environmental events."
+    },
+    {
+      "control_id": "3.2.4",
+      "title": "3.2.4",
+      "family": "Other",
+      "description": "The logs shall be regularly reviewed for any unusual or unwanted trends. Where appropriate, the relevant entities shall lay down appropriate values for alarm thresholds. If the laid down values for alarm threshold are exceeded, an alarm shall be triggered, where appropriate, automatically. The relevant entities shall ensure that, in case of an alarm, a qualified and appropriate response is initiated in a timely manner."
+    },
+    {
+      "control_id": "3.2.5",
+      "title": "3.2.5",
+      "family": "Other",
+      "description": "The relevant entities shall maintain and back up logs for a predefined period and shall protect them from unauthorised access or changes."
+    },
+    {
+      "control_id": "3.2.6",
+      "title": "3.2.6",
+      "family": "Other",
+      "description": "To the extent feasible, the relevant entities shall ensure that all systems have synchronised time sources to be able to correlate logs between systems for event assessment. The relevant entities shall establish and keep a list of all assets that are being logged and ensure that monitoring and logging systems are redundant. The availability of the monitoring and logging systems shall be monitored independent of the systems they are monitoring."
+    },
+    {
+      "control_id": "3.2.7",
+      "title": "3.2.7",
+      "family": "Other",
+      "description": "The procedures as well as the list of assets that are being logged shall be reviewed and, where appropriate, updated at regular intervals and after significant incidents."
+    },
+    {
+      "control_id": "3.3",
+      "title": "Event reporting",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.3.1",
+      "title": "3.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall put in place a simple mechanism allowing their employees, suppliers, and customers to report suspicious events."
+    },
+    {
+      "control_id": "3.3.2",
+      "title": "3.3.2",
+      "family": "Other",
+      "description": "The relevant entities shall, where appropriate, communicate the event reporting mechanism to their suppliers and customers, and shall regularly train their employees how to use the mechanism."
+    },
+    {
+      "control_id": "3.4",
+      "title": "Event assessment and classification",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.4.1",
+      "title": "3.4.1",
+      "family": "Other",
+      "description": "The relevant entities shall assess suspicious events to determine whether they constitute incidents and, if so, determine their nature and severity."
+    },
+    {
+      "control_id": "3.4.2",
+      "title": "3.4.2",
+      "family": "Other",
+      "description": "For the purpose of point 3.4.1, the relevant entities shall act in the following manner:"
+    },
+    {
+      "control_id": "3.4.2(a)",
+      "title": "3.4.2(a)",
+      "family": "Other",
+      "description": "carry out the assessment based on predefined criteria laid down in advance, and on a triage to determine prioritisation of incident containment and eradication;"
+    },
+    {
+      "control_id": "3.4.2(b)",
+      "title": "3.4.2(b)",
+      "family": "Other",
+      "description": "assess the existence of recurring incidents as referred to in Article 4 of this Regulation on a quarterly basis;"
+    },
+    {
+      "control_id": "3.4.2(c)",
+      "title": "3.4.2(c)",
+      "family": "Other",
+      "description": "review the appropriate logs for the purposes of event assessment and classification;"
+    },
+    {
+      "control_id": "3.4.2(d)",
+      "title": "3.4.2(d)",
+      "family": "Other",
+      "description": "put in place a process for log correlation and analysis, and"
+    },
+    {
+      "control_id": "3.4.2(e)",
+      "title": "3.4.2(e)",
+      "family": "Other",
+      "description": "reassess and reclassify events in case of new information becoming available or after analysis of previously available information."
+    },
+    {
+      "control_id": "3.5",
+      "title": "Incident response",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.5.1",
+      "title": "3.5.1",
+      "family": "Other",
+      "description": "The relevant entities shall respond to incidents in accordance with documented procedures and in a timely manner."
+    },
+    {
+      "control_id": "3.5.2",
+      "title": "3.5.2",
+      "family": "Other",
+      "description": "The incident response procedures shall include the following stages:"
+    },
+    {
+      "control_id": "3.5.2(a)",
+      "title": "3.5.2(a)",
+      "family": "Other",
+      "description": "incident containment, to prevent the consequences of the incident from spreading;"
+    },
+    {
+      "control_id": "3.5.2(b)",
+      "title": "3.5.2(b)",
+      "family": "Other",
+      "description": "eradication, to prevent the incident from continuing or reappearing,"
+    },
+    {
+      "control_id": "3.5.2(c)",
+      "title": "3.5.2(c)",
+      "family": "Other",
+      "description": "recovery from the incident, where necessary."
+    },
+    {
+      "control_id": "3.5.3",
+      "title": "3.5.3",
+      "family": "Other",
+      "description": "The relevant entities shall establish communication plans and procedures:"
+    },
+    {
+      "control_id": "3.5.3(a)",
+      "title": "3.5.3(a)",
+      "family": "Other",
+      "description": "with the Computer Security Incident Response Teams (CSIRTs) or, where applicable, the competent authorities, related to incident notification;"
+    },
+    {
+      "control_id": "3.5.3(b)",
+      "title": "3.5.3(b)",
+      "family": "Other",
+      "description": "for communication among staff members of the relevant entity, and for communication with relevant stakeholders external to the relevant entity."
+    },
+    {
+      "control_id": "3.5.4",
+      "title": "3.5.4",
+      "family": "Other",
+      "description": "The relevant entities shall log incident response activities in accordance with the procedures referred to in point 3.2.1., and record evidence."
+    },
+    {
+      "control_id": "3.5.5",
+      "title": "3.5.5",
+      "family": "Other",
+      "description": "The relevant entities shall test at planned intervals their incident response procedures."
+    },
+    {
+      "control_id": "3.6",
+      "title": "Post-incident reviews",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "3.6.1",
+      "title": "3.6.1",
+      "family": "Other",
+      "description": "Where appropriate, the relevant entities shall carry out post-incident reviews after recovery from incidents. The post-incident reviews shall identify, where possible, the root cause of the incident and result in documented lessons learned to reduce the occurrence and consequences of future incidents."
+    },
+    {
+      "control_id": "3.6.2",
+      "title": "3.6.2",
+      "family": "Other",
+      "description": "The relevant entities shall ensure that post-incident reviews contribute to improving their approach to network and information security, to risk treatment measures, and to incident handling, detection and response procedures."
+    },
+    {
+      "control_id": "3.6.3",
+      "title": "3.6.3",
+      "family": "Other",
+      "description": "The relevant entities shall review at planned intervals if incidents led to post-incident reviews."
+    },
+    {
+      "control_id": "4",
+      "title": "BUSINESS CONTINUITY AND CRISIS MANAGEMENT (ARTICLE 21(2), POINT (C), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "4.1",
+      "title": "Business continuity and disaster recovery plan",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "4.1.1",
+      "title": "4.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (c) of Directive (EU) 2022/2555, the relevant entities shall lay down and maintain a business continuity and disaster recovery plan to apply in the case of incidents."
+    },
+    {
+      "control_id": "4.1.2",
+      "title": "4.1.2",
+      "family": "Other",
+      "description": "The relevant entities’ operations shall be restored according to the business continuity and disaster recovery plan. The plan shall be based on the results of the risk assessment carried out pursuant to point 2.1 and shall include, where appropriate, the following:"
+    },
+    {
+      "control_id": "4.1.2(a)",
+      "title": "4.1.2(a)",
+      "family": "Other",
+      "description": "purpose, scope and audience;"
+    },
+    {
+      "control_id": "4.1.2(b)",
+      "title": "4.1.2(b)",
+      "family": "Other",
+      "description": "roles and responsibilities;"
+    },
+    {
+      "control_id": "4.1.2(c)",
+      "title": "4.1.2(c)",
+      "family": "Other",
+      "description": "key contacts and (internal and external) communication channels;"
+    },
+    {
+      "control_id": "4.1.2(d)",
+      "title": "4.1.2(d)",
+      "family": "Other",
+      "description": "conditions for plan activation and deactivation;"
+    },
+    {
+      "control_id": "4.1.2(e)",
+      "title": "4.1.2(e)",
+      "family": "Other",
+      "description": "order of recovery for operations;"
+    },
+    {
+      "control_id": "4.1.2(f)",
+      "title": "4.1.2(f)",
+      "family": "Other",
+      "description": "recovery plans for specific operations, including recovery objectives;"
+    },
+    {
+      "control_id": "4.1.2(g)",
+      "title": "4.1.2(g)",
+      "family": "Other",
+      "description": "required resources, including backups and redundancies;"
+    },
+    {
+      "control_id": "4.1.2(h)",
+      "title": "4.1.2(h)",
+      "family": "Other",
+      "description": "restoring and resuming activities from temporary measures."
+    },
+    {
+      "control_id": "4.1.3",
+      "title": "4.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall carry out a business impact analysis to assess the potential impact of severe disruptions to their business operations and shall, based on the results of the business impact analysis, establish continuity requirements for the network and information systems."
+    },
+    {
+      "control_id": "4.1.4",
+      "title": "4.1.4",
+      "family": "Other",
+      "description": "The business continuity plan and disaster recovery plan shall be tested, reviewed and, where appropriate, updated at planned intervals and following significant incidents or significant changes to operations or risks. The relevant entities shall ensure that the plans incorporate lessons learnt from such tests."
+    },
+    {
+      "control_id": "4.2",
+      "title": "Backup and redundancy management",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "4.2.1",
+      "title": "4.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall maintain backup copies of data and provide sufficient available resources, including facilities, network and information systems and staff, to ensure an appropriate level of redundancy."
+    },
+    {
+      "control_id": "4.2.2",
+      "title": "4.2.2",
+      "family": "Other",
+      "description": "Based on the results of the risk assessment carried out pursuant to point 2.1 and the business continuity plan, the relevant entities shall lay down backup plans which include the following:"
+    },
+    {
+      "control_id": "4.2.2(a)",
+      "title": "4.2.2(a)",
+      "family": "Other",
+      "description": "recovery times;"
+    },
+    {
+      "control_id": "4.2.2(b)",
+      "title": "4.2.2(b)",
+      "family": "Other",
+      "description": "assurance that backup copies are complete and accurate, including configuration data and data stored in cloud computing service environment;"
+    },
+    {
+      "control_id": "4.2.2(c)",
+      "title": "4.2.2(c)",
+      "family": "Other",
+      "description": "storing backup copies (online or offline) in a safe location or locations, which are not in the same network as the system, and are at sufficient distance to escape any damage from a disaster at the main site;"
+    },
+    {
+      "control_id": "4.2.2(d)",
+      "title": "4.2.2(d)",
+      "family": "Other",
+      "description": "appropriate physical and logical access controls to backup copies, in accordance with the asset classification level;"
+    },
+    {
+      "control_id": "4.2.2(e)",
+      "title": "4.2.2(e)",
+      "family": "Other",
+      "description": "restoring data from backup copies;"
+    },
+    {
+      "control_id": "4.2.2(f)",
+      "title": "4.2.2(f)",
+      "family": "Other",
+      "description": "retention periods based on business and regulatory requirements."
+    },
+    {
+      "control_id": "4.2.3",
+      "title": "4.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall perform regular integrity checks on the backup copies."
+    },
+    {
+      "control_id": "4.2.4",
+      "title": "4.2.4",
+      "family": "Other",
+      "description": "Based on the results of the risk assessment carried out pursuant to point 2.1 and the business continuity plan, the relevant entities shall ensure sufficient availability of resources by at least partial redundancy of the following:"
+    },
+    {
+      "control_id": "4.2.4(a)",
+      "title": "4.2.4(a)",
+      "family": "Other",
+      "description": "network and information systems;"
+    },
+    {
+      "control_id": "4.2.4(b)",
+      "title": "4.2.4(b)",
+      "family": "Other",
+      "description": "assets, including facilities, equipment and supplies;"
+    },
+    {
+      "control_id": "4.2.4(c)",
+      "title": "4.2.4(c)",
+      "family": "Other",
+      "description": "personnel with the necessary responsibility, authority and competence;"
+    },
+    {
+      "control_id": "4.2.4(d)",
+      "title": "4.2.4(d)",
+      "family": "Other",
+      "description": "appropriate communication channels."
+    },
+    {
+      "control_id": "4.2.5",
+      "title": "4.2.5",
+      "family": "Other",
+      "description": "Where appropriate, the relevant entities shall ensure that monitoring and adjustment of resources, including facilities, systems and personnel, is duly informed by backup and redundancy requirements."
+    },
+    {
+      "control_id": "4.2.6",
+      "title": "4.2.6",
+      "family": "Other",
+      "description": "The relevant entities shall carry out regular testing of the recovery of backup copies and redundancies to ensure that, in recovery conditions, they can be relied upon and cover the copies, processes and knowledge to perform an effective recovery. The relevant entities shall document the results of the tests and, where needed, take corrective action."
+    },
+    {
+      "control_id": "4.3",
+      "title": "Crisis management",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "4.3.1",
+      "title": "4.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall put in place a process for crisis management."
+    },
+    {
+      "control_id": "4.3.2",
+      "title": "4.3.2",
+      "family": "Other",
+      "description": "The relevant entities shall ensure that the crisis management process addresses at least the following elements:"
+    },
+    {
+      "control_id": "4.3.2(a)",
+      "title": "4.3.2(a)",
+      "family": "Other",
+      "description": "roles and responsibilities for personnel and, where appropriate, suppliers and service providers, specifying the allocation of roles in crisis situations, including specific steps to follow;"
+    },
+    {
+      "control_id": "4.3.2(b)",
+      "title": "4.3.2(b)",
+      "family": "Other",
+      "description": "appropriate communication means between the relevant entities and relevant competent authorities;"
+    },
+    {
+      "control_id": "4.3.2(c)",
+      "title": "4.3.2(c)",
+      "family": "Other",
+      "description": "application of appropriate measures to ensure the maintenance of network and information system security in crisis situations.\nFor the purpose of point (b), the flow of information between the relevant entities and relevant competent authorities shall include both obligatory communications, such as incident reports and related timelines, and non-obligatory communications."
+    },
+    {
+      "control_id": "4.3.3",
+      "title": "4.3.3",
+      "family": "Other",
+      "description": "The relevant entities shall implement a process for managing and making use of information received from the CSIRTs or, where applicable, the competent authorities, concerning incidents, vulnerabilities, threats or possible mitigation measures."
+    },
+    {
+      "control_id": "4.3.4",
+      "title": "4.3.4",
+      "family": "Other",
+      "description": "The relevant entities shall test, review and, where appropriate, update the crisis management plan on a regular basis or following significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "5",
+      "title": "SUPPLY CHAIN SECURITY (ARTICLE 21(2), POINT (D), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "5.1",
+      "title": "Supply chain security policy",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "5.1.1",
+      "title": "5.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (d) of Directive (EU) 2022/2555, the relevant entities shall establish, implement and apply a supply chain security policy which governs the relations with their direct suppliers and service providers in order to mitigate the identified risks to the security of network and information systems. In the supply chain security policy, the relevant entities shall identify their role in the supply chain and communicate it to their direct suppliers and service providers."
+    },
+    {
+      "control_id": "5.1.2",
+      "title": "5.1.2",
+      "family": "Other",
+      "description": "As part of the supply chain security policy referred to in point 5.1.1, the relevant entities shall lay down criteria to select and contract suppliers and service providers. Those criteria shall include the following:"
+    },
+    {
+      "control_id": "5.1.2(a)",
+      "title": "5.1.2(a)",
+      "family": "Other",
+      "description": "the cybersecurity practices of the suppliers and service providers, including their secure development procedures;"
+    },
+    {
+      "control_id": "5.1.2(b)",
+      "title": "5.1.2(b)",
+      "family": "Other",
+      "description": "the ability of the suppliers and service providers to meet cybersecurity specifications set by the relevant entities;"
+    },
+    {
+      "control_id": "5.1.2(c)",
+      "title": "5.1.2(c)",
+      "family": "Other",
+      "description": "the overall quality and resilience of ICT products and ICT services and the cybersecurity risk-management measures embedded in them, including the risks and classification level of the ICT products and ICT services;"
+    },
+    {
+      "control_id": "5.1.2(d)",
+      "title": "5.1.2(d)",
+      "family": "Other",
+      "description": "the ability of the relevant entities to diversify sources of supply and limit vendor lock-in, where applicable."
+    },
+    {
+      "control_id": "5.1.3",
+      "title": "5.1.3",
+      "family": "Other",
+      "description": "When establishing their supply chain security policy, relevant entities shall take into account the results of the coordinated security risk assessments of critical supply chains carried out in accordance with Article 22(1) of Directive (EU) 2022/2555, where applicable."
+    },
+    {
+      "control_id": "5.1.4",
+      "title": "5.1.4",
+      "family": "Other",
+      "description": "Based on the supply chain security policy and taking into account the results of the risk assessment carried out in accordance with point 2.1. of this Annex, the relevant entities shall ensure that their contracts with the suppliers and service providers specify, where appropriate through service level agreements, the following, where appropriate:"
+    },
+    {
+      "control_id": "5.1.4(a)",
+      "title": "5.1.4(a)",
+      "family": "Other",
+      "description": "cybersecurity requirements for the suppliers or service providers, including requirements as regards the security in acquisition of ICT services or ICT products set out in point 6.1.;"
+    },
+    {
+      "control_id": "5.1.4(b)",
+      "title": "5.1.4(b)",
+      "family": "Other",
+      "description": "requirements regarding awareness, skills and training, and where appropriate certifications, required from the suppliers’ or service providers’ employees;"
+    },
+    {
+      "control_id": "5.1.4(c)",
+      "title": "5.1.4(c)",
+      "family": "Other",
+      "description": "requirements regarding the verification of the background of the suppliers’ and service providers’ employees;"
+    },
+    {
+      "control_id": "5.1.4(d)",
+      "title": "5.1.4(d)",
+      "family": "Other",
+      "description": "an obligation on suppliers and service providers to notify, without undue delay, the relevant entities of incidents that present a risk to the security of the network and information systems of those entities;"
+    },
+    {
+      "control_id": "5.1.4(e)",
+      "title": "5.1.4(e)",
+      "family": "Other",
+      "description": "the right to audit or right to receive audit reports;"
+    },
+    {
+      "control_id": "5.1.4(f)",
+      "title": "5.1.4(f)",
+      "family": "Other",
+      "description": "an obligation on suppliers and service providers to handle vulnerabilities that present a risk to the security of the network and information systems of the relevant entities;"
+    },
+    {
+      "control_id": "5.1.4(g)",
+      "title": "5.1.4(g)",
+      "family": "Other",
+      "description": "requirements regarding subcontracting and, where the relevant entities allow subcontracting, cybersecurity requirements for subcontractors in accordance with the cybersecurity requirements referred to in point (a);"
+    },
+    {
+      "control_id": "5.1.4(h)",
+      "title": "5.1.4(h)",
+      "family": "Other",
+      "description": "obligations on the suppliers and service providers at the termination of the contract, such as retrieval and disposal of the information obtained by the suppliers and service providers in the exercise of their tasks."
+    },
+    {
+      "control_id": "5.1.5",
+      "title": "5.1.5",
+      "family": "Other",
+      "description": "The relevant entities shall take into account the elements referred to in point 5.1.2 and 5.1.3. as part of the selection process of new suppliers and service providers, as well as part of the procurement process referred to in point 6.1."
+    },
+    {
+      "control_id": "5.1.6",
+      "title": "5.1.6",
+      "family": "Other",
+      "description": "The relevant entities shall review the supply chain security policy, and monitor, evaluate and, where necessary, act upon changes in the cybersecurity practices of suppliers and service providers, at planned intervals and when significant changes to operations or risks or significant incidents related to the provision of ICT services or having impact on the security of the ICT products from suppliers and service providers occur."
+    },
+    {
+      "control_id": "5.1.7",
+      "title": "5.1.7",
+      "family": "Other",
+      "description": "For the purpose of point 5.1.6., the relevant entities shall:"
+    },
+    {
+      "control_id": "5.1.7(a)",
+      "title": "5.1.7(a)",
+      "family": "Other",
+      "description": "regularly monitor reports on the implementation of the service level agreements, where applicable;"
+    },
+    {
+      "control_id": "5.1.7(b)",
+      "title": "5.1.7(b)",
+      "family": "Other",
+      "description": "review incidents related to ICT products and ICT services from suppliers and service providers;"
+    },
+    {
+      "control_id": "5.1.7(c)",
+      "title": "5.1.7(c)",
+      "family": "Other",
+      "description": "assess the need for unscheduled reviews and document the findings in a comprehensible manner;"
+    },
+    {
+      "control_id": "5.1.7(d)",
+      "title": "5.1.7(d)",
+      "family": "Other",
+      "description": "analyse the risks presented by changes related to ICT products and ICT services from suppliers and service providers and, where appropriate, take mitigating measures in a timely manner."
+    },
+    {
+      "control_id": "5.2",
+      "title": "Directory of suppliers and service providers",
+      "family": "Other",
+      "description": "The relevant entities shall maintain and keep up to date a registry of their direct suppliers and service providers, including:"
+    },
+    {
+      "control_id": "5.2(a)",
+      "title": "5.2(a)",
+      "family": "Other",
+      "description": "contact points for each direct supplier and service provider;"
+    },
+    {
+      "control_id": "5.2(b)",
+      "title": "5.2(b)",
+      "family": "Other",
+      "description": "a list of ICT products, ICT services, and ICT processes provided by the direct supplier or service provider to the relevant entities."
+    },
+    {
+      "control_id": "6",
+      "title": "SECURITY IN NETWORK AND INFORMATION SYSTEMS ACQUISITION, DEVELOPMENT AND MAINTENANCE (ARTICLE 21(2), POINT (E), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.1",
+      "title": "Security in acquisition of ICT services or ICT products",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.1.1",
+      "title": "6.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (e) of Directive (EU) 2022/2555, the relevant entities shall set and implement processes to manage risks stemming from the acquisition of ICT services or ICT products for components that are critical for the relevant entities’ security of network and information systems, based on the risk assessment carried out pursuant to point 2.1, from suppliers or service providers throughout their life cycle."
+    },
+    {
+      "control_id": "6.1.2",
+      "title": "6.1.2",
+      "family": "Other",
+      "description": "For the purpose of point 6.1.1., the processes referred to in point 6.1.1. shall include:"
+    },
+    {
+      "control_id": "6.1.2(a)",
+      "title": "6.1.2(a)",
+      "family": "Other",
+      "description": "security requirements to apply to the ICT services or ICT products to be acquired;"
+    },
+    {
+      "control_id": "6.1.2(b)",
+      "title": "6.1.2(b)",
+      "family": "Other",
+      "description": "requirements regarding security updates throughout the entire lifetime of the ICT services or ICT products, or replacement after the end of the support period;"
+    },
+    {
+      "control_id": "6.1.2(c)",
+      "title": "6.1.2(c)",
+      "family": "Other",
+      "description": "information describing the hardware and software components used in the ICT services or ICT products;"
+    },
+    {
+      "control_id": "6.1.2(d)",
+      "title": "6.1.2(d)",
+      "family": "Other",
+      "description": "information describing the implemented cybersecurity functions of the ICT services or ICT products and the configuration required for their secure operation;"
+    },
+    {
+      "control_id": "6.1.2(e)",
+      "title": "6.1.2(e)",
+      "family": "Other",
+      "description": "assurance that the ICT services or ICT products comply with the security requirements according to point (a);"
+    },
+    {
+      "control_id": "6.1.2(f)",
+      "title": "6.1.2(f)",
+      "family": "Other",
+      "description": "methods for validating that the delivered ICT services or ICT products are compliant to the stated security requirements, as well as documentation of the results of the validation."
+    },
+    {
+      "control_id": "6.1.3",
+      "title": "6.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the processes at planned intervals and when significant incidents occur."
+    },
+    {
+      "control_id": "6.2",
+      "title": "Secure development life cycle",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.2.1",
+      "title": "6.2.1",
+      "family": "Other",
+      "description": "Before developing a network and information system, including software, the relevant entities shall lay down rules for the secure development of network and information systems and apply them when developing network and information systems in-house, or when outsourcing the development of network and information systems. The rules shall cover all development phases, including specification, design, development, implementation and testing."
+    },
+    {
+      "control_id": "6.2.2",
+      "title": "6.2.2",
+      "family": "Other",
+      "description": "For the purpose of point 6.2.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "6.2.2(a)",
+      "title": "6.2.2(a)",
+      "family": "Other",
+      "description": "carry out an analysis of security requirements at the specification and design phases of any development or acquisition project undertaken by the relevant entities or on behalf of those entities;"
+    },
+    {
+      "control_id": "6.2.2(b)",
+      "title": "6.2.2(b)",
+      "family": "Other",
+      "description": "apply principles for engineering secure systems and secure coding principles to any information system development activities such as promoting cybersecurity-by-design, zero-trust architectures;"
+    },
+    {
+      "control_id": "6.2.2(c)",
+      "title": "6.2.2(c)",
+      "family": "Other",
+      "description": "lay down security requirements regarding development environments;"
+    },
+    {
+      "control_id": "6.2.2(d)",
+      "title": "6.2.2(d)",
+      "family": "Other",
+      "description": "establish and implement security testing processes in the development life cycle;"
+    },
+    {
+      "control_id": "6.2.2(e)",
+      "title": "6.2.2(e)",
+      "family": "Other",
+      "description": "appropriately select, protect and manage security test data;"
+    },
+    {
+      "control_id": "6.2.2(f)",
+      "title": "6.2.2(f)",
+      "family": "Other",
+      "description": "sanitise and anonymise testing data according to the risk assessment carried out pursuant to point 2.1."
+    },
+    {
+      "control_id": "6.2.3",
+      "title": "6.2.3",
+      "family": "Other",
+      "description": "For outsourced development of network and information systems, the relevant entities shall also apply the policies and procedures referred to in points 5 and 6.1."
+    },
+    {
+      "control_id": "6.2.4",
+      "title": "6.2.4",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where necessary, update their secure development rules at planned intervals."
+    },
+    {
+      "control_id": "6.3",
+      "title": "Configuration management",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.3.1",
+      "title": "6.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall take the appropriate measures to establish, document, implement, and monitor configurations, including security configurations of hardware, software, services and networks."
+    },
+    {
+      "control_id": "6.3.2",
+      "title": "6.3.2",
+      "family": "Other",
+      "description": "For the purpose of point 6.3.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "6.3.2(a)",
+      "title": "6.3.2(a)",
+      "family": "Other",
+      "description": "lay down and ensure security in configurations for their hardware, software, services and networks;"
+    },
+    {
+      "control_id": "6.3.2(b)",
+      "title": "6.3.2(b)",
+      "family": "Other",
+      "description": "lay down and implement processes and tools to enforce the laid down secure configurations for hardware, software, services and networks, for newly installed systems as well as for systems in operation over their lifetime."
+    },
+    {
+      "control_id": "6.3.3",
+      "title": "6.3.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update configurations at planned intervals or when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "6.4",
+      "title": "Change management, repairs and maintenance",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.4.1",
+      "title": "6.4.1",
+      "family": "Other",
+      "description": "The relevant entities shall apply change management procedures to control changes of network and information systems. Where applicable, the procedures shall be consistent with the relevant entities’ general policies concerning change management."
+    },
+    {
+      "control_id": "6.4.2",
+      "title": "6.4.2",
+      "family": "Other",
+      "description": "The procedures referred to in point 6.4.1. shall be applied for releases, modifications and emergency changes of any software and hardware in operation and changes to the configuration. The procedures shall ensure that those changes are documented and, based on the risk assessment carried out pursuant to point 2.1, tested and assessed in view of the potential impact before being implemented."
+    },
+    {
+      "control_id": "6.4.3",
+      "title": "6.4.3",
+      "family": "Other",
+      "description": "In the event that the regular change management procedures could not be followed due to an emergency, the relevant entities shall document the result of the change, and the explanation for why the procedures could not be followed."
+    },
+    {
+      "control_id": "6.4.4",
+      "title": "6.4.4",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the procedures at planned intervals and when significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "6.5",
+      "title": "Security testing",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.5.1",
+      "title": "6.5.1",
+      "family": "Other",
+      "description": "The relevant entities shall establish, implement and apply a policy and procedures for security testing."
+    },
+    {
+      "control_id": "6.5.2",
+      "title": "6.5.2",
+      "family": "Other",
+      "description": "The relevant entities shall:"
+    },
+    {
+      "control_id": "6.5.2(a)",
+      "title": "6.5.2(a)",
+      "family": "Other",
+      "description": "establish, based on the risk assessment carried out pursuant to point 2.1, the need, scope, frequency and type of security tests;"
+    },
+    {
+      "control_id": "6.5.2(b)",
+      "title": "6.5.2(b)",
+      "family": "Other",
+      "description": "carry out security tests according to a documented test methodology, covering the components identified as relevant for secure operation in a risk analysis;"
+    },
+    {
+      "control_id": "6.5.2(c)",
+      "title": "6.5.2(c)",
+      "family": "Other",
+      "description": "document the type, scope, time and results of the tests, including assessment of criticality and mitigating actions for each finding;"
+    },
+    {
+      "control_id": "6.5.2(d)",
+      "title": "6.5.2(d)",
+      "family": "Other",
+      "description": "apply mitigating actions in case of critical findings."
+    },
+    {
+      "control_id": "6.5.3",
+      "title": "6.5.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update their security testing policies at planned intervals."
+    },
+    {
+      "control_id": "6.6",
+      "title": "Security patch management",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.6.1",
+      "title": "6.6.1",
+      "family": "Other",
+      "description": "The relevant entities shall specify and apply procedures, coherent with the change management procedures referred to in point 6.4.1. as well as with vulnerability management, risk management and other relevant management procedures, for ensuring that:"
+    },
+    {
+      "control_id": "6.6.1(a)",
+      "title": "6.6.1(a)",
+      "family": "Other",
+      "description": "security patches are applied within a reasonable time after they become available;"
+    },
+    {
+      "control_id": "6.6.1(b)",
+      "title": "6.6.1(b)",
+      "family": "Other",
+      "description": "security patches are tested before being applied in production systems;"
+    },
+    {
+      "control_id": "6.6.1(c)",
+      "title": "6.6.1(c)",
+      "family": "Other",
+      "description": "security patches come from trusted sources and are checked for integrity;"
+    },
+    {
+      "control_id": "6.6.1(d)",
+      "title": "6.6.1(d)",
+      "family": "Other",
+      "description": "additional measures are implemented and residual risks are accepted in cases where a patch is not available or not applied pursuant to point 6.6.2."
+    },
+    {
+      "control_id": "6.6.2",
+      "title": "6.6.2",
+      "family": "Other",
+      "description": "By way of derogation from point 6.6.1.(a), the relevant entities may choose not to apply security patches when the disadvantages of applying the security patches outweigh the cybersecurity benefits. The relevant entities shall duly document and substantiate the reasons for any such decision."
+    },
+    {
+      "control_id": "6.7",
+      "title": "Network security",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.7.1",
+      "title": "6.7.1",
+      "family": "Other",
+      "description": "The relevant entities shall take the appropriate measures to protect their network and information systems from cyber threats."
+    },
+    {
+      "control_id": "6.7.2",
+      "title": "6.7.2",
+      "family": "Other",
+      "description": "For the purpose of point 6.7.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "6.7.2(a)",
+      "title": "6.7.2(a)",
+      "family": "Other",
+      "description": "document the architecture of the network in a comprehensible and up to date manner;"
+    },
+    {
+      "control_id": "6.7.2(b)",
+      "title": "6.7.2(b)",
+      "family": "Other",
+      "description": "determine and apply controls to protect the relevant entities’ internal network domains from unauthorised access;"
+    },
+    {
+      "control_id": "6.7.2(c)",
+      "title": "6.7.2(c)",
+      "family": "Other",
+      "description": "configure controls to prevent accesses and network communication not required for the operation of the relevant entities;"
+    },
+    {
+      "control_id": "6.7.2(d)",
+      "title": "6.7.2(d)",
+      "family": "Other",
+      "description": "determine and apply controls for remote access to network and information systems, including access by service providers;"
+    },
+    {
+      "control_id": "6.7.2(e)",
+      "title": "6.7.2(e)",
+      "family": "Other",
+      "description": "not use systems used for administration of the security policy implementation for other purposes;"
+    },
+    {
+      "control_id": "6.7.2(f)",
+      "title": "6.7.2(f)",
+      "family": "Other",
+      "description": "explicitly forbid or deactivate unneeded connections and services;"
+    },
+    {
+      "control_id": "6.7.2(g)",
+      "title": "6.7.2(g)",
+      "family": "Other",
+      "description": "where appropriate, exclusively allow access to the relevant entities’ network and information systems by devices authorised by those entities;"
+    },
+    {
+      "control_id": "6.7.2(h)",
+      "title": "6.7.2(h)",
+      "family": "Other",
+      "description": "allow connections of service providers only after an authorisation request and for a set time period, such as the duration of a maintenance operation;"
+    },
+    {
+      "control_id": "6.7.2(i)",
+      "title": "6.7.2(i)",
+      "family": "Other",
+      "description": "establish communication between distinct systems only through trusted channels that are isolated using logical, cryptographic or physical separation from other communication channels and provide assured identification of their end points and protection of the channel data from modification or disclosure;"
+    },
+    {
+      "control_id": "6.7.2(j)",
+      "title": "6.7.2(j)",
+      "family": "Other",
+      "description": "adopt an implementation plan for the full transition towards latest generation network layer communication protocols in a secure, appropriate and gradual way and establish measures to accelerate such transition;"
+    },
+    {
+      "control_id": "6.7.2(k)",
+      "title": "6.7.2(k)",
+      "family": "Other",
+      "description": "adopt an implementation plan for the deployment of internationally agreed and interoperable modern e-mail communications standards to secure e-mail communications to mitigate vulnerabilities linked to e-mail-related threats and establish measures to accelerate such deployment;"
+    },
+    {
+      "control_id": "6.7.2(l)",
+      "title": "6.7.2(l)",
+      "family": "Other",
+      "description": "apply best practices for the security of the DNS, and for Internet routing security and routing hygiene of traffic originating from and destined to the network."
+    },
+    {
+      "control_id": "6.7.3",
+      "title": "6.7.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update these measures at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "6.8",
+      "title": "Network segmentation",
+      "family": "Other",
+      "description": "Network segmentation"
+    },
+    {
+      "control_id": "6.8.1",
+      "title": "6.8.1",
+      "family": "Other",
+      "description": "The relevant entities shall segment systems into networks or zones in accordance with the results of the risk assessment referred to in point 2.1. They shall segment their systems and networks from third parties’ systems and networks."
+    },
+    {
+      "control_id": "6.8.2",
+      "title": "6.8.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall:"
+    },
+    {
+      "control_id": "6.8.2(a)",
+      "title": "6.8.2(a)",
+      "family": "Other",
+      "description": "consider the functional, logical and physical relationship, including location, between trustworthy systems and services;"
+    },
+    {
+      "control_id": "6.8.2(b)",
+      "title": "6.8.2(b)",
+      "family": "Other",
+      "description": "grant access to a network or zone based on an assessment of its security requirements;"
+    },
+    {
+      "control_id": "6.8.2(c)",
+      "title": "6.8.2(c)",
+      "family": "Other",
+      "description": "keep systems that are critical to the relevant entities operation or to safety in secured zones;"
+    },
+    {
+      "control_id": "6.8.2(d)",
+      "title": "6.8.2(d)",
+      "family": "Other",
+      "description": "deploy a demilitarised zone within their communication networks to ensure secure communication originating from or destined to their networks;"
+    },
+    {
+      "control_id": "6.8.2(e)",
+      "title": "6.8.2(e)",
+      "family": "Other",
+      "description": "restrict access and communications between and within zones to those necessary for the operation of the relevant entities or for safety;"
+    },
+    {
+      "control_id": "6.8.2(f)",
+      "title": "6.8.2(f)",
+      "family": "Other",
+      "description": "separate the dedicated network for administration of network and information systems from the relevant entities’ operational network;"
+    },
+    {
+      "control_id": "6.8.2(g)",
+      "title": "6.8.2(g)",
+      "family": "Other",
+      "description": "segregate network administration channels from other network traffic;"
+    },
+    {
+      "control_id": "6.8.2(h)",
+      "title": "6.8.2(h)",
+      "family": "Other",
+      "description": "separate the production systems for the relevant entities’ services from systems used in development and testing, including backups."
+    },
+    {
+      "control_id": "6.8.3",
+      "title": "6.8.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update network segmentation at planned intervals and when significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "6.9",
+      "title": "Protection against malicious and unauthorised software",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.9.1",
+      "title": "6.9.1",
+      "family": "Other",
+      "description": "The relevant entities shall protect their network and information systems against malicious and unauthorised software."
+    },
+    {
+      "control_id": "6.9.2",
+      "title": "6.9.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall in particular implement measures that detect or prevent the use of malicious or unauthorised software. The relevant entities shall, where appropriate, ensure that their network and information systems are equipped with detection and response software, which is updated regularly in accordance with the risk assessment carried out pursuant to point 2.1 and the contractual agreements with the providers."
+    },
+    {
+      "control_id": "6.10",
+      "title": "Vulnerability handling and disclosure",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "6.10.1",
+      "title": "6.10.1",
+      "family": "Other",
+      "description": "The relevant entities shall obtain information about technical vulnerabilities in their network and information systems, evaluate their exposure to such vulnerabilities, and take appropriate measures to manage the vulnerabilities."
+    },
+    {
+      "control_id": "6.10.2",
+      "title": "6.10.2",
+      "family": "Other",
+      "description": "For the purpose of point 6.10.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "6.10.2(a)",
+      "title": "6.10.2(a)",
+      "family": "Other",
+      "description": "monitor information about vulnerabilities through appropriate channels, such as announcements of CSIRTs, competent authorities or information provided by suppliers or service providers;"
+    },
+    {
+      "control_id": "6.10.2(b)",
+      "title": "6.10.2(b)",
+      "family": "Other",
+      "description": "perform, where appropriate, vulnerability scans, and record evidence of the results of the scans, at planned intervals;"
+    },
+    {
+      "control_id": "6.10.2(c)",
+      "title": "6.10.2(c)",
+      "family": "Other",
+      "description": "address, without undue delay, vulnerabilities identified by the relevant entities as critical to their operations;"
+    },
+    {
+      "control_id": "6.10.2(d)",
+      "title": "6.10.2(d)",
+      "family": "Other",
+      "description": "ensure that their vulnerability handling is compatible with their change management, security patch management, risk management and incident management procedures;"
+    },
+    {
+      "control_id": "6.10.2(e)",
+      "title": "6.10.2(e)",
+      "family": "Other",
+      "description": "lay down a procedure for disclosing vulnerabilities in accordance with the applicable national coordinated vulnerability disclosure policy."
+    },
+    {
+      "control_id": "6.10.3",
+      "title": "6.10.3",
+      "family": "Other",
+      "description": "When justified by the potential impact of the vulnerability, the relevant entities shall create and implement a plan to mitigate the vulnerability. In other cases, the relevant entities shall document and substantiate the reason why the vulnerability does not require remediation."
+    },
+    {
+      "control_id": "6.10.4",
+      "title": "6.10.4",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update at planned intervals the channels they use for monitoring vulnerability information."
+    },
+    {
+      "control_id": "7",
+      "title": "POLICIES AND PROCEDURES TO ASSESS THE EFFECTIVENESS OF CYBERSECURITY RISK-MANAGEMENT MEASURES (ARTICLE 21(2), POINT (F), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "7.1",
+      "title": "7.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (f) of Directive (EU) 2022/2555, the relevant entities shall establish, implement and apply a policy and procedures to assess whether the cybersecurity risk-management measures taken by the relevant entity are effectively implemented and maintained."
+    },
+    {
+      "control_id": "7.2",
+      "title": "7.2",
+      "family": "Other",
+      "description": "The policy and procedures referred to in point 7.1. shall take into account results of the risk assessment pursuant to point 2.1. and past significant incidents. The relevant entities shall determine:"
+    },
+    {
+      "control_id": "7.2(a)",
+      "title": "7.2(a)",
+      "family": "Other",
+      "description": "what cybersecurity risk-management measures are to be monitored and measured, including processes and controls;"
+    },
+    {
+      "control_id": "7.2(b)",
+      "title": "7.2(b)",
+      "family": "Other",
+      "description": "the methods for monitoring, measurement, analysis and evaluation, as applicable, to ensure valid results;"
+    },
+    {
+      "control_id": "7.2(c)",
+      "title": "7.2(c)",
+      "family": "Other",
+      "description": "when the monitoring and measuring is to be performed;"
+    },
+    {
+      "control_id": "7.2(d)",
+      "title": "7.2(d)",
+      "family": "Other",
+      "description": "who is responsible for monitoring and measuring the effectiveness of the cybersecurity risk-management measures;"
+    },
+    {
+      "control_id": "7.2(e)",
+      "title": "7.2(e)",
+      "family": "Other",
+      "description": "when the results from monitoring and measurement are to be analysed and evaluated;"
+    },
+    {
+      "control_id": "7.2(f)",
+      "title": "7.2(f)",
+      "family": "Other",
+      "description": "who has to analyse and evaluate these results."
+    },
+    {
+      "control_id": "7.3",
+      "title": "7.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the policy and procedures at planned intervals and when significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "8",
+      "title": "BASIC CYBER HYGIENE PRACTICES AND SECURITY TRAINING (ARTICLE 21(2), POINT (G), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "8.1",
+      "title": "Awareness raising and basic cyber hygiene practices",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "8.1.1",
+      "title": "8.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (g) of Directive (EU) 2022/2555, the relevant entities shall ensure that their employees, including members of management bodies, as well as direct suppliers and service providers are aware of risks, are informed of the importance of cybersecurity and apply cyber hygiene practices."
+    },
+    {
+      "control_id": "8.1.2",
+      "title": "8.1.2",
+      "family": "Other",
+      "description": "For the purpose of point 8.1.1., the relevant entities shall offer to their employees, including members of management bodies, as well as to direct suppliers and service providers where appropriate in accordance with point 5.1.4., an awareness raising programme, which shall:"
+    },
+    {
+      "control_id": "8.1.2(a)",
+      "title": "8.1.2(a)",
+      "family": "Other",
+      "description": "be scheduled over time, so that the activities are repeated and cover new employees;"
+    },
+    {
+      "control_id": "8.1.2(b)",
+      "title": "8.1.2(b)",
+      "family": "Other",
+      "description": "be established in line with the network and information security policy, topic-specific policies and relevant procedures on network and information security;"
+    },
+    {
+      "control_id": "8.1.2(c)",
+      "title": "8.1.2(c)",
+      "family": "Other",
+      "description": "cover relevant cyber threats, the cybersecurity risk-management measures in place, contact points and resources for additional information and advice on cybersecurity matters, as well as cyber hygiene practices for users."
+    },
+    {
+      "control_id": "8.1.3",
+      "title": "8.1.3",
+      "family": "Other",
+      "description": "The awareness raising programme shall, where appropriate, be tested in terms of effectiveness. The awareness raising programme shall be updated and offered at planned intervals taking into account changes in cyber hygiene practices, and the current threat landscape and risks posed to the relevant entities."
+    },
+    {
+      "control_id": "8.2",
+      "title": "Security training",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "8.2.1",
+      "title": "8.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall identify employees, whose roles require security relevant skill sets and expertise, and ensure that they receive regular training on network and information system security."
+    },
+    {
+      "control_id": "8.2.2",
+      "title": "8.2.2",
+      "family": "Other",
+      "description": "The relevant entities shall establish, implement and apply a training program in line with the network and information security policy, topic-specific policies and other relevant procedures on network and information security which lays down the training needs for certain roles and positions based on criteria."
+    },
+    {
+      "control_id": "8.2.3",
+      "title": "8.2.3",
+      "family": "Other",
+      "description": "The training referred to in point 8.2.1. shall be relevant to the job function of the employee and its effectiveness shall be assessed. Training shall take into consideration security measures in place and cover the following:"
+    },
+    {
+      "control_id": "8.2.3(a)",
+      "title": "8.2.3(a)",
+      "family": "Other",
+      "description": "instructions regarding the secure configuration and operation of the network and information systems, including mobile devices;"
+    },
+    {
+      "control_id": "8.2.3(b)",
+      "title": "8.2.3(b)",
+      "family": "Other",
+      "description": "briefing on known cyber threats;"
+    },
+    {
+      "control_id": "8.2.3(c)",
+      "title": "8.2.3(c)",
+      "family": "Other",
+      "description": "training of the behaviour when security-relevant events occur."
+    },
+    {
+      "control_id": "8.2.4",
+      "title": "8.2.4",
+      "family": "Other",
+      "description": "The relevant entities shall apply training to staff members who transfer to new positions or roles which require security relevant skill sets and expertise."
+    },
+    {
+      "control_id": "8.2.5",
+      "title": "8.2.5",
+      "family": "Other",
+      "description": "The program shall be updated and run periodically taking into account applicable policies and rules, assigned roles, responsibilities, as well as known cyber threats and technological developments."
+    },
+    {
+      "control_id": "9",
+      "title": "CRYPTOGRAPHY (ARTICLE 21(2), POINT (H), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "9.1",
+      "title": "9.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (h) of Directive (EU) 2022/2555, the relevant entities shall establish, implement and apply a policy and procedures related to cryptography, with a view to ensuring adequate and effective use of cryptography to protect the confidentiality, authenticity and integrity of data in line with the relevant entities’ asset classification and the results of the risk assessment carried out pursuant to point 2.1."
+    },
+    {
+      "control_id": "9.2",
+      "title": "9.2",
+      "family": "Other",
+      "description": "The policy and procedures referred to in point 9.1 shall establish:"
+    },
+    {
+      "control_id": "9.2(a)",
+      "title": "9.2(a)",
+      "family": "Other",
+      "description": "in accordance with the relevant entities’ classification of assets, the type, strength and quality of the cryptographic measures required to protect the relevant entities’ assets, including data at rest and data in transit;"
+    },
+    {
+      "control_id": "9.2(b)",
+      "title": "9.2(b)",
+      "family": "Other",
+      "description": "based on point (a), the protocols or families of protocols to be adopted, as well as cryptographic algorithms, cipher strength, cryptographic solutions and usage practices to be approved and required for use in the relevant entities, following, where appropriate, a cryptographic agility approach;"
+    },
+    {
+      "control_id": "9.2(c)",
+      "title": "9.2(c)",
+      "family": "Other",
+      "description": "the relevant entities’ approach to key management, including, where appropriate, methods for the following:"
+    },
+    {
+      "control_id": "9.2(c)(i)",
+      "title": "9.2(c)(i)",
+      "family": "Other",
+      "description": "generating different keys for cryptographic systems and applications;"
+    },
+    {
+      "control_id": "9.2(c)(ii)",
+      "title": "9.2(c)(ii)",
+      "family": "Other",
+      "description": "issuing and obtaining public key certificates;"
+    },
+    {
+      "control_id": "9.2(c)(iii)",
+      "title": "9.2(c)(iii)",
+      "family": "Other",
+      "description": "distributing keys to intended entities, including how to activate keys when received;"
+    },
+    {
+      "control_id": "9.2(c)(iv)",
+      "title": "9.2(c)(iv)",
+      "family": "Other",
+      "description": "storing keys, including how authorised users obtain access to keys;"
+    },
+    {
+      "control_id": "9.2(c)(v)",
+      "title": "9.2(c)(v)",
+      "family": "Other",
+      "description": "changing or updating keys, including rules on when and how to change keys;"
+    },
+    {
+      "control_id": "9.2(c)(vi)",
+      "title": "9.2(c)(vi)",
+      "family": "Other",
+      "description": "dealing with compromised keys;"
+    },
+    {
+      "control_id": "9.2(c)(vii)",
+      "title": "9.2(c)(vii)",
+      "family": "Other",
+      "description": "revoking keys including how to withdraw or deactivate keys;"
+    },
+    {
+      "control_id": "9.2(c)(viii)",
+      "title": "9.2(c)(viii)",
+      "family": "Other",
+      "description": "recovering lost or corrupted keys;"
+    },
+    {
+      "control_id": "9.2(c)(ix)",
+      "title": "9.2(c)(ix)",
+      "family": "Other",
+      "description": "backing up or archiving keys;"
+    },
+    {
+      "control_id": "9.2(c)(x)",
+      "title": "9.2(c)(x)",
+      "family": "Other",
+      "description": "destroying keys;"
+    },
+    {
+      "control_id": "9.2(c)(xi)",
+      "title": "9.2(c)(xi)",
+      "family": "Other",
+      "description": "logging and auditing of key management-related activities;"
+    },
+    {
+      "control_id": "9.2(c)(xii)",
+      "title": "9.2(c)(xii)",
+      "family": "Other",
+      "description": "setting activation and deactivation dates for keys ensuring that the keys can only be used for the specified period of time according to the organization's rules on key management."
+    },
+    {
+      "control_id": "9.3",
+      "title": "9.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update their policy and procedures at planned intervals, taking into account the state of the art in cryptography."
+    },
+    {
+      "control_id": "10",
+      "title": "HUMAN RESOURCES SECURITY (ARTICLE 21(2), POINT (I), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "10.1",
+      "title": "Human resources security",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "10.1.1",
+      "title": "10.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (i) of Directive (EU) 2022/2555, the relevant entities shall ensure that their employees and direct suppliers and service providers, wherever applicable, understand and commit to their security responsibilities, as appropriate for the offered services and the job and in line with the relevant entities’ policy on the security of network and information systems."
+    },
+    {
+      "control_id": "10.1.2",
+      "title": "10.1.2",
+      "family": "Other",
+      "description": "The requirement referred to in point 10.1.1. shall include the following:"
+    },
+    {
+      "control_id": "10.1.2(a)",
+      "title": "10.1.2(a)",
+      "family": "Other",
+      "description": "mechanisms to ensure that all employees, direct suppliers and service providers, wherever applicable, understand and follow the standard cyber hygiene practices that the relevant entities apply pursuant to point 8.1.;"
+    },
+    {
+      "control_id": "10.1.2(b)",
+      "title": "10.1.2(b)",
+      "family": "Other",
+      "description": "mechanisms to ensure that all users with administrative or privileged access are aware of and act in accordance with their roles, responsibilities and authorities;"
+    },
+    {
+      "control_id": "10.1.2(c)",
+      "title": "10.1.2(c)",
+      "family": "Other",
+      "description": "mechanisms to ensure that members of management bodies understand and act in accordance with their role, responsibilities and authorities regarding network and information system security;"
+    },
+    {
+      "control_id": "10.1.2(d)",
+      "title": "10.1.2(d)",
+      "family": "Other",
+      "description": "mechanisms for hiring personnel qualified for the respective roles, such as reference checks, vetting procedures, validation of certifications, or written tests."
+    },
+    {
+      "control_id": "10.1.3",
+      "title": "10.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall review the assignment of personnel to specific roles as referred to in point 1.2., as well as their commitment of human resources in that regard, at planned intervals and at least annually. They shall update the assignment where necessary."
+    },
+    {
+      "control_id": "10.2",
+      "title": "Verification of background",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "10.2.1",
+      "title": "10.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall ensure to the extent feasible verification of the background of their employees, and where applicable of direct suppliers and service providers in accordance with point 5.1.4, if necessary for their role, responsibilities and authorisations."
+    },
+    {
+      "control_id": "10.2.2",
+      "title": "10.2.2",
+      "family": "Other",
+      "description": "For the purpose of point 10.2.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "10.2.2(a)",
+      "title": "10.2.2(a)",
+      "family": "Other",
+      "description": "put in place criteria, which set out which roles, responsibilities and authorities shall only be exercised by persons whose background has been verified;"
+    },
+    {
+      "control_id": "10.2.2(b)",
+      "title": "10.2.2(b)",
+      "family": "Other",
+      "description": "ensure that verification referred to in point 10.2.1 is performed on these persons before they start exercising these roles, responsibilities and authorities, which shall take into consideration the applicable laws, regulations, and ethics in proportion to the business requirements, the asset classification as referred to in point 12.1. and the network and information systems to be accessed, and the perceived risks."
+    },
+    {
+      "control_id": "10.2.3",
+      "title": "10.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the policy at planned intervals and update it where necessary."
+    },
+    {
+      "control_id": "10.3",
+      "title": "Termination or change of employment procedures",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "10.3.1",
+      "title": "10.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall ensure that network and information system security responsibilities and duties that remain valid after termination or change of employment of their employees are contractually defined and enforced."
+    },
+    {
+      "control_id": "10.3.2",
+      "title": "10.3.2",
+      "family": "Other",
+      "description": "For the purpose of point 10.3.1., the relevant entities shall include in the individual’s terms and conditions of employment, contract or agreement the responsibilities and duties that are still valid after termination of employment or contract, such as confidentiality clauses."
+    },
+    {
+      "control_id": "10.4",
+      "title": "Disciplinary process",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "10.4.1",
+      "title": "10.4.1",
+      "family": "Other",
+      "description": "The relevant entities shall establish, communicate and maintain a disciplinary process for handling violations of network and information system security policies. The process shall take into consideration relevant legal, statutory, contractual and business requirements."
+    },
+    {
+      "control_id": "10.4.2",
+      "title": "10.4.2",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the disciplinary process at planned intervals, and when necessary due to legal changes or significant changes to operations or risks."
+    },
+    {
+      "control_id": "11",
+      "title": "ACCESS CONTROL (ARTICLE 21(2), POINTS (I) AND (J), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.1",
+      "title": "Access control policy",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.1.1",
+      "title": "11.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (i) of Directive (EU) 2022/2555, the relevant entities shall establish, document and implement logical and physical access control policies for the access to their network and information systems, based on business requirements as well as network and information system security requirements."
+    },
+    {
+      "control_id": "11.1.2",
+      "title": "11.1.2",
+      "family": "Other",
+      "description": "The policies referred to in point 11.1.1. shall:"
+    },
+    {
+      "control_id": "11.1.2(a)",
+      "title": "11.1.2(a)",
+      "family": "Other",
+      "description": "address access by persons, including staff, visitors, and external entities such as suppliers and service providers;"
+    },
+    {
+      "control_id": "11.1.2(b)",
+      "title": "11.1.2(b)",
+      "family": "Other",
+      "description": "address access by network and information systems;"
+    },
+    {
+      "control_id": "11.1.2(c)",
+      "title": "11.1.2(c)",
+      "family": "Other",
+      "description": "ensure that access is only granted to users that have been adequately authenticated."
+    },
+    {
+      "control_id": "11.1.3",
+      "title": "11.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the policies at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "11.2",
+      "title": "Management of access rights",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.2.1",
+      "title": "11.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall provide, modify, remove and document access rights to network and information systems in accordance with the access control policy referred to in point 11.1."
+    },
+    {
+      "control_id": "11.2.2",
+      "title": "11.2.2",
+      "family": "Other",
+      "description": "The relevant entities shall:"
+    },
+    {
+      "control_id": "11.2.2(a)",
+      "title": "11.2.2(a)",
+      "family": "Other",
+      "description": "assign and revoke access rights based on the principles of need-to-know, least privilege and separation of duties;"
+    },
+    {
+      "control_id": "11.2.2(b)",
+      "title": "11.2.2(b)",
+      "family": "Other",
+      "description": "ensure that access rights are modified accordingly upon termination or change of employment;"
+    },
+    {
+      "control_id": "11.2.2(c)",
+      "title": "11.2.2(c)",
+      "family": "Other",
+      "description": "ensure that access to network and information systems is authorised by the relevant persons;"
+    },
+    {
+      "control_id": "11.2.2(d)",
+      "title": "11.2.2(d)",
+      "family": "Other",
+      "description": "ensure that access rights appropriately address third-party access, such as visitors, suppliers and service providers, in particular by limiting access rights in scope and in duration;"
+    },
+    {
+      "control_id": "11.2.2(e)",
+      "title": "11.2.2(e)",
+      "family": "Other",
+      "description": "maintain a register of access rights granted;"
+    },
+    {
+      "control_id": "11.2.2(f)",
+      "title": "11.2.2(f)",
+      "family": "Other",
+      "description": "apply logging to the management of access rights."
+    },
+    {
+      "control_id": "11.2.3",
+      "title": "11.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall review access rights at planned intervals and shall modify them based on organisational changes. The relevant entities shall document the results of the review including the necessary changes of access rights."
+    },
+    {
+      "control_id": "11.3",
+      "title": "Privileged accounts and system administration accounts",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.3.1",
+      "title": "11.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall maintain policies for management of privileged accounts and system administration accounts as part of the access control policy referred to in point 11.1."
+    },
+    {
+      "control_id": "11.3.2",
+      "title": "11.3.2",
+      "family": "Other",
+      "description": "The policies referred to in point 11.3.1. shall:"
+    },
+    {
+      "control_id": "11.3.2(a)",
+      "title": "11.3.2(a)",
+      "family": "Other",
+      "description": "establish strong identification, authentication such as multi-factor authentication, and authorisation procedures for privileged accounts and system administration accounts;"
+    },
+    {
+      "control_id": "11.3.2(b)",
+      "title": "11.3.2(b)",
+      "family": "Other",
+      "description": "set up specific accounts to be used for system administration operations exclusively, such as installation, configuration, management or maintenance;"
+    },
+    {
+      "control_id": "11.3.2(c)",
+      "title": "11.3.2(c)",
+      "family": "Other",
+      "description": "individualise and restrict system administration privileges to the highest extent possible,"
+    },
+    {
+      "control_id": "11.3.2(d)",
+      "title": "11.3.2(d)",
+      "family": "Other",
+      "description": "provide that system administration accounts are only used to connect to system administration systems."
+    },
+    {
+      "control_id": "11.3.3",
+      "title": "11.3.3",
+      "family": "Other",
+      "description": "The relevant entities shall review access rights of privileged accounts and system administration accounts at planned intervals and be modified based on organisational changes, and shall document the results of the review, including the necessary changes of access rights."
+    },
+    {
+      "control_id": "11.4",
+      "title": "Administration systems",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.4.1",
+      "title": "11.4.1",
+      "family": "Other",
+      "description": "The relevant entities shall restrict and control the use of system administration systems in accordance with the access control policy referred to in point 11.1."
+    },
+    {
+      "control_id": "11.4.2",
+      "title": "11.4.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall:"
+    },
+    {
+      "control_id": "11.4.2(a)",
+      "title": "11.4.2(a)",
+      "family": "Other",
+      "description": "only use system administration systems for system administration purposes, and not for any other operations;"
+    },
+    {
+      "control_id": "11.4.2(b)",
+      "title": "11.4.2(b)",
+      "family": "Other",
+      "description": "separate logically such systems from application software not used for system administrative purposes,"
+    },
+    {
+      "control_id": "11.4.2(c)",
+      "title": "11.4.2(c)",
+      "family": "Other",
+      "description": "protect access to system administration systems through authentication and encryption."
+    },
+    {
+      "control_id": "11.5",
+      "title": "Identification",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.5.1",
+      "title": "11.5.1",
+      "family": "Other",
+      "description": "The relevant entities shall manage the full life cycle of identities of network and information systems and their users."
+    },
+    {
+      "control_id": "11.5.2",
+      "title": "11.5.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall:"
+    },
+    {
+      "control_id": "11.5.2(a)",
+      "title": "11.5.2(a)",
+      "family": "Other",
+      "description": "set up unique identities for network and information systems and their users;"
+    },
+    {
+      "control_id": "11.5.2(b)",
+      "title": "11.5.2(b)",
+      "family": "Other",
+      "description": "link the identity of users to a single person;"
+    },
+    {
+      "control_id": "11.5.2(c)",
+      "title": "11.5.2(c)",
+      "family": "Other",
+      "description": "ensure oversight of identities of network and information systems;"
+    },
+    {
+      "control_id": "11.5.2(d)",
+      "title": "11.5.2(d)",
+      "family": "Other",
+      "description": "apply logging to the management of identities."
+    },
+    {
+      "control_id": "11.5.3",
+      "title": "11.5.3",
+      "family": "Other",
+      "description": "The relevant entities shall only permit identities assigned to multiple persons, such as shared identities, where they are necessary for business or operational reasons and are subject to an explicit approval process and documentation. The relevant entities shall take identities assigned to multiple persons into account in the cybersecurity risk management framework referred to in point 2.1."
+    },
+    {
+      "control_id": "11.5.4",
+      "title": "11.5.4",
+      "family": "Other",
+      "description": "The relevant entities shall regularly review the identities for network and information systems and their users and, if no longer needed, deactivate them without delay."
+    },
+    {
+      "control_id": "11.6",
+      "title": "Authentication",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.6.1",
+      "title": "11.6.1",
+      "family": "Other",
+      "description": "The relevant entities shall implement secure authentication procedures and technologies based on access restrictions and the policy on access control."
+    },
+    {
+      "control_id": "11.6.2",
+      "title": "11.6.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall:"
+    },
+    {
+      "control_id": "11.6.2(a)",
+      "title": "11.6.2(a)",
+      "family": "Other",
+      "description": "ensure the strength of authentication is appropriate to the classification of the asset to be accessed;"
+    },
+    {
+      "control_id": "11.6.2(b)",
+      "title": "11.6.2(b)",
+      "family": "Other",
+      "description": "control the allocation to users and management of secret authentication information by a process that ensures the confidentiality of the information, including advising personnel on appropriate handling of authentication information;"
+    },
+    {
+      "control_id": "11.6.2(c)",
+      "title": "11.6.2(c)",
+      "family": "Other",
+      "description": "require the change of authentication credentials initially, at predefined intervals and upon suspicion that the credentials were compromised;"
+    },
+    {
+      "control_id": "11.6.2(d)",
+      "title": "11.6.2(d)",
+      "family": "Other",
+      "description": "require the reset of authentication credentials and the blocking of users after a predefined number of unsuccessful log-in attempts;"
+    },
+    {
+      "control_id": "11.6.2(e)",
+      "title": "11.6.2(e)",
+      "family": "Other",
+      "description": "terminate inactive sessions after a predefined period of inactivity; and"
+    },
+    {
+      "control_id": "11.6.2(f)",
+      "title": "11.6.2(f)",
+      "family": "Other",
+      "description": "require separate credentials to access privileged access or administrative accounts."
+    },
+    {
+      "control_id": "11.6.3",
+      "title": "11.6.3",
+      "family": "Other",
+      "description": "The relevant entities shall to the extent feasible use state-of-the-art authentication methods, in accordance with the associated assessed risk and the classification of the asset to be accessed, and unique authentication information."
+    },
+    {
+      "control_id": "11.6.4",
+      "title": "11.6.4",
+      "family": "Other",
+      "description": "The relevant entities shall review the authentication procedures and technologies at planned intervals."
+    },
+    {
+      "control_id": "11.7",
+      "title": "Multi-factor authentication",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "11.7.1",
+      "title": "11.7.1",
+      "family": "Other",
+      "description": "The relevant entities shall ensure that users are authenticated by multiple authentication factors or continuous authentication mechanisms for accessing the relevant entities’ network and information systems, where appropriate, in accordance with the classification of the asset to be accessed."
+    },
+    {
+      "control_id": "11.7.2",
+      "title": "11.7.2",
+      "family": "Other",
+      "description": "The relevant entities shall ensure that the strength of authentication is appropriate for the classification of the asset to be accessed."
+    },
+    {
+      "control_id": "12",
+      "title": "ASSET MANAGEMENT (ARTICLE 21(2), POINT (I), OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "12.1",
+      "title": "Asset classification",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "12.1.1",
+      "title": "12.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2), point (i) of Directive (EU) 2022/2555, the relevant entities shall lay down classification levels of all assets, including information, in scope of their network and information systems for the level of protection required."
+    },
+    {
+      "control_id": "12.1.2",
+      "title": "12.1.2",
+      "family": "Other",
+      "description": "For the purpose of point 12.1.1., the relevant entities shall:"
+    },
+    {
+      "control_id": "12.1.2(a)",
+      "title": "12.1.2(a)",
+      "family": "Other",
+      "description": "lay down a system of classification levels for assets;"
+    },
+    {
+      "control_id": "12.1.2(b)",
+      "title": "12.1.2(b)",
+      "family": "Other",
+      "description": "associate all assets with a classification level, based on confidentiality, integrity, authenticity and availability requirements, to indicate the protection required according to their sensitivity, criticality, risk and business value;"
+    },
+    {
+      "control_id": "12.1.2(c)",
+      "title": "12.1.2(c)",
+      "family": "Other",
+      "description": "align the availability requirements of the assets with the delivery and recovery objectives set out in their business continuity and disaster recovery plans."
+    },
+    {
+      "control_id": "12.1.3",
+      "title": "12.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall conduct periodic reviews of the classification levels of assets and update them, where appropriate."
+    },
+    {
+      "control_id": "12.2",
+      "title": "Handling of assets",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "12.2.1",
+      "title": "12.2.1",
+      "family": "Other",
+      "description": "The relevant entities shall establish, implement and apply a policy for the proper handling of assets, including information, in accordance with their network and information security policy, and shall communicate the policy on proper handling of assets to anyone who uses or handles assets."
+    },
+    {
+      "control_id": "12.2.2",
+      "title": "12.2.2",
+      "family": "Other",
+      "description": "The policy shall:"
+    },
+    {
+      "control_id": "12.2.2(a)",
+      "title": "12.2.2(a)",
+      "family": "Other",
+      "description": "cover the entire life cycle of the assets, including acquisition, use, storage, transportation and disposal;"
+    },
+    {
+      "control_id": "12.2.2(b)",
+      "title": "12.2.2(b)",
+      "family": "Other",
+      "description": "provide rules on the safe use, safe storage, safe transport, and the irretrievable deletion and destruction of the assets;"
+    },
+    {
+      "control_id": "12.2.2(c)",
+      "title": "12.2.2(c)",
+      "family": "Other",
+      "description": "provide that the transfer shall take place in a secure manner, in accordance with the type of asset to be transferred."
+    },
+    {
+      "control_id": "12.2.3",
+      "title": "12.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the policy at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "12.3",
+      "title": "Removable media policy",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "12.3.1",
+      "title": "12.3.1",
+      "family": "Other",
+      "description": "The relevant entities shall establish, implement and apply a policy on the management of removable storage media and communicate it to their employees and third parties who handle removable storage media at the relevant entities’ premises or other locations where the removable media is connected to the relevant entities’ network and information systems."
+    },
+    {
+      "control_id": "12.3.2",
+      "title": "12.3.2",
+      "family": "Other",
+      "description": "The policy shall:"
+    },
+    {
+      "control_id": "12.3.2(a)",
+      "title": "12.3.2(a)",
+      "family": "Other",
+      "description": "provide for a technical prohibition of the connection of removable media unless there is an organisational reason for their use;"
+    },
+    {
+      "control_id": "12.3.2(b)",
+      "title": "12.3.2(b)",
+      "family": "Other",
+      "description": "provide for disabling self-execution from such media and scanning the media for malicious code before they are used on the relevant entities’ systems;"
+    },
+    {
+      "control_id": "12.3.2(c)",
+      "title": "12.3.2(c)",
+      "family": "Other",
+      "description": "provide measures for controlling and protecting portable storage devices containing data while in transit and in storage;"
+    },
+    {
+      "control_id": "12.3.2(d)",
+      "title": "12.3.2(d)",
+      "family": "Other",
+      "description": "where appropriate, provide measures for the use of cryptographic techniques to protect data on removable storage media."
+    },
+    {
+      "control_id": "12.3.3",
+      "title": "12.3.3",
+      "family": "Other",
+      "description": "The relevant entities shall review and, where appropriate, update the policy at planned intervals and when significant incidents or significant changes to operations or risks occur."
+    },
+    {
+      "control_id": "12.4",
+      "title": "Asset inventory",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "12.4.1",
+      "title": "12.4.1",
+      "family": "Other",
+      "description": "The relevant entities shall develop and maintain a complete, accurate, up-to-date and consistent inventory of their assets. They shall record changes to the entries in the inventory in a traceable manner."
+    },
+    {
+      "control_id": "12.4.2",
+      "title": "12.4.2",
+      "family": "Other",
+      "description": "The granularity of the inventory of the assets shall be at a level appropriate for the needs of the relevant entities. The inventory shall include the following:"
+    },
+    {
+      "control_id": "12.4.2(a)",
+      "title": "12.4.2(a)",
+      "family": "Other",
+      "description": "the list of operations and services and their description,"
+    },
+    {
+      "control_id": "12.4.2(b)",
+      "title": "12.4.2(b)",
+      "family": "Other",
+      "description": "the list of network and information systems and other associated assets supporting the relevant entities’ operations and services."
+    },
+    {
+      "control_id": "12.4.3",
+      "title": "12.4.3",
+      "family": "Other",
+      "description": "The relevant entities shall regularly review and update the inventory and their assets and document the history of changes."
+    },
+    {
+      "control_id": "12.5",
+      "title": "Deposit, return or deletion of assets upon termination of employment",
+      "family": "Other",
+      "description": "The relevant entities shall establish, implement and apply procedures which ensure that their assets which are under custody of personnel are deposited, returned or deleted upon termination of employment, and shall document the deposit, return and deletion of those assets. Where the deposit, return or deletion of assets is not possible, the relevant entities shall ensure that the assets can no longer access the relevant entities’ network and information systems in accordance with point 12.2.2."
+    },
+    {
+      "control_id": "13",
+      "title": "ENVIRONMENTAL AND PHYSICAL SECURITY (ARTICLE 21(2), POINTS (C), (E) AND (I) OF DIRECTIVE (EU) 2022/2555)",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "13.1",
+      "title": "Supporting utilities",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "13.1.1",
+      "title": "13.1.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2)(c) of Directive (EU) 2022/2555, the relevant entities shall prevent loss, damage or compromise of network and information systems or interruption to their operations due to the failure and disruption of supporting utilities."
+    },
+    {
+      "control_id": "13.1.2",
+      "title": "13.1.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall, where appropriate:"
+    },
+    {
+      "control_id": "13.1.2(a)",
+      "title": "13.1.2(a)",
+      "family": "Other",
+      "description": "protect facilities from power failures and other disruptions caused by failures in supporting utilities such as electricity, telecommunications, water supply, gas, sewage, ventilation and air conditioning;"
+    },
+    {
+      "control_id": "13.1.2(b)",
+      "title": "13.1.2(b)",
+      "family": "Other",
+      "description": "consider the use of redundancy in utilities services;"
+    },
+    {
+      "control_id": "13.1.2(c)",
+      "title": "13.1.2(c)",
+      "family": "Other",
+      "description": "protect utility services for electricity and telecommunications, which transport data or supply network and information systems, against interception and damage;"
+    },
+    {
+      "control_id": "13.1.2(d)",
+      "title": "13.1.2(d)",
+      "family": "Other",
+      "description": "monitor the utility services referred to in point (c) and report to the competent internal or external personnel events outside the minimum and maximum control thresholds referred to in point 13.2.2(b) affecting the utility services;"
+    },
+    {
+      "control_id": "13.1.2(e)",
+      "title": "13.1.2(e)",
+      "family": "Other",
+      "description": "conclude contracts for the emergency supply with corresponding services, such as for the fuel for emergency power supply;"
+    },
+    {
+      "control_id": "13.1.2(f)",
+      "title": "13.1.2(f)",
+      "family": "Other",
+      "description": "ensure continuous effectiveness, monitor, maintain and test the supply of the network and information systems necessary for the operation of the service offered, in particular the electricity, temperature and humidity control, telecommunications and Internet connection."
+    },
+    {
+      "control_id": "13.1.3",
+      "title": "13.1.3",
+      "family": "Other",
+      "description": "The relevant entities shall test, review and, where appropriate, update the protection measures on a regular basis or following significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "13.2",
+      "title": "Protection against physical and environmental threats",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "13.2.1",
+      "title": "13.2.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2)(e) of Directive (EU) 2022/2555, the relevant entities shall prevent or reduce the consequences of events originating from physical and environmental threats, such as natural disasters and other intentional or unintentional threats, based on the results of the risk assessment carried out pursuant to point 2.1."
+    },
+    {
+      "control_id": "13.2.2",
+      "title": "13.2.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall, where appropriate:"
+    },
+    {
+      "control_id": "13.2.2(a)",
+      "title": "13.2.2(a)",
+      "family": "Other",
+      "description": "design and implement protection measures against physical and environmental threats;"
+    },
+    {
+      "control_id": "13.2.2(b)",
+      "title": "13.2.2(b)",
+      "family": "Other",
+      "description": "determine minimum and maximum control thresholds for physical and environmental threats;"
+    },
+    {
+      "control_id": "13.2.2(c)",
+      "title": "13.2.2(c)",
+      "family": "Other",
+      "description": "monitor environmental parameters and report to the competent internal or external personnel events outside the minimum and maximum control thresholds referred to in point (b)."
+    },
+    {
+      "control_id": "13.2.3",
+      "title": "13.2.3",
+      "family": "Other",
+      "description": "The relevant entities shall test, review and, where appropriate, update the protection measures against physical and environmental threats on a regular basis or following significant incidents or significant changes to operations or risks."
+    },
+    {
+      "control_id": "13.3",
+      "title": "Perimeter and physical access control",
+      "family": "Other",
+      "description": "N/A"
+    },
+    {
+      "control_id": "13.3.1",
+      "title": "13.3.1",
+      "family": "Other",
+      "description": "For the purpose of Article 21(2)(i) of Directive (EU) 2022/2555, the relevant entities shall prevent and monitor unauthorised physical access, damage and interference to their network and information systems."
+    },
+    {
+      "control_id": "13.3.2",
+      "title": "13.3.2",
+      "family": "Other",
+      "description": "For that purpose, the relevant entities shall:"
+    },
+    {
+      "control_id": "13.3.2(a)",
+      "title": "13.3.2(a)",
+      "family": "Other",
+      "description": "on the basis of the risk assessment carried out pursuant to point 2.1, lay down and use security perimeters to protect areas where network and information systems and other associated assets are located;"
+    },
+    {
+      "control_id": "13.3.2(b)",
+      "title": "13.3.2(b)",
+      "family": "Other",
+      "description": "protect the areas referred to in point (a) by appropriate entry controls and access points;"
+    },
+    {
+      "control_id": "13.3.2(c)",
+      "title": "13.3.2(c)",
+      "family": "Other",
+      "description": "design and implement physical security for offices, rooms and facilities,"
+    },
+    {
+      "control_id": "13.3.2(d)",
+      "title": "13.3.2(d)",
+      "family": "Other",
+      "description": "continuously monitor their premises for unauthorised physical access."
+    },
+    {
+      "control_id": "13.3.3",
+      "title": "13.3.3",
+      "family": "Other",
+      "description": "The relevant entities shall test, review and, where appropriate, update the physical access control measures on a regular basis or following significant incidents or significant changes to operations or risks."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ControlDetail } from '../../../components/controls/ControlDetail';
+import {
+  getAllControls,
+  slugify,
+  getFrameworkConfig,
+  isValidFramework,
+  getRiskLists,
+  getNeighborControls,
+} from '../../../data/controls';
+
+export async function getStaticPaths() {
+  const paths: { params: { risklist: string; risk: string }; props: { risklistId: string; control: any; neighbors: any } }[] = [];
+
+  for (const config of getRiskLists()) {
+    const controls = getAllControls(config.id);
+    for (const control of controls) {
+      paths.push({
+        params: {
+          risklist: config.id,
+          risk: slugify(control.control_id),
+        },
+        props: {
+          risklistId: config.id,
+          control,
+          neighbors: getNeighborControls(config.id, control.control_id),
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { risklistId, control, neighbors } = Astro.props;
+const controlSlug = Astro.params.risk;
+
+if (!control || !isValidFramework(risklistId)) {
+  return Astro.redirect('/');
+}
+
+const config = getFrameworkConfig(risklistId);
+const title = `${control.control_id}: ${control.title}`;
+const description = control.description.substring(0, 160);
+---
+
+<BaseLayout title={title} description={description} showSidebar={true} frameworkId={risklistId} controlSlug={controlSlug}>
+  <ControlDetail control={control} frameworkId={risklistId} neighbors={neighbors} client:load />
+</BaseLayout>

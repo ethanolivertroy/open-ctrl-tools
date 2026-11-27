@@ -1,0 +1,506 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StaticCode from '@/components/ui/StaticCode.astro';
+import { techCommandLanguage } from '@/components/guidance/tech-command-language';
+import { AuthoritativeSourceCard } from '@/components/guidance/AuthoritativeSourceCard';
+import { GitHubRepoCard } from '@/components/guidance/GitHubRepoCard';
+import { getFrameworkConfig } from '@/data/frameworks';
+import { slugify, hasFrameworkData } from '@/data/controls';
+import { getTechnologyById, getTechnologyPath, hasSubpages, getOverviewContent, getSectionCounts, AWS_RSC_DATA } from '@/data/technology-guides';
+import type { TechCommandType, TechnologyGuide, TechnologyCategoryMeta } from '@/data/types';
+
+interface Props {
+  tech: TechnologyGuide;
+  categoryMeta?: TechnologyCategoryMeta;
+  baseHref?: string;
+  baseLabel?: string;
+  categoryHref?: string;
+}
+
+const {
+  tech,
+  categoryMeta,
+  baseHref = '/guidance',
+  baseLabel = 'Technology Guidance',
+  categoryHref,
+} = Astro.props;
+
+const resolvedCategoryHref = categoryHref ?? categoryMeta?.path;
+const isLandingPage = hasSubpages(tech);
+const techPath = getTechnologyPath(tech);
+
+// For landing page: get overview content (items not claimed by any section)
+const overview = isLandingPage ? getOverviewContent(tech) : null;
+
+// For monolithic page: use all content directly
+const COMMAND_TYPES: Record<TechCommandType, { label: string; color: string }> = {
+  cli: { label: 'CLI', color: 'bg-green-500/10 text-green-500 border-green-500/20' },
+  api: { label: 'API', color: 'bg-blue-500/10 text-blue-500 border-blue-500/20' },
+  query: { label: 'Query', color: 'bg-purple-500/10 text-purple-500 border-purple-500/20' },
+  config: { label: 'Config', color: 'bg-orange-500/10 text-orange-500 border-orange-500/20' },
+};
+
+const commands = isLandingPage ? overview!.commands : tech.commands;
+const hasCommandGroups = commands.some((cmd) => cmd.group);
+const groupedCommands = commands.reduce(
+  (groups, cmd) => {
+    const label = cmd.group ?? 'General';
+    const existing = groups.find((group) => group.label === label);
+    if (existing) {
+      existing.commands.push(cmd);
+    } else {
+      groups.push({ label, commands: [cmd] });
+    }
+    return groups;
+  },
+  [] as { label: string; commands: typeof commands }[],
+);
+
+const sources = isLandingPage ? overview!.sources : tech.authoritativeSources;
+const responsibilities = isLandingPage ? overview!.responsibilities : (tech.responsibilities ?? []);
+const controlMappings = isLandingPage ? overview!.controlMappings : tech.controlMappings;
+
+// Section badge counts for landing page cards
+const sectionData = isLandingPage
+  ? tech.sections!.map((section) => ({
+      section,
+      counts: getSectionCounts(tech, section),
+    }))
+  : [];
+
+// Detect if this tech has any RSC-powered sections
+const hasRscSections = tech.sections?.some((s) => s.rscServiceId && AWS_RSC_DATA[s.rscServiceId]) ?? false;
+
+// Fetch GitHub repo metadata at build time
+const githubRepoData = tech.githubRepos
+  ? await Promise.all(
+      tech.githubRepos.map(async (fullName) => {
+        const [owner, repo] = fullName.split('/');
+        try {
+          const res = await fetch(`https://api.github.com/repos/${fullName}`, {
+            headers: import.meta.env.GH_TOKEN
+              ? { Authorization: `token ${import.meta.env.GH_TOKEN}` }
+              : {},
+          });
+          if (!res.ok) return { owner, repo };
+          const data = await res.json();
+          return {
+            owner: data.owner.login,
+            repo: data.name,
+            description: data.description,
+            language: data.language,
+            stars: data.stargazers_count,
+            forks: data.forks_count,
+          };
+        } catch {
+          return { owner, repo };
+        }
+      })
+    )
+  : [];
+---
+
+<BaseLayout
+  title={`${tech.name} Security Guidance`}
+  description={`Security implementation and testing guidance for ${tech.name}. ${tech.description}`}
+  showSidebar={false}
+>
+  <div class="space-y-8 sm:space-y-10">
+    <header class="space-y-4">
+      <nav class="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <a href={baseHref} class="hover:text-foreground transition-colors">{baseLabel}</a>
+        <span>/</span>
+        {categoryMeta && (
+          <>
+            {resolvedCategoryHref ? (
+              <a href={resolvedCategoryHref} class="hover:text-foreground transition-colors">
+                {categoryMeta.name}
+              </a>
+            ) : (
+              <span class="text-foreground">{categoryMeta.name}</span>
+            )}
+            <span>/</span>
+          </>
+        )}
+        <span class="text-foreground">{tech.name}</span>
+      </nav>
+
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div class="space-y-2">
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">{tech.name}</h1>
+          {tech.vendor && (
+            <p class="text-sm text-muted-foreground">by {tech.vendor}</p>
+          )}
+          <p class="text-lg text-muted-foreground max-w-2xl">{tech.description}</p>
+        </div>
+        {tech.officialUrl && (
+          <a
+            href={tech.officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="shrink-0 inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors w-full sm:w-auto"
+          >
+            Official Docs
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        )}
+      </div>
+
+      <div class="p-4 rounded-lg warning-banner">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 warning-banner-icon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p class="text-sm warning-banner-text">
+            <strong>Under Construction:</strong> This guidance is being actively developed and verified. Content may change.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    {/* Overview sources (items not claimed by any section, or all sources for monolithic) */}
+    {sources.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">
+            {isLandingPage ? 'Overview' : 'Authoritative Sources'}
+          </h2>
+        </div>
+        {!isLandingPage && (
+          <p class="text-sm text-muted-foreground">
+            Key guidance documents from authoritative organizations. Click to view the original source.
+          </p>
+        )}
+        <div class="grid gap-3 sm:gap-4 min-w-0">
+          {sources.map((source) => (
+            <AuthoritativeSourceCard source={source} client:load />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* GitHub repos */}
+    {githubRepoData.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">Open Source Tools</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Community and open-source tools for {tech.name}.
+        </p>
+        <div class="grid gap-3 sm:gap-4">
+          {githubRepoData.map((repo) => (
+            <GitHubRepoCard {...repo} client:load />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Section navigation cards (landing page only) */}
+    {isLandingPage && sectionData.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          {hasRscSections ? (
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          ) : (
+            <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            </svg>
+          )}
+          <h2 class="text-lg sm:text-xl font-semibold">
+            {hasRscSections ? 'AWS Official Secure Configuration Guides' : 'Security Topics'}
+          </h2>
+        </div>
+        {hasRscSections ? (
+          <p class="text-sm text-muted-foreground">
+            Service-level secure configuration guidance from the AWS FedRAMP Responsibility Summary and Customer Configuration (RSC) packages. Each guide covers OSCAL-structured requirements with mapped FedRAMP controls.
+          </p>
+        ) : (
+          <p class="text-sm text-muted-foreground">
+            Detailed guidance organized by security domain. Each topic includes authoritative sources, configuration responsibilities, and verification commands.
+          </p>
+        )}
+        <div class="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sectionData.map(({ section, counts }) => {
+            const sectionRscData = section.rscServiceId ? AWS_RSC_DATA[section.rscServiceId] : null;
+            const sectionServiceName = sectionRscData?.serviceName ?? section.title;
+            return (
+              <a
+                href={`${techPath}/${section.id}`}
+                class="group rounded-lg border border-border bg-card p-4 hover:border-primary/50 hover:bg-muted/30 transition-all"
+              >
+                <h3 class="font-semibold text-foreground group-hover:text-primary transition-colors mb-1">
+                  {sectionRscData ? sectionServiceName : section.title}
+                </h3>
+                <p class="text-sm text-muted-foreground mb-3 line-clamp-2">
+                  {section.description}
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  {counts.rscRequirements != null && counts.rscRequirements > 0 ? (
+                    <>
+                      <span class="px-2 py-0.5 rounded-full bg-amber-600/10 text-amber-600 font-medium">AWS Official</span>
+                      <span class="px-2 py-0.5 rounded-full bg-red-500/10 text-red-500">FedRAMP RSC</span>
+                      <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500">
+                        {counts.rscRequirements} {counts.rscRequirements === 1 ? 'requirement' : 'requirements'}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {counts.sources > 0 && (
+                        <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500">
+                          {counts.sources} {counts.sources === 1 ? 'source' : 'sources'}
+                        </span>
+                      )}
+                      {counts.responsibilities > 0 && (
+                        <span class="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500">
+                          {counts.responsibilities} {counts.responsibilities === 1 ? 'responsibility' : 'responsibilities'}
+                        </span>
+                      )}
+                      {counts.commands > 0 && (
+                        <span class="px-2 py-0.5 rounded-full bg-green-500/10 text-green-500">
+                          {counts.commands} {counts.commands === 1 ? 'command' : 'commands'}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    {/* Responsibilities (overview items for landing page, all for monolithic) */}
+    {responsibilities.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">Customer Configuration Responsibilities</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Configuration tasks the customer owns in the shared responsibility model. Use the verification commands below to validate settings.
+        </p>
+
+        <div class="space-y-4">
+          {responsibilities.map((section) => (
+            <div class="rounded-lg border border-border bg-card p-4 space-y-3">
+              <div>
+                <h3 class="text-base font-semibold text-foreground">{section.title}</h3>
+                {section.description && (
+                  <p class="text-sm text-muted-foreground mt-1">{section.description}</p>
+                )}
+              </div>
+              <div class="space-y-3">
+                {section.items.map((item) => (
+                  <div class="rounded-md border border-border/60 bg-muted/30 p-3 space-y-2">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                      <div>
+                        <p class="text-sm font-medium text-foreground">{item.title}</p>
+                        {item.description && (
+                          <p class="text-xs text-muted-foreground mt-1">{item.description}</p>
+                        )}
+                      </div>
+                      {item.controls && item.controls.length > 0 && (
+                        <div class="flex flex-wrap gap-2 text-xs">
+                          {item.controls.map((control) => (
+                            <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+                              {control}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Verification commands (overview for landing page, all for monolithic) */}
+    {commands.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">Verification Commands</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Commands and queries for testing and verifying security configurations.
+        </p>
+        <div class={hasCommandGroups ? 'space-y-6' : 'space-y-3'}>
+          {hasCommandGroups ? (
+            groupedCommands.map((group) => (
+              <div class="space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-base font-semibold text-foreground">{group.label}</h3>
+                  <span class="text-xs text-muted-foreground">
+                    {group.commands.length} {group.commands.length === 1 ? 'command' : 'commands'}
+                  </span>
+                </div>
+                <div class="space-y-3">
+                  {group.commands.map((cmd) => (
+                    <div class="rounded-lg border border-border bg-card overflow-hidden">
+                      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-3 sm:px-4 py-2 bg-muted/50 border-b border-border">
+                        <span class="text-sm text-foreground">{cmd.description}</span>
+                        <span class={`px-2 py-0.5 text-xs font-medium rounded border ${COMMAND_TYPES[cmd.type].color}`}>
+                          {COMMAND_TYPES[cmd.type].label}
+                        </span>
+                      </div>
+                      <div class="relative">
+                        <StaticCode code={cmd.command} language={techCommandLanguage(cmd.type)} />
+                        <button
+                          data-copy={cmd.command}
+                          class="copy-btn absolute top-2 right-2 p-1.5 rounded bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+                          title="Copy to clipboard"
+                        >
+                          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            commands.map((cmd) => (
+              <div class="rounded-lg border border-border bg-card overflow-hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-3 sm:px-4 py-2 bg-muted/50 border-b border-border">
+                  <span class="text-sm text-foreground">{cmd.description}</span>
+                  <span class={`px-2 py-0.5 text-xs font-medium rounded border ${COMMAND_TYPES[cmd.type].color}`}>
+                    {COMMAND_TYPES[cmd.type].label}
+                  </span>
+                </div>
+                <div class="relative">
+                  <StaticCode code={cmd.command} language={techCommandLanguage(cmd.type)} />
+                  <button
+                    data-copy={cmd.command}
+                    class="copy-btn absolute top-2 right-2 p-1.5 rounded bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+    )}
+
+    {/* Control mappings */}
+    {controlMappings.length > 0 && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">Related Controls</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Security controls from various frameworks that relate to {tech.name}.
+        </p>
+        <div class="space-y-4">
+          {controlMappings.map((mapping) => {
+            const frameworkConfig = getFrameworkConfig(mapping.frameworkId);
+            if (!frameworkConfig) return null;
+            const isLoaded = hasFrameworkData(mapping.frameworkId);
+
+            return (
+              <div class="rounded-lg border border-border bg-card p-3 sm:p-4">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0 mb-3">
+                  <a
+                    href={`/frameworks/${mapping.frameworkId}`}
+                    class="font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    {frameworkConfig.name}
+                  </a>
+                  <span class="text-xs text-muted-foreground">
+                    {mapping.controlIds.length} {mapping.controlIds.length === 1 ? 'control' : 'controls'}
+                    {!isLoaded && ' · External reference'}
+                  </span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  {mapping.controlIds.map((controlId) => (
+                    <a
+                      href={isLoaded ? `/frameworks/${mapping.frameworkId}/${slugify(controlId)}` : `/frameworks/${mapping.frameworkId}`}
+                      title={isLoaded ? undefined : `${frameworkConfig.name} ${controlId} (view official source & local overlay instructions)`}
+                      class="px-2.5 py-1 text-sm rounded-md bg-muted hover:bg-primary/10 hover:text-primary transition-colors"
+                    >
+                      {controlId}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    {tech.relatedTechnologies && tech.relatedTechnologies.length > 0 && (
+      <section class="space-y-4 pt-6 border-t border-border">
+        <h2 class="text-lg font-semibold">Related Technologies</h2>
+        <div class="flex flex-wrap gap-3">
+          {tech.relatedTechnologies.map((relatedId) => {
+            const related = getTechnologyById(relatedId);
+            if (!related) return null;
+            return (
+              <a
+                href={getTechnologyPath(related)}
+                class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-border bg-card hover:bg-muted/50 hover:border-primary/50 transition-all w-full sm:w-auto"
+              >
+                <span class="font-medium">{related.name}</span>
+                <svg class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      if (text) {
+        await navigator.clipboard.writeText(text);
+        // Visual feedback
+        const svg = btn.querySelector('svg');
+        if (svg) {
+          svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />';
+          setTimeout(() => {
+            svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />';
+          }, 1500);
+        }
+      }
+    });
+  });
+</script>

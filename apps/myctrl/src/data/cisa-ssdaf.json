@@ -1,0 +1,106 @@
+{
+  "framework": {
+    "id": "cisa-ssdaf",
+    "name": "CISA SSDAF",
+    "version": "2024",
+    "description": "CISA SSDAF compliance framework"
+  },
+  "families": {
+    "1": "Secure Development Environments",
+    "2": "Source Code Supply Chain Security",
+    "3": "Software Provenance",
+    "4": "Vulnerability Management"
+  },
+  "controls": [
+    {
+      "control_id": "1",
+      "title": "Secure Development Environments",
+      "family": "1",
+      "description": "The software is developed and built in secure environments. Those environments are secured by the following actions at a minimum:"
+    },
+    {
+      "control_id": "1.a",
+      "title": "Environment Separation and Protection",
+      "family": "1",
+      "description": "Separating and protecting each environment involved in developing and building software;"
+    },
+    {
+      "control_id": "1.b",
+      "title": "Trust Relationship Monitoring",
+      "family": "1",
+      "description": "Regularly logging, monitoring, and auditing trust relationships used for authorization and access:"
+    },
+    {
+      "control_id": "1.b.i",
+      "title": "Development Environment Access Logging",
+      "family": "1",
+      "description": "to any software development and build environments; and"
+    },
+    {
+      "control_id": "1.b.ii",
+      "title": "Intra-Environment Component Logging",
+      "family": "1",
+      "description": "among components within each environment;"
+    },
+    {
+      "control_id": "1.c",
+      "title": "Multi-Factor Authentication",
+      "family": "1",
+      "description": "Enforcing multi-factor authentication and conditional access across the environments relevant to developing and building software in a manner that minimizes security risk;"
+    },
+    {
+      "control_id": "1.d",
+      "title": "Risky Software Minimization",
+      "family": "1",
+      "description": "Taking consistent and reasonable steps to document as well as minimize use or inclusion of software products that create undue risk within the environments used to develop and build software;"
+    },
+    {
+      "control_id": "1.e",
+      "title": "Sensitive Data Encryption",
+      "family": "1",
+      "description": "Encrypting sensitive data such as credentials to the extent practicable and based on risk;"
+    },
+    {
+      "control_id": "1.f",
+      "title": "Defensive Cybersecurity Practices",
+      "family": "1",
+      "description": "Implementing defensive cybersecurity practices including continuous monitoring of operations and alerts and as necessary responding to suspected and confirmed cyber incidents;"
+    },
+    {
+      "control_id": "2",
+      "title": "Source Code Supply Chain Security",
+      "family": "2",
+      "description": "The software producer makes a good-faith effort to maintain trusted source code supply chains by employing automated tools or comparable processes to address the security of internal code and third-party components and manage related vulnerabilities;"
+    },
+    {
+      "control_id": "3",
+      "title": "Software Provenance",
+      "family": "3",
+      "description": "The software producer maintains provenance for internal code and third-party components incorporated into the software to the greatest extent feasible;"
+    },
+    {
+      "control_id": "4",
+      "title": "Automated Vulnerability Checks",
+      "family": "4",
+      "description": "The software producer employed automated tools or comparable processes that check for security vulnerabilities. In addition:"
+    },
+    {
+      "control_id": "4.a",
+      "title": "Ongoing Vulnerability Scanning",
+      "family": "4",
+      "description": "The software producer operates these processes on an ongoing basis and prior to product version or update releases;"
+    },
+    {
+      "control_id": "4.b",
+      "title": "Pre-Release Vulnerability Remediation",
+      "family": "4",
+      "description": "The software producer has a policy or process to address discovered security vulnerabilities prior to product release; and"
+    },
+    {
+      "control_id": "4.c",
+      "title": "Vulnerability Disclosure Program",
+      "family": "4",
+      "description": "The software producer operates a vulnerability disclosure program and accepts reviews and addresses disclosed software vulnerabilities in a timely fashion and according to any timelines specified in the vulnerability disclosure program or applicable policies."
+    }
+  ]
+}

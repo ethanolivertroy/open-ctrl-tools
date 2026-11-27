@@ -1,0 +1,535 @@
+{
+  "system-security-plan": {
+    "uuid": "c9bb4d16-6c0b-4bce-85c5-d0cd2fc5f394",
+    "metadata": {
+      "title": "Documentdb System Security Plan",
+      "last-modified": "2026-02-03T17:16:24.870922+00:00",
+      "version": "1.0.0.2026-02-03",
+      "oscal-version": "1.1.2",
+      "roles": [
+        {
+          "id": "system-owner",
+          "title": "System Owner"
+        },
+        {
+          "id": "provider",
+          "title": "System Provider"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "c7e4e9cd-93f2-41cc-aa62-355aa7584696",
+          "type": "organization",
+          "name": "Amazon Web Services"
+        }
+      ]
+    },
+    "import-profile": {
+      "href": "#fedramp-high-baseline"
+    },
+    "system-characteristics": {
+      "system-ids": [
+        {
+          "identifier-type": "https://ietf.org/rfc/rfc4122",
+          "id": "c20d4f67-22ab-4be5-a4e4-bf6b801393b1"
+        }
+      ],
+      "system-name": "AWS Documentdb",
+      "description": "Amazon DocumentDB security configuration involves implementing comprehensive security controls including encryption, access management, master user authentication, and monitoring to meet FedRAMP compliance requirements. This guidance covers master user account security, MongoDB-compatible administrative operations, and privileged access controls for document database operations.\n\n**Important Disclaimer**: This document provides AWS recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. AWS makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\n**Command and Configuration Disclaimer**: All AWS CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. AWS CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest AWS CLI documentation and service-specific guides for current syntax and available options.",
+      "security-sensitivity-level": "high",
+      "system-information": {
+        "information-types": [
+          {
+            "uuid": "7af56af1-86cb-439c-81ad-6259afac2e4f",
+            "title": "System and Network Configuration",
+            "description": "Configuration data for AWS services",
+            "categorizations": [
+              {
+                "system": "https://doi.org/10.6028/NIST.SP.800-60v2r1",
+                "information-type-ids": [
+                  "C.3.5.8"
+                ]
+              }
+            ],
+            "confidentiality-impact": {
+              "base": "fips-199-high"
+            },
+            "integrity-impact": {
+              "base": "fips-199-high"
+            },
+            "availability-impact": {
+              "base": "fips-199-high"
+            }
+          }
+        ]
+      },
+      "security-impact-level": {
+        "security-objective-confidentiality": "fips-199-high",
+        "security-objective-integrity": "fips-199-high",
+        "security-objective-availability": "fips-199-high"
+      },
+      "status": {
+        "state": "operational"
+      },
+      "authorization-boundary": {
+        "description": "AWS Documentdb service boundary"
+      }
+    },
+    "system-implementation": {
+      "users": [
+        {
+          "uuid": "8274fb54-7513-43d9-8fd8-bc68d136eed8",
+          "title": "System Administrator",
+          "description": "Administrator responsible for system configuration and management",
+          "role-ids": [
+            "system-owner"
+          ]
+        }
+      ],
+      "components": [
+        {
+          "uuid": "2e2ae32c-a30b-4846-b05d-a27682f7cfbb",
+          "type": "software",
+          "title": "Documentdb",
+          "description": "Amazon DocumentDB security configuration involves implementing comprehensive security controls including encryption, access management, master user authentication, and monitoring to meet FedRAMP compliance requirements. This guidance covers master user account security, MongoDB-compatible administrative operations, and privileged access controls for document database operations.\n\n**Important Disclaimer**: This document provides AWS recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. AWS makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\n**Command and Configuration Disclaimer**: All AWS CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. AWS CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest AWS CLI documentation and service-specific guides for current syntax and available options.",
+          "status": {
+            "state": "operational"
+          },
+          "responsible-roles": [
+            {
+              "role-id": "provider",
+              "party-uuids": [
+                "c7e4e9cd-93f2-41cc-aa62-355aa7584696"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "control-implementation": {
+      "description": "Control implementation for Documentdb",
+      "implemented-requirements": []
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fedramp-high-baseline",
+          "description": "FedRAMP Revision 4 High Baseline Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/GSA/fedramp-automation/master/dist/content/rev4/baselines/json/FedRAMP_rev4_HIGH-baseline_profile.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "d721c6ed-4882-48ab-a449-1b203f4810c9",
+          "title": "Document Information",
+          "description": "[cols=\"1,3\"]\n|===\n|Version |1.0.0\n|Last Updated |2025-12-23\n|Documentation URL |https://docs.aws.amazon.com/\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "c4ce07c3-e295-48bd-a680-a93ec3024201",
+          "title": "Overview",
+          "description": "Amazon DocumentDB security configuration involves implementing comprehensive security controls including encryption, access management, master user authentication, and monitoring to meet FedRAMP compliance requirements. This guidance covers master user account security, MongoDB-compatible administrative operations, and privileged access controls for document database operations.\n\n**Important Disclaimer**: This document provides AWS recommended practices and guidance only. It does not constitute legal, compliance, or regulatory advice. Organizations are solely responsible for determining their compliance requirements and implementing appropriate controls. AWS makes no warranties or representations regarding FedRAMP compliance or the adequacy of these recommendations for any specific use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\n**Command and Configuration Disclaimer**: All AWS CLI commands, API calls, and configuration examples provided in this document are for illustrative purposes only. Organizations must validate all commands and configurations in non-production environments before implementation. AWS CLI commands may require specific IAM permissions, resource names, and parameter values that must be customized for each environment. Always refer to the latest AWS CLI documentation and service-specific guides for current syntax and available options.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "d4519933-28f6-41b2-9d65-b055df2ff8e6",
+          "title": "FedRAMP Requirements",
+          "description": "Amazon DocumentDB must comply with the following FedRAMP requirements:\n\n* FRR-RSC-01\n* FRR-RSC-02\n* FRR-RSC-03\n* FRR-RSC-04\n* FRR-RSC-05\n* FRR-RSC-06\n* FRR-RSC-07",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "73e02e62-13c6-4feb-b206-ef85971309a1",
+          "title": "Administrative Account Model",
+          "description": "Amazon DocumentDB has an administrative account model through master user accounts and MongoDB-compatible administrative operations.\n\n[cols=\"1,3\"]\n|===\n|Administrative Accounts |Yes\n|Account Type |Master user account with MongoDB-compatible administrative privileges\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "18ad80bd-62db-4642-a4ff-965d1b926eb1",
+          "title": "FRR-RSC-01: Administrative Accounts",
+          "description": "*Applicable:* Yes\n\nAmazon DocumentDB Administrative Account Security Configuration",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "ba5ee00a-8ec8-4bb8-867a-315a9fb1576d",
+          "title": "OVERVIEW ===",
+          "description": "Amazon DocumentDB administrative access is managed through the master user account and AWS IAM roles for cluster management operations. This guidance provides comprehensive security recommendations for securing administrative access to DocumentDB clusters with MongoDB compatibility.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "a76332f0-d173-4c95-b49d-9b64a033addb",
+          "title": "MASTER USER ACCOUNT SECURITY ===",
+          "description": "1. Master User Account Configuration:\n   - Use strong, randomly generated passwords (minimum 20 characters)\n   - Rotate master passwords regularly (every 90 days maximum)\n   - Store passwords in AWS Secrets Manager with automatic rotation\n   - Never use default or predictable usernames (avoid 'admin', 'root', 'mongodb')\n\n2. Authentication Methods:\n   - Configure master user with appropriate MongoDB-compatible privileges\n   - Use AWS Secrets Manager for password management\n   - Implement MongoDB-compatible authentication mechanisms\n   - Configure client applications to use secure authentication",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "bf594a48-a84b-4cf6-ac37-9184a565bf26",
+          "title": "MONGODB-COMPATIBLE ADMINISTRATIVE SECURITY ===",
+          "description": "** DocumentDB-Specific Configuration **\n- Master User: Create with dbAdminAnyDatabase and readWriteAnyDatabase roles\n- TLS Encryption: Enable TLS for all client connections (required)\n- Connection Security: Configure connection limits and timeouts\n- Database Roles: Implement MongoDB-compatible role-based access control\n- Audit Logging: Enable profiler for administrative operations\n- Network Security: Deploy in private subnets with restrictive security groups",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "92ad53b8-b62f-445c-b46e-cb44c3c76b8e",
+          "title": "AWS IAM INTEGRATION ===",
+          "description": "1. Cluster Management Access:\n   - Create IAM policies with least privilege DocumentDB permissions\n   - Use IAM roles for administrative operations\n   - Implement MFA requirements for privileged operations\n   - Example policy for cluster administration:\n+\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"docdb:CreateDBCluster\",\n        \"docdb:ModifyDBCluster\",\n        \"docdb:DescribeDBClusters\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        }\n      }\n    }\n  ]\n}\n----\n\n2. Cross-Service Integration:\n   - Use AWS Secrets Manager for credential rotation\n   - Integrate with AWS CloudTrail for API call logging\n   - Configure VPC security groups for network-level access control\n   - Enable CloudWatch monitoring for performance insights",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "e9a219f2-93ba-4c23-abf0-e66c323e0bc9",
+          "title": "NETWORK SECURITY ===",
+          "description": "1. VPC Configuration:\n   - Deploy DocumentDB in private subnets only\n   - Configure DB subnet groups across multiple AZs\n   - Use VPC security groups with least privilege rules\n   - Implement network ACLs for additional security layers\n\n2. Connection Security:\n   - Enable TLS encryption for all connections (mandatory)\n   - Use VPC endpoints for AWS service communications\n   - Configure connection timeouts and limits\n   - Monitor connection patterns for anomalies",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "0cd3304a-954a-4a76-866f-77d834adbf41",
+          "title": "MONITORING AND AUDITING ===",
+          "description": "1. Database-Level Monitoring:\n   - Enable profiler for administrative operations\n   - Configure log retention policies (minimum 90 days)\n   - Monitor failed authentication attempts\n   - Set up alerts for suspicious administrative activities\n\n2. AWS-Level Monitoring:\n   - Enable CloudTrail for all DocumentDB API calls\n   - Configure CloudWatch alarms for administrative events\n   - Use AWS Config rules for compliance monitoring\n   - Implement AWS GuardDuty for threat detection",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "60839a66-d330-4a87-b518-5e5137a1ff98",
+          "title": "BACKUP AND RECOVERY SECURITY ===",
+          "description": "1. Automated Backups:\n   - Enable automatic backups with encryption\n   - Configure backup retention period (7-35 days)\n   - Use cross-region backup replication for DR\n   - Encrypt backup snapshots with customer-managed KMS keys\n\n2. Manual Snapshots:\n   - Encrypt all manual snapshots\n   - Implement snapshot sharing controls\n   - Regular testing of snapshot restoration procedures\n   - Document recovery time objectives (RTO) and recovery point objectives (RPO)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "694faccd-41a6-4d07-8441-414e674aac04",
+          "title": "COMPLIANCE REQUIREMENTS ===",
+          "description": "1. FedRAMP Controls Addressed:\n   - AC-2: Account Management\n   - AC-3: Access Enforcement\n   - AC-6: Least Privilege\n   - AU-2: Audit Events\n   - AU-3: Content of Audit Records\n   - IA-2: Identification and Authentication\n   - SC-8: Transmission Confidentiality\n   - SC-28: Protection of Information at Rest\n\n2. Implementation Validation:\n   - Regular access reviews (quarterly minimum)\n   - Security assessments of cluster configurations\n   - Compliance scanning and vulnerability assessments\n   - Documentation of security configurations and procedures",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "3d0e286a-4539-42c7-9742-8280b2ceeaaa",
+          "title": "IMPLEMENTATION CHECKLIST ===",
+          "description": "☐ Configure strong master user credentials\n☐ Enable TLS encryption for all connections\n☐ Configure MongoDB-compatible role-based access control\n☐ Configure VPC and security group restrictions\n☐ Enable comprehensive monitoring and logging\n☐ Configure automated encrypted backups\n☐ Implement IAM least privilege policies\n☐ Document administrative procedures\n☐ Conduct regular security reviews\n\nThis comprehensive guidance ensures that Amazon DocumentDB administrative accounts are configured according to security best practices and FedRAMP requirements.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ede66581-28bb-4807-8118-f67083727c20",
+          "title": "FRR-RSC-02: Administrative Settings",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "9864300d-6e83-493c-b24a-8ae2e7ad97b0",
+          "title": "Security-Related Settings Restricted to Master User (Primary User with root role)",
+          "description": "The master user account (primary user) in Amazon DocumentDB has the MongoDB-compatible `root` role, which provides elevated privileges that cannot be delegated to regular database users. The following operations and their security implications are restricted to accounts with the root role:",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "5465e737-237b-4691-93b9-769bf1e02409",
+          "title": "1. User and Role Management",
+          "description": "*Operations:*\n\n* `db.createUser()` - Create new database users\n* `db.dropUser()` - Remove database users\n* `db.updateUser()` - Modify user attributes and passwords\n* `db.grantRolesToUser()` - Assign roles to users\n* `db.revokeRolesFromUser()` - Remove roles from users\n* `db.createRole()` - Create custom roles (user-defined roles)\n* `db.dropRole()` - Remove custom roles\n\n*Security Implications:*\n\n* Controls who can access the database cluster\n* Determines authentication methods and password policies\n* Manages privilege escalation through role assignments\n* Unauthorized user creation could lead to security breaches\n* Improper role grants could violate least privilege principles\n* User management is always performed in the context of the admin database",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "442c1435-47b4-44c8-b353-03a416a73e78",
+          "title": "2. Database Creation and Management",
+          "description": "*Operations:*\n\n* Create new databases\n* Drop databases\n* Clone databases\n* Modify database-level settings\n\n*Security Implications:*\n\n* Database owners have extensive privileges within their databases\n* Unauthorized database creation could consume resources\n* Database deletion could result in data loss\n* Database-level settings affect all collections and users",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "bfcc6ccd-5479-4bd5-b004-9ed31dc5ab91",
+          "title": "3. Collection and Index Management",
+          "description": "*Operations:*\n\n* Create and drop collections across all databases\n* Create and drop indexes on any collection\n* Modify collection options and validation rules\n* Manage capped collections\n\n*Security Implications:*\n\n* Index management affects query performance and resource usage\n* Collection deletion results in permanent data loss\n* Validation rules enforce data integrity constraints\n* Improper index management could impact cluster performance",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "1ac61510-a976-4d55-8297-775948fffecb",
+          "title": "4. Profiler and Audit Configuration",
+          "description": "*Operations:*\n\n* Enable/disable profiler for query logging\n* Configure profiler threshold and sampling rate\n* Set profiler level (off, slowOp, all)\n* Manage audit log settings\n\n*Security Implications:*\n\n* Disabling profiler could hide malicious activity\n* Improper profiler configuration may miss security events\n* Profiler data contains sensitive query information\n* Audit settings are critical for compliance requirements",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "5421399b-dcf3-47c4-8651-b5e745a5ae04",
+          "title": "5. Cluster-Wide Administrative Operations",
+          "description": "*Operations:*\n\n* `db.shutdownServer()` - Shutdown operations (restricted in DocumentDB)\n* `db.fsyncLock()` / `db.fsyncUnlock()` - Filesystem operations\n* `db.currentOp()` - View all running operations\n* `db.killOp()` - Terminate operations\n* Server status and diagnostic commands\n\n*Security Implications:*\n\n* Viewing current operations reveals all active queries and data\n* Killing operations could disrupt legitimate workloads\n* Administrative commands can impact cluster availability\n* Diagnostic information may expose sensitive metadata",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "c292ca14-52af-4b29-8c34-55678c46363a",
+          "title": "6. Replication and Backup Operations",
+          "description": "*Operations:*\n\n* Access to oplog (operations log)\n* Replication status and configuration\n* Backup and restore operations\n* Point-in-time recovery management\n\n*Security Implications:*\n\n* Oplog access allows reading all database changes\n* Replication information reveals cluster topology\n* Backup access could enable unauthorized data exfiltration\n* Restore operations can overwrite existing data",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "1b833a36-a06e-43af-9d3d-86c20aca3736",
+          "title": "7. Role-Based Access Control (RBAC) Management",
+          "description": "*Operations:*\n\n* Grant database-wide roles (readAnyDatabase, readWriteAnyDatabase, dbAdminAnyDatabase)\n* Manage built-in roles across all databases\n* Create and manage user-defined roles\n* View role privileges and inheritance\n\n*Security Implications:*\n\n* Database-wide roles provide access to all databases\n* Role inheritance can create unexpected privilege escalation\n* User-defined roles require careful privilege design\n* Role misconfiguration could violate security policies",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "e3b0d6b6-2f9b-4dbc-a4bd-022b3b4bcaf5",
+          "title": "Best Practices for Master User Account Security",
+          "description": "1. *Minimize Master User Usage*\n   - Never use master user directly in applications\n   - Create application-specific users with minimal required privileges\n   - Reserve master user for administrative tasks only\n   - Use MongoDB-compatible RBAC for fine-grained access control\n\n2. *Secure Master User Credentials*\n   - Use AWS Secrets Manager for password management\n   - Enable automatic password rotation (90 days maximum)\n   - Use strong, randomly generated passwords (minimum 20 characters)\n   - Never hardcode master credentials in application code\n\n3. *Enable Multi-Factor Authentication*\n   - Require MFA for AWS Console access to modify master password\n   - Implement MFA for IAM users who can modify DB clusters\n   - Use IAM database authentication where possible\n\n4. *Audit Master User Activity*\n   - Enable profiler for comprehensive query logging\n   - Monitor all master user connections and operations\n   - Set up CloudWatch alarms for master user activity\n   - Review profiler logs regularly for unauthorized access\n\n5. *Implement Least Privilege*\n   - Create role-based access with minimal required privileges\n   - Use built-in roles (read, readWrite, dbAdmin) appropriately\n   - Grant privileges at the most granular level possible\n   - Document all privilege grants and their justifications\n\n6. *Network Security*\n   - Deploy DocumentDB in private subnets only\n   - Use VPC security groups to restrict database access\n   - Never make DocumentDB clusters publicly accessible\n   - Enforce TLS for all client connections (mandatory)\n\n7. *Compliance and Documentation*\n   - Document all master user operations\n   - Maintain audit trail of privilege changes\n   - Conduct quarterly access reviews\n   - Implement change management for security settings",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "56562a53-123e-4f1c-b86b-b8ddf3ae5699",
+          "title": "FRR-RSC-03: Privileged Settings",
+          "description": "*Applicable:* Yes\n\nWithin DocumentDB you have two layers of privileged access. One layer is at the IAM layer, where you can limit what permissions a user has to operate within RDS. This section covers the priviliged settings for using the service itself and provides example IAM Policies that would allow for varying levels of access to the service. The second layer of privileged access is at the database engine layer itself which is covered in the other sections of this document.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "fb9fb578-4126-4e69-b15e-b3bc61429bd9",
+          "title": "IAM Least Privilege Policies",
+          "description": "Sample IAM policies for least privilege access to Amazon DocumentDB\n\n\n*Read Only Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"docdb:Describe*\",\n        \"docdb:List*\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n----\n\n\n*Operator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"docdb:Describe*\",\n        \"docdb:List*\",\n        \"docdb:ModifyDBCluster\",\n        \"docdb:ModifyDBInstance\",\n        \"docdb:RebootDBInstance\",\n        \"docdb:CreateDBClusterSnapshot\",\n        \"docdb:DeleteDBClusterSnapshot\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        }\n      }\n    }\n  ]\n}\n----\n\n\n*Administrator Policy:*\n\n[source,json,subs=\"verbatim,attributes\"]\n----\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"docdb:*\",\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        },\n        \"NumericLessThan\": {\n          \"aws:MultiFactorAuthAge\": \"3600\"\n        }\n      }\n    }\n  ]\n}\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "8e8dd664-d3e8-4ea4-b33c-6f191a1c70d1",
+          "title": "Master User Authentication and Database Security",
+          "description": "Amazon DocumentDB requires comprehensive master user security, TLS encryption, and MongoDB-compatible administrative controls for secure document database operations.\n\n*Implementation Overview:* DocumentDB security involves master user account management, TLS encryption, MongoDB-compatible role-based access control, and comprehensive audit logging for document database operations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "f79682b7-ef50-4a9e-b32c-87fecf0ec857",
+          "title": "Implementation Examples",
+          "description": ". *Create KMS Key and Secure Master User Configuration*\n+\nCreate dedicated KMS key and configure secure master user for DocumentDB cluster\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create KMS key for DocumentDB encryption\naws kms create-key \\\n  --description 'DocumentDB Encryption Key' \\\n  --key-usage ENCRYPT_DECRYPT \\\n  --key-spec SYMMETRIC_DEFAULT\n\n# Create alias for the key\naws kms create-alias \\\n  --alias-name alias/documentdb-key \\\n  --target-key-id <key-id>\n\n# Store master user password in Secrets Manager\naws secretsmanager create-secret \\\n  --name documentdb/master-user \\\n  --description 'DocumentDB master user credentials' \\\n  --secret-string '{\"username\":\"docdbadmin\",\"password\":\"'$(openssl rand -base64 32)'\"}'\n----\n\n. *Create Encrypted DocumentDB Cluster with Secure Configuration*\n+\nCreate DocumentDB cluster with encryption enabled and secure master user configuration\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Retrieve master user credentials from Secrets Manager\nMASTER_CREDS=$(aws secretsmanager get-secret-value \\\n  --secret-id documentdb/master-user \\\n  --query 'SecretString' --output text)\n\nMASTER_USERNAME=$(echo $MASTER_CREDS | jq -r '.username')\nMASTER_PASSWORD=$(echo $MASTER_CREDS | jq -r '.password')\n\n# Create encrypted DocumentDB cluster\naws docdb create-db-cluster \\\n  --db-cluster-identifier secure-documentdb-cluster \\\n  --engine docdb \\\n  --engine-version 5.0.0 \\\n  --master-username \"$MASTER_USERNAME\" \\\n  --master-user-password \"$MASTER_PASSWORD\" \\\n  --storage-encrypted \\\n  --kms-key-id alias/documentdb-key \\\n  --vpc-security-group-ids sg-xxxxxxxxx \\\n  --db-subnet-group-name private-docdb-subnet-group \\\n  --backup-retention-period 7 \\\n  --preferred-backup-window \"05:00-06:00\" \\\n  --preferred-maintenance-window \"sun:06:00-sun:07:00\" \\\n  --deletion-protection \\\n  --tags Key=DataClassification,Value=Sensitive Key=BackupRequired,Value=true\n\n# Create DocumentDB instances\naws docdb create-db-instance \\\n  --db-instance-identifier secure-documentdb-instance-1 \\\n  --db-instance-class db.r6g.large \\\n  --engine docdb \\\n  --db-cluster-identifier secure-documentdb-cluster \\\n  --monitoring-interval 60 \\\n  --monitoring-role-arn arn:aws:iam::account:role/rds-monitoring-role \\\n  --tags Key=Role,Value=Primary\n----\n\n. *Configure TLS Encryption and MongoDB-Compatible Security*\n+\nEnable TLS for client connections and configure MongoDB-compatible security features\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Download DocumentDB CA certificate for TLS connections\nwget https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem\n\n# Create parameter group with secure settings\naws docdb create-db-cluster-parameter-group \\\n  --db-cluster-parameter-group-name secure-docdb-params \\\n  --db-parameter-group-family docdb5.0 \\\n  --description 'Secure DocumentDB parameter group'\n\n# Configure profiler for audit logging\naws docdb modify-db-cluster-parameter-group \\\n  --db-cluster-parameter-group-name secure-docdb-params \\\n  --parameters ParameterName=profiler,ParameterValue=enabled \\\n  --parameters ParameterName=profiler_threshold_ms,ParameterValue=100 \\\n  --parameters ParameterName=profiler_sampling_rate,ParameterValue=1.0\n\n# Apply parameter group to cluster\naws docdb modify-db-cluster \\\n  --db-cluster-identifier secure-documentdb-cluster \\\n  --db-cluster-parameter-group-name secure-docdb-params \\\n  --apply-immediately\n\n# Enable CloudWatch logs export\naws docdb modify-db-cluster \\\n  --db-cluster-identifier secure-documentdb-cluster \\\n  --cloudwatch-logs-export-configuration LogTypesToEnable=profiler \\\n  --apply-immediately\n----\n\n*API:* `aws docdb create-db-cluster --storage-encrypted --kms-key-id alias/documentdb-key`\n\n*Control:* SC-28, IA-2",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "af99c606-31a4-496e-b484-c105bce15bca",
+          "title": "Privileged Access Control",
+          "description": "Amazon DocumentDB requires implementation of privileged account security controls including least privilege access, multi-factor authentication for administrative operations, and comprehensive audit logging of privileged activities.\n\n*Implementation Overview:* Amazon DocumentDB privileged account security involves implementing strict access controls for cluster administration, monitoring privileged operations, and ensuring administrative activities are properly authenticated and logged.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ac09f104-2f74-4915-9c3b-ac5444b061fe",
+          "title": "Implementation Examples",
+          "description": ". *Implement Least Privilege Access*\n+\nConfigure Amazon DocumentDB with minimal required permissions for administrative accounts\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create least privilege IAM policy for DocumentDB administration\ncat > documentdb-admin-policy.json << 'EOF'\n{\n  \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"docdb:CreateDBCluster\",\n        \"docdb:ModifyDBCluster\",\n        \"docdb:DescribeDBClusters\",\n        \"docdb:CreateDBInstance\",\n        \"docdb:ModifyDBInstance\",\n        \"docdb:DescribeDBInstances\",\n        \"docdb:CreateDBClusterSnapshot\",\n        \"docdb:DescribeDBClusterSnapshots\"\n      ],\n      \"Resource\": \"*\",\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:MultiFactorAuthPresent\": \"true\"\n        },\n        \"NumericLessThan\": {\n          \"aws:MultiFactorAuthAge\": \"3600\"\n        }\n      }\n    }\n  ]\n}\nEOF\n\naws iam create-policy \\\n  --policy-name DocumentDBAdminPolicy \\\n  --policy-document file://documentdb-admin-policy.json\n\n# Attach policy to administrative role\naws iam attach-role-policy \\\n  --role-name DocumentDBAdminRole \\\n  --policy-arn arn:aws:iam::account:policy/DocumentDBAdminPolicy\n----\n\n. *Enable Multi-Factor Authentication*\n+\nRequire MFA for all privileged operations and administrative access\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# MFA enforcement is configured through IAM policy conditions\n# Verify MFA enforcement for privileged operations\naws iam simulate-principal-policy \\\n  --policy-source-arn arn:aws:iam::account:role/DocumentDBAdminRole \\\n  --action-names docdb:CreateDBCluster \\\n  --context-entries ContextKeyName=aws:MultiFactorAuthPresent,ContextKeyValues=false,ContextKeyType=boolean\n----\n\n. *Configure Privileged Activity Monitoring*\n+\nEnable comprehensive logging and monitoring of all privileged account activities\n+\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Enable CloudTrail for API logging\naws cloudtrail create-trail \\\n  --name DocumentDBPrivilegedAccess \\\n  --s3-bucket-name documentdb-audit-logs \\\n  --include-global-service-events \\\n  --is-multi-region-trail \\\n  --enable-log-file-validation\n\n# Configure CloudWatch alarms for privileged operations\naws logs create-log-group \\\n  --log-group-name /aws/documentdb/privileged-access \\\n  --retention-in-days 365\n\n# Create metric filter for privileged operations\naws logs put-metric-filter \\\n  --log-group-name CloudTrail/DocumentDBPrivilegedAccess \\\n  --filter-name DocumentDBPrivilegedOperations \\\n  --filter-pattern '{ $.eventSource = \"docdb.amazonaws.com\" && $.userIdentity.type = \"AssumedRole\" }' \\\n  --metric-transformations \\\n    metricName=DocumentDBPrivilegedOperations,metricNamespace=Security/DocumentDB,metricValue=1\n----\n\n*API:* `Configure via IAM policies and DocumentDB administrative APIs`\n\n*Control:* AC-6",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "3ab8ead6-17f5-4232-aca6-e72a0a844399",
+          "title": "FRR-RSC-04: Secure Defaults",
+          "description": "*Applicable:* Yes\n\nAWS services are designed with security in mind, providing multiple layers of security controls and encryption capabilities. However, AWS allows customers to define the security configuration of services and does not enforce a minimum security standard by default, enabling customers the flexibility to meet their specific business requirements and compliance needs.\n\nAmazon DocumentDB should be configured with encryption enabled, strong master user credentials, TLS enforcement, and comprehensive audit logging by default.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "917c934c-ea96-4c85-8645-c0aafe4c0e18",
+          "title": "Implementation",
+          "description": "Ensure DocumentDB clusters are created with security-first configurations including encryption, authentication, and monitoring\n\n\n*Best Practices:*\n\n* Enable encryption at rest using customer-managed KMS keys\n* Use AWS Secrets Manager for master user password management\n* Enforce TLS connections for all database access (mandatory)\n* Enable profiler for comprehensive audit logging\n* Deploy in private subnets with restrictive security groups\n* Implement automated backup encryption\n* Configure parameter groups with security-hardened settings\n* Use MongoDB-compatible role-based access control for fine-grained permissions",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "32d14c89-e5d8-4174-bed4-72f49b7f0ef6",
+          "title": "FRR-RSC-05: Configuration Comparison",
+          "description": "*Applicable:* Yes\n\nUse AWS Config rules or custom scripts to compare current Amazon Documentdb With Mongodb Compatibility configuration against baselines.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "e251ba56-a01d-49fd-9954-9c1c71e7dae0",
+          "title": "FRR-RSC-06: Configuration Export",
+          "description": "*Applicable:* Yes\n\nExport Amazon Documentdb With Mongodb Compatibility configuration using AWS CLI describe/get commands in JSON format.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "4df3b469-d4f5-4996-b44e-7f6f7878773e",
+          "title": "FRR-RSC-07: API Configuration",
+          "description": "*Applicable:* Yes",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "3e938cf7-796a-4e8d-8ddf-981395880f34",
+          "title": "Iam Permissions",
+          "description": "*API Command:*\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\nConfigure via IAM policies for Amazon Documentdb With Mongodb Compatibility\n----\n\n*Control:* AC-6\n\n*Implementation Guidance:*\n\n* Create separate roles for different access levels (read-only, operator, administrator)\n* Always require MFA for privileged operations\n* Use time-based conditions to limit session duration\n* Implement resource-based restrictions where possible\n* Regular review and rotation of access permissions",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "dc1f330f-511a-452b-a127-393410d69eea",
+          "title": "Additional Resources",
+          "description": "For more information about {aws} security best practices, see the following resources:\n\n* link:https://docs.aws.amazon.com/security/[{aws} Security Documentation]\n* link:https://aws.amazon.com/compliance/fedramp/[{aws} FedRAMP Compliance]\n* link:https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html[{aws} Well-Architected Security Pillar]",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

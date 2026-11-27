@@ -1,0 +1,96 @@
+myctrl.tools
+Copyright 2026 Ethan Troy
+
+This product includes software developed by Ethan Troy (https://github.com/ethanolivertroy)
+and is licensed under the MIT License (see LICENSE).
+
+================================================================================
+DATA & THIRD-PARTY NOTICES
+================================================================================
+
+`apps/myctrl` bundles only public-domain and permissive open-license control
+catalogs and ID-level crosswalks, alongside an external publisher directory
+and gitignored local overlay (`src/data/local/`). Commercial, proprietary,
+`CC BY-ND`, `CC BY-NC-SA`, placeholder, and third-party SCF STRM-derived
+datasets are intentionally NOT redistributed in this repository.
+
+1. U.S. Federal Public Domain Materials (17 U.S.C. § 105 / CC0 1.0)
+   - NIST Special Publications & Catalogs: SP 800-53 Rev 5, SP 800-161,
+     SP 800-171 Rev 2 & Rev 3, SP 800-171A & 171A Rev 3, SP 800-172,
+     SP 800-207, SP 800-218 (SSDF), CSF 2.0, AI RMF 1.0, AI 600-1
+     (https://csrc.nist.gov/, https://github.com/usnistgov/OSCAL)
+   - FedRAMP Rev 5 baselines, FedRAMP 20x Key Security Indicators (KSIs),
+     requirements, and glossary (GSA FedRAMP, https://github.com/FedRAMP/rules)
+   - DoD SRG, DoD Zero Trust Architecture & Roadmap, DISA Kubernetes STIG,
+     DoD CMMC 2.0 & CMMC Level 1 / Assessment Objectives, DoD Cyber Exchange
+     CCI <-> NIST SP 800-53 crosswalk, SPARTA (Aerospace Corporation / DoD)
+   - CISA Cybersecurity Performance Goals (CPGs), SSDAF, Secure by Design,
+     DHS TIC 3.0, Executive Order 14028, FBI CJIS Security Policy
+   - U.S. federal regulations & statutory materials: HIPAA Security Rule &
+     Simplification, 45 CFR 155.260, GLBA (16 CFR 314), SEC Cybersecurity Rule,
+     FIPPs, U.S.-EU Data Privacy Framework (US DPF)
+   - NIST OLIR Public-Domain ID Crosswalks (`csf-nist-crosswalk.json`,
+     `csf-pci-crosswalk.json`, `csf-iso-crosswalk.json`,
+     `cis-csf-crosswalk.json`, `cmmc-nist171-crosswalk.json`,
+     `cci-nist-crosswalk.json`, `eu-ai-act-airmf-crosswalk.json`): contain
+     factual identifier-to-identifier mappings from NIST OLIR / CSRC and
+     public-domain sources only, without reproducing proprietary control text.
+
+2. State, European Union, and Other Governmental Public-Sector Texts
+   - U.S. state cybersecurity & privacy frameworks: TX-RAMP (Texas DIR),
+     NY DFS 23 NYCRR 500, California CCPA, Virginia CDPA, Texas TDPSA /
+     SB 2610, Oregon CPA, Tennessee IPA, Nevada Gaming Regulation 5.260,
+     FERC/NERC CIP, FCA CRM
+   - European Union legislation & official texts (published in EUR-Lex,
+     exempt from copyright or freely reusable per EU public-document rules):
+     GDPR, NIS2 Directive, EU AI Act, EU Cyber Resilience Act (CRA) & Annexes,
+     EU DORA
+   - National & international governmental frameworks indexed for reference:
+     UK CAF, UK DEF STAN 05-138, Spain ENS, Saudi Arabia PDPL & IoT
+     Guidelines, UAE NIAF, India DPDPA & SEBI CSCRF, China Cybersecurity Law,
+     New Zealand HISF & HISF Suppliers, Canada OSFI B-13, IMO Maritime Cyber Risk
+
+3. Open-License Third-Party Datasets
+   - OWASP Top 10 Series (`owasp-web-top10`, `owasp-api-top10`,
+     `owasp-llm-top10`, `owasp-mobile-top10`, `owasp-smart-contract-top10`):
+     Published by the OWASP Foundation (https://owasp.org/,
+     https://genai.owasp.org/) under Creative Commons Attribution-ShareAlike
+     4.0 International (CC BY-SA 4.0).
+   - Australian Signals Directorate (ASD / ACSC) Information Security Manual
+     (`au-ism`) & Essential Eight (`au-essential-8`):
+     Published via https://github.com/AustralianCyberSecurityCentre/ism-oscal
+     and https://www.cyber.gov.au/ under Creative Commons Attribution 4.0
+     International (CC BY 4.0).
+   - Canadian Centre for Cyber Security ITSG-33 (`itsg-33`):
+     Published under the Open Government Licence - Canada
+     (https://www.cyber.gc.ca/en/guidance/annex-3a-security-control-catalogue-itsg-33).
+   - UK National Cyber Security Centre Cyber Essentials (`cyber-essentials-uk`):
+     Published under the UK Open Government Licence v3.0
+     (https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+   - German BSI C5:2020 (`bsi-c5`):
+     Published by the Federal Office for Information Security (BSI)
+     (https://www.bsi.bund.de/).
+   - GovRAMP (`govramp`):
+     Published by GovRAMP (https://govramp.org).
+   - Open Cybersecurity Schema Framework (`ocsf`, `cloud-implementations`
+     references / AWS RSC):
+     OCSF schemas under the Apache License, Version 2.0 (https://schema.ocsf.io/).
+   - MITRE ATT&CK (`mitre-attack`):
+     Published by The MITRE Corporation (https://attack.mitre.org/) under the
+     MITRE ATT&CK Terms of Use (free open access with attribution).
+
+4. Fonts
+   - Geist Variable & Geist Mono Variable (`public/fonts/GeistVariable.woff2`,
+     `public/fonts/GeistMonoVariable.woff2`):
+     Developed by Vercel (https://vercel.com/font) and distributed under the
+     SIL Open Font License, Version 1.1.
+
+5. Non-Redistributed External Standards
+   - Commercial, proprietary, `CC BY-ND`, and `CC BY-NC-SA` standards (such as
+     PCI DSS, ISO/IEC 27001/27002/27701/29100/42001/23894, SOC 2 TSC, CIS
+     Controls v8, AIUC-1, Adobe CCF, HITRUST CSF, COBIT, TISAX, Canada
+     ITSP.10.171, CSA CCM, FAIR, IEC TR 60601-4-5, APEC Privacy, NAIC 668,
+     OECD Privacy, Unified Compliance, and SCF STRM-derived crosswalks) are
+     listed solely with links to their official publishers. Users who hold a
+     valid license may load their own copies locally under gitignored
+     `src/data/local/` (see `skills/myctrl-local-standards/SKILL.md`).

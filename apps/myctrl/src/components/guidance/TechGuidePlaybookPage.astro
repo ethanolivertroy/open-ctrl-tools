@@ -1,0 +1,636 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StaticCodeBlock from '@/components/guidance/StaticCodeBlock.astro';
+import { techCommandLanguage } from '@/components/guidance/tech-command-language';
+import GuidanceGrcLanker from '@/components/guidance/GuidanceGrcLanker';
+import { getFrameworkConfig } from '@/data/frameworks';
+import {
+  getGoodBadExamplePresentation,
+  resolveComparisonTitle,
+} from '@/components/guidance/good-bad-parser';
+import type {
+  AuthoritativeSource,
+  TechnologyCategoryMeta,
+  TechnologyGuide,
+  TechnologyGuideTool,
+} from '@/data/types';
+
+interface Props {
+  tech: TechnologyGuide;
+  categoryMeta?: TechnologyCategoryMeta;
+  baseHref?: string;
+  baseLabel?: string;
+  categoryHref?: string;
+}
+
+const {
+  tech,
+  categoryMeta,
+  baseHref = '/guidance',
+  baseLabel = 'Technology Guidance',
+  categoryHref,
+} = Astro.props;
+
+if (!tech.playbook) {
+  throw new Error(`Technology guide '${tech.id}' is missing playbook content.`);
+}
+
+const playbook = tech.playbook;
+const resolvedCategoryHref = categoryHref ?? categoryMeta?.path;
+
+const COMMAND_TYPES = {
+  cli: { label: 'CLI', color: 'bg-green-500/10 text-green-400 border-green-500/20' },
+  api: { label: 'API', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+  query: { label: 'Query', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+  config: { label: 'Config', color: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+} as const;
+
+const PRIORITY_STYLES = {
+  critical: 'bg-red-500/12 text-red-300 border-red-500/25',
+  high: 'bg-amber-500/12 text-amber-300 border-amber-500/25',
+  medium: 'bg-blue-500/12 text-blue-300 border-blue-500/25',
+} as const;
+
+const EXAMPLE_STATUS_STYLES = {
+  good: 'bg-green-500/12 text-green-300 border-green-500/25',
+  bad: 'bg-red-500/12 text-red-300 border-red-500/25',
+  better: 'bg-blue-500/12 text-blue-300 border-blue-500/25',
+} as const;
+
+const sourceMap = new Map<string, AuthoritativeSource>();
+for (const source of tech.authoritativeSources) {
+  sourceMap.set(source.id ?? source.title, source);
+}
+
+const toolMap = new Map<string, TechnologyGuideTool>();
+for (const tool of tech.tools ?? []) {
+  toolMap.set(tool.id, tool);
+}
+
+const sectionViews = playbook.sections.map((section) => ({
+  ...section,
+  sourceRefs: section.sourceIds
+    .map((id) => sourceMap.get(id))
+    .filter((source): source is AuthoritativeSource => Boolean(source)),
+  tools: (section.toolIds ?? [])
+    .map((id) => toolMap.get(id))
+    .filter((tool): tool is TechnologyGuideTool => Boolean(tool)),
+  examples: section.examples.map((example) => {
+    const presentation = getGoodBadExamplePresentation(example.code);
+    return {
+      ...example,
+      heading: resolveComparisonTitle(example.title, {
+        comparisonTitle: example.comparisonTitle,
+        isSemanticExample: presentation.mode !== 'plain',
+      }),
+      presentation,
+    };
+  }),
+}));
+
+const criticalSections = sectionViews.filter((section) => section.priority === 'critical');
+
+const groupedToolkitCommands = tech.commands.reduce(
+  (groups, command) => {
+    const label = command.group ?? 'General';
+    const existing = groups.find((group) => group.label === label);
+    if (existing) {
+      existing.commands.push(command);
+    } else {
+      groups.push({ label, commands: [command] });
+    }
+    return groups;
+  },
+  [] as { label: string; commands: typeof tech.commands }[],
+);
+
+const appendixSources = tech.authoritativeSources;
+
+const frameworkLinks = tech.controlMappings
+  .map((mapping) => {
+    const framework = getFrameworkConfig(mapping.frameworkId);
+    if (!framework) return null;
+    return {
+      id: mapping.frameworkId,
+      name: framework.name,
+      href: `/frameworks/${mapping.frameworkId}`,
+      description: `${mapping.controlIds.length} related control${mapping.controlIds.length === 1 ? '' : 's'}`,
+    };
+  })
+  .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+const grcLankerSections = sectionViews.map((section) => ({
+  id: section.id,
+  title: section.title,
+  summary: section.summary,
+  actions: section.actions,
+}));
+
+const grcLankerSources = appendixSources.map((source) => ({
+  title: source.title,
+  summary: source.summary,
+}));
+
+const grcLankerFrameworks = frameworkLinks.map((framework) => ({
+  name: framework.name,
+  description: framework.description,
+}));
+
+const grcLankerCommands = tech.commands.map((command) => ({
+  group: command.group ?? 'General',
+  description: command.description,
+  command: command.command,
+  scope: command.scope,
+  notes: command.notes,
+}));
+
+function getCommandLabel(commandType: keyof typeof COMMAND_TYPES) {
+  return COMMAND_TYPES[commandType];
+}
+
+function getCommandBlockLabel(commandType: keyof typeof COMMAND_TYPES) {
+  // Label doubles as the StaticCodeBlock highlight language; 'config' is a
+  // display-only label that shikiLanguage() resolves to plain text.
+  return commandType === 'config' ? 'config' : techCommandLanguage(commandType);
+}
+---
+
+<BaseLayout
+  title={`${tech.name} Hardening Guide`}
+  description={`Practical hardening and verification guidance for ${tech.name}. ${playbook.intro}`}
+  showSidebar={false}
+>
+  <div class="space-y-8 sm:space-y-10">
+    <header class="space-y-4">
+      <nav class="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <a href={baseHref} class="hover:text-foreground transition-colors">{baseLabel}</a>
+        <span>/</span>
+        {categoryMeta && (
+          <>
+            {resolvedCategoryHref ? (
+              <a href={resolvedCategoryHref} class="hover:text-foreground transition-colors">
+                {categoryMeta.name}
+              </a>
+            ) : (
+              <span class="text-foreground">{categoryMeta.name}</span>
+            )}
+            <span>/</span>
+          </>
+        )}
+        <span class="text-foreground">{tech.name}</span>
+      </nav>
+
+      <div class="flex flex-col gap-4 rounded-2xl border border-border bg-card/80 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.01)]">
+        <div class="space-y-3">
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{tech.name} Hardening Guide</h1>
+          <p class="max-w-3xl text-base text-muted-foreground sm:text-lg">
+            {playbook.intro}
+          </p>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-xl border border-border/70 bg-background/50 p-4">
+            <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Focus</div>
+            <p class="mt-2 text-sm text-foreground">Workflow hardening, runner policy, secret handling, and deployment authentication for GitHub Actions environments.</p>
+          </div>
+          <div class="rounded-xl border border-border/70 bg-background/50 p-4">
+            <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Source basis</div>
+            <p class="mt-2 text-sm text-foreground">This guide draws primarily from GitHub documentation and the Wiz GitHub Actions guide, with supporting OWASP context where it clarifies the risk model.</p>
+          </div>
+          <div class="rounded-xl border border-border/70 bg-background/50 p-4">
+            <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Scope</div>
+            <p class="mt-2 text-sm text-foreground">Framework mappings and supplementary references are collected in the appendix so the main page can stay centered on implementation and review.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_24rem]">
+      <div class="space-y-10">
+        {criticalSections.length > 0 && (
+          <section class="space-y-4">
+            <div class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008zm8.25-3.758c0 4.556-3.694 8.25-8.25 8.25S3.75 17.303 3.75 12.747 7.444 4.497 12 4.497s8.25 3.694 8.25 8.25z" />
+              </svg>
+              <h2 class="text-xl font-semibold">Fix These First</h2>
+            </div>
+            <p class="text-sm text-muted-foreground">
+              Start here when you are reviewing an existing setup or establishing an initial baseline for a new organization or repository.
+            </p>
+            <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {criticalSections.map((section) => (
+                <a
+                  href={`#${section.id}`}
+                  class="group rounded-xl border border-red-500/20 bg-red-500/6 p-4 transition-colors hover:border-red-400/35 hover:bg-red-500/10"
+                >
+                  <div class="flex items-center justify-between gap-3">
+                    <span class={`inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${PRIORITY_STYLES[section.priority]}`}>
+                      {section.priority}
+                    </span>
+                    <svg class="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
+                    </svg>
+                  </div>
+                  <h3 class="mt-3 text-base font-semibold text-foreground">{section.title}</h3>
+                  <p class="mt-2 text-sm text-muted-foreground">{section.summary}</p>
+                  <ul class="mt-3 space-y-1.5 text-sm text-foreground">
+                    {section.actions.slice(0, 2).map((action) => (
+                      <li class="flex gap-2">
+                        <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-300/80"></span>
+                        <span>{action}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="space-y-6">
+          {sectionViews.map((section) => (
+            <section id={section.id} class="scroll-mt-24 space-y-5 rounded-2xl border border-border bg-card/70 p-5 sm:p-6">
+              <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${PRIORITY_STYLES[section.priority]}`}>
+                    {section.priority}
+                  </span>
+                  {section.sourceRefs.map((source) => (
+                    <span class="inline-flex rounded-full border border-border bg-background/70 px-2.5 py-0.5 text-xs text-muted-foreground">
+                      {source.type}
+                    </span>
+                  ))}
+                </div>
+                <div class="space-y-2">
+                  <h2 class="text-2xl font-semibold tracking-tight">{section.title}</h2>
+                  <p class="max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">{section.summary}</p>
+                </div>
+              </div>
+
+              <div class="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
+                <div class="space-y-4">
+                  <div class="rounded-xl border border-border/70 bg-background/45 p-4">
+                    <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Recommended actions</div>
+                    <ul class="mt-3 space-y-2">
+                      {section.actions.map((action) => (
+                        <li class="flex gap-3 text-sm text-foreground">
+                          <span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary"></span>
+                          <span>{action}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {section.sourceRefs.length > 0 && (
+                    <div class="rounded-xl border border-border/70 bg-background/30 p-4">
+                      <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Sources</div>
+                      <div class="mt-3 flex flex-wrap gap-2">
+                        {section.sourceRefs.map((source) => (
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1 text-xs text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                          >
+                            {source.title}
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div class="space-y-3">
+                  <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Verification</div>
+                  {section.commands.map((command) => {
+                    const commandMeta = getCommandLabel(command.type);
+                    return (
+                      <div class="rounded-xl border border-border/70 bg-background/45 p-4">
+                        <div class="flex flex-wrap items-center gap-2">
+                          <span class={`inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${commandMeta.color}`}>
+                            {commandMeta.label}
+                          </span>
+                          {command.scope && (
+                            <span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                              {command.scope}
+                            </span>
+                          )}
+                        </div>
+                        <h3 class="mt-3 text-sm font-semibold text-foreground">{command.description}</h3>
+                        {command.notes && (
+                          <p class="mt-1 text-xs leading-5 text-muted-foreground">{command.notes}</p>
+                        )}
+                        <div class="mt-3">
+                          <StaticCodeBlock code={command.command} label={getCommandBlockLabel(command.type)} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {section.examples.length > 0 && (
+                <div class="space-y-4 border-t border-border/70 pt-5">
+                  <div>
+                    <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Examples</div>
+                    <p class="mt-1 text-sm text-muted-foreground">
+                      Examples are shown inline so you can review working patterns, compare contrasting cases, and adapt them directly.
+                    </p>
+                  </div>
+                  <div class="space-y-4">
+                    {section.examples.map((example) => {
+                      const { presentation } = example;
+                      const panels = [
+                        presentation.parsed.bad
+                          ? { key: 'bad', label: 'BAD', code: presentation.parsed.bad }
+                          : null,
+                        presentation.parsed.good
+                          ? { key: 'good', label: 'GOOD', code: presentation.parsed.good }
+                          : null,
+                        presentation.parsed.better
+                          ? { key: 'better', label: 'BETTER', code: presentation.parsed.better }
+                          : null,
+                      ].filter((panel): panel is { key: 'bad' | 'good' | 'better'; label: string; code: string } => Boolean(panel));
+
+                      return (
+                        <article class="rounded-xl border border-border/70 bg-background/35 p-4">
+                          <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                            <div class="space-y-1">
+                              <h3 class="text-base font-semibold text-foreground">{example.heading}</h3>
+                              {example.source && (
+                                <p class="text-xs text-muted-foreground">{example.source}</p>
+                              )}
+                            </div>
+                            {presentation.mode === 'single-sided' && presentation.status && (
+                              <span class={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${EXAMPLE_STATUS_STYLES[presentation.status]}`}>
+                                {presentation.status}
+                              </span>
+                            )}
+                          </div>
+
+                          {presentation.parsed.sharedPrelude && (
+                            <div class="mt-4 space-y-2">
+                              <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Shared setup</div>
+                              <StaticCodeBlock code={presentation.parsed.sharedPrelude} label={example.language} />
+                            </div>
+                          )}
+
+                          {presentation.mode === 'comparison' ? (
+                            <div class={`mt-4 grid gap-4 ${panels.length === 3 ? 'xl:grid-cols-3 md:grid-cols-2' : 'md:grid-cols-2'} grid-cols-1`}>
+                              {panels.map((panel) => (
+                                <div class="space-y-2">
+                                  <span class={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${EXAMPLE_STATUS_STYLES[panel.key]}`}>
+                                    {panel.label}
+                                  </span>
+                                  <StaticCodeBlock code={panel.code} label={example.language} />
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div class="mt-4">
+                              <StaticCodeBlock
+                                code={
+                                  presentation.parsed.bad ??
+                                  presentation.parsed.good ??
+                                  presentation.parsed.better ??
+                                  example.code
+                                }
+                                label={example.language}
+                              />
+                            </div>
+                          )}
+
+                          {example.discussion && (
+                            <p class="mt-3 text-sm leading-6 text-muted-foreground">{example.discussion}</p>
+                          )}
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {section.tools.length > 0 && (
+                <div class="space-y-4 border-t border-border/70 pt-5">
+                  <div>
+                    <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Selected tools</div>
+                    <p class="mt-1 text-sm text-muted-foreground">
+                      These tools support workflow review, policy validation, and runtime monitoring where they materially improve GitHub Actions security review.
+                    </p>
+                  </div>
+                  <div class="grid gap-3 md:grid-cols-2">
+                    {section.tools.map((tool) => {
+                      const href = tool.url ?? tool.repo;
+                      return (
+                        <div class="rounded-xl border border-border/70 bg-background/45 p-4">
+                          <div class="flex items-start justify-between gap-3">
+                            <div class="space-y-1">
+                              <h3 class="text-sm font-semibold text-foreground">{tool.name}</h3>
+                              <p class="text-sm text-muted-foreground">{tool.summary}</p>
+                            </div>
+                            {href && (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-xs text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                              >
+                                Open
+                                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                </svg>
+                              </a>
+                            )}
+                          </div>
+                          {tool.quickCommand && (
+                            <div class="mt-3">
+                              <StaticCodeBlock code={tool.quickCommand} label="bash" />
+                            </div>
+                          )}
+                          {tool.notes && (
+                            <p class="mt-3 text-xs leading-5 text-muted-foreground">{tool.notes}</p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </section>
+          ))}
+        </section>
+
+        {groupedToolkitCommands.length > 0 && (
+          <section id="verification-toolkit" class="scroll-mt-24 space-y-4 rounded-2xl border border-border bg-card/70 p-5 sm:p-6">
+            <div class="space-y-2">
+              <h2 class="text-2xl font-semibold tracking-tight">Verification Toolkit</h2>
+              <p class="max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
+                These checks are grouped by review task and labeled by scope so you can move from local inspection to repository and organization policy validation without guessing at prerequisites.
+              </p>
+            </div>
+
+            <div class="space-y-5">
+              {groupedToolkitCommands.map((group) => (
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between gap-3">
+                    <h3 class="text-lg font-semibold text-foreground">{group.label}</h3>
+                    <span class="text-xs text-muted-foreground">
+                      {group.commands.length} {group.commands.length === 1 ? 'command' : 'commands'}
+                    </span>
+                  </div>
+                  <div class="grid gap-3 lg:grid-cols-2">
+                    {group.commands.map((command) => {
+                      const commandMeta = getCommandLabel(command.type);
+                      return (
+                        <div class="rounded-xl border border-border/70 bg-background/45 p-4">
+                          <div class="flex flex-wrap items-center gap-2">
+                            <span class={`inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${commandMeta.color}`}>
+                              {commandMeta.label}
+                            </span>
+                            {command.scope && (
+                              <span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                {command.scope}
+                              </span>
+                            )}
+                          </div>
+                          <h4 class="mt-3 text-sm font-semibold text-foreground">{command.description}</h4>
+                          {command.notes && (
+                            <p class="mt-1 text-xs leading-5 text-muted-foreground">{command.notes}</p>
+                          )}
+                          <div class="mt-3">
+                            <StaticCodeBlock code={command.command} label={getCommandBlockLabel(command.type)} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section id="references" class="scroll-mt-24 space-y-6 rounded-2xl border border-border bg-card/70 p-5 sm:p-6">
+          <div class="space-y-2">
+            <h2 class="text-2xl font-semibold tracking-tight">References and Framework Mappings</h2>
+            <p class="max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
+              Use this appendix when you want the upstream source material or when you need framework-specific mapping context for evidence collection and assessment work.
+            </p>
+          </div>
+
+          <div class="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
+            <div class="space-y-3">
+              <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">References</div>
+              {appendixSources.map((source) => (
+                <article class="rounded-xl border border-border/70 bg-background/35 p-4">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex rounded-full border border-border bg-background px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      {source.type}
+                    </span>
+                  </div>
+                  <h3 class="mt-3 text-base font-semibold text-foreground">
+                    <a href={source.url} target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
+                      {source.title}
+                    </a>
+                  </h3>
+                  <p class="mt-2 text-sm leading-6 text-muted-foreground">{source.summary}</p>
+                  {source.additionalUrls && source.additionalUrls.length > 0 && (
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      {source.additionalUrls.map((link) => (
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1 text-xs text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+
+            <div class="space-y-3">
+              <div class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Framework pages</div>
+              <div class="rounded-xl border border-border/70 bg-background/35 p-4">
+                <p class="text-sm leading-6 text-muted-foreground">
+                  Use the framework pages when you need control mappings, evidence framing, or program-specific assessment context that is outside the scope of this implementation guide.
+                </p>
+                <div class="mt-4 space-y-2">
+                  {frameworkLinks.map((framework) => (
+                    <a
+                      href={framework.href}
+                      class="flex items-center justify-between gap-3 rounded-lg border border-border bg-background px-3 py-2 transition-colors hover:border-primary/40 hover:text-primary"
+                    >
+                      <div>
+                        <div class="text-sm font-semibold text-foreground">{framework.name}</div>
+                        <div class="text-xs text-muted-foreground">{framework.description}</div>
+                      </div>
+                      <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
+                      </svg>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="space-y-4 xl:sticky xl:top-24">
+        <GuidanceGrcLanker
+          client:idle
+          guideId={tech.id}
+          guideName={tech.name}
+          intro={playbook.intro}
+          sections={grcLankerSections}
+          sources={grcLankerSources}
+          frameworks={grcLankerFrameworks}
+          commands={grcLankerCommands}
+        />
+
+        {tech.officialUrl && (
+          <a
+            href={tech.officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-between rounded-2xl border border-primary/20 bg-primary/10 p-4 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
+          >
+            <span>Open official GitHub Actions docs</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        )}
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      if (!text) return;
+
+      await navigator.clipboard.writeText(text);
+
+      const svg = btn.querySelector('svg');
+      if (!svg) return;
+
+      const original = svg.innerHTML;
+      svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />';
+      setTimeout(() => {
+        svg.innerHTML = original;
+      }, 1500);
+    });
+  });
+</script>

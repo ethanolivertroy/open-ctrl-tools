@@ -1,0 +1,49 @@
+---
+/**
+ * Build-time syntax-highlighted code block rendered with @pierre/diffs'
+ * FileRenderer. Emits plain HTML (no client JS, no shadow DOM); layout
+ * styles live in globals.css under `.diffs-static`.
+ *
+ * Colors are baked in as dark/light CSS variable pairs; which side applies
+ * follows the active site theme's `color-scheme` via light-dark(), so
+ * blocks stay legible across all site themes.
+ */
+import { FileRenderer } from '@pierre/diffs';
+import { STATIC_CODE_THEMES, shikiLanguage } from '@/lib/code-theme';
+
+interface Props {
+  code: string;
+  language?: string;
+  /** Show the line-number gutter (default false; static blocks are mostly commands). */
+  lineNumbers?: boolean;
+  /** Wrap long lines instead of horizontal scrolling (default false). */
+  wrap?: boolean;
+  class?: string;
+}
+
+const {
+  code,
+  language,
+  lineNumbers = false,
+  wrap = false,
+  class: className = '',
+} = Astro.props;
+
+const renderer = new FileRenderer();
+renderer.setOptions({
+  theme: STATIC_CODE_THEMES,
+  disableFileHeader: true,
+  disableLineNumbers: !lineNumbers,
+  overflow: wrap ? 'wrap' : 'scroll',
+});
+
+const result = await renderer.asyncRender({
+  name: 'snippet',
+  contents: code,
+  lang: shikiLanguage(language),
+});
+
+const html = renderer.renderFullHTML(result);
+---
+
+<div class={`diffs-static ${className}`} style={result.themeStyles} set:html={html} />

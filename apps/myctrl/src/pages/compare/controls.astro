@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ControlComparisonTool } from '../../components/compare/ControlComparisonTool';
+---
+
+<BaseLayout title="Compare Controls" showSidebar={false}>
+  <div class="max-w-7xl mx-auto space-y-8 py-12 px-4">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <a href="/compare" class="hover:text-foreground transition-colors">Compare</a>
+        <span>/</span>
+        <span class="text-foreground">Controls</span>
+      </div>
+
+      <h1 class="text-3xl font-bold tracking-tight">
+        Compare Controls
+      </h1>
+
+      <p class="text-muted-foreground max-w-2xl">
+        Compare individual controls side-by-side across frameworks or within the same framework.
+        Understand differences between base controls and enhancements, or compare similar controls
+        across different standards.
+      </p>
+    </header>
+
+    <!-- Comparison Tool -->
+    <ControlComparisonTool client:load />
+
+    <!-- Info Section -->
+    <section class="p-4 rounded-lg border border-border bg-card/50">
+      <div class="flex gap-3">
+        <svg class="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="text-sm text-muted-foreground space-y-2">
+          <p>
+            <strong>Tip:</strong> Share comparisons by copying the URL. Control selections are saved in the link.
+          </p>
+          <p>
+            For framework-level comparison, use the{' '}
+            <a href="/compare" class="text-primary hover:underline">Framework Comparison Tool</a>.
+            For control-level mappings across frameworks, use the{' '}
+            <a href="/crosswalk/visualize" class="text-primary hover:underline">Crosswalk Visualizer</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

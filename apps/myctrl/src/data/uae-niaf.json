@@ -1,0 +1,109 @@
+{
+  "framework": {
+    "id": "uae-niaf",
+    "name": "UAE NIAF",
+    "version": "2024",
+    "description": "UAE NIAF compliance framework"
+  },
+  "families": {
+    "3": "3"
+  },
+  "controls": [
+    {
+      "control_id": "3.1",
+      "title": "3.1",
+      "family": "3",
+      "description": "Risk assessment is the central component of an effective life cycle approach to IA, helping to identify the highest risk areas and assisting IA (or information security) managers with the prioritizing and allocation of resources to efficiently reduce overall risk. This requires a systematic and repeatable approach for assessing the posture of cybersecurity systems and networks, enabling expenditures on controls to be balanced against the potential harm of security failures.\nThe risk assessment methodology outlined here ensures a uniform approach across all entities and produces comparable results, while still offering each entity the freedom needed to leverage its existing processes and meet its own business needs.\nThe National Cyber Security Risk Management Framework provides further detailed description and guidance to critical entities on the appropriate approach and methodology to conduct risk assessment."
+    },
+    {
+      "control_id": "3.1.1",
+      "title": "3.1.1",
+      "family": "3",
+      "description": "Each entity must have a clear understanding of the types of information assets (e.g. hardware, software, databases) under its ownership and/or control, for as-is and to-be enterprise architectures."
+    },
+    {
+      "control_id": "3.1.2",
+      "title": "3.1.2",
+      "family": "3",
+      "description": "Each entity must evaluate the potential impact in case of a security breach or service interruption of its own information assets, including developing a clear understanding of which activities, processes, and functions each individual information asset supports."
+    },
+    {
+      "control_id": "3.1.3",
+      "title": "3.1.3",
+      "family": "3",
+      "description": "Each entity must evaluate the threat exposure levels of their key information assets and the likelihood of an assault upon exploiting those vulnerabilities."
+    },
+    {
+      "control_id": "3.2",
+      "title": "3.2",
+      "family": "3",
+      "description": "Based on the results of the risk assessment, the individual entities must document how identified risks will be mitigated. As a minimum, this includes clearly identifying an integrated set of logical, physical, and personnel security controls to be implemented and the underlying rationale for a control selection based on a cost-benefit analysis."
+    },
+    {
+      "control_id": "3.2.1",
+      "title": "3.2.1",
+      "family": "3",
+      "description": "Each entity must define the appropriate logical security controls (e.g. firewalls, encryption, anti-virus, identity management, etc.) required to protect the information assets under its control and or ownership."
+    },
+    {
+      "control_id": "3.2.2",
+      "title": "3.2.2",
+      "family": "3",
+      "description": "Each entity must define the physical security controls (e.g. door locks, perimeter fence, fire alarms, etc.) required to protect the information assets under its control and or ownership."
+    },
+    {
+      "control_id": "3.2.3",
+      "title": "3.2.3",
+      "family": "3",
+      "description": "Each entity must define the personnel security controls (e.g. background checks, post-employment return of assets, etc.) required to protect the information assets under its control and or ownership."
+    },
+    {
+      "control_id": "3.3",
+      "title": "3.3",
+      "family": "3",
+      "description": "To minimize the impact of cybersecurity incidents, each entity must have the capacity to monitor its own information assets, identify and manage cybersecurity incidents, and escalate incidents to a sector or national level taking into account and utilizing as appropriate the National Incident Management Capability established by NESA."
+    },
+    {
+      "control_id": "3.3.1",
+      "title": "3.3.1",
+      "family": "3",
+      "description": "Each entity must possess the internal capacity to monitor the constant state of its own information assets and an overall awareness of its surrounding environment. This includes the ability to detect internal cybersecurity incidents, and taking into account any threat, warning, or incident-related information received from external sources."
+    },
+    {
+      "control_id": "3.3.2",
+      "title": "3.3.2",
+      "family": "3",
+      "description": "Each entity must develop an internal incident response capability that minimizes the impact of internal incidents or incidents arising from other entities that could affect them directly or indirectly.\nThe national framework for cybersecurity incident management, as well as other NESA’s issuances, define these minimum capabilities to be put in place by the critical entities."
+    },
+    {
+      "control_id": "3.3.3",
+      "title": "3.3.3",
+      "family": "3",
+      "description": "Each entity must have the processes and communication channels in place to escalate a significant incident to the sector level and to the national level, in accordance with the national framework for cybersecurity incident management developed by NESA."
+    },
+    {
+      "control_id": "3.4",
+      "title": "3.4",
+      "family": "3",
+      "description": "As a result of the business impact analysis, each entity should identify which information assets are the most crucial to the normal functioning of business. Each entity must ensure that these critical business functions will be available to customers, suppliers, and other actors as needed, including during significant cybersecurity events or other incidents (e.g. natural disasters) that might impact availability of these critical information assets. Business continuity is not only implemented at the time of a disaster but requires the performance of daily activities to maintain service, consistency, and recoverability."
+    },
+    {
+      "control_id": "3.4.1",
+      "title": "3.4.1",
+      "family": "3",
+      "description": "Prior to the occurrence of a disastrous incident, each entity must have developed and regularly tested a plan for continuing critical services and operations under significantly adverse conditions that may impact its critical information assets."
+    },
+    {
+      "control_id": "3.4.2",
+      "title": "3.4.2",
+      "family": "3",
+      "description": "Each entity must have an internal disaster recovery plan that illustrates the process of rapid recovery of critical information assets during a catastrophic interruption."
+    },
+    {
+      "control_id": "3.4.3",
+      "title": "3.4.3",
+      "family": "3",
+      "description": "Each entity must define a business resumption plan that ensures the smooth transition of critical information assets back to a state of normal service following a disruption."
+    }
+  ]
+}

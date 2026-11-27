@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'fedramp-rev5';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('fedramp-rev5');
+}
+
+const { level } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={level!} />

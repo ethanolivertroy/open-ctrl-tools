@@ -1,0 +1,241 @@
+{
+  "framework": {
+    "id": "fca-crm",
+    "name": "FCA CRM",
+    "version": "2024",
+    "description": "FCA CRM compliance framework"
+  },
+  "families": {
+    "609": "609"
+  },
+  "controls": [
+    {
+      "control_id": "609.905",
+      "title": "609.905",
+      "family": "609",
+      "description": "Farm Credit System (System) institutions must engage in appropriate risk management practices to ensure safety and soundness of their operations. A System institution's board and management must maintain and document effective policies, procedures, and controls to mitigate cyber risks. This includes establishing an appropriate vulnerability management program to monitor cyber threats, mitigate any known vulnerabilities, and establish appropriate reporting mechanisms to the institution's board and the Farm Credit Administration (FCA). The vulnerability management programs should be commensurate with the size, risk profile, and complexity of the institution and based on sound industry standards and practices."
+    },
+    {
+      "control_id": "609.930",
+      "title": "609.930",
+      "family": "609",
+      "description": "Cyber Risk Management Program"
+    },
+    {
+      "control_id": "609.930(a)",
+      "title": "609.930(a)",
+      "family": "609",
+      "description": "Each System institution must implement a comprehensive, written cyber risk management program consistent with the size, risk profile, and complexity of the institution's operations. The program must ensure controls exist to protect the security and confidentiality of current, former, and potential customer and employee information, protect against reasonably anticipated cyber threats or hazards to the security or integrity of such information, and protect against unauthorized access to or use of such information."
+    },
+    {
+      "control_id": "609.930(b)",
+      "title": "609.930(b)",
+      "family": "609",
+      "description": "Each year, the board of directors of each System institution or an appropriate committee of the board must:"
+    },
+    {
+      "control_id": "609.930(b)(1)",
+      "title": "609.930(b)(1)",
+      "family": "609",
+      "description": "Approve a written cyber risk program. The program must be consistent with industry standards to ensure the institution's safety and soundness and compliance with law and regulations;"
+    },
+    {
+      "control_id": "609.930(b)(2)",
+      "title": "609.930(b)(2)",
+      "family": "609",
+      "description": "Oversee the development, implementation, and maintenance of the institution's cyber risk program; and"
+    },
+    {
+      "control_id": "609.930(b)(3)",
+      "title": "609.930(b)(3)",
+      "family": "609",
+      "description": "Determine necessary expertise for executing the cyber risk management plan and, where practical, delegate day-to-day responsibilities to management and employees."
+    },
+    {
+      "control_id": "609.930(c)",
+      "title": "609.930(c)",
+      "family": "609",
+      "description": "Each institution's cyber risk program must, at a minimum:"
+    },
+    {
+      "control_id": "609.930(c)(1)",
+      "title": "609.930(c)(1)",
+      "family": "609",
+      "description": "Include an annual risk assessment of the internal and external factors likely to affect the institution. The risk assessment, at a minimum, must:"
+    },
+    {
+      "control_id": "609.930(c)(1)(i)",
+      "title": "609.930(c)(1)(i)",
+      "family": "609",
+      "description": "Identify and assess internal and external factors that could result in unauthorized disclosure, misuse, alteration, or destruction of current, former, and potential customer and employee information or information systems; and"
+    },
+    {
+      "control_id": "609.930(c)(1)(ii)",
+      "title": "609.930(c)(1)(ii)",
+      "family": "609",
+      "description": "Assess the sufficiency of policies, procedures, internal controls, and other practices in place to mitigate risks."
+    },
+    {
+      "control_id": "609.930(c)(2)",
+      "title": "609.930(c)(2)",
+      "family": "609",
+      "description": "Identify systems and software vulnerabilities, prioritize the vulnerabilities and the affected systems based on risk, and perform timely remediation. The particular security measures an institution adopts will depend upon the size, risk profile, and complexity of the institution's operations and activities."
+    },
+    {
+      "control_id": "609.930(c)(3)",
+      "title": "609.930(c)(3)",
+      "family": "609",
+      "description": "Maintain an incident response plan that contains procedures the institution must implement when it suspects or detects unauthorized access to current, former, or potential customer, employee, or other sensitive or confidential information. An institution's incident response plan must be reviewed and updated periodically, but at least annually, to address new threats, concerns, and evolving technology. The incident response plan must contain procedures for:"
+    },
+    {
+      "control_id": "609.930(c)(3)(i)",
+      "title": "609.930(c)(3)(i)",
+      "family": "609",
+      "description": "Assessing the nature and scope of an incident, and identifying what information systems and types of information have been accessed or misused;"
+    },
+    {
+      "control_id": "609.930(c)(3)(ii)",
+      "title": "609.930(c)(3)(ii)",
+      "family": "609",
+      "description": "Acting to contain the incident while preserving records and other evidence;"
+    },
+    {
+      "control_id": "609.930(c)(3)(iii)",
+      "title": "609.930(c)(3)(iii)",
+      "family": "609",
+      "description": "Resuming business activities during intrusion response;"
+    },
+    {
+      "control_id": "609.930(c)(3)(iv)",
+      "title": "609.930(c)(3)(iv)",
+      "family": "609",
+      "description": "Notifying the institution's board of directors when the institution learns of an incident involving unauthorized access to or use of sensitive or confidential customer, and/or employee information, or unauthorized access to financial institution information including proprietary information;"
+    },
+    {
+      "control_id": "609.930(c)(3)(v)",
+      "title": "609.930(c)(3)(v)",
+      "family": "609",
+      "description": "Notifying FCA as soon as possible or no later than 36 hours after the institution determines that an incident has occurred; and"
+    },
+    {
+      "control_id": "609.930(c)(3)(vi)",
+      "title": "609.930(c)(3)(vi)",
+      "family": "609",
+      "description": "Notifying former, current, or potential customers and employees and known visitors to your website of an incident when warranted, and in accordance with state and federal laws."
+    },
+    {
+      "control_id": "609.930(c)(4)",
+      "title": "609.930(c)(4)",
+      "family": "609",
+      "description": "Describe the plan to train employees, vendors, contractors, and the institution board to implement the institution's cyber risk program."
+    },
+    {
+      "control_id": "609.930(c)(5)",
+      "title": "609.930(c)(5)",
+      "family": "609",
+      "description": "Include policies for vendor management and oversight. Each institution, at a minimum, must:"
+    },
+    {
+      "control_id": "609.930(c)(5)(i)",
+      "title": "609.930(c)(5)(i)",
+      "family": "609",
+      "description": "Exercise appropriate due diligence in selecting vendors;"
+    },
+    {
+      "control_id": "609.930(c)(5)(ii)",
+      "title": "609.930(c)(5)(ii)",
+      "family": "609",
+      "description": "Negotiate contract provisions, when feasible, that facilitate effective risk management and oversight and specify the expectations and obligations of both parties;"
+    },
+    {
+      "control_id": "609.930(c)(5)(iii)",
+      "title": "609.930(c)(5)(iii)",
+      "family": "609",
+      "description": "Conduct a vendor risk assessment on all vendors; and"
+    },
+    {
+      "control_id": "609.930(c)(5)(iv)",
+      "title": "609.930(c)(5)(iv)",
+      "family": "609",
+      "description": "Monitor its IT and cyber risk management related vendors to ensure they have satisfied agreed upon expectations and deliverables. Monitoring may include reviewing audits, summaries of test results, or other equivalent evaluations of its vendors."
+    },
+    {
+      "control_id": "609.930(c)(6)",
+      "title": "609.930(c)(6)",
+      "family": "609",
+      "description": "Maintain robust internal controls by regularly testing the key controls, systems, and procedures of the cyber risk management program."
+    },
+    {
+      "control_id": "609.930(c)(6)(i)",
+      "title": "609.930(c)(6)(i)",
+      "family": "609",
+      "description": "The frequency and nature of such tests are to be determined by the institution's risk assessment."
+    },
+    {
+      "control_id": "609.930(c)(6)(ii)",
+      "title": "609.930(c)(6)(ii)",
+      "family": "609",
+      "description": "Tests must be conducted or reviewed by independent third parties or staff independent of those who develop or maintain the cyber risk management program."
+    },
+    {
+      "control_id": "609.930(c)(6)(iii)",
+      "title": "609.930(c)(6)(iii)",
+      "family": "609",
+      "description": "Internal systems and controls must provide reasonable assurances that System institutions will prevent, detect, and remediate material deficiencies on a timely basis."
+    },
+    {
+      "control_id": "609.930(d)",
+      "title": "609.930(d)",
+      "family": "609",
+      "description": "Institutions must consider privacy and other legal compliance issues, including but not limited to, the privacy and security of System institution information; current, former, and potential borrower information; and employee information, as well as compliance with statutory requirements for the use of electronic media."
+    },
+    {
+      "control_id": "609.930(e)",
+      "title": "609.930(e)",
+      "family": "609",
+      "description": "At a minimum, each institution must report quarterly to its board or an appropriate committee of the board. The report must contain material matters related to the institution's cyber risk management program, including specific risks and threats."
+    },
+    {
+      "control_id": "609.935",
+      "title": "609.935",
+      "family": "609",
+      "description": "The annually approved business plan required under subpart J of part 618 of this chapter, and § 652.60 of this chapter for System institutions and the Federal Agricultural Mortgage Corporation, respectively, must include a technology plan that, at a minimum:"
+    },
+    {
+      "control_id": "609.935(a)",
+      "title": "609.935(a)",
+      "family": "609",
+      "description": "Describes the institution's intended technology goals, performance measures, and objectives;"
+    },
+    {
+      "control_id": "609.935(b)",
+      "title": "609.935(b)",
+      "family": "609",
+      "description": "Details the technology budget;"
+    },
+    {
+      "control_id": "609.935(c)",
+      "title": "609.935(c)",
+      "family": "609",
+      "description": "Identifies and assesses the adequacy of the institution's entire cyber risk management program, including proposed technology changes;"
+    },
+    {
+      "control_id": "609.935(d)",
+      "title": "609.935(d)",
+      "family": "609",
+      "description": "Describes how the institution's technology and security support the current and planned business operations; and"
+    },
+    {
+      "control_id": "609.935(e)",
+      "title": "609.935(e)",
+      "family": "609",
+      "description": "Reviews internal and external technology factors likely to affect the institution during the planning period"
+    },
+    {
+      "control_id": "609.945",
+      "title": "609.945",
+      "family": "609",
+      "description": "Records stored electronically must be accurate, accessible, and reproducible for later reference."
+    }
+  ]
+}

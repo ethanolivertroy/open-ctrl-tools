@@ -1,0 +1,2948 @@
+{
+  "_meta": {
+    "source": "https://raw.githubusercontent.com/FedRAMP/docs/main/FRMR.documentation.json",
+    "description": "FedRAMP FRMR requirements extracted from FRR (20x + both scopes, excluding rev5)",
+    "processCount": 11,
+    "requirementCount": 160
+  },
+  "processes": {
+    "ADS": {
+      "processCode": "ADS",
+      "requirements": [
+        {
+          "id": "ADS-CSX-UTC",
+          "name": "Use Trust Centers",
+          "statement": "Providers MUST use a FedRAMP-compatible trust center to store and share authorization data with all necessary parties.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Trust Center"
+          ],
+          "notes": [
+            "Requirements and recommendations for FedRAMP-compatible trust centers are explained in ADS-TRC.",
+            "This requirement only applies to FedRAMP 20x."
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ADS-CSO-PUB",
+          "name": "Public Information",
+          "statement": "Providers MUST publicly share up-to-date information about the cloud service offering in both human-readable and machine-readable formats, including at least:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Machine-Readable",
+            "Ongoing Authorization Report (OAR)",
+            "Trust Center"
+          ],
+          "followingInformation": [
+            "Direct link to the FedRAMP Marketplace for the offering",
+            "Service Model",
+            "Deployment Model",
+            "Business Category",
+            "UEI Number",
+            "Contact Information",
+            "Overall Service Description",
+            "Detailed list of specific services and their security objectives (see ADS-CSO-SVC)",
+            "Summary of customer responsibilities and secure configuration guidance (if applicable, see the FedRAMP Secure Configuration Guide process)",
+            "Process for accessing information in the trust center (if applicable)",
+            "Availability status and recent disruptions for the trust center (if applicable)",
+            "Customer support information for the trust center (if applicable)",
+            "Next Ongoing Authorization Report date (see CCM-OAR-NRD)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-SVC",
+          "name": "Service List",
+          "statement": "Providers MUST publicly share a detailed list of specific services and their security objectives that are included in the cloud service offering using clear feature or service names that align with standard public marketing materials; this list MUST be complete enough for a potential customer to determine which services are and are not included in the FedRAMP Minimum Assessment Scope without requesting access to underlying authorization data.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Cloud Service Offering"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-CBF",
+          "name": "Consistency Between Formats",
+          "statement": "Providers MUST use automation to ensure information remains consistent between human-readable and machine-readable formats when authorization data is provided in both formats.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Machine-Readable"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-RIS",
+          "name": "Responsible Information Sharing",
+          "statement": "Providers MUST provide sufficient information in authorization data to support authorization decisions but SHOULD NOT include sensitive information that would likely enable a threat actor to gain unauthorized access, cause harm, disrupt operations, or otherwise have a negative adverse impact on the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Cloud Service Offering",
+            "Likely"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-HAD",
+          "name": "Historical Authorization Data",
+          "statement": "Providers MUST make historical versions of authorization data available for three years to all necessary parties UNLESS otherwise specified by applicable FedRAMP requirements; deltas between versions MAY be consolidated quarterly.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-PGD",
+          "name": "Public Guidance",
+          "statement": "Providers MUST publicly provide plain-language policies and guidance for all necessary parties that explains how they can obtain and manage access to authorization data stored in the trust center.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-AGA",
+          "name": "Agency Access",
+          "statement": "Providers SHOULD share the authorization package with agencies upon request.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization Package"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-CSO-AAD",
+          "name": "Agency Access Denial",
+          "statement": "Providers MUST notify FedRAMP by email to info@fedramp.gov within 5 business days of denying an agency access request for authorization data.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-USH",
+          "name": "Uninterrupted Sharing",
+          "statement": "Trust centers MUST share authorization data with all necessary parties without interruption.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-PAC",
+          "name": "Programmatic Access",
+          "statement": "Trust centers MUST provide documented programmatic access to all authorization data, including programmatic access to human-readable materials.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-AAI",
+          "name": "Agency Access Inventory",
+          "statement": "Trust centers MUST maintain an inventory and history of federal agency users or systems with access to authorization data and MUST make this information available to FedRAMP without interruption.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-ACL",
+          "name": "Access Logging",
+          "statement": "Trust centers MUST log access to authorization data and store summaries of access for at least six months; such information, as it pertains to specific parties, SHOULD be made available upon request by those parties.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-HMR",
+          "name": "Human and Machine-Readable",
+          "statement": "Trust centers SHOULD make authorization data available to view and download in both human-readable and machine-readable formats.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Machine-Readable",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-SSM",
+          "name": "Self-Service Access Management",
+          "statement": "Trust centers SHOULD include features that encourage all necessary parties to provision and manage access to authorization data for their users and services directly.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Trust Center"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "ADS-TRC-RSP",
+          "name": "Responsive Performance",
+          "statement": "Trust centers SHOULD deliver responsive performance during normal operating conditions and minimize service disruptions.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Trust Center"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 12,
+        "MUST NOT": 0,
+        "SHOULD": 4,
+        "SHOULD NOT": 0,
+        "MAY": 0
+      }
+    },
+    "CCM": {
+      "processCode": "CCM",
+      "requirements": [
+        {
+          "id": "CCM-OAR-AVL",
+          "name": "Report Availability",
+          "statement": "Providers MUST make an Ongoing Authorization Report available to all necessary parties every 3 months, covering the entire period since the previous summary, in a consistent format that is human readable; this report MUST include high-level summaries of at least the following information:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "All Necessary Parties",
+            "Authorization data",
+            "Cloud Service Offering",
+            "Ongoing Authorization Report (OAR)",
+            "Transformative",
+            "Vulnerability"
+          ],
+          "followingInformation": [
+            "Changes to authorization data",
+            "Planned changes to authorization data during at least the next 3 months",
+            "Accepted vulnerabilities",
+            "Transformative changes",
+            "Updated recommendations or best practices for security, configuration, usage, or similar aspects of the cloud service offering"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-NRD",
+          "name": "Next Report Date",
+          "statement": "Providers MUST publicly include the target date for their next Ongoing Authorization Report with other public authorization data.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-FBM",
+          "name": "Feedback Mechanism",
+          "statement": "Providers MUST establish and share an asynchronous mechanism for all necessary parties to provide feedback or ask questions about each Ongoing Authorization Report.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-AFS",
+          "name": "Anonymized Feedback Summary",
+          "statement": "Providers MUST maintain an anonymized and desensitized summary of the feedback, questions, and answers about each Ongoing Authorization Report as an addendum to the Ongoing Authorization Report.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-LSI",
+          "name": "Limit Sensitive Information",
+          "statement": "Providers MUST NOT irresponsibly disclose sensitive information in an Ongoing Authorization Report that would likely have an adverse effect on the cloud service offering.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Likely",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-SOR",
+          "name": "Spread Out Reports",
+          "statement": "Providers SHOULD establish a regular 3 month cycle for Ongoing Authorization Reports that is spread out from the beginning, middle, or end of each quarter.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Regularly"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-OAR-RPS",
+          "name": "Responsible Public Sharing",
+          "statement": "Providers MAY responsibly share some or all of the information an Ongoing Authorization Report publicly or with other parties if the provider determines doing so will NOT likely have an adverse effect on the cloud service offering.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Likely",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-MTG",
+          "name": "Quarterly Review Meeting",
+          "statement": "Providers MUST host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Authorization Reports that the provider determines are of the most relevance to agencies.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "All Necessary Parties",
+            "Quarterly Review"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Authorization Reports that the provider determines are of the most relevance to agencies.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "months",
+              "timeframe_num": 3
+            },
+            "moderate": {
+              "statement": "Providers MUST host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Authorization Reports that the provider determines are of the most relevance to agencies.",
+              "primary_key_word": "MUST",
+              "timeframe_type": "months",
+              "timeframe_num": 3
+            },
+            "high": {
+              "statement": "Providers MUST host a synchronous Quarterly Review every 3 months, open to all necessary parties, to review aspects of the most recent Ongoing Authorization Reports that the provider determines are of the most relevance to agencies.",
+              "primary_key_word": "MUST",
+              "timeframe_type": "months",
+              "timeframe_num": 3
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-REG",
+          "name": "Meeting Registration Info",
+          "statement": "Providers MUST include either a registration link or a downloadable calendar file with meeting information for Quarterly Reviews in the authorization data available to all necessary parties required by ADS-CSL-UCP and ADS-CSO-FCT.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-NRD",
+          "name": "Next Review Date",
+          "statement": "Providers MUST publicly include the target date for their next Quarterly Review with other public authorization data.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-NID",
+          "name": "No Irresponsible Disclosure",
+          "statement": "Providers MUST NOT irresponsibly disclose sensitive information in a Quarterly Review that would likely have an adverse effect on the cloud service offering.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Likely",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-SAR",
+          "name": "Schedule Around Reports",
+          "statement": "Providers SHOULD regularly schedule Quarterly Reviews to occur at least 3 business days after releasing an Ongoing Authorization Report AND within 10 business days of such release.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Ongoing Authorization Report (OAR)",
+            "Quarterly Review",
+            "Regularly"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-ACT",
+          "name": "Additional Content",
+          "statement": "Providers SHOULD include additional information in Quarterly Reviews that the provider determines is of interest, use, or otherwise relevant to agencies.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-RTR",
+          "name": "Record/Transcribe Reviews",
+          "statement": "Providers SHOULD record or transcribe Quarterly Reviews and make such available to all necessary parties with other authorization data.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-RTP",
+          "name": "Restrict Third Parties",
+          "statement": "Providers SHOULD NOT invite third parties to attend Quarterly Reviews intended for agencies unless they have specific relevance.",
+          "keyword": "SHOULD NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Likely",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-SRR",
+          "name": "Share Recordings Responsibly",
+          "statement": "Providers MAY responsibly share recordings or transcriptions of Quarterly Reviews with the public or other parties ONLY if the provider removes all agency information (comments, questions, names, etc.) AND determines sharing will NOT likely have an adverse effect on the cloud service offering.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Cloud Service Offering",
+            "Likely",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-QTR-SCR",
+          "name": "Share Content Responsibly",
+          "statement": "Providers MAY responsibly share content prepared for a Quarterly Review with the public or other parties if the provider determines doing so will NOT likely have an adverse effect on the cloud service offering.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Likely",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-ROR",
+          "name": "Review Ongoing Reports",
+          "statement": "Agencies MUST review each Ongoing Authorization Report to understand how changes to the cloud service offering may impact the previously agreed-upon risk tolerance documented in the agency's Authorization to Operate of a federal information system that includes the cloud service offering in its boundary.",
+          "keyword": "MUST",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Cloud Service Offering",
+            "Ongoing Authorization Report (OAR)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-NFR",
+          "name": "Notify FedRAMP of Concerns",
+          "statement": "Agencies MUST notify FedRAMP by sending an email to info@fedramp.gov if the information presented in an Ongoing Authorization Report, Quarterly Review, or other ongoing authorization data causes significant concerns that may lead the agency to stop operation of the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data",
+            "Cloud Service Offering",
+            "Ongoing Authorization Report (OAR)",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-NFA",
+          "name": "Notify FedRAMP After Requests",
+          "statement": "Agencies MUST notify FedRAMP after requesting any additional information or materials from a cloud service provider beyond those FedRAMP requires by sending an email to info@fedramp.gov.",
+          "keyword": "MUST",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-NAR",
+          "name": "No Additional Requirements",
+          "statement": "Agencies MUST NOT place additional security requirements on cloud service providers beyond those required by FedRAMP UNLESS the head of the agency or an authorized delegate makes a determination that there is a demonstrable need for such; this does not apply to seeking clarification or asking general questions about authorization data.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-CSC",
+          "name": "Consider Security Category",
+          "statement": "Agencies SHOULD consider the Security Category noted in their Authorization to Operate of the federal information system that includes the cloud service offering in its boundary and assign appropriate information security resources for reviewing Ongoing Authorization Reports, attending Quarterly Reviews, and other ongoing authorization data.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data",
+            "Cloud Service Offering",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-SSR",
+          "name": "Senior Security Reviewer",
+          "statement": "Agencies MAY designate a senior information security official to review Ongoing Authorization Reports and represent the agency at Quarterly Reviews for cloud service offerings included in agency information systems with a Security Category of High.",
+          "keyword": "MAY",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Cloud Service Offering",
+            "Quarterly Review"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Agencies MAY designate a senior information security official to review Ongoing Authorization Reports and represent the agency at Quarterly Reviews for cloud service offerings included in agency information systems with a Security Category of High.",
+              "primary_key_word": "MAY"
+            },
+            "moderate": {
+              "statement": "Agencies MAY designate a senior information security official to review Ongoing Authorization Reports and represent the agency at Quarterly Reviews for cloud service offerings included in agency information systems with a Security Category of High.",
+              "primary_key_word": "MAY"
+            },
+            "high": {
+              "statement": "Agencies SHOULD designate a senior information security official to review Ongoing Authorization Reports and represent the agency at Quarterly Reviews for cloud service offerings included in agency information systems with a Security Category of High.",
+              "primary_key_word": "SHOULD"
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "CCM-AGM-NPC",
+          "name": "Notify Provider of Concerns",
+          "statement": "Agencies SHOULD formally notify the provider if the information presented in an Ongoing Authorization Report, Quarterly Review, or other ongoing authorization data causes significant concerns that may lead the agency to remove the cloud service offering from operation.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization data",
+            "Cloud Service Offering",
+            "Ongoing Authorization Report (OAR)",
+            "Quarterly Review"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 10,
+        "MUST NOT": 3,
+        "SHOULD": 6,
+        "SHOULD NOT": 1,
+        "MAY": 4
+      }
+    },
+    "FSI": {
+      "processCode": "FSI",
+      "requirements": [
+        {
+          "id": "FSI-FRP-VRE",
+          "name": "Verified Emails",
+          "statement": "FedRAMP MUST send messages to cloud service providers using an official @fedramp.gov or @gsa.gov email address with properly configured Sender Policy Framework (SPF), DomainKeys Identified Mail (DKIM), and Domain-based Message Authentication Reporting and Conformance (DMARC) email authentication.",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-CDS",
+          "name": "Criticality Designators",
+          "statement": "FedRAMP MUST convey the criticality of the message in the subject line, IF the message requires an elevated reaction, using one of the following designators:",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "FedRAMP Security Inbox",
+            "Incident"
+          ],
+          "followingInformation": [
+            "**Emergency:** There is a potential incident or crisis such that FedRAMP requires an extremely urgent reaction; emergency messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.",
+            "**Emergency Test:** FedRAMP requires an extremely urgent reaction to confirm the functionality and effectiveness of the FedRAMP Security Inbox; emergency test messages will contain aggressive timeframes for reaction and failure to meet these timeframes will result in corrective action.",
+            "**Important:** There is an important issue that FedRAMP requires the cloud service provider to address; important messages will contain reasonable timeframes for reaction and failure to meet these timeframes may result in corrective action."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-UFS",
+          "name": "Use FedRAMP_Security Email in Emergencies",
+          "statement": "FedRAMP MUST send Emergency and Emergency Test designated messages from fedramp_security@gsa.gov OR fedramp_security@fedramp.gov.",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-PNT",
+          "name": "Public Notice of Emergency Tests",
+          "statement": "FedRAMP MUST post a public notice at least 10 business days in advance of sending an Emergency Test message; such notices MUST include explanation of the likely expected actions and timeframes for the Emergency Test message.",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "Likely"
+          ],
+          "notes": [
+            "Public notice may include blog posts, social media posts, announcements during Community Updates, or e-blasts.",
+            "As this process matures, additional confirmed options may become available."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-RQA",
+          "name": "Required Actions",
+          "statement": "FedRAMP MUST clearly specify the required actions in the body of messages that require an elevated reaction.",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-ERT",
+          "name": "Elevated Reaction Timeframes",
+          "statement": "FedRAMP MUST clearly specify the expected timeframe for completing required actions in the body of messages that require an elevated reaction; timeframes for actions will vary depending on the situation but the default timeframes to provide an estimated resolution time for Emergency and Emergency Test designated messages will be as follows:",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "Catastrophic Adverse Effect"
+          ],
+          "followingInformation": [
+            "**High Impact:** within 12 hours",
+            "**Moderate Impact:** by 3:00 p.m. Eastern Time on the 2nd business day",
+            "**Low Impact:** by 3:00 p.m. Eastern Time on the 3rd business day"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-COR",
+          "name": "Explain Corrective Actions",
+          "statement": "FedRAMP MUST clearly specify the corrective actions that will result from failure to complete the required actions in the body of messages that require an elevated reaction; such actions may vary from negative ratings in the FedRAMP Marketplace to suspension of FedRAMP authorization depending on the severity of the event.",
+          "keyword": "MUST",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-FRP-RPM",
+          "name": "Reaction Metrics",
+          "statement": "FedRAMP MAY track and publicly share the time required by cloud service providers to take the actions specified in messages that require an elevated reaction.",
+          "keyword": "MAY",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-INB",
+          "name": "Maintain a FedRAMP Security Inbox",
+          "statement": "Providers MUST establish and maintain an email address to receive messages from FedRAMP; this inbox is a FedRAMP Security Inbox (FSI).",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "FedRAMP Security Inbox"
+          ],
+          "notes": [
+            "Unless otherwise notified, FedRAMP will use the listed Security Email on the Marketplace for these notifications.",
+            "If a provider establishes a new inbox in reaction to this guidance that is different from the Security EMail then they must follow the requirements in FSI-CSO-NOC to notify FedRAMP."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-NOC",
+          "name": "Notification of Changes",
+          "statement": "Providers MUST immediately notify FedRAMP of any changes in addressing for their FedRAMP Security Inbox by emailing info@fedramp.gov with the name and FedRAMP ID of the cloud service offering and the updated email address.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "FedRAMP Security Inbox"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-TFG",
+          "name": "Trust @fedramp.gov and @gsa.gov",
+          "statement": "Providers MUST treat any email originating from an @fedramp.gov or @gsa.gov email address as if it was sent from FedRAMP by default; if such a message is confirmed to originate from someone other than FedRAMP then FedRAMP Security Inbox requirements no longer apply.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "FedRAMP Security Inbox"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-RCV",
+          "name": "Receive Email Without Disruption",
+          "statement": "Providers MUST receive and react to email messages from FedRAMP without disruption and without requiring additional actions from FedRAMP.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-CRA",
+          "name": "Complete Required Actions",
+          "statement": "Providers MUST complete the required actions in Emergency or Emergency Test designated messages sent by FedRAMP within the timeframe included in the message.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-EMR",
+          "name": "Emergency Message Routing",
+          "statement": "Providers MUST route Emergency designated messages sent by FedRAMP to a senior security official for their awareness.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-IMA",
+          "name": "Important Message Actions",
+          "statement": "Providers SHOULD complete the required actions in Important designated messages sent by FedRAMP within the timeframe specified in the message.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "FSI-CSO-ACK",
+          "name": "Acknowledge Receipt",
+          "statement": "Providers SHOULD promptly and automatically acknowledge the receipt of messages received from FedRAMP in their FedRAMP Security Inbox.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "FedRAMP Security Inbox",
+            "Promptly"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 13,
+        "MUST NOT": 0,
+        "SHOULD": 2,
+        "SHOULD NOT": 0,
+        "MAY": 1
+      }
+    },
+    "ICP": {
+      "processCode": "ICP",
+      "requirements": [
+        {
+          "id": "ICP-CSX-IRF",
+          "name": "Incident Reporting to FedRAMP",
+          "statement": "Providers MUST responsibly report incidents to FedRAMP within 1 hour of identification by sending an email to fedramp_security@fedramp.gov or fedramp_security@gsa.gov.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-IRA",
+          "name": "Incident Reporting to Agencies",
+          "statement": "Providers MUST responsibly report incidents to all agency customers within 1 hour of identification using the incident communications points of contact provided by each agency customer.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Incident"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-IRC",
+          "name": "Incident Reporting to CISA",
+          "statement": "Providers MUST responsibly report incidents to CISA within 1 hour of identification if the incident is confirmed or suspected to be the result of an attack vector listed at https://www.cisa.gov/federal-incident-notification-guidelines#attack-vectors-taxonomy, following the CISA Federal Incident Notification Guidelines at https://www.cisa.gov/federal-incident-notification-guidelines, by using the CISA Incident Reporting System at https://myservices.cisa.gov/irf.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-ICU",
+          "name": "Incident Updates",
+          "statement": "Providers MUST update all necessary parties, including at least FedRAMP, CISA (if applicable), and all agency customers, at least once per calendar day until the incident is resolved and recovery is complete.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "All Necessary Parties",
+            "Incident"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-RPT",
+          "name": "Incident Report Availability",
+          "statement": "Providers MUST make incident report information available in their secure FedRAMP repository (such as USDA Connect) or trust center.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident",
+            "Trust Center"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-FIR",
+          "name": "Final Incident Report",
+          "statement": "Providers MUST provide a final report once the incident is resolved and recovery is complete that describes at least:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident",
+            "Vulnerability Response"
+          ],
+          "followingInformation": [
+            "What occurred",
+            "Root cause",
+            "Response",
+            "Lessons learned",
+            "Changes needed"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-RSD",
+          "name": "Responsible Disclosure",
+          "statement": "Providers MUST NOT irresponsibly disclose specific sensitive information about incidents that would likely increase the impact of the incident, but MUST disclose sufficient information for informed risk-based decision-making to all necessary parties.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Incident",
+            "Likely"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-AUR",
+          "name": "Automated Reporting",
+          "statement": "Providers SHOULD use automated mechanisms for reporting incidents and providing updates to all necessary parties (including CISA).",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Incident"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "ICP-CSX-HRM",
+          "name": "Human and Machine-Readable",
+          "statement": "Providers SHOULD make incident report information available in consistent human-readable and machine-readable formats.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident",
+            "Machine-Readable"
+          ],
+          "scope": "20x"
+        }
+      ],
+      "counts": {
+        "MUST": 6,
+        "MUST NOT": 1,
+        "SHOULD": 2,
+        "SHOULD NOT": 0,
+        "MAY": 0
+      }
+    },
+    "MAS": {
+      "processCode": "MAS",
+      "requirements": [
+        {
+          "id": "MAS-CSO-IIR",
+          "name": "Identify Information Resources",
+          "statement": "Providers MUST identify a set of information resources to assess for FedRAMP authorization that includes all information resources that are likely to handle federal customer data or likely to impact the confidentiality, integrity, or availability of federal customer data handled by the cloud service offering; this set of information resources is the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Federal Customer Data",
+            "Handle",
+            "Information Resource",
+            "Likely"
+          ],
+          "notes": [
+            "Certain categories of cloud computing products and services are specified as entirely outside the scope of FedRAMP by the Director of the Office of Management and Budget. All such products and services are therefore not included in the cloud service offering for FedRAMP. For more, see https://fedramp.gov/scope.",
+            "Software produced by cloud service providers that is delivered separately for installation on agency systems and not operated in a shared responsibility model (typically including agents, application clients, mobile applications, etc. that are not fully managed by the cloud service provider) is not a cloud computing product or service and is entirely outside the scope of FedRAMP under the FedRAMP Authorization Act. All such software is therefore not included in the cloud service offering for FedRAMP. For more, see fedramp.gov/scope.",
+            "All aspects of the cloud service offering are determined and maintained by the cloud service provider in accordance with related FedRAMP authorization requirements and documented by the cloud service provider in their assessment and authorization materials."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "MAS-CSO-FLO",
+          "name": "Information Flows and Security Objectives",
+          "statement": "Providers MUST clearly identify, document, and explain information flows and security objectives for ALL information resources or sets of information resources in the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Handle",
+            "Information Resource",
+            "Third-party Information Resource"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "MAS-CSO-TPR",
+          "name": "Third-Party Information Resources",
+          "statement": "Providers MUST address the potential impact to federal customer data from third-party information resources used by the cloud service offering, ONLY IF MAS-CSO-IIR APPLIES, by documenting the following information about each applicable third-party information resource:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Federal Customer Data",
+            "Information Resource",
+            "Third-party Information Resource"
+          ],
+          "followingInformation": [
+            "General usage and configuration",
+            "Explanation or justification for use",
+            "Mitigation measures in place to reduce the potential impact to federal customer data",
+            "Compensating controls in place to reduce the potential impact to federal customer data"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "MAS-CSO-MDI",
+          "name": "Metadata Inclusion",
+          "statement": "Providers MUST include metadata (including metadata about federal customer data) in the Minimum Assessment Scope ONLY IF MAS-CSO-IIR APPLIES.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Federal Customer Data"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "MAS-CSO-SUP",
+          "name": "Supplemental Information",
+          "statement": "Providers MAY include additional materials about other information resources that are not part of the cloud service offering in a FedRAMP assessment and authorization package supplement; these resources will not be FedRAMP authorized and MUST be clearly marked and separated from the cloud service offering.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Authorization Package",
+            "Cloud Service Offering",
+            "Information Resource"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 4,
+        "MUST NOT": 0,
+        "SHOULD": 0,
+        "SHOULD NOT": 0,
+        "MAY": 1
+      }
+    },
+    "PVA": {
+      "processCode": "PVA",
+      "requirements": [
+        {
+          "id": "PVA-CSX-VAL",
+          "name": "Persistent Validation",
+          "statement": "Providers MUST persistently perform validation of their Key Security Indicators; this process is called persistent validation and is part of vulnerability detection.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Persistent Validation",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-FAV",
+          "name": "Issues As Vulnerabilities",
+          "statement": "Providers MUST treat issues detected during persistent validation and failures of the persistent validation process as vulnerabilities, then follow the requirements and recommendations in the FedRAMP Vulnerability Detection and Response process for such findings.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Persistent Validation",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-RPV",
+          "name": "Report Persistent Validation",
+          "statement": "Providers MUST include persistent validation activity in the reports on vulnerability detection and response activity required by the FedRAMP Vulnerability Detection and Response process.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Persistent Validation",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-IVV",
+          "name": "Independent Verification and Validation",
+          "statement": "Providers MUST have the implementation of their goals and validation processes assessed by a FedRAMP-recognized independent assessor OR by FedRAMP directly AND MUST include the results of this assessment in their authorization data without modification.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Persistent Validation"
+          ],
+          "notes": [
+            "The option for assessment by FedRAMP directly is limited to cloud services that are explicitly prioritized by FedRAMP, in consultation with the FedRAMP Board and the federal Chief Information Officers Council. During 20x Phase Two this includes AI services that meet certain criteria as shown at https://fedramp.gov/ai.",
+            "FedRAMP recognized assessors are listed on the FedRAMP Marketplace."
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-NMV",
+          "name": "Non-Machine Validation",
+          "statement": "Providers MUST complete the validation processes for Key Security Indicators of non-machine-based information resources at least once every 3 months.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Machine-Based (information resources)",
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-PMV",
+          "name": "Persistent Machine Validation",
+          "statement": "Providers MUST complete the validation processes for Key Security Indicators of machine-based information resources at least once every 3 days.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Machine-Based (information resources)",
+            "Persistent Validation"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers MUST complete the validation processes for Key Security Indicators of machine-based information resources at least once every 7 days.",
+              "primary_key_word": "MUST",
+              "timeframe_type": "days",
+              "timeframe_num": 7
+            },
+            "moderate": {
+              "statement": "Providers MUST complete the validation processes for Key Security Indicators of machine-based information resources at least once every 3 days.",
+              "primary_key_word": "MUST",
+              "timeframe_type": "days",
+              "timeframe_num": 3
+            },
+            "high": {
+              "statement": "Providers SHOULD plan for this requirement to be more frequent at 20x High but the anticipated requirements for this FRR have not yet been established for 20x High.",
+              "primary_key_word": "SHOULD"
+            }
+          },
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-PTE",
+          "name": "Provide Technical Evidence",
+          "statement": "Providers SHOULD provide technical explanations, demonstrations, and other relevant supporting information to all necessary assessors for the technical capabilities they employ to meet Key Security Indicators and to provide validation.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Assessors",
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-CSX-RAD",
+          "name": "Receiving Advice",
+          "statement": "Providers MAY ask for and accept advice from their assessor during assessment regarding techniques and procedures that will improve their security posture or the effectiveness, clarity, and accuracy of their validation and reporting procedures for Key Security Indicators, UNLESS doing so might compromise the objectivity and integrity of the assessment (see also PVA-TPX-AMA).",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-UNP",
+          "name": "Underlying Processes",
+          "statement": "Assessors MUST verify and validate the underlying processes (both machine-based and non-machine-based) that providers use to validate Key Security Indicators; this should include at least:",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Information Resource",
+            "Machine-Based (information resources)",
+            "Persistent Validation"
+          ],
+          "followingInformation": [
+            "The effectiveness, completeness, and integrity of the automated processes that perform validation of the cloud service offering's security posture.",
+            "The effectiveness, completeness, and integrity of the human processes that perform validation of the cloud service offering's security posture",
+            "The coverage of these processes within the cloud service offering, including if all of the consolidated information resources listed are being validated."
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-PDK",
+          "name": "Processes Derived from Key Security Indicators",
+          "statement": "Assessors MUST verify and validate the implementation of processes derived from Key Security Indicators to determine whether or not the provider has accurately documented their process and goals.",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-OUC",
+          "name": "Outcome Consistency",
+          "statement": "Assessors MUST verify and validate whether or not the underlying processes are consistently creating the desired security outcome documented by the provider.",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-MME",
+          "name": "Mixed Methods Evaluation",
+          "statement": "Assessors MUST perform evaluation using a combination of quantitative and expert qualitative assessment as appropriate AND document which is applied to which aspect of the assessment.",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-PAD",
+          "name": "Procedure Adherence",
+          "statement": "Assessors MUST assess whether or not procedures are consistently followed, including the processes in place to ensure this occurs, without relying solely on the existence of a procedure document for assessing if appropriate processes and procedures are in place.",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-SUM",
+          "name": "Assessment Summary",
+          "statement": "Assessors MUST deliver a high-level summary of their assessment process and findings for each Key Security Indicator; this summary will be included in the authorization data for the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Authorization data",
+            "Cloud Service Offering"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-STE",
+          "name": "Static Evidence",
+          "statement": "Assessors MUST NOT rely on screenshots, configuration dumps, or other static output as evidence EXCEPT when evaluating the accuracy and reliability of a process that generates such artifacts.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-NOR",
+          "name": "No Overall Recommendation",
+          "statement": "Assessors MUST NOT deliver an overall recommendation on whether or not the cloud service offering meets the requirements for FedRAMP authorization.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Cloud Service Offering"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-PEX",
+          "name": "Provider Experts",
+          "statement": "Assessors SHOULD engage provider experts in discussion to understand the decisions made by the provider and inform expert qualitative assessment, and SHOULD perform independent research to test such information as part of the expert qualitative assessment process.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [],
+          "scope": "20x"
+        },
+        {
+          "id": "PVA-TPX-SHA",
+          "name": "Sharing Advice",
+          "statement": "Assessors MAY share advice with providers they are assessing about techniques and procedures that will improve their security posture or the effectiveness, clarity, and accuracy of their validation and reporting procedures for Key Security Indicators, UNLESS doing so might compromise the objectivity and integrity of the assessment (see also PVA-CSX-RIA).",
+          "keyword": "MAY",
+          "affects": [
+            "Assessors"
+          ],
+          "terms": [
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        }
+      ],
+      "counts": {
+        "MUST": 12,
+        "MUST NOT": 2,
+        "SHOULD": 2,
+        "SHOULD NOT": 0,
+        "MAY": 2
+      }
+    },
+    "SCG": {
+      "processCode": "SCG",
+      "requirements": [
+        {
+          "id": "SCG-CSO-RSC",
+          "name": "Recommended Secure Configuration",
+          "statement": "Providers MUST create, maintain, and make available recommendations for securely configuring their cloud services (the Secure Configuration Guide) that includes at least the following information:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Privileged account",
+            "Top-level administrative account"
+          ],
+          "followingInformation": [
+            "Required: Instructions on how to securely access, configure, operate, and decommission top-level administrative accounts that control enterprise access to the entire cloud service offering.",
+            "Required: Explanations of security-related settings that can be operated only by top-level administrative accounts and their security implications.",
+            "Recommended: Explanations of security-related settings that can be operated only by privileged accounts and their security implications."
+          ],
+          "notes": [
+            "These requirements and recommendations refer to this guidance as a Secure Configuration Guide but cloud service providers may make this guidance available in various appropriate forms that provide the best customer experience.",
+            "This guidance should explain how top-level administrative accounts are named and referred to in the cloud service offering."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-CSO-AUP",
+          "name": "Use Instructions",
+          "statement": "Providers MUST include instructions in the FedRAMP authorization package that explain how to obtain and use the Secure Configuration Guide.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization Package"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-CSO-PUB",
+          "name": "Public Guidance",
+          "statement": "Providers SHOULD make the Secure Configuration Guide available publicly.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-CSO-SDF",
+          "name": "Secure Defaults",
+          "statement": "Providers SHOULD set all settings to their recommended secure defaults for top-level administrative accounts and privileged accounts when initially provisioned.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Privileged account",
+            "Top-level administrative account"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-ENH-CMP",
+          "name": "Comparison Capability",
+          "statement": "Providers SHOULD offer the capability to compare all current settings for top-level administrative accounts and privileged accounts to the recommended secure defaults.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Privileged account",
+            "Top-level administrative account"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-ENH-EXP",
+          "name": "Export Capability",
+          "statement": "Providers SHOULD offer the capability to export all security settings in a machine-readable format.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Machine-Readable"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-ENH-API",
+          "name": "API Capability",
+          "statement": "Providers SHOULD offer the capability to view and adjust security settings via an API or similar capability.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-ENH-MRG",
+          "name": "Machine-Readable Guidance",
+          "statement": "Providers SHOULD also provide the Secure Configuration Guide in a machine-readable format that can be used by customers or third-party tools to compare against current settings.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Machine-Readable"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCG-ENH-VRH",
+          "name": "Versioning and Release History",
+          "statement": "Providers SHOULD provide versioning and a release history for recommended secure default settings for top-level administrative accounts and privileged accounts as they are adjusted over time.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Privileged account",
+            "Top-level administrative account"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 2,
+        "MUST NOT": 0,
+        "SHOULD": 7,
+        "SHOULD NOT": 0,
+        "MAY": 0
+      }
+    },
+    "SCN": {
+      "processCode": "SCN",
+      "requirements": [
+        {
+          "id": "SCN-FRP-CAP",
+          "name": "Corrective Action Plan Conditions",
+          "statement": "FedRAMP MAY require providers to delay significant changes beyond the standard Significant Change Notification period and/or submit significant changes for approval in advance as a condition of a formal FedRAMP Corrective Action Plan or other agreement.",
+          "keyword": "MAY",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "Significant change"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-EVA",
+          "name": "Evaluate Changes",
+          "statement": "Providers MUST evaluate all potential significant changes to determine the type of significant change and apply the appropriate Significant Change Notification requirements and recommendations.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Adaptive",
+            "Impact Categorization",
+            "Routine Recurring",
+            "Significant change",
+            "Transformative"
+          ],
+          "followingInformation": [
+            "Is it a significant change? --> Continue evaluation and follow the Significant Change Notification process.",
+            "If it is, is it an impact categorization change?  --> This requires a new assessment and cannot be done under the Significant Change Notification process.",
+            "If it is not, is it a routine recurring change? --> Follow the Routine Recurring Change process (SCN-CSO-RTR).",
+            "If it is not, is it a transformative change? --> Follow the Transformative Change process (SCN-CSO-TRF).",
+            "If it is not, then it is an adaptive change --> Follow the Adaptive Change process (SCN-CSO-ADP)."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-MAR",
+          "name": "Maintain Audit Records",
+          "statement": "Providers MUST maintain auditable records of significant change evaluation activities and make them available to all necessary parties.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Significant change"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-INF",
+          "name": "Required Information",
+          "statement": "Providers MUST include at least the following information in Significant Change Notifications:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Persistent Validation",
+            "Significant change"
+          ],
+          "followingInformation": [
+            "Service Offering FedRAMP ID",
+            "Assessor Name (if applicable)",
+            "Related POA&M (if applicable)",
+            "Significant Change type and explanation of categorization",
+            "Short description of change",
+            "Reason for change",
+            "Summary of customer impact, including changes to services and customer configuration responsibilities",
+            "Plan and timeline for the change, including for the verification, assessment, and/or validation of impacted Key Security Indicators or controls",
+            "Copy of the business or security impact analysis",
+            "Name and title of approver"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-HIS",
+          "name": "Historical Notifications",
+          "statement": "Providers MUST keep historical Significant Change Notifications available to all necessary parties at least until the service completes its next annual assessment.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Significant change"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-HRM",
+          "name": "Human and Machine-Readable",
+          "statement": "Providers MUST make ALL Significant Change Notifications and related audit records available in similar human-readable and compatible machine-readable formats.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Machine-Readable",
+            "Significant change"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-ARI",
+          "name": "Additional Relevant Information",
+          "statement": "Providers MAY include additional relevant information in Significant Change Notifications.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Significant change"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-NOM",
+          "name": "Notification Mechanisms",
+          "statement": "Providers MAY notify necessary parties in a variety of ways as long as the mechanism for notification is clearly documented and easily accessible.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-CSO-EMG",
+          "name": "Emergency Changes",
+          "statement": "Providers MAY execute significant changes (including transformative changes) during an emergency or incident without meeting Significant Change Notification requirements in advance ONLY if absolutely necessary. In such emergencies, providers MUST follow all relevant procedures, notify all necessary parties, retroactively provide all Significant Change Notification materials, and complete appropriate assessment after the incident.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Incident",
+            "Significant change",
+            "Transformative"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-RTR-NNR",
+          "name": "No Notification Requirements",
+          "statement": "Providers SHOULD NOT make formal Significant Change Notifications for routine recurring changes; this type of change is exempted from the notification requirements of this process.",
+          "keyword": "SHOULD NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Routine Recurring",
+            "Significant change"
+          ],
+          "notes": [
+            "Activities that match the routine recurring significant change type are performed regularly and routinely by cloud service providers to address flaws or vulnerabilities, address incidents, and generally perform the typical maintenance and service delivery changes expected during day-to-day operations.",
+            "These changes leverage mature processes and capabilities to identify, mitigate, and remediate risks as part of the change. They are often entirely automated and may occur without human intervention, even though they have an impact on security of the service.",
+            "If the activity does not occur regularly and routinely then it cannot be a significant change of this type (e.g., replacing all physical firewalls to remediate a vulnerability is obviously not regular or routine)."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-ADP-NTF",
+          "name": "Notification Requirements",
+          "statement": "Providers MUST notify all necessary parties within 10 business days after finishing adaptive changes, also including the following information:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Adaptive",
+            "All Necessary Parties"
+          ],
+          "followingInformation": [
+            "Summary of any new risks identified and/or POA&Ms resulting from the change (if applicable)"
+          ],
+          "notes": [
+            "Activities that match the adaptive significant change type are a frequent and normal part of iteratively improving a service by deploying new functionality or modifying existing functionality in a way that is typically transparent to customers and does not introduce significant new security risks.",
+            "In general, most changes that do not happen regularly will be adaptive changes. This change type deliberately covers a wide range of activities in a way that requires assessment and consideration."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-OPT",
+          "name": "Option to Opt Out",
+          "statement": "Providers MUST allow agency customers to OPT OUT of transformative changes whenever feasible.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Transformative"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-NIP",
+          "name": "Notification of Initial Plans",
+          "statement": "Providers MUST notify all necessary parties of initial plans for transformative changes at least 30 business days before starting transformative changes.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Transformative"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-NFP",
+          "name": "Notification of Final Plans",
+          "statement": "Providers MUST notify all necessary parties of final plans for transformative changes at least 10 business days before starting transformative changes.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Transformative"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-NAF",
+          "name": "Notification After Finishing",
+          "statement": "Providers MUST notify all necessary parties within 5 business days after finishing transformative changes, also including the following information:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Transformative"
+          ],
+          "followingInformation": [
+            "Updates to all previously sent information"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-NAV",
+          "name": "Notification After Verification",
+          "statement": "Providers MUST notify all necessary parties within 5 business days after completing the verification, assessment, and/or validation of transformative changes, also including the following information:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Persistent Validation",
+            "Transformative"
+          ],
+          "followingInformation": [
+            "Updates to all previously sent information",
+            "Summary of any new risks identified and/or POA&Ms resulting from the change (if applicable)",
+            "Copy of the security assessment report (if applicable)"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-UPD",
+          "name": "Update Documentation",
+          "statement": "Providers MUST publish updated service documentation and other materials to reflect transformative changes within 30 business days after finishing transformative changes.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Transformative"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "SCN-TRF-TPR",
+          "name": "Third-Party Review",
+          "statement": "Providers SHOULD engage a third-party assessor to review the scope and impact of the planned change before starting transformative changes if human validation is necessary; such reviews SHOULD be limited to security decisions that require human validation.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Persistent Validation",
+            "Significant change",
+            "Transformative"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 12,
+        "MUST NOT": 0,
+        "SHOULD": 1,
+        "SHOULD NOT": 1,
+        "MAY": 4
+      }
+    },
+    "UCM": {
+      "processCode": "UCM",
+      "requirements": [
+        {
+          "id": "UCM-CSX-CMD",
+          "name": "Cryptographic Module Documentation",
+          "statement": "Providers MUST document the cryptographic modules used in each service (or groups of services that use the same modules) where cryptographic services are used to protect federal customer data, including whether these modules are validated under the NIST Cryptographic Module Validation Program or are update streams of such modules.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Federal Customer Data",
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "UCM-CSX-UVM",
+          "name": "Using Validated Cryptographic Modules",
+          "statement": "Providers SHOULD use cryptographic modules or update streams of cryptographic modules with active validations under the NIST Cryptographic Module Validation Program when using cryptographic services to protect federal customer data.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Federal Customer Data",
+            "Persistent Validation"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers MAY use cryptographic modules or update streams of cryptographic modules with active validations under the NIST Cryptographic Module Validation Program when using cryptographic services to protect federal customer data.",
+              "primary_key_word": "MAY"
+            },
+            "moderate": {
+              "statement": "Providers SHOULD use cryptographic modules or update streams of cryptographic modules with active validations under the NIST Cryptographic Module Validation Program when using cryptographic services to protect federal customer data.",
+              "primary_key_word": "SHOULD"
+            },
+            "high": {
+              "statement": "Providers MUST use cryptographic modules or update streams of cryptographic modules with active validations under the NIST Cryptographic Module Validation Program when using cryptographic services to protect federal customer data.",
+              "primary_key_word": "MUST"
+            }
+          },
+          "scope": "20x"
+        },
+        {
+          "id": "UCM-CSX-CAT",
+          "name": "Configuration of Agency Tenants",
+          "statement": "Providers SHOULD configure agency tenants by default to use cryptographic services that use cryptographic modules or update streams of cryptographic modules with active validations under the NIST Cryptographic Module Validation Program when such modules are available.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Persistent Validation"
+          ],
+          "scope": "20x"
+        }
+      ],
+      "counts": {
+        "MUST": 1,
+        "MUST NOT": 0,
+        "SHOULD": 2,
+        "SHOULD NOT": 0,
+        "MAY": 0
+      }
+    },
+    "VDR": {
+      "processCode": "VDR",
+      "requirements": [
+        {
+          "id": "VDR-FRP-ARP",
+          "name": "Additional Requirements",
+          "statement": "FedRAMP MAY require providers to share additional vulnerability information, alternative reports, or to report at an alternative frequency as a condition of a FedRAMP Corrective Action Plan or other agreements with federal agencies.",
+          "keyword": "MAY",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "Agency",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-FRP-ADV",
+          "name": "Sensitive Details",
+          "statement": "FedRAMP MAY required providers to share additional information or details about vulnerabilities, including sensitive information that would likely lead to exploitation, as part of review, response or investigation by necessary parties.",
+          "keyword": "MAY",
+          "affects": [
+            "FedRAMP"
+          ],
+          "terms": [
+            "Likely",
+            "Vulnerability",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-CSO-DET",
+          "name": "Vulnerability Detection",
+          "statement": "Providers MUST systematically, persistently, and promptly discover and identify vulnerabilities within their cloud service offering using appropriate techniques such as assessment, scanning, threat intelligence, vulnerability disclosure mechanisms, bug bounties, supply chain monitoring, and other relevant capabilities; this process is called vulnerability detection.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Persistently",
+            "Promptly",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-CSO-RES",
+          "name": "Vulnerability Response",
+          "statement": "Providers MUST systematically, persistently, and promptly track, evaluate, monitor, mitigate, remediate, assess exploitation of, report, and otherwise manage all detected vulnerabilities within their cloud service offering; this process is called vulnerability response.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Persistently",
+            "Promptly",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-CSO-DOC",
+          "name": "Documentation for Recommendations",
+          "statement": "Providers MUST document the reason and resulting implications for their customers when choosing not to meet FedRAMP recommendations in this process; this documentation MUST be included in the authorization data for the cloud service offering.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization data",
+            "Cloud Service Offering"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-ELX",
+          "name": "Evaluate Exploitability",
+          "statement": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to determine if they are likely exploitable vulnerabilities.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Likely",
+            "Likely Exploitable Vulnerability (LEV)",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "notes": [
+            "The simple reality is that most traditional vulnerabilities discovered by scanners or during assessment are not likely to be exploitable; exploitation typically requires an unrealistic set of circumstances that will not occur during normal operation. The likelihood of exploitation will vary depending on so many factors that FedRAMP will not recommend a specific framework for approaching this beyond the recommendations and requirements in this document.",
+            "The proof, ultimately, is in the pudding - providers who regularly evaluate vulnerabilities as not likely exploitable without careful consideration are more likely to suffer from an adverse impact where the root cause was an exploited vulnerability that was improperly evaluated. If done recklessly or deliberately, such actions will have a potential adverse impact on a provider's FedRAMP authorization."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-EIR",
+          "name": "Evaluate Internet-Reachability",
+          "statement": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to determine if they are internet-reachable vulnerabilities.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Internet-Reachable Vulnerability (IRV)",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "notes": [
+            "FedRAMP focuses on internet-reachable (rather than internet-accessible) to ensure that any service that might receive a payload from the internet is prioritized if that service has a vulnerability that can be triggered by processing the data in the payload.",
+            "The simplest way to prevent exploitation of internet-reachable vulnerabilities is to intercept, inspect, filter, sanitize, reject, or otherwise deflect triggering payloads before they are processed by the vulnerable resource; once this prevention is in place the vulnerability should no longer be considered an internet-reachable vulnerability.",
+            "A classic example of an internet-reachable vulnerability on systems that are not typically internet-accessible is [SQL injection](https://en.wikipedia.org/wiki/SQL_injection), where an application stack behind a load balancer and firewall with no ability to route traffic to or from the internet can receive a payload indirectly from the internet that triggers the manipulation or compromise of data in a database that can only be accessed by an authorized connection from the application server on a private network.",
+            "Another simple example is the infamous Log4Shell (https://en.wikipedia.org/wiki/Log4Shell) vulnerability from 2021, where exploitation was possible via vulnerable internet-reachable resources deep in the application stack that were often not internet-accessible themselves."
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-EPA",
+          "name": "Estimate Potential Adverse Impact",
+          "statement": "Providers MUST evaluate detected vulnerabilities, considering the context of the cloud service offering, to estimate the potential adverse impact of exploitation on government customers AND assign one of the following potential adverse impact ratings:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Agency",
+            "Catastrophic Adverse Effect",
+            "Cloud Service Offering",
+            "Limited Adverse Effect",
+            "Negligible Adverse Effect",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Serious Adverse Effect",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-GRV",
+          "name": "Group Vulnerabilities",
+          "statement": "Providers SHOULD evaluate detected vulnerabilities, considering the context of the cloud service offering, to identify logical groupings of affected information resources that may improve the efficiency and effectiveness of vulnerability response by consolidating further activity; requirements and recommendations in this process are then applied to these consolidated groupings of vulnerabilities instead of each individual detected instance.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Information Resource",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-EFP",
+          "name": "Evaluate False Positives",
+          "statement": "Providers SHOULD evaluate detected vulnerabilities, considering the context of the cloud service offering, to determine if they are false positive vulnerabilities.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "False Positive Vulnerability",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-EVA-EFA",
+          "name": "Evaluation Factors",
+          "statement": "Providers SHOULD consider at least the following factors when considering the context of the cloud service offering to evaluate detected vulnerabilities:",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Fully Mitigated Vulnerability",
+            "Likely",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "followingInformation": [
+            "**Criticality**: How important are the systems or information that might be impacted by the vulnerability?",
+            "**Reachability**: How might a threat actor reach the vulnerability and how likely is that?",
+            "**Exploitability**: How easy is it for a threat actor to exploit the vulnerability and how likely is that?",
+            "**Detectability**: How easy is it for a threat actor to become aware of the vulnerability and how likely is that?",
+            "**Prevalence**: How much of the cloud service offering is affected by the vulnerability?",
+            "**Privilege**: How much privileged authority or access is granted or can be gained from exploiting the vulnerability?",
+            "**Proximate Vulnerabilities**: How does this vulnerability interact with previously detected vulnerabilities, especially partially or fully mitigated vulnerabilities?",
+            "**Known Threats**: How might already known threats leverage the vulnerability and how likely is that?"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-DFR",
+          "name": "Design For Resilience",
+          "statement": "Providers SHOULD make design and architecture decisions for their cloud service offering that mitigate the risk of vulnerabilities by default AND decrease the risk and complexity of vulnerability detection and response.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-ADT",
+          "name": "Automate Detection",
+          "statement": "Providers SHOULD use automated services to improve and streamline vulnerability detection and response.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-DAC",
+          "name": "Detect After Changes",
+          "statement": "Providers SHOULD automatically perform vulnerability detection on representative samples of new or significantly changed information resources.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-MSP",
+          "name": "Maintain Security",
+          "statement": "Providers SHOULD NOT weaken the security of information resources to facilitate vulnerability scanning, detection, or assessment activities.",
+          "keyword": "SHOULD NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-AKE",
+          "name": "Avoid KEVs",
+          "statement": "Providers SHOULD NOT deploy or otherwise activate new machine-based information resources with Known Exploited Vulnerabilities.",
+          "keyword": "SHOULD NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Known Exploited Vulnerability (KEV)",
+            "Machine-Based (information resources)",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-BST-SIR",
+          "name": "Sampling",
+          "statement": "Providers MAY sample effectively identical information resources, especially machine-based information resources, when performing vulnerability detection UNLESS doing so would decrease the efficiency or effectiveness of vulnerability detection.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Machine-Based (information resources)",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-MHR",
+          "name": "Monthly Activity Report",
+          "statement": "Providers MUST report vulnerability detection and response activity to all necessary parties in a consistent format that is human readable at least monthly.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-MAV",
+          "name": "Mark Accepted Vulnerabilities",
+          "statement": "Providers MUST categorize any vulnerability that is not or will not be fully mitigated or remediated within 192 days of evaluation as an accepted vulnerability.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-KEV",
+          "name": "Remediate KEVs",
+          "statement": "Providers SHOULD remediate Known Exploited Vulnerabilities according to the due dates in the CISA Known Exploited Vulnerabilities Catalog (even if the vulnerability has been fully mitigated) as required by CISA Binding Operational Directive (BOD) 22-01 or any successor guidance from CISA.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Known Exploited Vulnerability (KEV)",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-MRH",
+          "name": "Historical Activity",
+          "statement": "Providers SHOULD make all recent historical vulnerability detection and response activity available in a machine-readable format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every 14 days.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Machine-Readable",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD make all recent historical vulnerability detection and response activity available in a machine-readable format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every month.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "month",
+              "timeframe_num": 1
+            },
+            "moderate": {
+              "statement": "Providers SHOULD make all recent historical vulnerability detection and response activity available in a machine-readable format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every 14 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 14
+            },
+            "high": {
+              "statement": "Providers SHOULD make all recent historical vulnerability detection and response activity available in a machine-readable format for automated retrieval by all necessary parties (e.g. using an API service or similar); this information SHOULD be updated persistently, at least once every 7 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 7
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-PSD",
+          "name": "Persistent Sample Detection",
+          "statement": "Providers SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 3 days.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Information Resource",
+            "Machine-Based (information resources)",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 7 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 7
+            },
+            "moderate": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once every 3 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 3
+            },
+            "high": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on representative samples of similar machine-based information resources, at least once per day.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 1
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-PDD",
+          "name": "Persistent Drift Detection",
+          "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 14 days.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Drift",
+            "Information Resource",
+            "Likely",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every month.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "month",
+              "timeframe_num": 1
+            },
+            "moderate": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 14 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 14
+            },
+            "high": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are likely to drift, at least once every 7 days.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 7
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-PCD",
+          "name": "Persistent Complete Detection",
+          "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every month.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Drift",
+            "Information Resource",
+            "Likely",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every six months.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "month",
+              "timeframe_num": 6
+            },
+            "moderate": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every month.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "month",
+              "timeframe_num": 1
+            },
+            "high": {
+              "statement": "Providers SHOULD persistently perform vulnerability detection on all information resources that are NOT likely to drift, at least once every month.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "month",
+              "timeframe_num": 1
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-EVU",
+          "name": "Evaluate Vulnerabilities Quickly",
+          "statement": "Providers SHOULD evaluate ALL vulnerabilities as required by VDR-EVA (Evaluation) within 5 days of detection.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Vulnerability",
+            "Vulnerability Detection"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD evaluate ALL vulnerabilities as required by VDR-EVA (Evaluation) within 7 days of detection.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 7
+            },
+            "moderate": {
+              "statement": "Providers SHOULD evaluate ALL vulnerabilities as required by VDR-EVA (Evaluation) within 5 days of detection.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 5
+            },
+            "high": {
+              "statement": "Providers SHOULD evaluate ALL vulnerabilities as required by VDR-EVA (Evaluation) within 2 days of detection.",
+              "primary_key_word": "SHOULD",
+              "timeframe_type": "days",
+              "timeframe_num": 2
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-PVR",
+          "name": "Mitigation and Remediation Expectations",
+          "statement": "Providers SHOULD partially mitigate, fully mitigate, or remediate vulnerabilities to a lower potential adverse impact within the timeframes from evaluation shown below (in days), factoring for the current potential adverse impact, internet reachability, and likely exploitability:",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Likely",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers SHOULD partially mitigate, fully mitigate, or remediate vulnerabilities to a lower potential adverse impact within the timeframes from evaluation shown below (in days), factoring for the current potential adverse impact, internet reachability, and likely exploitability:",
+              "primary_key_word": "SHOULD",
+              "pain_timeframes": [
+                {
+                  "pain": 5,
+                  "max_days_irv_lev": 4,
+                  "max_days_nirv_lev": 8,
+                  "max_days_nlev": 32
+                },
+                {
+                  "pain": 4,
+                  "max_days_irv_lev": 8,
+                  "max_days_nirv_lev": 32,
+                  "max_days_nlev": 64
+                },
+                {
+                  "pain": 3,
+                  "max_days_irv_lev": 32,
+                  "max_days_nirv_lev": 64,
+                  "max_days_nlev": 192
+                },
+                {
+                  "pain": 2,
+                  "max_days_irv_lev": 96,
+                  "max_days_nirv_lev": 160,
+                  "max_days_nlev": 192
+                }
+              ]
+            },
+            "moderate": {
+              "statement": "Providers SHOULD partially mitigate, fully mitigate, or remediate vulnerabilities to a lower potential adverse impact within the timeframes from evaluation shown below (in days), factoring for the current potential adverse impact, internet reachability, and likely exploitability:",
+              "primary_key_word": "SHOULD",
+              "pain_timeframes": [
+                {
+                  "pain": 5,
+                  "max_days_irv_lev": 2,
+                  "max_days_nirv_lev": 4,
+                  "max_days_nlev": 16
+                },
+                {
+                  "pain": 4,
+                  "max_days_irv_lev": 4,
+                  "max_days_nirv_lev": 8,
+                  "max_days_nlev": 64
+                },
+                {
+                  "pain": 3,
+                  "max_days_irv_lev": 16,
+                  "max_days_nirv_lev": 32,
+                  "max_days_nlev": 128
+                },
+                {
+                  "pain": 2,
+                  "max_days_irv_lev": 48,
+                  "max_days_nirv_lev": 128,
+                  "max_days_nlev": 192
+                }
+              ]
+            },
+            "high": {
+              "statement": "Providers SHOULD partially mitigate vulnerabilities to a lower potential adverse impact within the maximum time-frames from evaluation shown below (in days), factoring for the current potential adverse impact, internet reachability, and likely exploitability:",
+              "primary_key_word": "SHOULD",
+              "pain_timeframes": [
+                {
+                  "pain": 5,
+                  "max_days_irv_lev": 0.5,
+                  "max_days_nirv_lev": 1,
+                  "max_days_nlev": 8
+                },
+                {
+                  "pain": 4,
+                  "max_days_irv_lev": 2,
+                  "max_days_nirv_lev": 8,
+                  "max_days_nlev": 32
+                },
+                {
+                  "pain": 3,
+                  "max_days_irv_lev": 8,
+                  "max_days_nirv_lev": 16,
+                  "max_days_nlev": 64
+                },
+                {
+                  "pain": 2,
+                  "max_days_irv_lev": 24,
+                  "max_days_nirv_lev": 96,
+                  "max_days_nlev": 192
+                }
+              ]
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-RMN",
+          "name": "Remaining Vulnerabilities",
+          "statement": "Providers SHOULD mitigate or remediate remaining vulnerabilities during routine operations as determined necessary by the provider.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-IRI",
+          "name": "Internet-Reachable Incidents",
+          "statement": "Providers SHOULD treat internet-reachable likely exploitable vulnerabilities with a potential adverse impact of N4 or N5 as a security incident until they are partially mitigated to N3 or below.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident",
+            "Likely",
+            "Likely Exploitable Vulnerability (LEV)",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers MAY treat internet-reachable likely exploitable vulnerabilities with a potential adverse impact of N4 or N5 as a security incident until they are partially mitigated to N3 or below.",
+              "primary_key_word": "MAY"
+            },
+            "moderate": {
+              "statement": "Providers SHOULD treat internet-reachable likely exploitable vulnerabilities with a potential adverse impact of N4 or N5 as a security incident until they are partially mitigated to N3 or below.",
+              "primary_key_word": "SHOULD"
+            },
+            "high": {
+              "statement": "Providers SHOULD treat internet-reachable likely exploitable vulnerabilities with a potential adverse impact of N4 or N5 as a security incident until they are partially mitigated to N3 or below.",
+              "primary_key_word": "SHOULD"
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-TFR-NRI",
+          "name": "Non-Internet-Reachable Incidents",
+          "statement": "Providers MAY treat likely exploitable vulnerabilities that are NOT internet-reachable with a potential adverse impact of N5 as a security incident until they are partially mitigated to N4 or below.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Incident",
+            "Likely",
+            "Likely Exploitable Vulnerability (LEV)",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability"
+          ],
+          "variesByLevel": {
+            "low": {
+              "statement": "Providers MAY treat likely exploitable vulnerabilities that are NOT internet-reachable with a potential adverse impact of N5 as a security incident until they are partially mitigated to N4 or below.",
+              "primary_key_word": "MAY"
+            },
+            "moderate": {
+              "statement": "Providers MAY treat likely exploitable vulnerabilities that are NOT internet-reachable with a potential adverse impact of N5 as a security incident until they are partially mitigated to N4 or below.",
+              "primary_key_word": "MAY"
+            },
+            "high": {
+              "statement": "Providers SHOULD treat likely exploitable vulnerabilities that are NOT internet-reachable with a potential adverse impact of N5 as a security incident until they are partially mitigated to N4 or below.",
+              "primary_key_word": "SHOULD"
+            }
+          },
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-PER",
+          "name": "Persistent Reporting",
+          "statement": "Providers MUST report vulnerability detection and response activity to all necessary parties persistently, summarizing ALL activity since the previous report; these reports are authorization data and are subject to the FedRAMP Authorization Data Sharing (ADS) process.",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Authorization data",
+            "Persistently",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-NID",
+          "name": "Responsible Disclosure",
+          "statement": "Providers MUST NOT irresponsibly disclose specific sensitive information about vulnerabilities that would likely lead to exploitation, but MUST disclose sufficient information for informed risk-based decision-making to all necessary parties.",
+          "keyword": "MUST NOT",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "All Necessary Parties",
+            "Likely",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-VDT",
+          "name": "Vulnerability Details",
+          "statement": "Providers MUST include the following information (if applicable) on detected vulnerabilities when reporting on vulnerability detection and response activity, UNLESS it is an accepted vulnerability:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "Agency",
+            "Cloud Service Offering",
+            "Federal Customer Data",
+            "Internet-Reachable Vulnerability (IRV)",
+            "Likely",
+            "Likely Exploitable Vulnerability (LEV)",
+            "Overdue Vulnerability",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "followingInformation": [
+            "Provider's internally assigned tracking identifier",
+            "Time and source of the detection",
+            "Time of completed evaluation",
+            "Is it an internet-reachable vulnerability or not?",
+            "Is it a likely exploitable vulnerability or not?",
+            "Historically and currently estimated potential adverse impact of exploitation",
+            "Time and level of each completed and evaluated reduction in potential adverse impact",
+            "Estimated time and target level of next reduction in potential adverse impact",
+            "Is it currently or is it likely to become an overdue vulnerability or not? If so, explain.",
+            "Any supplementary information the provider responsibly determines will help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the vulnerability",
+            "Final disposition of the vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-AVI",
+          "name": "Accepted Vulnerability Info",
+          "statement": "Providers MUST include the following information on accepted vulnerabilities when reporting on vulnerability detection and response activity:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "Agency",
+            "Cloud Service Offering",
+            "Federal Customer Data",
+            "Internet-Reachable Vulnerability (IRV)",
+            "Likely",
+            "Likely Exploitable Vulnerability (LEV)",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "followingInformation": [
+            "Provider's internally assigned tracking identifier",
+            "Time and source of the detection",
+            "Time of completed evaluation",
+            "Is it an internet-reachable vulnerability or not?",
+            "Is it a likely exploitable vulnerability or not?",
+            "Currently estimated potential adverse impact of exploitation",
+            "Explanation of why this is an accepted vulnerability",
+            "Any supplementary information the provider determines will responsibly help federal agencies assess or mitigate the risk to their federal customer data within the cloud service offering resulting from the accepted vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-HLO",
+          "name": "High-Level Overviews",
+          "statement": "Providers SHOULD include high-level overviews of ALL vulnerability detection and response activities conducted during this period for the cloud service offering; this includes vulnerability disclosure programs, bug bounty programs, penetration testing, assessments, etc.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-RPT-RPD",
+          "name": "Responsible Public Disclosure",
+          "statement": "Providers MAY responsibly disclose vulnerabilities publicly or with other parties if the provider determines doing so will NOT likely lead to exploitation.",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Likely",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-AGM-RVR",
+          "name": "Review Vulnerability Reports",
+          "statement": "Agencies SHOULD review the information provided in vulnerability reports at appropriate and reasonable intervals commensurate with the expectations and risk posture indicated by their Authorization to Operate, and SHOULD use automated processing and filtering of machine readable information from cloud service providers.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "Agency",
+            "Potential Adverse Impact (of vulnerability exploitation)",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-AGM-MAP",
+          "name": "Maintain Agency POA&M",
+          "statement": "Agencies SHOULD use vulnerability information reported by the Provider to maintain Plans of Action & Milestones for agency security programs when relevant according to agency security policies (such as if the agency takes action to mitigate the risk of exploitation or authorized the continued use of a cloud service with accepted vulnerabilities that put agency information systems at risk).",
+          "keyword": "SHOULD",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Accepted Vulnerability",
+            "Agency",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-AGM-DRE",
+          "name": "Do Not Request Extra Info",
+          "statement": "Agencies SHOULD NOT request additional information from cloud service providers that is not required by this FedRAMP process UNLESS the head of the agency or an authorized delegate makes a determination that there is a demonstrable need for such.",
+          "keyword": "SHOULD NOT",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency"
+          ],
+          "scope": "both"
+        },
+        {
+          "id": "VDR-AGM-NFR",
+          "name": "Notify FedRAMP",
+          "statement": "Agencies MUST notify FedRAMP after requesting any additional vulnerability information or materials from a cloud service provider beyond those FedRAMP requires by sending a notification to [info@fedramp.gov](mailto:info@fedramp.gov).",
+          "keyword": "MUST",
+          "affects": [
+            "Agencies"
+          ],
+          "terms": [
+            "Agency",
+            "Vulnerability"
+          ],
+          "scope": "both"
+        }
+      ],
+      "counts": {
+        "MUST": 12,
+        "MUST NOT": 1,
+        "SHOULD": 18,
+        "SHOULD NOT": 3,
+        "MAY": 5
+      }
+    },
+    "KSI": {
+      "processCode": "KSI",
+      "requirements": [
+        {
+          "id": "KSI-CSX-SUM",
+          "name": "Implementation Summaries",
+          "statement": "Providers MUST maintain simple high-level summaries of at least the following for each Key Security Indicator:",
+          "keyword": "MUST",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Machine-Based (information resources)",
+            "Persistent Validation"
+          ],
+          "followingInformation": [
+            "Goals for how it will be implemented and validated, including clear pass/fail criteria and traceability",
+            "The consolidated _information resources_ that will be validated (this should include consolidated summaries such as \"all employees with privileged access that are members of the Admin group\")",
+            "The machine-based processes for _validation_ and the _persistent_ cycle on which they will be performed (or an explanation of why this doesn't apply)",
+            "The non-machine-based processes for _validation_ and the _persistent_ cycle on which they will be performed (or an explanation of why this doesn't apply)",
+            "Current implementation status",
+            "Any clarifications or responses to the assessment summary"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "KSI-CSX-MAS",
+          "name": "Application within MAS",
+          "statement": "Providers SHOULD apply ALL Key Security Indicators to ALL aspects of their cloud service offering that are within the FedRAMP Minimum Assessment Scope.",
+          "keyword": "SHOULD",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Cloud Service Offering"
+          ],
+          "scope": "20x"
+        },
+        {
+          "id": "KSI-CSX-ORD",
+          "name": "AFR Order of Criticality",
+          "statement": "Providers MAY use the following order of criticality for approaching Authorization by FedRAMP Key Security Indicators for an initial authorization package:",
+          "keyword": "MAY",
+          "affects": [
+            "Providers"
+          ],
+          "terms": [
+            "Authorization Package",
+            "Authorization data",
+            "FedRAMP Security Inbox",
+            "Incident",
+            "Persistent Validation",
+            "Persistently",
+            "Significant change",
+            "Vulnerability",
+            "Vulnerability Detection",
+            "Vulnerability Response"
+          ],
+          "followingInformation": [
+            "Minimum Assessment Scope (MAS)",
+            "Authorization Data Sharing (ADS)",
+            "Using Cryptographic Modules (UCM)",
+            "Vulnerability Detection and Response (VDR)",
+            "Significant Change Notifications (SCN)",
+            "Persistent Validation and Assessment (PVA)",
+            "Secure Configuration Guide (RSC)",
+            "Collaborative Continuous Monitoring (CCM)",
+            "FedRAMP Security Inbox (FSI)",
+            "Incident Communications Procedures (ICP)"
+          ],
+          "scope": "20x"
+        }
+      ],
+      "counts": {
+        "MUST": 1,
+        "MUST NOT": 0,
+        "SHOULD": 1,
+        "SHOULD NOT": 0,
+        "MAY": 1
+      }
+    }
+  }
+}

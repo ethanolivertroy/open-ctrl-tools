@@ -1,0 +1,2468 @@
+{
+  "framework": {
+    "id": "nist-800-171a",
+    "name": "NIST SP 800-171A",
+    "version": "Rev 2",
+    "description": "Assessing Security Requirements for Controlled Unclassified Information"
+  },
+  "families": {
+    "3.1": "Access Control",
+    "3.2": "Awareness and Training",
+    "3.3": "Audit and Accountability",
+    "3.4": "Configuration Management",
+    "3.5": "Identification and Authentication",
+    "3.6": "Incident Response",
+    "3.7": "Maintenance",
+    "3.8": "Media Protection",
+    "3.9": "Personnel Security",
+    "3.10": "Physical Protection",
+    "3.11": "Risk Assessment",
+    "3.12": "Security Assessment",
+    "3.13": "System and Communications Protection",
+    "3.14": "System and Information Integrity"
+  },
+  "controls": [
+    {
+      "control_id": "3.1.1",
+      "title": "Limit System Access Assessment",
+      "family": "3.1",
+      "description": "Determine if: authorized users are identified.; processes acting on behalf of authorized users are identified.; devices (including other systems) authorized to connect to the system are identified."
+    },
+    {
+      "control_id": "3.1.1[a]",
+      "title": "Limit System Access Assessment [a]",
+      "family": "3.1",
+      "description": "authorized users are identified."
+    },
+    {
+      "control_id": "3.1.1[b]",
+      "title": "Limit System Access Assessment [b]",
+      "family": "3.1",
+      "description": "processes acting on behalf of authorized users are identified."
+    },
+    {
+      "control_id": "3.1.1[c]",
+      "title": "Limit System Access Assessment [c]",
+      "family": "3.1",
+      "description": "devices (including other systems) authorized to connect to the system are identified."
+    },
+    {
+      "control_id": "3.1.1[d]",
+      "title": "Limit System Access Assessment [d]",
+      "family": "3.1",
+      "description": "system access is limited to authorized users."
+    },
+    {
+      "control_id": "3.1.1[e]",
+      "title": "Limit System Access Assessment [e]",
+      "family": "3.1",
+      "description": "system access is limited to processes acting on behalf of authorized users."
+    },
+    {
+      "control_id": "3.1.1[f]",
+      "title": "Limit System Access Assessment [f]",
+      "family": "3.1",
+      "description": "system access is limited to authorized devices (including other systems)."
+    },
+    {
+      "control_id": "3.1.2",
+      "title": "Limit Transaction and Function Access Assessment",
+      "family": "3.1",
+      "description": "Determine if: the types of transactions and functions that authorized users are permitted to execute are defined; system access is limited to the defined types of transactions and functions for authorized users."
+    },
+    {
+      "control_id": "3.1.2[a]",
+      "title": "Limit Transaction and Function Access Assessment [a]",
+      "family": "3.1",
+      "description": "the types of transactions and functions that authorized users are permitted to execute are defined"
+    },
+    {
+      "control_id": "3.1.2[b]",
+      "title": "Limit Transaction and Function Access Assessment [b]",
+      "family": "3.1",
+      "description": "system access is limited to the defined types of transactions and functions for authorized users."
+    },
+    {
+      "control_id": "3.1.3",
+      "title": "Control CUI Flow Assessment",
+      "family": "3.1",
+      "description": "Determine if: information flow control policies are defined.; methods and enforcement mechanisms for controlling the flow of CUI are defined.; designated sources and destinations (e.g., networks, individuals, and devices) for CUI within systems and between interconnected systems are identified."
+    },
+    {
+      "control_id": "3.1.3[a]",
+      "title": "Control CUI Flow Assessment [a]",
+      "family": "3.1",
+      "description": "information flow control policies are defined."
+    },
+    {
+      "control_id": "3.1.3[b]",
+      "title": "Control CUI Flow Assessment [b]",
+      "family": "3.1",
+      "description": "methods and enforcement mechanisms for controlling the flow of CUI are defined."
+    },
+    {
+      "control_id": "3.1.3[c]",
+      "title": "Control CUI Flow Assessment [c]",
+      "family": "3.1",
+      "description": "designated sources and destinations (e.g., networks, individuals, and devices) for CUI within systems and between interconnected systems are identified."
+    },
+    {
+      "control_id": "3.1.3[d]",
+      "title": "Control CUI Flow Assessment [d]",
+      "family": "3.1",
+      "description": "authorizations for controlling the flow of CUI are defined."
+    },
+    {
+      "control_id": "3.1.3[e]",
+      "title": "Control CUI Flow Assessment [e]",
+      "family": "3.1",
+      "description": "approved authorizations for controlling the flow of CUI are enforced."
+    },
+    {
+      "control_id": "3.1.4",
+      "title": "Separation of Duties Assessment",
+      "family": "3.1",
+      "description": "Determine if: the duties of individuals requiring separation to reduce the risk of malevolent activity are defined.; organization-defined duties of individuals requiring separation are separated.; separate accounts for individuals whose duties and accesses must be separated to reduce the risk of malevolent activity or collusion are established"
+    },
+    {
+      "control_id": "3.1.4[a]",
+      "title": "Separation of Duties Assessment [a]",
+      "family": "3.1",
+      "description": "the duties of individuals requiring separation to reduce the risk of malevolent activity are defined."
+    },
+    {
+      "control_id": "3.1.4[b]",
+      "title": "Separation of Duties Assessment [b]",
+      "family": "3.1",
+      "description": "organization-defined duties of individuals requiring separation are separated."
+    },
+    {
+      "control_id": "3.1.4[c]",
+      "title": "Separation of Duties Assessment [c]",
+      "family": "3.1",
+      "description": "separate accounts for individuals whose duties and accesses must be separated to reduce the risk of malevolent activity or collusion are established"
+    },
+    {
+      "control_id": "3.1.5",
+      "title": "Least Privilege Assessment",
+      "family": "3.1",
+      "description": "Determine if: privileged accounts are identified.; access to privileged accounts is authorized in accordance with the principle of least privilege.; security functions are identified."
+    },
+    {
+      "control_id": "3.1.5[a]",
+      "title": "Least Privilege Assessment [a]",
+      "family": "3.1",
+      "description": "privileged accounts are identified."
+    },
+    {
+      "control_id": "3.1.5[b]",
+      "title": "Least Privilege Assessment [b]",
+      "family": "3.1",
+      "description": "access to privileged accounts is authorized in accordance with the principle of least privilege."
+    },
+    {
+      "control_id": "3.1.5[c]",
+      "title": "Least Privilege Assessment [c]",
+      "family": "3.1",
+      "description": "security functions are identified."
+    },
+    {
+      "control_id": "3.1.5[d]",
+      "title": "Least Privilege Assessment [d]",
+      "family": "3.1",
+      "description": "access to security functions is authorized in accordance with the principle of least privilege."
+    },
+    {
+      "control_id": "3.1.6",
+      "title": "Use Non-Privileged Accounts Assessment",
+      "family": "3.1",
+      "description": "Determine if: nonsecurity functions are identified.; users are required to use non-privileged accounts or roles when accessing nonsecurity functions."
+    },
+    {
+      "control_id": "3.1.6[a]",
+      "title": "Use Non-Privileged Accounts Assessment [a]",
+      "family": "3.1",
+      "description": "nonsecurity functions are identified."
+    },
+    {
+      "control_id": "3.1.6[b]",
+      "title": "Use Non-Privileged Accounts Assessment [b]",
+      "family": "3.1",
+      "description": "users are required to use non-privileged accounts or roles when accessing nonsecurity functions."
+    },
+    {
+      "control_id": "3.1.7",
+      "title": "Prevent Non-Privileged Users from Executing Privileged Functions Assessment",
+      "family": "3.1",
+      "description": "Determine if: privileged functions are defined.; non-privileged users are defined.; non-privileged users are prevented from executing privileged functions."
+    },
+    {
+      "control_id": "3.1.7[a]",
+      "title": "Prevent Non-Privileged Users from Executing Privileged Functions Assessment [a]",
+      "family": "3.1",
+      "description": "privileged functions are defined."
+    },
+    {
+      "control_id": "3.1.7[b]",
+      "title": "Prevent Non-Privileged Users from Executing Privileged Functions Assessment [b]",
+      "family": "3.1",
+      "description": "non-privileged users are defined."
+    },
+    {
+      "control_id": "3.1.7[c]",
+      "title": "Prevent Non-Privileged Users from Executing Privileged Functions Assessment [c]",
+      "family": "3.1",
+      "description": "non-privileged users are prevented from executing privileged functions."
+    },
+    {
+      "control_id": "3.1.7[d]",
+      "title": "Prevent Non-Privileged Users from Executing Privileged Functions Assessment [d]",
+      "family": "3.1",
+      "description": "the execution of privileged functions is captured in audit logs."
+    },
+    {
+      "control_id": "3.1.8",
+      "title": "Limit Unsuccessful Logon Attempts Assessment",
+      "family": "3.1",
+      "description": "Determine if: the means of limiting unsuccessful logon attempts is defined.; the defined means of limiting unsuccessful logon attempts is implemented."
+    },
+    {
+      "control_id": "3.1.8[a]",
+      "title": "Limit Unsuccessful Logon Attempts Assessment [a]",
+      "family": "3.1",
+      "description": "the means of limiting unsuccessful logon attempts is defined."
+    },
+    {
+      "control_id": "3.1.8[b]",
+      "title": "Limit Unsuccessful Logon Attempts Assessment [b]",
+      "family": "3.1",
+      "description": "the defined means of limiting unsuccessful logon attempts is implemented."
+    },
+    {
+      "control_id": "3.1.9",
+      "title": "Privacy and Security Notices Assessment",
+      "family": "3.1",
+      "description": "Determine if: privacy and security notices required by CUI-specified rules are identified, consistent, and associated with the specific CUI category; privacy and security notices are displayed."
+    },
+    {
+      "control_id": "3.1.9[a]",
+      "title": "Privacy and Security Notices Assessment [a]",
+      "family": "3.1",
+      "description": "privacy and security notices required by CUI-specified rules are identified, consistent, and associated with the specific CUI category"
+    },
+    {
+      "control_id": "3.1.9[b]",
+      "title": "Privacy and Security Notices Assessment [b]",
+      "family": "3.1",
+      "description": "privacy and security notices are displayed."
+    },
+    {
+      "control_id": "3.1.10",
+      "title": "Session Lock Assessment",
+      "family": "3.1",
+      "description": "Determine if: the period of inactivity after which the system initiates a session lock is defined.; access to the system and viewing of data is prevented by initiating a session lock after the defined period of inactivity.; previously visible information is concealed via a pattern-hiding display after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.1.10[a]",
+      "title": "Session Lock Assessment [a]",
+      "family": "3.1",
+      "description": "the period of inactivity after which the system initiates a session lock is defined."
+    },
+    {
+      "control_id": "3.1.10[b]",
+      "title": "Session Lock Assessment [b]",
+      "family": "3.1",
+      "description": "access to the system and viewing of data is prevented by initiating a session lock after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.1.10[c]",
+      "title": "Session Lock Assessment [c]",
+      "family": "3.1",
+      "description": "previously visible information is concealed via a pattern-hiding display after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.1.11",
+      "title": "Session Termination Assessment",
+      "family": "3.1",
+      "description": "Determine if: conditions requiring a user session to terminate are defined.; a user session is automatically terminated after any of the defined conditions occur."
+    },
+    {
+      "control_id": "3.1.11[a]",
+      "title": "Session Termination Assessment [a]",
+      "family": "3.1",
+      "description": "conditions requiring a user session to terminate are defined."
+    },
+    {
+      "control_id": "3.1.11[b]",
+      "title": "Session Termination Assessment [b]",
+      "family": "3.1",
+      "description": "a user session is automatically terminated after any of the defined conditions occur."
+    },
+    {
+      "control_id": "3.1.12",
+      "title": "Control Remote Access Assessment",
+      "family": "3.1",
+      "description": "Determine if: remote access sessions are permitted.; the types of permitted remote access are identified.; remote access sessions are controlled."
+    },
+    {
+      "control_id": "3.1.12[a]",
+      "title": "Control Remote Access Assessment [a]",
+      "family": "3.1",
+      "description": "remote access sessions are permitted."
+    },
+    {
+      "control_id": "3.1.12[b]",
+      "title": "Control Remote Access Assessment [b]",
+      "family": "3.1",
+      "description": "the types of permitted remote access are identified."
+    },
+    {
+      "control_id": "3.1.12[c]",
+      "title": "Control Remote Access Assessment [c]",
+      "family": "3.1",
+      "description": "remote access sessions are controlled."
+    },
+    {
+      "control_id": "3.1.12[d]",
+      "title": "Control Remote Access Assessment [d]",
+      "family": "3.1",
+      "description": "remote access sessions are monitored."
+    },
+    {
+      "control_id": "3.1.13",
+      "title": "Route Remote Access via Managed Access Control Points Assessment",
+      "family": "3.1",
+      "description": "Determine if: cryptographic mechanisms to protect the confidentiality of remote access sessions are identified.; cryptographic mechanisms to protect the confidentiality of remote access sessions are implemented."
+    },
+    {
+      "control_id": "3.1.13[a]",
+      "title": "Route Remote Access via Managed Access Control Points Assessment [a]",
+      "family": "3.1",
+      "description": "cryptographic mechanisms to protect the confidentiality of remote access sessions are identified."
+    },
+    {
+      "control_id": "3.1.13[b]",
+      "title": "Route Remote Access via Managed Access Control Points Assessment [b]",
+      "family": "3.1",
+      "description": "cryptographic mechanisms to protect the confidentiality of remote access sessions are implemented."
+    },
+    {
+      "control_id": "3.1.14",
+      "title": "Limit Remote Access via Managed Access Control Points Assessment",
+      "family": "3.1",
+      "description": "Determine if: managed access control points are identified and implemented.; remote access is routed through managed network access control points."
+    },
+    {
+      "control_id": "3.1.14[a]",
+      "title": "Limit Remote Access via Managed Access Control Points Assessment [a]",
+      "family": "3.1",
+      "description": "managed access control points are identified and implemented."
+    },
+    {
+      "control_id": "3.1.14[b]",
+      "title": "Limit Remote Access via Managed Access Control Points Assessment [b]",
+      "family": "3.1",
+      "description": "remote access is routed through managed network access control points."
+    },
+    {
+      "control_id": "3.1.15",
+      "title": "Authorize Remote Execution Assessment",
+      "family": "3.1",
+      "description": "Determine if: privileged commands authorized for remote execution are identified.; security-relevant information authorized to be accessed remotely is identified.; the execution of the identified privileged commands via remote access is authorized."
+    },
+    {
+      "control_id": "3.1.15[a]",
+      "title": "Authorize Remote Execution Assessment [a]",
+      "family": "3.1",
+      "description": "privileged commands authorized for remote execution are identified."
+    },
+    {
+      "control_id": "3.1.15[b]",
+      "title": "Authorize Remote Execution Assessment [b]",
+      "family": "3.1",
+      "description": "security-relevant information authorized to be accessed remotely is identified."
+    },
+    {
+      "control_id": "3.1.15[c]",
+      "title": "Authorize Remote Execution Assessment [c]",
+      "family": "3.1",
+      "description": "the execution of the identified privileged commands via remote access is authorized."
+    },
+    {
+      "control_id": "3.1.15[d]",
+      "title": "Authorize Remote Execution Assessment [d]",
+      "family": "3.1",
+      "description": "access to the identified security-relevant information via remote access is authorized."
+    },
+    {
+      "control_id": "3.1.16",
+      "title": "Authorize Wireless Access Assessment",
+      "family": "3.1",
+      "description": "Determine if: wireless access points are identified.; wireless access is authorized prior to allowing such connections."
+    },
+    {
+      "control_id": "3.1.16[a]",
+      "title": "Authorize Wireless Access Assessment [a]",
+      "family": "3.1",
+      "description": "wireless access points are identified."
+    },
+    {
+      "control_id": "3.1.16[b]",
+      "title": "Authorize Wireless Access Assessment [b]",
+      "family": "3.1",
+      "description": "wireless access is authorized prior to allowing such connections."
+    },
+    {
+      "control_id": "3.1.17",
+      "title": "Protect Wireless Access Assessment",
+      "family": "3.1",
+      "description": "Determine if: wireless access to the system is protected using encryption.; wireless access to the system is protected using authentication."
+    },
+    {
+      "control_id": "3.1.17[a]",
+      "title": "Protect Wireless Access Assessment [a]",
+      "family": "3.1",
+      "description": "wireless access to the system is protected using encryption."
+    },
+    {
+      "control_id": "3.1.17[b]",
+      "title": "Protect Wireless Access Assessment [b]",
+      "family": "3.1",
+      "description": "wireless access to the system is protected using authentication."
+    },
+    {
+      "control_id": "3.1.18",
+      "title": "Control Connection of Mobile Devices Assessment",
+      "family": "3.1",
+      "description": "Determine if: mobile devices that process, store, or transmit CUI are identified.; the connection of mobile devices is authorized.; mobile device connections are monitored and logged."
+    },
+    {
+      "control_id": "3.1.18[a]",
+      "title": "Control Connection of Mobile Devices Assessment [a]",
+      "family": "3.1",
+      "description": "mobile devices that process, store, or transmit CUI are identified."
+    },
+    {
+      "control_id": "3.1.18[b]",
+      "title": "Control Connection of Mobile Devices Assessment [b]",
+      "family": "3.1",
+      "description": "the connection of mobile devices is authorized."
+    },
+    {
+      "control_id": "3.1.18[c]",
+      "title": "Control Connection of Mobile Devices Assessment [c]",
+      "family": "3.1",
+      "description": "mobile device connections are monitored and logged."
+    },
+    {
+      "control_id": "3.1.19",
+      "title": "Encrypt CUI on Mobile Devices Assessment",
+      "family": "3.1",
+      "description": "Determine if: mobile devices and mobile computing platforms that process, store, or transmit CUI are identified.; encryption is employed to protect CUI on identified mobile devices and mobile computing platforms."
+    },
+    {
+      "control_id": "3.1.19[a]",
+      "title": "Encrypt CUI on Mobile Devices Assessment [a]",
+      "family": "3.1",
+      "description": "mobile devices and mobile computing platforms that process, store, or transmit CUI are identified."
+    },
+    {
+      "control_id": "3.1.19[b]",
+      "title": "Encrypt CUI on Mobile Devices Assessment [b]",
+      "family": "3.1",
+      "description": "encryption is employed to protect CUI on identified mobile devices and mobile computing platforms."
+    },
+    {
+      "control_id": "3.1.20",
+      "title": "Verify External Connections Assessment",
+      "family": "3.1",
+      "description": "Determine if: connections to external systems are identified.; use of external systems is identified.; connections to external systems are verified."
+    },
+    {
+      "control_id": "3.1.20[a]",
+      "title": "Verify External Connections Assessment [a]",
+      "family": "3.1",
+      "description": "connections to external systems are identified."
+    },
+    {
+      "control_id": "3.1.20[b]",
+      "title": "Verify External Connections Assessment [b]",
+      "family": "3.1",
+      "description": "use of external systems is identified."
+    },
+    {
+      "control_id": "3.1.20[c]",
+      "title": "Verify External Connections Assessment [c]",
+      "family": "3.1",
+      "description": "connections to external systems are verified."
+    },
+    {
+      "control_id": "3.1.20[d]",
+      "title": "Verify External Connections Assessment [d]",
+      "family": "3.1",
+      "description": "use of external systems is verified."
+    },
+    {
+      "control_id": "3.1.20[e]",
+      "title": "Verify External Connections Assessment [e]",
+      "family": "3.1",
+      "description": "connections to external systems are controlled/limited."
+    },
+    {
+      "control_id": "3.1.20[f]",
+      "title": "Verify External Connections Assessment [f]",
+      "family": "3.1",
+      "description": "use of external systems is controlled/limited."
+    },
+    {
+      "control_id": "3.1.21",
+      "title": "Limit Use of Portable Storage Devices Assessment",
+      "family": "3.1",
+      "description": "Determine if: use of organizational portable storage devices containing CUI on external systems is identified and documented.; limits on the use of organizational portable storage devices containing CUI on external systems are defined.; use of organizational portable storage devices containing CUI on external systems is limited as defined."
+    },
+    {
+      "control_id": "3.1.21[a]",
+      "title": "Limit Use of Portable Storage Devices Assessment [a]",
+      "family": "3.1",
+      "description": "use of organizational portable storage devices containing CUI on external systems is identified and documented."
+    },
+    {
+      "control_id": "3.1.21[b]",
+      "title": "Limit Use of Portable Storage Devices Assessment [b]",
+      "family": "3.1",
+      "description": "limits on the use of organizational portable storage devices containing CUI on external systems are defined."
+    },
+    {
+      "control_id": "3.1.21[c]",
+      "title": "Limit Use of Portable Storage Devices Assessment [c]",
+      "family": "3.1",
+      "description": "use of organizational portable storage devices containing CUI on external systems is limited as defined."
+    },
+    {
+      "control_id": "3.1.22",
+      "title": "Control Publicly Accessible Content Assessment",
+      "family": "3.1",
+      "description": "Determine if CUI posted or processed on publicly accessible systems is controlled."
+    },
+    {
+      "control_id": "3.1.22[a]",
+      "title": "Control Publicly Accessible Content Assessment [a]",
+      "family": "3.1",
+      "description": "individuals authorized to post or process information on publicly accessible systems are identified."
+    },
+    {
+      "control_id": "3.1.22[b]",
+      "title": "Control Publicly Accessible Content Assessment [b]",
+      "family": "3.1",
+      "description": "procedures to ensure CUI is not posted or processed on publicly accessible systems are identified."
+    },
+    {
+      "control_id": "3.1.22[c]",
+      "title": "Control Publicly Accessible Content Assessment [c]",
+      "family": "3.1",
+      "description": "a review process in in place prior to posting of any content to publicly accessible systems."
+    },
+    {
+      "control_id": "3.1.22[d]",
+      "title": "Control Publicly Accessible Content Assessment [d]",
+      "family": "3.1",
+      "description": "content on publicly accessible information systems is reviewed to ensure that it does not include CUI."
+    },
+    {
+      "control_id": "3.1.22[e]",
+      "title": "Control Publicly Accessible Content Assessment [e]",
+      "family": "3.1",
+      "description": "mechanisms are in place to remove and address improper posting of CUI."
+    },
+    {
+      "control_id": "3.2.1",
+      "title": "Security Awareness Assessment",
+      "family": "3.2",
+      "description": "Determine if: security risks associated with organizational activities involving CUI are identified.; policies, standards, and procedures related to the security of the system are identified.; managers, systems administrators, and users of the system are made aware of the security risks associated with their activities."
+    },
+    {
+      "control_id": "3.2.1[a]",
+      "title": "Security Awareness Assessment [a]",
+      "family": "3.2",
+      "description": "security risks associated with organizational activities involving CUI are identified."
+    },
+    {
+      "control_id": "3.2.1[b]",
+      "title": "Security Awareness Assessment [b]",
+      "family": "3.2",
+      "description": "policies, standards, and procedures related to the security of the system are identified."
+    },
+    {
+      "control_id": "3.2.1[c]",
+      "title": "Security Awareness Assessment [c]",
+      "family": "3.2",
+      "description": "managers, systems administrators, and users of the system are made aware of the security risks associated with their activities."
+    },
+    {
+      "control_id": "3.2.1[d]",
+      "title": "Security Awareness Assessment [d]",
+      "family": "3.2",
+      "description": "managers, systems administrators, and users of the system are made aware of the applicable policies, standards, and procedures related to the security of the system."
+    },
+    {
+      "control_id": "3.2.2",
+      "title": "Role-Based Security Training Assessment",
+      "family": "3.2",
+      "description": "Determine if: information security-related duties, roles, and responsibilities are defined.; information security-related duties, roles, and responsibilities are assigned to designated personnel.; personnel are adequately trained to carry out their assigned information security-related duties, roles, and responsibilities."
+    },
+    {
+      "control_id": "3.2.2[a]",
+      "title": "Role-Based Security Training Assessment [a]",
+      "family": "3.2",
+      "description": "information security-related duties, roles, and responsibilities are defined."
+    },
+    {
+      "control_id": "3.2.2[b]",
+      "title": "Role-Based Security Training Assessment [b]",
+      "family": "3.2",
+      "description": "information security-related duties, roles, and responsibilities are assigned to designated personnel."
+    },
+    {
+      "control_id": "3.2.2[c]",
+      "title": "Role-Based Security Training Assessment [c]",
+      "family": "3.2",
+      "description": "personnel are adequately trained to carry out their assigned information security-related duties, roles, and responsibilities."
+    },
+    {
+      "control_id": "3.2.3",
+      "title": "Insider Threat Awareness Assessment",
+      "family": "3.2",
+      "description": "Determine if: potential indicators associated with insider threats are identified.; security awareness training on recognizing and reporting potential indicators of insider threat is provided to managers and employees."
+    },
+    {
+      "control_id": "3.2.3[a]",
+      "title": "Insider Threat Awareness Assessment [a]",
+      "family": "3.2",
+      "description": "potential indicators associated with insider threats are identified."
+    },
+    {
+      "control_id": "3.2.3[b]",
+      "title": "Insider Threat Awareness Assessment [b]",
+      "family": "3.2",
+      "description": "security awareness training on recognizing and reporting potential indicators of insider threat is provided to managers and employees."
+    },
+    {
+      "control_id": "3.3.1",
+      "title": "System Auditing Assessment",
+      "family": "3.3",
+      "description": "Determine if: audit logs needed (i.e., event types to be logged) to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity are specified.; the content of audit records needed to support monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity is defined.; audit records are created (generated)."
+    },
+    {
+      "control_id": "3.3.1[a]",
+      "title": "System Auditing Assessment [a]",
+      "family": "3.3",
+      "description": "audit logs needed (i.e., event types to be logged) to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity are specified."
+    },
+    {
+      "control_id": "3.3.1[b]",
+      "title": "System Auditing Assessment [b]",
+      "family": "3.3",
+      "description": "the content of audit records needed to support monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity is defined."
+    },
+    {
+      "control_id": "3.3.1[c]",
+      "title": "System Auditing Assessment [c]",
+      "family": "3.3",
+      "description": "audit records are created (generated)."
+    },
+    {
+      "control_id": "3.3.1[d]",
+      "title": "System Auditing Assessment [d]",
+      "family": "3.3",
+      "description": "audit records, once created, contain the defined content."
+    },
+    {
+      "control_id": "3.3.1[e]",
+      "title": "System Auditing Assessment [e]",
+      "family": "3.3",
+      "description": "retention requirements for audit records are defined."
+    },
+    {
+      "control_id": "3.3.1[f]",
+      "title": "System Auditing Assessment [f]",
+      "family": "3.3",
+      "description": "audit records are retained as defined."
+    },
+    {
+      "control_id": "3.3.2",
+      "title": "User Accountability Assessment",
+      "family": "3.3",
+      "description": "Determine if: the content of the audit records needed to support the ability to uniquely trace users to their actions is defined.; audit records, once created, contain the defined content."
+    },
+    {
+      "control_id": "3.3.2[a]",
+      "title": "User Accountability Assessment [a]",
+      "family": "3.3",
+      "description": "the content of the audit records needed to support the ability to uniquely trace users to their actions is defined."
+    },
+    {
+      "control_id": "3.3.2[b]",
+      "title": "User Accountability Assessment [b]",
+      "family": "3.3",
+      "description": "audit records, once created, contain the defined content."
+    },
+    {
+      "control_id": "3.3.3",
+      "title": "Event Review Assessment",
+      "family": "3.3",
+      "description": "Determine if: a process for determining when to review logged events is defined.; event types being logged are reviewed in accordance with the defined review process.; event types being logged are updated based on the review."
+    },
+    {
+      "control_id": "3.3.3[a]",
+      "title": "Event Review Assessment [a]",
+      "family": "3.3",
+      "description": "a process for determining when to review logged events is defined."
+    },
+    {
+      "control_id": "3.3.3[b]",
+      "title": "Event Review Assessment [b]",
+      "family": "3.3",
+      "description": "event types being logged are reviewed in accordance with the defined review process."
+    },
+    {
+      "control_id": "3.3.3[c]",
+      "title": "Event Review Assessment [c]",
+      "family": "3.3",
+      "description": "event types being logged are updated based on the review."
+    },
+    {
+      "control_id": "3.3.4",
+      "title": "Audit Failure Alerting Assessment",
+      "family": "3.3",
+      "description": "Determine if: personnel or roles to be alerted in the event of an audit logging process failure are identified.; types of audit logging process failures for which alert will be generated are defined.; identified personnel or roles are alerted in the event of an audit logging process failure."
+    },
+    {
+      "control_id": "3.3.4[a]",
+      "title": "Audit Failure Alerting Assessment [a]",
+      "family": "3.3",
+      "description": "personnel or roles to be alerted in the event of an audit logging process failure are identified."
+    },
+    {
+      "control_id": "3.3.4[b]",
+      "title": "Audit Failure Alerting Assessment [b]",
+      "family": "3.3",
+      "description": "types of audit logging process failures for which alert will be generated are defined."
+    },
+    {
+      "control_id": "3.3.4[c]",
+      "title": "Audit Failure Alerting Assessment [c]",
+      "family": "3.3",
+      "description": "identified personnel or roles are alerted in the event of an audit logging process failure."
+    },
+    {
+      "control_id": "3.3.5",
+      "title": "Audit Correlation Assessment",
+      "family": "3.3",
+      "description": "Determine if: audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity are defined.; defined audit record review, analysis, and reporting processes are correlated."
+    },
+    {
+      "control_id": "3.3.5[a]",
+      "title": "Audit Correlation Assessment [a]",
+      "family": "3.3",
+      "description": "audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity are defined."
+    },
+    {
+      "control_id": "3.3.5[b]",
+      "title": "Audit Correlation Assessment [b]",
+      "family": "3.3",
+      "description": "defined audit record review, analysis, and reporting processes are correlated."
+    },
+    {
+      "control_id": "3.3.6",
+      "title": "Audit Reduction and Reporting Assessment",
+      "family": "3.3",
+      "description": "Determine if: an audit record reduction capability that supports on-demand analysis is provided.; a report generation capability that supports on-demand reporting is provided."
+    },
+    {
+      "control_id": "3.3.6[a]",
+      "title": "Audit Reduction and Reporting Assessment [a]",
+      "family": "3.3",
+      "description": "an audit record reduction capability that supports on-demand analysis is provided."
+    },
+    {
+      "control_id": "3.3.6[b]",
+      "title": "Audit Reduction and Reporting Assessment [b]",
+      "family": "3.3",
+      "description": "a report generation capability that supports on-demand reporting is provided."
+    },
+    {
+      "control_id": "3.3.7",
+      "title": "Authoritative Time Source Assessment",
+      "family": "3.3",
+      "description": "Determine if: internal system clocks are used to generate time stamps for audit records.; an authoritative source with which to compare and synchronize internal system clocks is specified.; internal system clocks used to generate time stamps for audit records are compared to and synchronized with the specified authoritative time source."
+    },
+    {
+      "control_id": "3.3.7[a]",
+      "title": "Authoritative Time Source Assessment [a]",
+      "family": "3.3",
+      "description": "internal system clocks are used to generate time stamps for audit records."
+    },
+    {
+      "control_id": "3.3.7[b]",
+      "title": "Authoritative Time Source Assessment [b]",
+      "family": "3.3",
+      "description": "an authoritative source with which to compare and synchronize internal system clocks is specified."
+    },
+    {
+      "control_id": "3.3.7[c]",
+      "title": "Authoritative Time Source Assessment [c]",
+      "family": "3.3",
+      "description": "internal system clocks used to generate time stamps for audit records are compared to and synchronized with the specified authoritative time source."
+    },
+    {
+      "control_id": "3.3.8",
+      "title": "Audit Record Protection Assessment",
+      "family": "3.3",
+      "description": "Determine if: audit information is protected from unauthorized access.; audit information is protected from unauthorized modification.; audit information is protected from unauthorized deletion."
+    },
+    {
+      "control_id": "3.3.8[a]",
+      "title": "Audit Record Protection Assessment [a]",
+      "family": "3.3",
+      "description": "audit information is protected from unauthorized access."
+    },
+    {
+      "control_id": "3.3.8[b]",
+      "title": "Audit Record Protection Assessment [b]",
+      "family": "3.3",
+      "description": "audit information is protected from unauthorized modification."
+    },
+    {
+      "control_id": "3.3.8[c]",
+      "title": "Audit Record Protection Assessment [c]",
+      "family": "3.3",
+      "description": "audit information is protected from unauthorized deletion."
+    },
+    {
+      "control_id": "3.3.8[d]",
+      "title": "Audit Record Protection Assessment [d]",
+      "family": "3.3",
+      "description": "audit logging tools are protected from unauthorized access."
+    },
+    {
+      "control_id": "3.3.8[e]",
+      "title": "Audit Record Protection Assessment [e]",
+      "family": "3.3",
+      "description": "audit logging tools are protected from unauthorized modification."
+    },
+    {
+      "control_id": "3.3.8[f]",
+      "title": "Audit Record Protection Assessment [f]",
+      "family": "3.3",
+      "description": "audit logging tools are protected from unauthorized deletion."
+    },
+    {
+      "control_id": "3.3.9",
+      "title": "Audit Management Assessment",
+      "family": "3.3",
+      "description": "Determine if: a subset of privileged users granted access to manage audit logging functionality is defined.; management of audit logging functionality is limited to the defined subset of privileged users."
+    },
+    {
+      "control_id": "3.3.9[a]",
+      "title": "Audit Management Assessment [a]",
+      "family": "3.3",
+      "description": "a subset of privileged users granted access to manage audit logging functionality is defined."
+    },
+    {
+      "control_id": "3.3.9[b]",
+      "title": "Audit Management Assessment [b]",
+      "family": "3.3",
+      "description": "management of audit logging functionality is limited to the defined subset of privileged users."
+    },
+    {
+      "control_id": "3.4.1",
+      "title": "Baseline Configurations Assessment",
+      "family": "3.4",
+      "description": "Determine if: a baseline configuration is established.; the baseline configuration includes hardware, software, firmware, and documentation.; the baseline configuration is maintained (reviewed and updated) throughout the system development life cycle."
+    },
+    {
+      "control_id": "3.4.1[a]",
+      "title": "Baseline Configurations Assessment [a]",
+      "family": "3.4",
+      "description": "a baseline configuration is established."
+    },
+    {
+      "control_id": "3.4.1[b]",
+      "title": "Baseline Configurations Assessment [b]",
+      "family": "3.4",
+      "description": "the baseline configuration includes hardware, software, firmware, and documentation."
+    },
+    {
+      "control_id": "3.4.1[c]",
+      "title": "Baseline Configurations Assessment [c]",
+      "family": "3.4",
+      "description": "the baseline configuration is maintained (reviewed and updated) throughout the system development life cycle."
+    },
+    {
+      "control_id": "3.4.1[d]",
+      "title": "Baseline Configurations Assessment [d]",
+      "family": "3.4",
+      "description": "a system inventory is established."
+    },
+    {
+      "control_id": "3.4.1[e]",
+      "title": "Baseline Configurations Assessment [e]",
+      "family": "3.4",
+      "description": "the system inventory includes hardware, software, firmware, and documentation."
+    },
+    {
+      "control_id": "3.4.1[f]",
+      "title": "Baseline Configurations Assessment [f]",
+      "family": "3.4",
+      "description": "the inventory is maintained (reviewed and updated) throughout the system development life cycle."
+    },
+    {
+      "control_id": "3.4.2",
+      "title": "Security Configuration Settings Assessment",
+      "family": "3.4",
+      "description": "Determine if: security configuration settings for information technology products employed in the system are established and included in the baseline configuration.; security configuration settings for information technology products employed in the system are enforced."
+    },
+    {
+      "control_id": "3.4.2[a]",
+      "title": "Security Configuration Settings Assessment [a]",
+      "family": "3.4",
+      "description": "security configuration settings for information technology products employed in the system are established and included in the baseline configuration."
+    },
+    {
+      "control_id": "3.4.2[b]",
+      "title": "Security Configuration Settings Assessment [b]",
+      "family": "3.4",
+      "description": "security configuration settings for information technology products employed in the system are enforced."
+    },
+    {
+      "control_id": "3.4.3",
+      "title": "System Change Management Assessment",
+      "family": "3.4",
+      "description": "Determine if: changes to the system are tracked.; changes to the system are reviewed.; changes to the system are approved or disapproved."
+    },
+    {
+      "control_id": "3.4.3[a]",
+      "title": "System Change Management Assessment [a]",
+      "family": "3.4",
+      "description": "changes to the system are tracked."
+    },
+    {
+      "control_id": "3.4.3[b]",
+      "title": "System Change Management Assessment [b]",
+      "family": "3.4",
+      "description": "changes to the system are reviewed."
+    },
+    {
+      "control_id": "3.4.3[c]",
+      "title": "System Change Management Assessment [c]",
+      "family": "3.4",
+      "description": "changes to the system are approved or disapproved."
+    },
+    {
+      "control_id": "3.4.3[d]",
+      "title": "System Change Management Assessment [d]",
+      "family": "3.4",
+      "description": "changes to the system are logged."
+    },
+    {
+      "control_id": "3.4.4",
+      "title": "Security Impact Analysis Assessment",
+      "family": "3.4",
+      "description": "Determine if the security impact of changes to each organizational system is analyzed prior to implementation."
+    },
+    {
+      "control_id": "3.4.5",
+      "title": "Access Restrictions for Change Assessment",
+      "family": "3.4",
+      "description": "Determine if: physical access restrictions associated with changes to the system are defined.; physical access restrictions associated with changes to the system are documented.; physical access restrictions associated with changes to the system are approved."
+    },
+    {
+      "control_id": "3.4.5[a]",
+      "title": "Access Restrictions for Change Assessment [a]",
+      "family": "3.4",
+      "description": "physical access restrictions associated with changes to the system are defined."
+    },
+    {
+      "control_id": "3.4.5[b]",
+      "title": "Access Restrictions for Change Assessment [b]",
+      "family": "3.4",
+      "description": "physical access restrictions associated with changes to the system are documented."
+    },
+    {
+      "control_id": "3.4.5[c]",
+      "title": "Access Restrictions for Change Assessment [c]",
+      "family": "3.4",
+      "description": "physical access restrictions associated with changes to the system are approved."
+    },
+    {
+      "control_id": "3.4.5[d]",
+      "title": "Access Restrictions for Change Assessment [d]",
+      "family": "3.4",
+      "description": "physical access restrictions associated with changes to the system are enforced."
+    },
+    {
+      "control_id": "3.4.5[e]",
+      "title": "Access Restrictions for Change Assessment [e]",
+      "family": "3.4",
+      "description": "logical access restrictions associated with changes to the system are defined."
+    },
+    {
+      "control_id": "3.4.5[f]",
+      "title": "Access Restrictions for Change Assessment [f]",
+      "family": "3.4",
+      "description": "logical access restrictions associated with changes to the system are documented."
+    },
+    {
+      "control_id": "3.4.5[g]",
+      "title": "Access Restrictions for Change Assessment [g]",
+      "family": "3.4",
+      "description": "logical access restrictions associated with changes to the system are approved."
+    },
+    {
+      "control_id": "3.4.5[h]",
+      "title": "Access Restrictions for Change Assessment [h]",
+      "family": "3.4",
+      "description": "logical access restrictions associated with changes to the system are enforced."
+    },
+    {
+      "control_id": "3.4.6",
+      "title": "Least Functionality Assessment",
+      "family": "3.4",
+      "description": "Determine if: essential system capabilities are defined based on the principle of least functionality.; the system is configured to provide only the defined essential capabilities."
+    },
+    {
+      "control_id": "3.4.6[a]",
+      "title": "Least Functionality Assessment [a]",
+      "family": "3.4",
+      "description": "essential system capabilities are defined based on the principle of least functionality."
+    },
+    {
+      "control_id": "3.4.6[b]",
+      "title": "Least Functionality Assessment [b]",
+      "family": "3.4",
+      "description": "the system is configured to provide only the defined essential capabilities."
+    },
+    {
+      "control_id": "3.4.7",
+      "title": "Nonessential Functionality Assessment",
+      "family": "3.4",
+      "description": "Determine if: essential programs are defined.; the use of nonessential programs is defined.; the use of nonessential programs is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.7[a]",
+      "title": "Nonessential Functionality Assessment [a]",
+      "family": "3.4",
+      "description": "essential programs are defined."
+    },
+    {
+      "control_id": "3.4.7[b]",
+      "title": "Nonessential Functionality Assessment [b]",
+      "family": "3.4",
+      "description": "the use of nonessential programs is defined."
+    },
+    {
+      "control_id": "3.4.7[c]",
+      "title": "Nonessential Functionality Assessment [c]",
+      "family": "3.4",
+      "description": "the use of nonessential programs is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.7[d]",
+      "title": "Nonessential Functionality Assessment [d]",
+      "family": "3.4",
+      "description": "essential functions are defined."
+    },
+    {
+      "control_id": "3.4.7[e]",
+      "title": "Nonessential Functionality Assessment [e]",
+      "family": "3.4",
+      "description": "the use of nonessential functions is defined."
+    },
+    {
+      "control_id": "3.4.7[f]",
+      "title": "Nonessential Functionality Assessment [f]",
+      "family": "3.4",
+      "description": "the use of nonessential functions is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.7[g]",
+      "title": "Nonessential Functionality Assessment [g]",
+      "family": "3.4",
+      "description": "essential ports are defined."
+    },
+    {
+      "control_id": "3.4.7[h]",
+      "title": "Nonessential Functionality Assessment [h]",
+      "family": "3.4",
+      "description": "the use of nonessential ports is defined."
+    },
+    {
+      "control_id": "3.4.7[i]",
+      "title": "Nonessential Functionality Assessment [i]",
+      "family": "3.4",
+      "description": "the use of nonessential ports is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.7[j]",
+      "title": "Nonessential Functionality Assessment [j]",
+      "family": "3.4",
+      "description": "essential protocols are defined."
+    },
+    {
+      "control_id": "3.4.7[k]",
+      "title": "Nonessential Functionality Assessment [k]",
+      "family": "3.4",
+      "description": "the use of nonessential protocols is defined."
+    },
+    {
+      "control_id": "3.4.7[l]",
+      "title": "Nonessential Functionality Assessment [l]",
+      "family": "3.4",
+      "description": "the use of nonessential protocols is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.7[m]",
+      "title": "Nonessential Functionality Assessment [m]",
+      "family": "3.4",
+      "description": "essential services are defined."
+    },
+    {
+      "control_id": "3.4.7[n]",
+      "title": "Nonessential Functionality Assessment [n]",
+      "family": "3.4",
+      "description": "the use of nonessential services is defined."
+    },
+    {
+      "control_id": "3.4.7[o]",
+      "title": "Nonessential Functionality Assessment [o]",
+      "family": "3.4",
+      "description": "the use of nonessential services is restricted, disabled, or prevented as defined."
+    },
+    {
+      "control_id": "3.4.8",
+      "title": "Application Execution Policy Assessment",
+      "family": "3.4",
+      "description": "Determine if: a policy specifying whether whitelisting or blacklisting is to be implemented is specified.; the software allowed to execute under whitelisting or denied use under blacklisting is specified.; whitelisting to allow the execution of authorized software or blacklisting to prevent the use of unauthorized software is implemented as specified."
+    },
+    {
+      "control_id": "3.4.8[a]",
+      "title": "Application Execution Policy Assessment [a]",
+      "family": "3.4",
+      "description": "a policy specifying whether whitelisting or blacklisting is to be implemented is specified."
+    },
+    {
+      "control_id": "3.4.8[b]",
+      "title": "Application Execution Policy Assessment [b]",
+      "family": "3.4",
+      "description": "the software allowed to execute under whitelisting or denied use under blacklisting is specified."
+    },
+    {
+      "control_id": "3.4.8[c]",
+      "title": "Application Execution Policy Assessment [c]",
+      "family": "3.4",
+      "description": "whitelisting to allow the execution of authorized software or blacklisting to prevent the use of unauthorized software is implemented as specified."
+    },
+    {
+      "control_id": "3.4.9",
+      "title": "User-Installed Software Assessment",
+      "family": "3.4",
+      "description": "Determine if: a policy for controlling the installation of software by users is established.; installation of software by users is controlled based on the established policy.; installation of software by users is monitored."
+    },
+    {
+      "control_id": "3.4.9[a]",
+      "title": "User-Installed Software Assessment [a]",
+      "family": "3.4",
+      "description": "a policy for controlling the installation of software by users is established."
+    },
+    {
+      "control_id": "3.4.9[b]",
+      "title": "User-Installed Software Assessment [b]",
+      "family": "3.4",
+      "description": "installation of software by users is controlled based on the established policy."
+    },
+    {
+      "control_id": "3.4.9[c]",
+      "title": "User-Installed Software Assessment [c]",
+      "family": "3.4",
+      "description": "installation of software by users is monitored."
+    },
+    {
+      "control_id": "3.5.1",
+      "title": "Identify System Users Assessment",
+      "family": "3.5",
+      "description": "Determine if: system users are identified.; processes acting on behalf of users are identified.; devices accessing the system are identified."
+    },
+    {
+      "control_id": "3.5.1[a]",
+      "title": "Identify System Users Assessment [a]",
+      "family": "3.5",
+      "description": "system users are identified."
+    },
+    {
+      "control_id": "3.5.1[b]",
+      "title": "Identify System Users Assessment [b]",
+      "family": "3.5",
+      "description": "processes acting on behalf of users are identified."
+    },
+    {
+      "control_id": "3.5.1[c]",
+      "title": "Identify System Users Assessment [c]",
+      "family": "3.5",
+      "description": "devices accessing the system are identified."
+    },
+    {
+      "control_id": "3.5.2",
+      "title": "Authenticate Users, Processes, and Devices Assessment",
+      "family": "3.5",
+      "description": "Determine if: the identity of each user is authenticated or verified as a prerequisite to system access.; the identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access.; the identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access."
+    },
+    {
+      "control_id": "3.5.2[a]",
+      "title": "Authenticate Users, Processes, and Devices Assessment [a]",
+      "family": "3.5",
+      "description": "the identity of each user is authenticated or verified as a prerequisite to system access."
+    },
+    {
+      "control_id": "3.5.2[b]",
+      "title": "Authenticate Users, Processes, and Devices Assessment [b]",
+      "family": "3.5",
+      "description": "the identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access."
+    },
+    {
+      "control_id": "3.5.2[c]",
+      "title": "Authenticate Users, Processes, and Devices Assessment [c]",
+      "family": "3.5",
+      "description": "the identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access."
+    },
+    {
+      "control_id": "3.5.3",
+      "title": "Multifactor Authentication Assessment",
+      "family": "3.5",
+      "description": "Determine if: privileged accounts are identified.; multifactor authentication is implemented for local access to privileged accounts.; multifactor authentication is implemented for network access to privileged accounts."
+    },
+    {
+      "control_id": "3.5.3[a]",
+      "title": "Multifactor Authentication Assessment [a]",
+      "family": "3.5",
+      "description": "privileged accounts are identified."
+    },
+    {
+      "control_id": "3.5.3[b]",
+      "title": "Multifactor Authentication Assessment [b]",
+      "family": "3.5",
+      "description": "multifactor authentication is implemented for local access to privileged accounts."
+    },
+    {
+      "control_id": "3.5.3[c]",
+      "title": "Multifactor Authentication Assessment [c]",
+      "family": "3.5",
+      "description": "multifactor authentication is implemented for network access to privileged accounts."
+    },
+    {
+      "control_id": "3.5.3[d]",
+      "title": "Multifactor Authentication Assessment [d]",
+      "family": "3.5",
+      "description": "multifactor authentication is implemented for network access to non-privileged accounts."
+    },
+    {
+      "control_id": "3.5.4",
+      "title": "Replay-Resistant Authentication Assessment",
+      "family": "3.5",
+      "description": "Determine if replay-resistant authentication mechanisms are implemented for all network account access to privileged and non-privileged accounts."
+    },
+    {
+      "control_id": "3.5.5",
+      "title": "Identifier Reuse Assessment",
+      "family": "3.5",
+      "description": "Determine if: a period within which identifiers cannot be reused is defined.; reuse of identifiers is prevented within the defined period."
+    },
+    {
+      "control_id": "3.5.5[a]",
+      "title": "Identifier Reuse Assessment [a]",
+      "family": "3.5",
+      "description": "a period within which identifiers cannot be reused is defined."
+    },
+    {
+      "control_id": "3.5.5[b]",
+      "title": "Identifier Reuse Assessment [b]",
+      "family": "3.5",
+      "description": "reuse of identifiers is prevented within the defined period."
+    },
+    {
+      "control_id": "3.5.6",
+      "title": "Identifier Handling Assessment",
+      "family": "3.5",
+      "description": "Determine if: a period of inactivity after which an identifier is disabled is defined.; identifiers are disabled after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.5.6[a]",
+      "title": "Identifier Handling Assessment [a]",
+      "family": "3.5",
+      "description": "a period of inactivity after which an identifier is disabled is defined."
+    },
+    {
+      "control_id": "3.5.6[b]",
+      "title": "Identifier Handling Assessment [b]",
+      "family": "3.5",
+      "description": "identifiers are disabled after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.5.7",
+      "title": "Password Complexity Assessment",
+      "family": "3.5",
+      "description": "Determine if: password complexity requirements are defined.; password change of character requirements are defined.; minimum password complexity requirements as defined are enforced when new passwords are created."
+    },
+    {
+      "control_id": "3.5.7[a]",
+      "title": "Password Complexity Assessment [a]",
+      "family": "3.5",
+      "description": "password complexity requirements are defined."
+    },
+    {
+      "control_id": "3.5.7[b]",
+      "title": "Password Complexity Assessment [b]",
+      "family": "3.5",
+      "description": "password change of character requirements are defined."
+    },
+    {
+      "control_id": "3.5.7[c]",
+      "title": "Password Complexity Assessment [c]",
+      "family": "3.5",
+      "description": "minimum password complexity requirements as defined are enforced when new passwords are created."
+    },
+    {
+      "control_id": "3.5.7[d]",
+      "title": "Password Complexity Assessment [d]",
+      "family": "3.5",
+      "description": "minimum password change of character requirements as defined are enforced when new passwords are created."
+    },
+    {
+      "control_id": "3.5.8",
+      "title": "Password Reuse Assessment",
+      "family": "3.5",
+      "description": "Determine if: the number of generations during which a password cannot be reused is specified.; reuse of passwords is prohibited during the specified number of generations."
+    },
+    {
+      "control_id": "3.5.8[a]",
+      "title": "Password Reuse Assessment [a]",
+      "family": "3.5",
+      "description": "the number of generations during which a password cannot be reused is specified."
+    },
+    {
+      "control_id": "3.5.8[b]",
+      "title": "Password Reuse Assessment [b]",
+      "family": "3.5",
+      "description": "reuse of passwords is prohibited during the specified number of generations."
+    },
+    {
+      "control_id": "3.5.9",
+      "title": "Temporary Passwords Assessment",
+      "family": "3.5",
+      "description": "Determine if an immediate change to a permanent password is required when a temporary password is used for system logon."
+    },
+    {
+      "control_id": "3.5.10",
+      "title": "Cryptographic Key Protection Assessment",
+      "family": "3.5",
+      "description": "Determine if: passwords are cryptographically protected in storage.; passwords are cryptographically protected in transit."
+    },
+    {
+      "control_id": "3.5.10[a]",
+      "title": "Cryptographic Key Protection Assessment [a]",
+      "family": "3.5",
+      "description": "passwords are cryptographically protected in storage."
+    },
+    {
+      "control_id": "3.5.10[b]",
+      "title": "Cryptographic Key Protection Assessment [b]",
+      "family": "3.5",
+      "description": "passwords are cryptographically protected in transit."
+    },
+    {
+      "control_id": "3.5.11",
+      "title": "Obscure Authentication Feedback Assessment",
+      "family": "3.5",
+      "description": "Determine if authentication information is obscured during the authentication process."
+    },
+    {
+      "control_id": "3.6.1",
+      "title": "Incident Handling Assessment",
+      "family": "3.6",
+      "description": "Determine if: an operational incident-handling capability is established.; the operational incident-handling capability includes preparation.; the operational incident-handling capability includes detection."
+    },
+    {
+      "control_id": "3.6.1[a]",
+      "title": "Incident Handling Assessment [a]",
+      "family": "3.6",
+      "description": "an operational incident-handling capability is established."
+    },
+    {
+      "control_id": "3.6.1[b]",
+      "title": "Incident Handling Assessment [b]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes preparation."
+    },
+    {
+      "control_id": "3.6.1[c]",
+      "title": "Incident Handling Assessment [c]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes detection."
+    },
+    {
+      "control_id": "3.6.1[d]",
+      "title": "Incident Handling Assessment [d]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes analysis."
+    },
+    {
+      "control_id": "3.6.1[e]",
+      "title": "Incident Handling Assessment [e]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes containment."
+    },
+    {
+      "control_id": "3.6.1[f]",
+      "title": "Incident Handling Assessment [f]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes recovery."
+    },
+    {
+      "control_id": "3.6.1[g]",
+      "title": "Incident Handling Assessment [g]",
+      "family": "3.6",
+      "description": "the operational incident-handling capability includes user response activities."
+    },
+    {
+      "control_id": "3.6.2",
+      "title": "Incident Reporting Assessment",
+      "family": "3.6",
+      "description": "Determine if: incidents are tracked.; incidents are documented.; authorities to whom incidents are to be reported are identified."
+    },
+    {
+      "control_id": "3.6.2[a]",
+      "title": "Incident Reporting Assessment [a]",
+      "family": "3.6",
+      "description": "incidents are tracked."
+    },
+    {
+      "control_id": "3.6.2[b]",
+      "title": "Incident Reporting Assessment [b]",
+      "family": "3.6",
+      "description": "incidents are documented."
+    },
+    {
+      "control_id": "3.6.2[c]",
+      "title": "Incident Reporting Assessment [c]",
+      "family": "3.6",
+      "description": "authorities to whom incidents are to be reported are identified."
+    },
+    {
+      "control_id": "3.6.2[d]",
+      "title": "Incident Reporting Assessment [d]",
+      "family": "3.6",
+      "description": "organizational officials to whom incidents are to be reported are identified."
+    },
+    {
+      "control_id": "3.6.2[e]",
+      "title": "Incident Reporting Assessment [e]",
+      "family": "3.6",
+      "description": "identified authorities are notified of incidents."
+    },
+    {
+      "control_id": "3.6.2[f]",
+      "title": "Incident Reporting Assessment [f]",
+      "family": "3.6",
+      "description": "identified organizational officials are notified of incidents."
+    },
+    {
+      "control_id": "3.6.3",
+      "title": "Incident Response Testing Assessment",
+      "family": "3.6",
+      "description": "Determine if the incident response capability is tested."
+    },
+    {
+      "control_id": "3.7.1",
+      "title": "System Maintenance Assessment",
+      "family": "3.7",
+      "description": "Determine if system maintenance is performed."
+    },
+    {
+      "control_id": "3.7.2",
+      "title": "Maintenance Tool Control Assessment",
+      "family": "3.7",
+      "description": "Determine if: tools used to conduct system maintenance are controlled.; techniques used to conduct system maintenance are controlled.; mechanisms used to conduct system maintenance are controlled."
+    },
+    {
+      "control_id": "3.7.2[a]",
+      "title": "Maintenance Tool Control Assessment [a]",
+      "family": "3.7",
+      "description": "tools used to conduct system maintenance are controlled."
+    },
+    {
+      "control_id": "3.7.2[b]",
+      "title": "Maintenance Tool Control Assessment [b]",
+      "family": "3.7",
+      "description": "techniques used to conduct system maintenance are controlled."
+    },
+    {
+      "control_id": "3.7.2[c]",
+      "title": "Maintenance Tool Control Assessment [c]",
+      "family": "3.7",
+      "description": "mechanisms used to conduct system maintenance are controlled."
+    },
+    {
+      "control_id": "3.7.2[d]",
+      "title": "Maintenance Tool Control Assessment [d]",
+      "family": "3.7",
+      "description": "personnel used to conduct system maintenance are controlled."
+    },
+    {
+      "control_id": "3.7.3",
+      "title": "Equipment Sanitization Assessment",
+      "family": "3.7",
+      "description": "Determine if equipment to be removed from organizational spaces for off-site maintenance is sanitized of any CUI."
+    },
+    {
+      "control_id": "3.7.4",
+      "title": "Media Inspection Assessment",
+      "family": "3.7",
+      "description": "Determine if media containing diagnostic and test programs are checked for malicious code before being used in organizational systems that process, store, or transmit CUI."
+    },
+    {
+      "control_id": "3.7.5",
+      "title": "Nonlocal Maintenance Assessment",
+      "family": "3.7",
+      "description": "Determine if: multifactor authentication is required to establish nonlocal maintenance sessions via external network connections.; nonlocal maintenance sessions established via external network connections are terminated when nonlocal maintenance is complete."
+    },
+    {
+      "control_id": "3.7.5[a]",
+      "title": "Nonlocal Maintenance Assessment [a]",
+      "family": "3.7",
+      "description": "multifactor authentication is required to establish nonlocal maintenance sessions via external network connections."
+    },
+    {
+      "control_id": "3.7.5[b]",
+      "title": "Nonlocal Maintenance Assessment [b]",
+      "family": "3.7",
+      "description": "nonlocal maintenance sessions established via external network connections are terminated when nonlocal maintenance is complete."
+    },
+    {
+      "control_id": "3.7.6",
+      "title": "Maintenance Personnel Assessment",
+      "family": "3.7",
+      "description": "Determine if maintenance personnel without required access authorization are supervised during maintenance activities."
+    },
+    {
+      "control_id": "3.8.1",
+      "title": "Media Protection Assessment",
+      "family": "3.8",
+      "description": "Determine if: paper media containing CUI is physically controlled.; digital media containing CUI is physically controlled.; paper media containing CUI is securely stored."
+    },
+    {
+      "control_id": "3.8.1[a]",
+      "title": "Media Protection Assessment [a]",
+      "family": "3.8",
+      "description": "paper media containing CUI is physically controlled."
+    },
+    {
+      "control_id": "3.8.1[b]",
+      "title": "Media Protection Assessment [b]",
+      "family": "3.8",
+      "description": "digital media containing CUI is physically controlled."
+    },
+    {
+      "control_id": "3.8.1[c]",
+      "title": "Media Protection Assessment [c]",
+      "family": "3.8",
+      "description": "paper media containing CUI is securely stored."
+    },
+    {
+      "control_id": "3.8.1[d]",
+      "title": "Media Protection Assessment [d]",
+      "family": "3.8",
+      "description": "digital media containing CUI is securely stored."
+    },
+    {
+      "control_id": "3.8.2",
+      "title": "Media Access Assessment",
+      "family": "3.8",
+      "description": "Determine if access to CUI on system media is limited to authorized users."
+    },
+    {
+      "control_id": "3.8.3",
+      "title": "Media Sanitization Assessment",
+      "family": "3.8",
+      "description": "Determine if: system media containing CUI is sanitized or destroyed before disposal.; system media containing CUI is sanitized before it is released for reuse."
+    },
+    {
+      "control_id": "3.8.3[a]",
+      "title": "Media Sanitization Assessment [a]",
+      "family": "3.8",
+      "description": "system media containing CUI is sanitized or destroyed before disposal."
+    },
+    {
+      "control_id": "3.8.3[b]",
+      "title": "Media Sanitization Assessment [b]",
+      "family": "3.8",
+      "description": "system media containing CUI is sanitized before it is released for reuse."
+    },
+    {
+      "control_id": "3.8.4",
+      "title": "Media Marking Assessment",
+      "family": "3.8",
+      "description": "Determine if: media containing CUI is marked with applicable CUI markings.; media containing CUI is marked with distribution limitations."
+    },
+    {
+      "control_id": "3.8.4[a]",
+      "title": "Media Marking Assessment [a]",
+      "family": "3.8",
+      "description": "media containing CUI is marked with applicable CUI markings."
+    },
+    {
+      "control_id": "3.8.4[b]",
+      "title": "Media Marking Assessment [b]",
+      "family": "3.8",
+      "description": "media containing CUI is marked with distribution limitations."
+    },
+    {
+      "control_id": "3.8.5",
+      "title": "Media Accountability Assessment",
+      "family": "3.8",
+      "description": "Determine if: access to media containing CUI is controlled.; accountability for media containing CUI is maintained during transport outside of controlled areas."
+    },
+    {
+      "control_id": "3.8.5[a]",
+      "title": "Media Accountability Assessment [a]",
+      "family": "3.8",
+      "description": "access to media containing CUI is controlled."
+    },
+    {
+      "control_id": "3.8.5[b]",
+      "title": "Media Accountability Assessment [b]",
+      "family": "3.8",
+      "description": "accountability for media containing CUI is maintained during transport outside of controlled areas."
+    },
+    {
+      "control_id": "3.8.6",
+      "title": "Portable Storage Encryption Assessment",
+      "family": "3.8",
+      "description": "Determine if the confidentiality of CUI stored on digital media is protected during transport using cryptographic mechanisms or alternative physical safeguards."
+    },
+    {
+      "control_id": "3.8.7",
+      "title": "Removable Media Use Assessment",
+      "family": "3.8",
+      "description": "Determine if the use of removable media on system components containing CUI is controlled."
+    },
+    {
+      "control_id": "3.8.8",
+      "title": "Shared Media Assessment",
+      "family": "3.8",
+      "description": "Determine if the use of portable storage devices is prohibited when such devices have no identifiable owner."
+    },
+    {
+      "control_id": "3.8.9",
+      "title": "Protect Backups Assessment",
+      "family": "3.8",
+      "description": "Determine if the confidentiality of backup CUI is protected at storage locations."
+    },
+    {
+      "control_id": "3.9.1",
+      "title": "Screen Individuals Assessment",
+      "family": "3.9",
+      "description": "Determine if individuals are screened prior to authorizing access to organizational systems."
+    },
+    {
+      "control_id": "3.9.2",
+      "title": "Personnel Actions Assessment",
+      "family": "3.9",
+      "description": "Determine if: a policy and/or process for terminating system access authorization and any credentials coincident with personnel actions is established.; system access and credentials are terminated consistent with personnel actions such as termination or transfer.; the system is protected during and after personnel transfer actions."
+    },
+    {
+      "control_id": "3.9.2[a]",
+      "title": "Personnel Actions Assessment [a]",
+      "family": "3.9",
+      "description": "a policy and/or process for terminating system access authorization and any credentials coincident with personnel actions is established."
+    },
+    {
+      "control_id": "3.9.2[b]",
+      "title": "Personnel Actions Assessment [b]",
+      "family": "3.9",
+      "description": "system access and credentials are terminated consistent with personnel actions such as termination or transfer."
+    },
+    {
+      "control_id": "3.9.2[c]",
+      "title": "Personnel Actions Assessment [c]",
+      "family": "3.9",
+      "description": "the system is protected during and after personnel transfer actions."
+    },
+    {
+      "control_id": "3.10.1",
+      "title": "Limit Physical Access Assessment",
+      "family": "3.10",
+      "description": "Determine if: authorized individuals allowed physical access are identified.; physical access to organizational systems is limited to authorized individuals.; physical access to equipment is limited to authorized individuals."
+    },
+    {
+      "control_id": "3.10.1[a]",
+      "title": "Limit Physical Access Assessment [a]",
+      "family": "3.10",
+      "description": "authorized individuals allowed physical access are identified."
+    },
+    {
+      "control_id": "3.10.1[b]",
+      "title": "Limit Physical Access Assessment [b]",
+      "family": "3.10",
+      "description": "physical access to organizational systems is limited to authorized individuals."
+    },
+    {
+      "control_id": "3.10.1[c]",
+      "title": "Limit Physical Access Assessment [c]",
+      "family": "3.10",
+      "description": "physical access to equipment is limited to authorized individuals."
+    },
+    {
+      "control_id": "3.10.1[d]",
+      "title": "Limit Physical Access Assessment [d]",
+      "family": "3.10",
+      "description": "physical access to operating environments is limited to authorized individuals."
+    },
+    {
+      "control_id": "3.10.2",
+      "title": "Monitor Physical Access Facility Assessment",
+      "family": "3.10",
+      "description": "Determine if: the physical facility where that system resides is protected.; the support infrastructure for that system is protected.; the physical facility where that system resides is monitored."
+    },
+    {
+      "control_id": "3.10.2[a]",
+      "title": "Monitor Physical Access Facility Assessment [a]",
+      "family": "3.10",
+      "description": "the physical facility where that system resides is protected."
+    },
+    {
+      "control_id": "3.10.2[b]",
+      "title": "Monitor Physical Access Facility Assessment [b]",
+      "family": "3.10",
+      "description": "the support infrastructure for that system is protected."
+    },
+    {
+      "control_id": "3.10.2[c]",
+      "title": "Monitor Physical Access Facility Assessment [c]",
+      "family": "3.10",
+      "description": "the physical facility where that system resides is monitored."
+    },
+    {
+      "control_id": "3.10.2[d]",
+      "title": "Monitor Physical Access Facility Assessment [d]",
+      "family": "3.10",
+      "description": "the support infrastructure for that system is monitored."
+    },
+    {
+      "control_id": "3.10.3",
+      "title": "Escort Visitors Assessment",
+      "family": "3.10",
+      "description": "Determine if: visitors are escorted.; visitor activity is monitored."
+    },
+    {
+      "control_id": "3.10.3[a]",
+      "title": "Escort Visitors Assessment [a]",
+      "family": "3.10",
+      "description": "visitors are escorted."
+    },
+    {
+      "control_id": "3.10.3[b]",
+      "title": "Escort Visitors Assessment [b]",
+      "family": "3.10",
+      "description": "visitor activity is monitored."
+    },
+    {
+      "control_id": "3.10.4",
+      "title": "Physical Access Logs Assessment",
+      "family": "3.10",
+      "description": "Determine if audit logs of physical access are maintained."
+    },
+    {
+      "control_id": "3.10.5",
+      "title": "Manage Physical Access Assessment",
+      "family": "3.10",
+      "description": "Determine if: physical access devices are identified.; physical access devices are controlled.; physical access devices are managed."
+    },
+    {
+      "control_id": "3.10.5[a]",
+      "title": "Manage Physical Access Assessment [a]",
+      "family": "3.10",
+      "description": "physical access devices are identified."
+    },
+    {
+      "control_id": "3.10.5[b]",
+      "title": "Manage Physical Access Assessment [b]",
+      "family": "3.10",
+      "description": "physical access devices are controlled."
+    },
+    {
+      "control_id": "3.10.5[c]",
+      "title": "Manage Physical Access Assessment [c]",
+      "family": "3.10",
+      "description": "physical access devices are managed."
+    },
+    {
+      "control_id": "3.10.6",
+      "title": "Alternative Work Sites Assessment",
+      "family": "3.10",
+      "description": "Determine if: safeguarding measures for CUI are defined for alternate work sites.; safeguarding measures for CUI are enforced for alternate work sites."
+    },
+    {
+      "control_id": "3.10.6[a]",
+      "title": "Alternative Work Sites Assessment [a]",
+      "family": "3.10",
+      "description": "safeguarding measures for CUI are defined for alternate work sites."
+    },
+    {
+      "control_id": "3.10.6[b]",
+      "title": "Alternative Work Sites Assessment [b]",
+      "family": "3.10",
+      "description": "safeguarding measures for CUI are enforced for alternate work sites."
+    },
+    {
+      "control_id": "3.11.1",
+      "title": "Risk Assessment Assessment",
+      "family": "3.11",
+      "description": "Determine if: the frequency to assess risk to organizational operations, organizational assets, and individuals is defined.; risk to organizational operations, organizational assets, and individuals resulting from the operation of an organizational system that processes, stores, or transmits CUI is assessed with the defined frequency."
+    },
+    {
+      "control_id": "3.11.1[a]",
+      "title": "Risk Assessment Assessment [a]",
+      "family": "3.11",
+      "description": "the frequency to assess risk to organizational operations, organizational assets, and individuals is defined."
+    },
+    {
+      "control_id": "3.11.1[b]",
+      "title": "Risk Assessment Assessment [b]",
+      "family": "3.11",
+      "description": "risk to organizational operations, organizational assets, and individuals resulting from the operation of an organizational system that processes, stores, or transmits CUI is assessed with the defined frequency."
+    },
+    {
+      "control_id": "3.11.2",
+      "title": "Vulnerability Scanning Assessment",
+      "family": "3.11",
+      "description": "Determine if: the frequency to scan for vulnerabilities in an organizational system and its applications that process, store, or transmit CUI is defined.; vulnerability scans are performed in an organizational system that processes, stores, or transmits CUI with the defined frequency.; vulnerability scans are performed in an application that contains CUI with the defined frequency."
+    },
+    {
+      "control_id": "3.11.2[a]",
+      "title": "Vulnerability Scanning Assessment [a]",
+      "family": "3.11",
+      "description": "the frequency to scan for vulnerabilities in an organizational system and its applications that process, store, or transmit CUI is defined."
+    },
+    {
+      "control_id": "3.11.2[b]",
+      "title": "Vulnerability Scanning Assessment [b]",
+      "family": "3.11",
+      "description": "vulnerability scans are performed in an organizational system that processes, stores, or transmits CUI with the defined frequency."
+    },
+    {
+      "control_id": "3.11.2[c]",
+      "title": "Vulnerability Scanning Assessment [c]",
+      "family": "3.11",
+      "description": "vulnerability scans are performed in an application that contains CUI with the defined frequency."
+    },
+    {
+      "control_id": "3.11.2[d]",
+      "title": "Vulnerability Scanning Assessment [d]",
+      "family": "3.11",
+      "description": "vulnerability scans are performed in an organizational system that processes, stores, or transmits CUI when new vulnerabilities are identified."
+    },
+    {
+      "control_id": "3.11.2[e]",
+      "title": "Vulnerability Scanning Assessment [e]",
+      "family": "3.11",
+      "description": "vulnerability scans are performed in an application that contains CUI when new vulnerabilities are identified."
+    },
+    {
+      "control_id": "3.11.3",
+      "title": "Vulnerability Remediation Assessment",
+      "family": "3.11",
+      "description": "Determine if: vulnerabilities are identified.; vulnerabilities are remediated in accordance with risk assessments."
+    },
+    {
+      "control_id": "3.11.3[a]",
+      "title": "Vulnerability Remediation Assessment [a]",
+      "family": "3.11",
+      "description": "vulnerabilities are identified."
+    },
+    {
+      "control_id": "3.11.3[b]",
+      "title": "Vulnerability Remediation Assessment [b]",
+      "family": "3.11",
+      "description": "vulnerabilities are remediated in accordance with risk assessments."
+    },
+    {
+      "control_id": "3.12.1",
+      "title": "Security Control Assessment Assessment",
+      "family": "3.12",
+      "description": "Determine if: the frequency of security control assessments is defined.; security controls are assessed with the defined frequency to determine if the controls are effective in their application."
+    },
+    {
+      "control_id": "3.12.1[a]",
+      "title": "Security Control Assessment Assessment [a]",
+      "family": "3.12",
+      "description": "the frequency of security control assessments is defined."
+    },
+    {
+      "control_id": "3.12.1[b]",
+      "title": "Security Control Assessment Assessment [b]",
+      "family": "3.12",
+      "description": "security controls are assessed with the defined frequency to determine if the controls are effective in their application."
+    },
+    {
+      "control_id": "3.12.2",
+      "title": "Plan of Action Assessment",
+      "family": "3.12",
+      "description": "Determine if: deficiencies and vulnerabilities to be addressed by the plan of action are identified.; a plan of action is developed to correct identified deficiencies and reduce or eliminate identified vulnerabilities.; the plan of action is implemented to correct identified deficiencies and reduce or eliminate identified vulnerabilities."
+    },
+    {
+      "control_id": "3.12.2[a]",
+      "title": "Plan of Action Assessment [a]",
+      "family": "3.12",
+      "description": "deficiencies and vulnerabilities to be addressed by the plan of action are identified."
+    },
+    {
+      "control_id": "3.12.2[b]",
+      "title": "Plan of Action Assessment [b]",
+      "family": "3.12",
+      "description": "a plan of action is developed to correct identified deficiencies and reduce or eliminate identified vulnerabilities."
+    },
+    {
+      "control_id": "3.12.2[c]",
+      "title": "Plan of Action Assessment [c]",
+      "family": "3.12",
+      "description": "the plan of action is implemented to correct identified deficiencies and reduce or eliminate identified vulnerabilities."
+    },
+    {
+      "control_id": "3.12.3",
+      "title": "Security Control Monitoring Assessment",
+      "family": "3.12",
+      "description": "Determine if security controls are monitored on an ongoing basis to ensure the continued effectiveness of those controls."
+    },
+    {
+      "control_id": "3.12.4",
+      "title": "System Security Plan Assessment",
+      "family": "3.12",
+      "description": "Determine if: a system security plan is developed.; the system boundary is described and documented in the system security plan.; the system environment of operation is described and documented in the system security plan."
+    },
+    {
+      "control_id": "3.12.4[a]",
+      "title": "System Security Plan Assessment [a]",
+      "family": "3.12",
+      "description": "a system security plan is developed."
+    },
+    {
+      "control_id": "3.12.4[b]",
+      "title": "System Security Plan Assessment [b]",
+      "family": "3.12",
+      "description": "the system boundary is described and documented in the system security plan."
+    },
+    {
+      "control_id": "3.12.4[c]",
+      "title": "System Security Plan Assessment [c]",
+      "family": "3.12",
+      "description": "the system environment of operation is described and documented in the system security plan."
+    },
+    {
+      "control_id": "3.12.4[d]",
+      "title": "System Security Plan Assessment [d]",
+      "family": "3.12",
+      "description": "the security requirements identified and approved by the designated authority as non-applicable are identified."
+    },
+    {
+      "control_id": "3.12.4[e]",
+      "title": "System Security Plan Assessment [e]",
+      "family": "3.12",
+      "description": "the method of security requirement implementation is described and documented in the system security plan."
+    },
+    {
+      "control_id": "3.12.4[f]",
+      "title": "System Security Plan Assessment [f]",
+      "family": "3.12",
+      "description": "the relationship with or connection to other systems is described and documented in the system security plan."
+    },
+    {
+      "control_id": "3.12.4[g]",
+      "title": "System Security Plan Assessment [g]",
+      "family": "3.12",
+      "description": "the frequency to update the system security plan is defined."
+    },
+    {
+      "control_id": "3.12.4[h]",
+      "title": "System Security Plan Assessment [h]",
+      "family": "3.12",
+      "description": "system security plan is updated with the defined frequency."
+    },
+    {
+      "control_id": "3.13.1",
+      "title": "Boundary Protection Assessment",
+      "family": "3.13",
+      "description": "Determine if: the external system boundary is defined.; key internal system boundaries are defined.; communications are monitored at the external system boundary."
+    },
+    {
+      "control_id": "3.13.1[a]",
+      "title": "Boundary Protection Assessment [a]",
+      "family": "3.13",
+      "description": "the external system boundary is defined."
+    },
+    {
+      "control_id": "3.13.1[b]",
+      "title": "Boundary Protection Assessment [b]",
+      "family": "3.13",
+      "description": "key internal system boundaries are defined."
+    },
+    {
+      "control_id": "3.13.1[c]",
+      "title": "Boundary Protection Assessment [c]",
+      "family": "3.13",
+      "description": "communications are monitored at the external system boundary."
+    },
+    {
+      "control_id": "3.13.1[d]",
+      "title": "Boundary Protection Assessment [d]",
+      "family": "3.13",
+      "description": "communications are monitored at key internal boundaries."
+    },
+    {
+      "control_id": "3.13.1[e]",
+      "title": "Boundary Protection Assessment [e]",
+      "family": "3.13",
+      "description": "communications are controlled at the external system boundary."
+    },
+    {
+      "control_id": "3.13.1[f]",
+      "title": "Boundary Protection Assessment [f]",
+      "family": "3.13",
+      "description": "communications are controlled at key internal boundaries."
+    },
+    {
+      "control_id": "3.13.1[g]",
+      "title": "Boundary Protection Assessment [g]",
+      "family": "3.13",
+      "description": "communications are protected at the external system boundary."
+    },
+    {
+      "control_id": "3.13.1[h]",
+      "title": "Boundary Protection Assessment [h]",
+      "family": "3.13",
+      "description": "communications are protected at key internal boundaries."
+    },
+    {
+      "control_id": "3.13.2",
+      "title": "Architectural Design Assessment",
+      "family": "3.13",
+      "description": "Determine if: architectural designs that promote effective information security are identified.; software development techniques that promote effective information security are identified.; systems engineering principles that promote effective information security are identified."
+    },
+    {
+      "control_id": "3.13.2[a]",
+      "title": "Architectural Design Assessment [a]",
+      "family": "3.13",
+      "description": "architectural designs that promote effective information security are identified."
+    },
+    {
+      "control_id": "3.13.2[b]",
+      "title": "Architectural Design Assessment [b]",
+      "family": "3.13",
+      "description": "software development techniques that promote effective information security are identified."
+    },
+    {
+      "control_id": "3.13.2[c]",
+      "title": "Architectural Design Assessment [c]",
+      "family": "3.13",
+      "description": "systems engineering principles that promote effective information security are identified."
+    },
+    {
+      "control_id": "3.13.2[d]",
+      "title": "Architectural Design Assessment [d]",
+      "family": "3.13",
+      "description": "identified architectural designs that promote effective information security are employed."
+    },
+    {
+      "control_id": "3.13.2[e]",
+      "title": "Architectural Design Assessment [e]",
+      "family": "3.13",
+      "description": "identified software development techniques that promote effective information security are employed."
+    },
+    {
+      "control_id": "3.13.2[f]",
+      "title": "Architectural Design Assessment [f]",
+      "family": "3.13",
+      "description": "identified systems engineering principles that promote effective information security are employed."
+    },
+    {
+      "control_id": "3.13.3",
+      "title": "Role Separation Assessment",
+      "family": "3.13",
+      "description": "Determine if: user functionality is identified.; system management functionality is identified.; user functionality is separated from system management functionality."
+    },
+    {
+      "control_id": "3.13.3[a]",
+      "title": "Role Separation Assessment [a]",
+      "family": "3.13",
+      "description": "user functionality is identified."
+    },
+    {
+      "control_id": "3.13.3[b]",
+      "title": "Role Separation Assessment [b]",
+      "family": "3.13",
+      "description": "system management functionality is identified."
+    },
+    {
+      "control_id": "3.13.3[c]",
+      "title": "Role Separation Assessment [c]",
+      "family": "3.13",
+      "description": "user functionality is separated from system management functionality."
+    },
+    {
+      "control_id": "3.13.4",
+      "title": "Shared Resource Control Assessment",
+      "family": "3.13",
+      "description": "Determine if unauthorized and unintended information transfer via shared system resources is prevented."
+    },
+    {
+      "control_id": "3.13.5",
+      "title": "Public Access System Protection Assessment",
+      "family": "3.13",
+      "description": "Determine if: publicly accessible system components are identified.; subnetworks for publicly accessible system components are physically or logically separated from internal networks."
+    },
+    {
+      "control_id": "3.13.5[a]",
+      "title": "Public Access System Protection Assessment [a]",
+      "family": "3.13",
+      "description": "publicly accessible system components are identified."
+    },
+    {
+      "control_id": "3.13.5[b]",
+      "title": "Public Access System Protection Assessment [b]",
+      "family": "3.13",
+      "description": "subnetworks for publicly accessible system components are physically or logically separated from internal networks."
+    },
+    {
+      "control_id": "3.13.6",
+      "title": "Network Communication by Exception Assessment",
+      "family": "3.13",
+      "description": "Determine if: network communications traffic is denied by default.; network communications traffic is allowed by exception."
+    },
+    {
+      "control_id": "3.13.6[a]",
+      "title": "Network Communication by Exception Assessment [a]",
+      "family": "3.13",
+      "description": "network communications traffic is denied by default."
+    },
+    {
+      "control_id": "3.13.6[b]",
+      "title": "Network Communication by Exception Assessment [b]",
+      "family": "3.13",
+      "description": "network communications traffic is allowed by exception."
+    },
+    {
+      "control_id": "3.13.7",
+      "title": "Split Tunneling Assessment",
+      "family": "3.13",
+      "description": "Determine if remote devices are prevented from simultaneously establishing non-remote connections with the system and communicating via some other connection to resources in external networks (i.e., split tunneling)."
+    },
+    {
+      "control_id": "3.13.8",
+      "title": "Cryptographic Mechanisms for CUI Assessment",
+      "family": "3.13",
+      "description": "Determine if: cryptographic mechanisms intended to prevent unauthorized disclosure of CUI are identified.; alternative physical safeguards intended to prevent unauthorized disclosure of CUI are identified.; either cryptographic mechanisms or alternative physical safeguards are implemented to prevent unauthorized disclosure of CUI during transmission."
+    },
+    {
+      "control_id": "3.13.8[a]",
+      "title": "Cryptographic Mechanisms for CUI Assessment [a]",
+      "family": "3.13",
+      "description": "cryptographic mechanisms intended to prevent unauthorized disclosure of CUI are identified."
+    },
+    {
+      "control_id": "3.13.8[b]",
+      "title": "Cryptographic Mechanisms for CUI Assessment [b]",
+      "family": "3.13",
+      "description": "alternative physical safeguards intended to prevent unauthorized disclosure of CUI are identified."
+    },
+    {
+      "control_id": "3.13.8[c]",
+      "title": "Cryptographic Mechanisms for CUI Assessment [c]",
+      "family": "3.13",
+      "description": "either cryptographic mechanisms or alternative physical safeguards are implemented to prevent unauthorized disclosure of CUI during transmission."
+    },
+    {
+      "control_id": "3.13.9",
+      "title": "Network Connections Termination Assessment",
+      "family": "3.13",
+      "description": "Determine if: a period of inactivity to terminate network connections associated with communications sessions is defined.; network connections associated with communications sessions are terminated at the end of the sessions.; network connections associated with communications sessions are terminated after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.13.9[a]",
+      "title": "Network Connections Termination Assessment [a]",
+      "family": "3.13",
+      "description": "a period of inactivity to terminate network connections associated with communications sessions is defined."
+    },
+    {
+      "control_id": "3.13.9[b]",
+      "title": "Network Connections Termination Assessment [b]",
+      "family": "3.13",
+      "description": "network connections associated with communications sessions are terminated at the end of the sessions."
+    },
+    {
+      "control_id": "3.13.9[c]",
+      "title": "Network Connections Termination Assessment [c]",
+      "family": "3.13",
+      "description": "network connections associated with communications sessions are terminated after the defined period of inactivity."
+    },
+    {
+      "control_id": "3.13.10",
+      "title": "Cryptographic Key Management Assessment",
+      "family": "3.13",
+      "description": "Determine if: cryptographic keys are established whenever cryptography is employed.; cryptographic keys are managed whenever cryptography is employed."
+    },
+    {
+      "control_id": "3.13.10[a]",
+      "title": "Cryptographic Key Management Assessment [a]",
+      "family": "3.13",
+      "description": "cryptographic keys are established whenever cryptography is employed."
+    },
+    {
+      "control_id": "3.13.10[b]",
+      "title": "Cryptographic Key Management Assessment [b]",
+      "family": "3.13",
+      "description": "cryptographic keys are managed whenever cryptography is employed."
+    },
+    {
+      "control_id": "3.13.11",
+      "title": "CUI Encryption Assessment",
+      "family": "3.13",
+      "description": "Determine if FIPS-validated cryptography is employed to protect the confidentiality of CUI."
+    },
+    {
+      "control_id": "3.13.12",
+      "title": "Collaborative Computing Device Control Assessment",
+      "family": "3.13",
+      "description": "Determine if: collaborative computing devices are identified.; collaborative computing devices provide indication to users of devices in use.; remote activation of collaborative computing devices is prohibited."
+    },
+    {
+      "control_id": "3.13.12[a]",
+      "title": "Collaborative Computing Device Control Assessment [a]",
+      "family": "3.13",
+      "description": "collaborative computing devices are identified."
+    },
+    {
+      "control_id": "3.13.12[b]",
+      "title": "Collaborative Computing Device Control Assessment [b]",
+      "family": "3.13",
+      "description": "collaborative computing devices provide indication to users of devices in use."
+    },
+    {
+      "control_id": "3.13.12[c]",
+      "title": "Collaborative Computing Device Control Assessment [c]",
+      "family": "3.13",
+      "description": "remote activation of collaborative computing devices is prohibited."
+    },
+    {
+      "control_id": "3.13.13",
+      "title": "Mobile Code Control Assessment",
+      "family": "3.13",
+      "description": "Determine if: use of mobile code is controlled.; use of mobile code is monitored."
+    },
+    {
+      "control_id": "3.13.13[a]",
+      "title": "Mobile Code Control Assessment [a]",
+      "family": "3.13",
+      "description": "use of mobile code is controlled."
+    },
+    {
+      "control_id": "3.13.13[b]",
+      "title": "Mobile Code Control Assessment [b]",
+      "family": "3.13",
+      "description": "use of mobile code is monitored."
+    },
+    {
+      "control_id": "3.13.14",
+      "title": "Voice over Internet Protocol Assessment",
+      "family": "3.13",
+      "description": "Determine if: use of Voice over Internet Protocol (VoIP) technologies is controlled.; use of Voice over Internet Protocol (VoIP) technologies is monitored."
+    },
+    {
+      "control_id": "3.13.14[a]",
+      "title": "Voice over Internet Protocol Assessment [a]",
+      "family": "3.13",
+      "description": "use of Voice over Internet Protocol (VoIP) technologies is controlled."
+    },
+    {
+      "control_id": "3.13.14[b]",
+      "title": "Voice over Internet Protocol Assessment [b]",
+      "family": "3.13",
+      "description": "use of Voice over Internet Protocol (VoIP) technologies is monitored."
+    },
+    {
+      "control_id": "3.13.15",
+      "title": "Communications Authenticity Assessment",
+      "family": "3.13",
+      "description": "Determine if the authenticity of communications sessions is protected."
+    },
+    {
+      "control_id": "3.13.16",
+      "title": "Data at Rest Protection Assessment",
+      "family": "3.13",
+      "description": "Determine if the confidentiality of CUI at rest is protected."
+    },
+    {
+      "control_id": "3.14.1",
+      "title": "Flaw Remediation Assessment",
+      "family": "3.14",
+      "description": "Determine if: the time within which to identify system flaws is specified.; system flaws are identified within the specified time frame.; the time within which to report system flaws is specified."
+    },
+    {
+      "control_id": "3.14.1[a]",
+      "title": "Flaw Remediation Assessment [a]",
+      "family": "3.14",
+      "description": "the time within which to identify system flaws is specified."
+    },
+    {
+      "control_id": "3.14.1[b]",
+      "title": "Flaw Remediation Assessment [b]",
+      "family": "3.14",
+      "description": "system flaws are identified within the specified time frame."
+    },
+    {
+      "control_id": "3.14.1[c]",
+      "title": "Flaw Remediation Assessment [c]",
+      "family": "3.14",
+      "description": "the time within which to report system flaws is specified."
+    },
+    {
+      "control_id": "3.14.1[d]",
+      "title": "Flaw Remediation Assessment [d]",
+      "family": "3.14",
+      "description": "system flaws are reported within the specified time frame."
+    },
+    {
+      "control_id": "3.14.1[e]",
+      "title": "Flaw Remediation Assessment [e]",
+      "family": "3.14",
+      "description": "the time within which to correct system flaws is specified."
+    },
+    {
+      "control_id": "3.14.1[f]",
+      "title": "Flaw Remediation Assessment [f]",
+      "family": "3.14",
+      "description": "system flaws are corrected within the specified time frame."
+    },
+    {
+      "control_id": "3.14.2",
+      "title": "Malicious Code Protection Assessment",
+      "family": "3.14",
+      "description": "Determine if: designated locations for malicious code protection are identified.; protection from malicious code at designated locations is provided."
+    },
+    {
+      "control_id": "3.14.2[a]",
+      "title": "Malicious Code Protection Assessment [a]",
+      "family": "3.14",
+      "description": "designated locations for malicious code protection are identified."
+    },
+    {
+      "control_id": "3.14.2[b]",
+      "title": "Malicious Code Protection Assessment [b]",
+      "family": "3.14",
+      "description": "protection from malicious code at designated locations is provided."
+    },
+    {
+      "control_id": "3.14.3",
+      "title": "Security Alert Monitoring Assessment",
+      "family": "3.14",
+      "description": "Determine if: response actions to system security alerts and advisories are identified.; system security alerts and advisories are monitored.; actions in response to system security alerts and advisories are taken."
+    },
+    {
+      "control_id": "3.14.3[a]",
+      "title": "Security Alert Monitoring Assessment [a]",
+      "family": "3.14",
+      "description": "response actions to system security alerts and advisories are identified."
+    },
+    {
+      "control_id": "3.14.3[b]",
+      "title": "Security Alert Monitoring Assessment [b]",
+      "family": "3.14",
+      "description": "system security alerts and advisories are monitored."
+    },
+    {
+      "control_id": "3.14.3[c]",
+      "title": "Security Alert Monitoring Assessment [c]",
+      "family": "3.14",
+      "description": "actions in response to system security alerts and advisories are taken."
+    },
+    {
+      "control_id": "3.14.4",
+      "title": "Update Malicious Code Protection Assessment",
+      "family": "3.14",
+      "description": "Determine if malicious code protection mechanisms are updated when new releases are available."
+    },
+    {
+      "control_id": "3.14.5",
+      "title": "System and File Scanning Assessment",
+      "family": "3.14",
+      "description": "Determine if: the frequency for malicious code scans is defined.; malicious code scans are performed with the defined frequency.; real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed."
+    },
+    {
+      "control_id": "3.14.5[a]",
+      "title": "System and File Scanning Assessment [a]",
+      "family": "3.14",
+      "description": "the frequency for malicious code scans is defined."
+    },
+    {
+      "control_id": "3.14.5[b]",
+      "title": "System and File Scanning Assessment [b]",
+      "family": "3.14",
+      "description": "malicious code scans are performed with the defined frequency."
+    },
+    {
+      "control_id": "3.14.5[c]",
+      "title": "System and File Scanning Assessment [c]",
+      "family": "3.14",
+      "description": "real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed."
+    },
+    {
+      "control_id": "3.14.6",
+      "title": "Monitor Communications for Attacks Assessment",
+      "family": "3.14",
+      "description": "Determine if: the system is monitored to detect attacks and indicators of potential attacks.; inbound communications traffic is monitored to detect attacks and indicators of potential attacks.; outbound communications traffic is monitored to detect attacks and indicators of potential attacks."
+    },
+    {
+      "control_id": "3.14.6[a]",
+      "title": "Monitor Communications for Attacks Assessment [a]",
+      "family": "3.14",
+      "description": "the system is monitored to detect attacks and indicators of potential attacks."
+    },
+    {
+      "control_id": "3.14.6[b]",
+      "title": "Monitor Communications for Attacks Assessment [b]",
+      "family": "3.14",
+      "description": "inbound communications traffic is monitored to detect attacks and indicators of potential attacks."
+    },
+    {
+      "control_id": "3.14.6[c]",
+      "title": "Monitor Communications for Attacks Assessment [c]",
+      "family": "3.14",
+      "description": "outbound communications traffic is monitored to detect attacks and indicators of potential attacks."
+    },
+    {
+      "control_id": "3.14.7",
+      "title": "Identify Unauthorized Use Assessment",
+      "family": "3.14",
+      "description": "Determine if: authorized use of the system is defined.; unauthorized use of the system is identified."
+    },
+    {
+      "control_id": "3.14.7[a]",
+      "title": "Identify Unauthorized Use Assessment [a]",
+      "family": "3.14",
+      "description": "authorized use of the system is defined."
+    },
+    {
+      "control_id": "3.14.7[b]",
+      "title": "Identify Unauthorized Use Assessment [b]",
+      "family": "3.14",
+      "description": "unauthorized use of the system is identified."
+    }
+  ]
+}

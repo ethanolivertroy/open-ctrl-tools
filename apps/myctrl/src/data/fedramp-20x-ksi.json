@@ -1,0 +1,3095 @@
+{
+  "framework": {
+    "id": "fedramp-20x-ksi",
+    "name": "FedRAMP 20x KSI",
+    "version": "2026.07.14.01",
+    "description": "Key Security Indicators from the FedRAMP Consolidated Rules for 2026"
+  },
+  "families": {
+    "CED": "Cybersecurity Education",
+    "CMT": "Change Management",
+    "CNA": "Cloud Native Architecture",
+    "IAM": "Identity and Access Management",
+    "INR": "Incident Response",
+    "MLA": "Monitoring, Logging, and Auditing",
+    "PIY": "Policy and Inventory",
+    "RPL": "Recovery Planning",
+    "SCR": "Supply Chain Risk",
+    "SVC": "Service Configuration"
+  },
+  "controls": [
+    {
+      "control_id": "KSI-CED-RAT",
+      "title": "Reviewing All Training",
+      "family": "CED",
+      "description": "The effectiveness of relevant cybersecurity education and training is persistently reviewed, including at least general training for all employees, role-specific training for employees in high risk roles, training for development and engineering staff on secure software delivery, and training for staff involved with incident response or disaster recovery.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "related_controls": [
+        "cp-3",
+        "ir-2",
+        "ps-6",
+        "at-2",
+        "at-2.2",
+        "at-2.3",
+        "at-3.5",
+        "at-4",
+        "ir-2.3",
+        "at-3",
+        "sr-11.1"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Incident",
+        "Persistently",
+        "Vulnerability Response"
+      ],
+      "assessment_questions": [
+        {
+          "category": "General Training (All Employees)",
+          "questions": [
+            "Does general security training cover all required topics — phishing awareness, social engineering, data handling, password hygiene, incident reporting, and acceptable use?",
+            "Are all employees included in training requirements — full-time, part-time, contractors, and temporary staff with access to organizational systems?",
+            "How do you ensure training addresses current threats (AI-powered phishing, deepfakes, business email compromise) rather than only historical patterns?",
+            "When new policies or security procedures are introduced, how quickly are they incorporated into training content?"
+          ]
+        },
+        {
+          "category": "Role-Specific Training (High-Risk Roles)",
+          "questions": [
+            "Does your high-risk role definition include all relevant categories — privileged administrators, security operations staff, data custodians, and personnel with access to production systems?",
+            "Are role-specific training requirements tailored to each role's actual threat exposure, or is it the same advanced content for all high-risk roles?",
+            "How do you ensure contractors and third-party personnel in high-risk roles receive the same role-specific training as internal staff?",
+            "When a staff member transitions into a high-risk role, what process ensures they complete required training before receiving elevated access?"
+          ]
+        },
+        {
+          "category": "Development & Engineering Training",
+          "questions": [
+            "Does secure development training cover all relevant topics — OWASP Top 10, secure API design, secrets management, dependency security, and cloud-native security patterns?",
+            "Are all development and engineering staff included — full-time employees, contractors, and third-party developers with commit access?",
+            "How do you ensure training addresses the specific languages, frameworks, and platforms your developers use, rather than only generic secure coding principles?",
+            "When new developers join or new technologies are adopted, what process ensures training is completed before they contribute code to the CSO?"
+          ]
+        },
+        {
+          "category": "Response & Recovery Training",
+          "questions": [
+            "Does response and recovery training cover all required staff — primary responders, backup personnel, on-call rotation members, and leadership with decision-making authority?",
+            "Are both incident response and disaster recovery scenarios covered, including cloud-specific failures (region outages, provider incidents, credential compromise)?",
+            "How do you ensure training addresses FedRAMP-specific requirements such as ICP notification timelines and agency communication procedures?",
+            "When staff rotate into or out of response roles, what process ensures training is completed before they take on-call duties?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CMT-LMC",
+      "title": "Logging Changes",
+      "family": "CMT",
+      "description": "Modifications to the cloud service offering are logged and monitored.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CMT-01",
+      "related_controls": [
+        "au-2",
+        "cm-3",
+        "cm-3.2",
+        "cm-4.2",
+        "cm-6",
+        "cm-8.3",
+        "ma-2"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Cloud Service Offering"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does change logging cover all modification types — infrastructure changes, application deployments, configuration updates, IAM policy changes, and database schema changes?",
+            "Are there any CSO components where changes are not logged (e.g., ephemeral containers, serverless functions, third-party managed services)?",
+            "How do you ensure changes made via break-glass or emergency access procedures are logged with the same fidelity as normal changes?",
+            "When a new service or component is added to the CSO, what process ensures it is included in change logging before it goes live?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated alerts fire when a change is detected outside normal change management processes (e.g., direct console access, manual SSH changes)?",
+            "How do you detect if change logging itself fails — for example, if a CloudTrail or audit log pipeline stops ingesting events?",
+            "What automated correlation links changes to their corresponding change tickets or deployment records, and what happens when a change has no matching ticket?",
+            "How do you validate that tamper protection on change logs is functioning — do you test for unauthorized deletion or modification of log entries?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools capture change logs across your stack (CloudTrail, Config, GitHub audit logs, Kubernetes audit logs), and how do they feed into a centralized view?",
+            "How does your change logging integrate with your SIEM to correlate changes with security events?",
+            "Are change logs from inherited or third-party services ingested into the same platform, or tracked separately?",
+            "How do you reconcile change logs against your deployment pipeline records to confirm every deployment was properly logged?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that change logging has been continuous and uninterrupted over the past 90 days?",
+            "Is change log data queryable via API for assessors and agency reviewers, or only accessible through manual log exports?",
+            "How do you detect gaps in change log coverage — periods where logging was degraded or missing for specific resources?",
+            "What evidence shows change logs are retained for the required duration and have not been modified after the fact?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CMT-RMV",
+      "title": "Redeploying vs Modifying",
+      "family": "CMT",
+      "description": "Changes to machine-based information resources are executed through the redeployment of version controlled resources rather than direct modification wherever reasonable.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CMT-02",
+      "related_controls": [
+        "cm-2",
+        "cm-3",
+        "cm-5",
+        "cm-6",
+        "cm-7",
+        "cm-8.1",
+        "si-3"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "What percentage of machine-based information resources are managed as immutable, version-controlled artifacts versus those still subject to direct modification?",
+            "For resources where direct modification is still used, how are those exceptions documented and what is the plan to transition them to immutable redeployment?",
+            "Does the immutable redeployment approach cover all layers — OS images, container images, serverless code packages, and infrastructure definitions?",
+            "How do you handle stateful resources (databases, persistent volumes) that cannot simply be redeployed — what controls apply to those modifications?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated controls prevent or alert on direct SSH, RDP, or console modifications to resources that should only change via redeployment?",
+            "How do you detect IaC drift — differences between the version-controlled definition and the actual running state of a resource?",
+            "What happens if a redeployment pipeline fails mid-execution — do resources roll back to the previous known-good version automatically?",
+            "What automated tests validate that a redeployed resource matches the intended configuration before it receives production traffic?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What IaC tools (Terraform, Pulumi, CloudFormation, Helm) manage your infrastructure, and how do you track which resources are under IaC management versus manually provisioned?",
+            "How does your CI/CD pipeline enforce that changes go through version control and code review before redeployment?",
+            "What tools detect resources that exist in the environment but are not represented in any version-controlled definition?",
+            "How do you correlate redeployment events with change management records to confirm every change followed the redeployment path?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you continuously demonstrate that the ratio of immutable redeployment to direct modification is improving over time?",
+            "What evidence shows that drift detection runs continuously and that detected drift is remediated within a defined timeframe?",
+            "Is deployment history (who deployed what version, when, from which commit) available via API or structured logs?",
+            "How do you prove that no direct modifications occurred on resources designated as immutable during the past assessment period?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CMT-RVP",
+      "title": "Reviewing Change Procedures",
+      "family": "CMT",
+      "description": "The effectiveness of documented change management procedures is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CMT-04",
+      "related_controls": [
+        "cm-3",
+        "cm-3.2",
+        "cm-3.4",
+        "cm-5",
+        "cm-7.1",
+        "cm-9"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Do your change management procedures cover all change types — infrastructure, application, configuration, emergency, and third-party changes — or are there gaps?",
+            "How do you ensure change management procedures address changes made by automated systems (CI/CD pipelines, auto-scaling) in addition to human-initiated changes?",
+            "Are emergency and break-glass change procedures reviewed with the same rigor as standard change procedures?",
+            "When procedure non-compliance is identified, how do you determine whether it represents a systemic gap versus an isolated failure?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated enforcement prevents changes from bypassing required approval gates (code review, CAB approval, security scan)?",
+            "How do you automatically measure change success rates, rollback frequency, and change-related incidents to assess procedure effectiveness?",
+            "What happens when automated procedure enforcement is overridden or bypassed — is the override logged and flagged for review?",
+            "How do you test that procedure enforcement controls actually block non-compliant changes rather than just logging them?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How does your change management platform (ServiceNow, Jira, GitHub) enforce procedure compliance through workflow automation?",
+            "What tools correlate change records with deployment logs, incident tickets, and rollback events to measure procedure effectiveness?",
+            "Are change management metrics integrated into a dashboard accessible to leadership, or do they require manual compilation?",
+            "How do you ensure procedure changes themselves go through a controlled review and approval process?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are change management procedures reviewed for effectiveness, and what evidence proves each review occurred on schedule?",
+            "What metrics trending over time demonstrate that procedure improvements are actually reducing change-related incidents?",
+            "Is change compliance data (approval rates, cycle times, bypass counts) available via API for continuous monitoring?",
+            "How do you demonstrate that procedure reviews result in concrete, implemented changes rather than just documented recommendations?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CMT-VTD",
+      "title": "Validating Throughout Deployment",
+      "family": "CMT",
+      "description": "Persistent testing and validation of changes throughout deployment is automated.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CMT-03",
+      "related_controls": [
+        "cm-3",
+        "cm-3.2",
+        "cm-4.2",
+        "si-2"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Validation"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does automated testing cover all deployment stages — build, integration, staging, canary, and production — or are some stages validated only manually?",
+            "How do you ensure test coverage includes security validation (SAST, DAST, dependency scanning) in addition to functional and performance testing?",
+            "Are infrastructure changes (Terraform, CloudFormation) subject to the same automated validation pipeline as application code changes?",
+            "When a new type of deployment artifact is introduced (e.g., a new microservice, a new cloud resource type), how do you ensure validation tests are created before the first deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What happens when an automated validation gate fails — is the deployment blocked, rolled back, or only flagged, and what evidence shows the gate is enforced?",
+            "How do you detect if automated tests themselves are broken, flaky, or silently passing when they should fail?",
+            "What automated rollback or circuit-breaker mechanism activates when post-deployment validation detects a regression in production?",
+            "How do you validate that security-specific tests (e.g., scanning for exposed secrets, misconfigured permissions) actually catch real issues — do you run red-team or mutation testing against the pipeline?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What CI/CD platforms (GitHub Actions, GitLab CI, Jenkins, ArgoCD) run your validation pipeline, and how do you ensure all deployable artifacts pass through them?",
+            "How do test results from different stages and tools aggregate into a single pass/fail decision for each deployment?",
+            "Are deployment validation results integrated with your change management records so every change ticket links to its test results?",
+            "How do you track test coverage metrics across the entire deployment pipeline, and are there components with no automated tests?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that every production deployment in the past 90 days passed through the full automated validation pipeline?",
+            "Is deployment validation history (test results, gate decisions, rollback events) available via API or structured logs?",
+            "How do you measure and demonstrate that test coverage and validation rigor are improving over time rather than degrading?",
+            "What evidence shows that failed validation gates actually prevented problematic changes from reaching production?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-DFP",
+      "title": "Defining Functionality and Privileges",
+      "family": "CNA",
+      "description": "The functionality and privileges for infrastructure and services are strictly defined.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-04",
+      "related_controls": [
+        "cm-2",
+        "si-3"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Are functionality and privileges strictly defined for all infrastructure and service types — compute instances, containers, serverless functions, managed services, and network components?",
+            "What resources still have broad or default privileges that have not been scoped down, and how are those exceptions tracked?",
+            "How do you ensure that service accounts, IAM roles, and machine identities associated with infrastructure also follow strictly defined privilege boundaries?",
+            "When new infrastructure types or cloud services are adopted, what process ensures their functionality and privileges are defined before deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated policy checks (OPA, Sentinel, AWS Config Rules) enforce that deployed resources do not exceed their defined functionality and privilege boundaries?",
+            "How do you detect if a resource acquires privileges or functionality beyond its definition at runtime — for example, through role assumption or dynamic policy changes?",
+            "What happens when a policy violation is detected — is the resource automatically reverted, quarantined, or only flagged?",
+            "How do you test that privilege boundaries actually restrict access as intended, rather than just being defined on paper?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain a mapping between each infrastructure resource and its defined functionality and privilege scope?",
+            "What tools enforce privilege definitions at deployment time (IaC policy scanners, admission controllers) versus at runtime (CSPM, CWPP)?",
+            "How do privilege definitions for infrastructure integrate with your IAM system to prevent privilege escalation paths?",
+            "Are privilege definitions stored as code alongside infrastructure definitions, or maintained in a separate system?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you continuously demonstrate that deployed resources operate within their defined functionality and privilege boundaries?",
+            "What evidence shows privilege definitions are reviewed and tightened over time rather than remaining static?",
+            "Is resource privilege compliance data available via API or dashboard for ongoing monitoring?",
+            "How do you detect privilege drift — resources gradually acquiring more permissions than originally defined — between review cycles?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-EIS",
+      "title": "Enforcing Intended State",
+      "family": "CNA",
+      "description": "Automated services are used to persistently assess the security of all machine-based information resources and automatically enforce their intended operational state.",
+      "impact_low": false,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-08",
+      "related_controls": [
+        "ca-2.1",
+        "ca-7.1"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does automated intended-state enforcement cover all machine-based resource types — VMs, containers, Kubernetes pods, serverless functions, managed services, and network configurations?",
+            "Are there resources where intended state is defined but not automatically enforced, and how are those exceptions justified and tracked?",
+            "How do you define intended operational state for ephemeral resources that are created and destroyed rapidly (spot instances, auto-scaled pods)?",
+            "When a new resource type is introduced, what process ensures its intended state is defined and enforcement is configured before production deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What happens when IaC drift detection identifies a resource has deviated from intended state — is it automatically remediated, flagged, or quarantined?",
+            "How do you prevent automated enforcement from causing availability issues — for example, reverting a legitimate emergency change?",
+            "What is the maximum time between a resource drifting from intended state and automated detection, and what is the SLA for remediation?",
+            "How do you test that enforcement mechanisms actually correct drift rather than just reporting it — do you run chaos engineering or fault injection tests?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools compose your intended-state enforcement stack (AWS Config, Azure Policy, Kubernetes admission controllers, CSPM), and how do they coordinate?",
+            "How do intended-state definitions integrate with your IaC repository so that the source of truth is version-controlled code?",
+            "Are enforcement results from different tools aggregated into a single compliance dashboard, or do they require separate review?",
+            "How does your drift detection integrate with your SIEM or incident management to escalate persistent or malicious drift?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that intended-state assessment and enforcement runs continuously rather than on a batch schedule?",
+            "Is drift detection and enforcement data available via API for assessors to verify in real time?",
+            "What metrics show mean time to detect drift and mean time to remediate drift over the past 90 days?",
+            "How do you prove that enforcement coverage has not degraded — that newly deployed resources are always included in posture assessment?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-IBP",
+      "title": "Implementing Best Practices",
+      "family": "CNA",
+      "description": "The use and configuration of third-party machine-based information resources is persistently compared against the original provider's best practices and guidance.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-07",
+      "related_controls": [
+        "ac-17.3",
+        "cm-2",
+        "pl-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently",
+        "Provider"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your best-practices compliance cover all cloud providers and services in use (AWS, Azure, GCP, or others), including managed databases, AI services, and networking features?",
+            "Are there provider security features or recommendations you have chosen not to implement, and how are those decisions documented and justified?",
+            "How do you ensure best-practice adherence for resources managed by third parties or partners who deploy within your authorization boundary?",
+            "When your cloud provider releases new security features or updates their best-practice guidance, what process ensures you evaluate and adopt them?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated benchmarking tools (CIS Benchmarks, AWS Trusted Advisor, Azure Advisor, GCP Security Command Center) validate resources against provider best practices?",
+            "What happens when a resource is deployed that violates a provider best practice — is deployment blocked, or is the violation detected and flagged post-deployment?",
+            "How do you detect when provider best practices change and your existing resources become non-compliant with updated guidance?",
+            "What automated remediation runs when best-practice violations are detected, and what evidence shows it resolves findings without manual intervention?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain a mapping between each cloud-native resource and the specific provider best-practice benchmarks it must meet?",
+            "What tools enforce provider best practices at deployment time (IaC policy scanners, admission webhooks) versus at runtime (CSPM)?",
+            "How do provider security advisories and feature announcements integrate into your change management workflow?",
+            "Are best-practice compliance results from different cloud providers aggregated into a single view, or reviewed separately per provider?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate continuous adherence to provider best practices rather than point-in-time compliance at assessment time?",
+            "Is best-practice compliance data available via API or dashboard showing current and historical conformance rates?",
+            "What evidence shows the delta between provider-recommended configurations and your actual configurations, and how that delta trends over time?",
+            "How often do you reconcile your implementations against updated provider guidance, and how do you prove each reconciliation was completed?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-MAT",
+      "title": "Minimizing Attack Surface",
+      "family": "CNA",
+      "description": "Machine-based information resources are persistently reviewed to ensure they have a minimal attack surface and that lateral movement is minimized if compromised.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-02",
+      "related_controls": [
+        "ac-17.3",
+        "ac-18.1",
+        "ac-18.3",
+        "ac-20.1",
+        "ca-9",
+        "sc-7.3",
+        "sc-7.4",
+        "sc-7.5",
+        "sc-7.8",
+        "sc-8",
+        "sc-10",
+        "si-10",
+        "si-11",
+        "si-16"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your attack surface minimization apply to all machine-based resource types — including containers, serverless functions, managed services, and build/CI infrastructure?",
+            "Are there resources with open ports, enabled services, or default features that are not required for their function, and how are those documented?",
+            "How do you ensure lateral movement prevention extends across all network segments, including between workloads, between environments (dev/staging/prod), and between cloud accounts?",
+            "When new resources are deployed, what gate ensures they meet hardening baselines before receiving production traffic?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated scanning validates that resources have minimal attack surface (open ports, enabled services, installed packages) and what happens when a violation is found?",
+            "How do you test lateral movement prevention — do you run penetration tests or breach simulation tools that attempt east-west movement from a compromised resource?",
+            "What happens if a network segmentation rule is misconfigured and allows unintended traffic between segments — how is it detected and corrected?",
+            "What automated mechanisms disable or remove unnecessary services, default accounts, and unused features on newly deployed resources?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain an inventory of all exposed services, ports, and endpoints across your authorization boundary?",
+            "What tools enforce hardening baselines at deployment time (golden images, admission controllers) versus detect deviations at runtime (vulnerability scanners, CSPM)?",
+            "How does your micro-segmentation or network policy tool integrate with your workload inventory to automatically apply appropriate traffic restrictions?",
+            "Are hardening baselines and segmentation policies stored as code and versioned alongside infrastructure definitions?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you continuously demonstrate that attack surface remains minimal rather than growing over time?",
+            "What evidence shows that lateral movement prevention controls are tested regularly, not just at initial deployment?",
+            "Is attack surface data (open ports, exposed services, segmentation compliance) available via API for ongoing assessment?",
+            "How do you detect attack surface expansion — new ports opened, new services enabled, segmentation relaxed — between formal review cycles?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-OFA",
+      "title": "Optimizing for Availability",
+      "family": "CNA",
+      "description": "Machine-based information resources are persistently reviewed to ensure they are appropriately optimized for high availability and rapid recovery.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-06",
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Are all critical machine-based resources optimized for high availability, or are there single points of failure in the architecture that are documented as accepted risks?",
+            "Does your high-availability design cover all dependencies — databases, message queues, DNS, identity providers, and third-party APIs — not just compute resources?",
+            "How do you ensure rapid recovery capabilities extend to all data stores and stateful services, not just stateless application tiers?",
+            "Are non-production environments (staging, DR sites) also designed for rapid recovery, or only production?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated health checks detect resource failures, and what is the maximum time between failure detection and automated failover?",
+            "How do you test failover mechanisms — do you run chaos engineering experiments (e.g., Chaos Monkey, Gremlin) that kill resources in production?",
+            "What happens if an availability zone or region goes down — does automated failover activate without manual intervention, and what evidence proves this?",
+            "How do you validate that auto-scaling and self-healing mechanisms can handle load spikes and resource failures simultaneously?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain an inventory of all resources and their availability tier (single-AZ, multi-AZ, multi-region), and is this mapping kept in a centralized system?",
+            "What tools monitor availability and failover status across your entire stack, and how do they integrate with your incident management system?",
+            "How do load balancers, auto-scaling groups, and failover DNS integrate to provide seamless recovery?",
+            "Are availability configurations (replica counts, failover policies, health check settings) defined in IaC and version-controlled?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What availability SLA do you commit to, and what evidence demonstrates you have met it over the past 12 months?",
+            "How frequently do you test failover and rapid recovery capabilities, and what evidence shows each test was completed?",
+            "Is real-time availability and recovery performance data accessible via API or dashboard?",
+            "How do you detect degradation in availability posture — for example, when a replica count drops or a health check is disabled?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-RNT",
+      "title": "Restricting Network Traffic",
+      "family": "CNA",
+      "description": "Machine-based information resources are persistently reviewed to ensure they are appropriately configured to limit inbound and outbound network traffic.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-01",
+      "related_controls": [
+        "ac-17.3",
+        "ca-9",
+        "cm-7.1",
+        "sc-7.5",
+        "si-8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Do network traffic restrictions apply to all machine-based resources — including containers, serverless functions, managed services, and CI/CD build agents?",
+            "Are both inbound and outbound traffic restrictions defined and enforced, or is outbound traffic less restricted than inbound?",
+            "How do you ensure resources in all environments (production, staging, development) have appropriate traffic restrictions, not just production?",
+            "Are there resources with overly permissive network rules (e.g., 0.0.0.0/0 ingress or egress) that are documented as exceptions?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated policy checks prevent deployment of resources with overly permissive network configurations (e.g., open security groups, unrestricted NACLs)?",
+            "How do you detect when a network rule is modified to be more permissive than intended — is the change automatically reverted or flagged?",
+            "What happens when a legitimate application needs network access that current restrictions block — how do you handle the exception without weakening the overall posture?",
+            "Do you run automated network reachability analysis to verify that resources can only communicate with their intended destinations?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools enforce network restrictions (security groups, network policies, firewall rules, service mesh), and how do they coordinate across your architecture?",
+            "How do you maintain an inventory of all network rules and their justifications, and is this inventory programmatically generated from IaC?",
+            "How do network restriction configurations integrate with your CMDB to ensure every resource has an associated network policy?",
+            "Are network flow logs analyzed to identify traffic patterns that should be restricted but are not?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that network traffic restrictions have been consistently enforced over the past 90 days?",
+            "Is network compliance data (rule sets, violation counts, flow log analysis) available via API or dashboard for ongoing assessment?",
+            "How do you detect network restriction drift — rules that were tightened but later loosened — between review cycles?",
+            "What evidence shows network flow logs have been analyzed for unauthorized traffic patterns and anomalies?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-RVP",
+      "title": "Reviewing Protections",
+      "family": "CNA",
+      "description": "The effectiveness of protection against denial of service attacks and other unwanted activity for machine-based information resources is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-05",
+      "related_controls": [
+        "sc-5",
+        "si-8",
+        "si-8.2"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your DoS and unwanted activity protection cover all entry points — public APIs, web applications, DNS, email, and internal service-to-service traffic?",
+            "Are protections in place for all layers — volumetric (L3/L4), protocol (L4), and application-layer (L7) attacks?",
+            "How do you ensure third-party or inherited services (CDN, DNS provider, IaaS) also have adequate DoS protections, and are their SLAs documented?",
+            "Are there any services or endpoints where DoS protection is limited or absent, and how are those risks documented?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated mechanisms detect and mitigate DoS attacks in real time, and what is the maximum time from attack start to mitigation activation?",
+            "How do you test DoS protection effectiveness — do you run controlled load tests or DDoS simulations against production or staging?",
+            "What happens if your DDoS mitigation provider itself experiences an outage — what failover protection applies?",
+            "How do you automatically distinguish between legitimate traffic spikes (product launch, press coverage) and attack traffic to avoid blocking real users?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What DDoS mitigation services and tools are in your stack (cloud provider native, third-party CDN, WAF), and how do they coordinate during an attack?",
+            "How do DoS detection alerts integrate with your SIEM and incident response workflow?",
+            "Are rate-limiting and traffic-shaping configurations defined as code and applied consistently across all services?",
+            "How do you coordinate DDoS response with your cloud provider's support and mitigation teams?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently do you review and test DoS protection effectiveness, and what evidence proves each review was completed?",
+            "Is DoS mitigation telemetry (blocked traffic volume, attack types, mitigation response times) available via API or dashboard?",
+            "What evidence shows protections have been improved based on past attacks or effectiveness reviews?",
+            "How do you demonstrate that DoS protections remain effective as your traffic patterns and architecture evolve?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-CNA-ULN",
+      "title": "Using Logical Networking",
+      "family": "CNA",
+      "description": "Logical networking and related capabilities are used and persistently reviewed to enforce traffic flow controls.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-CNA-03",
+      "related_controls": [
+        "ac-12",
+        "ac-17.3",
+        "ca-9",
+        "sc-4",
+        "sc-7",
+        "sc-7.7",
+        "sc-8",
+        "sc-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your logical networking enforce traffic flow controls across all tiers — public-facing, application, data, management, and CI/CD networks?",
+            "Are traffic flow controls applied to multi-cloud or hybrid scenarios, or only within a single cloud provider?",
+            "How do you ensure east-west traffic between services is controlled with the same rigor as north-south (ingress/egress) traffic?",
+            "Are there network segments where traffic flow controls are relaxed for operational reasons, and how are those exceptions documented?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated tools validate that logical network configurations (VPCs, subnets, security groups, network policies) match intended traffic flow definitions?",
+            "How do you detect unauthorized traffic flows — do you analyze flow logs for connections that violate defined policies?",
+            "What happens if a network configuration change inadvertently allows unauthorized traffic between segments — how quickly is it detected and reverted?",
+            "Do you run automated reachability analysis or network path testing to confirm traffic can only flow along approved paths?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What logical networking constructs (VPCs, VNets, security groups, network policies, service mesh) compose your traffic flow enforcement, and how are they inventoried?",
+            "How do network-layer and application-layer traffic controls (service mesh, API gateways) integrate to provide defense in depth?",
+            "Are traffic flow policies defined as code (Terraform, Kubernetes NetworkPolicies, cloud provider IaC) and version-controlled?",
+            "How do flow logs from different networking layers integrate into your SIEM for traffic analysis?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that traffic flow controls have been consistently enforced and validated over the past 90 days?",
+            "Is network flow data and policy compliance status available via API or dashboard for assessor review?",
+            "How do you detect when traffic flow controls degrade — for example, when a security group rule is added that weakens segmentation?",
+            "What evidence shows flow log analysis is performed continuously to identify unauthorized or anomalous traffic patterns?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-AAM",
+      "title": "Automating Account Management",
+      "family": "IAM",
+      "description": "The lifecycle and privileges of all accounts, roles, and groups are securely managed using automation.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-07",
+      "related_controls": [
+        "ac-2.2",
+        "ac-2.3",
+        "ac-2.13",
+        "ac-6.7",
+        "ia-4.4",
+        "ia-12",
+        "ia-12.2",
+        "ia-12.3",
+        "ia-12.5"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does automated account lifecycle management cover all account types — user accounts, service accounts, machine identities, shared accounts, and break-glass accounts?",
+            "Are there any accounts, roles, or groups managed manually outside the automated lifecycle system, and how are those exceptions tracked?",
+            "How do you ensure account deprovisioning covers all systems — not just the primary IdP but also local accounts, API keys, SSH keys, and third-party SaaS tools?",
+            "When a new system or application is added to the CSO, what process ensures it is integrated into automated account management before accounts are created?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What is the maximum time between an employee termination event in HR and automatic account disablement across all systems, and how is this SLA measured?",
+            "What happens if the automated provisioning or deprovisioning system fails — how is the failure detected and what manual fallback applies?",
+            "How do you validate that automated role assignments match the principle of least privilege rather than granting overly broad access by default?",
+            "What automated access reviews detect orphaned accounts, stale group memberships, or privilege accumulation that the lifecycle system missed?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What identity governance platform manages the account lifecycle, and how does it integrate with your authoritative HR source for joiner/mover/leaver events?",
+            "How many systems and applications are integrated with automated provisioning and deprovisioning, and what percentage of total accounts does that represent?",
+            "What tools discover accounts that exist outside the lifecycle management system (shadow IT, local accounts, direct API key creation)?",
+            "How do role and group definitions integrate with your RBAC/ABAC model to ensure lifecycle automation enforces the correct privileges?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that account lifecycle automation has operated continuously and correctly over the past 90 days?",
+            "Is account lifecycle data (provisioning events, deprovisioning timing, access reviews) available via API or structured logs?",
+            "What evidence shows that accounts for all departing employees were disabled within the required timeframe?",
+            "How frequently are automated access reviews conducted, and what evidence shows findings are remediated within defined SLAs?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-APM",
+      "title": "Adopting Passwordless Methods",
+      "family": "IAM",
+      "description": "Secure passwordless methods are used for user authentication and authorization when feasible, otherwise strong passwords with phishing-resistant MFA is used.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-02",
+      "related_controls": [
+        "ac-3",
+        "ia-5.1",
+        "ia-5.2",
+        "ia-5.6",
+        "ia-6",
+        "ac-2",
+        "ia-2",
+        "ia-2.1",
+        "ia-2.2",
+        "ia-2.8",
+        "ia-5",
+        "ia-8",
+        "sc-23"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "What percentage of user authentication flows use passwordless methods (FIDO2, passkeys, certificate-based), and which flows still rely on passwords with MFA?",
+            "For authentication paths that still use passwords, are all of them protected by MFA, or are there any password-only login paths remaining?",
+            "Are passwordless or strong-password-with-MFA requirements enforced across all authentication surfaces — web console, CLI, API, mobile, and VPN?",
+            "How do you document and justify scenarios where passwordless authentication is deemed infeasible?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated enforcement prevents creation or use of authentication flows that allow password-only access without MFA?",
+            "How do you detect password weakness at authentication time — do you check against breached password databases (e.g., HIBP) or common password lists?",
+            "What happens if a user attempts to downgrade from passwordless to password-based authentication — is it blocked or flagged?",
+            "How do you test that MFA enforcement cannot be bypassed through session manipulation, token replay, or API authentication paths?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What identity providers and authentication platforms are in use, and do they all support passwordless methods?",
+            "How does your passwordless rollout track which users and applications have been migrated versus those still on password-based authentication?",
+            "What tools enforce password strength policies (minimum length, complexity, breach checking) for non-passwordless authentication?",
+            "How do authentication policies integrate across federated identity scenarios where multiple IdPs are in use?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What metrics demonstrate the passwordless adoption rate trending over time, and what is the target timeline for full adoption where feasible?",
+            "Is authentication method data (passwordless vs. password+MFA breakdown per user/application) available via API or dashboard?",
+            "How do you continuously validate that no new password-only authentication paths are introduced as applications are updated?",
+            "What evidence shows that password strength and MFA requirements are consistently enforced across all authentication events?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-ELP",
+      "title": "Ensuring Least Privilege",
+      "family": "IAM",
+      "description": "Identity and access management measures are used and persistently reviewed to ensure each user or device can only access the resources they need.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-05",
+      "related_controls": [
+        "ac-2.5",
+        "ac-2.6",
+        "ac-3",
+        "ac-4",
+        "ac-6",
+        "ac-12",
+        "ac-14",
+        "ac-17",
+        "ac-17.1",
+        "ac-17.2",
+        "ac-17.3",
+        "ac-20",
+        "ac-20.1",
+        "cm-2.7",
+        "cm-9",
+        "ia-2",
+        "ia-3",
+        "ia-4",
+        "ia-4.4",
+        "ia-5.2",
+        "ia-5.6",
+        "ia-11",
+        "ps-2",
+        "ps-3",
+        "ps-4",
+        "ps-5",
+        "ps-6",
+        "sc-4",
+        "sc-20",
+        "sc-21",
+        "sc-22",
+        "sc-23",
+        "sc-39",
+        "si-3"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does least privilege enforcement apply to all identity types — users, service accounts, machine identities, federated identities, and third-party integrations?",
+            "Are there IAM policies with wildcard permissions (e.g., `*:*`, `s3:*`) that have not been scoped down, and how are those exceptions tracked?",
+            "How do you ensure least privilege extends to data access (row-level, column-level) and not just infrastructure permissions?",
+            "When new applications or services are integrated, what process validates their access is scoped to only what they need before production deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated tools detect privilege creep — permissions granted over time that exceed current job requirements?",
+            "How do you identify and flag unused permissions (e.g., IAM policies that were granted but never exercised in the past 90 days)?",
+            "What happens when an access review identifies excessive privileges — is access automatically revoked, or does it require manual action, and what is the SLA?",
+            "How do you test that access restrictions actually work — do you run access boundary tests or attempt to access resources beyond the permitted scope?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools analyze effective permissions across your cloud environment (IAM Access Analyzer, Cloud Asset Inventory, custom scripts)?",
+            "How does your access review process integrate with your HR system to correlate permissions with current job roles and responsibilities?",
+            "What tools discover and flag overly permissive service account or machine identity permissions?",
+            "How do you maintain a map of which resources each identity can access, and is this map generated programmatically?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are access reviews conducted, and what evidence demonstrates every review completed on schedule with documented outcomes?",
+            "Is effective permission data available via API or dashboard showing each identity's actual access scope?",
+            "How do you detect when least privilege posture degrades — for example, when new broad permissions are granted outside the review cycle?",
+            "What metrics trend over time to demonstrate that privilege scope is tightening rather than expanding?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-JIT",
+      "title": "Authorizing Just-in-Time",
+      "family": "IAM",
+      "description": "A least-privileged, role and attribute-based, and just-in-time security authorization model is used and persistently reviewed for all user and non-user accounts and services.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-04",
+      "related_controls": [
+        "ac-2",
+        "ac-2.1",
+        "ac-2.2",
+        "ac-2.3",
+        "ac-2.4",
+        "ac-2.6",
+        "ac-3",
+        "ac-4",
+        "ac-5",
+        "ac-6",
+        "ac-6.1",
+        "ac-6.2",
+        "ac-6.5",
+        "ac-6.7",
+        "ac-6.9",
+        "ac-6.10",
+        "ac-7",
+        "ac-20.1",
+        "ac-17",
+        "au-9.4",
+        "cm-5",
+        "cm-7",
+        "cm-7.2",
+        "cm-7.5",
+        "cm-9",
+        "ia-4",
+        "ia-4.4",
+        "ia-7",
+        "ps-2",
+        "ps-3",
+        "ps-4",
+        "ps-5",
+        "ps-6",
+        "ps-9",
+        "ra-5.5",
+        "sc-2",
+        "sc-23",
+        "sc-39"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does just-in-time access apply to all privileged operations — production infrastructure, databases, security tooling, CI/CD pipelines, and cloud management consoles?",
+            "Are there any standing privileged accounts (always-on admin access) that have not been migrated to JIT, and how are those exceptions justified and tracked?",
+            "How do you ensure JIT applies to non-user accounts and services, not just human operators?",
+            "Does your RBAC/ABAC model cover all resources in the authorization boundary, or are there systems where access control is managed outside the central model?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated system grants temporary elevated access, and how do you ensure access is automatically revoked when the time window or task expires?",
+            "What happens if the JIT system itself goes down — can privileged access still be obtained, and what compensating controls apply?",
+            "How do you detect if someone circumvents JIT by creating persistent credentials or assuming a role outside the JIT workflow?",
+            "What automated monitoring detects JIT sessions that run longer than approved or perform actions outside the approved scope?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What privileged access management (PAM) or JIT platform is in use, and how does it integrate with your identity provider and cloud IAM?",
+            "How do JIT access requests and approvals integrate with your ticketing system to create an auditable justification trail?",
+            "What tools enforce RBAC and ABAC policies at the cloud provider level (IAM Conditions, Azure PIM, GCP IAM Conditions)?",
+            "How does your JIT system handle multi-cloud or hybrid environments where privileges span different IAM systems?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What percentage of privileged access events use JIT versus standing access, and how is this metric trending over time?",
+            "Is JIT session data (requestor, approver, duration, actions performed) available via API or structured audit logs?",
+            "How do you demonstrate that JIT access durations are appropriate — not too long (reducing security) or too short (causing operational friction)?",
+            "What evidence shows all JIT sessions over the past 90 days had proper justification, approval, and automatic revocation?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-SNU",
+      "title": "Securing Non-User Authentication",
+      "family": "IAM",
+      "description": "Appropriately secure authentication methods are used and persistently reviewed for non-user accounts and services.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-03",
+      "related_controls": [
+        "ac-2",
+        "ac-2.2",
+        "ac-4",
+        "ac-6.5",
+        "ia-3",
+        "ia-5.2",
+        "ra-5.5"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your non-user account inventory cover all types — service accounts, machine identities, API keys, OAuth clients, managed identities, and inter-service certificates?",
+            "Are there non-user accounts still using long-lived static credentials (passwords, API keys) rather than short-lived tokens, managed identities, or certificates?",
+            "How do you ensure non-user authentication requirements extend to third-party integrations and SaaS-to-SaaS connections within your authorization boundary?",
+            "When a new service or integration is created, what process ensures it uses an approved non-user authentication method before deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated scanning detects hardcoded credentials in source code, configuration files, container images, and IaC templates?",
+            "How do you enforce that non-user credentials are rotated on schedule, and what happens if automated rotation fails — is it detected and alerted?",
+            "What automated checks prevent service accounts from being created with password-based authentication when stronger methods are available?",
+            "How do you detect non-user accounts that authenticate from unexpected sources or exhibit anomalous behavior?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What secrets management platform (Vault, AWS Secrets Manager, Azure Key Vault) manages non-user credentials, and what percentage of credentials are managed through it?",
+            "How does your credential management integrate with workload identity systems (IRSA, Workload Identity Federation) to eliminate static credentials where possible?",
+            "What tools discover non-user accounts that exist outside your managed inventory — rogue API keys, manually created service accounts?",
+            "How do non-user credential rotation events integrate with your change management and logging systems?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What is the credential rotation schedule for each non-user account type, and what evidence shows rotation occurred on time?",
+            "Is the non-user credential inventory and rotation status available via API or dashboard for ongoing assessment?",
+            "How do you continuously detect newly created non-user accounts that bypass the approved creation and management process?",
+            "What evidence shows no hardcoded or improperly stored credentials exist in the current codebase and deployed artifacts?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-IAM-SUS",
+      "title": "Responding to Suspicious Activity",
+      "family": "IAM",
+      "description": "Accounts with privileged access are disabled or otherwise secured in response to suspicious activity.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-IAM-06",
+      "related_controls": [
+        "ac-2",
+        "ac-2.1",
+        "ac-2.3",
+        "ac-2.13",
+        "ac-7",
+        "ps-4",
+        "ps-8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Vulnerability Response"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does automated suspicious activity detection and response cover all privileged account types — cloud admin accounts, database admins, CI/CD pipeline accounts, and root/break-glass accounts?",
+            "What suspicious activity indicators trigger automated account actions — impossible travel, unusual API calls, off-hours access, failed MFA attempts, privilege escalation patterns?",
+            "How do you ensure detection covers privileged activity across all systems, not just the primary identity provider?",
+            "Are there privileged accounts excluded from automated suspension (e.g., break-glass accounts), and what compensating controls apply to those?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What is the maximum time between detection of suspicious privileged activity and automatic account disablement or restriction?",
+            "How do you prevent false positives from disrupting legitimate administrative work — what tuning and safeguards are in place?",
+            "What happens if the automated response system itself is compromised or disabled by an attacker — what secondary detection exists?",
+            "How do you test automated suspicious activity response — do you run simulated attacks or adversary emulation against privileged accounts?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What behavioral analytics or UEBA platform detects suspicious privileged activity, and how does it integrate with your IdP to disable accounts?",
+            "How do automated account actions integrate with your incident response workflow to ensure human investigation follows automated containment?",
+            "What tools monitor privileged session activity (session recording, command logging) to provide context for suspicious activity alerts?",
+            "How does the account restoration process integrate with your ticketing system to ensure investigation is completed before access is restored?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What evidence shows the automated detection and response system is operational and has been effective over the past 90 days?",
+            "Are detection rules and response actions auditable — can assessors review the criteria, thresholds, and recent trigger events via API?",
+            "How do you demonstrate that false positive and false negative rates are tracked and that detection rules are tuned over time?",
+            "What evidence shows that every automated account action resulted in proper investigation and documented resolution?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-INR-AAR",
+      "title": "Generating After Action Reports",
+      "family": "INR",
+      "description": "Incident after action reports are generated and lessons learned are persistently incorporated.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-INR-03",
+      "related_controls": [
+        "ir-3",
+        "ir-4",
+        "ir-4.1",
+        "ir-8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Incident",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Are after action reports generated for all incident types — security breaches, service outages, near-misses, and third-party incidents that affected your CSO?",
+            "Do AARs cover all phases of incident handling — detection, containment, eradication, recovery, and communication — or only selected phases?",
+            "How do you ensure lessons learned address root causes, not just symptoms, and that systemic issues across multiple incidents are identified?",
+            "Are lessons learned from AARs shared with all relevant teams (engineering, security, operations, leadership), not just the incident response team?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "How do you track that remediation actions identified in AARs are actually implemented — not just documented — and within what timeframe?",
+            "What automated tracking ensures AAR findings are assigned, prioritized, and closed with evidence of completion?",
+            "How do you validate that implemented improvements actually prevent recurrence — do you test through simulations or track recurrence rates?",
+            "What happens if an AAR remediation action is not completed by its deadline — what escalation triggers?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What platform manages AARs and their follow-up actions (Jira, ServiceNow, dedicated incident management tool)?",
+            "How do AAR findings integrate with your risk register, vulnerability management, and change management processes?",
+            "Are AAR templates standardized to ensure consistent coverage of root cause analysis, timeline, impact, and remediation actions?",
+            "How do lessons learned from AARs feed into training content, runbooks, and detection rule updates?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that an AAR was completed for every qualifying incident over the past year?",
+            "Is AAR data (findings, remediation status, closure evidence) accessible via API or structured export for assessor review?",
+            "What evidence shows that lessons learned from past AARs have been persistently incorporated — not just documented but operationalized?",
+            "How do you measure whether AAR-driven improvements are reducing incident frequency or severity over time?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-INR-RIR",
+      "title": "Reviewing Incident Response Procedures",
+      "family": "INR",
+      "description": "The effectiveness of documented incident response procedures is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-INR-01",
+      "related_controls": [
+        "ir-4",
+        "ir-4.1",
+        "ir-6",
+        "ir-6.1",
+        "ir-6.3",
+        "ir-7",
+        "ir-7.1",
+        "ir-8",
+        "ir-8.1",
+        "si-4.5"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Incident",
+        "Persistently",
+        "Vulnerability Response"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Do your incident response procedures cover all incident types — data breaches, ransomware, insider threats, supply chain compromise, cloud provider incidents, and availability events?",
+            "Are procedures defined for all phases — preparation, detection/analysis, containment, eradication, recovery, and post-incident activity?",
+            "How do you ensure procedures address FedRAMP-specific requirements (ICP notification timelines, agency communication, evidence preservation for federal data)?",
+            "Are there incident scenarios not covered by current procedures, and how are those gaps identified and tracked?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What SOAR or automation assists responders during incidents — automated evidence collection, containment playbooks, or enrichment of alerts?",
+            "How do you measure procedure effectiveness through quantitative metrics (MTTD, MTTR, containment time, recurrence rate)?",
+            "What happens when a procedure is followed but the incident is not effectively contained — how do you detect procedure failure versus execution failure?",
+            "Do you run tabletop exercises, purple team engagements, or adversary simulations that test procedure effectiveness under realistic conditions?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What incident response platform (PagerDuty, Jira, ServiceNow, Rootly) orchestrates procedure execution, and how does it integrate with your SIEM and communication tools?",
+            "How do incident response procedures integrate with your FedRAMP ICP workflow to ensure notification requirements are met automatically?",
+            "Are incident response runbooks and playbooks version-controlled and linked to specific detection rules and alert types?",
+            "What tools support forensic investigation and evidence preservation as part of your incident response procedures?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are incident response procedures reviewed for effectiveness, and what evidence shows each review was completed?",
+            "Is incident response performance data (detection time, response time, resolution time per incident) available via API or dashboard?",
+            "What evidence demonstrates that procedure reviews result in concrete updates to runbooks, playbooks, and automation?",
+            "How do you prove that tabletop exercises and drills are conducted on schedule and that findings drive procedure improvements?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-INR-RPI",
+      "title": "Reviewing Past Incidents",
+      "family": "INR",
+      "description": "Past incidents are persistently reviewed for patterns or vulnerabilities that were not previously apparent or identified.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-INR-02",
+      "related_controls": [
+        "ir-3",
+        "ir-4",
+        "ir-4.1",
+        "ir-5",
+        "ir-8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Incident",
+        "Persistently",
+        "Vulnerability"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your incident review scope include all incident types — security events, availability incidents, near-misses, and third-party incidents that affected your environment?",
+            "How do you ensure pattern analysis spans a sufficient time window to identify recurring issues, not just recent incidents?",
+            "Are incidents from all sources analyzed — including those detected by automated tools, user reports, third-party notifications, and threat intelligence feeds?",
+            "How do you correlate internal incidents with industry-wide vulnerability disclosures and threat intelligence to identify broader patterns?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated analytics or machine learning identify patterns across your incident history that human reviewers might miss?",
+            "How do you validate that identified patterns actually represent systemic vulnerabilities rather than coincidental similarities?",
+            "What automated correlation links incidents to common root causes — shared vulnerabilities, misconfigured controls, or specific attack techniques?",
+            "When a pattern is identified, what automated workflow ensures it becomes a tracked remediation item with accountability and deadline?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What incident data repository or SIEM supports historical incident analysis and pattern detection?",
+            "How do incident review findings integrate with your vulnerability management, risk register, and detection engineering processes?",
+            "Are incident records structured with consistent taxonomy (MITRE ATT&CK, kill chain phase, affected component) to support automated pattern analysis?",
+            "How do findings from incident pattern analysis feed into your threat modeling and security architecture decisions?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are past incidents reviewed for patterns, and what evidence proves each review was completed?",
+            "Is incident trend data (frequency by type, severity trends, recurrence rates) available via API or dashboard?",
+            "What evidence demonstrates that pattern analysis findings led to implemented preventive measures?",
+            "How do you measure whether preventive measures from past pattern analysis actually reduced incident recurrence?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-MLA-ALA",
+      "title": "Authorizing Log Access",
+      "family": "MLA",
+      "description": "A least-privileged, role and attribute-based, and just-in-time access authorization model is used and persistently reviewed for access to log data based on organizationally defined data sensitivity.",
+      "impact_low": false,
+      "impact_moderate": true,
+      "fka": "KSI-MLA-08",
+      "related_controls": [
+        "si-11"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your log access control model cover all log types — application logs, infrastructure logs, security event logs, audit trails, and database query logs?",
+            "Are log data sensitivity levels defined for all log sources, or are some log streams accessible without classification?",
+            "How do you ensure JIT access controls apply to all log access paths — SIEM UI, API queries, direct storage access, and exported log files?",
+            "Are there log data consumers (monitoring dashboards, alerting systems, third-party integrations) that have standing access to sensitive logs without JIT controls?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated controls enforce that sensitive log access requires JIT elevation and is automatically revoked after the approved time window?",
+            "How do you detect unauthorized log access — someone querying logs they should not have access to or accessing logs outside approved JIT sessions?",
+            "What happens if a user attempts to export or download sensitive log data — is it blocked, logged, or allowed?",
+            "How do you validate that log access controls actually prevent unauthorized access rather than just logging violations after the fact?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What log management platform enforces access controls, and how does it integrate with your IdP and PAM system for RBAC/ABAC and JIT?",
+            "How do you maintain a classification inventory of all log sources and their sensitivity levels?",
+            "Are log access policies defined as code (IAM policies, SIEM role configurations) and version-controlled?",
+            "How does log access auditing integrate with your SIEM to detect and alert on suspicious log access patterns?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that log access controls have been consistently enforced over the past 90 days?",
+            "Is log access audit data (who accessed what logs, when, via what JIT session) available via API for assessor review?",
+            "How frequently are log access privileges reviewed and right-sized, and what evidence shows each review was completed?",
+            "What evidence shows that log data sensitivity classifications are reviewed and updated as new log sources are added?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-MLA-EVC",
+      "title": "Evaluating Configurations",
+      "family": "MLA",
+      "description": "The configuration of machine-based information resources, especially infrastructure as code, is persistently evaluated and tested.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-MLA-05",
+      "related_controls": [
+        "ca-7",
+        "cm-2",
+        "cm-6",
+        "si-7.7"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does configuration evaluation cover all machine-based resource types — VMs, containers, Kubernetes manifests, serverless functions, managed services, and IaC templates?",
+            "Are both pre-deployment (static analysis of IaC) and post-deployment (runtime configuration assessment) evaluations in place?",
+            "How do you ensure evaluation covers security, compliance, and operational best practices — not just one dimension?",
+            "When new IaC modules or cloud resource types are introduced, what process ensures evaluation rules are created before first deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated tools evaluate IaC templates before deployment (Checkov, tfsec, Bridgecrew, Snyk IaC), and do they block deployment on failure?",
+            "How do you detect configuration drift between deployed resources and their IaC definitions — is drift detection continuous or periodic?",
+            "What happens when a runtime configuration scan finds a misconfiguration — is it auto-remediated, quarantined, or only alerted?",
+            "How do you validate that configuration evaluation rules themselves are correct and not missing real issues (false negatives)?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools compose your configuration evaluation pipeline (IaC scanners, CSPM, CIS Benchmark tools), and how do findings aggregate?",
+            "How does configuration evaluation integrate with your CI/CD pipeline to prevent insecure configurations from being deployed?",
+            "Are configuration baselines and evaluation policies stored as code alongside infrastructure definitions?",
+            "How do configuration evaluation findings integrate with your ticketing system to ensure remediation is tracked and assigned?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that configuration evaluation runs persistently rather than only at deployment time?",
+            "Is configuration compliance data (pass/fail rates, drift counts, remediation timelines) available via API or dashboard?",
+            "What evidence shows that configuration evaluation catches and prevents misconfigurations from reaching production?",
+            "How do you measure configuration evaluation coverage — what percentage of resources are evaluated, and is coverage improving over time?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-MLA-LET",
+      "title": "Logging Event Types",
+      "family": "MLA",
+      "description": "A list of information resources and event types that will be logged, monitored, and audited is maintained and persistently reviewed to ensure these activities occur.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-MLA-07",
+      "related_controls": [
+        "ac-2.4",
+        "ac-6.9",
+        "ac-17.1",
+        "ac-20.1",
+        "au-2",
+        "au-7.1",
+        "au-12",
+        "si-4.4",
+        "si-4.5",
+        "si-7.7"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your logging event type list include all security-relevant events — authentication, authorization, privilege changes, data access, configuration changes, and administrative actions?",
+            "Are there information resources where certain event types are not logged due to technical limitations or cost constraints, and how are those gaps documented?",
+            "How do you ensure the event type list covers events from all layers — application, infrastructure, network, identity, and data?",
+            "When new resources or services are deployed, what process ensures they are added to the logging scope with appropriate event types before going live?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated checks validate that every resource on your list is actually sending the defined event types to your logging system?",
+            "How do you detect when logging stops for a resource — if a log pipeline breaks or a resource stops emitting expected events?",
+            "What alerting fires when there is a gap between the documented event type list and what is actually being collected?",
+            "How do you validate that logged events contain sufficient detail (who, what, when, where, outcome) for security analysis?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain the mapping between each information resource and its required event types — is this a machine-readable inventory or a manual document?",
+            "What tools auto-discover new resources and compare them against the required logging configuration?",
+            "How does your event type list integrate with your SIEM ingestion configuration to ensure all required events are parsed and indexed?",
+            "Are logging configurations for each resource type defined as code and applied automatically during provisioning?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently is the event type list reviewed and updated, and what evidence proves each review occurred?",
+            "Is logging coverage data (percentage of resources logging all required event types) available via API or dashboard?",
+            "How do you demonstrate that logging, monitoring, and auditing have been continuous and gap-free over the past 90 days?",
+            "What evidence shows the event type list has been updated in response to new threats, new resources, or past incidents that revealed logging gaps?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-MLA-OSM",
+      "title": "Operating SIEM Capability",
+      "family": "MLA",
+      "description": "A Security Information and Event Management (SIEM) or similar system(s) is used and persistently reviewed for centralized, tamper-resistant logging of events, activities, and changes.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-MLA-01",
+      "related_controls": [
+        "ac-17.1",
+        "ac-20.1",
+        "au-2",
+        "au-3",
+        "au-3.1",
+        "au-4",
+        "au-5",
+        "au-6.1",
+        "au-6.3",
+        "au-7",
+        "au-7.1",
+        "au-8",
+        "au-9",
+        "au-11",
+        "ir-4.1",
+        "si-4.2",
+        "si-4.4",
+        "si-7.7"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your SIEM or centralized logging ingest events from all in-scope information resources — cloud infrastructure, applications, identity providers, network devices, and third-party services?",
+            "Are there log sources that are not yet integrated with centralized logging, and what is the plan and timeline to close those gaps?",
+            "Does centralized logging cover events, activities, and changes across all environments (production, staging, development, DR)?",
+            "How do you ensure log ingestion keeps pace with environment growth — new services, accounts, and regions are automatically onboarded?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What tamper-resistance mechanisms protect centralized log data (immutable storage, write-once-read-many, cryptographic integrity verification)?",
+            "How do you detect if centralized log ingestion is disrupted — a source stops sending logs, or the SIEM pipeline drops events?",
+            "What automated monitoring alerts when log volume from a source drops unexpectedly, indicating potential logging failure or tampering?",
+            "How do you validate that log integrity controls actually prevent modification — do you test by attempting to alter or delete log entries?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What SIEM platform or log management system provides centralized logging, and what is its capacity and scalability?",
+            "How does the SIEM integrate with your asset inventory to validate that every in-scope resource has a corresponding log source?",
+            "What log shipping mechanisms (agents, API collectors, cloud-native log forwarding) feed into the centralized system?",
+            "How does your centralized logging integrate with alerting, incident response, and compliance reporting workflows?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that centralized logging has been operational and complete for the past 90 days with no gaps?",
+            "Is log ingestion health data (source count, event volume, latency, error rates) available via API or dashboard?",
+            "What evidence shows log retention meets required durations and that retention policies are enforced automatically?",
+            "How do you prove that tamper-resistance controls have been active and effective throughout the assessment period?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-MLA-RVL",
+      "title": "Reviewing Logs",
+      "family": "MLA",
+      "description": "Logs are persistently reviewed and audited.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-MLA-02",
+      "related_controls": [
+        "ac-2.4",
+        "ac-6.9",
+        "au-2",
+        "au-6",
+        "au-6.1",
+        "si-4",
+        "si-4.4"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does log review and auditing cover all log types — security events, access logs, change logs, error logs, and administrative action logs?",
+            "Are there log sources that are ingested but not subject to regular review or automated analysis, and how are those gaps tracked?",
+            "How do you ensure log review depth is appropriate — are high-value logs (privileged access, security events) reviewed more thoroughly than routine operational logs?",
+            "How do you ensure log review covers both automated detection (SIEM correlation rules, anomaly detection) and human analysis of events that automated tools may miss?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated detection rules (correlation rules, anomaly detection, ML-based analysis) identify concerning patterns in logs before human review?",
+            "How do you validate that automated log analysis rules are effective — do you test with simulated attacks or known-bad patterns?",
+            "What happens when automated analysis flags an anomaly — is it automatically escalated for investigation, and what is the response SLA?",
+            "How do you detect when automated log analysis stops working — for example, when a correlation rule is disabled or a data source is misconfigured?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What SIEM capabilities, log analysis tools, or SOC services support persistent log review?",
+            "How do log review findings integrate with your incident response workflow to ensure anomalies become investigated incidents?",
+            "Are log review and audit schedules defined per log type and sensitivity, with clear accountability for each?",
+            "How do alert triage and investigation findings feed back into detection rule tuning and log analysis improvement?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that log reviews and audits occur persistently rather than only when triggered by incidents?",
+            "Is log review activity data (reviews conducted, anomalies found, investigations opened) available via API or dashboard?",
+            "What evidence shows that findings from log reviews led to security improvements or incident detection?",
+            "How do you measure log review effectiveness — for example, tracking whether past incidents could have been detected earlier through log review?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-PIY-GIV",
+      "title": "Generating Inventories",
+      "family": "PIY",
+      "description": "Authoritative sources are used to automatically generate real-time inventories of all information resources when needed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-PIY-01",
+      "related_controls": [
+        "cm-2.2",
+        "cm-7.5",
+        "cm-8",
+        "cm-8.1",
+        "cm-12",
+        "cm-12.1",
+        "cp-2.8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your automated inventory cover all information resource types — compute, storage, networking, databases, serverless functions, containers, SaaS integrations, and data stores?",
+            "Are there resource types that cannot be discovered automatically (shadow IT, manually provisioned resources, third-party managed components), and how are those tracked?",
+            "How do you ensure inventory generation captures resources across all cloud accounts, regions, and environments — including those managed by third parties?",
+            "When new cloud services or resource types are adopted, what process ensures they are included in automated inventory generation?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "How do you validate that your automated inventory matches the actual deployed environment — do you run reconciliation checks against cloud provider APIs?",
+            "What happens when inventory generation discovers a resource that is not in any known configuration management database — is it flagged for investigation?",
+            "How quickly can you generate a complete, real-time inventory on demand, and what is the maximum staleness of inventory data?",
+            "What automated checks detect inventory inaccuracies — resources that exist but are not inventoried, or inventoried resources that no longer exist?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What authoritative sources feed your inventory system (cloud provider APIs, Terraform state, Kubernetes API, CMDB), and which is considered the source of truth?",
+            "How do inventory data from multiple sources reconcile to produce a single, consistent view of all information resources?",
+            "What tools perform automated asset discovery beyond what cloud provider APIs report (network scanning, DNS enumeration, certificate transparency)?",
+            "How does inventory data integrate with vulnerability management, compliance assessment, and monitoring systems?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that inventory data is real-time or near-real-time rather than generated on a periodic batch schedule?",
+            "Is the complete inventory available via API in a machine-readable format for assessor consumption?",
+            "What evidence shows inventory accuracy has been validated over the past 90 days — reconciliation reports, drift detection results?",
+            "How do you detect when inventory coverage degrades — for example, when a new cloud account is created but not integrated into the discovery system?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-PIY-RES",
+      "title": "Reviewing Executive Support",
+      "family": "PIY",
+      "description": "Executive support for achieving the provider's security goals is persistently reviewed and demonstrated.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-PIY-08",
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Provider"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does executive oversight cover all dimensions of the security program — risk management, compliance, investment, staffing, incident response, and strategic direction?",
+            "Are executive roles and responsibilities for security clearly defined, including accountability for FedRAMP authorization and ongoing compliance?",
+            "How do you ensure executive support extends to resource allocation (headcount, tooling budget, training) and not just verbal endorsement?",
+            "Are there security program areas that lack adequate executive visibility or sponsorship, and how are those gaps escalated?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated dashboards or reports keep executives informed of security posture, risk levels, and compliance status without requiring manual compilation?",
+            "How do you measure whether executive decisions (resource allocation, risk acceptance, strategic direction) actually improve security outcomes?",
+            "What automated escalation triggers when security risks exceed defined thresholds, ensuring executive awareness without waiting for scheduled reviews?",
+            "How do you validate that executive-approved risk acceptances are still appropriate and have not become stale?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What GRC platform or reporting tool provides executives with aggregated security metrics and risk data?",
+            "How do executive reporting dashboards integrate with underlying security tools to provide accurate, real-time data rather than manually curated reports?",
+            "What mechanisms ensure executive security reviews are connected to operational outcomes (budget approvals, staffing decisions, project prioritization)?",
+            "How is executive engagement in security tracked and documented — board meeting minutes, risk committee records, decision logs?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently does executive leadership review security program status, and what evidence demonstrates each review occurred?",
+            "Is executive engagement data (review dates, decisions made, resources allocated) available in structured format for assessor review?",
+            "How do you demonstrate that executive support is persistent and effective rather than limited to annual compliance reviews?",
+            "What evidence shows executive-directed security improvements were implemented and produced measurable results?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-PIY-RIS",
+      "title": "Reviewing Investments in Security",
+      "family": "PIY",
+      "description": "The effectiveness of the provider's investments in achieving security goals is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-PIY-06",
+      "related_controls": [
+        "ac-5",
+        "ca-2",
+        "cp-2.1",
+        "cp-4.1",
+        "ir-3.2",
+        "pm-3",
+        "sa-2",
+        "sa-3",
+        "sr-2.1"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Provider"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your investment effectiveness review cover all security spending categories — tools, staffing, training, compliance, managed services, and consulting?",
+            "How do you ensure effectiveness reviews assess both operational security outcomes (fewer incidents, faster detection) and compliance outcomes (FedRAMP findings remediated)?",
+            "Are there security investments that are not subject to effectiveness review, and how do you ensure those do not persist without accountability?",
+            "How do you ensure investment reviews consider total cost of ownership, not just acquisition cost — including maintenance, staffing, and integration costs?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated metrics track whether security investments are achieving their intended objectives (reduced risk scores, faster MTTD/MTTR, fewer findings)?",
+            "How do you validate that a tool or investment is actively contributing to security outcomes rather than being shelfware?",
+            "What happens when an effectiveness review determines an investment is underperforming — is there an automated flag or threshold that triggers re-evaluation?",
+            "How do you measure the counterfactual — how would your security posture have been different without a specific investment?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tool or platform tracks security investments, their costs, and their mapped objectives?",
+            "How do investment effectiveness metrics integrate with your GRC platform and executive reporting dashboards?",
+            "How do you correlate security tool utilization data with investment decisions to identify underutilized tools?",
+            "Are security investment objectives mapped to specific KSIs or NIST 800-53 controls to demonstrate compliance value?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are security investments reviewed for effectiveness, and what evidence demonstrates each review was completed?",
+            "Is investment effectiveness data (metrics, utilization, outcomes) available in structured format for assessor review?",
+            "What evidence shows that effectiveness reviews have led to changes — tools replaced, budgets reallocated, or approaches adjusted?",
+            "How do you demonstrate that security investment effectiveness is improving over time rather than remaining static?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-PIY-RSD",
+      "title": "Reviewing Security in the SDLC",
+      "family": "PIY",
+      "description": "The effectiveness of building security and privacy considerations into the Software Development Lifecycle and aligning with CISA Secure By Design principles is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-PIY-04",
+      "related_controls": [
+        "ac-5",
+        "au-3.3",
+        "cm-3.4",
+        "pl-8",
+        "pm-7",
+        "sa-3",
+        "sa-8",
+        "sc-4",
+        "sc-18",
+        "si-10",
+        "si-11",
+        "si-16"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your secure SDLC cover all phases — design (threat modeling), development (SAST, SCA), testing (DAST, penetration testing), deployment (IaC scanning), and maintenance (dependency updates)?",
+            "Are all software components subject to the secure SDLC — including internal services, customer-facing applications, infrastructure-as-code, and configuration code?",
+            "How do you ensure CISA Secure By Design principles are applied — including memory-safe languages, secure defaults, eliminating default passwords, and reducing attack surface?",
+            "Are third-party or open-source components incorporated into the CSO subject to the same SDLC security requirements as internally developed code?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated security gates exist in the CI/CD pipeline (SAST, DAST, SCA, secret scanning, container scanning), and do they block merges or deployments on failure?",
+            "How do you measure whether secure SDLC practices are effective — do you track finding rates by category (injection, XSS, auth issues) trending over time?",
+            "What happens when a security gate fails — is the developer provided with actionable guidance, and how quickly must the finding be resolved before the pipeline unblocks?",
+            "How do you validate that threat modeling is conducted for new features and that identified risks are addressed before release?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What SAST, DAST, SCA, and secret scanning tools are integrated into your CI/CD pipeline, and how do findings aggregate into a single view?",
+            "How does your secure SDLC integrate with your vulnerability management system to track findings from code to remediation?",
+            "Are SDLC security policies (required scans, approval gates, finding severity thresholds) defined as pipeline-as-code and version-controlled?",
+            "How do you track which repositories and services have full SDLC security coverage versus partial or no coverage?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that every production release in the past 90 days passed through the secure SDLC pipeline with all security gates?",
+            "Is SDLC security data (scan results, gate pass/fail, finding counts, remediation timelines) available via API or dashboard?",
+            "How frequently is the secure SDLC reviewed for effectiveness, and what evidence shows improvements based on those reviews?",
+            "What evidence demonstrates alignment with CISA Secure By Design principles in recent releases?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-PIY-RVD",
+      "title": "Reviewing Vulnerability Disclosures",
+      "family": "PIY",
+      "description": "The effectiveness of the provider's vulnerability disclosure program is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-PIY-03",
+      "related_controls": [
+        "ra-5.11"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Provider",
+        "Vulnerability"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your vulnerability disclosure program (VDP) cover all in-scope services and applications, or are some excluded from the program scope?",
+            "Is the VDP publicly accessible with clear instructions for researchers — including scope, rules of engagement, and safe harbor language?",
+            "How do you ensure the VDP addresses all vulnerability types — not just web application bugs but also infrastructure, API, and logic flaws?",
+            "Are there any channels through which vulnerability reports arrive outside the formal VDP (direct emails, social media), and how are those tracked?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated workflow triages incoming vulnerability reports, assigns severity, and routes them to the appropriate remediation team?",
+            "How do you track response timeframes for each disclosure — time to acknowledge, time to validate, time to remediate — and what happens when SLAs are missed?",
+            "What automated deduplication identifies when multiple researchers report the same vulnerability?",
+            "How do you validate that a reported vulnerability has been effectively remediated before closing the disclosure?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What platform manages VDP submissions (HackerOne, Bugcrowd, custom portal), and how does it integrate with your vulnerability management and ticketing systems?",
+            "How do VDP findings feed into your broader vulnerability management program alongside scanner findings and internal testing results?",
+            "What secure communication channels are provided for researchers to submit sensitive vulnerability details?",
+            "How does the VDP integrate with your public security contact information (security.txt, CSAF provider metadata)?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently is VDP effectiveness reviewed, and what evidence demonstrates each review was completed?",
+            "Is VDP performance data (submission counts, response times, resolution rates) available via API or dashboard?",
+            "What evidence shows the VDP is actively used by researchers and that legitimate reports are received and resolved?",
+            "How do you demonstrate the program has improved over time based on effectiveness reviews — faster response times, higher resolution rates?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-RPL-ABO",
+      "title": "Aligning Backups with Objectives",
+      "family": "RPL",
+      "description": "The alignment of machine-based information resource backups with defined recovery objectives is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-RPL-03",
+      "related_controls": [
+        "cm-2.3",
+        "cp-6",
+        "cp-9",
+        "cp-10",
+        "cp-10.2",
+        "si-12"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your backup strategy cover all critical machine-based information resources — databases, object storage, configuration data, secrets, IaC state files, and container registry images?",
+            "Are there resources where backups are not performed because they are considered ephemeral or recoverable from code, and how is that determination documented?",
+            "How do you ensure backup coverage extends to all environments and regions where federal customer data is stored, including DR sites?",
+            "When new data stores or services are added, what process ensures they are included in the backup schedule with appropriate RPOs before going live?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated monitoring detects backup failures, and how quickly are failures alerted and investigated?",
+            "How do you validate backup integrity — do you run automated restore tests to confirm backups are not corrupted and can be restored within RPO?",
+            "What happens if a backup job consistently misses its RPO window — is it automatically escalated, and what compensating action is taken?",
+            "How do you test that backups can actually restore to a functioning state, not just that backup files exist?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What backup technologies are in use (cloud-native snapshots, third-party backup tools, database-native backups), and how do they cover different resource types?",
+            "How does your backup inventory map to your asset inventory to confirm every critical resource has a corresponding backup policy?",
+            "Are backup configurations (schedules, retention, encryption, storage location) defined as code and version-controlled?",
+            "How do backup systems integrate with your monitoring and alerting to ensure backup health is continuously tracked?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that backups have run successfully and on schedule for the past 90 days for all critical resources?",
+            "Is backup status data (last successful backup, backup size, restore test results) available via API or dashboard?",
+            "How frequently are backup restore tests performed, and what evidence shows each test was completed with results documented?",
+            "What evidence demonstrates that backup RPOs align with defined recovery objectives and that alignment is reviewed persistently?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-RPL-ARP",
+      "title": "Aligning Recovery Plan",
+      "family": "RPL",
+      "description": "The alignment of recovery plans with defined recovery objectives is persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-RPL-02",
+      "related_controls": [
+        "cp-2",
+        "cp-2.1",
+        "cp-2.3",
+        "cp-4.1",
+        "cp-6",
+        "cp-6.1",
+        "cp-6.3",
+        "cp-7",
+        "cp-7.1",
+        "cp-7.2",
+        "cp-7.3",
+        "cp-8",
+        "cp-8.1",
+        "cp-8.2",
+        "cp-10",
+        "cp-10.2"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Do recovery plans cover all critical systems, services, and dependencies — including third-party services, DNS, identity providers, and key management systems?",
+            "Are recovery plans defined for multiple failure scenarios — single-service failure, availability zone loss, region loss, and provider-wide outage?",
+            "How do you ensure recovery plan alignment covers both RTO (service restoration) and RPO (data loss) objectives for every critical resource?",
+            "Are there dependencies or services where recovery plans are incomplete or untested, and how are those gaps tracked?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated runbooks or scripts support recovery plan execution, and what percentage of recovery steps are automated versus manual?",
+            "How do you validate that recovery plans actually achieve defined RTOs and RPOs — through full recovery tests, not just tabletop exercises?",
+            "What happens if a recovery plan fails during execution — is there a fallback plan, and has the fallback been tested?",
+            "How do you detect when environmental changes (new services, new dependencies, architecture updates) invalidate portions of the recovery plan?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools support recovery plan execution (orchestration platforms, DR automation, cloud-native recovery services)?",
+            "How do recovery plans integrate with your asset inventory and dependency map to ensure all critical resources are covered?",
+            "Are recovery plans stored as executable runbooks (linked to automation), or only as narrative documents?",
+            "How does your recovery plan account for the recovery order of dependent services — which services must recover first for others to function?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are recovery plans reviewed for alignment with objectives, and what evidence proves each review was completed?",
+            "Is recovery plan testing data (test dates, achieved RTO/RPO, issues found) available in structured format for assessor review?",
+            "What evidence demonstrates that recovery plans have been updated in response to environmental changes, test failures, or objective updates?",
+            "How do you prove that recovery plans remain viable — that they reflect the current architecture, dependencies, and staffing?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-RPL-RRO",
+      "title": "Reviewing Recovery Objectives",
+      "family": "RPL",
+      "description": "The desired Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO) are defined and persistently reviewed for alignment with the provider's business needs and capabilities.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-RPL-01",
+      "related_controls": [
+        "cp-2.3",
+        "cp-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Provider"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Are RTOs and RPOs defined for all critical services and data stores, or are there components without formally defined recovery objectives?",
+            "Do recovery objectives account for all failure scenarios — not just service outages but also data corruption, ransomware, insider threats, and provider failures?",
+            "How do you ensure recovery objectives reflect agency requirements and SLA commitments, not just internal preferences?",
+            "Are recovery objectives defined at a granular level (per service, per data tier) rather than a single blanket RTO/RPO for the entire CSO?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated monitoring confirms that current technical capabilities (backup frequency, replication lag, failover speed) can actually meet defined RTOs and RPOs?",
+            "How do you detect when infrastructure changes make a defined RTO or RPO unachievable — for example, when data volume growth outpaces backup throughput?",
+            "What happens when a recovery test fails to meet the defined RTO or RPO — is the objective updated, or is the capability improved?",
+            "How do you validate that RPO-aligned backup frequencies are maintained during peak load periods and not just under normal conditions?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "Where are RTOs and RPOs documented and maintained — in a GRC tool, a configuration management database, or alongside service definitions?",
+            "How do recovery objectives integrate with your backup configuration, replication settings, and failover policies to ensure technical alignment?",
+            "Are recovery objectives linked to agency SLAs and customer agreements in a traceable manner?",
+            "How do recovery objective definitions integrate with your recovery plan documentation to ensure plans are designed to meet them?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are recovery objectives reviewed and validated, and what evidence demonstrates each review occurred?",
+            "Is recovery objective compliance data (current capability vs. defined objective for each service) available via API or dashboard?",
+            "What evidence shows recovery objectives have been updated in response to changes in agency requirements, architecture, or test results?",
+            "How do you demonstrate that actual recovery performance in tests or incidents met defined RTOs and RPOs?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-RPL-TRC",
+      "title": "Testing Recovery Capabilities",
+      "family": "RPL",
+      "description": "The capability to recover from incidents and contingencies aligned with defined recovery objectives is persistently tested.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-RPL-04",
+      "related_controls": [
+        "cp-2.1",
+        "cp-2.3",
+        "cp-4",
+        "cp-4.1",
+        "cp-6",
+        "cp-6.1",
+        "cp-9.1",
+        "cp-10",
+        "ir-3",
+        "ir-3.2"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Incident",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does recovery testing cover all critical failure scenarios — single-service failure, data corruption, availability zone loss, region loss, ransomware, and supply chain compromise?",
+            "Are all critical services and data stores included in recovery tests, or are some components tested only through tabletop exercises without actual recovery?",
+            "How do you ensure recovery testing validates the full recovery chain — from backup restoration through service startup through data integrity validation?",
+            "Are recovery tests conducted with realistic conditions (production-scale data, real dependencies, actual failover mechanisms) rather than simplified scenarios?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated recovery testing runs on a regular schedule (automated failover drills, backup restore tests, chaos engineering experiments)?",
+            "How do you measure actual recovery times and compare them against defined RTOs during tests?",
+            "What happens when a recovery test fails to meet RTO/RPO — what remediation process triggers, and what is the deadline to retest?",
+            "How do you validate data integrity after recovery — confirming recovered data is complete, consistent, and not corrupted?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools and platforms support recovery testing (DR orchestration, chaos engineering tools, backup management consoles)?",
+            "How do recovery test results integrate with your recovery plan documentation to trigger plan updates when tests reveal gaps?",
+            "Are recovery test scenarios defined and version-controlled alongside recovery plans?",
+            "How do recovery test findings feed into your risk register and remediation tracking system?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are recovery tests conducted for each critical service, and what evidence demonstrates the schedule has been followed?",
+            "Is recovery test data (test dates, scenarios tested, achieved RTO/RPO, issues found) available in structured format via API?",
+            "What evidence shows that recovery test findings have driven improvements to recovery plans and capabilities?",
+            "How do you demonstrate that recovery capabilities are persistently tested rather than only validated at assessment time?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SCR-MIT",
+      "title": "Mitigating Supply Chain Risk",
+      "family": "SCR",
+      "description": "Persistently identify, review, and mitigate potential supply chain risks.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-TPR-03",
+      "related_controls": [
+        "ac-20",
+        "ra-3.1",
+        "sa-9",
+        "sa-10",
+        "sa-11",
+        "sa-15.3",
+        "sa-22",
+        "si-7.1",
+        "sr-5",
+        "sr-6",
+        "ca-7.4",
+        "sc-18"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your supply chain risk management cover all supplier categories — open-source libraries, commercial software vendors, cloud infrastructure providers, managed service providers, and SaaS integrations?",
+            "How do you assess supply chain risks beyond vulnerability management — including vendor viability, geopolitical risk, single-source dependencies, and build pipeline integrity?",
+            "Are there suppliers or third-party components that have not been subject to risk assessment, and how are those gaps identified and tracked?",
+            "How do you ensure supply chain risk mitigation extends to build infrastructure — ensuring CI/CD pipelines, package registries, and artifact repositories are not compromised?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated tools verify the integrity of third-party components before they are incorporated — signature verification, provenance attestation (SLSA), or hash validation?",
+            "How do you detect supply chain attacks such as dependency confusion, typosquatting, or compromised maintainer accounts?",
+            "What automated monitoring alerts when a supplier's security posture changes — for example, a vendor loses a certification, experiences a breach, or changes ownership?",
+            "How do you validate that mitigations for identified supply chain risks are effective — through testing, monitoring, or periodic reassessment?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you maintain an inventory of all third-party suppliers and components in your supply chain, including their risk ratings and assessment status?",
+            "What tools support supply chain risk assessment (vendor risk management platforms, SCA tools, SBOM analysis, threat intelligence feeds)?",
+            "How does supply chain risk data integrate with your overall risk register and vulnerability management program?",
+            "Are third-party component provenance and integrity verification integrated into your CI/CD pipeline as mandatory gates?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are supply chain risks reassessed, and what evidence demonstrates persistent identification and review?",
+            "Is supply chain risk data (supplier inventory, risk ratings, assessment dates, mitigation status) available via API or dashboard?",
+            "What evidence shows supply chain risk mitigations have been implemented and are effective — not just documented but operational?",
+            "How do you detect new supply chain risks introduced by developer choices — for example, when a new dependency is added that has not been vetted?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SCR-MON",
+      "title": "Monitoring Supply Chain Risk",
+      "family": "SCR",
+      "description": "Third party software information resources are automatically monitored for upstream vulnerabilities using mechanisms that may include contractual notification requirements or active monitoring services.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-RSC-MON",
+      "related_controls": [
+        "ac-20",
+        "ca-3",
+        "ir-6.3",
+        "ps-7",
+        "ra-5",
+        "sa-9",
+        "si-5",
+        "sr-5",
+        "sr-6",
+        "sr-8"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Vulnerability"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your third-party software monitoring cover all dependency types — open-source libraries, commercial SDKs, container base images, OS packages, and cloud provider managed runtimes?",
+            "Are dependencies tracked across all languages, frameworks, and package managers used in your CSO (npm, pip, Maven, Go modules, Cargo, etc.)?",
+            "How do you ensure monitoring covers transitive (indirect) dependencies, not just direct dependencies listed in manifest files?",
+            "Are there third-party components where you rely solely on contractual notification rather than active monitoring, and how do you verify those notifications are timely?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated SCA (Software Composition Analysis) tools monitor dependencies for vulnerabilities, and do they alert in near-real-time when new CVEs are published?",
+            "How quickly after a vulnerability is disclosed in a third-party component do you detect it in your environment, and what is your SLA for remediation?",
+            "What automated processes update or patch vulnerable dependencies — do you have automated dependency update PRs (Dependabot, Renovate)?",
+            "What happens if automated patching breaks a build or test — how is the failure detected and the update adjusted without leaving the vulnerability unpatched?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "How do you generate and maintain SBOMs (Software Bill of Materials) for all deployed services, and in what format (SPDX, CycloneDX)?",
+            "How does your SCA tooling integrate with your CI/CD pipeline to block deployment of artifacts with known critical vulnerabilities?",
+            "What tools monitor the CISA KEV catalog and other exploit intelligence feeds to prioritize actively exploited third-party vulnerabilities?",
+            "How do SCA findings integrate with your vulnerability management system to ensure third-party findings are tracked alongside infrastructure findings?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that third-party software monitoring has been continuous and effective over the past 90 days?",
+            "Is SBOM and dependency vulnerability data available via API for assessor review and FedRAMP consumption?",
+            "What evidence shows third-party vulnerabilities are detected and remediated within the same timelines required for first-party vulnerabilities?",
+            "How do you detect when monitoring coverage drops — for example, when a new repository or service is created without SCA integration?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-ACM",
+      "title": "Automating Configuration Management",
+      "family": "SVC",
+      "description": "The configuration of machine-based information resources is managed using automation and persistently reviewed for drift.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-04",
+      "related_controls": [
+        "ac-2.4",
+        "cm-2",
+        "cm-2.2",
+        "cm-2.3",
+        "cm-6",
+        "cm-7.1",
+        "pl-9",
+        "pl-10",
+        "sa-5",
+        "si-5",
+        "sr-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Drift",
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "What percentage of machine-based information resources are managed through automated configuration management, and which resource types are excluded?",
+            "Does automated configuration management cover all resource categories — compute, containers, networking, storage, managed services, and security tooling?",
+            "Are resources that cannot be managed through automation documented with compensating controls, and is there a plan to bring them under automation?",
+            "How do you ensure configuration standards enforced by automation cover security hardening, compliance requirements, and operational best practices?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "How do you detect configuration drift between the automated desired state and the actual running configuration, and what is the remediation SLA?",
+            "What happens if the configuration automation tool itself fails or applies an incorrect configuration — how is the failure detected and rolled back?",
+            "What automated validation runs after configuration is applied to confirm the resource is in the correct state and functioning properly?",
+            "How do you test configuration changes in non-production environments before applying them to production through automation?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What configuration management tools are in use (Ansible, Chef, Puppet, Terraform, cloud-native config services), and how do they coordinate across resource types?",
+            "How does your configuration management system integrate with your asset inventory to confirm every resource has an assigned configuration policy?",
+            "Are configuration definitions stored as code in version control with change review and approval workflows?",
+            "How does configuration management integrate with your SIEM and change logging to track all configuration changes?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that automated configuration management has been active and effective over the past 90 days?",
+            "Is configuration compliance data (drift counts, remediation times, coverage percentage) available via API or dashboard?",
+            "What evidence shows configuration drift detection and remediation is continuous rather than periodic?",
+            "How do you measure and demonstrate that configuration management coverage is increasing over time?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-ASM",
+      "title": "Automating Secret Management",
+      "family": "SVC",
+      "description": "Management, protection, and regular rotation of digital keys, certificates, and other secrets is automated and persistently reviewed.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-06",
+      "related_controls": [
+        "ac-17.2",
+        "ia-5.2",
+        "ia-5.6",
+        "sc-12",
+        "sc-17"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Persistently",
+        "Regularly"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does automated secret management cover all secret types — API keys, database credentials, TLS certificates, SSH keys, encryption keys, OAuth tokens, and webhook secrets?",
+            "Are there secrets managed manually or stored outside the centralized secret management platform, and how are those exceptions tracked?",
+            "How do you ensure secret rotation covers all environments (production, staging, development, CI/CD) and not just production?",
+            "When new services or integrations are added, what process ensures their secrets are onboarded into the automated management system before deployment?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated rotation schedules are defined for each secret type, and what happens if a rotation job fails — how is the failure detected and retried?",
+            "How do you detect hardcoded secrets in source code, container images, IaC templates, and configuration files — at what stage (pre-commit, CI/CD, runtime)?",
+            "What happens when a secret is suspected of being compromised — can it be rotated immediately across all consuming services without downtime?",
+            "How do you validate that rotated secrets are properly picked up by all consuming applications without causing authentication failures?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What secrets management platform (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault) is in use, and how does it integrate with workload identity for secret retrieval?",
+            "How do you maintain an inventory of all secrets, their types, rotation schedules, and consuming services?",
+            "What tools scan for secret sprawl — secrets that were provisioned but are no longer in use, or secrets stored in unauthorized locations?",
+            "How does your secrets management integrate with your CI/CD pipeline to inject secrets securely without exposing them in logs or environment variables?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What evidence demonstrates that all secrets have been rotated within their defined rotation periods over the past 90 days?",
+            "Is secret rotation and management data (rotation dates, consuming services, expiration status) available via API for assessor review?",
+            "How do you detect when a secret approaches expiration or exceeds its rotation schedule without being rotated?",
+            "What evidence shows that secret scanning has been active across all code repositories and deployment pipelines, with findings remediated?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-EIS",
+      "title": "Evaluating and Improving Security",
+      "family": "SVC",
+      "description": "Information resources are persistently evaluated for opportunities to improve security and those improvements are persistently made.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-01",
+      "related_controls": [
+        "cm-7.1",
+        "cm-12.1",
+        "ma-2",
+        "pl-8",
+        "sc-7",
+        "sc-39",
+        "si-2.2",
+        "si-4",
+        "sr-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your security evaluation and improvement process cover all information resource categories — infrastructure, applications, data stores, identity systems, and network components?",
+            "How do you ensure improvement evaluations consider all security dimensions — hardening, patching, architecture, access controls, encryption, and monitoring?",
+            "Are improvements prioritized using risk-based criteria that consider both likelihood and impact, not just severity scores?",
+            "How do you identify improvement opportunities proactively (benchmarking, threat intelligence, industry best practices) rather than only in response to findings?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated evaluation tools (CSPM, CWPP, benchmark scanners) continuously identify security improvement opportunities?",
+            "How do you validate that implemented improvements actually improved security posture — through before/after measurement, re-scanning, or testing?",
+            "What happens when an improvement opportunity is identified but deprioritized — how do you track the accepted risk and re-evaluate periodically?",
+            "How do you detect regression — previously implemented improvements that are undone by subsequent changes?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools and processes compose your continuous security evaluation pipeline?",
+            "How do security improvement findings integrate with your backlog management and sprint planning to ensure they are resourced?",
+            "Are security improvement opportunities tracked in the same system as vulnerability findings and compliance gaps, or in a separate process?",
+            "How do evaluation results from different tools (CSPM, vulnerability scanners, penetration tests, audits) aggregate into a unified improvement roadmap?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that security evaluation and improvement is persistent rather than episodic?",
+            "Is security posture trending data (improvement counts, risk score changes, benchmark conformance) available via API or dashboard?",
+            "What evidence shows that security improvements implemented over the past year have measurably improved your posture?",
+            "How do you prove that the evaluation cadence is maintained and that identified improvements are implemented within defined timelines?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-PRR",
+      "title": "Preventing Residual Risk",
+      "family": "SVC",
+      "description": "Plans, procedures, and the state of information resources are persistently reviewed after making changes to limit and remove unwanted residual elements that would likely negatively affect the confidentiality, integrity, or availability of federal customer data.",
+      "impact_low": false,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-08",
+      "related_controls": [
+        "sc-4"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Federal Customer Data",
+        "Information Resource",
+        "Likely",
+        "Persistently"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your residual risk review process cover all change types that could leave unwanted elements — decommissioned services, migrated databases, retired features, and infrastructure teardowns?",
+            "How do you identify all categories of residual elements — orphaned data, stale credentials, leftover network rules, dangling DNS records, unused storage volumes, and abandoned IAM roles?",
+            "Are residual risk reviews conducted for inherited and third-party service changes that may affect the confidentiality, integrity, or availability of federal customer data?",
+            "How do you ensure residual risk reviews cover data remnants in backups, caches, CDN edge nodes, and log archives — not just primary storage?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated scanning detects orphaned resources, stale configurations, and data remnants after changes are deployed?",
+            "How do you automatically identify resources that are no longer referenced by any active service but still contain federal customer data?",
+            "What validation confirms that residual elements have been completely removed — do you verify deletion through post-cleanup scanning?",
+            "What happens if automated cleanup fails to remove a residual element — how is the failure detected and what manual process applies?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools detect orphaned cloud resources (unused EBS volumes, detached network interfaces, stale snapshots, abandoned S3 buckets)?",
+            "How does your change management process integrate with residual risk review to ensure every significant change triggers a post-change cleanup check?",
+            "Are residual risk review results tracked in your ticketing system with accountability for remediation?",
+            "How do you maintain visibility into data remnants across all storage tiers (hot, warm, cold, archive, backup)?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How frequently are residual risk reviews conducted, and what evidence demonstrates they occur after every significant change?",
+            "Is orphaned resource and residual element detection data available via API or dashboard for ongoing monitoring?",
+            "What evidence shows residual elements identified in the past 90 days were remediated within defined timelines?",
+            "How do you demonstrate that residual risk to federal customer data is persistently minimized rather than addressed only at assessment time?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-RUD",
+      "title": "Removing Unwanted Data",
+      "family": "SVC",
+      "description": "Unwanted federal customer data is removed promptly when requested by an agency in alignment with customer agreements, including from backups if appropriate; this typically applies when a customer spills information or when a customer seeks to remove information from a service due to a change in usage.",
+      "impact_low": false,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-10",
+      "related_controls": [
+        "si-12.3",
+        "si-18.4"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Agency",
+        "Federal Customer Data",
+        "Promptly"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does your data removal process cover all locations where federal customer data may reside — production databases, caches, search indexes, logs, backups, archives, CDN caches, and analytics pipelines?",
+            "How do you handle data removal from backups — is the data selectively removed, or are affected backup sets marked for expiration?",
+            "Are data removal procedures defined for both data spill scenarios and customer departure scenarios, with appropriate differences in scope and urgency?",
+            "How do you ensure data removal extends to third-party sub-processors or integrated services that may have received copies of the data?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated processes execute data removal across all identified storage locations, and how quickly can production data be removed after request approval?",
+            "How do you validate that data removal is complete — do you run post-deletion searches across all storage tiers to confirm no remnants exist?",
+            "What happens if data removal from a specific location fails (e.g., backup system is unavailable, archive storage has retention locks) — how is the failure tracked and retried?",
+            "How do you ensure deleted data cannot be recovered from any storage medium after removal?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What data mapping or data flow documentation identifies all locations where a specific customer's data is stored, processed, or cached?",
+            "How does the data removal process integrate with your ticketing system to track requests from receipt through completion with full audit trail?",
+            "What tools support data removal across different storage technologies (relational databases, object storage, data lakes, search indexes)?",
+            "How does your data removal capability integrate with customer agreements to ensure alignment on definitions of 'promptly' and scope of removal?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "What is your defined SLA for data removal after an agency request, and what evidence demonstrates you have met that SLA for all past requests?",
+            "Is data removal request tracking (request date, completion date, locations cleared, validation results) available in structured format for assessor review?",
+            "How do you demonstrate that the data removal process has been tested — including removal from backups — even if no actual requests have been received?",
+            "What evidence shows data removal validation (post-deletion search results) is performed for every removal request?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-SIN",
+      "title": "Securing Information",
+      "family": "SVC",
+      "description": "Information is encrypted or otherwise secured from unwanted access or modification.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-SNT",
+      "related_controls": [
+        "ac-1",
+        "ac-17.2",
+        "cp-9.8",
+        "sc-8",
+        "sc-8.1",
+        "sc-13",
+        "sc-20",
+        "sc-21",
+        "sc-22",
+        "sc-23",
+        "sc-28",
+        "sc-28.1"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Is all network traffic encrypted — including internal service-to-service traffic, database connections, management plane traffic, and backup replication?",
+            "Are there any network paths where traffic is unencrypted (e.g., within a VPC, between containers on the same host, legacy protocol connections), and how are those exceptions documented?",
+            "Does encryption cover all protocols in use — HTTPS, gRPC, database-specific TLS, DNS-over-HTTPS/TLS, and email transmission?",
+            "How do you ensure network encryption extends to traffic involving third-party services and integrations within the authorization boundary?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated checks detect unencrypted network traffic — network flow analysis, TLS configuration scanning, or protocol-level inspection?",
+            "How do you validate that encryption configurations meet minimum standards (TLS 1.2+, strong cipher suites, no deprecated protocols) across all services?",
+            "What happens if an unencrypted communication path is detected — is it automatically blocked, or only alerted?",
+            "How do you detect certificate expiration or TLS misconfiguration that could cause encrypted connections to fail or downgrade?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools enforce network encryption across your stack (load balancers, service mesh, API gateways, database TLS configuration)?",
+            "How do you maintain an inventory of all TLS certificates, their expiration dates, and the services they protect?",
+            "How does your certificate management integrate with automated renewal (Let's Encrypt, ACM, cert-manager) to prevent expiration-related outages?",
+            "Are TLS configurations for all services defined as code and enforced through automated deployment?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that all network traffic has been encrypted over the past 90 days — through flow log analysis, TLS scan results, or monitoring data?",
+            "Is TLS configuration and certificate status data available via API or dashboard for ongoing assessment?",
+            "How do you detect TLS configuration regression — for example, when a service update inadvertently enables a deprecated cipher suite?",
+            "What evidence shows encryption protocol versions and cipher suites are reviewed and updated as security standards evolve?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-VCM",
+      "title": "Validating Communications",
+      "family": "SVC",
+      "description": "The authenticity and integrity of communications between machine-based information resources is persistently validated using automation.",
+      "impact_low": false,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-09",
+      "related_controls": [
+        "sc-23",
+        "si-7.1"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Persistently",
+        "Validation"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does communication validation (authenticity and integrity) cover all machine-to-machine communication paths — API calls, database connections, message queue exchanges, and service mesh traffic?",
+            "Are there inter-resource communication paths where mutual authentication or integrity validation is not implemented, and how are those exceptions documented?",
+            "How do you ensure communication validation extends to communications with inherited services and third-party integrations?",
+            "Does integrity validation apply to all data in transit, including control plane communications, not just data plane traffic?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated mechanisms enforce mutual TLS (mTLS), signed requests, or other integrity validation for inter-resource communications?",
+            "What happens when communication integrity validation fails — is the connection rejected, retried, or allowed with an alert?",
+            "How do you detect man-in-the-middle or tampering attempts between resources through integrity validation failures?",
+            "How do you test that integrity validation mechanisms actually reject tampered or unauthenticated communications?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools enforce communication validation (service mesh with mTLS, API gateways with request signing, certificate-based mutual authentication)?",
+            "How do you maintain an inventory of all inter-resource communication channels and their validation mechanisms?",
+            "How does your PKI or certificate management system support machine-to-machine authentication at scale?",
+            "Are communication validation policies (mTLS requirements, signature verification rules) defined as code and version-controlled?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that communication validation has been persistently active across all inter-resource channels over the past 90 days?",
+            "Is communication validation status (mTLS enforcement, certificate health, validation failure rates) available via API or dashboard?",
+            "How do you detect when communication validation coverage degrades — for example, when a new service is deployed without mTLS configuration?",
+            "What evidence shows communication integrity validation failures are investigated and resolved?"
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "KSI-SVC-VRI",
+      "title": "Validating Resource Integrity",
+      "family": "SVC",
+      "description": "Use cryptographic methods to validate the integrity of machine-based information resources.",
+      "impact_low": true,
+      "impact_moderate": true,
+      "fka": "KSI-SVC-05",
+      "related_controls": [
+        "cm-2.2",
+        "cm-8.3",
+        "sc-13",
+        "sc-23",
+        "si-7",
+        "si-7.1",
+        "sr-10"
+      ],
+      "updated": [
+        {
+          "date": "2026-06-24",
+          "comment": "Official launch of the FedRAMP Consolidated Rules for 2026."
+        }
+      ],
+      "terms": [
+        "Information Resource",
+        "Machine-Based (Information Resources)",
+        "Validation"
+      ],
+      "assessment_questions": [
+        {
+          "category": "Completeness & Coverage",
+          "questions": [
+            "Does cryptographic integrity validation cover all machine-based resource types — container images, VM images, application binaries, IaC templates, configuration files, and firmware?",
+            "Are there resource types where integrity validation is not performed, and how are those exceptions documented and justified?",
+            "How do you ensure integrity baselines are established for all resources at a known-good state, and updated only through approved change processes?",
+            "Does integrity validation extend to resources in all environments (production, staging, DR) and all deployment stages (build, deploy, runtime)?"
+          ]
+        },
+        {
+          "category": "Automation & Validation",
+          "questions": [
+            "What automated mechanisms validate resource integrity — image signing verification, file integrity monitoring (FIM), signed artifacts in CI/CD pipelines?",
+            "What happens when integrity validation detects a resource that does not match its cryptographic baseline — is it quarantined, blocked from execution, or only alerted?",
+            "How do you detect if an attacker modifies a resource and updates the hash to match — do you use signed baselines with protected signing keys?",
+            "How frequently is runtime integrity validation performed, and what is the maximum time between a resource being tampered with and detection?"
+          ]
+        },
+        {
+          "category": "Inventory & Integration",
+          "questions": [
+            "What tools perform integrity validation (Sigstore/cosign for containers, AIDE/OSSEC for file integrity, code signing for binaries)?",
+            "How do integrity baselines integrate with your CI/CD pipeline to ensure only signed, validated artifacts are deployed?",
+            "What PKI or signing infrastructure supports resource integrity validation, and how are signing keys protected?",
+            "How does integrity validation integrate with your SIEM to alert on and investigate integrity failures?"
+          ]
+        },
+        {
+          "category": "Continuous Evidence & Schedules",
+          "questions": [
+            "How do you demonstrate that integrity validation has been active and effective across all resources over the past 90 days?",
+            "Is integrity validation data (baseline status, validation results, failure counts) available via API or dashboard?",
+            "How do you detect when integrity validation coverage drops — for example, when new resources are deployed without signed baselines?",
+            "What evidence shows integrity validation failures in the past year were investigated, root-caused, and remediated?"
+          ]
+        }
+      ]
+    }
+  ]
+}

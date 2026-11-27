@@ -1,0 +1,495 @@
+{
+  "framework": {
+    "id": "nz-hisf-suppliers",
+    "name": "New Zealand HISF Suppliers",
+    "version": "2025",
+    "description": "New Zealand HISF Suppliers compliance framework"
+  },
+  "families": {
+    "HSUP01": "HSUP01",
+    "HSUP02": "HSUP02",
+    "HSUP03": "HSUP03",
+    "HSUP04": "HSUP04",
+    "HSUP05": "HSUP05",
+    "HSUP06": "HSUP06",
+    "HSUP07": "HSUP07",
+    "HSUP08": "HSUP08",
+    "HSUP09": "HSUP09",
+    "HSUP10": "HSUP10",
+    "HSUP11": "HSUP11",
+    "HSUP12": "HSUP12",
+    "HSUP13": "HSUP13",
+    "HSUP14": "HSUP14",
+    "HSUP15": "HSUP15",
+    "HSUP16": "HSUP16",
+    "HSUP17": "HSUP17",
+    "HSUP18": "HSUP18",
+    "HSUP19": "HSUP19",
+    "HSUP20": "HSUP20",
+    "HSUP21": "HSUP21",
+    "HSUP22": "HSUP22",
+    "HSUP23": "HSUP23",
+    "HSUP24": "HSUP24",
+    "HSUP25": "HSUP25",
+    "HSUP26": "HSUP26",
+    "HSUP27": "HSUP27",
+    "HSUP28": "HSUP28",
+    "HSUP29": "HSUP29",
+    "HSUP30": "HSUP30",
+    "HSUP31": "HSUP31",
+    "HSUP32": "HSUP32",
+    "HSUP33": "HSUP33",
+    "HSUP34": "HSUP34",
+    "HSUP35": "HSUP35",
+    "HSUP36": "HSUP36",
+    "HSUP37": "HSUP37",
+    "HSUP38": "HSUP38",
+    "HSUP39": "HSUP39",
+    "HSUP40": "HSUP40",
+    "HSUP41": "HSUP41",
+    "HSUP42": "HSUP42",
+    "HSUP43": "HSUP43",
+    "HSUP44": "HSUP44",
+    "HSUP45": "HSUP45",
+    "HSUP46": "HSUP46",
+    "HSUP47": "HSUP47",
+    "HSUP48": "HSUP48",
+    "HSUP49": "HSUP49",
+    "HSUP50": "HSUP50",
+    "HSUP51": "HSUP51",
+    "HSUP52": "HSUP52",
+    "HSUP53": "HSUP53",
+    "HSUP54": "HSUP54",
+    "HSUP55": "HSUP55",
+    "HSUP56": "HSUP56",
+    "HSUP57": "HSUP57",
+    "HSUP58": "HSUP58",
+    "HSUP59": "HSUP59",
+    "HSUP60": "HSUP60",
+    "HSUP61": "HSUP61",
+    "HSUP62": "HSUP62",
+    "HSUP63": "HSUP63",
+    "HSUP64": "HSUP64",
+    "HML01": "HML01",
+    "HSUP65": "HSUP65",
+    "HSUP66": "HSUP66",
+    "HSUP67": "HSUP67",
+    "HSUP68": "HSUP68"
+  },
+  "controls": [
+    {
+      "control_id": "HSUP01",
+      "title": "HSUP01",
+      "family": "HSUP01",
+      "description": "The organisation has a clear information security policy, acceptable use policy, topic-specific policies and procedures to maintain information security."
+    },
+    {
+      "control_id": "HSUP02",
+      "title": "HSUP02",
+      "family": "HSUP02",
+      "description": "Security roles and responsibilities of personnel are included within job descriptions."
+    },
+    {
+      "control_id": "HSUP03",
+      "title": "HSUP03",
+      "family": "HSUP03",
+      "description": "A breach of information by personnel is considered a security policy violation. Consequences of a security policy violation leads to a disciplinary process."
+    },
+    {
+      "control_id": "HSUP04",
+      "title": "HSUP04",
+      "family": "HSUP04",
+      "description": "There are documented procedures for providing and revoking logical, and physical access when personnel join, have a role change or leave the organisation."
+    },
+    {
+      "control_id": "HSUP05",
+      "title": "HSUP05",
+      "family": "HSUP05",
+      "description": "Asset management process(es) are in place."
+    },
+    {
+      "control_id": "HSUP06",
+      "title": "HSUP06",
+      "family": "HSUP06",
+      "description": "Processes are in place for media equipment management, decommissioning and secure disposal."
+    },
+    {
+      "control_id": "HSUP07",
+      "title": "HSUP07",
+      "family": "HSUP07",
+      "description": "An information security incident management process is in place."
+    },
+    {
+      "control_id": "HSUP08",
+      "title": "HSUP08",
+      "family": "HSUP08",
+      "description": "Organisations have a documented, approved, business continuity and disaster recovery management, operational resilience policies and procedures in place."
+    },
+    {
+      "control_id": "HSUP09",
+      "title": "HSUP09",
+      "family": "HSUP09",
+      "description": "Establish, document, approve, and implement rules to control physical and logical access to information and its assets."
+    },
+    {
+      "control_id": "HSUP10",
+      "title": "HSUP10",
+      "family": "HSUP10",
+      "description": "The organisation's Board or information security steering committee is accountable for information security governance."
+    },
+    {
+      "control_id": "HSUP11",
+      "title": "HSUP11",
+      "family": "HSUP11",
+      "description": "A documented policy and supporting procedures for maintaining physical security within the organisation is in place."
+    },
+    {
+      "control_id": "HSUP12",
+      "title": "HSUP12",
+      "family": "HSUP12",
+      "description": "A documented and approved procedure to remove papers and removable storage from easily accessible areas is to be implemented."
+    },
+    {
+      "control_id": "HSUP13",
+      "title": "HSUP13",
+      "family": "HSUP13",
+      "description": "Organisations have planned maintenance of information and services that are being provided to their customers via cloud services as per documented policies and agreements."
+    },
+    {
+      "control_id": "HSUP14",
+      "title": "HSUP14",
+      "family": "HSUP14",
+      "description": "Information systems are securely designed, and appropriate controls are implemented."
+    },
+    {
+      "control_id": "HSUP15",
+      "title": "HSUP15",
+      "family": "HSUP15",
+      "description": "A backup and recovery procedure is in place."
+    },
+    {
+      "control_id": "HSUP16",
+      "title": "HSUP16",
+      "family": "HSUP16",
+      "description": "A documented process is in place for performing changes to new and existing systems or services."
+    },
+    {
+      "control_id": "HSUP17",
+      "title": "HSUP17",
+      "family": "HSUP17",
+      "description": "There is a documented and approved process for identifying vulnerabilities and updating patches on the organisation's systems, applications, tools, services etc."
+    },
+    {
+      "control_id": "HSUP18",
+      "title": "HSUP18",
+      "family": "HSUP18",
+      "description": "Organisations, at a minimum, screen all personnel by verifying their identity, previous employment, applicable professional qualifications and criminal backgrounds before confirmation of employment."
+    },
+    {
+      "control_id": "HSUP19",
+      "title": "HSUP19",
+      "family": "HSUP19",
+      "description": "Organisations are to ensure:  a)  information security responsibilities are clearly defined and assigned b)  a governance body or steering committee overseeing information security activities is in place c)  there is at least one individual responsible for maintaining information security within the organisation."
+    },
+    {
+      "control_id": "HSUP20",
+      "title": "HSUP20",
+      "family": "HSUP20",
+      "description": "There has been an assessment of information security training needs and a training plan is put in place."
+    },
+    {
+      "control_id": "HSUP21",
+      "title": "HSUP21",
+      "family": "HSUP21",
+      "description": "Organisations are to have roles and responsibilities determined to carry out the incident management process."
+    },
+    {
+      "control_id": "HSUP22",
+      "title": "HSUP22",
+      "family": "HSUP22",
+      "description": "Establish criteria for developing business continuity, disaster recovery, operational resilience strategies, and capabilities based on disruption and impact to the organisation."
+    },
+    {
+      "control_id": "HSUP23",
+      "title": "HSUP23",
+      "family": "HSUP23",
+      "description": "Roles and responsibilities are defined and documented for planning, implementing, operating, assessing, and reporting on the organisation's information security requirements."
+    },
+    {
+      "control_id": "HSUP24",
+      "title": "HSUP24",
+      "family": "HSUP24",
+      "description": "Organisations are to integrate information security into project management."
+    },
+    {
+      "control_id": "HSUP25",
+      "title": "HSUP25",
+      "family": "HSUP25",
+      "description": "Relevant legal, regulatory, and contractual requirements are identified and implemented."
+    },
+    {
+      "control_id": "HSUP26",
+      "title": "HSUP26",
+      "family": "HSUP26",
+      "description": "A risk assessment methodology and cloud assurance activities that support the use of cloud technologies are in place."
+    },
+    {
+      "control_id": "HSUP27",
+      "title": "HSUP27",
+      "family": "HSUP27",
+      "description": "Business, customer, and security requirements are identified, documented, and approved when developing or acquiring applications."
+    },
+    {
+      "control_id": "HSUP28",
+      "title": "HSUP28",
+      "family": "HSUP28",
+      "description": "Risk assessments are performed on new, existing systems, and applications to understand the risks posed to the organisation while using them."
+    },
+    {
+      "control_id": "HSUP29",
+      "title": "HSUP29",
+      "family": "HSUP29",
+      "description": "The proposed changes are to be analysed for potential security threats and their impact on the organisation and their customers."
+    },
+    {
+      "control_id": "HSUP30",
+      "title": "HSUP30",
+      "family": "HSUP30",
+      "description": "The organisation's information and associated assets are appropriately protected, used, and handled based on their importance."
+    },
+    {
+      "control_id": "HSUP31",
+      "title": "HSUP31",
+      "family": "HSUP31",
+      "description": "In the event of a disruption or failure, critical information or services are identified, and measures are taken for the continuity of services."
+    },
+    {
+      "control_id": "HSUP32",
+      "title": "HSUP32",
+      "family": "HSUP32",
+      "description": "Rules for effective use of cryptography, including encryption, and key management are defined and implemented."
+    },
+    {
+      "control_id": "HSUP33",
+      "title": "HSUP33",
+      "family": "HSUP33",
+      "description": "The complete lifecycle of the account(s) being used to access, process, or manage information and services is managed."
+    },
+    {
+      "control_id": "HSUP34",
+      "title": "HSUP34",
+      "family": "HSUP34",
+      "description": "User accounts are authenticated and circumventing the authentication process is prevented."
+    },
+    {
+      "control_id": "HSUP35",
+      "title": "HSUP35",
+      "family": "HSUP35",
+      "description": "Access to information and its associated assets is defined and authorised according to the business, customer and security requirements by adhering to the organisation's identity and access management policy or procedures."
+    },
+    {
+      "control_id": "HSUP36",
+      "title": "HSUP36",
+      "family": "HSUP36",
+      "description": "Organisations are to ensure that only authorised users, software components and services are provided with privileged access rights."
+    },
+    {
+      "control_id": "HSUP37",
+      "title": "HSUP37",
+      "family": "HSUP37",
+      "description": "Access to source code, development tools, and software libraries are restricted, appropriately managed, and maintained."
+    },
+    {
+      "control_id": "HSUP38",
+      "title": "HSUP38",
+      "family": "HSUP38",
+      "description": "Metrics affecting the organisation's cyber security posture are regularly reported to the Board, and any decisions made are clearly documented."
+    },
+    {
+      "control_id": "HSUP39",
+      "title": "HSUP39",
+      "family": "HSUP39",
+      "description": "Update, protect and maintain the devices installed as physical security safeguards including the utilities."
+    },
+    {
+      "control_id": "HSUP40",
+      "title": "HSUP40",
+      "family": "HSUP40",
+      "description": "Secure areas of the organisation are protected from unauthorised personnel."
+    },
+    {
+      "control_id": "HSUP41",
+      "title": "HSUP41",
+      "family": "HSUP41",
+      "description": "Secure mechanisms are available and supported by a documented policy or guidelines to connect to the organisation's or customer's network."
+    },
+    {
+      "control_id": "HSUP42",
+      "title": "HSUP42",
+      "family": "HSUP42",
+      "description": "Security controls are implemented if the organisation is developing the web applications to protect them and their customers from potential cyber-attacks."
+    },
+    {
+      "control_id": "HSUP43",
+      "title": "HSUP43",
+      "family": "HSUP43",
+      "description": "The organisation's architectural strategy supports the adoption of cloud technologies."
+    },
+    {
+      "control_id": "HSUP44",
+      "title": "HSUP44",
+      "family": "HSUP44",
+      "description": "Organisations are to make use of developed and configured APIs for secure transfer of information between different cloud components."
+    },
+    {
+      "control_id": "HSUP45",
+      "title": "HSUP45",
+      "family": "HSUP45",
+      "description": "Organisations are to ensure that appropriate controls are implemented to protect information in a multi-tenant cloud environment."
+    },
+    {
+      "control_id": "HSUP46",
+      "title": "HSUP46",
+      "family": "HSUP46",
+      "description": "Networks and network devices that are used within the organisation are to be securely managed."
+    },
+    {
+      "control_id": "HSUP47",
+      "title": "HSUP47",
+      "family": "HSUP47",
+      "description": "The systems and applications that are used to process, store, or transmit information are connected to a separate, dedicated network."
+    },
+    {
+      "control_id": "HSUP48",
+      "title": "HSUP48",
+      "family": "HSUP48",
+      "description": "Backup copies of information, software, services provided, and relevant systems are protected and maintained in accordance with the backup and recovery procedures."
+    },
+    {
+      "control_id": "HSUP49",
+      "title": "HSUP49",
+      "family": "HSUP49",
+      "description": "Backups are tested for their restoration in accordance with the documented backup and recovery procedures. Organisations are able to access restored backups as well."
+    },
+    {
+      "control_id": "HSUP50",
+      "title": "HSUP50",
+      "family": "HSUP50",
+      "description": "Organisations developing inhouse systems, applications, or services are to maintain separate production and non-production environments."
+    },
+    {
+      "control_id": "HSUP51",
+      "title": "HSUP51",
+      "family": "HSUP51",
+      "description": "Identified vulnerabilities or unpatched systems, services or applications are properly identified, tracked, and remediated."
+    },
+    {
+      "control_id": "HSUP52",
+      "title": "HSUP52",
+      "family": "HSUP52",
+      "description": "Organisations have a standardised baseline configuration in place for new and existing systems, services, and applications."
+    },
+    {
+      "control_id": "HSUP53",
+      "title": "HSUP53",
+      "family": "HSUP53",
+      "description": "The capacity requirements for maintenance of information processing facilities, communication, and environmental support during contingency operations are met."
+    },
+    {
+      "control_id": "HSUP54",
+      "title": "HSUP54",
+      "family": "HSUP54",
+      "description": "Information, services, and applications on organisation systems and associated assets are protected against malware."
+    },
+    {
+      "control_id": "HSUP55",
+      "title": "HSUP55",
+      "family": "HSUP55",
+      "description": "Organisations are to detect and prevent data leakage through the unauthorised disclosure and siphoning of information by individuals, systems, or services."
+    },
+    {
+      "control_id": "HSUP56",
+      "title": "HSUP56",
+      "family": "HSUP56",
+      "description": "The lessons learned from business continuity and disaster recovery testing are reflected in the established and implemented information security controls."
+    },
+    {
+      "control_id": "HSUP57",
+      "title": "HSUP57",
+      "family": "HSUP57",
+      "description": "Installed physical and environmental security mechanisms are monitored for potential security incidents."
+    },
+    {
+      "control_id": "HSUP58",
+      "title": "HSUP58",
+      "family": "HSUP58",
+      "description": "Regular reviews are performed to confirm that the legal, regulatory, statutory, and contractual requirements are met."
+    },
+    {
+      "control_id": "HSUP59",
+      "title": "HSUP59",
+      "family": "HSUP59",
+      "description": "Independent security reviews are defined and implemented before any new or major upgrades on systems are moved to the production environment."
+    },
+    {
+      "control_id": "HSUP60",
+      "title": "HSUP60",
+      "family": "HSUP60",
+      "description": "Authorised personnel or teams are alerted upon unsuccessful backups."
+    },
+    {
+      "control_id": "HSUP61",
+      "title": "HSUP61",
+      "family": "HSUP61",
+      "description": "The activities performed on the information processing systems, services, and applications are logged and stored as per the organisation's (and the customer's) logging and auditing requirements."
+    },
+    {
+      "control_id": "HSUP62",
+      "title": "HSUP62",
+      "family": "HSUP62",
+      "description": "The information processing systems, applications, devices, and services are synchronised to an approved time source."
+    },
+    {
+      "control_id": "HSUP63",
+      "title": "HSUP63",
+      "family": "HSUP63",
+      "description": "Breach of employment and supplier agreements are enforced."
+    },
+    {
+      "control_id": "HSUP64",
+      "title": "HSUP64",
+      "family": "HSUP64",
+      "description": "Misuse of the organisation's assets is investigated, and documented procedures are followed as stated in the acceptable use policy, contractor agreements, or service agreements."
+    },
+    {
+      "control_id": "HML01",
+      "title": "HML01",
+      "family": "HML01",
+      "description": "A clear information security policy, acceptable use policy, topic-specific policies and procedures are in place to maintain information security."
+    },
+    {
+      "control_id": "HSUP65",
+      "title": "HSUP65",
+      "family": "HSUP65",
+      "description": "Organisations report all security incidents and near misses to their senior management or to the Board by a nominated Information Security Officer. All customer-related incidents are to be notified to the customer as per agreed timelines."
+    },
+    {
+      "control_id": "HSUP66",
+      "title": "HSUP66",
+      "family": "HSUP66",
+      "description": "Evidence gathered as part of the incident management process is appropriately protected."
+    },
+    {
+      "control_id": "HSUP67",
+      "title": "HSUP67",
+      "family": "HSUP67",
+      "description": "Suppliers are to be systematically evaluated, and their information security activities are reviewed before and after onboarding of their systems and services."
+    },
+    {
+      "control_id": "HSUP68",
+      "title": "HSUP68",
+      "family": "HSUP68",
+      "description": "The organisation's information security requirements are to be included in the agreements with the suppliers."
+    }
+  ]
+}

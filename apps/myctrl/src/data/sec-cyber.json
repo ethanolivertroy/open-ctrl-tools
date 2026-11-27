@@ -1,0 +1,116 @@
+{
+  "framework": {
+    "id": "sec-cyber",
+    "name": "SEC Cybersecurity Rule",
+    "version": "2023",
+    "description": "SEC Cybersecurity Rule compliance framework"
+  },
+  "families": {
+    "17 CFR 229": "17 CFR 229",
+    "Form 8-K Item 1": "Form 8-K Item 1"
+  },
+  "controls": [
+    {
+      "control_id": "17 CFR 229.105(a)",
+      "title": "17 CFR 229.105(a)",
+      "family": "17 CFR 229",
+      "description": "Where appropriate, provide under the caption “Risk Factors” a discussion of the material factors that make an investment in the registrant or offering speculative or risky. This discussion must be organized logically with relevant headings and each risk factor should be set forth under a subcaption that adequately describes the risk. The presentation of risks that could apply generically to any registrant or any offering is discouraged, but to the extent generic risk factors are presented, disclose them at the end of the risk factor section under the caption “General Risk Factors.”"
+    },
+    {
+      "control_id": "17 CFR 229.105(b)",
+      "title": "17 CFR 229.105(b)",
+      "family": "17 CFR 229",
+      "description": "Concisely explain how each risk affects the registrant or the securities being offered. If the discussion is longer than 15 pages, include in the forepart of the prospectus or annual report, as applicable, a series of concise, bulleted or numbered statements that is no more than two pages summarizing the principal factors that make an investment in the registrant or offering speculative or risky. If the risk factor discussion is included in a registration statement, it must immediately follow the summary section required by § 229.503 (Item 503 of Regulation S–K). If you do not include a summary section, the risk factor section must immediately follow the cover page of the prospectus or the pricing information section that immediately follows the cover page. Pricing information means price and price-related information that you may omit from the prospectus in an effective registration statement based on Rule 430A (§ 230.430A of this chapter). The registrant must furnish this information in plain English. See § 230.421(d) of Regulation C of this chapter."
+    },
+    {
+      "control_id": "17 CFR 229.106(a)",
+      "title": "17 CFR 229.106(a)",
+      "family": "17 CFR 229",
+      "description": "Definitions. For purposes of this section:\nCybersecurity incident means an unauthorized occurrence, or a series of related unauthorized occurrences, on or conducted through a registrant's information systems that jeopardizes the confidentiality, integrity, or availability of a registrant's information systems or any information residing therein.\nCybersecurity threat means any potential unauthorized occurrence on or conducted through a registrant's information systems that may result in adverse effects on the confidentiality, integrity, or availability of a registrant's information systems or any information residing therein.\nInformation systems means electronic information resources, owned or used by the registrant, including physical or virtual infrastructure controlled by such information resources, or components thereof, organized for the collection, processing, maintenance, use, sharing, dissemination, or disposition of the registrant's information to maintain or support the registrant's operations."
+    },
+    {
+      "control_id": "17 CFR 229.106(b)",
+      "title": "17 CFR 229.106(b)",
+      "family": "17 CFR 229",
+      "description": "Risk management and strategy."
+    },
+    {
+      "control_id": "17 CFR 229.106(b)(1)",
+      "title": "17 CFR 229.106(b)(1)",
+      "family": "17 CFR 229",
+      "description": "Describe the registrant's processes, if any, for assessing, identifying, and managing material risks from cybersecurity threats in sufficient detail for a reasonable investor to understand those processes. In providing such disclosure, a registrant should address, as applicable, the following non-exclusive list of disclosure items:"
+    },
+    {
+      "control_id": "17 CFR 229.106(b)(1)(i)",
+      "title": "17 CFR 229.106(b)(1)(i)",
+      "family": "17 CFR 229",
+      "description": "Whether and how any such processes have been integrated into the registrant's overall risk management system or processes;"
+    },
+    {
+      "control_id": "17 CFR 229.106(b)(1)(ii)",
+      "title": "17 CFR 229.106(b)(1)(ii)",
+      "family": "17 CFR 229",
+      "description": "Whether the registrant engages assessors, consultants, auditors, or other third parties in connection with any such processes; and"
+    },
+    {
+      "control_id": "17 CFR 229.106(b)(1)(iii)",
+      "title": "17 CFR 229.106(b)(1)(iii)",
+      "family": "17 CFR 229",
+      "description": "Whether the registrant has processes to oversee and identify such risks from cybersecurity threats associated with its use of any third-party service provider."
+    },
+    {
+      "control_id": "17 CFR 229.106(b)(2)",
+      "title": "17 CFR 229.106(b)(2)",
+      "family": "17 CFR 229",
+      "description": "Describe whether any risks from cybersecurity threats, including as a result of any previous cybersecurity incidents, have materially affected or are reasonably likely to materially affect the registrant, including its business strategy, results of operations, or financial condition and if so, how."
+    },
+    {
+      "control_id": "17 CFR 229.106(c)",
+      "title": "17 CFR 229.106(c)",
+      "family": "17 CFR 229",
+      "description": "Governance"
+    },
+    {
+      "control_id": "17 CFR 229.106(c)(1)",
+      "title": "17 CFR 229.106(c)(1)",
+      "family": "17 CFR 229",
+      "description": "Describe the board of directors' oversight of risks from cybersecurity threats. If applicable, identify any board committee or subcommittee responsible for the oversight of risks from cybersecurity threats and describe the processes by which the board or such committee is informed about such risks."
+    },
+    {
+      "control_id": "17 CFR 229.106(c)(2)",
+      "title": "17 CFR 229.106(c)(2)",
+      "family": "17 CFR 229",
+      "description": "Describe management's role in assessing and managing the registrant's material risks from cybersecurity threats. In providing such disclosure, a registrant should address, as applicable, the following non-exclusive list of disclosure items:"
+    },
+    {
+      "control_id": "17 CFR 229.106(c)(2)(i)",
+      "title": "17 CFR 229.106(c)(2)(i)",
+      "family": "17 CFR 229",
+      "description": "Whether and which management positions or committees are responsible for assessing and managing such risks, and the relevant expertise of such persons or members in such detail as necessary to fully describe the nature of the expertise;"
+    },
+    {
+      "control_id": "17 CFR 229.106(c)(2)(ii)",
+      "title": "17 CFR 229.106(c)(2)(ii)",
+      "family": "17 CFR 229",
+      "description": "The processes by which such persons or committees are informed about and monitor the prevention, detection, mitigation, and remediation of cybersecurity incidents; and"
+    },
+    {
+      "control_id": "17 CFR 229.106(c)(2)(iii)",
+      "title": "17 CFR 229.106(c)(2)(iii)",
+      "family": "17 CFR 229",
+      "description": "Whether such persons or committees report information about such risks to the board of directors or a committee or subcommittee of the board of directors."
+    },
+    {
+      "control_id": "17 CFR 229.106(d)",
+      "title": "17 CFR 229.106(d)",
+      "family": "17 CFR 229",
+      "description": "Structured Data Requirement. Provide the information required by this Item in an Interactive Data File in accordance with Rule 405 of Regulation S–T and the EDGAR Filer Manual."
+    },
+    {
+      "control_id": "Form 8-K Item 1.05(a)",
+      "title": "Form 8-K Item 1.05(a)",
+      "family": "Form 8-K Item 1",
+      "description": "If the registrant experiences a cybersecurity incident that is determined by the registrant to be material, describe the material aspects of the nature, scope, and timing of the incident, and the material impact or reasonably likely material impact on the registrant, including its financial condition and results of operations."
+    }
+  ]
+}

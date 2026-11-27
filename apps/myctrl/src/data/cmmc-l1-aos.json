@@ -1,0 +1,372 @@
+{
+  "framework": {
+    "id": "cmmc-l1-aos",
+    "name": "CMMC 2.0 Level 1 AOS",
+    "version": "2.0",
+    "description": "Cybersecurity Maturity Model Certification (CMMC) 2.0 Level 1 Assessment Objective Specifications, defining the specific assessment objectives for verifying compliance with CMMC Level 1 practices for protecting Federal Contract Information (FCI)."
+  },
+  "families": {
+    "AC": "Access Control",
+    "IA": "Identification and Authentication",
+    "MP": "Media Protection",
+    "PE": "Physical Protection",
+    "SC": "System and Communications Protection",
+    "SI": "System and Information Integrity"
+  },
+  "controls": [
+    {
+      "control_id": "AC.L1-B.1.I[a]",
+      "title": "Authorized users are identified.",
+      "family": "AC",
+      "description": "authorized users are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.I[b]",
+      "title": "Processes acting on behalf of authorized users are identified.",
+      "family": "AC",
+      "description": "processes acting on behalf of authorized users are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.I[c]",
+      "title": "Devices (and other systems) authorized to connect to the system are identified.",
+      "family": "AC",
+      "description": "devices (and other systems) authorized to connect to the system are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.I[d]",
+      "title": "System access is limited to authorized users.",
+      "family": "AC",
+      "description": "system access is limited to authorized users;"
+    },
+    {
+      "control_id": "AC.L1-B.1.I[e]",
+      "title": "System access is limited to processes acting on behalf of authorized users.",
+      "family": "AC",
+      "description": "system access is limited to processes acting on behalf of authorized users; and"
+    },
+    {
+      "control_id": "AC.L1-B.1.I[f]",
+      "title": "System access is limited to authorized devices (including other systems).",
+      "family": "AC",
+      "description": "system access is limited to authorized devices (including other systems)."
+    },
+    {
+      "control_id": "AC.L1-B.1.II[a]",
+      "title": "The types of transactions and functions that authorized users are permitted to execute are defined.",
+      "family": "AC",
+      "description": "the types of transactions and functions that authorized users are permitted to execute are defined; and"
+    },
+    {
+      "control_id": "AC.L1-B.1.II[b]",
+      "title": "System access is limited to the defined types of transactions and functions for authorized users.",
+      "family": "AC",
+      "description": "system access is limited to the defined types of transactions and functions for authorized users."
+    },
+    {
+      "control_id": "AC.L1-B.1.III[a]",
+      "title": "Connections to external systems are identified.",
+      "family": "AC",
+      "description": "connections to external systems are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.III[b]",
+      "title": "The use of external systems is identified.",
+      "family": "AC",
+      "description": "the use of external systems is identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.III[c]",
+      "title": "Connections to external systems are verified.",
+      "family": "AC",
+      "description": "connections to external systems are verified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.III[d]",
+      "title": "The use of external systems is verified.",
+      "family": "AC",
+      "description": "the use of external systems is verified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.III[e]",
+      "title": "Connections to external systems are controlled/limited.",
+      "family": "AC",
+      "description": "connections to external systems are controlled/limited; and"
+    },
+    {
+      "control_id": "AC.L1-B.1.III[f]",
+      "title": "The use of external systems is controlled/limited.",
+      "family": "AC",
+      "description": "the use of external systems is controlled/limited."
+    },
+    {
+      "control_id": "AC.L1-B.1.IV[a]",
+      "title": "Individuals authorized to post or process information on publicly accessible systems are identified.",
+      "family": "AC",
+      "description": "individuals authorized to post or process information on publicly accessible systems are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.IV[b]",
+      "title": "Procedures to ensure [FCI] is not posted or processed on publicly accessible systems are identified.",
+      "family": "AC",
+      "description": "procedures to ensure [FCI] is not posted or processed on publicly accessible systems are identified;"
+    },
+    {
+      "control_id": "AC.L1-B.1.IV[c]",
+      "title": "A review process is in place prior to posting of any content to publicly accessible systems.",
+      "family": "AC",
+      "description": "a review process is in place prior to posting of any content to publicly accessible systems;"
+    },
+    {
+      "control_id": "AC.L1-B.1.IV[d]",
+      "title": "Content on publicly accessible systems is reviewed to ensure that it does not include [FCI].",
+      "family": "AC",
+      "description": "content on publicly accessible systems is reviewed to ensure that it does not include [FCI]; and"
+    },
+    {
+      "control_id": "AC.L1-B.1.IV[e]",
+      "title": "Mechanisms are in place to remove and address improper posting of [FCI].",
+      "family": "AC",
+      "description": "mechanisms are in place to remove and address improper posting of [FCI]."
+    },
+    {
+      "control_id": "IA.L1-B.1.V[a]",
+      "title": "System users are identified.",
+      "family": "IA",
+      "description": "system users are identified;"
+    },
+    {
+      "control_id": "IA.L1-B.1.V[b]",
+      "title": "Processes acting on behalf of users are identified.",
+      "family": "IA",
+      "description": "processes acting on behalf of users are identified; and"
+    },
+    {
+      "control_id": "IA.L1-B.1.V[c]",
+      "title": "Devices accessing the system are identified.",
+      "family": "IA",
+      "description": "devices accessing the system are identified."
+    },
+    {
+      "control_id": "IA.L1-B.1.VI[a]",
+      "title": "The identity of each user is authenticated or verified as a prerequisite to system access.",
+      "family": "IA",
+      "description": "the identity of each user is authenticated or verified as a prerequisite to system access;"
+    },
+    {
+      "control_id": "IA.L1-B.1.VI[b]",
+      "title": "The identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access.",
+      "family": "IA",
+      "description": "the identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access; and"
+    },
+    {
+      "control_id": "IA.L1-B.1.VI[c]",
+      "title": "The identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access.",
+      "family": "IA",
+      "description": "the identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access."
+    },
+    {
+      "control_id": "MP.L1-B.1.VII[a]",
+      "title": "System media containing [FCI] is sanitized or destroyed before disposal.",
+      "family": "MP",
+      "description": "system media containing [FCI] is sanitized or destroyed before disposal; and"
+    },
+    {
+      "control_id": "MP.L1-B.1.VII[b]",
+      "title": "System media containing [FCI] is sanitized before it is released for reuse.",
+      "family": "MP",
+      "description": "system media containing [FCI] is sanitized before it is released for reuse."
+    },
+    {
+      "control_id": "PE.L1-B.1.VIII[a]",
+      "title": "Authorized individuals allowed physical access are identified.",
+      "family": "PE",
+      "description": "authorized individuals allowed physical access are identified;"
+    },
+    {
+      "control_id": "PE.L1-B.1.VIII[b]",
+      "title": "Physical access to organizational systems is limited to authorized individuals.",
+      "family": "PE",
+      "description": "physical access to organizational systems is limited to authorized individuals;"
+    },
+    {
+      "control_id": "PE.L1-B.1.VIII[c]",
+      "title": "Physical access to equipment is limited to authorized individuals.",
+      "family": "PE",
+      "description": "physical access to equipment is limited to authorized individuals; and"
+    },
+    {
+      "control_id": "PE.L1-B.1.VIII[d]",
+      "title": "Physical access to operating environments is limited to authorized individuals.",
+      "family": "PE",
+      "description": "physical access to operating environments is limited to authorized individuals."
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[a]",
+      "title": "Visitors are escorted.",
+      "family": "PE",
+      "description": "visitors are escorted;"
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[b]",
+      "title": "Visitor activity is monitored.",
+      "family": "PE",
+      "description": "visitor activity is monitored;"
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[c]",
+      "title": "Audit logs of physical access are maintained.",
+      "family": "PE",
+      "description": "audit logs of physical access are maintained;"
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[d]",
+      "title": "Physical access devices are identified.",
+      "family": "PE",
+      "description": "physical access devices are identified;"
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[e]",
+      "title": "Physical access devices are controlled.",
+      "family": "PE",
+      "description": "physical access devices are controlled; and"
+    },
+    {
+      "control_id": "PE.L1-B.1.IX[f]",
+      "title": "Physical access devices are managed.",
+      "family": "PE",
+      "description": "physical access devices are managed."
+    },
+    {
+      "control_id": "SC.L1-B.1.X[a]",
+      "title": "The external system boundary is defined.",
+      "family": "SC",
+      "description": "the external system boundary is defined;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[b]",
+      "title": "Key internal system boundaries are defined.",
+      "family": "SC",
+      "description": "key internal system boundaries are defined;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[c]",
+      "title": "Communications are monitored at the external system boundary.",
+      "family": "SC",
+      "description": "communications are monitored at the external system boundary;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[d]",
+      "title": "Communications are monitored at key internal boundaries.",
+      "family": "SC",
+      "description": "communications are monitored at key internal boundaries;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[e]",
+      "title": "Communications are controlled at the external system boundary.",
+      "family": "SC",
+      "description": "communications are controlled at the external system boundary;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[f]",
+      "title": "Communications are controlled at key internal boundaries.",
+      "family": "SC",
+      "description": "communications are controlled at key internal boundaries;"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[g]",
+      "title": "Communications are protected at the external system boundary.",
+      "family": "SC",
+      "description": "communications are protected at the external system boundary; and"
+    },
+    {
+      "control_id": "SC.L1-B.1.X[h]",
+      "title": "Communications are protected at key internal boundaries.",
+      "family": "SC",
+      "description": "communications are protected at key internal boundaries."
+    },
+    {
+      "control_id": "SC.L1-B.1.XI[a]",
+      "title": "Publicly accessible system components are identified.",
+      "family": "SC",
+      "description": "publicly accessible system components are identified; and"
+    },
+    {
+      "control_id": "SC.L1-B.1.XI[b]",
+      "title": "Subnetworks for publicly accessible system components are physically or logically separated from internal networks.",
+      "family": "SC",
+      "description": "subnetworks for publicly accessible system components are physically or logically separated from internal networks."
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[a]",
+      "title": "The time within which to identify system flaws is specified.",
+      "family": "SI",
+      "description": "the time within which to identify system flaws is specified;"
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[b]",
+      "title": "System flaws are identified within the specified time frame.",
+      "family": "SI",
+      "description": "system flaws are identified within the specified time frame;"
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[c]",
+      "title": "The time within which to report system flaws is specified.",
+      "family": "SI",
+      "description": "the time within which to report system flaws is specified;"
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[d]",
+      "title": "System flaws are reported within the specified time frame.",
+      "family": "SI",
+      "description": "system flaws are reported within the specified time frame;"
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[e]",
+      "title": "The time within which to correct system flaws is specified.",
+      "family": "SI",
+      "description": "the time within which to correct system flaws is specified; and"
+    },
+    {
+      "control_id": "SI.L1-B.1.XII[f]",
+      "title": "System flaws are corrected within the specified time frame.",
+      "family": "SI",
+      "description": "system flaws are corrected within the specified time frame."
+    },
+    {
+      "control_id": "SI.L1-B.1.XIII[a]",
+      "title": "Designated locations for malicious code protection are identified.",
+      "family": "SI",
+      "description": "designated locations for malicious code protection are identified; and"
+    },
+    {
+      "control_id": "SI.L1-B.1.XIII[b]",
+      "title": "Protection from malicious code at designated locations is provided.",
+      "family": "SI",
+      "description": "protection from malicious code at designated locations is provided."
+    },
+    {
+      "control_id": "SI.L1-B.1.XIV[a]",
+      "title": "Malicious code protection mechanisms are updated when new releases are available.",
+      "family": "SI",
+      "description": "malicious code protection mechanisms are updated when new releases are available."
+    },
+    {
+      "control_id": "SI.L1-B.1.XV[a]",
+      "title": "The frequency for malicious code scans is defined.",
+      "family": "SI",
+      "description": "the frequency for malicious code scans is defined;"
+    },
+    {
+      "control_id": "SI.L1-B.1.XV[b]",
+      "title": "Malicious code scans are performed with the defined frequency.",
+      "family": "SI",
+      "description": "malicious code scans are performed with the defined frequency; and"
+    },
+    {
+      "control_id": "SI.L1-B.1.XV[c]",
+      "title": "Real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed.",
+      "family": "SI",
+      "description": "real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+---
+import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
+import { getStats, getFrameworkConfig } from '../data/controls';
+
+// Enterprise compliance frameworks (industry standards)
+const enterpriseIds = ['pci-dss-v4', 'iso-27001-2022', 'soc2-tsc', 'cis-controls-v8'];
+
+const enterpriseContent = enterpriseIds.map(id => ({
+  config: getFrameworkConfig(id),
+  stats: getStats(id),
+}));
+
+const totalItems = enterpriseContent.reduce((sum, { stats }) => sum + stats.total, 0);
+const loadedCount = enterpriseContent.filter(({ stats }) => stats.total > 0).length;
+const description = totalItems > 0
+  ? `Industry-standard security and compliance frameworks for enterprise organizations. ${totalItems.toLocaleString()} items across ${loadedCount} loaded framework${loadedCount !== 1 ? 's' : ''} (${enterpriseContent.length} listed).`
+  : `Industry-standard security and compliance frameworks for enterprise organizations. ${enterpriseContent.length} external reference entries — visit official publishers or load licensed copies into src/data/local/.`;
+---
+
+<FrameworkCategoryPage
+  title="Enterprise Compliance"
+  breadcrumbLabel="Enterprise"
+  heading="Enterprise Compliance Frameworks"
+  badge={{ label: 'Enterprise', class: 'bg-teal-500/10 border-teal-500/30 text-teal-700 dark:text-teal-400' }}
+  description={description}
+  groups={[{ frameworks: enterpriseContent }]}
+  emptyMessage="No enterprise frameworks available yet."
+>
+  <section slot="info" class="glass-card-thick p-4 rounded-lg border">
+    <div class="flex gap-3">
+      <svg class="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div class="text-sm text-muted-foreground">
+        <p>
+          These frameworks are widely adopted across industries for information security management,
+          payment card security, and operational controls. Because their full text requires licensing or
+          publisher terms acceptance, control text is not redistributed here — each card forwards to
+          the official publisher and documents how to load a copy you hold into <code>src/data/local/</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+</FrameworkCategoryPage>

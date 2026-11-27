@@ -1,0 +1,541 @@
+{
+  "framework": {
+    "id": "tn-ipa",
+    "name": "Tennessee IPA",
+    "version": "2024",
+    "description": "Tennessee IPA compliance framework"
+  },
+  "families": {
+    "47": "47"
+  },
+  "controls": [
+    {
+      "control_id": "47-18-3201",
+      "title": "47-18-3201",
+      "family": "47",
+      "description": "(see definitions section)"
+    },
+    {
+      "control_id": "47-18-3202",
+      "title": "47-18-3202",
+      "family": "47",
+      "description": "This part applies to persons that conduct business in this state producing products or services that target residents of this state and that:\n(1) Exceed twenty-five million dollars ($25,000,000) in revenue; and\n(2)\n(A) Control or process personal information of at least twenty-five\nthousand (25,000) consumers and derive more than fifty percent (50%) of gross revenue from the sale of personal information; or\n(B) During a calendar year, control or process personal\ninformation of at least one hundred seventy-five thousand (175,000)\nconsumers"
+    },
+    {
+      "control_id": "47-18-3203",
+      "title": "47-18-3203",
+      "family": "47",
+      "description": "Consumer Rights"
+    },
+    {
+      "control_id": "47-18-3203(a)",
+      "title": "47-18-3203(a)",
+      "family": "47",
+      "description": "Consumer Rights Enumeration"
+    },
+    {
+      "control_id": "47-18-3203(a)(1)",
+      "title": "47-18-3203(a)(1)",
+      "family": "47",
+      "description": "A consumer may invoke the consumer rights authorized pursuant to\nsubdivision (a)(2) at any time by submitting a request to a controller specifying the consumer rights the consumer wishes to invoke. A known child's parent or legal guardian may invoke the consumer rights authorized pursuant to subdivision (a)(2) on behalf of the child regarding processing personal information belonging to the known child."
+    },
+    {
+      "control_id": "47-18-3203(a)(2)",
+      "title": "47-18-3203(a)(2)",
+      "family": "47",
+      "description": "A controller shall comply with an authenticated consumer request to\nexercise the right to:"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(A)",
+      "title": "47-18-3203(a)(2)(A)",
+      "family": "47",
+      "description": "Confirm whether a controller is processing the consumer's\npersonal information and to access the personal information;"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(B)",
+      "title": "47-18-3203(a)(2)(B)",
+      "family": "47",
+      "description": "Correct inaccuracies in the consumer's personal information,\ntaking into account the nature of the personal information and the\npurposes of the processing of the consumer's personal information;"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(C)",
+      "title": "47-18-3203(a)(2)(C)",
+      "family": "47",
+      "description": "Delete personal information provided by or obtained about the consumer. A controller is not required to delete information that it maintains or uses as aggregate or de-identified data; provided, that such data in the possession of the controller is not linked to a specific consumer. A controller that obtained personal information about a consumer from a source other than the consumer is in compliance with a consumer's request to delete such personal information by:"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(C)(i)",
+      "title": "47-18-3203(a)(2)(C)(i)",
+      "family": "47",
+      "description": "Deletion Compliance Options"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(C)(i)(a)",
+      "title": "47-18-3203(a)(2)(C)(i)(a)",
+      "family": "47",
+      "description": "Retaining a record of the deletion request and the minimum information necessary for the purpose of ensuring that the consumer's personal information remains\ndeleted from the controller's records; and"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(C)(i)(b)",
+      "title": "47-18-3203(a)(2)(C)(i)(b)",
+      "family": "47",
+      "description": "Not using such retained personal information for any purpose prohibited under this part; or"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(C)(ii)",
+      "title": "47-18-3203(a)(2)(C)(ii)",
+      "family": "47",
+      "description": "Opting the consumer out of the processing of such personal data for any purpose except for those exempted under this part;"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(D)",
+      "title": "47-18-3203(a)(2)(D)",
+      "family": "47",
+      "description": "Obtain a copy of the consumer's personal information that the consumer previously provided to the controller in a portable and, to the extent technically feasible, readily usable format that allows the consumer to transmit the data to another controller without hindrance, where the processing is carried out by automated means; or"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(E)",
+      "title": "47-18-3203(a)(2)(E)",
+      "family": "47",
+      "description": "Opt out of a controller's processing of personal information for purposes of:"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(E)(i)",
+      "title": "47-18-3203(a)(2)(E)(i)",
+      "family": "47",
+      "description": "Selling personal information about the consumer;"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(E)(ii)",
+      "title": "47-18-3203(a)(2)(E)(ii)",
+      "family": "47",
+      "description": "Targeted advertising; or"
+    },
+    {
+      "control_id": "47-18-3203(a)(2)(E)(iii)",
+      "title": "47-18-3203(a)(2)(E)(iii)",
+      "family": "47",
+      "description": "Profiling in furtherance of decisions that produce legal\nor similarly significant effects concerning the consumer."
+    },
+    {
+      "control_id": "47-18-3203(b)",
+      "title": "47-18-3203(b)",
+      "family": "47",
+      "description": "Except as otherwise provided in this part, a controller shall comply with an\nauthenticated request by a consumer to exercise the consumer rights authorized\npursuant to subdivision (a)(2) as follows:"
+    },
+    {
+      "control_id": "47-18-3203(b)(1)",
+      "title": "47-18-3203(b)(1)",
+      "family": "47",
+      "description": "A controller shall respond to the consumer without undue delay, but in all cases within forty-five (45) days of receipt of a request submitted pursuant to subsection (a). The response period may be extended once by forty-five (45) additional days when reasonably necessary, taking into account the complexity and number of the consumer's requests, so long as the controller informs the consumer of the extension within the initial forty-five-day response period, together with the reason for the extension;"
+    },
+    {
+      "control_id": "47-18-3203(b)(2)",
+      "title": "47-18-3203(b)(2)",
+      "family": "47",
+      "description": "If a controller declines to take action regarding the consumer's request, then the controller shall inform the consumer without undue delay, but in all cases and at the latest within forty-five (45) days of receipt of the request, of the justification for declining to take action and instructions for how to appeal the decision pursuant to subsection (c);"
+    },
+    {
+      "control_id": "47-18-3203(b)(3)",
+      "title": "47-18-3203(b)(3)",
+      "family": "47",
+      "description": "Information provided in response to a consumer request must be provided by a controller free of charge, up to twice annually per consumer. If requests from a consumer are manifestly unfounded, technically infeasible, excessive, or repetitive, then the controller may charge the consumer a reasonable fee to cover the administrative costs of complying with the request or decline to act on the request. The controller bears the burden of demonstrating the manifestly unfounded, technically infeasible, excessive, or repetitive nature of the request; and"
+    },
+    {
+      "control_id": "47-18-3203(b)(4)",
+      "title": "47-18-3203(b)(4)",
+      "family": "47",
+      "description": "If a controller is unable to authenticate the request using commercially reasonable efforts, then the controller is not required to comply with a request to initiate an action under subsection (a) and may request that the consumer provide additional information reasonably necessary to authenticate the consumer and the consumer's request."
+    },
+    {
+      "control_id": "47-18-3203(c)",
+      "title": "47-18-3203(c)",
+      "family": "47",
+      "description": "A controller shall establish a process for a consumer to appeal the controller's refusal to take action on a request within a reasonable period of time after the consumer's receipt of the decision pursuant to subdivision (b)(2). The appeal process must be made available to the consumer in a conspicuous manner, must be\navailable at no cost to the consumer, and must be similar to the process for submitting requests to initiate action pursuant to subsection (a). Within sixty (60) days of receipt of an appeal, a controller shall inform the consumer in writing of action taken or not taken in response to the appeal, including a written explanation of the reasons for the decisions. If the appeal is denied, then the controller shall also provide the consumer with an online mechanism, if available, or other method through which the consumer may contact the attorney general and reporter to submit a complaint"
+    },
+    {
+      "control_id": "47-18-3204",
+      "title": "47-18-3204",
+      "family": "47",
+      "description": "Controller Responsibilities"
+    },
+    {
+      "control_id": "47-18-3204(a)",
+      "title": "47-18-3204(a)",
+      "family": "47",
+      "description": "A controller shall:"
+    },
+    {
+      "control_id": "47-18-3204(a)(1)",
+      "title": "47-18-3204(a)(1)",
+      "family": "47",
+      "description": "Limit the collection of personal information to what is adequate, relevant, and reasonably necessary in relation to the purposes for which the data is processed, as disclosed to the consumer;"
+    },
+    {
+      "control_id": "47-18-3204(a)(2)",
+      "title": "47-18-3204(a)(2)",
+      "family": "47",
+      "description": "Except as otherwise provided in this part, not process personal information for purposes that are beyond what is reasonably necessary to and compatible with the disclosed purposes for which the personal information is processed, as disclosed to the consumer, unless the controller obtains the consumer's consent;"
+    },
+    {
+      "control_id": "47-18-3204(a)(3)",
+      "title": "47-18-3204(a)(3)",
+      "family": "47",
+      "description": "Establish, implement, and maintain reasonable administrative, technical, and physical data security practices, as described in § 47-18-3213, to protect the confidentiality, integrity, and accessibility of personal information. The data security practices must be appropriate to the volume and nature of the personal information at issue;"
+    },
+    {
+      "control_id": "47-18-3204(a)(4)",
+      "title": "47-18-3204(a)(4)",
+      "family": "47",
+      "description": "Not be required to delete information that it maintains or uses as aggregate or de-identified data, provided that such data in the possession of the business is not linked to a specific consumer;"
+    },
+    {
+      "control_id": "47-18-3204(a)(5)",
+      "title": "47-18-3204(a)(5)",
+      "family": "47",
+      "description": "Not process personal information in violation of state and federal laws that prohibit unlawful discrimination against consumers. A controller shall not discriminate against a consumer for exercising the consumer rights contained in this part, including denying goods or services, charging different prices or rates for goods or services, or providing a different level of quality of goods and services to the consumer. However, this subdivision (a)(5) does not require a controller to provide a product or service that requires the personal information of a consumer that the controller does not collect or maintain, or prohibit a controller from offering a different price, rate, level, quality, or selection of goods or services to a consumer, including offering goods or services for no fee, if the consumer has exercised the right to opt out pursuant to § 47-18-3203(a)(2)(F) or the offer is related to a consumer's voluntary participation in a bona fide loyalty, rewards, premium features, discounts, or club card program; and"
+    },
+    {
+      "control_id": "47-18-3204(a)(6)",
+      "title": "47-18-3204(a)(6)",
+      "family": "47",
+      "description": "Not process sensitive data concerning a consumer without obtaining the consumer's consent, or, in the case of the processing of sensitive data concerning a known child, without processing the data in accordance with the federal Children's Online Privacy Protection Act (15 U.S.C. § 6501 et seq.) and its implementing regulations"
+    },
+    {
+      "control_id": "47-18-3204(b)",
+      "title": "47-18-3204(b)",
+      "family": "47",
+      "description": "A provision of a contract or agreement that purports to waive or limit the consumer rights described in § 47-18-3203 is contrary to public policy and is void and unenforceable"
+    },
+    {
+      "control_id": "47-18-3204(c)",
+      "title": "47-18-3204(c)",
+      "family": "47",
+      "description": "A controller shall provide a reasonably accessible, clear, and meaningful privacy notice that includes:"
+    },
+    {
+      "control_id": "47-18-3204(c)(1)",
+      "title": "47-18-3204(c)(1)",
+      "family": "47",
+      "description": "The categories of personal information processed by the controller;"
+    },
+    {
+      "control_id": "47-18-3204(c)(2)",
+      "title": "47-18-3204(c)(2)",
+      "family": "47",
+      "description": "The purpose for processing personal information;"
+    },
+    {
+      "control_id": "47-18-3204(c)(3)",
+      "title": "47-18-3204(c)(3)",
+      "family": "47",
+      "description": "How consumers may exercise their consumer rights pursuant to § 47-18-3203, including how a consumer may appeal a controller's decision with regard to the consumer's request;"
+    },
+    {
+      "control_id": "47-18-3204(c)(4)",
+      "title": "47-18-3204(c)(4)",
+      "family": "47",
+      "description": "The categories of personal information that the controller sells to third parties, if any; and"
+    },
+    {
+      "control_id": "47-18-3204(c)(5)",
+      "title": "47-18-3204(c)(5)",
+      "family": "47",
+      "description": "The categories of third parties, if any, to whom the controller sells personal information"
+    },
+    {
+      "control_id": "47-18-3204(d)",
+      "title": "47-18-3204(d)",
+      "family": "47",
+      "description": "If a controller sells personal information to third parties or processes personal\ninformation for targeted advertising, then the controller shall clearly and  conspicuously disclose the processing, as well as the manner in which a consumer may exercise the right to opt out of the processing"
+    },
+    {
+      "control_id": "47-18-3204(e)",
+      "title": "47-18-3204(e)",
+      "family": "47",
+      "description": "Dark Patterns Prohibition"
+    },
+    {
+      "control_id": "47-18-3204(e)(1)",
+      "title": "47-18-3204(e)(1)",
+      "family": "47",
+      "description": "A controller shall provide, and shall describe in a privacy notice, one (1) or more secure and reliable means for a consumer to submit a request to exercise the consumer rights in § 47-18-3203. Such means must take into account the:"
+    },
+    {
+      "control_id": "47-18-3204(e)(1)(A)",
+      "title": "47-18-3204(e)(1)(A)",
+      "family": "47",
+      "description": "Ways in which a consumer normally interacts with the controller;"
+    },
+    {
+      "control_id": "47-18-3204(e)(1)(B)",
+      "title": "47-18-3204(e)(1)(B)",
+      "family": "47",
+      "description": "Need for secure and reliable communication of such requests; and"
+    },
+    {
+      "control_id": "47-18-3204(e)(1)(C)",
+      "title": "47-18-3204(e)(1)(C)",
+      "family": "47",
+      "description": "Ability of a controller to authenticate the identity of the consumer making the request."
+    },
+    {
+      "control_id": "47-18-3204(e)(2)",
+      "title": "47-18-3204(e)(2)",
+      "family": "47",
+      "description": "A controller shall not require a consumer to create a new account in order to exercise consumer rights in § 47-18-3203, but may require a consumer to use an existing account"
+    },
+    {
+      "control_id": "47-18-3205",
+      "title": "47-18-3205",
+      "family": "47",
+      "description": "Processor"
+    },
+    {
+      "control_id": "47-18-3205(a)",
+      "title": "47-18-3205(a)",
+      "family": "47",
+      "description": "A processor shall adhere to the instructions of a controller and shall assist the controller in meeting its obligations under this part. The assistance must include:"
+    },
+    {
+      "control_id": "47-18-3205(a)(1)",
+      "title": "47-18-3205(a)(1)",
+      "family": "47",
+      "description": "Taking into account the nature of processing and the information available to the processor, by appropriate technical and organizational measures, insofar as this is reasonably practicable, to fulfill the controller's obligation to respond to consumer rights requests pursuant to § 47-18-3203; and"
+    },
+    {
+      "control_id": "47-18-3205(a)(2)",
+      "title": "47-18-3205(a)(2)",
+      "family": "47",
+      "description": "Providing necessary information to enable the controller to conduct and document data protection assessments pursuant to § 47-18-3206."
+    },
+    {
+      "control_id": "47-18-3205(b)",
+      "title": "47-18-3205(b)",
+      "family": "47",
+      "description": "A contract between a controller and a processor governs the processor's data processing procedures with respect to processing performed on behalf of the controller. The contract is binding and must clearly set forth instructions for processing data, the nature and purpose of processing, the type of data subject to processing, the duration of processing, and the rights and obligations of both parties. The contract must also include requirements that the processor shall:"
+    },
+    {
+      "control_id": "47-18-3205(b)(1)",
+      "title": "47-18-3205(b)(1)",
+      "family": "47",
+      "description": "Ensure that each person processing personal information is subject to a duty of confidentiality with respect to the data;"
+    },
+    {
+      "control_id": "47-18-3205(b)(2)",
+      "title": "47-18-3205(b)(2)",
+      "family": "47",
+      "description": "At the controller's direction, delete or return all personal information to the controller as requested at the end of the provision of services, unless retention of the personal information is required by law;"
+    },
+    {
+      "control_id": "47-18-3205(b)(3)",
+      "title": "47-18-3205(b)(3)",
+      "family": "47",
+      "description": "Upon the reasonable request of the controller, make available to the controller all information in its possession necessary to demonstrate the processor's compliance with the obligations in this part;"
+    },
+    {
+      "control_id": "47-18-3205(b)(4)",
+      "title": "47-18-3205(b)(4)",
+      "family": "47",
+      "description": "Allow, and cooperate with, reasonable assessments by the controller or the controller's designated assessor; alternatively, the processor may arrange for a qualified and independent assessor to conduct an assessment of the processor's policies and technical and organizational measures in support of the obligations under this part using an appropriate and accepted control standard or framework and assessment procedure for the assessments. The processor shall provide a report of each assessment to the controller upon request; and"
+    },
+    {
+      "control_id": "47-18-3205(b)(5)",
+      "title": "47-18-3205(b)(5)",
+      "family": "47",
+      "description": "Engage a subcontractor pursuant to a written contract in that requires the subcontractor to meet the obligations of the processor with respect to the personal information"
+    },
+    {
+      "control_id": "47-18-3205(c)",
+      "title": "47-18-3205(c)",
+      "family": "47",
+      "description": "This section does not relieve a controller or a processor from the liabilities imposed on it by virtue of its role in the processing relationship as described in subsection (b)"
+    },
+    {
+      "control_id": "47-18-3205(d)",
+      "title": "47-18-3205(d)",
+      "family": "47",
+      "description": "Determining whether a person is acting as a controller or processor with respect to a specific processing of data is a fact-based determination that depends upon the context in which personal information is to be processed. A processor that continues to adhere to a controller's instructions with respect to a specific processing of personal information remains a processor."
+    },
+    {
+      "control_id": "47-18-3206",
+      "title": "47-18-3206",
+      "family": "47",
+      "description": "Data Protection Assessments"
+    },
+    {
+      "control_id": "47-18-3206(a)",
+      "title": "47-18-3206(a)",
+      "family": "47",
+      "description": "A controller shall conduct and document a data protection assessment of each of the following processing activities involving personal information:"
+    },
+    {
+      "control_id": "47-18-3206(a)(1)",
+      "title": "47-18-3206(a)(1)",
+      "family": "47",
+      "description": "The processing of personal information for purposes of targeted advertising;"
+    },
+    {
+      "control_id": "47-18-3206(a)(2)",
+      "title": "47-18-3206(a)(2)",
+      "family": "47",
+      "description": "The sale of personal information;"
+    },
+    {
+      "control_id": "47-18-3206(a)(3)",
+      "title": "47-18-3206(a)(3)",
+      "family": "47",
+      "description": "The processing of personal information for purposes of profiling, where the profiling presents a reasonably foreseeable risk of:"
+    },
+    {
+      "control_id": "47-18-3206(a)(3)(A)",
+      "title": "47-18-3206(a)(3)(A)",
+      "family": "47",
+      "description": "Unfair or deceptive treatment of, or unlawful disparate impact on, consumers;"
+    },
+    {
+      "control_id": "47-18-3206(a)(3)(B)",
+      "title": "47-18-3206(a)(3)(B)",
+      "family": "47",
+      "description": "Financial, physical, or reputational injury to consumers;"
+    },
+    {
+      "control_id": "47-18-3206(a)(3)(C)",
+      "title": "47-18-3206(a)(3)(C)",
+      "family": "47",
+      "description": "A physical or other intrusion upon the solitude or seclusion, or the private affairs or concerns, of consumers, where the intrusion would be offensive to a reasonable person; or"
+    },
+    {
+      "control_id": "47-18-3206(a)(3)(D)",
+      "title": "47-18-3206(a)(3)(D)",
+      "family": "47",
+      "description": "Other substantial injury to consumers;"
+    },
+    {
+      "control_id": "47-18-3206(a)(4)",
+      "title": "47-18-3206(a)(4)",
+      "family": "47",
+      "description": "The processing of sensitive data; and"
+    },
+    {
+      "control_id": "47-18-3206(a)(5)",
+      "title": "47-18-3206(a)(5)",
+      "family": "47",
+      "description": "Processing activities involving personal information that present a heightened risk of harm to consumers"
+    },
+    {
+      "control_id": "47-18-3206(b)",
+      "title": "47-18-3206(b)",
+      "family": "47",
+      "description": "Data protection assessments conducted pursuant to subsection (a) must identify and weigh the benefits that may flow, directly and indirectly, from the processing to the controller, the consumer, other stakeholders, and the public against the potential risks to the rights of the consumer associated with the processing, as mitigated by safeguards that can be employed by the controller to reduce the risks. The use of deidentified data and the reasonable expectations of consumers, as well as the context of the processing and the relationship between the controller and the consumer whose personal information will be processed, must be factored into this assessment by the controller"
+    },
+    {
+      "control_id": "47-18-3206(c)",
+      "title": "47-18-3206(c)",
+      "family": "47",
+      "description": "The attorney general and reporter may request pursuant to a civil investigative demand that a controller disclose a data protection assessment that is relevant to an investigation conducted by the attorney general and reporter, and the controller shall make the data protection assessment available to the attorney general and reporter. The attorney general and reporter may evaluate the data protection\nassessment for compliance with the responsibilities set forth in § 47-18-3204. Data protection  assessments are confidential and not open to public inspection and copying. The disclosure of a data protection assessment pursuant to a request from the attorney general and reporter does not constitute a waiver of attorney-client privilege or work product protection with respect to the assessment and information contained in the assessment"
+    },
+    {
+      "control_id": "47-18-3206(d)",
+      "title": "47-18-3206(d)",
+      "family": "47",
+      "description": "A single data protection assessment may address a comparable set of processing operations that include similar activities."
+    },
+    {
+      "control_id": "47-18-3206(e)",
+      "title": "47-18-3206(e)",
+      "family": "47",
+      "description": "Data protection assessments conducted by a controller for the purpose of compliance with other laws, rules, or regulations may comply with this section if the assessments have a reasonably comparable scope and effect."
+    },
+    {
+      "control_id": "47-18-3206(f)",
+      "title": "47-18-3206(f)",
+      "family": "47",
+      "description": "Data protection assessment requirements apply to processing activities created or generated on or after July 1, 2024, and are not retroactive."
+    },
+    {
+      "control_id": "47-18-3207",
+      "title": "47-18-3207",
+      "family": "47",
+      "description": "De-identified Data"
+    },
+    {
+      "control_id": "47-18-3207(a)",
+      "title": "47-18-3207(a)",
+      "family": "47",
+      "description": "The controller in possession of de-identified data shall:"
+    },
+    {
+      "control_id": "47-18-3207(a)(1)",
+      "title": "47-18-3207(a)(1)",
+      "family": "47",
+      "description": "Take reasonable measures to ensure that the data cannot be associated with a natural person;"
+    },
+    {
+      "control_id": "47-18-3207(a)(2)",
+      "title": "47-18-3207(a)(2)",
+      "family": "47",
+      "description": "Publicly commit to maintaining and using de-identified data without attempting to reidentify the data; and"
+    },
+    {
+      "control_id": "47-18-3207(a)(3)",
+      "title": "47-18-3207(a)(3)",
+      "family": "47",
+      "description": "Contractually obligate recipients of the de-identified data to comply with this part."
+    },
+    {
+      "control_id": "47-18-3207(b)",
+      "title": "47-18-3207(b)",
+      "family": "47",
+      "description": "This section does not require a controller or processor to:"
+    },
+    {
+      "control_id": "47-18-3207(b)(1)",
+      "title": "47-18-3207(b)(1)",
+      "family": "47",
+      "description": "Reidentify de-identified data or pseudonymous data;"
+    },
+    {
+      "control_id": "47-18-3207(b)(2)",
+      "title": "47-18-3207(b)(2)",
+      "family": "47",
+      "description": "Maintain data in identifiable form, or collect, obtain, retain, or access data or technology, in order to be capable of associating an authenticated consumer request with personal information; or"
+    },
+    {
+      "control_id": "47-18-3207(b)(3)",
+      "title": "47-18-3207(b)(3)",
+      "family": "47",
+      "description": "Comply with an authenticated consumer rights request, pursuant to § 47-18-3203, if:"
+    },
+    {
+      "control_id": "47-18-3207(b)(3)(A)",
+      "title": "47-18-3207(b)(3)(A)",
+      "family": "47",
+      "description": "The controller is not reasonably capable of associating the request with the personal information or it would be unreasonably burdensome for the controller to associate the request with the personal information;"
+    },
+    {
+      "control_id": "47-18-3207(b)(3)(B)",
+      "title": "47-18-3207(b)(3)(B)",
+      "family": "47",
+      "description": "The controller does not use the personal information to recognize or respond to the specific consumer who is the subject of the personal information, or associate the personal information with other personal information about the same specific consumer; and"
+    },
+    {
+      "control_id": "47-18-3207(b)(3)(C)",
+      "title": "47-18-3207(b)(3)(C)",
+      "family": "47",
+      "description": "The controller does not sell the personal information to a third party or otherwise voluntarily disclose the personal information to a third party other than a processor, except as otherwise permitted in this\nsection."
+    },
+    {
+      "control_id": "47-18-3207(c)",
+      "title": "47-18-3207(c)",
+      "family": "47",
+      "description": "The consumer rights contained in §§ 47-18-3203 and 47-18-3204 do not apply to pseudonymous data in cases where the controller is able to demonstrate information necessary to identify the consumer is kept separately and is subject to effective technical and organizational controls that prevent the controller from accessing that information."
+    },
+    {
+      "control_id": "47-18-3207(d)",
+      "title": "47-18-3207(d)",
+      "family": "47",
+      "description": "A controller that discloses pseudonymous data or de-identified data shall exercise reasonable oversight to monitor compliance with contractual commitments to which the pseudonymous data or de-identified data is subject and shall take appropriate steps to address breaches of those contractual commitments."
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+---
+/**
+ * FrameworkCategoryPage — shared shell for the framework category pages
+ * (/us-federal, /ai, /enterprise, /international, /privacy, /all, /meta).
+ * Mirrors the GuidanceCategoryPage pattern: pages stay thin config files and
+ * this component renders the breadcrumb, badge, header, and FrameworkCard grid.
+ *
+ * Slots:
+ * - "info": optional box between the header and the card grid
+ * - "footer": optional content after the card grid
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import FrameworkCard from '@/components/cards/FrameworkCard.astro';
+import type { FrameworkConfig } from '@/data/types';
+import { getStats } from '@/data/controls';
+
+export interface FrameworkEntry {
+  config: FrameworkConfig;
+  stats: ReturnType<typeof getStats>;
+}
+
+export interface FrameworkGroup {
+  /** Optional numbered section heading (e.g. region or jurisdiction) */
+  heading?: string;
+  frameworks: FrameworkEntry[];
+}
+
+interface Props {
+  /** BaseLayout <title> */
+  title: string;
+  /** Final breadcrumb segment */
+  breadcrumbLabel: string;
+  /** H1 text */
+  heading: string;
+  /** Optional badge pill next to the H1 */
+  badge?: { label: string; class: string };
+  /** Paragraph under the H1 (pages compute their own count sentence) */
+  description: string;
+  groups: FrameworkGroup[];
+  /** Shown when every group is empty */
+  emptyMessage?: string;
+}
+
+const { title, breadcrumbLabel, heading, badge, description, groups, emptyMessage } = Astro.props;
+
+const totalFrameworks = groups.reduce((sum, g) => sum + g.frameworks.length, 0);
+const hasGroupHeadings = groups.some((g) => g.heading !== undefined);
+---
+
+<BaseLayout title={title} showSidebar={false}>
+  <div class="max-w-4xl mx-auto space-y-12 py-12">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-foreground">{breadcrumbLabel}</span>
+      </div>
+
+      {badge ? (
+        <div class="flex items-center gap-3">
+          <span class={`${badge.class} px-3 py-1.5 text-sm font-mono rounded border`}>
+            {badge.label}
+          </span>
+          <h1 class="text-3xl font-bold tracking-tight">
+            {heading}
+          </h1>
+        </div>
+      ) : (
+        <h1 class="text-3xl font-bold tracking-tight">
+          {heading}
+        </h1>
+      )}
+
+      <p class="text-muted-foreground max-w-2xl">
+        {description}
+      </p>
+    </header>
+
+    <slot name="info" />
+
+    {hasGroupHeadings ? (
+      groups.map(({ heading: groupHeading, frameworks }) => (
+        <section class="space-y-6">
+          <div class="flex items-baseline gap-2 border-t border-dashed border-border/40 pt-4">
+            <h2 class="text-xl font-bold tracking-tight">{groupHeading}</h2>
+            <span class="text-sm font-normal text-muted-foreground">({frameworks.length})</span>
+          </div>
+
+          <div class="grid gap-6">
+            {frameworks.map(({ config, stats }, i) => (
+              <FrameworkCard config={config} stats={stats} index={i} />
+            ))}
+          </div>
+        </section>
+      ))
+    ) : (
+      <section class="space-y-6">
+        <div class="grid gap-6">
+          {groups.map(({ frameworks }) =>
+            frameworks.map(({ config, stats }, i) => (
+              <FrameworkCard config={config} stats={stats} index={i} />
+            ))
+          )}
+        </div>
+
+        {emptyMessage && totalFrameworks === 0 && (
+          <p class="text-center text-muted-foreground py-8">
+            {emptyMessage}
+          </p>
+        )}
+
+        <slot name="footer" />
+      </section>
+    )}
+    {hasGroupHeadings && <slot name="footer" />}
+  </div>
+</BaseLayout>

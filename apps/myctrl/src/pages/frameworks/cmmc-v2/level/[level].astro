@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'cmmc-v2';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('cmmc-v2');
+}
+
+const { level } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={level!} />

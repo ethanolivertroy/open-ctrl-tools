@@ -1,0 +1,164 @@
+---
+/**
+ * FrameworkLicenseNotice — license, official source forwarding, and local BYO
+ * overlay notice shown on /frameworks/[framework].
+ */
+import type { FrameworkConfig } from '@/data/types';
+import { hasFrameworkData, isLocalFrameworkData } from '@/data/controls';
+
+interface Props {
+  config: FrameworkConfig;
+  isLoaded?: boolean;
+  isLocal?: boolean;
+}
+
+const { config } = Astro.props;
+const frameworkId = config.id;
+const isLoaded = Astro.props.isLoaded ?? hasFrameworkData(frameworkId);
+const isLocal = Astro.props.isLocal ?? isLocalFrameworkData(frameworkId);
+
+function licenseDisplayLabel(license: FrameworkConfig['license']): string {
+  switch (license) {
+    case 'proprietary':
+      return 'Proprietary / Copyrighted';
+    case 'cc-by-nd':
+      return 'Creative Commons NoDerivatives (CC BY-ND / BY-NC-ND)';
+    case 'cc-by-nc-sa':
+      return 'Creative Commons NonCommercial (CC BY-NC-SA 4.0)';
+    case 'open-license':
+      return 'Open License';
+    default:
+      return 'Public Domain';
+  }
+}
+---
+
+{!isLoaded ? (
+  <div class="p-6 rounded-xl border border-[var(--ctp-peach)]/30 bg-[var(--ctp-peach)]/5 space-y-5">
+    <div class="space-y-2">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="badge-proprietary px-2.5 py-1 text-xs font-mono rounded border">
+          {licenseDisplayLabel(config.license)}
+        </span>
+        <span class="px-2.5 py-1 text-xs font-mono rounded border border-border text-muted-foreground">
+          Official Source Only
+        </span>
+      </div>
+      <h2 class="text-lg font-semibold text-foreground">
+        Obtain {config.name} from its Official Publisher
+      </h2>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        <strong class="text-foreground">{config.name}</strong> is not bundled or redistributed in this open-source repository due to publisher copyright, NoDerivatives, or NonCommercial license restrictions. Visit the official publisher below to view or license the authoritative text.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      {config.officialUrl && (
+        <a
+          href={config.officialUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+        >
+          Visit Official {config.name} Source
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      )}
+      {frameworkId === 'iso-27001-2022' && (
+        <a
+          href="https://csrc.nist.gov/projects/olir/informative-reference-catalog/details?referenceId=154"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-mono text-muted-foreground hover:border-foreground/50 hover:text-foreground transition-colors"
+        >
+          NIST OLIR Crosswalk ↗
+        </a>
+      )}
+      {frameworkId === 'pci-dss-v4' && (
+        <a
+          href="/crosswalk/csf-pci"
+          class="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-mono text-muted-foreground hover:border-foreground/50 hover:text-foreground transition-colors"
+        >
+          NIST OLIR CSF ↔ PCI IDs →
+        </a>
+      )}
+    </div>
+
+    <div class="pt-4 border-t border-border/50 space-y-2.5">
+      <h3 class="text-sm font-semibold text-foreground">
+        Use Your Own Licensed Copy Locally (with Your Coding Agent)
+      </h3>
+      <p class="text-sm text-muted-foreground leading-relaxed">
+        Already hold a licensed copy or internal export of {config.name}? You can load it into your own local{' '}
+        <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">myctrl</code> checkout — gitignored and never checked into version control — so your local UI, search, assessments, and{' '}
+        <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">/api/v1/*</code> endpoints include full searchable controls:
+      </p>
+      <ol class="list-decimal list-inside text-xs sm:text-sm text-muted-foreground space-y-1.5 pl-1">
+        <li>
+          Convert your self-licensed file to the framework JSON schema at{' '}
+          <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">src/data/local/{frameworkId}.json</code>{' '}
+          (works in Pi, Claude Code, Cursor, Codex, or Grok using{' '}
+          <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">skills/myctrl-local-standards/SKILL.md</code>).
+        </li>
+        <li>
+          Validate the schema with{' '}
+          <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">npm run validate:local</code>.
+        </li>
+        <li>
+          Start the local server with{' '}
+          <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">npm run dev</code>{' '}
+          and reload this page to browse, search, and crosswalk your local dataset.
+        </li>
+      </ol>
+    </div>
+  </div>
+) : (
+  <>
+    {isLocal && (
+      <div class="p-4 rounded-lg border border-green-500/30 bg-green-500/5 text-sm text-muted-foreground">
+        <strong class="text-foreground">Loaded from local overlay:</strong> This dataset is served from your gitignored{' '}
+        <code class="px-1.5 py-0.5 rounded bg-muted text-xs font-mono">src/data/local/{frameworkId}.json</code>{' '}
+        overlay.
+      </div>
+    )}
+
+    {frameworkId === 'govramp' ? (
+      <div class="p-4 rounded-lg border border-blue-500/30 bg-blue-500/5 space-y-3">
+        <p class="text-sm text-muted-foreground">
+          Baseline levels, control titles, and core control designations sourced from the official{' '}
+          <a href="https://govramp.org" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-medium">GovRAMP</a>{' '}
+          published documents.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <a href="https://govramp.org" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 rounded-md border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-xs font-mono text-blue-400 hover:bg-blue-500/20 transition-colors">
+            GovRAMP Official ↗
+          </a>
+        </div>
+      </div>
+    ) : config.officialUrl && (
+      <p class="text-sm text-muted-foreground/80 italic">
+        This is a reference tool, not an authoritative source.
+        For official documentation, visit <a href={config.officialUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{new URL(config.officialUrl).hostname}</a>.
+      </p>
+    )}
+  </>
+)}
+
+{/* Data source attribution */}
+{config.dataSource && (
+  <div class="p-4 rounded-lg border border-purple-500/30 bg-purple-500/5 space-y-3">
+    <p class="text-sm text-muted-foreground">
+      Framework data reference:{' '}
+      <a href={config.dataSource.url} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-medium">
+        {config.dataSource.name}
+      </a>
+      {config.dataSource.version && ` v${config.dataSource.version}`}, licensed under{' '}
+      <a href={config.dataSource.licenseUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">
+        {config.dataSource.license}
+      </a>.
+    </p>
+  </div>
+)}

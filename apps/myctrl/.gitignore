@@ -1,0 +1,55 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Scraped data (keep raw JSON for builds)
+# scripts/data/raw/  # Commented out - needed for build
+scripts/data/*.json
+.vercel
+.playwright-mcp/
+.wrangler/
+.env*.local
+
+# Data files (spreadsheets, exports)
+*.xlsx
+*.csv
+csf-export.json
+nist_ai_rmf_playbook.json
+extract-data-*.json
+scripts/parse_fedramp_marketplace.py
+
+# User-specific local settings
+.claude/
+.opencode/
+.firecrawl/
+.worktrees/
+
+# Local BYO licensed framework & crosswalk overlays (never commit)
+src/data/local/*.json
+src/data/local/crosswalks/*.json

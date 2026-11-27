@@ -1,0 +1,1090 @@
+{
+  "framework": {
+    "id": "spain-ens",
+    "name": "Spain ENS (BOE-A-2022-7191)",
+    "version": "2022",
+    "description": "Spain ENS (BOE-A-2022-7191) compliance framework"
+  },
+  "families": {
+    "Article": "Article",
+    "Article 3": "Article 3",
+    "Article 6": "Article 6",
+    "Article 7": "Article 7",
+    "Article 8": "Article 8",
+    "Article 9": "Article 9",
+    "Article 10": "Article 10",
+    "Article 11": "Article 11",
+    "Article 12": "Article 12",
+    "Article 13": "Article 13",
+    "Article 14": "Article 14",
+    "Article 15": "Article 15",
+    "Article 16": "Article 16",
+    "Article 19": "Article 19",
+    "Article 21": "Article 21",
+    "Article 22": "Article 22",
+    "Article 24": "Article 24",
+    "Article 25": "Article 25",
+    "Article 28": "Article 28",
+    "Article 30": "Article 30",
+    "Article 31": "Article 31",
+    "Article 32": "Article 32",
+    "Article 33": "Article 33",
+    "Article 34": "Article 34",
+    "Article 35": "Article 35",
+    "Article 38": "Article 38",
+    "Article 40": "Article 40",
+    "Article 41": "Article 41"
+  },
+  "controls": [
+    {
+      "control_id": "Article 3",
+      "title": "Article 3",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 3.1",
+      "title": "Article 3.1",
+      "family": "Article 3",
+      "description": "When an information system processes personal data, the provisions of Regulation (EU) 2016/679 of the European Parliament and of the Council, of April 27, 2016, relating to the protection of natural persons in what concerns the processing of personal data and the free circulation of these data and which repeals Directive 95/46/EC (General Data Protection Regulation) and Organic Law 3/2018, of December 5, on Protection of Personal Data and guarantee of digital rights, or, where applicable, Organic Law 7/2021, of May 26, on the protection of personal data processed for the purposes of prevention, detection, investigation and prosecution of criminal and enforcement infractions of criminal sanctions, the rest of the applicable regulations, as well as the criteria established by the Spanish Data Protection Agency or in its area of ​​competence, by the autonomous data protection authorities, without prejudice to the requirements established herein royal decree."
+    },
+    {
+      "control_id": "Article 3.2",
+      "title": "Article 3.2",
+      "family": "Article 3",
+      "description": "In these cases, the person responsible or in charge of the treatment, advised by the data protection delegate, will carry out a risk analysis in accordance with article 24 of the General Data Protection Regulation and, in the cases of its article 35, a data protection impact assessment."
+    },
+    {
+      "control_id": "Article 3.3",
+      "title": "Article 3.3",
+      "family": "Article 3",
+      "description": "In any case, the measures to be implemented as a consequence of the risk analysis and, where appropriate, the impact evaluation referred to in the previous section will prevail, if they are aggravated with respect to those provided for in this document. decree."
+    },
+    {
+      "control_id": "Article 4",
+      "title": "Article 4",
+      "family": "Article",
+      "description": "(see definitions section)"
+    },
+    {
+      "control_id": "Article 5",
+      "title": "Article 5",
+      "family": "Article",
+      "description": "The ultimate objective of information security is to guarantee that an organization will be able to meet its objectives, develop its functions and exercise its powers using information systems. Therefore, in terms of information security, the following basic principles must be taken into account:"
+    },
+    {
+      "control_id": "Article 5(a)",
+      "title": "Article 5(a)",
+      "family": "Article",
+      "description": "Security as an integral process."
+    },
+    {
+      "control_id": "Article 5(b)",
+      "title": "Article 5(b)",
+      "family": "Article",
+      "description": "Risk-based security management."
+    },
+    {
+      "control_id": "Article 5(c)",
+      "title": "Article 5(c)",
+      "family": "Article",
+      "description": "Prevention, detection, response and conservation."
+    },
+    {
+      "control_id": "Article 5(d)",
+      "title": "Article 5(d)",
+      "family": "Article",
+      "description": "Existence of lines of defense."
+    },
+    {
+      "control_id": "Article 5(e)",
+      "title": "Article 5(e)",
+      "family": "Article",
+      "description": "Continuous surveillance."
+    },
+    {
+      "control_id": "Article 5(f)",
+      "title": "Article 5(f)",
+      "family": "Article",
+      "description": "Periodic reevaluation."
+    },
+    {
+      "control_id": "Article 5(g)",
+      "title": "Article 5(g)",
+      "family": "Article",
+      "description": "Differentiation of responsibilities."
+    },
+    {
+      "control_id": "Article 6",
+      "title": "Article 6",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 6.1",
+      "title": "Article 6.1",
+      "family": "Article 6",
+      "description": "Security is understood as a comprehensive process made up of all human, material, technical, legal and organizational elements related to the information system. The application of the ENS will be governed by this principle, which excludes any specific action or short-term treatment."
+    },
+    {
+      "control_id": "Article 6.2",
+      "title": "Article 6.2",
+      "family": "Article 6",
+      "description": "Maximum attention will be paid to raising the awareness of the people involved in the process and that of the hierarchical managers, to prevent ignorance, lack of organization and coordination or adequate instructions from constituting sources of risk for the security."
+    },
+    {
+      "control_id": "Article 7",
+      "title": "Article 7",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 7.1",
+      "title": "Article 7.1",
+      "family": "Article 7",
+      "description": "Risk analysis and management is an essential part of the security process, and must constitute a continuous and permanently updated activity."
+    },
+    {
+      "control_id": "Article 7.2",
+      "title": "Article 7.2",
+      "family": "Article 7",
+      "description": "Risk management will allow the maintenance of a controlled environment, minimizing risks to acceptable levels. The reduction to these levels will be carried out through an appropriate application of security measures, in a balanced manner and proportionate to the nature of the information processed, the services to be provided and the risks to which they are exposed."
+    },
+    {
+      "control_id": "Article 8",
+      "title": "Article 8",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 8.1",
+      "title": "Article 8.1",
+      "family": "Article 8",
+      "description": "The security of the system must contemplate actions related to aspects of prevention, detection and response, in order to minimize its vulnerabilities and ensure that threats to it do not materialize or, if they do, do not seriously affect the system. to the information it handles or the services it provides."
+    },
+    {
+      "control_id": "Article 8.2",
+      "title": "Article 8.2",
+      "family": "Article 8",
+      "description": "Prevention measures, which may incorporate components aimed at deterrence or reducing the exposure surface, must eliminate or reduce the possibility of threats materializing."
+    },
+    {
+      "control_id": "Article 8.3",
+      "title": "Article 8.3",
+      "family": "Article 8",
+      "description": "Detection measures will be aimed at discovering the presence of a cyber incident."
+    },
+    {
+      "control_id": "Article 8.4",
+      "title": "Article 8.4",
+      "family": "Article 8",
+      "description": "Response measures, which will be managed in a timely manner, will be aimed at restoring information and services that may have been affected by a security incident."
+    },
+    {
+      "control_id": "Article 8.5",
+      "title": "Article 8.5",
+      "family": "Article 8",
+      "description": "Without compromising the remaining basic principles and minimum requirements established, the information system will guarantee the conservation of data and information in electronic format."
+    },
+    {
+      "control_id": "Article 8 (end)",
+      "title": "Article 8 (end)",
+      "family": "Article",
+      "description": "Likewise, the system will keep services available throughout the life cycle of digital information, through a conception and procedures that are the basis for the preservation of digital heritage."
+    },
+    {
+      "control_id": "Article 9",
+      "title": "Article 9",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 9.1",
+      "title": "Article 9.1",
+      "family": "Article 9",
+      "description": "The information system must have a protection strategy made up of multiple security layers, arranged in such a way that, when one of the layers is compromised, it allows:"
+    },
+    {
+      "control_id": "Article 9.1(a)",
+      "title": "Article 9.1(a)",
+      "family": "Article 9",
+      "description": "Develop an appropriate reaction to incidents that could not be avoided, reducing the probability that the system as a whole will be compromised."
+    },
+    {
+      "control_id": "Article 9.1(b)",
+      "title": "Article 9.1(b)",
+      "family": "Article 9",
+      "description": "Minimize the final impact on it."
+    },
+    {
+      "control_id": "Article 9.2",
+      "title": "Article 9.2",
+      "family": "Article 9",
+      "description": "The lines of defense must be made up of measures of an organizational, physical and logical nature."
+    },
+    {
+      "control_id": "Article 10",
+      "title": "Article 10",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 10.1",
+      "title": "Article 10.1",
+      "family": "Article 10",
+      "description": "Continuous surveillance will allow the detection of anomalous activities or behaviors and their timely response."
+    },
+    {
+      "control_id": "Article 10.2",
+      "title": "Article 10.2",
+      "family": "Article 10",
+      "description": "The permanent evaluation of the security status of the assets will allow measuring their evolution, detecting vulnerabilities and identifying configuration deficiencies."
+    },
+    {
+      "control_id": "Article 10.3",
+      "title": "Article 10.3",
+      "family": "Article 10",
+      "description": "Security measures will be periodically re-evaluated and updated, adapting their effectiveness to the evolution of risks and protection systems, leading to a rethinking of security, if necessary."
+    },
+    {
+      "control_id": "Article 11",
+      "title": "Article 11",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 11.1",
+      "title": "Article 11.1",
+      "family": "Article 11",
+      "description": "In information systems, the person responsible for the information, the person responsible for the service, the person responsible for security and the person responsible for the system will be differentiated."
+    },
+    {
+      "control_id": "Article 11.2",
+      "title": "Article 11.2",
+      "family": "Article 11",
+      "description": "Responsibility for the security of information systems will be differentiated from responsibility for the exploitation of the information systems concerned."
+    },
+    {
+      "control_id": "Article 11.3",
+      "title": "Article 11.3",
+      "family": "Article 11",
+      "description": "The organization's security policy will detail the responsibilities of each person responsible and the coordination and conflict resolution mechanisms."
+    },
+    {
+      "control_id": "Article 12",
+      "title": "Article 12",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 12.1",
+      "title": "Article 12.1",
+      "family": "Article 12",
+      "description": "The information security policy is the set of guidelines that govern the way in which an organization manages and protects the information it processes and the services it provides. To this end, the instrument that approves said security policy must include, at a minimum, the following points:"
+    },
+    {
+      "control_id": "Article 12.1(a)",
+      "title": "Article 12.1(a)",
+      "family": "Article 12",
+      "description": "The objectives or mission of the organization."
+    },
+    {
+      "control_id": "Article 12.1(b)",
+      "title": "Article 12.1(b)",
+      "family": "Article 12",
+      "description": "The regulatory framework in which the activities will be carried out."
+    },
+    {
+      "control_id": "Article 12.1(c)",
+      "title": "Article 12.1(c)",
+      "family": "Article 12",
+      "description": "The security roles or functions, defining for each one, their duties and responsibilities, as well as the procedure for their appointment and renewal."
+    },
+    {
+      "control_id": "Article 12.1(d)",
+      "title": "Article 12.1(d)",
+      "family": "Article 12",
+      "description": "The structure and composition of the committee or committees for security management and coordination, detailing their scope of responsibility and the relationship with other elements of the organization."
+    },
+    {
+      "control_id": "Article 12.1(e)",
+      "title": "Article 12.1(e)",
+      "family": "Article 12",
+      "description": "The guidelines for structuring the system's security documentation, its management and access."
+    },
+    {
+      "control_id": "Article 12.1(f)",
+      "title": "Article 12.1(f)",
+      "family": "Article 12",
+      "description": "The risks arising from the processing of personal data."
+    },
+    {
+      "control_id": "Article 12.2",
+      "title": "Article 12.2",
+      "family": "Article 12",
+      "description": "Each public administration will have a security policy formally approved by the competent body. Likewise, each body or entity with its own legal personality included in the subjective scope of article 2 must have a security policy formally approved by the competent body.\nHowever, all or part of the subjects of an institutional public sector may be included in the subjective scope of the security policy approved by the Administration with which they have a relationship, dependence or affiliation, when so determined by the bodies. competent in the exercise of organizational powers."
+    },
+    {
+      "control_id": "Article 12.3",
+      "title": "Article 12.3",
+      "family": "Article 12",
+      "description": "In the General Administration of the State, each ministry will have its security policy, which will be approved by the head of the Department. Public organizations and entities belonging to the state institutional public sector may have their own security policy, approved by the competent body, which will be consistent with that of the Department with which they maintain the relationship of connection, dependency or affiliation, or be included in the subjective scope of its security policy. The management centers of the General Administration of the State that manage services under the declaration of shared services may also have their own security policy, approved by the competent body, consistent with that of the Department to which they depend or to which they are attached."
+    },
+    {
+      "control_id": "Article 12.4",
+      "title": "Article 12.4",
+      "family": "Article 12",
+      "description": "The General Secretariat of Digital Administration of the Ministry of Economic Affairs and Digital Transformation will have its own security policy, which will be approved by the person in charge of it."
+    },
+    {
+      "control_id": "Article 12.5",
+      "title": "Article 12.5",
+      "family": "Article 12",
+      "description": "Municipalities may have a common security policy prepared by the local regional or provincial entity that assumes responsibility for the information security of municipal systems."
+    },
+    {
+      "control_id": "Article 12.6",
+      "title": "Article 12.6",
+      "family": "Article 12",
+      "description": "The security policy will be established in accordance with the basic principles indicated in chapter II and will be developed applying the following minimum requirements:"
+    },
+    {
+      "control_id": "Article 12.6(a)",
+      "title": "Article 12.6(a)",
+      "family": "Article 12",
+      "description": "Organization and implementation of the security process."
+    },
+    {
+      "control_id": "Article 12.6(b)",
+      "title": "Article 12.6(b)",
+      "family": "Article 12",
+      "description": "Risk analysis and management."
+    },
+    {
+      "control_id": "Article 12.6(c)",
+      "title": "Article 12.6(c)",
+      "family": "Article 12",
+      "description": "Personnel management."
+    },
+    {
+      "control_id": "Article 12.6(d)",
+      "title": "Article 12.6(d)",
+      "family": "Article 12",
+      "description": "Professionalism."
+    },
+    {
+      "control_id": "Article 12.6(e)",
+      "title": "Article 12.6(e)",
+      "family": "Article 12",
+      "description": "Authorization and access control."
+    },
+    {
+      "control_id": "Article 12.6(f)",
+      "title": "Article 12.6(f)",
+      "family": "Article 12",
+      "description": "Protection of facilities."
+    },
+    {
+      "control_id": "Article 12.6(g)",
+      "title": "Article 12.6(g)",
+      "family": "Article 12",
+      "description": "Acquisition of security products and contracting of security services."
+    },
+    {
+      "control_id": "Article 12.6(h)",
+      "title": "Article 12.6(h)",
+      "family": "Article 12",
+      "description": "Minimum privilege."
+    },
+    {
+      "control_id": "Article 12.6(i)",
+      "title": "Article 12.6(i)",
+      "family": "Article 12",
+      "description": "Integrity and updating of the system."
+    },
+    {
+      "control_id": "Article 12.6(j)",
+      "title": "Article 12.6(j)",
+      "family": "Article 12",
+      "description": "Protection of information stored and in transit."
+    },
+    {
+      "control_id": "Article 12.6(k)",
+      "title": "Article 12.6(k)",
+      "family": "Article 12",
+      "description": "Prevention against other interconnected information systems."
+    },
+    {
+      "control_id": "Article 12.6(l)",
+      "title": "Article 12.6(l)",
+      "family": "Article 12",
+      "description": "Recording of activity and detection of harmful code."
+    },
+    {
+      "control_id": "Article 12.6(m)",
+      "title": "Article 12.6(m)",
+      "family": "Article 12",
+      "description": "Security incidents."
+    },
+    {
+      "control_id": "Article 12.6(n)",
+      "title": "Article 12.6(n)",
+      "family": "Article 12",
+      "description": "Continuity of activity."
+    },
+    {
+      "control_id": "Article 12.6(ny)",
+      "title": "Article 12.6(ñ)",
+      "family": "Article 12",
+      "description": "Continuous improvement of the security process."
+    },
+    {
+      "control_id": "Article 12.7",
+      "title": "Article 12.7",
+      "family": "Article 12",
+      "description": "The minimum requirements will be required in proportion to the risks identified in each system, in accordance with the provisions of article 28, some of which may be ignored in systems without significant risks."
+    },
+    {
+      "control_id": "Article 13",
+      "title": "Article 13",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 13.1",
+      "title": "Article 13.1",
+      "family": "Article 13",
+      "description": "The security of information systems must involve all members of the organization."
+    },
+    {
+      "control_id": "Article 13.2",
+      "title": "Article 13.2",
+      "family": "Article 13",
+      "description": "The security policy, in application of the principle of differentiation of responsibilities referred to in article 11 and as detailed in section 3.1 of annex II, must be known by all people who are part of the organization and clearly identify unequivocally to those responsible for ensuring compliance, who will have the following functions:"
+    },
+    {
+      "control_id": "Article 13.2(a)",
+      "title": "Article 13.2(a)",
+      "family": "Article 13",
+      "description": "The person responsible for the information will determine the requirements of the information processed"
+    },
+    {
+      "control_id": "Article 13.2(b)",
+      "title": "Article 13.2(b)",
+      "family": "Article 13",
+      "description": "The person responsible for the service will determine the requirements of the services provided."
+    },
+    {
+      "control_id": "Article 13.2(c)",
+      "title": "Article 13.2(c)",
+      "family": "Article 13",
+      "description": "The person responsible for security will determine decisions to satisfy the information and service security requirements, supervise the implementation of the necessary measures to ensure that the requirements are satisfied and report on these issues."
+    },
+    {
+      "control_id": "Article 13.2(d)",
+      "title": "Article 13.2(d)",
+      "family": "Article 13",
+      "description": "The person responsible for security will determine decisions to satisfy the information and service security requirements, supervise the implementation of the necessary measures to ensure that the requirements are satisfied and report on these issues."
+    },
+    {
+      "control_id": "Article 13.3",
+      "title": "Article 13.3",
+      "family": "Article 13",
+      "description": "The person responsible for security will be different from the person responsible for the system, and there should be no hierarchical dependency between the two. In those exceptional situations in which the justified absence of resources makes it necessary for both functions to fall to the same person or to different people between whom there is a hierarchical relationship, compensatory measures must be applied to guarantee the purpose of the principle of differentiation of responsibilities provided for in the article 11."
+    },
+    {
+      "control_id": "Article 13.4",
+      "title": "Article 13.4",
+      "family": "Article 13",
+      "description": "A Technical Safety Instruction will regulate the Certification Scheme of Persons Responsible for Safety, which will include the conditions and requirements applicable to this figure."
+    },
+    {
+      "control_id": "Article 13.5",
+      "title": "Article 13.5",
+      "family": "Article 13",
+      "description": "In the case of outsourced services, except for justified and documented cause, the organization providing said services must designate a POC (Point or Contact Person) for the security of the information processed and the service provided, who has the support of the management bodies, and that channels and supervises both compliance with the security requirements of the service it provides or solution it provides, as well as communications related to information security and incident management for the scope of said service.\nSaid security POC will be the Security Manager of the contracted organization, will be part of its area or will have direct communication with it. All this without prejudice to the fact that the ultimate responsibility resides with the public sector entity receiving the aforementioned services."
+    },
+    {
+      "control_id": "Article 14",
+      "title": "Article 14",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 14.1",
+      "title": "Article 14.1",
+      "family": "Article 14",
+      "description": "Each organization that develops and implements systems for the processing of information or the provision of services will carry out its own risk management."
+    },
+    {
+      "control_id": "Article 14.2",
+      "title": "Article 14.2",
+      "family": "Article 14",
+      "description": "This management will be carried out through the analysis and treatment of the risks to which the system is exposed. Without prejudice to the provisions of Annex II, some internationally recognized methodology will be used."
+    },
+    {
+      "control_id": "Article 14.3",
+      "title": "Article 14.3",
+      "family": "Article 14",
+      "description": "The measures adopted to mitigate or eliminate risks must be justified and, in any case, there will be proportionality between them and the risks."
+    },
+    {
+      "control_id": "Article 15",
+      "title": "Article 15",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 15.1",
+      "title": "Article 15.1",
+      "family": "Article 15",
+      "description": "Personnel, whether their own or others, related to the information systems subject to the provisions of this royal decree, must be trained and informed of their duties, obligations and responsibilities in matters of security. Their actions, which must be supervised to verify that established procedures are followed, will apply the approved safety standards and operating procedures in the performance of their duties."
+    },
+    {
+      "control_id": "Article 15.2",
+      "title": "Article 15.2",
+      "family": "Article 15",
+      "description": "The meaning and scope of the safe use of the system will be specified and reflected in security standards that will be approved by the management or the corresponding higher body."
+    },
+    {
+      "control_id": "Article 16",
+      "title": "Article 16",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 16.1",
+      "title": "Article 16.1",
+      "family": "Article 16",
+      "description": "The security of information systems will be attended to and will be reviewed and audited by qualified, dedicated and instructed personnel in all phases of their life cycle: planning, design, acquisition, construction, deployment, exploitation, maintenance, incident management and dismantling."
+    },
+    {
+      "control_id": "Article 16.2",
+      "title": "Article 16.2",
+      "family": "Article 16",
+      "description": "The entities within the scope of application of this royal decree will require, in an objective and non-discriminatory manner, that the organizations that provide them with security services have qualified professionals with suitable levels of management and maturity in the services provided."
+    },
+    {
+      "control_id": "Article 16.3",
+      "title": "Article 16.3",
+      "family": "Article 16",
+      "description": "Organizations will determine the training and experience requirements necessary for personnel to perform their job."
+    },
+    {
+      "control_id": "Article 17",
+      "title": "Article 17",
+      "family": "Article",
+      "description": "Controlled access to the information systems included in the scope of application of this royal decree must be limited to duly authorized users, processes, devices or other information systems, and exclusively to the permitted functions."
+    },
+    {
+      "control_id": "Article 18",
+      "title": "Article 18",
+      "family": "Article",
+      "description": "The information systems and their associated communications infrastructure must remain in controlled areas and have adequate and proportional access mechanisms based on the risk analysis, without prejudice to the provisions of Law 8/2011, of April 28, by which establishes measures for the protection of critical infrastructures and in Royal Decree 704/2011, of May 20, which approves the Regulation for the protection of critical infrastructures."
+    },
+    {
+      "control_id": "Article 19",
+      "title": "Article 19",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 19.1",
+      "title": "Article 19.1",
+      "family": "Article 19",
+      "description": "In the acquisition of security products or contracting of information and communication technology security services that are going to be used in the information systems within the scope of application of this royal decree, they will be used, in a manner proportionate to the category of the system and the level of security determined, those that have the security functionality related to the object of their acquisition certified."
+    },
+    {
+      "control_id": "Article 19.2",
+      "title": "Article 19.2",
+      "family": "Article 19",
+      "description": "The Certification Body of the National Information Technology Security Evaluation and Certification Scheme of the National Cryptological Center (hereinafter, CCN), established under the provisions of article 2.2.c) of Royal Decree 421/ 2004, of March 12, which regulates the National Cryptological Center, taking into account the national and international evaluation criteria and methodologies recognized by this body and depending on the intended use of the specific product or service within its powers, will determine the following aspects:"
+    },
+    {
+      "control_id": "Article 19.2(a)",
+      "title": "Article 19.2(a)",
+      "family": "Article 19",
+      "description": "The functional security and certification assurance requirements."
+    },
+    {
+      "control_id": "Article 19.2(b)",
+      "title": "Article 19.2(b)",
+      "family": "Article 19",
+      "description": "Other additional security certifications that are required by regulations."
+    },
+    {
+      "control_id": "Article 19.2(c)",
+      "title": "Article 19.2(c)",
+      "family": "Article 19",
+      "description": "Exceptionally, the criteria to follow in cases where there are no certified products or services."
+    },
+    {
+      "control_id": "Article 19.3",
+      "title": "Article 19.3",
+      "family": "Article 19",
+      "description": "For the contracting of security services, the provisions of the previous sections and the provisions of article 16 will apply."
+    },
+    {
+      "control_id": "Article 20",
+      "title": "Article 20",
+      "family": "Article",
+      "description": "Information systems must be designed and configured granting the minimum privileges necessary for their correct performance, which implies incorporating the following aspects:"
+    },
+    {
+      "control_id": "Article 20(a)",
+      "title": "Article 20(a)",
+      "family": "Article",
+      "description": "The system will provide the essential functionality for the organization to achieve its competency or contractual objectives."
+    },
+    {
+      "control_id": "Article 20(b)",
+      "title": "Article 20(b)",
+      "family": "Article",
+      "description": "The operation, administration and activity registration functions will be the minimum necessary, and it will be ensured that they are only carried out by authorized people, from also authorized locations or equipment; Time restrictions and authorized access points may be required, where appropriate."
+    },
+    {
+      "control_id": "Article 20(c)",
+      "title": "Article 20(c)",
+      "family": "Article",
+      "description": "Functions that are unnecessary or inappropriate for the intended purpose will be eliminated or deactivated by controlling the configuration. Ordinary use of the system must be simple and safe, so that unsafe use requires a conscious act on the part of the user."
+    },
+    {
+      "control_id": "Article 20(d)",
+      "title": "Article 20(d)",
+      "family": "Article",
+      "description": "Security configuration guides will be applied for the different technologies, adapted to the categorization of the system, in order to eliminate or deactivate functions that are unnecessary or inappropriate."
+    },
+    {
+      "control_id": "Article 21",
+      "title": "Article 21",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 21.1",
+      "title": "Article 21.1",
+      "family": "Article 21",
+      "description": "The inclusion of any physical or logical element in the updated catalog of system assets, or its modification, will require prior formal authorization."
+    },
+    {
+      "control_id": "Article 21.2",
+      "title": "Article 21.2",
+      "family": "Article 21",
+      "description": "Permanent evaluation and monitoring will allow the security status of the systems to be adjusted based on configuration deficiencies, identified vulnerabilities and updates that affect them, as well as early detection of any incident that occurs on them."
+    },
+    {
+      "control_id": "Article 22",
+      "title": "Article 22",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 22.1",
+      "title": "Article 22.1",
+      "family": "Article 22",
+      "description": "In the organization and implementation of security, special attention will be paid to the information stored or in transit through portable or mobile equipment or devices, peripheral devices, information media and communications over open networks, which must be analyzed. especially to achieve adequate protection."
+    },
+    {
+      "control_id": "Article 22.2",
+      "title": "Article 22.2",
+      "family": "Article 22",
+      "description": "Procedures will be applied to guarantee the recovery and long-term conservation of electronic documents produced by the information systems included in the scope of application of this royal decree, when this is required."
+    },
+    {
+      "control_id": "Article 22.3",
+      "title": "Article 22.3",
+      "family": "Article 22",
+      "description": "All information in non-electronic support that has been the direct cause or consequence of the electronic information referred to in this royal decree must be protected with the same degree of security as this. To do this, the measures that correspond to the nature of the support will be applied, in accordance with the applicable regulations."
+    },
+    {
+      "control_id": "Article 23",
+      "title": "Article 23",
+      "family": "Article",
+      "description": "The perimeter of the information system will be protected, especially if it is connected to public networks, as defined in Law 9/2014, of May 9, General Telecommunications, reinforcing the tasks of prevention, detection and response to incidents. of security.\nIn any case, the risks derived from the interconnection of the system with other systems will be analyzed and their connection point will be controlled. For adequate interconnection between systems, the provisions of the corresponding Technical Safety Instruction will be followed."
+    },
+    {
+      "control_id": "Article 24",
+      "title": "Article 24",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 24.1",
+      "title": "Article 24.1",
+      "family": "Article 24",
+      "description": "With the purpose of satisfying the purpose of this royal decree, with full guarantees of the right to honor, personal and family privacy and the self-image of those affected, and in accordance with the regulations on the protection of personal data, of function public or labor, and other provisions that may be applicable, the activities of the users will be recorded, retaining the information strictly necessary to monitor, analyze, investigate and document improper or unauthorized activities, allowing the person acting to be identified at all times."
+    },
+    {
+      "control_id": "Article 24.2",
+      "title": "Article 24.2",
+      "family": "Article 24",
+      "description": "In order to preserve the security of information systems, guaranteeing rigorous observance of the principles of action of public Administrations, and in accordance with the provisions of the General Data Protection Regulation and respect for the principles of limitation of the purpose, minimization of data and limitation of the conservation period stated therein, the subjects included in article 2 may, to the extent strictly necessary and proportionate, analyze incoming or outgoing communications, and only for the purposes of security of the information, so that it is possible to prevent unauthorized access to networks and information systems, stop denial of service attacks, prevent malicious distribution of harmful code as well as other damage to the aforementioned networks and information systems."
+    },
+    {
+      "control_id": "Article 24.3",
+      "title": "Article 24.3",
+      "family": "Article 24",
+      "description": "To correct or, where appropriate, demand responsibilities, each user who accesses the information system must be uniquely identified, so that it is known, at all times, who receives access rights, what type they are, and who has carried out a certain activity."
+    },
+    {
+      "control_id": "Article 25",
+      "title": "Article 25",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 25.1",
+      "title": "Article 25.1",
+      "family": "Article 25",
+      "description": "The entity that owns the information systems within the scope of this royal decree will have security incident management procedures in accordance with the provisions of article 33, the corresponding Technical Security Instruction and, in the case of an operator of essential services or a digital service provider, in accordance with the provisions of the annex to Royal Decree 43/2021, of January 26, which implements Royal Decree-Law 12/2018, of September 7, security of networks and information systems."
+    },
+    {
+      "control_id": "Article 25.2",
+      "title": "Article 25.2",
+      "family": "Article 25",
+      "description": "Likewise, there will be detection mechanisms, classification criteria, analysis and resolution procedures, as well as communication channels to interested parties and a record of actions. This log will be used for continuous improvement of system security."
+    },
+    {
+      "control_id": "Article 26",
+      "title": "Article 26",
+      "family": "Article",
+      "description": "The systems will have backup copies and the necessary mechanisms will be established to guarantee the continuity of operations in the event of loss of the usual means."
+    },
+    {
+      "control_id": "Article 27",
+      "title": "Article 27",
+      "family": "Article",
+      "description": "The comprehensive security process implemented must be continually updated and improved. To this end, the criteria and methods recognized in national and international practice relating to information technology security management will be applied."
+    },
+    {
+      "control_id": "Article 28",
+      "title": "Article 28",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 28.1",
+      "title": "Article 28.1",
+      "family": "Article 28",
+      "description": "To comply with the minimum requirements established in this royal decree, the entities included in its scope of application will adopt the corresponding security measures and reinforcements indicated in Annex II, taking into account:"
+    },
+    {
+      "control_id": "Article 28.1(a)",
+      "title": "Article 28.1(a)",
+      "family": "Article 28",
+      "description": "The assets that constitute the information systems concerned."
+    },
+    {
+      "control_id": "Article 28.1(b)",
+      "title": "Article 28.1(b)",
+      "family": "Article 28",
+      "description": "The category of the system, as provided for in article 40 and Annex I."
+    },
+    {
+      "control_id": "Article 28.1(c)",
+      "title": "Article 28.1(c)",
+      "family": "Article 28",
+      "description": "The decisions taken to manage the identified risks."
+    },
+    {
+      "control_id": "Article 28.2",
+      "title": "Article 28.2",
+      "family": "Article 28",
+      "description": "The measures referred to in section 1 will have the status of minimum requirements, being expandable at the discretion of the person responsible for security, who may include additional measures, taking into account the state of the technology, the nature of the information processed or the services provided and the risks to which the affected information systems are exposed. The list of selected security measures will be formalized in a document called Declaration of Applicability, signed by the person responsible for security."
+    },
+    {
+      "control_id": "Article 28.3",
+      "title": "Article 28.3",
+      "family": "Article 28",
+      "description": "The security measures referenced in Annex II may be replaced by other compensatory measures, as long as it is documented that they protect, equally or better, from the risk on assets (Annex I) and the basic principles and minimum requirements are satisfied. provided for in chapters II and III. As an integral part of the Declaration of Applicability, the correspondence between the compensatory measures implemented and the measures in Annex II that compensate will be indicated in detail. The set will be subject to formal approval by the person responsible for security. A CCN-STIC Guide of those provided for in the second additional provision will guide the selection of said measures, as well as their registration and inclusion in the Declaration of Applicability."
+    },
+    {
+      "control_id": "Article 29",
+      "title": "Article 29",
+      "family": "Article",
+      "description": "The use of common infrastructure and services of public administrations, including shared or transversal ones, will facilitate compliance with the provisions of this royal decree. The specific cases of use of these infrastructures and services will be determined by each public administration."
+    },
+    {
+      "control_id": "Article 30",
+      "title": "Article 30",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 30.1",
+      "title": "Article 30.1",
+      "family": "Article 30",
+      "description": "By virtue of the principle of proportionality and seeking an effective and efficient application of the ENS to certain entities or specific sectors of activity, specific compliance profiles may be implemented that will include that set of security measures that, resulting from the mandatory risk analysis , are suitable for a specific security category."
+    },
+    {
+      "control_id": "Article 30.2",
+      "title": "Article 30.2",
+      "family": "Article 30",
+      "description": "In a manner analogous to what is provided in the previous section, to enable the adequate implementation and configuration of solutions or platforms supplied by third parties, which are going to be used by the entities included in the scope of application of this royal decree, they may be implemented accreditation schemes for entities and validation of people, which guarantee the security of said solutions or platforms and compliance with the provisions of this royal decree."
+    },
+    {
+      "control_id": "Article 30.3",
+      "title": "Article 30.3",
+      "family": "Article 30",
+      "description": "The CCN, in the exercise of its powers, will validate and publish the corresponding specific compliance profiles that are defined and the aforementioned accreditation and validation schemes, in accordance with the technical security instructions and security guides approved as planned. in the second additional provision."
+    },
+    {
+      "control_id": "Article 30.4",
+      "title": "Article 30.4",
+      "family": "Article 30",
+      "description": "The corresponding technical security instructions or, where applicable, the CCN-STIC Security guides, will specify the conditions to which local implementations of products, systems or services originally provided in the cloud or remotely must be subject. , as well as the specific conditions for its evaluation and audit."
+    },
+    {
+      "control_id": "Article 31",
+      "title": "Article 31",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 31.1",
+      "title": "Article 31.1",
+      "family": "Article 31",
+      "description": "The information systems included in the scope of application of this royal decree will be subject to a regular audit, at least every two years, to verify compliance with the requirements of the ENS.\nOn an extraordinary basis, said audit must be carried out whenever substantial changes occur in the information systems, which may impact the required security measures. The completion of the extraordinary audit will determine the calculation date for the calculation of the two years, established for the completion of the next regular ordinary audit, indicated in the previous paragraph.\nThe two-year period indicated in the previous paragraphs may be extended for three months when force majeure impediments occur that are not attributable to the entity that owns the information system or systems concerned."
+    },
+    {
+      "control_id": "Article 31.2",
+      "title": "Article 31.2",
+      "family": "Article 31",
+      "description": "The audit will be carried out based on the category of the system and, where applicable, the corresponding specific compliance profile, as provided in Annexes I and III and in accordance with the provisions of the Audit Security Technical Instruction. of Information Systems Security."
+    },
+    {
+      "control_id": "Article 31.3",
+      "title": "Article 31.3",
+      "family": "Article 31",
+      "description": "When carrying out security audits, generally recognized criteria, work methods and conduct will be used, as well as national and international standardization applicable to this type of activities."
+    },
+    {
+      "control_id": "Article 31.4",
+      "title": "Article 31.4",
+      "family": "Article 31",
+      "description": "The audit report must rule on the degree of compliance with this royal decree, identifying the findings of compliance and non-compliance detected. It must also include the audit methodological criteria used, the scope and objective of the audit, and the data, facts and observations on which the conclusions formulated are based, all in accordance with the aforementioned Technical Instruction on Audit Security. the Security of Information Systems."
+    },
+    {
+      "control_id": "Article 31.5",
+      "title": "Article 31.5",
+      "family": "Article 31",
+      "description": "The audit reports will be presented to the person responsible for the system and the person responsible for security. These reports will be analyzed by the latter who will present their conclusions to the person responsible for the system so that appropriate corrective measures can be taken."
+    },
+    {
+      "control_id": "Article 31.6",
+      "title": "Article 31.6",
+      "family": "Article 31",
+      "description": "In the case of HIGH category systems, given the audit opinion and taking into account the eventual severity of the deficiencies found, the person responsible for the system may temporarily suspend the processing of information, the provision of services or the total operation of the system. , until its adequate correction or mitigation."
+    },
+    {
+      "control_id": "Article 31.7",
+      "title": "Article 31.7",
+      "family": "Article 31",
+      "description": "Audit reports may be requested by those responsible for each organization, with powers over information technology security, and by the CCN."
+    },
+    {
+      "control_id": "Article 32",
+      "title": "Article 32",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 32.1",
+      "title": "Article 32.1",
+      "family": "Article 32",
+      "description": "The Sectoral Commission for Electronic Administration will collect information related to the state of the main security variables in the information systems referred to in this royal decree, so that it allows the elaboration of a general profile of the state of security in the entities that own the information systems included in the scope of application of article 2, which will be reflected in the corresponding report."
+    },
+    {
+      "control_id": "Article 32.2",
+      "title": "Article 32.2",
+      "family": "Article 32",
+      "description": "The CCN will articulate the necessary procedures for the collection and consolidation of information, as well as the methodological aspects for its treatment and exploitation, through the corresponding working groups that are constituted for this purpose in the Sectoral Commission of Electronic Administration and in the competent collegiate bodies in the field of the General Administration of the State."
+    },
+    {
+      "control_id": "Article 32.3",
+      "title": "Article 32.3",
+      "family": "Article 32",
+      "description": "The results of the report will be used by the competent authorities who will promote the appropriate measures that facilitate the continuous improvement of the state of security using, where appropriate, dashboards and indicators that contribute to decision-making through the use of tools. that the CCN provides for this purpose."
+    },
+    {
+      "control_id": "Article 33",
+      "title": "Article 33",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 33.1",
+      "title": "Article 33.1",
+      "family": "Article 33",
+      "description": "The CCN will articulate the response to security incidents around the structure called CCN-CERT (for its acronym in English of Computer Emergency Response Team), which will act without prejudice to the security incident response capabilities it may have. each public administration and the coordination function at the national and international level of the CCN."
+    },
+    {
+      "control_id": "Article 33.2",
+      "title": "Article 33.2",
+      "family": "Article 33",
+      "description": "Without prejudice to the provisions of article 19.4 of Royal Decree-Law 12/2018, of September 7, public sector entities will notify the CCN of those incidents that have a significant impact on the security of the information systems concerned. in accordance with the corresponding Technical Safety Instruction."
+    },
+    {
+      "control_id": "Article 33.3",
+      "title": "Article 33.3",
+      "family": "Article 33",
+      "description": "When an essential operator that has been designated as a critical operator suffers an incident, the reference CSIRTs will coordinate with the Ministry of the Interior, through its Cybersecurity Coordination Office, as provided for in article 11.2 of the Royal Decree- Law 12/2018, of September 7."
+    },
+    {
+      "control_id": "Article 33.4",
+      "title": "Article 33.4",
+      "family": "Article 33",
+      "description": "When an operator with an impact on the National Defense suffers an incident, he must analyze whether, due to its scope, it could have an impact on the functioning of the Ministry of Defense or on the operation of the Armed Forces, he will immediately inform his Reference CSIRT, who will inform the response capacity and reference security incidents for the field of national Defense, called ESPDEF-CERT, of the Joint Cyberspace Command (MCCE) through the established channels. In these cases, the ESPDEF-CERT of the Joint Cyberspace Command must be promptly informed of the evolution of the incident management and may collaborate in supervision with the competent authority."
+    },
+    {
+      "control_id": "Article 33.5",
+      "title": "Article 33.5",
+      "family": "Article 33",
+      "description": "In accordance with the provisions of Royal Decree-Law 12/2018, of September 7, the CCN will exercise the national coordination of the technical response of the response teams to computer security incidents (denominated by its acronym in English Computer Security Incident Response Team, hereinafter, CSIRT) in matters of network security and public sector information systems."
+    },
+    {
+      "control_id": "Article 33.6",
+      "title": "Article 33.6",
+      "family": "Article 33",
+      "description": "After a security incident, the CCN-CERT will technically determine the risk of reconnection of the affected system or systems, indicating the procedures to follow and the safeguards to implement in order to reduce the impact and, to the extent possible, avoid that the circumstances that led to it occur again.\nAfter a security incident, the General Secretariat of Digital Administration, without prejudice to the regulations that regulate the continuity of information systems involved in public security or the regulations that regulate the continuity of military information systems involved in National Defense that require the participation of the ESPDEF-CERT of the Joint Cyberspace Command, will authorize reconnection to the common means and services included under its scope of responsibility, including shared or transversal ones, if a CCN-CERT exposure surface report has determined that the risk is acceptable.\nIn the event that it is a security incident that affects a common means or service under the scope of responsibility of the General Intervention of the State Administration, it will participate in the process of authorization of the reconnection referred to in the previous paragraph."
+    },
+    {
+      "control_id": "Article 33.7",
+      "title": "Article 33.7",
+      "family": "Article 33",
+      "description": "Private sector organizations that provide services to public entities will notify INCIBE-CERT, a reference security incident response center for citizens and private law entities in Spain operated by the SME National Cybersecurity Institute of Spain MP , SA (INCIBE) dependent on the Ministry of Economic Affairs and Digital Transformation, the incidents that affect them through its computer security incident response team, who, without prejudice to its powers and the provisions of articles 9, 10 and 11 of Royal Decree 43/2021, of January 26, in relation to the Cyberincident Notification and Monitoring Platform, will immediately inform the CCN-CERT."
+    },
+    {
+      "control_id": "Article 34",
+      "title": "Article 34",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 34.1",
+      "title": "Article 34.1",
+      "family": "Article 34",
+      "description": "In accordance with the provisions of article 33, the CCN-CERT will provide the following services:"
+    },
+    {
+      "control_id": "Article 34.1(a)",
+      "title": "Article 34.1(a)",
+      "family": "Article 34",
+      "description": "Support and coordination for the treatment of vulnerabilities and the resolution of security incidents experienced by entities within the scope of application of this royal decree.\nThe CCN-CERT, through its technical support and coordination service, will act as quickly as possible in the event of any attack received on the affected information systems.\nTo fulfill the purposes indicated in the previous paragraphs, reports, audit records and configurations of the affected systems and any other information that is considered relevant may be collected, as well as the computer supports that are deemed necessary for the investigation of the incident of the affected systems, without prejudice to the provisions of the applicable data protection regulations, as well as the possible confidentiality of institutional or organizational data."
+    },
+    {
+      "control_id": "Article 34.1(b)",
+      "title": "Article 34.1(b)",
+      "family": "Article 34",
+      "description": "Research and dissemination of best practices on information security among all members of public sector entities. To this end, the series of CCN-STIC (CCN-Security of Information and Communication Technologies) documents, prepared by the CCN, will offer standards, instructions, guides, recommendations and best practices to apply the ENS and to guarantee security. of information systems within the scope of application of this royal decree."
+    },
+    {
+      "control_id": "Article 34.1(c)",
+      "title": "Article 34.1(c)",
+      "family": "Article 34",
+      "description": "Training for public sector personnel specialized in the field of information technology security, in order to facilitate the updating of knowledge and to achieve awareness and improvement of their capabilities for the prevention, detection and management of incidents."
+    },
+    {
+      "control_id": "Article 34.1(d)",
+      "title": "Article 34.1(d)",
+      "family": "Article 34",
+      "description": "Information on vulnerabilities, alerts and warnings of new threats to information systems, compiled from various sources of recognized prestige, including our own."
+    },
+    {
+      "control_id": "Article 34.2",
+      "title": "Article 34.2",
+      "family": "Article 34",
+      "description": "The CCN will develop a program that offers the information, training, recommendations and tools necessary for public sector entities to develop their own capabilities to respond to security incidents, and in which it will be coordinator at the state public level."
+    },
+    {
+      "control_id": "Article 35",
+      "title": "Article 35",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 35.1",
+      "title": "Article 35.1",
+      "family": "Article 35",
+      "description": "The security of the information systems that support digital administration will be governed by the provisions of this royal decree."
+    },
+    {
+      "control_id": "Article 35.2",
+      "title": "Article 35.2",
+      "family": "Article 35",
+      "description": "The CCN is the competent body to guarantee due interoperability in matters of cybersecurity and cryptography, in relation to the application of Royal Decree 4/2010, of January 8, which regulates the National Interoperability Scheme in the field. of electronic administration."
+    },
+    {
+      "control_id": "Article 36",
+      "title": "Article 36",
+      "family": "Article",
+      "description": "Security specifications will be included in the life cycle of services and systems, accompanied by the corresponding control procedures."
+    },
+    {
+      "control_id": "Article 37",
+      "title": "Article 37",
+      "family": "Article",
+      "description": "Each entity that owns the information systems included in the scope of application of this royal decree and, where appropriate, its agencies, bodies, departments or units, will establish its control mechanisms to truly and effectively guarantee compliance with the ENS."
+    },
+    {
+      "control_id": "Article 38",
+      "title": "Article 38",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 38.1",
+      "title": "Article 38.1",
+      "family": "Article 38",
+      "description": "The information systems included in the scope of article 2 will be subject to a process to determine their conformity with the ENS. To this end, MEDIUM or HIGH category systems will require an audit to certify their conformity, without prejudice to the security audit provided for in Article 31, which may also serve the purposes of certification, while systems BASIC category will only require a self-assessment for their declaration of conformity, without prejudice to the fact that they may also undergo a certification audit.\nBoth the self-assessment procedure and the certification audit will be carried out in accordance with the provisions of article 31 and annex III and in the terms determined in the corresponding Technical Safety Instruction, which will also specify the requirements required of the certifying entities."
+    },
+    {
+      "control_id": "Article 38.2",
+      "title": "Article 38.2",
+      "family": "Article 38",
+      "description": "The information systems included in the scope of article 2 will be subject to a process to determine their conformity with the ENS. To this end, MEDIUM or HIGH category systems will require an audit to certify their conformity, without prejudice to the security audit provided for in Article 31, which may also serve the purposes of certification, while systems BASIC category will only require a self-assessment for their declaration of conformity, without prejudice to the fact that they may also undergo a certification audit.\nBoth the self-assessment procedure and the certification audit will be carried out in accordance with the provisions of article 31 and annex III and in the terms determined in the corresponding Technical Safety Instruction, which will also specify the requirements required of the certifying entities."
+    },
+    {
+      "control_id": "Article 39",
+      "title": "Article 39",
+      "family": "Article",
+      "description": "The ENS will remain permanently updated, developing and perfecting itself over time, in parallel with the advancement of the services provided by public sector entities, technological evolution, the emergence or consolidation of new international standards on security and auditing and the risks to which the information systems concerned are exposed."
+    },
+    {
+      "control_id": "Article 40",
+      "title": "Article 40",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 40.1",
+      "title": "Article 40.1",
+      "family": "Article 40",
+      "description": "The security category of an information system will modulate the balance between the importance of the information it handles and the services it provides and the security effort required, depending on the risks to which it is exposed, under the principle of proportionality."
+    },
+    {
+      "control_id": "Article 40.2",
+      "title": "Article 40.2",
+      "family": "Article 40",
+      "description": "The determination of the security category will be carried out based on the assessment of the impact that an incident that affects the security of the information or services with detriment to the availability, authenticity, integrity, confidentiality or traceability would have, following the procedure described in Annex I."
+    },
+    {
+      "control_id": "Article 41",
+      "title": "Article 41",
+      "family": "Article",
+      "description": ""
+    },
+    {
+      "control_id": "Article 41.1",
+      "title": "Article 41.1",
+      "family": "Article 41",
+      "description": "The power to carry out the assessments referred to in article 40, as well as, where appropriate, its subsequent modification, will correspond to the person responsible or responsible for the information or services affected."
+    },
+    {
+      "control_id": "Article 41.2",
+      "title": "Article 41.2",
+      "family": "Article 41",
+      "description": "Based on the assessments indicated in the previous section, the determination of the security category of the system will correspond to the person responsible for security."
+    }
+  ]
+}

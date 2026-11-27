@@ -1,0 +1,291 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCmvpCertificateDetail, getCmvpModuleByCertificate } from '../../../lib/cmvp';
+
+const certificate = Astro.params.certificate?.trim() ?? '';
+const isValidCertificate = /^[0-9]+$/.test(certificate);
+
+let detail = null;
+let summaryModule = null;
+let loadError: string | null = null;
+
+if (isValidCertificate) {
+  try {
+    [detail, summaryModule] = await Promise.all([
+      getCmvpCertificateDetail(certificate),
+      getCmvpModuleByCertificate(certificate),
+    ]);
+  } catch (error) {
+    console.error('CMVP certificate page load failed:', error);
+    loadError = 'Unable to load the full certificate detail right now.';
+  }
+} else {
+  loadError = 'Certificate numbers must be numeric.';
+}
+
+if (!detail && !summaryModule) {
+  Astro.response.status = isValidCertificate ? 404 : 400;
+}
+
+const pageTitle = detail?.moduleName ?? summaryModule?.moduleName ?? `Certificate ${certificate}`;
+const pageDescription = detail?.description
+  ?? summaryModule?.description
+  ?? `CMVP certificate ${certificate} detail mirrored inside myctrl.tools.`;
+
+const badges = [
+  detail?.standard ?? summaryModule?.standard,
+  detail?.moduleType ?? summaryModule?.moduleType,
+  detail?.status ?? summaryModule?.status,
+  (detail?.overallLevel ?? summaryModule?.overallLevel) !== null && (detail?.overallLevel ?? summaryModule?.overallLevel) !== undefined
+    ? `Level ${detail?.overallLevel ?? summaryModule?.overallLevel}`
+    : null,
+].filter(Boolean);
+
+const validationDates = detail?.validationDates
+  ?? (summaryModule?.validationDate ? summaryModule.validationDate.split(/\s*,\s*/).filter(Boolean) : []);
+
+const detailRows = detail ? [
+  ['Module Name', detail.moduleName],
+  ['Standard', detail.standard],
+  ['Status', detail.status],
+  ['Sunset Date', detail.sunsetDate],
+  ['Overall Level', detail.overallLevel !== null ? String(detail.overallLevel) : null],
+  ['Caveat', detail.caveat],
+  ['Security Level Exceptions', detail.securityLevelExceptions.length > 0 ? detail.securityLevelExceptions.join('\n') : null],
+  ['Module Type', detail.moduleType],
+  ['Embodiment', detail.embodiment],
+  ['Description', detail.description],
+].filter(([, value]) => !!value) : [];
+---
+
+<BaseLayout
+  title={`CMVP Certificate ${certificate}`}
+  description={pageDescription}
+  showSidebar={false}
+>
+  <div class="mx-auto max-w-6xl space-y-6 px-4 py-8">
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="transition-colors hover:text-foreground">Home</a>
+        <span>/</span>
+        <a href="/cmvp" class="transition-colors hover:text-foreground">CMVP Explorer</a>
+        <span>/</span>
+        <span class="text-foreground">Certificate #{certificate}</span>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center gap-3">
+          <h1 class="text-3xl font-bold tracking-tight">Certificate #{certificate}</h1>
+          {detail?.generatedAt && (
+            <span class="rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground">
+              Upstream refresh {new Date(detail.generatedAt).toLocaleString()}
+            </span>
+          )}
+        </div>
+        <div class="space-y-2">
+          <h2 class="text-xl font-semibold">{pageTitle}</h2>
+          <p class="text-sm text-muted-foreground">{detail?.vendorName ?? summaryModule?.vendorName}</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {badges.map((badge) => (
+            <span class="rounded-full border border-border/70 px-3 py-1 text-xs font-medium">{badge}</span>
+          ))}
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm">
+          {detail?.securityPolicyUrl ?? summaryModule?.securityPolicyUrl ? (
+            <a
+              href={detail?.securityPolicyUrl ?? summaryModule?.securityPolicyUrl ?? '#'}
+              target="_blank"
+              rel="noreferrer"
+              class="text-primary hover:underline"
+            >
+              Security Policy
+            </a>
+          ) : null}
+          {detail?.nistPageUrl ?? summaryModule?.certificateDetailUrl ? (
+            <a
+              href={detail?.nistPageUrl ?? summaryModule?.certificateDetailUrl ?? '#'}
+              target="_blank"
+              rel="noreferrer"
+              class="text-primary hover:underline"
+            >
+              Original NIST Page
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </header>
+
+    {loadError && (
+      <div class="rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-amber-700 dark:text-amber-300">
+        {loadError}
+      </div>
+    )}
+
+    {!detail && summaryModule && (
+      <div class="rounded-xl border border-dashed px-4 py-4 text-sm text-muted-foreground">
+        Full certificate-detail parity is not available from the upstream CMVP detail feed for this certificate yet.
+        The summary metadata below is still sourced from the CMVP explorer dataset.
+      </div>
+    )}
+
+    {detail ? (
+      <>
+        <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+          <div class="border-b border-border/60 px-6 py-4">
+            <h3 class="text-2xl font-semibold">Details</h3>
+          </div>
+          <div class="px-6 py-5">
+            <div class="grid gap-x-8 gap-y-4 md:grid-cols-[220px_minmax(0,1fr)]">
+              {detailRows.map(([label, value]) => (
+                <>
+                  <div class="text-sm font-medium text-muted-foreground">{label}</div>
+                  <div class={`text-sm ${label === 'Caveat' ? 'rounded-md bg-amber-500/10 px-3 py-2 text-amber-700 dark:text-amber-300' : ''} whitespace-pre-line`}>
+                    {value}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+          <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+            <div class="border-b border-border/60 px-6 py-4">
+              <h3 class="text-2xl font-semibold">Vendor</h3>
+            </div>
+            <div class="space-y-4 px-6 py-5 text-sm">
+              <div class="space-y-1">
+                {detail.vendor.websiteUrl ? (
+                  <a href={detail.vendor.websiteUrl} target="_blank" rel="noreferrer" class="font-medium text-primary hover:underline">
+                    {detail.vendor.name}
+                  </a>
+                ) : (
+                  <div class="font-medium">{detail.vendor.name}</div>
+                )}
+                {detail.vendor.addressLines.map((line) => (
+                  <div>{line}</div>
+                ))}
+              </div>
+
+              {(detail.vendor.contactName || detail.vendor.contactEmail || detail.vendor.contactPhone) && (
+                <div class="space-y-1 border-t border-border/60 pt-4 text-muted-foreground">
+                  {detail.vendor.contactName && <div>{detail.vendor.contactName}</div>}
+                  {detail.vendor.contactEmail && (
+                    <a href={`mailto:${detail.vendor.contactEmail}`} class="block text-primary hover:underline">
+                      {detail.vendor.contactEmail}
+                    </a>
+                  )}
+                  {detail.vendor.contactPhone && <div>Phone: {detail.vendor.contactPhone}</div>}
+                </div>
+              )}
+            </div>
+          </section>
+
+          <div class="space-y-6">
+            <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+              <div class="border-b border-border/60 px-6 py-4">
+                <h3 class="text-2xl font-semibold">Related Files</h3>
+              </div>
+              <div class="space-y-2 px-6 py-5 text-sm">
+                {detail.relatedFiles.length > 0 ? detail.relatedFiles.map((file) => (
+                  <a href={file.url} target="_blank" rel="noreferrer" class="block text-primary hover:underline">
+                    {file.label}
+                  </a>
+                )) : (
+                  <div class="text-muted-foreground">No related files were listed for this certificate.</div>
+                )}
+              </div>
+            </section>
+
+            <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+              <div class="border-b border-border/60 px-6 py-4">
+                <h3 class="text-2xl font-semibold">Algorithm Enrichment</h3>
+              </div>
+              <div class="space-y-4 px-6 py-5">
+                {detail.algorithms.length > 0 ? (
+                  <div class="flex flex-wrap gap-2">
+                    {detail.algorithms.map((algorithm) => (
+                      <span class="rounded-full border border-border/70 px-3 py-1 text-xs font-medium">{algorithm}</span>
+                    ))}
+                  </div>
+                ) : (
+                  <div class="text-sm text-muted-foreground">No algorithm enrichment is available for this certificate yet.</div>
+                )}
+
+                {validationDates.length > 0 && (
+                  <div class="space-y-2 text-sm">
+                    <div class="font-medium text-muted-foreground">Validation Dates</div>
+                    <div class="flex flex-wrap gap-2">
+                      {validationDates.map((date) => (
+                        <span class="rounded-full border border-border/70 px-3 py-1 font-mono text-xs">{date}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+          <div class="border-b border-border/60 px-6 py-4">
+            <h3 class="text-2xl font-semibold">Validation History</h3>
+          </div>
+          <div class="overflow-x-auto px-6 py-5">
+            {detail.validationHistory.length > 0 ? (
+              <table class="w-full min-w-[520px] border-collapse text-sm">
+                <thead>
+                  <tr class="border-b border-border/60 text-left">
+                    <th class="py-2 pr-4 font-medium text-muted-foreground">Date</th>
+                    <th class="py-2 pr-4 font-medium text-muted-foreground">Type</th>
+                    <th class="py-2 font-medium text-muted-foreground">Lab</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail.validationHistory.map((entry) => (
+                    <tr class="border-b border-border/40 align-top">
+                      <td class="py-2 pr-4 font-mono text-xs">{entry.date}</td>
+                      <td class="py-2 pr-4">{entry.type}</td>
+                      <td class="py-2">{entry.lab}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div class="text-sm text-muted-foreground">No validation history rows were listed for this certificate.</div>
+            )}
+          </div>
+        </section>
+      </>
+    ) : summaryModule ? (
+      <section class="rounded-2xl border border-border/70 bg-card/80 shadow-sm">
+        <div class="border-b border-border/60 px-6 py-4">
+          <h3 class="text-2xl font-semibold">Summary</h3>
+        </div>
+        <div class="grid gap-x-8 gap-y-4 px-6 py-5 md:grid-cols-[220px_minmax(0,1fr)]">
+          <div class="text-sm font-medium text-muted-foreground">Module Name</div>
+          <div class="text-sm">{summaryModule.moduleName}</div>
+          <div class="text-sm font-medium text-muted-foreground">Vendor</div>
+          <div class="text-sm">{summaryModule.vendorName}</div>
+          <div class="text-sm font-medium text-muted-foreground">Status</div>
+          <div class="text-sm">{summaryModule.status}</div>
+          <div class="text-sm font-medium text-muted-foreground">Algorithms</div>
+          <div class="text-sm">{summaryModule.algorithms.length > 0 ? summaryModule.algorithms.join(', ') : 'Not listed'}</div>
+          {summaryModule.description && (
+            <>
+              <div class="text-sm font-medium text-muted-foreground">Description</div>
+              <div class="text-sm">{summaryModule.description}</div>
+            </>
+          )}
+        </div>
+      </section>
+    ) : (
+      <div class="rounded-xl border border-dashed px-4 py-8 text-center text-sm text-muted-foreground">
+        Certificate {certificate} was not found in the CMVP datasets.
+      </div>
+    )}
+  </div>
+</BaseLayout>

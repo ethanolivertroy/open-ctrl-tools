@@ -1,0 +1,205 @@
+---
+import '../styles/globals.css';
+import Header from '../components/layout/Header';
+import Sidebar from '../components/layout/Sidebar';
+import { CommandSearch } from '../components/search/CommandSearch';
+import { KeyboardShortcutsProvider } from '../components/shortcuts/KeyboardShortcutsProvider';
+import GrcLankerBootstrap from '../components/ai/GrcLankerBootstrap.astro';
+import StructuredData from '../components/seo/StructuredData.astro';
+import { AmbientParticles } from '../components/effects/AmbientParticles';
+import ScrollReveal from '../components/ui/ScrollReveal.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  showSidebar?: boolean;
+  frameworkId?: string;
+  controlSlug?: string;
+  isHomepage?: boolean;
+  showAmbientParticles?: boolean;
+}
+
+declare const __BUILD_LAST_UPDATED__: string;
+
+const {
+  title,
+  description = 'Your security compliance command center — 120+ frameworks, implementation guidance, crosswalks, and AI-powered tools.',
+  showSidebar = true,
+  frameworkId,
+  controlSlug,
+  isHomepage = false,
+  showAmbientParticles = false,
+} = Astro.props;
+
+// Determine the keyboard shortcuts scope based on context
+const scope = controlSlug ? 'control' : frameworkId ? 'framework' : 'global';
+
+const lastUpdated = __BUILD_LAST_UPDATED__;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="preload" href="/fonts/GeistVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistMonoVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="canonical" href={Astro.url} />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={`${title} | myctrl.tools`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site || 'https://myctrl.tools')} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:site_name" content="myctrl.tools" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | myctrl.tools`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og-image.png', Astro.site || 'https://myctrl.tools')} />
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#bd93f9" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="myctrl" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#1e1e2e" />
+
+    <title>{title} | myctrl.tools</title>
+
+    <!-- Structured Data -->
+    <StructuredData type="organization" />
+    <StructuredData type="webpage" title={title} description={description} />
+
+    <!-- Theme detection - runs before page render to prevent flash -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        let theme = stored;
+        var valid = ['mocha', 'dracula', 'latte'];
+        var legacyLight = ['zinc-light','gruvbox-light','solarized-light','earth-light','flexoki-light'];
+        if (!theme || valid.indexOf(theme) === -1) {
+          // Migrate retired themes: light ones land on Latte, everything else Dracula
+          theme = legacyLight.indexOf(theme) !== -1 ? 'latte' : 'dracula';
+          localStorage.setItem('theme', theme);
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.toggle('dark', theme !== 'latte');
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen bg-background antialiased">
+    {/* Ambient floating particles on inner pages (homepage has its own WebGLBackground) */}
+    {!isHomepage && showAmbientParticles && (
+      <AmbientParticles client:only="react" />
+    )}
+
+    <div class="relative z-10 flex min-h-screen flex-col">
+      <!-- Header -->
+      <Header frameworkId={frameworkId} lastUpdated={lastUpdated} client:load />
+
+
+      <!-- Main content area -->
+      <div class="flex-1 flex">
+        {showSidebar && (
+          <aside class="hidden lg:block w-80 border-r border-border shrink-0 bg-background">
+            <div class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto scrollbar-thin py-6 px-4 overscroll-contain" style="-webkit-overflow-scrolling: touch;">
+              <Sidebar frameworkId={frameworkId} client:only="react" />
+            </div>
+          </aside>
+        )}
+
+        <main class="flex-1 min-w-0">
+          <div class={`container mx-auto px-4 sm:px-6 py-8 ${showSidebar ? 'max-w-4xl' : ''}`}>
+            <slot />
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Minimal footer (mazehq-style) -->
+    <div class="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent"></div>
+    <footer class="relative py-6 px-4">
+      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div class="flex items-center gap-3">
+          <span class="font-semibold text-foreground tracking-tight text-sm">myctrl.tools</span>
+          <span class="hidden sm:inline">My control tools are now yours.</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <a href="https://ethantroy.dev" class="hover:text-foreground transition-colors">ethantroy.dev</a>
+          <a href="https://github.com/ethanolivertroy/myctrl-tools-issues" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">GitHub</a>
+          <a href="/preferences" class="hover:text-foreground transition-colors">Preferences</a>
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">CC BY 4.0</a>
+        </div>
+      </div>
+    </footer>
+
+    {!isHomepage && (
+      <button
+        type="button"
+        id="grclanker-orb"
+        data-ai-chat-trigger
+        data-ai-framework-id={frameworkId ?? ''}
+        data-ai-control-slug={controlSlug ?? ''}
+        class="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-primary/40 bg-card text-sm font-semibold text-foreground shadow-lg transition hover:border-primary hover:bg-primary/10"
+        aria-label="Ask GRCLanker"
+        title="Ask GRCLanker (⌘J)"
+      >
+        GL
+      </button>
+    )}
+
+    <GrcLankerBootstrap frameworkId={frameworkId} controlSlug={controlSlug} />
+
+    <!-- Command palette search - handles its own Cmd+K shortcut -->
+    <CommandSearch client:only="react" contextFrameworkId={frameworkId} />
+
+    <!-- Keyboard shortcuts provider - handles chord navigation, help modal -->
+    <KeyboardShortcutsProvider
+      scope={scope}
+      frameworkId={frameworkId}
+      controlSlug={controlSlug}
+      client:idle
+    />
+
+    <!-- One-time localStorage → Dexie migration -->
+    <script>
+      import { initClientStorage } from '../lib/client-storage-init';
+      void initClientStorage();
+    </script>
+
+    <!-- Scroll-reveal IntersectionObserver -->
+    <ScrollReveal />
+
+    <!-- Service Worker Registration -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then((registration) => {
+            registration.update();
+          }).catch(() => {
+            // no-op
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

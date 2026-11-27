@@ -1,0 +1,159 @@
+{
+  "framework": {
+    "id": "au-essential-8",
+    "name": "Australia Essential Eight",
+    "version": "2024",
+    "description": "The Australian Signals Directorate (ASD) Essential Eight is a set of baseline mitigation strategies designed to protect organizations against cyber threats. Controls are organized by maturity level."
+  },
+  "families": {
+    "ML1": "Maturity Level 1",
+    "ML2": "Maturity Level 2",
+    "ML3": "Maturity Level 3"
+  },
+  "controls": [
+    {
+      "control_id": "ML1-P1",
+      "title": "Patch Applications",
+      "family": "ML1",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML1-P2",
+      "title": "Patch Operating Systems",
+      "family": "ML1",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML1-P3",
+      "title": "Multi-factor Authentication",
+      "family": "ML1",
+      "description": "Multi-factor authentication is used to authenticate users to their organisation’s online services that process, store or communicate their organisation’s sensitive data."
+    },
+    {
+      "control_id": "ML1-P4",
+      "title": "Restrict Administrative Privileges",
+      "family": "ML1",
+      "description": "Requests for privileged access to systems, applications and data repositories are validated when first requested."
+    },
+    {
+      "control_id": "ML1-P5",
+      "title": "Application Control",
+      "family": "ML1",
+      "description": "Application control is implemented on workstations."
+    },
+    {
+      "control_id": "ML1-P6",
+      "title": "Configure Microsoft Office Macros",
+      "family": "ML1",
+      "description": "Microsoft Office macros are disabled for users that do not have a demonstrated business requirement."
+    },
+    {
+      "control_id": "ML1-P7",
+      "title": "User Application Hardening",
+      "family": "ML1",
+      "description": "Internet Explorer 11 is disabled or removed."
+    },
+    {
+      "control_id": "ML1-P8",
+      "title": "Regular Backups",
+      "family": "ML1",
+      "description": "Backups of data, applications and settings are performed and retained in accordance with business criticality and business continuity requirements."
+    },
+    {
+      "control_id": "ML2-P1",
+      "title": "Patch Applications",
+      "family": "ML2",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML2-P2",
+      "title": "Patch Operating Systems",
+      "family": "ML2",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML2-P3",
+      "title": "Multi-factor Authentication",
+      "family": "ML2",
+      "description": "Multi-factor authentication is used to authenticate users to their organisation’s online services that process, store or communicate their organisation’s sensitive data."
+    },
+    {
+      "control_id": "ML2-P4",
+      "title": "Restrict Administrative Privileges",
+      "family": "ML2",
+      "description": "Requests for privileged access to systems, applications and data repositories are validated when first requested."
+    },
+    {
+      "control_id": "ML2-P5",
+      "title": "Application Control",
+      "family": "ML2",
+      "description": "Application control is implemented on workstations."
+    },
+    {
+      "control_id": "ML2-P6",
+      "title": "Configure Microsoft Office Macros",
+      "family": "ML2",
+      "description": "Microsoft Office macros are disabled for users that do not have a demonstrated business requirement."
+    },
+    {
+      "control_id": "ML2-P7",
+      "title": "User Application Hardening",
+      "family": "ML2",
+      "description": "Internet Explorer 11 is disabled or removed."
+    },
+    {
+      "control_id": "ML2-P8",
+      "title": "Regular Backups",
+      "family": "ML2",
+      "description": "Backups of data, applications and settings are performed and retained in accordance with business criticality and business continuity requirements."
+    },
+    {
+      "control_id": "ML3-P1",
+      "title": "Patch Applications",
+      "family": "ML3",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML3-P2",
+      "title": "Patch Operating Systems",
+      "family": "ML3",
+      "description": "An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities."
+    },
+    {
+      "control_id": "ML3-P3",
+      "title": "Multi-factor Authentication",
+      "family": "ML3",
+      "description": "Multi-factor authentication is used to authenticate users to their organisation’s online services that process, store or communicate their organisation’s sensitive data."
+    },
+    {
+      "control_id": "ML3-P4",
+      "title": "Restrict Administrative Privileges",
+      "family": "ML3",
+      "description": "Requests for privileged access to systems, applications and data repositories are validated when first requested."
+    },
+    {
+      "control_id": "ML3-P5",
+      "title": "Application Control",
+      "family": "ML3",
+      "description": "Application control is implemented on workstations."
+    },
+    {
+      "control_id": "ML3-P6",
+      "title": "Configure Microsoft Office Macros",
+      "family": "ML3",
+      "description": "Microsoft Office macros are disabled for users that do not have a demonstrated business requirement."
+    },
+    {
+      "control_id": "ML3-P7",
+      "title": "User Application Hardening",
+      "family": "ML3",
+      "description": "Internet Explorer 11 is disabled or removed."
+    },
+    {
+      "control_id": "ML3-P8",
+      "title": "Regular Backups",
+      "family": "ML3",
+      "description": "Backups of data, applications and settings are performed and retained in accordance with business criticality and business continuity requirements."
+    }
+  ]
+}

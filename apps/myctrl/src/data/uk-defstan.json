@@ -1,0 +1,1041 @@
+{
+  "framework": {
+    "id": "uk-defstan",
+    "name": "UK DEF STAN 05-138",
+    "version": "2024",
+    "description": "UK DEF STAN 05-138 compliance framework"
+  },
+  "families": {
+    "1": "1",
+    "2": "2",
+    "1100": "1100",
+    "1101": "1101",
+    "1102": "1102",
+    "1103": "1103",
+    "1200": "1200",
+    "1201": "1201",
+    "1202": "1202",
+    "1203": "1203",
+    "1204": "1204",
+    "1205": "1205",
+    "1206": "1206",
+    "1300": "1300",
+    "1301": "1301",
+    "1400": "1400",
+    "1401": "1401",
+    "1500": "1500",
+    "1501": "1501",
+    "1502": "1502",
+    "1503": "1503",
+    "2100": "2100",
+    "2101": "2101",
+    "2200": "2200",
+    "2201": "2201",
+    "2202": "2202",
+    "2203": "2203",
+    "2204": "2204",
+    "2205": "2205",
+    "2206": "2206",
+    "2207": "2207",
+    "2208": "2208",
+    "2209": "2209",
+    "2210": "2210",
+    "2211": "2211",
+    "2212": "2212",
+    "2213": "2213",
+    "2214": "2214",
+    "2215": "2215",
+    "2216": "2216",
+    "2217": "2217",
+    "2218": "2218",
+    "2300": "2300",
+    "2301": "2301",
+    "2302": "2302",
+    "2303": "2303",
+    "2304": "2304",
+    "2305": "2305",
+    "2306": "2306",
+    "2307": "2307",
+    "2308": "2308",
+    "2309": "2309",
+    "2310": "2310",
+    "2311": "2311",
+    "2312": "2312",
+    "2313": "2313",
+    "2314": "2314",
+    "2315": "2315",
+    "2316": "2316",
+    "2317": "2317",
+    "2318": "2318",
+    "2319": "2319",
+    "2320": "2320",
+    "2321": "2321",
+    "2322": "2322",
+    "2323": "2323",
+    "2400": "2400",
+    "2401": "2401",
+    "2402": "2402",
+    "2403": "2403",
+    "2404": "2404",
+    "2405": "2405",
+    "2406": "2406",
+    "2407": "2407",
+    "2408": "2408",
+    "2409": "2409",
+    "2410": "2410",
+    "2411": "2411",
+    "2412": "2412",
+    "2413": "2413",
+    "2414": "2414",
+    "2415": "2415",
+    "2416": "2416",
+    "2417": "2417",
+    "2418": "2418",
+    "2419": "2419",
+    "2420": "2420",
+    "2421": "2421",
+    "2422": "2422",
+    "2423": "2423",
+    "2424": "2424",
+    "2425": "2425",
+    "2426": "2426",
+    "2427": "2427",
+    "2428": "2428",
+    "2430": "2430",
+    "2500": "2500",
+    "2501": "2501",
+    "2502": "2502",
+    "2503": "2503",
+    "2504": "2504",
+    "2505": "2505",
+    "2506": "2506",
+    "2507": "2507",
+    "2508": "2508",
+    "2509": "2509",
+    "2510": "2510",
+    "2511": "2511",
+    "2512": "2512",
+    "2513": "2513",
+    "2600": "2600",
+    "2601": "2601",
+    "2602": "2602",
+    "2603": "2603",
+    "2604": "2604",
+    "2605": "2605",
+    "2700": "2700",
+    "2701": "2701",
+    "2702": "2702",
+    "2703": "2703",
+    "2704": "2704",
+    "3100": "3100",
+    "3101": "3101",
+    "3102": "3102",
+    "3103": "3103",
+    "3104": "3104",
+    "3105": "3105",
+    "3106": "3106",
+    "3107": "3107",
+    "3108": "3108",
+    "3109": "3109",
+    "3110": "3110",
+    "3200": "3200",
+    "3201": "3201",
+    "3202": "3202",
+    "3203": "3203",
+    "3204": "3204",
+    "4100": "4100",
+    "4101": "4101",
+    "4102": "4102",
+    "4103": "4103",
+    "4104": "4104",
+    "4105": "4105",
+    "4106": "4106",
+    "4200": "4200",
+    "4201": "4201",
+    "4202": "4202"
+  },
+  "controls": [
+    {
+      "control_id": "1.0",
+      "title": "1.0",
+      "family": "1",
+      "description": "The Supplier shall have Cyber Essentials certification that covers the scope required for all aspects of the contract and commit to maintaining this for the duration of the contract."
+    },
+    {
+      "control_id": "2.0",
+      "title": "2.0",
+      "family": "2",
+      "description": "The Supplier shall have Cyber Essentials Plus certification that covers the scope required for all aspects of the contract and commit to maintaining this for the duration of the contract."
+    },
+    {
+      "control_id": "1100.0",
+      "title": "1100.0",
+      "family": "1100",
+      "description": "The Supplier shall have appropriate management policies and processes in place to govern their approach to the security of the network and information systems supporting Functions and protection of Data."
+    },
+    {
+      "control_id": "1101.0",
+      "title": "1101.0",
+      "family": "1101",
+      "description": "The Supplier shall have effective organisational security management led at board level and articulated clearly in corresponding policies."
+    },
+    {
+      "control_id": "1102.0",
+      "title": "1102.0",
+      "family": "1102",
+      "description": "The Supplier shall have established roles and responsibilities for the security of networks and information systems at all levels, with clear and well-understood channels for communicating and escalating risks."
+    },
+    {
+      "control_id": "1103.0",
+      "title": "1103.0",
+      "family": "1103",
+      "description": "The Supplier shall have senior-level accountability for the security of networks and information systems, and delegates decision-making authority appropriately and effectively. Risks to network and information systems that protect all Data are considered in the context of other organisational risks."
+    },
+    {
+      "control_id": "1200.0",
+      "title": "1200.0",
+      "family": "1200",
+      "description": "The Supplier shall take appropriate steps to identify, assess, understand and remediate security risks to the network and information systems that protect all Data. This includes an overall organisational approach to risk management."
+    },
+    {
+      "control_id": "1201.0",
+      "title": "1201.0",
+      "family": "1201",
+      "description": "The Supplier shall have effective internal processes for managing risks (to the security of network and information systems that protect all Data) and communicating associated activities and solutions."
+    },
+    {
+      "control_id": "1202.0",
+      "title": "1202.0",
+      "family": "1202",
+      "description": "The Supplier shall periodically assess the risk to organisational operations (including mission, functions, image, or reputation), organisational assets, and individuals, resulting from the operation of organisational systems and the associated processing, storage, or transmission of Data."
+    },
+    {
+      "control_id": "1203.0",
+      "title": "1203.0",
+      "family": "1203",
+      "description": "The Supplier shall create and maintain up to date network diagrams detailing the network boundaries, internal and external connection, and systems within the operational environment."
+    },
+    {
+      "control_id": "1204.0",
+      "title": "1204.0",
+      "family": "1204",
+      "description": "The Supplier shall implement threat intelligence capabilities (internally or externally) as part of a risk assessment to guide and inform the development of organisational systems, security architectures, selection of security solutions, monitoring, threat hunting, system security alerts and advisories, response and recovery activities."
+    },
+    {
+      "control_id": "1205.0",
+      "title": "1205.0",
+      "family": "1205",
+      "description": "The Supplier shall gain validation for the effectiveness of the security of their technology, people, and processes in support of its Functions and which store and/or process Data."
+    },
+    {
+      "control_id": "1206.0",
+      "title": "1206.0",
+      "family": "1206",
+      "description": "The Supplier shall monitor security controls on an ongoing basis to ensure the continued effectiveness of the controls. Any identified deficiencies should be recorded, reported to leadership, and mitigated within agreed timeframes."
+    },
+    {
+      "control_id": "1300.0",
+      "title": "1300.0",
+      "family": "1300",
+      "description": "The Supplier shall reasonably ensure everything required to deliver, maintain or support networks and information systems that support delivery of all Functions which protect all Data are determined and understood. This includes people and systems, as well as any supporting infrastructure (such as power or cooling)."
+    },
+    {
+      "control_id": "1301.0",
+      "title": "1301.0",
+      "family": "1301",
+      "description": "The Supplier shall employ automated discovery and management tools to maintain an up-to-date, complete, accurate, and readily available inventory of data, people, systems and supporting infrastructure used to support business Functions and protect Data."
+    },
+    {
+      "control_id": "1400.0",
+      "title": "1400.0",
+      "family": "1400",
+      "description": "The Supplier shall understand and manage security risks to Functions and Data that arise as a result of dependencies on external suppliers. This includes ensuring that appropriate measures are employed where third party services are used."
+    },
+    {
+      "control_id": "1401.0",
+      "title": "1401.0",
+      "family": "1401",
+      "description": "The Supplier shall establish, document, and maintain trust relationships with external service providers based on the following requirements, properties, factors, or conditions: security and privacy requirements, properties, factors, or conditions defining acceptable trust relationships."
+    },
+    {
+      "control_id": "1500.0",
+      "title": "1500.0",
+      "family": "1500",
+      "description": "The Supplier shall, unless prohibited by applicable law, restrict and monitor all physical access to facilities where Data is stored or processed to its authorised Personnel by implementing industry standard physical access controls. Examples of such controls include but are not limited to:\ni) Swipe card technology\nii) Monitored CCTV\niii) Remotely monitored alarm systems\niv) On-premise security guards\nv) Photographic access credentials\nvi) Visitor escort\nvii) Physical access logs\nviii) Authorised access lists.\nThe Supplier shall review physical access logs regularly or in the event of a physical or cybersecurity incident."
+    },
+    {
+      "control_id": "1501.0",
+      "title": "1501.0",
+      "family": "1501",
+      "description": "The Supplier shall manage and maintain an inventory of all physical access devices used on their premises. The inventory should contain a unique identifier for the device regardless of the type (e.g. RFID card, access fob or door key) as well as the named individual who it is assigned to."
+    },
+    {
+      "control_id": "1502.0",
+      "title": "1502.0",
+      "family": "1502",
+      "description": "The Supplier shall restrict physical access to sensitive areas within an organisation's premises to only those who are authorised to have access. The Supplier shall maintain and manage an inventory of those staff who have privileged physical access."
+    },
+    {
+      "control_id": "1503.0",
+      "title": "1503.0",
+      "family": "1503",
+      "description": "The Supplier shall ensure the following controls are applied to all visitors visiting the organisation's premises:\ni) Visitor access and exit shall be logged\nii) All visitors shall wear visitor ID badges at all times. Visitor badges should visually differ from employee badges\niii) All visitors should be appropriately escorted at all times while on the premises\niv) Visitor badges should be returned to the organisation at the end of the day."
+    },
+    {
+      "control_id": "2100.0",
+      "title": "2100.0",
+      "family": "2100",
+      "description": "The Supplier shall develop, enact and regularly review cyber security and resilience policies and processes to manage and mitigate the risk of adverse impact on Functions and protection of Data."
+    },
+    {
+      "control_id": "2101.0",
+      "title": "2101.0",
+      "family": "2101",
+      "description": "The Supplier shall develop, enact and regularly review cyber security and resilience policies and processes to manage and mitigate the risk of adverse impact on Functions and protection of Data."
+    },
+    {
+      "control_id": "2200.0",
+      "title": "2200.0",
+      "family": "2200",
+      "description": "The Supplier shall understand, document and manage (i.e create, review and disable) access to networks, information systems, and removable storage media & devices supporting Functions and protection of Data. All accounts and identities, including users, system and automated functions that can access Data or systems are appropriately verified, authenticated and authorised."
+    },
+    {
+      "control_id": "2201.0",
+      "title": "2201.0",
+      "family": "2201",
+      "description": "The Supplier shall implement multi-factor authentication (MFA) mechanisms to control access to critical or sensitive systems, and organisational operations. Factors can include:\ni) Something you know (e.g. password/personal identification number (PIN))\nii) Something you have (e.g. cryptographic identification device, token)\niii) Something you are (e.g. biometric)."
+    },
+    {
+      "control_id": "2202.0",
+      "title": "2202.0",
+      "family": "2202",
+      "description": "The Supplier shall fully understand and trust the devices that are used to access the network and information systems that support Functions and process Data."
+    },
+    {
+      "control_id": "2203.0",
+      "title": "2203.0",
+      "family": "2203",
+      "description": "The Supplier shall closely manage privileged user access and actions to networks and information systems supporting Functions and that protect Data."
+    },
+    {
+      "control_id": "2204.0",
+      "title": "2204.0",
+      "family": "2204",
+      "description": "The Supplier shall ensure that all information systems are configured to provide only essential capabilities and to prohibit or restrict the use of non-essential functions, such as ports, protocols, programmes and services that are not integral to the operation of that information system."
+    },
+    {
+      "control_id": "2205.0",
+      "title": "2205.0",
+      "family": "2205",
+      "description": "The Supplier shall closely manage all user accounts and employ the principle of least privilege to networks and information systems supporting all Functions and protecting all Data."
+    },
+    {
+      "control_id": "2206.0",
+      "title": "2206.0",
+      "family": "2206",
+      "description": "The Supplier shall limit access to systems’ audit/security logging data and functionality to privileged user groups that have a confirmed requirement in accordance with the principle of least privilege."
+    },
+    {
+      "control_id": "2207.0",
+      "title": "2207.0",
+      "family": "2207",
+      "description": "The Supplier shall develop a policy and implement a separation of duties methodology for standard and privileged accounts which support Functions and protect Data."
+    },
+    {
+      "control_id": "2208.0",
+      "title": "2208.0",
+      "family": "2208",
+      "description": "The Supplier shall closely manage and maintain identity and access control for users/admins, devices and systems accessing their networks and information systems supporting business Functions and protecting all Data."
+    },
+    {
+      "control_id": "2209.0",
+      "title": "2209.0",
+      "family": "2209",
+      "description": "The Supplier shall implement automated mechanisms to support the management of system accounts, including processes acting on behalf of authorised users."
+    },
+    {
+      "control_id": "2210.0",
+      "title": "2210.0",
+      "family": "2210",
+      "description": "The Supplier shall issue, manage, verify, revoke, and audit identities and credentials to authorised transactions. users, and processes."
+    },
+    {
+      "control_id": "2211.0",
+      "title": "2211.0",
+      "family": "2211",
+      "description": "The Supplier shall employ secure practices for the secure storage, transmission, and management of first-time and one-time passwords. These practices include, but are not limited to:\ni) Secure storage of first-time password prior to use\nii) Secure transmission of first-time and one-time passwords to their new user\niii) Require first-time and one-time passwords are immediately changed after first logon."
+    },
+    {
+      "control_id": "2212.0",
+      "title": "2212.0",
+      "family": "2212",
+      "description": "The Supplier shall employ automated mechanisms for the generation, protection, storage, rotation, transmission, cryptographic protection and management of passwords for staff and systems."
+    },
+    {
+      "control_id": "2213.0",
+      "title": "2213.0",
+      "family": "2213",
+      "description": "The Supplier shall deploy technical controls to manage the quality of credentials across all identifiers. The technical controls should reflect industry standard requirements such as password length, complexity requirements (e.g. uppercase, lowercase, numbers and symbols), reuse history, prevent reuse of identifiers for a defined period, banned words and insecure pattern recognition (e.g. 1234), as appropriate."
+    },
+    {
+      "control_id": "2214.0",
+      "title": "2214.0",
+      "family": "2214",
+      "description": "The Supplier shall employ policies and processes to appropriately manage unsuccessful login attempts to standard and privileged accounts. The Supplier shall lock accounts after at most ten unsuccessful login attempts for a minimum of 15 minutes; the duration of which should increase between multiple account lockouts."
+    },
+    {
+      "control_id": "2215.0",
+      "title": "2215.0",
+      "family": "2215",
+      "description": "The Supplier shall enforce technical control to protect against the capture of transmitted authentication or access control information and its subsequent retransmission i.e replay attacks."
+    },
+    {
+      "control_id": "2216.0",
+      "title": "2216.0",
+      "family": "2216",
+      "description": "The Supplier shall prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs."
+    },
+    {
+      "control_id": "2217.0",
+      "title": "2217.0",
+      "family": "2217",
+      "description": "The Supplier shall inventory all generic, service and system accounts used on the network. Every account shall be owned by a single named individual who is responsible and accountable for the account and its usage."
+    },
+    {
+      "control_id": "2218.0",
+      "title": "2218.0",
+      "family": "2218",
+      "description": "The Supplier shall identify system users, processes acting on behalf of users, and devices."
+    },
+    {
+      "control_id": "2300.0",
+      "title": "2300.0",
+      "family": "2300",
+      "description": "The Supplier shall appropriately protect data stored or transmitted electronically from actions such as unauthorised access, modification, or deletion that may cause an adverse impact on Functions or Data. Such protection extends to how authorised users, devices and systems access critical data necessary for the operation of Functions and use of Data. Additionally, covers information that would assist an attacker, such as design details of networks and information systems."
+    },
+    {
+      "control_id": "2301.0",
+      "title": "2301.0",
+      "family": "2301",
+      "description": "The Supplier shall have a good understanding and classification of the data important to the operation of Functions and protection of Data, including where it is stored, where it travels, the application of protective markings to media. The Supplier shall understand how unauthorised access, modification or availability of data would adversely impact the organisation. This shall apply to data released to third parties including those important to the operation of Functions and protection of all Data."
+    },
+    {
+      "control_id": "2302.0",
+      "title": "2302.0",
+      "family": "2302",
+      "description": "The Supplier shall protect and control data in transit, including the use of encryption where appropriate, for data important to the operation of the Functions and all Data. This includes the transfer of data to third parties."
+    },
+    {
+      "control_id": "2303.0",
+      "title": "2303.0",
+      "family": "2303",
+      "description": "The Supplier shall terminate network connections associated with communications sessions at the end of the sessions or after a defined period of inactivity"
+    },
+    {
+      "control_id": "2304.0",
+      "title": "2304.0",
+      "family": "2304",
+      "description": "The Supplier shall ensure that the following controls apply to trusted organisational wireless networks:\ni) All users and devices must be authorised and authenticated prior to granting access to the network via the wireless network\nii) The data transferred over the wireless network must be encrypted using WPA2 or above methodology."
+    },
+    {
+      "control_id": "2305.0",
+      "title": "2305.0",
+      "family": "2305",
+      "description": "The Supplier shall ensure the following controls are enforced for staff to connect to organisational networks and systems using Remote Access technologies, for example VPN:\ni) Enable MFA prior to establishing a remote connection to the network\nii) Encrypt all data transmitted over a VPN connection\niii) Disable split-tunnelling to ensure all Data is only transmitted via organisation controlled channels."
+    },
+    {
+      "control_id": "2306.0",
+      "title": "2306.0",
+      "family": "2306",
+      "description": "The Supplier shall employ cryptographic mechanisms to protect the confidentiality of remote access sessions."
+    },
+    {
+      "control_id": "2307.0",
+      "title": "2307.0",
+      "family": "2307",
+      "description": "The Supplier shall route remote access via managed access control points."
+    },
+    {
+      "control_id": "2308.0",
+      "title": "2308.0",
+      "family": "2308",
+      "description": "The Supplier shall appropriately protect the confidentiality of soft and hard copies of data being stored for all Functions."
+    },
+    {
+      "control_id": "2309.0",
+      "title": "2309.0",
+      "family": "2309",
+      "description": "The Supplier shall protect, such as through encryption, data important to the operation of Functions and all Data on mobile devices."
+    },
+    {
+      "control_id": "2310.0",
+      "title": "2310.0",
+      "family": "2310",
+      "description": "The Supplier shall:\ni) Maintain and manage an inventory of corporately owned removable storage media and devices\nii) Encrypt removable media using secured and industry best practice methods\niii) Allow only corporately owned and/or authorised removable storage media and devices to have read/write permissions\niv) Prohibit the use of removable storage media and devices that are not corporately owned or authorised."
+    },
+    {
+      "control_id": "2311.0",
+      "title": "2311.0",
+      "family": "2311",
+      "description": "The Supplier shall maintain and update a list of authorised working locations which are not the organisation's premise and communicate these locations to all employees and contractors."
+    },
+    {
+      "control_id": "2312.0",
+      "title": "2312.0",
+      "family": "2312",
+      "description": "The Supplier shall employ technical security controls and educate users to reduce the security risks to employees while working outside the organisation's premise. Technical security controls for consideration may include, but are not limited to:\ni) Always-on VPN to protect data in-transit\nii) Screen privacy protector to prevent shoulder surfing\niii) Disabling USB ports on devices\niv) Full disk encryption\nUser awareness topics may include, but are not limited to:\ni) Risks of using public Wi-Fi\nii) Avoid taking confidential phone calls within earshot of unauthorised individuals\niii) Shoulder surfing\niv) Avoid leaving devices unattended"
+    },
+    {
+      "control_id": "2313.0",
+      "title": "2313.0",
+      "family": "2313",
+      "description": "The Supplier shall appropriately sanitise before reuse and / or disposal the devices, equipment, and removable storage media & devices holding data important to the operation of business Functions and that protect all Data."
+    },
+    {
+      "control_id": "2314.0",
+      "title": "2314.0",
+      "family": "2314",
+      "description": "The Supplier shall ensure that the processing of personal data is conducted in compliance with the General Data Protection Regulation."
+    },
+    {
+      "control_id": "2315.0",
+      "title": "2315.0",
+      "family": "2315",
+      "description": "The Supplier shall implement Domain-based Message Authentication, Reporting and Conformance (DMARC), DomainKeys Identified Mail (DKIM) and Sender Policy Framework (SPF) to verify the authenticity of an email's source."
+    },
+    {
+      "control_id": "2316.0",
+      "title": "2316.0",
+      "family": "2316",
+      "description": "The Supplier shall employ systems to monitor and control the flow of all Personal and/or Personally Identifiable Information (PII) and all government information (e.g. OFFICIAL and above) provided or produced during the contract throughout the information lifecycle in accordance with approved authorisations, required legislation and contractual requirements."
+    },
+    {
+      "control_id": "2317.0",
+      "title": "2317.0",
+      "family": "2317",
+      "description": "The Supplier shall implement and maintain full disk level encryption on all endpoints to industry standard solutions, for example, full disk encryption solutions using AES-256 encryption algorithm or FIPS equivalent."
+    },
+    {
+      "control_id": "2318.0",
+      "title": "2318.0",
+      "family": "2318",
+      "description": "The Supplier shall employ appropriate nationally or departmentally approved cryptography when used to protect all Data (e.g. FIPS 140-2 or comparable standards)"
+    },
+    {
+      "control_id": "2319.0",
+      "title": "2319.0",
+      "family": "2319",
+      "description": "The Supplier shall establish and manage cryptographic keys for cryptography employed in organisational systems using appropriate nationally or departmentally approved solutions (e.g. FIPS 140-2 or comparable standards)"
+    },
+    {
+      "control_id": "2320.0",
+      "title": "2320.0",
+      "family": "2320",
+      "description": "The Supplier shall implement and maintain appropriate tooling to monitor and restrict the access and use of:\ni) Removable storage media and devices\nii) External websites\niii) Email"
+    },
+    {
+      "control_id": "2321.0",
+      "title": "2321.0",
+      "family": "2321",
+      "description": "The Supplier shall:\ni) Designate individuals authorised to make information publicly accessible\nii) Train authorised individuals to ensure that publicly accessible information does not contain non-public information\niii) Review the proposed content of information prior to posting onto the publicly accessible system to ensure that non-public information is not included\niv) Periodically review the content on the publicly accessible system for non-public information and remove such information, if discovered."
+    },
+    {
+      "control_id": "2322.0",
+      "title": "2322.0",
+      "family": "2322",
+      "description": "The Supplier shall ensure that mobile devices accessing its corporate environment/data are appropriately configured and managed using industry recognised solutions such as Mobile Device Management (MDM) tooling."
+    },
+    {
+      "control_id": "2323.0",
+      "title": "2323.0",
+      "family": "2323",
+      "description": "The Supplier shall, where not otherwise stated explicitly by country, legislation or Authority instructions, implement procedures to ensure that all Data is securely destroyed when no longer needed, or at the expiration or termination of the Agreement. Supplier shall:\ni) Secure and confirm the erasure of Data from its systems and servers, including any physical or\nelectronic copies, prior to asset destruction and disposal\nii) Provide attestation of destruction, where specified by contract with Authority\niii) Require that any third parties engaged to process the Data shall securely dispose of such Data when no longer needed to provide the service, unless otherwise stated explicitly by country, legislation or Authority instructions."
+    },
+    {
+      "control_id": "2400.0",
+      "title": "2400.0",
+      "family": "2400",
+      "description": "The Supplier shall ensure that network and information systems and technology critical for the operation of business Functions and protection of Data are protected from cyber attack. An organisational understanding of risk to business Functions and protection of Data informs the use of robust and reliable protective security measures to effectively limit opportunities for attackers to compromise networks and systems."
+    },
+    {
+      "control_id": "2401.0",
+      "title": "2401.0",
+      "family": "2401",
+      "description": "The Supplier shall securely configure the network and information systems that support the operation of business Functions and that protect Data."
+    },
+    {
+      "control_id": "2402.0",
+      "title": "2402.0",
+      "family": "2402",
+      "description": "The Supplier shall implement a vulnerability and patch management process to identify, report, and remediate application and system (internal and external facing) vulnerabilities that is approved by the application or system owner and is commensurate with the level of risk by:\ni) Performing vulnerability scans on a monthly basis and during any major system or application updates\nii) Implementing vendor patches or fixes prioritising using the CVSS v3 scoring\niii) Developing a Risk Treatment Plan to address identified vulnerabilities.\nThe Supplier shall address vulnerabilities in accordance with the Supplier’s internal vulnerability remediation timelines and in line with reasonable industry standards for vulnerability management based on CVSS v3 or above."
+    },
+    {
+      "control_id": "2403.0",
+      "title": "2403.0",
+      "family": "2403",
+      "description": "The Supplier shall conduct penetration testing (minimum every 12 months) against externally facing systems used to support the operation of Functions and that protect Data. The penetration testing programme shall be based upon industry standards and performed by subject matter experts. The Supplier shall ensure that any deficiencies identified are remediated in a timely manner in line with their risk to the network. The Supplier shall retain records including:\ni) The scope and methodology utilised\nii) The number of critical, high, and medium severity findings\niii) The name of the tester\niv) The date of the testing\nv) Timelines and actions for a remedial plan."
+    },
+    {
+      "control_id": "2404.0",
+      "title": "2404.0",
+      "family": "2404",
+      "description": "The Supplier shall formally document, publish and review (minimum every 12 months) the change control procedures to manage changes to information systems, supporting infrastructure and facilities. The change management policy includes:\ni) Definitions of the types of change (e.g. standard, critical, emergency) with associated processes\nii) Roles and responsibilities for those involved in the change or approving the change.\nPrior to implementing any changes, Supplier shall:\ni) Establish acceptance criteria for production change approval and implementation\nii) Require stakeholder approval prior to any change implementation\niii) Formally record the change in a centralised repository\niv) Document business impact analysis outcomes and document back-out procedures should the change fail\nv) Keep a full audit trail of the change request, testing conducted, associated documentation, approvals and outcomes\nvi) Document and record security impact analysis outcomes along with any mitigating actions."
+    },
+    {
+      "control_id": "2405.0",
+      "title": "2405.0",
+      "family": "2405",
+      "description": "The Supplier shall develop and maintain an appropriately robust patch management programme to address known vulnerabilities on its network within industry best-practice timelines. The Supplier shall take appropriate steps to identify, assess, test and implement patches for endpoints, network devices and software which address known vulnerabilities within industry best practice timeline.\nThe Supplier shall have appropriate processes in place to address out-of-band emergency patching and/or mitigating actions."
+    },
+    {
+      "control_id": "2406.0",
+      "title": "2406.0",
+      "family": "2406",
+      "description": "The Supplier shall ensure that mechanisms are in place to ensure users accept appropriate warning notices prior to information system access. At a minimum users must be warned that:\ni) Use of the information system is monitored, recorded and subject to audit\nii) Unauthorised usage of the information system is prohibited\niii) Unauthorised usage of the information system use is subject to criminal and civil penalties\niv) In continuing, the user affirms consent to monitoring and recording of their activities"
+    },
+    {
+      "control_id": "2407.0",
+      "title": "2407.0",
+      "family": "2407",
+      "description": "The Supplier shall ensure that users accept appropriate warning notices prior to information system access where information systems contain information with specific handling requirements imposed by the UK or its International Partners.\nSuch warnings must only be provided to authenticated users. At a minimum users must be warned that:\ni) The information system contains information with specific requirements imposed by the UK and/or international partner nations.\nii) Use of the information system may be subject to other specified requirements associated with certain types of information, such as that subject to Export Controls or licences."
+    },
+    {
+      "control_id": "2408.0",
+      "title": "2408.0",
+      "family": "2408",
+      "description": "The Supplier shall have controls in place to automatically lock user sessions after a predefined period. The lock screen shall conceal all information previously displayed on the screen and prevent unauthorised viewing of data."
+    },
+    {
+      "control_id": "2409.0",
+      "title": "2409.0",
+      "family": "2409",
+      "description": "The Supplier shall identify software programs authorised to execute on the corporate environment. For all other programs employ a block by default, permit-by-exception policy."
+    },
+    {
+      "control_id": "2410.0",
+      "title": "2410.0",
+      "family": "2410",
+      "description": "The Supplier shall review and manage the list of authorised software programs at least every 90 days."
+    },
+    {
+      "control_id": "2411.0",
+      "title": "2411.0",
+      "family": "2411",
+      "description": "The Supplier shall ensure the following internet controls are enforced on endpoints:\ni) Technical controls to prevent malware infection from internet browsing are in place\nii) Block undesirable websites from being accessed (e.g. malicious sites, inappropriate content etc.)\niii) Prevent code being launched on the corporate host\niv) Prevent downloads to the corporate host from the internet without sandboxing and anti-malware scan\nv) Automatically block suspicious traffic and communications\nvi) Terminate network connections associated with communications sessions at the end of the sessions or after a defined period of inactivity.\nEnsure auditing is enabled for these controls and security operators are notified of the attempted above actions. Where users have a necessity to perform the above activities, ensure a robust model and supporting processes and technologies are employed to mitigate the additional risk (e.g. allow/block listing, network monitoring, vulnerability scanning etc.)"
+    },
+    {
+      "control_id": "2412.0",
+      "title": "2412.0",
+      "family": "2412",
+      "description": "The Supplier should establish usage restrictions and implementation guidance for Voice over Internet Protocol (VoIP) technologies based on the potential to cause damage to the information system if used maliciously; and ensure controls are in place to authorise, monitor, and control the use of VoIP within the information system."
+    },
+    {
+      "control_id": "2413.0",
+      "title": "2413.0",
+      "family": "2413",
+      "description": "The Supplier shall define acceptable and unacceptable mobile code, and ensure controls are in place to identify, authorise, monitor, review and control the use of mobile code within the organisation."
+    },
+    {
+      "control_id": "2414.0",
+      "title": "2414.0",
+      "family": "2414",
+      "description": "The Supplier shall use secure network management and communication protocols to protect session authenticity addressing communications protection at the session level."
+    },
+    {
+      "control_id": "2415.0",
+      "title": "2415.0",
+      "family": "2415",
+      "description": "The Supplier shall employ automated mechanisms to detect misconfigured or unauthorised system components."
+    },
+    {
+      "control_id": "2416.0",
+      "title": "2416.0",
+      "family": "2416",
+      "description": "The supplier shall prevent unauthorised and unintended information transfer via shared system resources (e.g. registers, cache memory, main memory, hard disks)."
+    },
+    {
+      "control_id": "2417.0",
+      "title": "2417.0",
+      "family": "2417",
+      "description": "The Supplier shall ensure that all remote users acquire appropriate authorisation prior to accessing and/or executing privileged functions."
+    },
+    {
+      "control_id": "2418.0",
+      "title": "2418.0",
+      "family": "2418",
+      "description": "The Supplier shall implement, update and document system hardening procedures. Implement, update and document baseline configurations settings for all information technology products deployed in organisational systems; this shall include the restriction of user actions and of unsupported software and hardware."
+    },
+    {
+      "control_id": "2419.0",
+      "title": "2419.0",
+      "family": "2419",
+      "description": "The Supplier shall configure systems to obscure authentication information, for example, passwords to ensure that they are not displayed as cleartext when a user is inputting their credentials."
+    },
+    {
+      "control_id": "2420.0",
+      "title": "2420.0",
+      "family": "2420",
+      "description": "The Supplier shall configure systems to minimise feedback information from failed logons to ensure that the system does not provide any information that would allow unauthorised individuals to compromise authentication mechanisms. e.g. explicitly stating that the password is the incorrect authentication component."
+    },
+    {
+      "control_id": "2421.0",
+      "title": "2421.0",
+      "family": "2421",
+      "description": "The Supplier shall implement a Network Time Protocol (NTP) to a recognised authoritative source, to synchronise the clocks of every network device to ensure accurate and consistent timestamps for audit records on associated system logs."
+    },
+    {
+      "control_id": "2422.0",
+      "title": "2422.0",
+      "family": "2422",
+      "description": "The Supplier shall define, document, approve, and enforce physical and logical access restrictions associated with changes to organisational systems."
+    },
+    {
+      "control_id": "2423.0",
+      "title": "2423.0",
+      "family": "2423",
+      "description": "The Supplier shall identify, register and maintain an inventory of system components using automated tooling for those assets that support business Functions and protect Data in an asset register, and at a minimum, include data location and asset ownership information."
+    },
+    {
+      "control_id": "2424.0",
+      "title": "2424.0",
+      "family": "2424",
+      "description": "The Supplier shall ensure administrator credentials are stored through an approved and secured storage mechanism (process/location/tools etc.) and quarterly audits are performed to ensure the control is consistently applied and functions appropriately."
+    },
+    {
+      "control_id": "2425.0",
+      "title": "2425.0",
+      "family": "2425",
+      "description": "The Supplier shall implement an integrity verification tool to detect unauthorised changes to web-facing, critical software and firmware. Upon discovering discrepancies, the tool should automatically trigger the incident response process."
+    },
+    {
+      "control_id": "2426.0",
+      "title": "2426.0",
+      "family": "2426",
+      "description": "The Supplier shall ensure that anti-malware capabilities are regularly audited, to verify they are up to date, functional (e.g. performing real-time scans as well as periodic scans), managed, detect malware, report detections and update both malware signatures and software when new releases are available."
+    },
+    {
+      "control_id": "2427.0",
+      "title": "2427.0",
+      "family": "2427",
+      "description": "The Supplier shall monitor, control, and protect communications (information transmitted or received by organisational systems) at the external boundaries except as prohibited by Applicable Law and key internal boundaries of those organisational systems. This includes all staff including all remote workers to carry out their duties."
+    },
+    {
+      "control_id": "2428.0",
+      "title": "2428.0",
+      "family": "2428",
+      "description": "The Supplier shall control and limit connections to external systems by an allow-list on the network boundary."
+    },
+    {
+      "control_id": "2430.0",
+      "title": "2430.0",
+      "family": "2430",
+      "description": "The Supplier shall promptly remove or disable unnecessary firewall rules when they are no longer required or fulfil no business need."
+    },
+    {
+      "control_id": "2500.0",
+      "title": "2500.0",
+      "family": "2500",
+      "description": "The Supplier shall build resilience against cyber-attack and system failure into their design, implementation, operation and management of systems that support the operation of business Functions and protection of Data."
+    },
+    {
+      "control_id": "2501.0",
+      "title": "2501.0",
+      "family": "2501",
+      "description": "The Supplier shall design the network and information systems supporting their Functions and protect Data to be resilient to cyber security incidents and system failure. Systems shall be appropriately segregated and resource limitations mitigated."
+    },
+    {
+      "control_id": "2502.0",
+      "title": "2502.0",
+      "family": "2502",
+      "description": "The Supplier shall develop recovery plans for all systems that deliver Functions and protect Data."
+    },
+    {
+      "control_id": "2503.0",
+      "title": "2503.0",
+      "family": "2503",
+      "description": "The Supplier shall develop recovery plans for all systems that deliver Functions and protect Data. Recovery plans must also be tested at least annually with any deficiencies being recorded, risk assessed and resolved within defined timelines."
+    },
+    {
+      "control_id": "2504.0",
+      "title": "2504.0",
+      "family": "2504",
+      "description": "The Supplier shall hold accessible and secured current backups of data and information needed to recover operation of their Functions and protect Data. Backup procedures and media shall include:\ni) Appropriate encryption technology\nii) Integrity validation."
+    },
+    {
+      "control_id": "2505.0",
+      "title": "2505.0",
+      "family": "2505",
+      "description": "The Supplier shall hold accessible and secured current backups of data and information needed to recover operation of their Functions and protect Data. Backup procedures and media shall include:\ni) Appropriate encryption technology\nii) Integrity validation\niii) Secure offsite storage supporting availability requirements\niv) Regular backup recovery testing."
+    },
+    {
+      "control_id": "2506.0",
+      "title": "2506.0",
+      "family": "2506",
+      "description": "The Supplier shall protect the physical movement of media containing Data in transit using the following methodologies:\ni) Store backup media within a secured and locked container prior to transport.\nii) Utilise a certified backup courier to transport backup drives/tapes.\niii) Maintain a full chain of custody record.\niv) Ensure that tracking information is recorded for all drives being transported.\nv) Implement appropriate cryptographic mechanisms to protect confidentiality."
+    },
+    {
+      "control_id": "2507.0",
+      "title": "2507.0",
+      "family": "2507",
+      "description": "The Supplier shall ensure that firewalls must block every network connectivity path and network service not explicitly authorised by the appropriate Change Advisory Board (CAB). Traffic flow policy exceptions that are no longer supported by an explicit business need must be removed."
+    },
+    {
+      "control_id": "2508.0",
+      "title": "2508.0",
+      "family": "2508",
+      "description": "The Supplier shall implement network segmentation for publicly accessible system components to ensure logical and/or physical separation from internal network components."
+    },
+    {
+      "control_id": "2509.0",
+      "title": "2509.0",
+      "family": "2509",
+      "description": "The Supplier shall implement appropriate tooling or methods to detect, block and report malicious or spam emails coming into the network. Such tooling or methods may include learning capabilities for more effectively identifying legitimate communications."
+    },
+    {
+      "control_id": "2510.0",
+      "title": "2510.0",
+      "family": "2510",
+      "description": "The Supplier shall check all media containing diagnostic and/or test programs for malicious code prior to use on the organisational network."
+    },
+    {
+      "control_id": "2511.0",
+      "title": "2511.0",
+      "family": "2511",
+      "description": "The Supplier shall ensure that relevant good practice tooling, techniques and mechanisms are authorised or provided to maintenance personnel in order to carry out their duties"
+    },
+    {
+      "control_id": "2512.0",
+      "title": "2512.0",
+      "family": "2512",
+      "description": "The Supplier shall require multi-factor authentication to establish non local maintenance sessions via external network connections and terminate such connections when nonlocal maintenance is complete."
+    },
+    {
+      "control_id": "2513.0",
+      "title": "2513.0",
+      "family": "2513",
+      "description": "The Supplier shall designate authorised, suitably qualified and experienced personnel to supervise maintenance personnel who do not possess the required physical access authorisations."
+    },
+    {
+      "control_id": "2600.0",
+      "title": "2600.0",
+      "family": "2600",
+      "description": "The Supplier shall ensure that staff have appropriate awareness, knowledge and skills to carry out their organisational roles effectively in relation to the security of network and information systems supporting the operation of business Functions and protection of Data."
+    },
+    {
+      "control_id": "2601.0",
+      "title": "2601.0",
+      "family": "2601",
+      "description": "The Supplier shall develop and maintain a positive cyber security culture which encourages employees to make information security part of their day-to-day activities and incentivises them for doing so."
+    },
+    {
+      "control_id": "2602.0",
+      "title": "2602.0",
+      "family": "2602",
+      "description": "The Supplier shall ensure that people who support the operation of Functions and protection of Data are appropriately trained in cyber security. The Supplier shall conduct awareness training at least every 12 months to recognise and respond to the following topics:\ni) Social engineering and phishing\nii) Advanced persistent threats\niii) Suspected breaches\niv) Suspicious behaviours.\nA range of approaches to cyber security training, awareness and communications shall be employed and the Supplier shall update the training every 12 months or when there are significant changes to the threat."
+    },
+    {
+      "control_id": "2603.0",
+      "title": "2603.0",
+      "family": "2603",
+      "description": "The Supplier shall ensure that managers, systems administrators, and users of organisational information systems are made aware of the security risks associated with their activities and of the applicable policies, standards, and procedures related to the security of organisational information systems. The Supplier shall review and update these security risks at least every 12 months or when there is significant change within the organisation or threat."
+    },
+    {
+      "control_id": "2604.0",
+      "title": "2604.0",
+      "family": "2604",
+      "description": "The Supplier’s Acceptable Use Policy shall consider and include appropriate enforcement of restrictions on:\ni) Use of social media, social networking sites, and external sites/applications ii) Posting organisational information on public websites\niii) Use of organisation-provided identifiers (e.g. email addresses) and authentication secrets (e.g. passwords) for creating accounts on external sites/applications\niv) Enforce clear desk and clear screen requirements\nv) Handling of physical corporate assets outside the office environment\nvi) Locations for conducting duties\nvii) Remote activation of collaborative computing devices\nviii) Prohibit remote activation of collaborative computing devices and provide indication of devices in use to users present at the device."
+    },
+    {
+      "control_id": "2605.0",
+      "title": "2605.0",
+      "family": "2605",
+      "description": "The Supplier shall conduct practical exercises in awareness training for their organisation that are aligned with current threat scenarios and provide feedback to individuals involved in the training and their supervisors."
+    },
+    {
+      "control_id": "2700.0",
+      "title": "2700.0",
+      "family": "2700",
+      "description": "The Supplier shall, unless prohibited by Applicable Law, perform appropriate background verification checks on Personnel that have access to Data upon hire. The verification checks shall include:\ni) Verifying credentials\nii) Employment history\niii) Qualification checks\niv) Application or verification of BPSS (Baseline Personnel Security Standard)"
+    },
+    {
+      "control_id": "2701.0",
+      "title": "2701.0",
+      "family": "2701",
+      "description": "The Supplier shall define and implement a policy for applying BPSS and National Security Vetting (NSV) checks as appropriate for employees that support Functions and the protection of Data. *(It is recognised that application of NSV is normally only possible once a contract requiring such is in place. Potential suppliers who do not meet this requirement at time of submission must, however, be willing and be able to enforce their staff through appropriate levels of vetting within a timescale agreed with the project delivery team following contract award)."
+    },
+    {
+      "control_id": "2702.0",
+      "title": "2702.0",
+      "family": "2702",
+      "description": "The Supplier shall define and implement a joiners, movers and leavers policy to secure organisational hardware, software and systems."
+    },
+    {
+      "control_id": "2703.0",
+      "title": "2703.0",
+      "family": "2703",
+      "description": "The Supplier shall define and implement training and processes for employees and contractors to identify and report suspicious activities and/or behaviour including violations of information security policies and procedures without fear of recrimination. The Supplier shall define and implement a disciplinary process to take action against employees who violate information security policies or procedures."
+    },
+    {
+      "control_id": "2704.0",
+      "title": "2704.0",
+      "family": "2704",
+      "description": "The Supplier shall, where appropriate, implement, install, and maintain the following environmental controls supporting Functions and protection of Data:\ni) Fire suppression systems\nii) Temperature and humidity controls within a data centre or server room environment\niii) Backup power technology (e.g. uninterruptible power supply, diesel generator, separate grid connection, etc.)."
+    },
+    {
+      "control_id": "3100.0",
+      "title": "3100.0",
+      "family": "3100",
+      "description": "The Supplier shall monitor the security status of the networks and systems supporting the operation of business Functions and protection of Data in order to detect potential security problems and to track the ongoing effectiveness of protective security measures."
+    },
+    {
+      "control_id": "3101.0",
+      "title": "3101.0",
+      "family": "3101",
+      "description": "The Supplier shall establish and document security event monitoring which at a minimum covers the following:\ni) Security events covered\nii) Frequency of monitoring\niii) Clearly defined roles and responsibilities\niv) Escalation matrix."
+    },
+    {
+      "control_id": "3102.0",
+      "title": "3102.0",
+      "family": "3102",
+      "description": "The Supplier shall establish and document security event monitoring which at a minimum covers the following:\ni) 24x7x365 monitoring of all identified Information Systems in Production and non-Production environments\nii) Tools used for 24x7x365 monitoring and correlation\niii) Security events covered\niv) Frequency of monitoring\nv) Clearly defined roles and responsibilities\nvi) Escalation matrix."
+    },
+    {
+      "control_id": "3103.0",
+      "title": "3103.0",
+      "family": "3103",
+      "description": "The Supplier shall hold logging data securely and grant read access only to accounts with business needs. The Supplier shall protect audit tools from unauthorised access, modification and deletion. Logging data shall be retained and protected from deletion to a documented retention period, after which it shall be deleted."
+    },
+    {
+      "control_id": "3104.0",
+      "title": "3104.0",
+      "family": "3104",
+      "description": "The Supplier shall provide evidence from their monitoring tool of security incidents to verify the reliability of identified and triggered alerts for triage."
+    },
+    {
+      "control_id": "3105.0",
+      "title": "3105.0",
+      "family": "3105",
+      "description": "The Supplier shall contextualise alerts with knowledge of the threat and their systems, and engage Incident Response when an incident (confirmed or otherwise) is identified."
+    },
+    {
+      "control_id": "3106.0",
+      "title": "3106.0",
+      "family": "3106",
+      "description": "The Supplier shall ensure that monitoring staff skills, tools and roles, including any that are outsourced, reflect governance and reporting requirements, expected threats and the complexities of the network or system data they need to use. Monitoring staff have contextual knowledge of the Functions and requirements for the protection of Data."
+    },
+    {
+      "control_id": "3107.0",
+      "title": "3107.0",
+      "family": "3107",
+      "description": "The Supplier shall generate event logs for systems that support the operation of Functions and protection of Data. The following criteria apply:\ni) Logs are archived for a minimum of 12 months\nii) Logs capture (as a minimum) date, time (from a single NTP source), user ID, device accessed and port used\niii) Logs capture key security event types (e.g. critical files accessed, user accounts generated, multiple failed login attempts, logging failures from devices, events related to systems that have an internet connection)\niv) Access to modify system logs is restricted\nv) Logs and security event logs can be made available upon request\nvi) Store audit records in a repository that is part of a physically different system\nvii) The Supplier shall ensure that systems logs are reviewed at least weekly to identify system\nfailures, faults, or potential security incidents and corrective actions are taken to resolve or address issues within a reasonable timeframe\nviii) Review, at least every 6 months the event types selected for logging purposes to ensure these still meet business requirements\nix) Capture the operational status of the logging system and alert on any failures which impact the system's operational capacity."
+    },
+    {
+      "control_id": "3108.0",
+      "title": "3108.0",
+      "family": "3108",
+      "description": "The Supplier shall provide and implement an appropriate audit record reduction and report generation capability that:\ni) supports on-demand audit record review, analysis, and reporting requirements and after-the-fact investigations of incidents; and\nii) does not alter the original content or time ordering of audit records."
+    },
+    {
+      "control_id": "3109.0",
+      "title": "3109.0",
+      "family": "3109",
+      "description": "The Supplier shall integrate audit record review, triage, analysis, and reporting processes with organisational governance and incident management structure."
+    },
+    {
+      "control_id": "3110.0",
+      "title": "3110.0",
+      "family": "3110",
+      "description": "The Supplier shall monitor system security alerts and advisories and take action in response."
+    },
+    {
+      "control_id": "3200.0",
+      "title": "3200.0",
+      "family": "3200",
+      "description": "The Supplier shall detect, within networks and information systems, malicious activity affecting, or with the potential to affect, the operation of business Functions and protection of Data even when the activity evades standard signature-based security prevent/detect solutions (or when standard solutions are not deployable)."
+    },
+    {
+      "control_id": "3201.0",
+      "title": "3201.0",
+      "family": "3201",
+      "description": "The Supplier shall define examples of abnormal system behaviour to aid in detecting malicious activity that is otherwise hard to identify. The Supplier shall take appropriate action upon identifying this behaviour."
+    },
+    {
+      "control_id": "3202.0",
+      "title": "3202.0",
+      "family": "3202",
+      "description": "The Supplier shall implement reasonable and proportionate measures to detect malicious activity affecting, or with the potential to affect, the operation of Functions and protection of Data."
+    },
+    {
+      "control_id": "3203.0",
+      "title": "3203.0",
+      "family": "3203",
+      "description": "The Supplier shall monitor system security alerts and advisories and take action in response using agreed and managed indicators of compromise."
+    },
+    {
+      "control_id": "3204.0",
+      "title": "3204.0",
+      "family": "3204",
+      "description": "The Supplier shall implement proportionate measures to:\ni) Detect the presence of unauthorised hardware, software, and firmware components within the system using tooling\nii) Take the following actions when unauthorised components are detected: disable network access by such components; isolate the components; notify systems administrators and/or security operations teams."
+    },
+    {
+      "control_id": "4100.0",
+      "title": "4100.0",
+      "family": "4100",
+      "description": "The Supplier shall implement well-defined and tested incident management processes that aim to ensure continuity of business Functions and protection of Data in the event of system or service failure. Mitigation activities are designed and where possible automated to contain or limit the impact of a compromise."
+    },
+    {
+      "control_id": "4101.0",
+      "title": "4101.0",
+      "family": "4101",
+      "description": "The Supplier shall have an up-to-date incident response plan that is grounded in a thorough risk assessment that takes account of business Functions and protection of Data and covers a range of incident scenarios."
+    },
+    {
+      "control_id": "4102.0",
+      "title": "4102.0",
+      "family": "4102",
+      "description": "The Supplier shall have the capability to enact their incident response plan, including effective limitation of impact on the operation of Functions and protection of Data. During an incident, the Supplier shall enact processes and capabilities to provide access to information sources on which to base their response decisions to coordinate incident handling activities with contingency planning activities."
+    },
+    {
+      "control_id": "4103.0",
+      "title": "4103.0",
+      "family": "4103",
+      "description": "The Supplier shall carry out exercises to test response plans at least every 12 months, using past incidents that affected their (and other’s) organisation, and scenarios that draw on threat intelligence and risk assessments."
+    },
+    {
+      "control_id": "4104.0",
+      "title": "4104.0",
+      "family": "4104",
+      "description": "The Supplier shall establish an operational incident handling capability for organisational information systems that is consistently applied across the organisation and includes:\ni) Adequate preparation, detection, forensic analysis, containment, recovery, and user response activities\nii) Tracking, documenting, and reporting incidents to appropriate organisational officials and/or authorities\niii) Sufficient rigour, intensity and scope."
+    },
+    {
+      "control_id": "4105.0",
+      "title": "4105.0",
+      "family": "4105",
+      "description": "The Supplier shall conduct data exfiltration tests at the network boundaries at least every 12 months. These tests must be conducted against both authorised and covert channels."
+    },
+    {
+      "control_id": "4106.0",
+      "title": "4106.0",
+      "family": "4106",
+      "description": "The Supplier shall audit the identity of internal users associated with denied communications."
+    },
+    {
+      "control_id": "4200.0",
+      "title": "4200.0",
+      "family": "4200",
+      "description": "The Supplier shall, when an incident occurs, incorporate root cause analysis and lessons learned information from incident response activities into incident response procedures, training and testing. The Supplier shall implement the resulting improvements immediately or, at minimum, within 30 days of the completion of the root cause analysis."
+    },
+    {
+      "control_id": "4201.0",
+      "title": "4201.0",
+      "family": "4201",
+      "description": "The Supplier shall perform Business Continuity Risk Assessments to determine relevant risks, threats, and likelihood & impact of a service outage or Data Breach. The Supplier shall record the output of these Risk Assessments within a risk register along with the required controls and/or procedures to mitigate or remove the risk and/or threat."
+    },
+    {
+      "control_id": "4202.0",
+      "title": "4202.0",
+      "family": "4202",
+      "description": "The Supplier shall assess the requirement for redundant networking and telecommunication systems to protect Functions and Data. Where required, the Supplier shall implement and protect these systems."
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getStats, getByLicense } from '../data/controls';
+import FrameworkCard from '../components/cards/FrameworkCard.astro';
+
+const openLicenseConfigs = [
+  ...getByLicense('open-license'),
+  ...getByLicense('cc-by-nd'),
+  ...getByLicense('cc-by-nc-sa'),
+];
+const openLicenseContent = openLicenseConfigs.map(config => ({
+  config,
+  stats: getStats(config.id),
+}));
+
+const totalItems = openLicenseContent.reduce((sum, { stats }) => sum + stats.total, 0);
+const builtInCount = openLicenseContent.filter(({ stats }) => stats.total > 0).length;
+---
+
+<BaseLayout title="Open License Resources" showSidebar={false}>
+  <div class="max-w-4xl mx-auto space-y-12 py-12">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-foreground">Open License</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="badge-open-license px-3 py-1.5 text-sm font-mono rounded border">
+          Open License
+        </span>
+        <h1 class="text-3xl font-bold tracking-tight">
+          Open License Resources
+        </h1>
+      </div>
+
+      <p class="text-muted-foreground max-w-2xl">
+        Frameworks and guidance released under open licenses (Creative Commons, Apache-2.0, OGL).
+        Permissive open-license datasets ({builtInCount}) are bundled out of the box ({totalItems.toLocaleString()} items);
+        non-derivative / share-alike external entries link to official publishers and support local overlay loading.
+      </p>
+    </header>
+
+    <!-- Open License Content Cards -->
+    <section class="space-y-6">
+      <div class="grid gap-6">
+        {openLicenseContent.map(({ config, stats }, i) => (
+          <FrameworkCard config={config} stats={stats} index={i} />
+        ))}
+      </div>
+
+      {openLicenseContent.length === 0 && (
+        <p class="text-center text-muted-foreground py-8">
+          No open license content available yet.
+        </p>
+      )}
+    </section>
+
+    <!-- Info Section -->
+    <section class="glass-card-thick p-6 rounded-lg border space-y-4">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <span class="text-primary font-mono">{'>'}</span>
+        About Open Licenses
+      </h2>
+      <div class="text-sm text-muted-foreground space-y-3">
+        <p>
+          <strong class="text-foreground">Open license</strong> resources are freely available but released under specific license terms (typically Creative Commons).
+          Unlike public domain works, these have some restrictions on use.
+        </p>
+        <p>
+          Common terms include:
+        </p>
+        <ul class="list-disc list-inside pl-2 space-y-1">
+          <li><strong>Attribution (BY)</strong> - Credit the original creator</li>
+          <li><strong>Non-Commercial (NC)</strong> - Free for non-commercial use only</li>
+          <li><strong>No Derivatives (ND)</strong> - Cannot modify or create derivative works</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>

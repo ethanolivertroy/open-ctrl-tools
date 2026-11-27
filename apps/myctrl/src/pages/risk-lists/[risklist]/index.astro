@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ControlCardCompact } from '../../../components/controls/ControlCard';
+import {
+  getAllControls,
+  getAllFamilies,
+  getControlsByFamily,
+  getFamilyName,
+  getStats,
+  getFrameworkConfig,
+  isValidFramework,
+  getRiskLists,
+} from '../../../data/controls';
+
+export async function getStaticPaths() {
+  const riskLists = getRiskLists();
+  return riskLists.map((config) => ({
+    params: { risklist: config.id },
+    props: { risklistId: config.id },
+  }));
+}
+
+const { risklistId } = Astro.props;
+
+if (!isValidFramework(risklistId)) {
+  return Astro.redirect('/');
+}
+
+const config = getFrameworkConfig(risklistId);
+const stats = getStats(risklistId);
+const families = getAllFamilies(risklistId);
+---
+
+<BaseLayout title={`${config.name} ${config.version}`} showSidebar={true} frameworkId={risklistId}>
+  <div class="space-y-8">
+    <!-- Header -->
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span>Risk Lists</span>
+        <span>/</span>
+        <span class="text-foreground">{config.name}</span>
+      </div>
+
+      <h1 class="text-3xl font-bold tracking-tight">
+        {config.name} <span class="text-primary">v{config.version}</span>
+      </h1>
+
+      <p class="text-muted-foreground">
+        {config.description}
+      </p>
+
+      {config.officialUrl && (
+        <p class="text-sm text-muted-foreground/80 italic">
+          This is a reference tool, not an authoritative source.
+          For official documentation, visit <a href={config.officialUrl} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{new URL(config.officialUrl).hostname}</a>.
+        </p>
+      )}
+
+      <!-- Quick stats -->
+      <div class="flex flex-wrap gap-3 text-sm pt-2">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all duration-200 bg-primary/20 border-primary text-primary">
+          <span class="font-mono">{stats.total}</span>
+          <span>{config.itemLabel}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Risk Categories -->
+    <section class="space-y-8">
+      {families.map((family) => {
+        const controls = getControlsByFamily(risklistId, family);
+        const familyName = getFamilyName(risklistId, family);
+
+        return (
+          <div class="space-y-4" id={family.toLowerCase()}>
+            <h2 class="text-xl font-semibold flex items-center gap-3 sticky top-16 bg-background py-2 z-10">
+              <span class="font-mono text-primary">{family}</span>
+              <span class="text-muted-foreground">—</span>
+              <span>{familyName}</span>
+            </h2>
+
+            <div class="space-y-2">
+              {controls.map((control) => (
+                <ControlCardCompact control={control} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </section>
+  </div>
+</BaseLayout>

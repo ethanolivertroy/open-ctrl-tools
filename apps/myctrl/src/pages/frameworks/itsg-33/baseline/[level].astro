@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'itsg-33';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('itsg-33');
+}
+
+const { level } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={level!} />

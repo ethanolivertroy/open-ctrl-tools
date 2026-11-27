@@ -1,0 +1,146 @@
+{
+  "framework": {
+    "id": "cisa-sbd",
+    "name": "CISA Secure by Design",
+    "version": "2024",
+    "description": "Principles and pledge goals for building cybersecurity into product design and manufacture, jointly published by CISA, FBI, NSA, and 17+ international cybersecurity authorities."
+  },
+  "families": {
+    "PRINCIPLES": "Secure by Design Principles",
+    "PLEDGE": "Secure by Design Pledge Goals",
+    "ALERTS": "Secure by Design Alerts"
+  },
+  "controls": [
+    {
+      "control_id": "SBD-P1",
+      "title": "Take Ownership of Customer Security Outcomes",
+      "family": "PRINCIPLES",
+      "description": "Technology manufacturers should take ownership of customer security outcomes rather than shifting the burden to customers. Products should be designed so that the security of the customer is a core business goal of the manufacturer. This means building products that are secure by default, reducing the need for customers to take additional actions to secure the product after purchase."
+    },
+    {
+      "control_id": "SBD-P2",
+      "title": "Embrace Radical Transparency and Accountability",
+      "family": "PRINCIPLES",
+      "description": "Technology manufacturers should embrace radical transparency and accountability. This includes publishing security-relevant information such as vulnerability disclosure policies, security advisories, CVEs with accurate CWE fields, and information about security patches and updates. Manufacturers should be transparent about their security practices and accountable for the security of their products."
+    },
+    {
+      "control_id": "SBD-P3",
+      "title": "Lead From the Top",
+      "family": "PRINCIPLES",
+      "description": "Security is a business priority that must be driven by executive leadership, not delegated solely to technical teams. The C-suite and board should actively invest in security outcomes, establish security as a core business requirement, and create organizational structures that prioritize product security throughout the development lifecycle."
+    },
+    {
+      "control_id": "SBD-PLEDGE-1",
+      "title": "Multi-Factor Authentication (MFA)",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate actions taken to measurably increase the use of multi-factor authentication across the manufacturer's products. This includes enabling MFA by default, supporting phishing-resistant MFA (such as FIDO2/WebAuthn), including SSO support in baseline product pricing at no extra cost, and publishing MFA adoption statistics.",
+      "related_controls": ["SBD-P1", "SBD-PLEDGE-7"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-2",
+      "title": "Default Passwords",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate measurable progress toward reducing default passwords across the manufacturer's products. This includes eliminating default passwords entirely, using instance-unique initial credentials, transitioning existing deployments away from default passwords, and ensuring that initial setup requires the creation of strong unique credentials.",
+      "related_controls": ["SBD-P1", "SBD-PLEDGE-1"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-3",
+      "title": "Reducing Entire Classes of Vulnerability",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate measurable actions taken to reduce the prevalence of one or more vulnerability classes across the manufacturer's products. This includes eliminating SQL injection (CWE-89) through parameterized queries, eliminating cross-site scripting (CWE-79) through safe templating, publishing memory-safe language roadmaps, adopting memory-safe languages for new development, and using static/dynamic analysis to detect vulnerability classes at scale.",
+      "related_controls": ["SBD-P2", "SBD-ALERT-1", "SBD-ALERT-4", "SBD-ALERT-5"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-4",
+      "title": "Security Patches",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate actions taken to measurably increase the installation of security patches by customers. This includes enabling automatic updates by default, providing patches without requiring additional product purchases or upgrade tiers, supporting patches across a broad range of deployed versions, clearly communicating end-of-life timelines, and reducing customer-side effort to apply patches.",
+      "related_controls": ["SBD-P1"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-5",
+      "title": "Vulnerability Disclosure Policy",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, publish a vulnerability disclosure policy (VDP) that authorizes testing by members of the public on products offered by the manufacturer, commits not to recommend or pursue legal action against good-faith reporters, provides a clear mechanism for public reporting, and aligns with coordinated vulnerability disclosure best practices. Manufacturers should also publish a security.txt file per RFC 9116.",
+      "related_controls": ["SBD-P2", "SBD-PLEDGE-6"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-6",
+      "title": "CVEs",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate transparency in vulnerability reporting by issuing CVEs in a timely manner for critical and high-severity vulnerabilities in the manufacturer's products, whether discovered internally or externally. CVEs should include accurate CWE (Common Weakness Enumeration) and CPE (Common Platform Enumeration) fields. Manufacturers should not attempt to obscure the nature of vulnerabilities.",
+      "related_controls": ["SBD-P2", "SBD-PLEDGE-5"]
+    },
+    {
+      "control_id": "SBD-PLEDGE-7",
+      "title": "Evidence of Intrusions",
+      "family": "PLEDGE",
+      "description": "Within one year of signing the pledge, demonstrate measurable actions to increase the ability of customers to gather evidence of cybersecurity intrusions affecting the manufacturer's products. This includes providing audit logs for configuration changes, identity and authentication events, network flow data, and data access events in the baseline product at no extra charge. Logs should be in standard machine-readable formats and retained for an adequate period.",
+      "related_controls": ["SBD-P1", "SBD-PLEDGE-1"]
+    },
+    {
+      "control_id": "SBD-ALERT-1",
+      "title": "Eliminating Buffer Overflow Vulnerabilities",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (February 12, 2025): Technology manufacturers should take steps to eliminate buffer overflow vulnerabilities from their products by adopting memory-safe programming languages, using memory-safe libraries and functions, and implementing compiler-level protections. Buffer overflows remain one of the most dangerous and prevalent vulnerability classes, enabling remote code execution and system compromise.",
+      "related_controls": ["SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-2",
+      "title": "Eliminating Cross-Site Scripting Vulnerabilities",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (September 18, 2024): Technology manufacturers should eliminate cross-site scripting (XSS) vulnerabilities (CWE-79) from their web-based products through the use of safe-by-default templating frameworks, output encoding, Content Security Policy (CSP), and other architectural approaches that prevent XSS at the framework level rather than relying on individual developer vigilance.",
+      "related_controls": ["SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-3",
+      "title": "Eliminating OS Command Injection Vulnerabilities",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (July 10, 2024): Technology manufacturers should eliminate OS command injection vulnerabilities (CWE-78) from their products by using safe APIs that do not invoke shell commands, avoiding string concatenation for OS commands, using parameterized interfaces, and adopting architectural patterns that separate command construction from execution.",
+      "related_controls": ["SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-4",
+      "title": "Eliminating Directory Traversal Vulnerabilities",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (May 2, 2024): Technology manufacturers should eliminate directory traversal vulnerabilities (CWE-22) from their products by using safe file access APIs, canonicalizing file paths before use, implementing chroot or container-based isolation, and validating that resolved paths remain within expected directories.",
+      "related_controls": ["SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-5",
+      "title": "Eliminating SQL Injection Vulnerabilities",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (March 25, 2024): Technology manufacturers should eliminate SQL injection vulnerabilities (CWE-89) from their products by universally using parameterized queries (prepared statements), adopting ORM frameworks that prevent raw SQL injection, and auditing codebases for existing SQL injection patterns. SQL injection has been a known vulnerability class for over 25 years and should be completely preventable.",
+      "related_controls": ["SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-6",
+      "title": "Security Design for SOHO Device Manufacturers",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (January 31, 2024): Manufacturers of small office/home office (SOHO) routers, NAS devices, and other network equipment should improve their security design practices. This includes eliminating default passwords, providing automatic update mechanisms, securing web management interfaces, using memory-safe languages for network-facing code, and providing clear end-of-life timelines and security support commitments.",
+      "related_controls": ["SBD-PLEDGE-2", "SBD-PLEDGE-4"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-7",
+      "title": "Eliminating Default Passwords",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (December 15, 2023): Technology manufacturers should eliminate default passwords from their products entirely. Products should ship with unique-per-instance credentials or require credential creation during initial setup. Manufacturers should audit existing products for default credentials and provide migration paths for deployed systems still using default passwords.",
+      "related_controls": ["SBD-PLEDGE-2"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    },
+    {
+      "control_id": "SBD-ALERT-8",
+      "title": "Shielding Web Management Interfaces",
+      "family": "ALERTS",
+      "description": "CISA Secure by Design Alert (November 29, 2023): Manufacturers of devices with web-based management interfaces should protect these interfaces from malicious cyber activity. This includes not exposing management interfaces to the public internet by default, implementing strong authentication for management access, using encrypted communications (TLS), applying input validation, and following secure coding practices for all administrative functionality.",
+      "related_controls": ["SBD-PLEDGE-1", "SBD-PLEDGE-3"],
+      "url": "https://www.cisa.gov/securebydesign/alerts"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+---
+import FilterPage from '@/components/frameworks/FilterPage.astro';
+import { getFilterStaticPaths } from '@/components/frameworks/filter-config';
+
+const FRAMEWORK_ID = 'govramp';
+
+export function getStaticPaths() {
+  return getFilterStaticPaths('govramp');
+}
+
+const { level } = Astro.params;
+---
+
+<FilterPage frameworkId={FRAMEWORK_ID} param={level!} />

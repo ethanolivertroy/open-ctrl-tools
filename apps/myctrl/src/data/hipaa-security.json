@@ -1,0 +1,903 @@
+{
+  "framework": {
+    "id": "hipaa-security",
+    "name": "HIPAA Security Rule",
+    "version": "45 CFR Part 164 Subpart C",
+    "description": "Health Insurance Portability and Accountability Act (HIPAA) Security Rule - safeguards for electronic protected health information (ePHI)"
+  },
+  "families": {
+    "§ 164.306": "General Requirements",
+    "§ 164.308": "Administrative Safeguards",
+    "§ 164.310": "Physical Safeguards",
+    "§ 164.312": "Technical Safeguards",
+    "§ 164.314": "Organizational Requirements",
+    "§ 164.316": "Policies and Procedures"
+  },
+  "controls": [
+    {
+      "control_id": "§ 164.306",
+      "title": "Security standards: General rules",
+      "family": "§ 164.306",
+      "description": "General rules establishing the security standards that covered entities and business associates must follow to protect electronic protected health information (ePHI)."
+    },
+    {
+      "control_id": "§ 164.306(a)",
+      "title": "General requirements",
+      "family": "§ 164.306",
+      "description": "Covered entities and business associates must do the following:"
+    },
+    {
+      "control_id": "§ 164.306(a)(1)",
+      "title": "§ 164.306(a)(1)",
+      "family": "§ 164.306",
+      "description": "Ensure the confidentiality, integrity, and availability of all electronic protected health information the covered entity or business associate creates, receives, maintains, or transmits."
+    },
+    {
+      "control_id": "§ 164.306(a)(2)",
+      "title": "§ 164.306(a)(2)",
+      "family": "§ 164.306",
+      "description": "Protect against any reasonably anticipated threats or hazards to the security or integrity of such information."
+    },
+    {
+      "control_id": "§ 164.306(a)(3)",
+      "title": "§ 164.306(a)(3)",
+      "family": "§ 164.306",
+      "description": "Protect against any reasonably anticipated uses or disclosures of such information that are not permitted or required under subpart E of this part."
+    },
+    {
+      "control_id": "§ 164.306(b)",
+      "title": "Flexibility of approach",
+      "family": "§ 164.306",
+      "description": "Covered entities and business associates may use any security measures that allow them to reasonably and appropriately implement the applicable standards and implementation specifications."
+    },
+    {
+      "control_id": "§ 164.306(b)(1)",
+      "title": "§ 164.306(b)(1)",
+      "family": "§ 164.306",
+      "description": "Covered entities and business associates may use any security measures that allow the covered entity or business associate to reasonably and appropriately implement the standards and implementation specifications as specified in this subpart."
+    },
+    {
+      "control_id": "§ 164.306(b)(2)",
+      "title": "§ 164.306(b)(2)",
+      "family": "§ 164.306",
+      "description": "In deciding which security measures to use, a covered entity or business associate must take into account the following factors:"
+    },
+    {
+      "control_id": "§ 164.306(b)(2)(i)",
+      "title": "§ 164.306(b)(2)(i)",
+      "family": "§ 164.306",
+      "description": "The size, complexity, and capabilities of the covered entity or business associate."
+    },
+    {
+      "control_id": "§ 164.306(b)(2)(ii)",
+      "title": "§ 164.306(b)(2)(ii)",
+      "family": "§ 164.306",
+      "description": "The covered entity's or the business associate's technical infrastructure, hardware, and software security capabilities."
+    },
+    {
+      "control_id": "§ 164.306(b)(2)(iii)",
+      "title": "§ 164.306(b)(2)(iii)",
+      "family": "§ 164.306",
+      "description": "The costs of security measures."
+    },
+    {
+      "control_id": "§ 164.306(b)(2)(iv)",
+      "title": "§ 164.306(b)(2)(iv)",
+      "family": "§ 164.306",
+      "description": "The probability and criticality of potential risks to electronic protected health information."
+    },
+    {
+      "control_id": "§ 164.306(c)",
+      "title": "Standards",
+      "family": "§ 164.306",
+      "description": "A covered entity or business associate must comply with the applicable standards as provided in this section and in § 164.308, § 164.310, § 164.312, § 164.314 and § 164.316 with respect to all electronic protected health information."
+    },
+    {
+      "control_id": "§ 164.306(d)",
+      "title": "Implementation specifications",
+      "family": "§ 164.306",
+      "description": "In this subpart:"
+    },
+    {
+      "control_id": "§ 164.306(d)(1)",
+      "title": "§ 164.306(d)(1)",
+      "family": "§ 164.306",
+      "description": "Implementation specifications are required or addressable. If an implementation specification is required, the word “Required” appears in parentheses after the title of the implementation specification. If an implementation specification is addressable, the word “Addressable” appears in parentheses after the title of the implementation specification."
+    },
+    {
+      "control_id": "§ 164.306(d)(2)",
+      "title": "§ 164.306(d)(2)",
+      "family": "§ 164.306",
+      "description": "When a standard adopted in § 164.308, § 164.310, § 164.312, § 164.314, or § 164.316 includes required implementation specifications, a covered entity or business associate must implement the implementation specifications."
+    },
+    {
+      "control_id": "§ 164.306(d)(3)",
+      "title": "§ 164.306(d)(3)",
+      "family": "§ 164.306",
+      "description": "When a standard adopted in § 164.308, § 164.310, § 164.312, § 164.314, or § 164.316 includes addressable implementation specifications, a covered entity or business associate must—"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(i)",
+      "title": "§ 164.306(d)(3)(i)",
+      "family": "§ 164.306",
+      "description": "Assess whether each implementation specification is a reasonable and appropriate safeguard in its environment, when analyzed with reference to the likely contribution to protecting electronic protected health information; and"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(ii)",
+      "title": "§ 164.306(d)(3)(ii)",
+      "family": "§ 164.306",
+      "description": "As applicable to the covered entity or business associate—"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(ii)(A)",
+      "title": "§ 164.306(d)(3)(ii)(A)",
+      "family": "§ 164.306",
+      "description": "Implement the implementation specification if reasonable and appropriate; or"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(ii)(B)",
+      "title": "§ 164.306(d)(3)(ii)(B)",
+      "family": "§ 164.306",
+      "description": "If implementing the implementation specification is not reasonable and appropriate—"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(ii)(B)(1)",
+      "title": "§ 164.306(d)(3)(ii)(B)(1)",
+      "family": "§ 164.306",
+      "description": "Document why it would not be reasonable and appropriate to implement the implementation specification; and"
+    },
+    {
+      "control_id": "§ 164.306(d)(3)(ii)(B)(2)",
+      "title": "§ 164.306(d)(3)(ii)(B)(2)",
+      "family": "§ 164.306",
+      "description": "Implement an equivalent alternative measure if reasonable and appropriate."
+    },
+    {
+      "control_id": "§ 164.306(e)",
+      "title": "Maintenance",
+      "family": "§ 164.306",
+      "description": "A covered entity or business associate must review and modify the security measures implemented under this subpart as needed to continue provision of reasonable and appropriate protection of electronic protected health information, and update documentation of such security measures in accordance with § 164.316(b)(2)(iii)."
+    },
+    {
+      "control_id": "§ 164.308",
+      "title": "Administrative safeguards",
+      "family": "§ 164.308",
+      "description": "Administrative actions, policies, and procedures to manage the selection, development, implementation, and maintenance of security measures to protect ePHI and to manage the conduct of the covered entity's or business associate's workforce.",
+      "nist_800_66": "164.308"
+    },
+    {
+      "control_id": "§ 164.308(a)",
+      "title": "§ 164.308(a)",
+      "family": "§ 164.308",
+      "description": "A covered entity or business associate must, in accordance with § 164.306:"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)",
+      "title": "§ 164.308(a)(1)",
+      "family": "§ 164.308",
+      "description": "Security management process standard and implementation specifications.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(i)",
+      "title": "Standard: Security management process",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures to prevent, detect, contain, and correct security violations.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(ii)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.308",
+      "description": "Implementation specifications for the security management process standard.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(ii)(A)",
+      "title": "Risk analysis (Required)",
+      "family": "§ 164.308",
+      "description": "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic protected health information held by the covered entity or business associate.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(ii)(B)",
+      "title": "Risk management (Required)",
+      "family": "§ 164.308",
+      "description": "Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level to comply with § 164.306(a).",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(ii)(C)",
+      "title": "Sanction policy (Required)",
+      "family": "§ 164.308",
+      "description": "Apply appropriate sanctions against workforce members who fail to comply with the security policies and procedures of the covered entity or business associate.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(1)(ii)(D)",
+      "title": "Information system activity review (Required)",
+      "family": "§ 164.308",
+      "description": "Implement procedures to regularly review records of information system activity, such as audit logs, access reports, and security incident tracking reports.",
+      "nist_800_66": "164.308(a)(1)"
+    },
+    {
+      "control_id": "§ 164.308(a)(2)",
+      "title": "Standard: Assigned security responsibility",
+      "family": "§ 164.308",
+      "description": "Identify the security official who is responsible for the development and implementation of the policies and procedures required by this subpart for the covered entity or business associate.",
+      "nist_800_66": "164.308(a)(2)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)",
+      "title": "§ 164.308(a)(3)",
+      "family": "§ 164.308",
+      "description": "Workforce security standard and implementation specifications.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)(i)",
+      "title": "Standard: Workforce security",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures to ensure that all members of its workforce have appropriate access to electronic protected health information, as provided under paragraph (a)(4) of this section, and to prevent those workforce members who do not have access under paragraph (a)(4) of this section from obtaining access to electronic protected health information.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)(ii)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.308",
+      "description": "Implementation specifications for the workforce security standard.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)(ii)(A)",
+      "title": "Authorization and/or supervision (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement procedures for the authorization and/or supervision of workforce members who work with electronic protected health information or in locations where it might be accessed.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)(ii)(B)",
+      "title": "Workforce clearance procedure (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement procedures to determine that the access of a workforce member to electronic protected health information is appropriate.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(3)(ii)(C)",
+      "title": "Termination procedures (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement procedures for terminating access to electronic protected health information when the employment of, or other arrangement with, a workforce member ends or as required by determinations made as specified in paragraph (a)(3)(ii)(B) of this section.",
+      "nist_800_66": "164.308(a)(3)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)",
+      "title": "§ 164.308(a)(4)",
+      "family": "§ 164.308",
+      "description": "Information access management standard and implementation specifications.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)(i)",
+      "title": "Standard: Information access management",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures for authorizing access to electronic protected health information that are consistent with the applicable requirements of subpart E of this part.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)(ii)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.308",
+      "description": "Implementation specifications for the information access management standard.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)(ii)(A)",
+      "title": "Isolating health care clearinghouse functions (Required)",
+      "family": "§ 164.308",
+      "description": "If a health care clearinghouse is part of a larger organization, the clearinghouse must implement policies and procedures that protect the electronic protected health information of the clearinghouse from unauthorized access by the larger organization.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)(ii)(B)",
+      "title": "Access authorization (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures for granting access to electronic protected health information, for example, through access to a workstation, transaction, program, process, or other mechanism.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(4)(ii)(C)",
+      "title": "Access establishment and modification (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures that, based upon the covered entity's or the business associate's access authorization policies, establish, document, review, and modify a user's right of access to a workstation, transaction, program, or process.",
+      "nist_800_66": "164.308(a)(4)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)",
+      "title": "§ 164.308(a)(5)",
+      "family": "§ 164.308",
+      "description": "Security awareness and training standard and implementation specifications.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(i)",
+      "title": "Standard: Security awareness and training",
+      "family": "§ 164.308",
+      "description": "Implement a security awareness and training program for all members of its workforce (including management).",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(ii)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.308",
+      "description": "Implementation specifications for the security awareness and training standard.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(ii)(A)",
+      "title": "Security reminders (Addressable)",
+      "family": "§ 164.308",
+      "description": "Periodic security updates.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(ii)(B)",
+      "title": "Protection from malicious software (Addressable)",
+      "family": "§ 164.308",
+      "description": "Procedures for guarding against, detecting, and reporting malicious software.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(ii)(C)",
+      "title": "Log-in monitoring (Addressable)",
+      "family": "§ 164.308",
+      "description": "Procedures for monitoring log-in attempts and reporting discrepancies.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(5)(ii)(D)",
+      "title": "Password management (Addressable)",
+      "family": "§ 164.308",
+      "description": "Procedures for creating, changing, and safeguarding passwords.",
+      "nist_800_66": "164.308(a)(5)"
+    },
+    {
+      "control_id": "§ 164.308(a)(6)",
+      "title": "§ 164.308(a)(6)",
+      "family": "§ 164.308",
+      "description": "Security incident procedures standard and implementation specification.",
+      "nist_800_66": "164.308(a)(6)"
+    },
+    {
+      "control_id": "§ 164.308(a)(6)(i)",
+      "title": "Standard: Security incident procedures",
+      "family": "§ 164.308",
+      "description": "Implement policies and procedures to address security incidents.",
+      "nist_800_66": "164.308(a)(6)"
+    },
+    {
+      "control_id": "§ 164.308(a)(6)(ii)",
+      "title": "Implementation specification: Response and reporting (Required)",
+      "family": "§ 164.308",
+      "description": "Identify and respond to suspected or known security incidents; mitigate, to the extent practicable, harmful effects of security incidents that are known to the covered entity or business associate; and document security incidents and their outcomes.",
+      "nist_800_66": "164.308(a)(6)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)",
+      "title": "§ 164.308(a)(7)",
+      "family": "§ 164.308",
+      "description": "Contingency plan standard and implementation specifications.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(i)",
+      "title": "Standard: Contingency plan",
+      "family": "§ 164.308",
+      "description": "Establish (and implement as needed) policies and procedures for responding to an emergency or other occurrence (for example, fire, vandalism, system failure, and natural disaster) that damages systems that contain electronic protected health information.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.308",
+      "description": "Implementation specifications for the contingency plan standard.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)(A)",
+      "title": "Data backup plan (Required)",
+      "family": "§ 164.308",
+      "description": "Establish and implement procedures to create and maintain retrievable exact copies of electronic protected health information.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)(B)",
+      "title": "Disaster recovery plan (Required)",
+      "family": "§ 164.308",
+      "description": "Establish (and implement as needed) procedures to restore any loss of data.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)(C)",
+      "title": "Emergency mode operation plan (Required)",
+      "family": "§ 164.308",
+      "description": "Establish (and implement as needed) procedures to enable continuation of critical business processes for protection of the security of electronic protected health information while operating in emergency mode.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)(D)",
+      "title": "Testing and revision procedures (Addressable)",
+      "family": "§ 164.308",
+      "description": "Implement procedures for periodic testing and revision of contingency plans.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(7)(ii)(E)",
+      "title": "Applications and data criticality analysis (Addressable)",
+      "family": "§ 164.308",
+      "description": "Assess the relative criticality of specific applications and data in support of other contingency plan components.",
+      "nist_800_66": "164.308(a)(7)"
+    },
+    {
+      "control_id": "§ 164.308(a)(8)",
+      "title": "Standard: Evaluation",
+      "family": "§ 164.308",
+      "description": "Perform a periodic technical and nontechnical evaluation, based initially upon the standards implemented under this rule and, subsequently, in response to environmental or operational changes affecting the security of electronic protected health information, that establishes the extent to which a covered entity's or business associate's security policies and procedures meet the requirements of this subpart.",
+      "nist_800_66": "164.308(a)(8)"
+    },
+    {
+      "control_id": "§ 164.308(b)",
+      "title": "Business associate contracts and other arrangements",
+      "family": "§ 164.308",
+      "description": "Requirements for business associate contracts and other arrangements to ensure appropriate safeguards for ePHI."
+    },
+    {
+      "control_id": "§ 164.308(b)(1)",
+      "title": "§ 164.308(b)(1)",
+      "family": "§ 164.308",
+      "description": "A covered entity may permit a business associate to create, receive, maintain, or transmit electronic protected health information on the covered entity's behalf only if the covered entity obtains satisfactory assurances, in accordance with § 164.314(a), that the business associate will appropriately safeguard the information. A covered entity is not required to obtain such satisfactory assurances from a business associate that is a subcontractor.",
+      "nist_800_66": "164.308(b)(1)"
+    },
+    {
+      "control_id": "§ 164.308(b)(2)",
+      "title": "§ 164.308(b)(2)",
+      "family": "§ 164.308",
+      "description": "A business associate may permit a business associate that is a subcontractor to create, receive, maintain, or transmit electronic protected health information on its behalf only if the business associate obtains satisfactory assurances, in accordance with § 164.314(a), that the subcontractor will appropriately safeguard the information."
+    },
+    {
+      "control_id": "§ 164.308(b)(3)",
+      "title": "Implementation specifications: Written contract or other arrangement (Required)",
+      "family": "§ 164.308",
+      "description": "Document the satisfactory assurances required by paragraph (b)(1) or (b)(2) of this section through a written contract or other arrangement with the business associate that meets the applicable requirements of § 164.314(a)."
+    },
+    {
+      "control_id": "§ 164.310",
+      "title": "Physical safeguards",
+      "family": "§ 164.310",
+      "description": "A covered entity or business associate must, in accordance with § 164.306:",
+      "nist_800_66": "164.310"
+    },
+    {
+      "control_id": "§ 164.310(a)",
+      "title": "§ 164.310(a)",
+      "family": "§ 164.310",
+      "description": "Facility access controls standard and implementation specifications.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(1)",
+      "title": "Standard: Facility access controls",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures to limit physical access to its electronic information systems and the facility or facilities in which they are housed, while ensuring that properly authorized access is allowed.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(2)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.310",
+      "description": "Implementation specifications for the facility access controls standard.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(2)(i)",
+      "title": "Contingency operations (Addressable)",
+      "family": "§ 164.310",
+      "description": "Establish (and implement as needed) procedures that allow facility access in support of restoration of lost data under the disaster recovery plan and emergency mode operations plan in the event of an emergency.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(2)(ii)",
+      "title": "Facility security plan (Addressable)",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures to safeguard the facility and the equipment therein from unauthorized physical access, tampering, and theft.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(2)(iii)",
+      "title": "Access control and validation procedures (Addressable)",
+      "family": "§ 164.310",
+      "description": "Implement procedures to control and validate a person's access to facilities based on their role or function, including visitor control, and control of access to software programs for testing and revision.",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(a)(2)(iv)",
+      "title": "Maintenance records (Addressable)",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures to document repairs and modifications to the physical components of a facility which are related to security (for example, hardware, walls, doors, and locks).",
+      "nist_800_66": "164.310(a)"
+    },
+    {
+      "control_id": "§ 164.310(b)",
+      "title": "Standard: Workstation use",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures that specify the proper functions to be performed, the manner in which those functions are to be performed, and the physical attributes of the surroundings of a specific workstation or class of workstation that can access electronic protected health information.",
+      "nist_800_66": "164.310(b)"
+    },
+    {
+      "control_id": "§ 164.310(c)",
+      "title": "Standard: Workstation security",
+      "family": "§ 164.310",
+      "description": "Implement physical safeguards for all workstations that access electronic protected health information, to restrict access to authorized users.",
+      "nist_800_66": "164.310(c)"
+    },
+    {
+      "control_id": "§ 164.310(d)",
+      "title": "Standard: Device and media controls",
+      "family": "§ 164.310",
+      "description": "Policies and procedures that govern the receipt, removal, and movement of hardware and electronic media containing ePHI.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(1)",
+      "title": "§ 164.310(d)(1)",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures that govern the receipt and removal of hardware and electronic media that contain electronic protected health information into and out of a facility, and the movement of these items within the facility.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(2)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.310",
+      "description": "Implementation specifications for the device and media controls standard.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(2)(i)",
+      "title": "Disposal (Required)",
+      "family": "§ 164.310",
+      "description": "Implement policies and procedures to address the final disposition of electronic protected health information, and/or the hardware or electronic media on which it is stored.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(2)(ii)",
+      "title": "Media re-use (Required)",
+      "family": "§ 164.310",
+      "description": "Implement procedures for removal of electronic protected health information from electronic media before the media are made available for re-use.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(2)(iii)",
+      "title": "Accountability (Addressable)",
+      "family": "§ 164.310",
+      "description": "Maintain a record of the movements of hardware and electronic media and any person responsible therefore.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.310(d)(2)(iv)",
+      "title": "Data backup and storage (Addressable)",
+      "family": "§ 164.310",
+      "description": "Create a retrievable, exact copy of electronic protected health information, when needed, before movement of equipment.",
+      "nist_800_66": "164.310(d)"
+    },
+    {
+      "control_id": "§ 164.312",
+      "title": "Technical safeguards",
+      "family": "§ 164.312",
+      "description": "A covered entity or business associate must, in accordance with § 164.306:",
+      "nist_800_66": "164.312"
+    },
+    {
+      "control_id": "§ 164.312(a)",
+      "title": "Standard: Access control",
+      "family": "§ 164.312",
+      "description": "Technical policies and procedures for electronic information systems that maintain ePHI to allow access only to authorized persons or software programs.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(1)",
+      "title": "§ 164.312(a)(1)",
+      "family": "§ 164.312",
+      "description": "Implement technical policies and procedures for electronic information systems that maintain electronic protected health information to allow access only to those persons or software programs that have been granted access rights as specified in § 164.308(a)(4).",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(2)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.312",
+      "description": "Implementation specifications for the access control standard.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(2)(i)",
+      "title": "Unique user identification (Required)",
+      "family": "§ 164.312",
+      "description": "Assign a unique name and/or number for identifying and tracking user identity.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(2)(ii)",
+      "title": "Emergency access procedure (Required)",
+      "family": "§ 164.312",
+      "description": "Establish (and implement as needed) procedures for obtaining necessary electronic protected health information during an emergency.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(2)(iii)",
+      "title": "Automatic logoff (Addressable)",
+      "family": "§ 164.312",
+      "description": "Implement electronic procedures that terminate an electronic session after a predetermined time of inactivity.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(a)(2)(iv)",
+      "title": "Encryption and decryption (Addressable)",
+      "family": "§ 164.312",
+      "description": "Implement a mechanism to encrypt and decrypt electronic protected health information.",
+      "nist_800_66": "164.312(a)"
+    },
+    {
+      "control_id": "§ 164.312(b)",
+      "title": "Standard: Audit controls",
+      "family": "§ 164.312",
+      "description": "Implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information.",
+      "nist_800_66": "164.312(b)"
+    },
+    {
+      "control_id": "§ 164.312(c)",
+      "title": "Standard: Integrity",
+      "family": "§ 164.312",
+      "description": "Policies and procedures to protect ePHI from improper alteration or destruction.",
+      "nist_800_66": "164.312(c)"
+    },
+    {
+      "control_id": "§ 164.312(c)(1)",
+      "title": "§ 164.312(c)(1)",
+      "family": "§ 164.312",
+      "description": "Implement policies and procedures to protect electronic protected health information from improper alteration or destruction.",
+      "nist_800_66": "164.312(c)"
+    },
+    {
+      "control_id": "§ 164.312(c)(2)",
+      "title": "Implementation specification: Mechanism to authenticate electronic protected health information (Addressable)",
+      "family": "§ 164.312",
+      "description": "Implement electronic mechanisms to corroborate that electronic protected health information has not been altered or destroyed in an unauthorized manner.",
+      "nist_800_66": "164.312(c)"
+    },
+    {
+      "control_id": "§ 164.312(d)",
+      "title": "Standard: Person or entity authentication",
+      "family": "§ 164.312",
+      "description": "Implement procedures to verify that a person or entity seeking access to electronic protected health information is the one claimed.",
+      "nist_800_66": "164.312(d)"
+    },
+    {
+      "control_id": "§ 164.312(e)",
+      "title": "Standard: Transmission security",
+      "family": "§ 164.312",
+      "description": "Technical security measures to guard against unauthorized access to ePHI that is being transmitted over an electronic communications network."
+    },
+    {
+      "control_id": "§ 164.312(e)(1)",
+      "title": "§ 164.312(e)(1)",
+      "family": "§ 164.312",
+      "description": "Implement technical security measures to guard against unauthorized access to electronic protected health information that is being transmitted over an electronic communications network.",
+      "nist_800_66": "164.312(e)(1)"
+    },
+    {
+      "control_id": "§ 164.312(e)(2)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.312",
+      "description": "Implementation specifications for the transmission security standard."
+    },
+    {
+      "control_id": "§ 164.312(e)(2)(i)",
+      "title": "Integrity controls (Addressable)",
+      "family": "§ 164.312",
+      "description": "Implement security measures to ensure that electronically transmitted electronic protected health information is not improperly modified without detection until disposed of."
+    },
+    {
+      "control_id": "§ 164.312(e)(2)(ii)",
+      "title": "Encryption (Addressable)",
+      "family": "§ 164.312",
+      "description": "Implement a mechanism to encrypt electronic protected health information whenever deemed appropriate."
+    },
+    {
+      "control_id": "§ 164.314",
+      "title": "Organizational requirements",
+      "family": "§ 164.314",
+      "description": "Requirements for business associate contracts, other arrangements, and group health plan documents to ensure appropriate safeguards for ePHI.",
+      "nist_800_66": "164.314"
+    },
+    {
+      "control_id": "§ 164.314(a)",
+      "title": "§ 164.314(a)",
+      "family": "§ 164.314",
+      "description": "Business associate contracts or other arrangements standard and implementation specifications.",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(1)",
+      "title": "Standard: Business associate contracts or other arrangements",
+      "family": "§ 164.314",
+      "description": "The contract or other arrangement required by § 164.308(b)(3) must meet the requirements of paragraph (a)(2)(i), (a)(2)(ii), or (a)(2)(iii) of this section, as applicable.",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)",
+      "title": "Implementation specifications (Required)",
+      "family": "§ 164.314",
+      "description": "Implementation specifications for business associate contracts or other arrangements.",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(i)",
+      "title": "Business associate contracts",
+      "family": "§ 164.314",
+      "description": "The contract must provide that the business associate will—",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(i)(A)",
+      "title": "§ 164.314(a)(2)(i)(A)",
+      "family": "§ 164.314",
+      "description": "Comply with the applicable requirements of this subpart;",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(i)(B)",
+      "title": "§ 164.314(a)(2)(i)(B)",
+      "family": "§ 164.314",
+      "description": "In accordance with § 164.308(b)(2), ensure that any subcontractors that create, receive, maintain, or transmit electronic protected health information on behalf of the business associate agree to comply with the applicable requirements of this subpart by entering into a contract or other arrangement that complies with this section; and",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(i)(C)",
+      "title": "§ 164.314(a)(2)(i)(C)",
+      "family": "§ 164.314",
+      "description": "Report to the covered entity any security incident of which it becomes aware, including breaches of unsecured protected health information as required by § 164.410.",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(ii)",
+      "title": "Other arrangements",
+      "family": "§ 164.314",
+      "description": "The covered entity is in compliance with paragraph (a)(1) of this section if it has another arrangement in place that meets the requirements of § 164.504(e)(3).",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(a)(2)(iii)",
+      "title": "Business associate contracts with subcontractors",
+      "family": "§ 164.314",
+      "description": "The requirements of paragraphs (a)(2)(i) and (a)(2)(ii) of this section apply to the contract or other arrangement between a business associate and a subcontractor required by § 164.308(b)(4) in the same manner as such requirements apply to contracts or other arrangements between a covered entity and business associate.",
+      "nist_800_66": "164.314(a)"
+    },
+    {
+      "control_id": "§ 164.314(b)",
+      "title": "§ 164.314(b)",
+      "family": "§ 164.314",
+      "description": "Requirements for group health plans standard and implementation specifications.",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(1)",
+      "title": "Standard: Requirements for group health plans",
+      "family": "§ 164.314",
+      "description": "Except when the only electronic protected health information disclosed to a plan sponsor is disclosed pursuant to § 164.504(f)(1)(ii) or (iii), or as authorized under § 164.508, a group health plan must ensure that its plan documents provide that the plan sponsor will reasonably and appropriately safeguard electronic protected health information created, received, maintained, or transmitted to or by the plan sponsor on behalf of the group health plan.",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(2)",
+      "title": "Implementation specifications (Required)",
+      "family": "§ 164.314",
+      "description": "The plan documents of the group health plan must be amended to incorporate provisions to require the plan sponsor to—",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(2)(i)",
+      "title": "§ 164.314(b)(2)(i)",
+      "family": "§ 164.314",
+      "description": "Implement administrative, physical, and technical safeguards that reasonably and appropriately protect the confidentiality, integrity, and availability of the electronic protected health information that it creates, receives, maintains, or transmits on behalf of the group health plan;",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(2)(ii)",
+      "title": "§ 164.314(b)(2)(ii)",
+      "family": "§ 164.314",
+      "description": "Ensure that the adequate separation required by § 164.504(f)(2)(iii) is supported by reasonable and appropriate security measures;",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(2)(iii)",
+      "title": "§ 164.314(b)(2)(iii)",
+      "family": "§ 164.314",
+      "description": "Ensure that any agent to whom it provides this information agrees to implement reasonable and appropriate security measures to protect the information; and",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.314(b)(2)(iv)",
+      "title": "§ 164.314(b)(2)(iv)",
+      "family": "§ 164.314",
+      "description": "Report to the group health plan any security incident of which it becomes aware.",
+      "nist_800_66": "164.314(b)"
+    },
+    {
+      "control_id": "§ 164.316",
+      "title": "Policies and procedures and documentation requirements",
+      "family": "§ 164.316",
+      "description": "A covered entity or business associate must, in accordance with § 164.306:",
+      "nist_800_66": "164.316"
+    },
+    {
+      "control_id": "§ 164.316(a)",
+      "title": "Standard: Policies and procedures",
+      "family": "§ 164.316",
+      "description": "Implement reasonable and appropriate policies and procedures to comply with the standards, implementation specifications, or other requirements of this subpart, taking into account those factors specified in § 164.306(b)(2)(i), (ii), (iii), and (iv). This standard is not to be construed to permit or excuse an action that violates any other standard, implementation specification, or other requirements of this subpart. A covered entity or business associate may change its policies and procedures at any time, provided that the changes are documented and are implemented in accordance with this subpart.",
+      "nist_800_66": "164.316(a)"
+    },
+    {
+      "control_id": "§ 164.316(b)",
+      "title": "§ 164.316(b)",
+      "family": "§ 164.316",
+      "description": "Documentation standard and implementation specifications.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(1)",
+      "title": "§ 164.316(b)(1)",
+      "family": "§ 164.316",
+      "description": "Documentation standard requirements.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(1)(i)",
+      "title": "Standard: Documentation",
+      "family": "§ 164.316",
+      "description": "Maintain the policies and procedures implemented to comply with this subpart in written (which may be electronic) form; and",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(1)(ii)",
+      "title": "§ 164.316(b)(1)(ii)",
+      "family": "§ 164.316",
+      "description": "If an action, activity or assessment is required by this subpart to be documented, maintain a written (which may be electronic) record of the action, activity, or assessment.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(2)",
+      "title": "Implementation specifications:",
+      "family": "§ 164.316",
+      "description": "Implementation specifications for the documentation standard.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(2)(i)",
+      "title": "Time limit (Required)",
+      "family": "§ 164.316",
+      "description": "Retain the documentation required by paragraph (b)(1) of this section for 6 years from the date of its creation or the date when it last was in effect, whichever is later.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(2)(ii)",
+      "title": "Availability (Required)",
+      "family": "§ 164.316",
+      "description": "Make documentation available to those persons responsible for implementing the procedures to which the documentation pertains.",
+      "nist_800_66": "164.316(b)"
+    },
+    {
+      "control_id": "§ 164.316(b)(2)(iii)",
+      "title": "Updates (Required)",
+      "family": "§ 164.316",
+      "description": "Review documentation periodically, and update as needed, in response to environmental or operational changes affecting the security of the electronic protected health information.",
+      "nist_800_66": "164.316(b)"
+    }
+  ]
+}

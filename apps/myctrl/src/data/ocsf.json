@@ -1,0 +1,572 @@
+{
+  "version": "1.9.0",
+  "source": "https://schema.ocsf.io/1.9.0/export/v2/schema",
+  "license": "Apache-2.0",
+  "framework": {
+    "id": "ocsf",
+    "name": "OCSF",
+    "version": "1.9.0",
+    "description": "Open Cybersecurity Schema Framework - open standard for security data normalization across tools and vendors"
+  },
+  "families": {
+    "Application Activity": "Application Activity",
+    "Discovery": "Discovery",
+    "Findings": "Findings",
+    "Identity & Access Management": "Identity & Access Management",
+    "Network Activity": "Network Activity",
+    "Remediation": "Remediation",
+    "System Activity": "System Activity",
+    "Unmanned Systems": "Unmanned Systems"
+  },
+  "controls": [
+    {
+      "control_id": "OCSF-1001",
+      "title": "File System Activity",
+      "family": "System Activity",
+      "description": "File System Activity events report when a process performs an action on a file or folder.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Actor, Class ID, File.",
+      "class_uid": 1001,
+      "class_name": "file_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/file_activity"
+    },
+    {
+      "control_id": "OCSF-1002",
+      "title": "Kernel Extension Activity",
+      "family": "System Activity",
+      "description": "Kernel Extension events report when a driver/extension is loaded or unloaded into the kernel\n\nRequired attributes: Kernel Driver, Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 1002,
+      "class_name": "kernel_extension_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/kernel_extension_activity"
+    },
+    {
+      "control_id": "OCSF-1003",
+      "title": "Kernel Activity",
+      "family": "System Activity",
+      "description": "Kernel Activity events report when an process creates, reads, or deletes a kernel resource.\n\nRequired attributes: Event Time, Type ID, Activity ID, Kernel, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 1003,
+      "class_name": "kernel_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/kernel_activity"
+    },
+    {
+      "control_id": "OCSF-1004",
+      "title": "Memory Activity",
+      "family": "System Activity",
+      "description": "Memory Activity events report when a process has memory allocated, read/modified, or other manipulation activities - such as a buffer overflow or turning off data execution protection (DEP).\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Process, Actor, Class ID.",
+      "class_uid": 1004,
+      "class_name": "memory_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/memory_activity"
+    },
+    {
+      "control_id": "OCSF-1005",
+      "title": "Module Activity",
+      "family": "System Activity",
+      "description": "Module Activity events report when an endpoint process acts on a module.\n\nRequired attributes: Event Time, Type ID, Activity ID, Module, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 1005,
+      "class_name": "module_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/module_activity"
+    },
+    {
+      "control_id": "OCSF-1006",
+      "title": "Scheduled Job Activity",
+      "family": "System Activity",
+      "description": "Scheduled Job Activity events report activities related to scheduled jobs or tasks.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Job, Class ID.",
+      "class_uid": 1006,
+      "class_name": "scheduled_job_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/scheduled_job_activity"
+    },
+    {
+      "control_id": "OCSF-1007",
+      "title": "Process Activity",
+      "family": "System Activity",
+      "description": "Process Activity events report when a process launches, injects, opens or terminates another process, successful or otherwise.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Process, Actor, Class ID.",
+      "class_uid": 1007,
+      "class_name": "process_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/process_activity"
+    },
+    {
+      "control_id": "OCSF-1008",
+      "title": "Event Log Activity",
+      "family": "System Activity",
+      "description": "Event Log Activity events report actions pertaining to the system's event logging service(s), such as disabling logging or clearing the log data.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 1008,
+      "class_name": "event_log_actvity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/event_log_actvity"
+    },
+    {
+      "control_id": "OCSF-1009",
+      "title": "Script Activity",
+      "family": "System Activity",
+      "description": "Script Activity events report when a process executes a script.\n\nRequired attributes: Event Time, Type ID, Script, Activity ID, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 1009,
+      "class_name": "script_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/script_activity"
+    },
+    {
+      "control_id": "OCSF-1010",
+      "title": "Peripheral Activity",
+      "family": "System Activity",
+      "description": "Peripheral Activity events log a system's interactions with external, connectable, and detachable hardware. These events provide visibility into the external devices connected to and used by a system.\n\nRequired attributes: Event Time, Type ID, Activity ID, Peripheral Device, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 1010,
+      "class_name": "peripheral_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/peripheral_activity"
+    },
+    {
+      "control_id": "OCSF-1011",
+      "title": "Device Power State Activity",
+      "family": "System Activity",
+      "description": "Device Power State Activity events report activities related to power state changes of a system.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Class ID.",
+      "class_uid": 1011,
+      "class_name": "device_power_state_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/device_power_state_activity"
+    },
+    {
+      "control_id": "OCSF-1012",
+      "title": "Clipboard Activity",
+      "family": "System Activity",
+      "description": "Clipboard Activity events report when a process performs an action on a clipboard.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Clipboard, Actor, Class ID.",
+      "class_uid": 1012,
+      "class_name": "clipboard_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/clipboard_activity"
+    },
+    {
+      "control_id": "OCSF-2002",
+      "title": "Vulnerability Finding",
+      "family": "Findings",
+      "description": "The Vulnerability Finding event is a notification about weakness in an information system, system security procedures, internal controls, or implementation that could be exploited or triggered by a threat source. Note: if the event producer is a security control, the security_control profile should be applied and its attacks information, if present, should be duplicated into the finding_info object.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the incident profile or aggregate this finding into an Incident Finding.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Vulnerabilities, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2002,
+      "class_name": "vulnerability_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/vulnerability_finding"
+    },
+    {
+      "control_id": "OCSF-2003",
+      "title": "Compliance Finding",
+      "family": "Findings",
+      "description": "Compliance Finding events describe results of evaluations performed against resources, to check compliance with various Industry Frameworks or Security Standards such as NIST SP 800-53, CIS AWS Foundations Benchmark v1.4.0, ISO/IEC 27001 etc. Note: if the event producer is a security control, the security_control profile should be applied and its attacks information, if present, should be duplicated into the finding_info object.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the incident profile or aggregate this finding into an Incident Finding.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Compliance, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2003,
+      "class_name": "compliance_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/compliance_finding"
+    },
+    {
+      "control_id": "OCSF-2004",
+      "title": "Detection Finding",
+      "family": "Findings",
+      "description": "A Detection Finding describes detections or alerts generated by security products using correlation engines, detection engines or other methodologies.\nNote: If the event producer is a security control, the Security Control profile should be applied and its attacks information, if present, should be duplicated into the finding_info object.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the Incident profile or aggregate the finding into an Incident Finding.Note: Findings are mutable and as such have a lifecycle, via Update activities. When modeling atomic alerts, you are encouraged to consider using the Security Control profile with the activity event associated with the alert. See the referenced article below.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2004,
+      "class_name": "detection_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/detection_finding"
+    },
+    {
+      "control_id": "OCSF-2005",
+      "title": "Incident Finding",
+      "family": "Findings",
+      "description": "An Incident Finding reports the creation, update, or closure of security incidents as a result of detections and/or analytics.\nNote: Incident Finding implicitly includes the incident profile and it should be added to the metadata.profiles[] array.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Finding Information List, Severity ID, Status ID, Class ID.",
+      "class_uid": 2005,
+      "class_name": "incident_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/incident_finding"
+    },
+    {
+      "control_id": "OCSF-2006",
+      "title": "Data Security Finding",
+      "family": "Findings",
+      "description": "A Data Security Finding describes detections or alerts generated by various data security products such as Data Loss Prevention (DLP), Data Classification, Secrets Management, Digital Rights Management (DRM), Data Security Posture Management (DSPM), and similar tools. These detections or alerts can be created using fingerprinting, statistical analysis, machine learning or other methodologies. The finding describes the actors and endpoints who accessed or own the sensitive data, as well as the resources which store the sensitive data. Note: if the event producer is a security control, the security_control profile should be applied and its attacks information, if present, should be duplicated into the finding_info object.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the incident profile or aggregate this finding into an Incident Finding.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2006,
+      "class_name": "data_security_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/data_security_finding"
+    },
+    {
+      "control_id": "OCSF-2007",
+      "title": "Application Security Posture Finding",
+      "family": "Findings",
+      "description": "The Application Security Posture Finding event is a notification about any bug, defect, deficiency, exploit, vulnerability, weakness or any other issue with software and related systems. Application Security Posture Findings typically involve reporting on the greater context including compliance, impacted resources, remediation guidance, specific code defects, and/or vulnerability metadata. Application Security Posture Findings can be reported by Threat & Vulnerability Management (TVM) tools, Application Security Posture Management (ASPM) tools, or other similar tools. Note: if the event producer is a security control, the security_control profile should be applied and its attacks information, if present, should be duplicated into the finding_info object.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the incident profile or aggregate this finding into an Incident Finding.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2007,
+      "class_name": "application_security_posture_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/application_security_posture_finding"
+    },
+    {
+      "control_id": "OCSF-2008",
+      "title": "IAM Analysis Finding",
+      "family": "Findings",
+      "description": "This finding represents an IAM analysis result, which evaluates IAM policies, access patterns, and IAM configurations for potential security risks. The analysis can focus on either an identity (user, role, service account) or a resource to assess permissions, access patterns, and security posture within the IAM domain.\nNote: Use permission_analysis_results for identity-centric analysis (evaluating what an identity can do) and access_analysis_result for resource-centric analysis (evaluating who can access a resource). These complement each other for comprehensive IAM security assessment.\nNote: If the Finding is an incident, i.e. requires incident workflow, also apply the incident profile or aggregate this finding into an Incident Finding.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Finding Information, Class ID.",
+      "class_uid": 2008,
+      "class_name": "iam_analysis_finding",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/iam_analysis_finding"
+    },
+    {
+      "control_id": "OCSF-3002",
+      "title": "Authentication",
+      "family": "Identity & Access Management",
+      "description": "Authentication events report authentication session activities, including user attempts to log on or log off, regardless of success, as well as other key stages within the authentication process. These events are typically generated by authentication services, such as Kerberos, OIDC, or SAML, and may include information about the user, the authentication method used, and the status of the authentication attempt.\n\nRequired attributes: Event Time, Type ID, Activity ID, User, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 3002,
+      "class_name": "authentication",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/authentication"
+    },
+    {
+      "control_id": "OCSF-3003",
+      "title": "Authorize Session",
+      "family": "Identity & Access Management",
+      "description": "Authorize Session events report privileges, groups or roles assigned to a new user session, usually at login time.\n\nRequired attributes: Event Time, Type ID, Activity ID, User, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 3003,
+      "class_name": "authorize_session",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/authorize_session"
+    },
+    {
+      "control_id": "OCSF-3004",
+      "title": "Entity Management",
+      "family": "Identity & Access Management",
+      "description": "Entity Management events report activity by a managed client, a micro service, or a user at a management console. The activity can be a create, read, update, and delete operation on a managed entity.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Entity, Class ID.",
+      "class_uid": 3004,
+      "class_name": "entity_management",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/entity_management"
+    },
+    {
+      "control_id": "OCSF-3006",
+      "title": "Group Management",
+      "family": "Identity & Access Management",
+      "description": "Group Management events report lifecycle management of a group, as well as privileges, roles, and resources associated with the group. There are two ways updates to the state of a group may be expressed: Using the Update activity, for example when updating multiple items at one time, the updated_group reflects the changes made to group. Using discrete activities, such as Assign Privileges the state change is expressed by the privileges attribute. Optionally, on success, the updated_group reflects the new state of the group.\n\nRequired attributes: Event Time, Type ID, Activity ID, Group, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 3006,
+      "class_name": "group_management",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/group_management"
+    },
+    {
+      "control_id": "OCSF-3007",
+      "title": "User Management",
+      "family": "Identity & Access Management",
+      "description": "User Management events report lifecycle management of a user and account management tasks that are performed, such as a password change or reset, a user being created, updated, deleted, disabled, enabled, locked out or unlocked. There are two ways updates to the state of a user may be expressed: Using the Update activity, for example when updating multiple items at one time, the updated_user reflects the changes made to user. Using discrete activities, such as Assign Privileges the state change is expressed by the privileges attribute. Optionally, on successful changes, the updated_user reflects the new state of the user.\n\nRequired attributes: Event Time, Type ID, Activity ID, User, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 3007,
+      "class_name": "user_management",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/user_management"
+    },
+    {
+      "control_id": "OCSF-3008",
+      "title": "Role Management",
+      "family": "Identity & Access Management",
+      "description": "Role Management events report lifecycle management of a role, as well as privileges, policies, credentials, and resources associated with the role. There are two ways updates to the state of a role may be expressed: Using the Update activity, for example when updating multiple items at one time, the updated_role reflects the changes made to iam_role. Using discrete activities, such as Assign Privileges the state change is expressed by the privileges attribute. Optionally, on success, the updated_role reflects the new state of the role. Roles assigned or removed from users and groups are expressed by the User Management and Group Management classes.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, IAM Role, Category ID, Severity ID, Class ID.",
+      "class_uid": 3008,
+      "class_name": "role_management",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/role_management"
+    },
+    {
+      "control_id": "OCSF-4001",
+      "title": "Network Activity",
+      "family": "Network Activity",
+      "description": "Network Activity events report network connection and traffic activity.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4001,
+      "class_name": "network_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/network_activity"
+    },
+    {
+      "control_id": "OCSF-4002",
+      "title": "HTTP Activity",
+      "family": "Network Activity",
+      "description": "HTTP Activity events report HTTP connection and traffic information.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4002,
+      "class_name": "http_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/http_activity"
+    },
+    {
+      "control_id": "OCSF-4003",
+      "title": "DNS Activity",
+      "family": "Network Activity",
+      "description": "DNS Activity events report DNS queries and answers as seen on the network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4003,
+      "class_name": "dns_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/dns_activity"
+    },
+    {
+      "control_id": "OCSF-4004",
+      "title": "DHCP Activity",
+      "family": "Network Activity",
+      "description": "DHCP Activity events report MAC to IP assignment via DHCP from a client or server.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4004,
+      "class_name": "dhcp_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/dhcp_activity"
+    },
+    {
+      "control_id": "OCSF-4005",
+      "title": "RDP Activity",
+      "family": "Network Activity",
+      "description": "Remote Desktop Protocol (RDP) Activity events report post-authentication remote client connections between clients and servers over the network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4005,
+      "class_name": "rdp_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/rdp_activity"
+    },
+    {
+      "control_id": "OCSF-4006",
+      "title": "SMB Activity",
+      "family": "Network Activity",
+      "description": "Server Message Block (SMB) Protocol Activity events report client/server connections sharing resources within the network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4006,
+      "class_name": "smb_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/smb_activity"
+    },
+    {
+      "control_id": "OCSF-4007",
+      "title": "SSH Activity",
+      "family": "Network Activity",
+      "description": "SSH Activity events report remote client connections to a server using the Secure Shell (SSH) Protocol.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4007,
+      "class_name": "ssh_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/ssh_activity"
+    },
+    {
+      "control_id": "OCSF-4008",
+      "title": "FTP Activity",
+      "family": "Network Activity",
+      "description": "File Transfer Protocol (FTP) Activity events report file transfers between a server and a client as seen on the network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4008,
+      "class_name": "ftp_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/ftp_activity"
+    },
+    {
+      "control_id": "OCSF-4009",
+      "title": "Email Activity",
+      "family": "Network Activity",
+      "description": "Email Activity events report SMTP protocol and email activities including those with embedded URLs and files. See the Email object for details.\n\nRequired attributes: Event Time, Direction ID, Type ID, Activity ID, Metadata, Category ID, Severity ID, Email, Class ID.",
+      "class_uid": 4009,
+      "class_name": "email_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/email_activity"
+    },
+    {
+      "control_id": "OCSF-4013",
+      "title": "NTP Activity",
+      "family": "Network Activity",
+      "description": "The Network Time Protocol (NTP) Activity events report instances of remote clients synchronizing their clocks with an NTP server, as observed on the network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Version, Severity ID, Class ID.",
+      "class_uid": 4013,
+      "class_name": "ntp_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/ntp_activity"
+    },
+    {
+      "control_id": "OCSF-4014",
+      "title": "Tunnel Activity",
+      "family": "Network Activity",
+      "description": "Tunnel Activity events report secure tunnel establishment (such as VPN), teardowns, renewals, and other network tunnel specific actions.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 4014,
+      "class_name": "tunnel_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/tunnel_activity"
+    },
+    {
+      "control_id": "OCSF-5001",
+      "title": "Device Inventory Info",
+      "family": "Discovery",
+      "description": "Device Inventory Info events report device inventory data that is either logged or proactively collected. For example, when collecting device information from a CMDB or running a network sweep of connected devices.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Class ID.",
+      "class_uid": 5001,
+      "class_name": "inventory_info",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/inventory_info"
+    },
+    {
+      "control_id": "OCSF-5003",
+      "title": "User Inventory Info",
+      "family": "Discovery",
+      "description": "User Inventory Info events report user inventory data that is either logged or proactively collected. For example, when collecting user information from Active Directory entries.\n\nRequired attributes: Event Time, Type ID, Activity ID, User, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 5003,
+      "class_name": "user_inventory",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/user_inventory"
+    },
+    {
+      "control_id": "OCSF-5004",
+      "title": "Operating System Patch State",
+      "family": "Discovery",
+      "description": "Operating System Patch State reports the installation of an OS patch to a device and any associated knowledgebase articles.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Class ID.",
+      "class_uid": 5004,
+      "class_name": "patch_state",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/patch_state"
+    },
+    {
+      "control_id": "OCSF-5019",
+      "title": "Device Config State Change",
+      "family": "Discovery",
+      "description": "Device Config State Change events report state changes that impact the security of the device.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Class ID.",
+      "class_uid": 5019,
+      "class_name": "device_config_state_change",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/device_config_state_change"
+    },
+    {
+      "control_id": "OCSF-5020",
+      "title": "Software Inventory Info",
+      "family": "Discovery",
+      "description": "Software Inventory Info events report device software inventory data that is either logged or proactively collected. For example, when collecting device information from a CMDB or running a network sweep of connected devices.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Class ID.",
+      "class_uid": 5020,
+      "class_name": "software_info",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/software_info"
+    },
+    {
+      "control_id": "OCSF-5021",
+      "title": "OSINT Inventory Info",
+      "family": "Discovery",
+      "description": "OSINT Inventory Info events report open source intelligence or threat intelligence inventory data that is either logged or proactively collected. For example, when collecting OSINT information from Threat Intelligence Platforms (TIPs) or Extended Detection and Response (XDR) platforms, or collecting data from OSINT or other generic threat intelligence and enrichment feeds such as APIs and datastores.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, OSINT, Class ID.",
+      "class_uid": 5021,
+      "class_name": "osint_inventory_info",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/osint_inventory_info"
+    },
+    {
+      "control_id": "OCSF-5023",
+      "title": "Cloud Resources Inventory Info",
+      "family": "Discovery",
+      "description": "Cloud Resources Inventory Info events report cloud asset inventory data. This data can be either logged or proactively collected. For example, use this event class when creating an inventory of cloud resource information from a Configuration Management Database (CMDB), Cyber Asset Attack Surface Management (CAASM), direct public cloud service provider APIs, Software-as-a-Service (SaaS) APIs, or otherwise.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 5023,
+      "class_name": "cloud_resources_inventory_info",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/cloud_resources_inventory_info"
+    },
+    {
+      "control_id": "OCSF-5040",
+      "title": "Live Evidence Info",
+      "family": "Discovery",
+      "description": "Data collected directly from devices that represents forensic information pulled, queried, or discovered from devices that may indicate malicious activity. It contains a number of child objects, each representing a distinct evidence domain (network connections, file artifacts, registry entries, etc.). When mapping raw telemetry data users should select Query Evidence and then the appropriate child object that best matches the evidence type.\n\nRequired attributes: Query Evidence, Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Query Result ID, Severity ID, Class ID.",
+      "class_uid": 5040,
+      "class_name": "evidence_info",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/evidence_info"
+    },
+    {
+      "control_id": "OCSF-6001",
+      "title": "Web Resources Activity",
+      "family": "Application Activity",
+      "description": "Web Resources Activity events describe actions executed on a set of Web Resources.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Web Resources, Category ID, Severity ID, Class ID.",
+      "class_uid": 6001,
+      "class_name": "web_resources_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/web_resources_activity"
+    },
+    {
+      "control_id": "OCSF-6002",
+      "title": "Application Lifecycle",
+      "family": "Application Activity",
+      "description": "Application Lifecycle events report installation, removal, start, stop of an application or service.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 6002,
+      "class_name": "application_lifecycle",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/application_lifecycle"
+    },
+    {
+      "control_id": "OCSF-6003",
+      "title": "API Activity",
+      "family": "Application Activity",
+      "description": "API events describe general CRUD (Create, Read, Update, Delete) API activities, e.g. (AWS Cloudtrail)\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Actor, API Details, Source Endpoint, Class ID.",
+      "class_uid": 6003,
+      "class_name": "api_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/api_activity"
+    },
+    {
+      "control_id": "OCSF-6005",
+      "title": "Datastore Activity",
+      "family": "Application Activity",
+      "description": "Datastore events describe general activities (Read, Update, Query, Delete, etc.) which affect datastores or data within those datastores, e.g. (AWS RDS, AWS S3).\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Actor, Source Endpoint, Class ID.",
+      "class_uid": 6005,
+      "class_name": "datastore_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/datastore_activity"
+    },
+    {
+      "control_id": "OCSF-6006",
+      "title": "File Hosting Activity",
+      "family": "Application Activity",
+      "description": "File Hosting Activity events report the actions taken by file management applications, including file sharing servers like Sharepoint and services such as Box, MS OneDrive, Google Drive, or network file share services.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Actor, Source Endpoint, Class ID, File.",
+      "class_uid": 6006,
+      "class_name": "file_hosting",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/file_hosting"
+    },
+    {
+      "control_id": "OCSF-6007",
+      "title": "Scan Activity",
+      "family": "Application Activity",
+      "description": "Scan events report the start, completion, and results of a scan job. The scan event includes the number of items that were scanned and the number of detections that were resolved.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Scan, Class ID.",
+      "class_uid": 6007,
+      "class_name": "scan_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/scan_activity"
+    },
+    {
+      "control_id": "OCSF-6008",
+      "title": "Application Error",
+      "family": "Application Activity",
+      "description": "Application Error events describe issues with an applications. The error message should be put in the event's message attribute. The metadata.product attribute can be used to capture the originating application information. The host profile can used to include the generating device information. This class is helpful for applications that generate or handle OCSF events and can also be used for errors in upstream products and services.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 6008,
+      "class_name": "application_error",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/application_error"
+    },
+    {
+      "control_id": "OCSF-7001",
+      "title": "Remediation Activity",
+      "family": "Remediation",
+      "description": "Remediation Activity events report on attempts at remediating a compromised device or computer network.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Command UID, Category ID, Severity ID, Class ID.",
+      "class_uid": 7001,
+      "class_name": "remediation_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/remediation_activity"
+    },
+    {
+      "control_id": "OCSF-7002",
+      "title": "File Remediation Activity",
+      "family": "Remediation",
+      "description": "File Remediation Activity events report on attempts at remediating files. Sub-techniques of countermeasures will include File, such as File Removal or Restore File.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Command UID, Category ID, Severity ID, Class ID, File.",
+      "class_uid": 7002,
+      "class_name": "file_remediation_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/file_remediation_activity"
+    },
+    {
+      "control_id": "OCSF-7003",
+      "title": "Process Remediation Activity",
+      "family": "Remediation",
+      "description": "Process Remediation Activity events report on attempts at remediating processes. Sub-techniques of countermeasures will include Process Eviction, such as Process Termination or Kernel-based Process Isolation.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Command UID, Category ID, Severity ID, Process, Class ID.",
+      "class_uid": 7003,
+      "class_name": "process_remediation_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/process_remediation_activity"
+    },
+    {
+      "control_id": "OCSF-7004",
+      "title": "Network Remediation Activity",
+      "family": "Remediation",
+      "description": "Network Remediation Activity events report on attempts at remediating computer networks. Techniques and Sub-techniques of countermeasures will include Network, such as Network Isolation or Network Traffic Filtering.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Command UID, Category ID, Severity ID, Connection Info, Class ID.",
+      "class_uid": 7004,
+      "class_name": "network_remediation_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/network_remediation_activity"
+    },
+    {
+      "control_id": "OCSF-8001",
+      "title": "Drone Flights Activity",
+      "family": "Unmanned Systems",
+      "description": "Drone Flights Activity events report the activity of Unmanned Aerial Systems (UAS), their Operators, and mission-planning and authorization metadata as reported by the UAS platforms themselves, by Counter-UAS (CUAS) systems, or other remote monitoring or sensing infrastructure. Based on the Remote ID defined in Standard Specification for Remote ID and Tracking (ASTM Designation: F3411-22a).\n\nRequired attributes: Event Time, Type ID, Activity ID, Unmanned Aerial System, Unmanned Systems Operator, Metadata, Category ID, Destination Endpoint, Severity ID, Class ID.",
+      "class_uid": 8001,
+      "class_name": "drone_flights_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/drone_flights_activity"
+    },
+    {
+      "control_id": "OCSF-8002",
+      "title": "Airborne Broadcast Activity",
+      "family": "Unmanned Systems",
+      "description": "Airborne Broadcast Activity events report the activity of any aircraft or unmanned system as reported and tracked by Automatic Dependent Surveillance - Broadcast (ADS-B) receivers. Based on the ADS-B standards described in Code of Federal Regulations (CFR) Title 14 Chapter I Subchapter F Part 91 and in other general Federal Aviation Administration (FAA) supplemental orders and guidance.\n\nRequired attributes: Event Time, Type ID, Activity ID, Unmanned Aerial System, Unmanned Systems Operator, Metadata, Category ID, Severity ID, Class ID.",
+      "class_uid": 8002,
+      "class_name": "airborne_broadcast_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/airborne_broadcast_activity"
+    },
+    {
+      "control_id": "OCSF-201001",
+      "title": "Registry Key Activity",
+      "family": "System Activity",
+      "description": "Registry Key Activity events report when a process performs an action on a Windows registry key.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Registry Key, Actor, Class ID.",
+      "class_uid": 201001,
+      "class_name": "registry_key_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/win/registry_key_activity"
+    },
+    {
+      "control_id": "OCSF-201002",
+      "title": "Registry Value Activity",
+      "family": "System Activity",
+      "description": "Registry Value Activity events reports when a process performs an action on a Windows registry value.\n\nRequired attributes: Event Time, Type ID, Activity ID, Metadata, Device, Registry Value, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 201002,
+      "class_name": "registry_value_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/win/registry_value_activity"
+    },
+    {
+      "control_id": "OCSF-201003",
+      "title": "Windows Resource Activity",
+      "family": "System Activity",
+      "description": "Windows Resource Activity events report when a process accesses a Windows managed resource object, successful or otherwise.\n\nRequired attributes: Windows Resource, Event Time, Type ID, Activity ID, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 201003,
+      "class_name": "windows_resource_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/win/windows_resource_activity"
+    },
+    {
+      "control_id": "OCSF-201004",
+      "title": "Windows Service Activity",
+      "family": "System Activity",
+      "description": "Windows Service Activity events report when a process interacts with the Service Control Manager.\n\nRequired attributes: Event Time, Type ID, Activity ID, Windows Service, Metadata, Device, Category ID, Severity ID, Actor, Class ID.",
+      "class_uid": 201004,
+      "class_name": "windows_service_activity",
+      "ocsf_url": "https://schema.ocsf.io/1.9.0/classes/win/windows_service_activity"
+    }
+  ]
+}

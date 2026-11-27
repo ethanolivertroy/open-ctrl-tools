@@ -1,0 +1,541 @@
+{
+  "component-definition": {
+    "uuid": "55742dcb-42bb-4169-b152-041bc716dc33",
+    "metadata": {
+      "title": "AWS Service Component Definition",
+      "last-modified": "2026-02-03T17:16:24.618151+00:00",
+      "version": "1.0.0.2026-02-03",
+      "oscal-version": "1.1.2",
+      "parties": [
+        {
+          "uuid": "83b3149b-8eea-45a1-aac0-33b411eec6e1",
+          "type": "organization",
+          "name": "Amazon Web Services"
+        }
+      ],
+      "remarks": "Original document title: Top Level Admin Guidance\nLast updated: 2026-01-09"
+    },
+    "components": [
+      {
+        "uuid": "d4567f0f-3135-40bd-abb3-e7418b69a7d4",
+        "type": "software",
+        "title": "Top Level Admin Guidance",
+        "description": "",
+        "responsible-roles": [
+          {
+            "role-id": "provider",
+            "party-uuids": [
+              "83b3149b-8eea-45a1-aac0-33b411eec6e1"
+            ]
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "ddcfb376-9469-422a-8563-89e5058148e2",
+            "source": "#fedramp-high-baseline",
+            "description": "FedRAMP control implementations for AWS Service",
+            "implemented-requirements": []
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "fedramp-high-baseline",
+          "description": "FedRAMP Revision 4 High Baseline Profile",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/GSA/fedramp-automation/master/dist/content/rev4/baselines/json/FedRAMP_rev4_HIGH-baseline_profile.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "a6987b55-b9e9-4f87-9251-9ec1daa28248",
+          "title": "Document Information",
+          "description": "[cols=\"1,3\"]\n|===\n|Version |1.0.0\n|Last Updated |2026-01-09\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "220e3244-8de7-4efc-8b71-2b28b8ec6c6a",
+          "title": "FRR-RSC-01: Top-Level Administrative Accounts Guidance",
+          "description": "[.lead]\n✓ MUST - Required for all FedRAMP services\n\n*OSCAL Control ID: FRR-RSC-01*\n\n*UUID: frr-rsc-01-control*",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "c5af986e-3541-4357-87e6-845e9cf0421f",
+          "title": "Requirement",
+          "description": "Providers MUST create and maintain guidance that includes instructions on how to securely access, configure, operate, and decommission top-level administrative accounts that control enterprise access to the entire cloud service offering.\n\nNote: This guidance should explain how top-level administrative accounts are named and referred to in the cloud service offering.\n\nApplies to: Low, Moderate, High",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "94872c71-1f18-4e79-a4d2-c19e6b2011e5",
+          "title": "Component Implementation (OSCAL)",
+          "description": "*Component UUID*: iam-component-001\n\n*Component Type*: Account\n\n*Control Implementation*: AC-2 (Account Management), AC-6 (Least Privilege), IA-2 (Identification and Authentication)\n\n*Implementation Status*: Available",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "090fe26c-c829-443c-9774-13652e789e7f",
+          "title": "Executive Summary",
+          "description": "This comprehensive guidance provides AWS recommended practices for managing AWS top-level administrative accounts in FedRAMP environments, offering instructions for securely accessing, configuring, operating, and decommissioning administrative accounts that control enterprise access to AWS cloud services. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS documentation before implementation.\n\nA top-level account within AWS is identified as a link:organizations/latest/userguide/orgs-manage_accounts_management.html[Management Account,type=\"documentation\"] that serves as the central control point for an link:organizations/latest/userguide/orgs_introduction.html[AWS Organization,type=\"documentation\"]. This guidance provides comprehensive information on multiple components of AWS account management, including the account itself, management account operations, and the secure access and configuration of accounts in association with administrative accounts and top-level administrative accounts that control access to the AWS management account and subsequent organizational structure.\n\n*Key Coverage Areas*:\n\n*Account Types and Naming Standards*: Recommends standardized naming conventions and hierarchical organization for Management Accounts, Security Accounts, Shared Services Accounts, and Workload Accounts, with clear reference methods for both console and programmatic access.\n\n*Modern Root Access Management*: Describes how to leverage link:/organizations/latest/userguide/orgs_manage_accounts_access.html[AWS Organizations' centralized root access management,type=\"documentation\"] capabilities to eliminate long-term root credentials while maintaining necessary administrative capabilities through temporary, task-scoped root sessions.\n\n*Configuration Management*: Provides guidance for implementing organization-wide configuration baselines using link:config/latest/developerguide/evaluate-config.html[AWS Config rules,type=\"documentation\"], link:organizations/latest/userguide/orgs_manage_policies_scps.html[Service Control Policies (SCPs),type=\"documentation\"], and automated drift detection to help maintain consistent security posture across all administrative accounts.\n\n*Operational Procedures*: Offers structured daily, weekly, and monthly administrative tasks with specific AWS CLI commands for routine security checks, compliance monitoring, and administrative reporting.\n\n*Decommissioning Framework*: Outlines comprehensive account closure procedures including data retention requirements, resource inventory and transfer processes, dependency analysis, and post-decommissioning validation steps.\n\n*Emergency Response*: Details incident response procedures for account compromise scenarios, emergency access activation processes, and recovery workflows with proper approval mechanisms and audit trails.\n\n*Access Control and Governance*: Describes role-based access control matrix with defined approval workflows for standard changes, elevated privilege operations, and emergency access scenarios using link:iam/latest/userguide/best-practices.html[IAM best practices,type=\"documentation\"].\n\n*FedRAMP Compliance Considerations*: Provides guidance for continuous monitoring requirements through automated evidence collection, link:cloudtrail/latest/userguide/cloudtrail-user-guide.html[audit trail management,type=\"documentation\"] with 7-year retention, and real-time compliance reporting considerations for FedRAMP assessments.\n\nThis guidance presents AWS recommended approaches for transforming traditional AWS account management from a credential-based approach to a modern, centralized, and auditable framework that supports FedRAMP Rev5 requirements while helping to reduce security risks and operational complexity. Organizations may use these recommendations to help achieve enhanced security posture, simplified compliance reporting, and streamlined administrative operations across the",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "77e9b6c2-f40a-44e0-837d-77d81f8cd08d",
+          "title": "AWS Administrative Account Types and Naming Conventions",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "af9a4a55-5b9a-41e2-931c-2a61b1c3e3d1",
+          "title": "Account Type Hierarchy",
+          "description": "This section defines the four primary types of AWS accounts in an organization and their specific purposes, naming conventions, and administrative scope.\n\n*Management Account (Organization Root)*:\n\n* *Purpose*: Central control point for AWS Organizations\n* *Naming Convention*: `[org-name]-management-[environment]` (e.g., `acme-management-prod`)\n* *Account ID Reference*: 12-digit unique identifier (e.g., `123456789012`)\n* *Administrative Scope*: Full organizational control, billing consolidation, service control policies\n\n*Security Account (Audit/Log Archive)*:\n\n* *Purpose*: Centralized security logging and compliance monitoring\n* *Naming Convention*: `[org-name]-security-[function]` (e.g., `acme-security-audit`)\n* *Administrative Scope*: CloudTrail log aggregation, AWS Config compliance, Security Hub findings\n\n*Shared Services Account*:\n\n* *Purpose*: Common infrastructure services (DNS, Active Directory, monitoring)\n* *Naming Convention*: `[org-name]-shared-[service]` (e.g., `acme-shared-network`)\n* *Administrative Scope*: Cross-account resource sharing, centralized services\n\n*Workload Accounts (Member Accounts)*:\n\n* *Purpose*: Application and service hosting\n* *Naming Convention*: `[org-name]-[workload]-[environment]` (e.g., `acme-webapp-prod`)\n* *Administrative Scope*: Application-specific resources and permissions",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "0f638dc8-c018-456b-b3ff-ec6573b3010a",
+          "title": "Administrative Role Naming Standards",
+          "description": "This section establishes consistent naming patterns for administrative roles across AWS accounts, including both AWS-managed and custom roles.\n\n*Cross-Account Administrative Roles*:\n\n* *OrganizationAccountAccessRole*: Default cross-account access role created by AWS Organizations\n* *AWSControlTowerExecution*: AWS Control Tower service role for governance\n* *AWSServiceRoleFor[ServiceName]*: Service-linked roles for AWS services\n\n*Custom Administrative Roles*:\n\n* *Naming Pattern*: `[Function]-[Scope]-[Environment]Role`\n* *Examples*: \n  - `SecurityAdmin-Organization-ProdRole`\n  - `NetworkAdmin-Account-DevRole`\n  - `ComplianceAuditor-ReadOnly-AllRole`",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ad62662b-e534-4028-b104-8247b0856d00",
+          "title": "Account Reference Methods",
+          "description": "This section explains the various ways to identify and reference AWS accounts in different contexts, from console navigation to programmatic access.\n\n*AWS Console Navigation*:\n\n* Account Switcher: Displays account name and ID\n* Organization view: Shows account hierarchy and organizational units\n* Billing console: Lists all accounts with names and IDs\n\n*Programmatic Access*:\n\n* AWS CLI: Use account ID or account alias for cross-account operations\n* AWS APIs: Reference accounts by 12-digit account ID\n* CloudFormation: Use account ID in cross-account resource references",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "b807040e-6f25-4d1d-92f3-a9effb693126",
+          "title": "AWS Root Account Security Architecture",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "4dd1c982-99da-4dc3-87b2-f499daa43825",
+          "title": "AWS Organizations Root Access Management (Recommended)",
+          "description": "This section describes AWS's modern approach to root account management that eliminates long-term credentials while maintaining necessary administrative capabilities.\n\n*FedRAMP Impact*: Eliminates long-term root credentials, helping to reduce potential security exposure and supporting better credential management practices.\n\n*Central Management of Root Credentials*:\n\n*AWS Organizations now provides centralized root access management that addresses longstanding security challenges*\n\n* *Remove Long-term Root Credentials*: Programmatically eliminate root user passwords, access keys, and signing certificates from member accounts\n* *Prevent Credential Recovery*: Block unauthorized recovery of root credentials, supporting secure credential management\n* *Secure-by-Default Provisioning*: Create new AWS accounts without root credentials from inception, supporting streamlined security configuration\n* *Compliance Visibility*: Centralized discovery and monitoring of root credential status across all organization accounts\n\n*Root Sessions for Privileged Operations*:\n*When root-level access is required, AWS Organizations provides temporary, task-scoped access through root sessions*\n\n* *Auditing Root User Credentials*: Read-only access to review root user information and security posture\n* *Re-enabling Account Recovery*: Restore account recovery capabilities without requiring long-term root credentials\n* *Deleting Root User Credentials*: Remove console passwords, access keys, signing certificates, and MFA devices\n* *Unlocking S3 Bucket Policies*: Edit or delete S3 bucket policies that deny all principals (emergency access)\n* *Unlocking SQS Queue Policies*: Edit or delete Amazon SQS resource policies that deny all principals",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "5611befa-9825-4520-b427-82dfbe5ccd96",
+          "title": "Implementation Commands",
+          "description": "IMPORTANT: The commands below are provided as samples for how to enable and leverage the features in AWS. Review all commands and adjust as needed for your organization and use case. AWS services and features evolve rapidly. Customers should verify current service capabilities and limitations through official AWS service specific documentation before implementation. \n\n*Enable Organizations Root Access Management*:\n\nTo enable organization root access management in AWS, you must first enable the necessary service access and then configure the root access management features. This process eliminates long-term root credentials while maintaining necessary administrative capabilities.\n\n*Prerequisites*:\n\n* You must be signed in as the management account root user or have appropriate IAM permissions\n* Your AWS Organization must already be created\n* You need the `organizations:EnableAWSServiceAccess` permission\n\n*Step 1: Enable AWS SSO service access*:\n\n[source,bash]\n----\naws organizations enable-aws-service-access --service-principal sso.amazonaws.com\n----\n\n*Step 2: Enable additional organization services (recommended)*:\n\n[source,bash]\n----\n# Enable AWS Config service access\naws organizations enable-aws-service-access --service-principal config.amazonaws.com\n\n# Enable AWS CloudTrail service access\naws organizations enable-aws-service-access --service-principal cloudtrail.amazonaws.com\n----\n\n*Step 3: Enable IAM service access in Organizations*:\n\n[source,bash]\n----\naws organizations enable-aws-service-access --service-principal iam.amazonaws.com\n----\n\n*Enable root credentials management*:\n\n[source,bash]\n----\n# Note: Root access management is configured through the AWS Organizations console\n# Navigate to AWS Organizations > Settings > Root access management\n# This cannot be enabled via CLI at this time\n----\n\n*Enable root sessions capability*:\n\n[source,bash]\n----\n# Note: Root sessions are configured through the AWS Organizations console\n# Navigate to AWS Organizations > Settings > Root access management\n# This cannot be enabled via CLI at this time\n----\n\n*Obtain Temporary Root Access*:\n\nRequest temporary root credentials for specific task\n\n[source,bash]\n----\n# Note: Root sessions must be initiated through the AWS Organizations console\n# Navigate to AWS Organizations > Accounts > Select account > Root access\n# CLI access for root sessions is not currently available\n----\n\n*Credentials are valid for 15 minutes maximum and can be used to perform necessary actions.* \nUse returned AccessKeyId, SecretAccessKey, and SessionToken",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "106557c2-fa7a-4ac3-bac1-d117bdf156dd",
+          "title": "Traditional Root Account Security (Legacy Approach)",
+          "description": "This section covers security practices for standalone accounts or organizations not yet implementing centralized root management.\n\n*Use Case*: Standalone accounts or organizations not yet implementing centralized root management\n\n\nRoot Account Hardening Requirements\n\n*Multi-Factor Authentication (MFA)*: Hardware security key (FIDO2/WebAuthn) or virtual MFA device required\n\n*Access Key Elimination*: Delete all root account access keys immediately after account creation\n\n*Strong Password Policy*: Minimum 14 characters with complexity requirements\n\n*Account Contact Information*: Secure, monitored email address with restricted access\n\n*Security Questions*: Unique, non-guessable answers stored securely\n\nRoot Account Usage Restrictions\n\n*Root account access should be limited to these specific scenarios*:\n\nInitial account setup and MFA configuration\nBilling and account management tasks that cannot be delegated\nRecovery scenarios when standard IAM access is unavailable\nSpecific AWS services that require root account permissions\nAccount closure and decommissioning\nAdministrative Account Hierarchy",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "c8ddea65-f0bc-49b2-a3c4-867ccd650de2",
+          "title": "AWS Organizations Management Account",
+          "description": "This section details the security requirements and configuration for the central management account in an AWS Organization.\n\n*Purpose*: Central control point for multi-account AWS environments\n\n*Security Requirements*:\n\nImplement centralized root access management\nEnable AWS CloudTrail organization trail with log file validation\nConfigure AWS Config organization-wide rules\nImplement Service Control Policies (SCPs) for security guardrails\nEnable AWS Security Hub for centralized security findings",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "537855d9-98aa-4ff9-943b-a42ac582578f",
+          "title": "AWS IAM Identity Center (Successor to AWS SSO)",
+          "description": "*Purpose*: Centralized workforce identity management and federated access\n\n*Security Configuration*:\n\nEnable MFA for all users with hardware tokens or authenticator apps\nConfigure session duration limits (maximum 12 hours for FedRAMP)\nImplement permission sets based on job functions and least privilege\nEnable audit logging and integrate with SIEM systems\nConfigure external identity provider integration (SAML 2.0/OIDC)",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "f8f04625-1299-47c9-9e85-4c1f32d71e54",
+          "title": "AWS Control Tower Landing Zone",
+          "description": "*Purpose*: Automated governance and compliance for multi-account environments\n\n*Security Guardrails*:\n\n*Mandatory guardrails*: CloudTrail enabled, access logging configured\n\n*Strongly recommended*: MFA for root users, S3 bucket public access blocked\n\n*Elective guardrails*: Additional security controls based on compliance requirements",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "205daf47-09f6-4d83-8f94-805b639bc94f",
+          "title": "Service-Level Administrative Accounts",
+          "description": "*Database Administrative Accounts*:\n\n*Applicable Services*: Amazon RDS, Amazon Aurora, Amazon ElastiCache, Amazon DocumentDB, Amazon Neptune\n\n*Security Requirements*:\n\n*Primary User Credentials*: Store in AWS Secrets Manager with automatic rotation\n\n*Database Authentication*: Implement IAM database authentication where supported\n\n*Network Security*: Deploy in private subnets with security group restrictions\n\n*Encryption*: Enable encryption at rest and in transit for all database instances\n\n*Audit Logging*: Enable database audit logs and forward to CloudWatch Logs\n\n*Implementation Example (RDS)*:\n\n[source,bash]\n----\n# Create RDS instance with IAM authentication\naws rds create-db-instance \\\n    --db-instance-identifier mydb-instance \\\n    --db-instance-class db.t3.micro \\\n    --engine mysql \\\n    --master-username admin \\\n    --manage-master-user-password \\\n    --master-user-secret-kms-key-id alias/aws/rds \\\n    --enable-iam-database-authentication \\\n    --storage-encrypted \\\n    --kms-key-id alias/aws/rds\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "4c91414e-517f-4cf1-a6ef-2b37f987e900",
+          "title": "Container Administrative Access",
+          "description": "This section provides guidance for managing administrative access to containerized workloads on AWS services like EKS, ECS, and Fargate.\n\n*Applicable Services*: Amazon EKS, Amazon ECS, AWS Fargate\n\n*EKS Cluster Administrative Access*:\n\n* *Cluster Authentication*: Use IAM roles for service accounts (IRSA)\n* *RBAC Configuration*: Implement Kubernetes role-based access control\n* *Pod Security*: Enable Pod Security Standards and admission controllers\n* *Network Policies*: Implement Kubernetes network policies for micro-segmentation\n* *Audit Logging*: Enable EKS control plane logging to CloudWatch",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "8c985d11-7def-40a8-a555-ef53c418f242",
+          "title": "Administrative Account Configuration Management",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "72805d00-98be-4cf4-acd1-cfb98e6a57f3",
+          "title": "Configuration Baselines",
+          "description": "This section describes how to establish and maintain consistent security configurations across all administrative accounts using AWS Config and Service Control Policies.\n\n*AWS Config Organization Rules*:\n\nEstablish organization-wide configuration compliance rules for administrative accounts\n\n[source,bash]\n----\n# Deploy organization-wide Config rule for root account MFA\naws configservice put-organization-config-rule \\\n    --organization-config-rule-name \"org-root-mfa-enabled\" \\\n    --organization-managed-rule-metadata \\\n        RuleIdentifier=ROOT_MFA_ENABLED,Description=\"Checks whether MFA is enabled for root account\"\n----\n\n*Service Control Policies (SCPs)*:\n\nImplement preventive guardrails for administrative account security\n\n[source,bash,subs=\"verbatim,attributes\"]\n----\n# Create SCP to prevent root account usage\naws organizations create-policy \\\n    --name \"PreventRootAccountUsage\" \\\n    --description \"Deny root account actions except emergency scenarios\" \\\n    --type SERVICE_CONTROL_POLICY \\\n    --content '{\n        \"Version\": \"2012-10-17\",{tcx5-2025-waiver}\n        \"Statement\": [\n            {\n                \"Effect\": \"Deny\",\n                \"Principal\": {\n                    \"AWS\": \"*\"\n                },\n                \"Action\": \"*\",\n                \"Resource\": \"*\",\n                \"Condition\": {\n                    \"StringEquals\": {\n                        \"aws:PrincipalType\": \"Root\"\n                    },\n                    \"StringNotEquals\": {\n                        \"aws:RequestedRegion\": [\"us-east-1\", \"us-west-2\"]\n                    }\n                }\n            }\n        ]\n    }'\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ae885967-6035-4334-9594-f8fef59eb408",
+          "title": "Configuration Drift Detection",
+          "description": "This section explains how to monitor and detect unauthorized changes to administrative account configurations using AWS Config and Systems Manager.\n\n*AWS Config Compliance Monitoring*:\n\n[source,bash]\n----\n# Get compliance status for administrative accounts\naws configservice get-compliance-details-by-config-rule \\\n    --config-rule-name \"root-mfa-enabled\" \\\n    --compliance-types NON_COMPLIANT\n----\n\n*AWS Systems Manager Compliance*:\n\n[source,bash]\n----\n# Create compliance association for administrative instances\naws ssm create-association \\\n    --name \"AWS-GatherSoftwareInventory\" \\\n    --targets \"Key=tag:AccountType,Values=Administrative\"\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "uuid": "86d30e60-1591-485e-add5-409145ba3631",
+          "title": "Daily Operations and Maintenance",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "bb9fb23a-9b71-4df3-8526-97725c666775",
+          "title": "Routine Administrative Tasks",
+          "description": "This section outlines structured schedules for security checks, compliance activities, and administrative reviews to maintain ongoing security posture.\n\n*Daily Security Checks*:\n\n* Review CloudTrail logs for root account activity \n* Verify MFA status for all administrative users\n* Check AWS Config compliance dashboard\n* Monitor Security Hub findings for important security issues\n\n*Weekly Administrative Reviews*:\n\n* Audit IAM user and role permissions\n* Review AWS Trusted Advisor security recommendations\n* Validate backup and recovery procedures\n* Update security group and NACL rules as needed\n\n*Monthly Compliance Activities*:\n\n* Generate compliance reports for FedRAMP assessments\n* Review and update administrative procedures\n* Conduct access reviews for administrative accounts\n* Test incident response procedures",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "988dc05e-6f9b-4080-bb58-7c51404dd1f2",
+          "title": "Administrative Task Commands",
+          "description": "This section provides specific AWS CLI commands for generating reports and monitoring administrative account activities.\n\n*Generate Administrative Access Report*:\n\n[source,bash]\n----\n# List all administrative users and their last activity\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d > credential-report.csv\n----\n\n*Review Root Account Activity*:\n\n[source,bash]\n----\n# Query CloudTrail for root account usage in last 30 days\naws logs filter-log-events \\\n    --log-group-name \"CloudTrail/RootAccountActivity\" \\\n    --start-time $(date -d '30 days ago' +%s)000 \\\n    --filter-pattern '{ $.userIdentity.type = \"Root\" }'\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "4c423b96-a4ea-41fd-a558-bf32f0b19f71",
+          "title": "Account Decommissioning Procedures",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "ea3616ce-855b-4fe8-83a0-5e5fe226a0e7",
+          "title": "Pre-Decommissioning Requirements",
+          "description": "This section covers the essential steps that must be completed before closing an AWS account, including data backup and dependency analysis.\n\n*Data Retention and Backup*:\n\n* Export all CloudTrail logs to long-term storage\n* Backup AWS Config configuration history\n* Archive Security Hub findings and compliance reports\n* Export billing and usage reports for audit purposes\n\n*Resource Inventory and Transfer*:\n\n[source,bash]\n----\n# List all resources in account before decommissioning\naws resourcegroupstaggingapi get-resources \\\n    --resources-per-page 100 \\\n    --output table\n----\n\n*Dependency Analysis*:\n\n* Identify cross-account resource dependencies\n* Document shared services and integrations\n* Review IAM cross-account trust relationships\n* Catalog DNS and network dependencies",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "46d6e71b-161d-43d8-97f2-c9be3a8aab51",
+          "title": "Decommissioning Steps",
+          "description": "This section provides the step-by-step process for safely closing AWS accounts while maintaining compliance records and documentation.\n\n*Step 1: Remove from AWS Organizations*:\n\n[source,bash]\n----\n# Remove account from organization (if member account)\naws organizations remove-account-from-organization \\\n    --account-id 123456789012\n----\n\n*Step 2: Close AWS Account*:\n\n[source,bash]\n----\n# Note: Account closure must be done through the AWS Console\n# 1. Sign in as root user to the account being closed\n# 2. Navigate to Account Settings in the AWS Console\n# 3. Scroll to \"Close Account\" section\n# 4. Follow the account closure process\n# CLI account closure is not available\n----\n\n*Step 3: Update Documentation*:\n\n* Remove account from organizational charts\n* Update network diagrams and architecture documentation\n* Archive administrative procedures and runbooks\n* Update compliance documentation and evidence",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "4d2f0c43-5e20-48a7-a3c3-ef877a9a006d",
+          "title": "Post-Decommissioning Validation",
+          "description": "This section describes how to verify successful account closure and maintain required compliance documentation after decommissioning.\n\n*Verify Account Closure*:\n\n[source,bash]\n----\n# Verify account is no longer accessible\naws organizations list-accounts \\\n    --query 'Accounts[?Id==`123456789012`]'\n----\n\n*Compliance Record Keeping*:\n\n* Maintain decommissioning records for audit purposes\n* Archive final compliance reports and assessments\n* Document lessons learned and process improvements\n* Update incident response procedures if needed",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "c5fb018f-2263-4cba-b7bd-59e370e49b5c",
+          "title": "Monitoring and Compliance",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "1fca0880-dcff-4126-9390-120f54cd7ced",
+          "title": "CloudTrail Configuration",
+          "description": "This section explains how to set up comprehensive audit logging for administrative account activities using AWS CloudTrail.\n\n*Root Account Activity Monitoring*:\n\n[source,bash]\n----\n# Create CloudTrail for root account monitoring\naws cloudtrail create-trail \\\n    --name root-account-trail \\\n    --s3-bucket-name security-audit-logs \\\n    --include-global-service-events \\\n    --is-multi-region-trail \\\n    --enable-log-file-validation \\\n    --event-selectors '[{\n        \"ReadWriteType\": \"All\",\n        \"IncludeManagementEvents\": true,\n        \"DataResources\": []\n    }]'\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "cebcc4b4-d377-4f1d-923c-daac2d47b5ab",
+          "title": "Real-time Alerting",
+          "description": "This section covers setting up automated alerts for suspicious or unauthorized administrative account activities using CloudWatch.\n\n*CloudWatch Alarms for Root Account Usage*:\n\n[source,bash]\n----\n# Create metric filter for root account usage\naws logs put-metric-filter \\\n    --log-group-name CloudTrail/RootAccountActivity \\\n    --filter-name RootAccountUsage \\\n    --filter-pattern '{ $.userIdentity.type = \"Root\" }' \\\n    --metric-transformations \\\n        metricName=RootAccountUsageCount,metricNamespace=Security/RootAccount,metricValue=1\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "a2a74677-ea2e-411d-9017-606d7d4a191b",
+          "title": "Emergency Procedures",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "186e9df2-1496-46e1-b933-1640a72a363d",
+          "title": "Root Account Compromise Response",
+          "description": "This section provides response procedures for suspected or confirmed compromise of root account credentials.\n\n*Initial Response Actions*:\n\n1. Change root account password as soon as possible\n2. Disable or rotate all access keys\n3. Review and update MFA devices\n4. Verify AWS CloudTrail is active and collecting logs\n5. Contact AWS Support for assistance if needed\n\n*Investigation*:\n\n* Review CloudTrail logs for unusual activities\n* Check AWS Config for configuration changes\n* Analyze VPC Flow Logs for network anomalies\n* Review IAM policy changes and user creations\n\n*Recovery*:\n\n* Consider implementing AWS Organizations root access management\n* Remove long-term root credentials where possible\n* Update incident response procedures based on lessons learned\n* Conduct security assessment and review",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "2ba5845f-ca0c-4c62-8010-df53cc254bea",
+          "title": "Emergency Access Procedures",
+          "description": "This section details how to activate emergency access to administrative accounts during security incidents or system failures.\n\n*Emergency Access Activation*:\n\n[source,bash]\n----\n# Assume emergency access role (pre-configured)\naws sts assume-role \\\n    --role-arn \"arn:aws:iam:ACCOUNT-ID:role/EmergencyAccessRole\" \\\n    --role-session-name \"emergency-$(date +%Y%m%d-%H%M%S)\"\n----\n\n*Emergency Root Session Request*:\n\n[source,bash]\n----\n# Note: Emergency root access must be requested through AWS Organizations console\n# 1. Navigate to AWS Organizations > Accounts\n# 2. Select the target account\n# 3. Choose \"Root access\" \n# 4. Select appropriate task policy and provide justification\n# 5. Complete the root session request process\n# CLI-based root session requests are not currently available\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "63732d52-e300-43fa-9964-98de59987b3c",
+          "title": "Access Control Matrix and Approval Workflows",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "892ecffa-10ce-4ed5-aa95-82a64834aa5d",
+          "title": "Role-Based Access Permissions",
+          "description": "This section defines the different administrative roles, their access levels, approval requirements, and permitted actions in a structured matrix format.\n\n[cols=\"3,2,2,3\", options=\"header\"]\n|===\n|Administrative Role |Access Level |Approval Required |Permitted Actions\n\n|Organization Administrator\n|Full\n|Dual approval + CISO\n|All organization-level operations, account creation/closure\n\n|Security Administrator  \n|Security-focused\n|Security team lead\n|Security service configuration, compliance monitoring\n\n|Network Administrator\n|Network-focused\n|Infrastructure lead\n|VPC, routing, DNS, load balancer management\n\n|Compliance Auditor\n|Read-only\n|Compliance manager\n|Audit log access, compliance report generation\n\n|Emergency Responder\n|Temporary elevated\n|Incident commander + Security\n|Emergency access during security incidents\n|===",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "64979417-16dc-4fcd-929d-b15a5cf9e101",
+          "title": "Approval Workflow Requirements",
+          "description": "This section establishes the approval processes required for different types of administrative changes, from routine updates to emergency access.\n\n*Standard Administrative Changes*:\n\n* Single approver from appropriate team lead\n* Change request documentation required\n* Automated testing in non-production first\n\n*Elevated Privilege Operations*:\n\n* Dual approval required (requestor + approver)\n* Business justification documented\n* Time-limited access (maximum 4 hours)\n\n*Emergency Access*:\n\n* Incident commander approval\n* Real-time notification to security team\n* Post-incident review within 24 hours recommended",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "e1d6e18d-e97c-4590-892b-a1cefba9d051",
+          "title": "FedRAMP Continuous Monitoring Requirements",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "ac6d00f6-c4f7-4a47-bcae-8ce8ec64720e",
+          "title": "Evidence Collection and Reporting",
+          "description": "This section describes how to automate the collection of compliance evidence and generate reports required for FedRAMP assessments.\n\n*Monthly Compliance Reports*:\n\n[source,bash]\n----\n# Generate AWS Config compliance summary\naws configservice get-compliance-summary-by-config-rule \\\n    --output table > monthly-config-compliance.txt\n\n# Export Security Hub findings\naws securityhub get-findings \\\n    --filters '{\"ComplianceStatus\":[{\"Value\":\"FAILED\",\"Comparison\":\"EQUALS\"}]}' \\\n    --output json > monthly-security-findings.json\n----\n\n*Continuous Monitoring Automation*:\n\n[source,bash]\n----\n# Create EventBridge rule for real-time compliance monitoring\naws events put-rule \\\n    --name \"FedRAMP-ComplianceMonitoring\" \\\n    --event-pattern '{\n        \"source\": [\"aws.config\"],\n        \"detail-type\": [\"Config Rules Compliance Change\"],\n        \"detail\": {\n            \"newEvaluationResult\": {\n                \"complianceType\": [\"NON_COMPLIANT\"]\n            }\n        }\n    }'\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "fa2f7237-6071-4f09-9c7c-4f36248d385f",
+          "title": "Audit Trail Requirements",
+          "description": "This section covers the configuration of audit logging systems to meet FedRAMP requirements for log retention and cross-account aggregation.\n\n*Log Retention Configuration*:\n\n[source,bash]\n----\n# Set CloudTrail log retention to 7 years for FedRAMP\naws logs put-retention-policy \\\n    --log-group-name \"CloudTrail/FedRAMP-AuditLogs\" \\\n    --retention-in-days 2557  # 7 years\n----\n\n*Cross-Account Log Aggregation*:\n\n[source,bash]\n----\n# Create organization-wide CloudTrail\naws cloudtrail create-trail \\\n    --name \"FedRAMP-OrganizationTrail\" \\\n    --s3-bucket-name \"fedramp-audit-logs-bucket\" \\\n    --is-organization-trail \\\n    --enable-log-file-validation \\\n    --include-global-service-events\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "ed887155-6c76-4dc8-b0b8-02d2d3a95875",
+          "title": "Compliance Validation",
+          "description": "",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "6e00e0ce-c25d-4df6-9322-48a742d2c0d9",
+          "title": "AWS Config Rules for Root Account Security",
+          "description": "This section provides specific AWS Config rules for monitoring and enforcing security requirements on root accounts across the organization.\n\n[source,bash]\n----\n# Deploy Config rule for root account MFA\naws configservice put-config-rule \\\n    --config-rule '{\n        \"ConfigRuleName\": \"root-mfa-enabled\",\n        \"Source\": {\n            \"Owner\": \"AWS\",\n            \"SourceIdentifier\": \"ROOT_MFA_ENABLED\"\n        }\n    }'\n----\n\n[source,bash]\n----\n# Deploy Config rule for root account access key check\naws configservice put-config-rule \\\n    --config-rule '{\n        \"ConfigRuleName\": \"root-access-key-check\",\n        \"Source\": {\n            \"Owner\": \"AWS\",\n            \"SourceIdentifier\": \"ROOT_ACCESS_KEY_CHECK\"\n        }\n    }'\n----",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "uuid": "e990ac7f-7039-463a-b967-3a53f451d328",
+          "title": "Best Practices Summary",
+          "description": "*Administrative Account Management*:\n\n* Consider implementing AWS Organizations root access management for centralized, secure root account control\n* Eliminate long-term root credentials in favor of temporary, task-scoped access\n* Use standardized naming conventions for accounts and administrative roles\n* Maintain clear documentation of account hierarchy and administrative responsibilities\n\n*Security and Compliance*:\n\n* Enable comprehensive logging and monitoring for all administrative account activities\n* Implement least privilege access through IAM roles and policies with time-limited sessions\n* Use AWS managed services for credential management and rotation\n* Consider establishing automated compliance monitoring and real-time alerting for policy violations\n\n*Operational Excellence*:\n\n* Regularly audit and review administrative account usage and permissions\n* Maintain incident response procedures for account security scenarios\n* Implement proper change management processes for administrative account modifications\n* Conduct regular testing of emergency access procedures and account recovery processes\n\n*FedRAMP Compliance Considerations*:\n\n* Maintain audit trails with appropriate retention periods (7 years minimum recommended)\n* Generate regular compliance reports and evidence collection as required by your organization\n* Consider implementing continuous monitoring for security and compliance posture\n* Document all administrative procedures and maintain version control\n\n*Important Note*: This guidance provides AWS recommended practices and considerations. Organizations are responsible for evaluating these recommendations against their specific compliance requirements and implementing appropriate controls to meet their regulatory obligations.",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "uuid": "f0ae30b4-0ee2-4179-8a9c-3ce91b41ce4b",
+          "title": "Additional Resources",
+          "description": "*AWS Documentation References*:\n\n* link:organizations/latest/userguide/orgs_introduction.html[AWS Organizations User Guide]\n* link:iam/latest/userguide/best-practices.html[IAM Best Practices]\n* link:controltower/latest/userguide/what-is-control-tower.html[AWS Control Tower User Guide]\n* link:securityhub/latest/userguide/what-is-securityhub.html[AWS Security Hub User Guide]\n\n*FedRAMP Resources*:\n\n* link:https://www.fedramp.gov/assets/resources/documents/FedRAMP_Security_Controls_Baseline.xlsx[FedRAMP Security Controls Baseline]\n* link:https://www.fedramp.gov/assets/resources/templates/FedRAMP_OSCAL_Based_FedRAMP_High_Baseline_Profile.json[FedRAMP OSCAL Profile]",
+          "props": [
+            {
+              "name": "section-level",
+              "value": "2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

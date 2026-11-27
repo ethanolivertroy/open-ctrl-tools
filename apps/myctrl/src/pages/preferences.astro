@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PreferencesPage } from '../components/preferences/PreferencesPage';
+import { FRAMEWORK_CONFIGS } from '../data/frameworks';
+
+// Lightweight config subset for the client
+const frameworkConfigs = Object.fromEntries(
+  Object.entries(FRAMEWORK_CONFIGS).map(([id, config]) => [
+    id,
+    {
+      id: config.id,
+      name: config.name,
+      version: config.version,
+      description: config.description,
+      type: config.type,
+      tags: config.tags,
+    }
+  ])
+);
+---
+
+<BaseLayout title="Preferences" showSidebar={false}>
+  <div class="max-w-5xl mx-auto space-y-8 py-12 px-4">
+    <header class="space-y-4">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-foreground transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-foreground">Preferences</span>
+      </div>
+
+      <h1 class="text-3xl font-bold tracking-tight">
+        Preferences
+      </h1>
+
+      <p class="text-muted-foreground max-w-2xl">
+        Manage your theme, favorites, notes, and all locally stored data.
+        Everything is saved in your browser. Nothing is sent to a server.
+      </p>
+    </header>
+
+    <PreferencesPage client:load frameworkConfigs={frameworkConfigs} />
+  </div>
+</BaseLayout>
