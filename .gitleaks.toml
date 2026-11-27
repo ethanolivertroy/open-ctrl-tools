@@ -12,3 +12,11 @@ paths = [
 regexes = [
   '^sk-1234567890abcdefghijklmnop$',
 ]
+
+[[allowlists]]
+description = "Blank Drata example API key followed by the literal public region default"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "match"
+regexes = ['''^DRATA_API_KEY=\r?\nDRATA_REGION=us$''']
+paths = ['^tools/drata-cli/\.env\.example$']

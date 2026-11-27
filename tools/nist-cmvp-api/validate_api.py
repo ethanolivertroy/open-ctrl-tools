@@ -1,0 +1,956 @@
+#!/usr/bin/env python3
+"""Validate generated static API artifacts for internal consistency."""
+
+import argparse
+import json
+from pathlib import Path
+from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+
+
+REQUIRED_TOP_LEVEL_FILES = (
+    "api/modules.json",
+    "api/historical-modules.json",
+    "api/modules-in-process.json",
+    "api/metadata.json",
+    "api/index.json",
+    "api/certificates/index.json",
+    "api/data-quality.json",
+    "api/examples.json",
+    "api/indexes/vendors.json",
+    "api/indexes/algorithms.json",
+    "api/indexes/statuses.json",
+    "api/indexes/standards.json",
+    "openapi.json",
+    "llms.txt",
+    "llms-full.txt",
+    "api/docs.md",
+    "index.html",
+)
+# api/changes.json is validated when present, but stays optional until after
+# the first scheduled workflow publishes it into the generated artifacts.
+
+DETAIL_REQUIRED_FIELDS = (
+    "certificate_number",
+    "dataset",
+    "generated_at",
+    "nist_page_url",
+    "certificate_detail_url",
+    "security_policy_url",
+    "vendor_name",
+    "module_name",
+    "standard",
+    "status",
+    "related_files",
+    "validation_history",
+    "vendor",
+)
+
+CURRENT_SCHEMA_DETAIL_FIELDS = (
+    "software_versions",
+    "hardware_versions",
+    "firmware_versions",
+    "algorithm_extraction",
+)
+
+ALGORITHM_EXTRACTION_REQUIRED_FIELDS = (
+    "schema_version",
+    "status",
+    "configured_source",
+    "source",
+    "source_url",
+    "cached",
+    "fallback_used",
+    "cache_version",
+    "algorithm_count",
+    "detailed_algorithm_count",
+)
+
+ALGORITHM_EXTRACTION_STATUSES = {"parsed", "cached", "miss", "skipped"}
+
+JSON_SCHEMA_FILES = (
+    "api/schemas/index.schema.json",
+    "api/schemas/metadata.schema.json",
+    "api/schemas/module.schema.json",
+    "api/schemas/module-in-process.schema.json",
+    "api/schemas/modules.schema.json",
+    "api/schemas/historical-modules.schema.json",
+    "api/schemas/modules-in-process.schema.json",
+    "api/schemas/certificate-index.schema.json",
+    "api/schemas/certificate-detail.schema.json",
+    "api/schemas/data-quality.schema.json",
+    "api/schemas/examples.schema.json",
+    "api/schemas/search-index.schema.json",
+)
+# api/schemas/changes.schema.json follows the optional changes feed and becomes
+# required-eligible after the first published artifact set includes it.
+
+SEARCH_INDEX_FILES = (
+    ("vendors", "vendor_name", "api/indexes/vendors.json"),
+    ("algorithms", "algorithms", "api/indexes/algorithms.json"),
+    ("statuses", "status", "api/indexes/statuses.json"),
+    ("standards", "standard", "api/indexes/standards.json"),
+)
+
+
+def load_json(path: Path, errors: List[str]) -> Optional[Dict]:
+    """Load a JSON file and append a validation error on failure."""
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except Exception as exc:
+        errors.append(f"{path}: failed to load JSON: {exc}")
+        return None
+
+    if not isinstance(payload, dict):
+        errors.append(f"{path}: top-level JSON value must be an object")
+        return None
+    return payload
+
+
+def parse_certificate_number(record: Dict) -> Optional[int]:
+    """Return a numeric certificate number from a module or detail record."""
+    for key in ("Certificate Number", "certificate_number"):
+        value = str(record.get(key, "")).strip()
+        if value.isdigit():
+            return int(value)
+    return None
+
+
+def add_error(errors: List[str], condition: bool, message: str) -> None:
+    """Append message when condition is false."""
+    if not condition:
+        errors.append(message)
+
+
+def count_certificate_algorithm_pairs(cert_algorithms: Dict[int, List[str]]) -> int:
+    """Count certificate/algorithm pairs from module rows."""
+    return sum(len(algorithms) for algorithms in cert_algorithms.values())
+
+
+def build_expected_algorithm_index(cert_algorithms: Dict[int, List[str]]) -> Dict[str, Set[int]]:
+    """Build algorithm -> certificate set from module rows."""
+    expected: Dict[str, Set[int]] = {}
+    for cert_number, algorithms in cert_algorithms.items():
+        for algorithm in algorithms:
+            expected.setdefault(algorithm, set()).add(cert_number)
+    return expected
+
+
+def validate_algorithm_extraction(
+    record: Dict,
+    label: str,
+    require_current_schema: bool,
+    errors: List[str],
+) -> None:
+    """Validate an optional per-certificate algorithm_extraction object."""
+    extraction = record.get("algorithm_extraction")
+    if extraction is None:
+        if require_current_schema:
+            errors.append(f"{label}: missing algorithm_extraction")
+        return
+
+    if not isinstance(extraction, dict):
+        errors.append(f"{label}: algorithm_extraction must be an object")
+        return
+
+    for field in ALGORITHM_EXTRACTION_REQUIRED_FIELDS:
+        add_error(errors, field in extraction, f"{label}: algorithm_extraction missing {field}")
+
+    status = extraction.get("status")
+    add_error(
+        errors,
+        status in ALGORITHM_EXTRACTION_STATUSES,
+        f"{label}: invalid algorithm_extraction.status {status!r}",
+    )
+
+    algorithms = record.get("algorithms") or []
+    detailed = record.get("algorithms_detailed") or []
+    if isinstance(extraction.get("algorithm_count"), int):
+        add_error(
+            errors,
+            extraction["algorithm_count"] == len(algorithms),
+            f"{label}: algorithm_extraction.algorithm_count does not match algorithms length",
+        )
+    if isinstance(extraction.get("detailed_algorithm_count"), int):
+        add_error(
+            errors,
+            extraction["detailed_algorithm_count"] == len(detailed),
+            f"{label}: algorithm_extraction.detailed_algorithm_count does not match algorithms_detailed length",
+        )
+
+
+def validate_module_rows(
+    rows: Iterable[Dict],
+    dataset: str,
+    errors: List[str],
+    require_current_schema: bool,
+) -> Tuple[Dict[int, str], Dict[int, List[str]]]:
+    """Validate active or historical module rows and return cert metadata."""
+    cert_datasets: Dict[int, str] = {}
+    cert_algorithms: Dict[int, List[str]] = {}
+
+    for index, row in enumerate(rows):
+        label = f"{dataset} modules[{index}]"
+        cert_number = parse_certificate_number(row)
+        if cert_number is None:
+            errors.append(f"{label}: missing numeric Certificate Number")
+            continue
+
+        if cert_number in cert_datasets:
+            errors.append(f"{label}: duplicate certificate {cert_number}")
+        cert_datasets[cert_number] = dataset
+
+        for field in ("Vendor Name", "Module Name"):
+            add_error(errors, field in row, f"{label}: missing {field}")
+        for field in ("security_policy_url", "certificate_detail_url"):
+            add_error(errors, bool(row.get(field)), f"{label}: missing {field}")
+        add_error(errors, row.get("detail_available") is True, f"{label}: detail_available is not true")
+
+        algorithms = row.get("algorithms") or []
+        if algorithms:
+            add_error(errors, isinstance(algorithms, list), f"{label}: algorithms must be a list")
+            cert_algorithms[cert_number] = algorithms
+        validate_algorithm_extraction(row, label, require_current_schema, errors)
+
+    return cert_datasets, cert_algorithms
+
+
+def validate_certificate_details(
+    detail_dir: Path,
+    expected_datasets: Dict[int, str],
+    expected_algorithms: Dict[int, List[str]],
+    errors: List[str],
+    require_current_schema: bool,
+) -> None:
+    """Validate per-certificate detail files."""
+    detail_files = sorted(detail_dir.glob("*.json"))
+    found_certificates: Set[int] = set()
+
+    for filepath in detail_files:
+        label = str(filepath)
+        if filepath.name == "index.json":
+            continue
+        if not filepath.stem.isdigit():
+            errors.append(f"{label}: certificate detail filename must be numeric")
+            continue
+
+        file_cert_number = int(filepath.stem)
+        payload = load_json(filepath, errors)
+        if payload is None:
+            continue
+
+        metadata = payload.get("metadata")
+        certificate = payload.get("certificate")
+        add_error(errors, isinstance(metadata, dict), f"{label}: metadata must be an object")
+        add_error(errors, isinstance(certificate, dict), f"{label}: certificate must be an object")
+        if not isinstance(certificate, dict):
+            continue
+
+        cert_number = parse_certificate_number(certificate)
+        add_error(errors, cert_number == file_cert_number, f"{label}: certificate_number does not match filename")
+        if cert_number is None:
+            continue
+
+        found_certificates.add(cert_number)
+        expected_dataset = expected_datasets.get(cert_number)
+        add_error(errors, expected_dataset is not None, f"{label}: certificate is not in active or historical modules")
+        add_error(errors, certificate.get("dataset") == expected_dataset, f"{label}: dataset does not match module list")
+
+        for field in DETAIL_REQUIRED_FIELDS:
+            add_error(errors, field in certificate, f"{label}: certificate missing {field}")
+        if require_current_schema:
+            for field in CURRENT_SCHEMA_DETAIL_FIELDS:
+                add_error(errors, field in certificate, f"{label}: certificate missing current schema field {field}")
+
+        add_error(errors, isinstance(certificate.get("related_files"), list), f"{label}: related_files must be a list")
+        add_error(errors, isinstance(certificate.get("validation_history"), list), f"{label}: validation_history must be a list")
+        add_error(errors, isinstance(certificate.get("vendor"), dict), f"{label}: vendor must be an object")
+
+        expected_detail_algorithms = expected_algorithms.get(cert_number, [])
+        actual_detail_algorithms = certificate.get("algorithms") or []
+        add_error(
+            errors,
+            actual_detail_algorithms == expected_detail_algorithms,
+            f"{label}: detail algorithms do not match module row algorithms",
+        )
+        validate_algorithm_extraction(certificate, label, require_current_schema, errors)
+
+    missing_details = sorted(set(expected_datasets) - found_certificates)
+    orphan_details = sorted(found_certificates - set(expected_datasets))
+    if missing_details:
+        errors.append(f"api/certificates: missing detail files for {len(missing_details)} certificates; first={missing_details[:5]}")
+    if orphan_details:
+        errors.append(f"api/certificates: found {len(orphan_details)} orphan detail files; first={orphan_details[:5]}")
+
+
+def validate_certificate_index(
+    root: Path,
+    metadata: Dict,
+    expected_datasets: Dict[int, str],
+    expected_algorithms: Dict[int, List[str]],
+    errors: List[str],
+) -> None:
+    """Validate api/certificates/index.json against module rows and detail paths."""
+    payload = load_json(root / "api" / "certificates" / "index.json", errors)
+    if payload is None:
+        return
+
+    add_error(errors, payload.get("metadata") == metadata, "api/certificates/index.json: embedded metadata does not match api/metadata.json")
+    add_error(errors, payload.get("total_certificates") == len(expected_datasets), "api/certificates/index.json: total_certificates mismatch")
+
+    certificate_paths = payload.get("certificate_paths")
+    certificates = payload.get("certificates")
+    add_error(errors, isinstance(certificate_paths, dict), "api/certificates/index.json: certificate_paths must be an object")
+    add_error(errors, isinstance(certificates, list), "api/certificates/index.json: certificates must be a list")
+    if not isinstance(certificate_paths, dict) or not isinstance(certificates, list):
+        return
+
+    found_certificates: Set[int] = set()
+    for entry_index, entry in enumerate(certificates):
+        label = f"api/certificates/index.json: certificates[{entry_index}]"
+        if not isinstance(entry, dict):
+            errors.append(f"{label}: entry must be an object")
+            continue
+
+        cert_number = parse_certificate_number(entry)
+        if cert_number is None:
+            errors.append(f"{label}: missing numeric certificate_number")
+            continue
+        found_certificates.add(cert_number)
+
+        expected_path = f"/api/certificates/{cert_number}.json"
+        add_error(errors, certificate_paths.get(str(cert_number)) == expected_path, f"{label}: certificate_paths entry mismatch")
+        add_error(errors, entry.get("path") == expected_path, f"{label}: path mismatch")
+        add_error(errors, entry.get("dataset") == expected_datasets.get(cert_number), f"{label}: dataset mismatch")
+        add_error(errors, entry.get("detail_available") is True, f"{label}: detail_available is not true")
+
+        algorithms = entry.get("algorithms") or []
+        add_error(errors, isinstance(algorithms, list), f"{label}: algorithms must be a list")
+        if isinstance(algorithms, list):
+            add_error(errors, algorithms == expected_algorithms.get(cert_number, []), f"{label}: algorithms mismatch")
+            add_error(errors, entry.get("algorithm_count") == len(algorithms), f"{label}: algorithm_count mismatch")
+
+    expected_certificates = set(expected_datasets)
+    add_error(errors, found_certificates == expected_certificates, "api/certificates/index.json: certificate set mismatch")
+    add_error(errors, set(certificate_paths) == {str(cert) for cert in expected_certificates}, "api/certificates/index.json: certificate_paths keys mismatch")
+
+
+def validate_algorithms_summary(
+    root: Path,
+    metadata: Dict,
+    expected_cert_algorithms: Dict[int, List[str]],
+    errors: List[str],
+) -> None:
+    """Validate api/algorithms.json against module row algorithm fields."""
+    algorithms_path = root / "api" / "algorithms.json"
+    expected_total = metadata.get("total_certificates_with_algorithms", 0)
+
+    if expected_total == 0:
+        add_error(errors, not algorithms_path.exists(), "api/algorithms.json exists despite zero algorithm coverage")
+        return
+
+    summary = load_json(algorithms_path, errors)
+    if summary is None:
+        return
+
+    algorithms = summary.get("algorithms")
+    add_error(errors, isinstance(algorithms, dict), "api/algorithms.json: algorithms must be an object")
+    if not isinstance(algorithms, dict):
+        return
+
+    expected_index = build_expected_algorithm_index(expected_cert_algorithms)
+    add_error(errors, summary.get("total_unique_algorithms") == len(expected_index), "api/algorithms.json: total_unique_algorithms mismatch")
+    add_error(
+        errors,
+        summary.get("total_certificate_algorithm_pairs") == count_certificate_algorithm_pairs(expected_cert_algorithms),
+        "api/algorithms.json: total_certificate_algorithm_pairs mismatch",
+    )
+    add_error(errors, expected_total == len(expected_cert_algorithms), "metadata: total_certificates_with_algorithms mismatch")
+
+    for algorithm, expected_certs in expected_index.items():
+        entry = algorithms.get(algorithm)
+        if not isinstance(entry, dict):
+            errors.append(f"api/algorithms.json: missing algorithm {algorithm}")
+            continue
+        certs = entry.get("certificates")
+        add_error(errors, isinstance(certs, list), f"api/algorithms.json: {algorithm}.certificates must be a list")
+        if not isinstance(certs, list):
+            continue
+        add_error(errors, entry.get("count") == len(certs), f"api/algorithms.json: {algorithm}.count mismatch")
+        add_error(errors, len(certs) == len(set(certs)), f"api/algorithms.json: {algorithm}.certificates has duplicates")
+        add_error(errors, set(certs) == expected_certs, f"api/algorithms.json: {algorithm}.certificates mismatch")
+
+    extra_algorithms = sorted(set(algorithms) - set(expected_index))
+    if extra_algorithms:
+        errors.append(f"api/algorithms.json: unexpected algorithms present: {extra_algorithms[:5]}")
+
+
+def validate_data_quality_report(
+    root: Path,
+    metadata: Dict,
+    expected_datasets: Dict[int, str],
+    expected_algorithms: Dict[int, List[str]],
+    errors: List[str],
+    require_data_quality_pass: bool = False,
+) -> None:
+    """Validate api/data-quality.json at a structural and reference level."""
+    payload = load_json(root / "api" / "data-quality.json", errors)
+    if payload is None:
+        return
+
+    add_error(errors, payload.get("metadata") == metadata, "api/data-quality.json: embedded metadata does not match api/metadata.json")
+    summary = payload.get("summary")
+    add_error(errors, isinstance(summary, dict), "api/data-quality.json: summary must be an object")
+    if not isinstance(summary, dict):
+        summary = {}
+
+    for key in ("misses", "refreshed_records", "fallback_usage", "changed_certificates"):
+        records = payload.get(key)
+        add_error(errors, isinstance(records, list), f"api/data-quality.json: {key} must be a list")
+        if not isinstance(records, list):
+            continue
+        add_error(errors, summary.get(key) == len(records), f"api/data-quality.json: summary.{key} count mismatch")
+        for index, record in enumerate(records):
+            label = f"api/data-quality.json: {key}[{index}]"
+            add_error(errors, isinstance(record, dict), f"{label}: record must be an object")
+            if not isinstance(record, dict):
+                continue
+            cert_number = parse_certificate_number(record)
+            add_error(errors, cert_number is not None, f"{label}: missing numeric certificate_number")
+            if cert_number is None:
+                continue
+            add_error(errors, cert_number in expected_datasets, f"{label}: certificate not present in module rows")
+            add_error(errors, record.get("dataset") == expected_datasets.get(cert_number), f"{label}: dataset mismatch")
+            add_error(errors, record.get("path") == f"/api/certificates/{cert_number}.json", f"{label}: path mismatch")
+            add_error(errors, bool(record.get("reason")), f"{label}: missing reason")
+
+    deferred_records = payload.get("deferred_certificates")
+    if "deferred_certificates" in payload:
+        add_error(errors, isinstance(deferred_records, list), "api/data-quality.json: deferred_certificates must be a list")
+        if isinstance(deferred_records, list):
+            if "deferred" in summary:
+                add_error(
+                    errors,
+                    summary.get("deferred") == len(deferred_records),
+                    "api/data-quality.json: summary.deferred count mismatch",
+                )
+            for index, record in enumerate(deferred_records):
+                label = f"api/data-quality.json: deferred_certificates[{index}]"
+                add_error(errors, isinstance(record, dict), f"{label}: record must be an object")
+                if not isinstance(record, dict):
+                    continue
+                for field in ("certificate_number", "dataset", "reason", "repeat"):
+                    add_error(errors, field in record, f"{label}: missing {field}")
+                cert_number = record.get("certificate_number")
+                add_error(
+                    errors,
+                    cert_number is None or isinstance(cert_number, str),
+                    f"{label}: certificate_number must be a string or null",
+                )
+                add_error(errors, record.get("dataset") in {"active", "historical"}, f"{label}: invalid dataset")
+                add_error(errors, isinstance(record.get("reason"), str) and bool(record.get("reason")), f"{label}: missing reason")
+                add_error(errors, isinstance(record.get("repeat"), bool), f"{label}: repeat must be a boolean")
+
+    algorithm_coverage = payload.get("algorithm_coverage")
+    if "algorithm_coverage" in payload:
+        label = "api/data-quality.json: algorithm_coverage"
+        add_error(errors, isinstance(algorithm_coverage, dict), f"{label} must be an object")
+        if isinstance(algorithm_coverage, dict):
+            total = algorithm_coverage.get("total_certificates")
+            with_algorithms = algorithm_coverage.get("certificates_with_algorithms")
+            coverage_rate = algorithm_coverage.get("coverage_rate")
+            zero_buckets = algorithm_coverage.get("zero_algorithm_certificates")
+            add_error(errors, isinstance(total, int) and total >= 0, f"{label}.total_certificates must be a non-negative integer")
+            add_error(
+                errors,
+                isinstance(with_algorithms, int) and with_algorithms >= 0,
+                f"{label}.certificates_with_algorithms must be a non-negative integer",
+            )
+            add_error(
+                errors,
+                isinstance(coverage_rate, (int, float)) and 0 <= coverage_rate <= 1,
+                f"{label}.coverage_rate must be between 0 and 1",
+            )
+            add_error(errors, isinstance(zero_buckets, dict), f"{label}.zero_algorithm_certificates must be an object")
+            if isinstance(total, int):
+                add_error(errors, total == len(expected_datasets), f"{label}.total_certificates mismatch")
+            if isinstance(with_algorithms, int):
+                add_error(
+                    errors,
+                    with_algorithms == len(expected_algorithms),
+                    f"{label}.certificates_with_algorithms mismatch",
+                )
+            if isinstance(zero_buckets, dict):
+                bucket_total = 0
+                for bucket in ("cached_no_attempts", "explicit_no_algorithms", "source_none", "other"):
+                    value = zero_buckets.get(bucket)
+                    add_error(errors, isinstance(value, int) and value >= 0, f"{label}.{bucket} must be a non-negative integer")
+                    if isinstance(value, int):
+                        bucket_total += value
+                if isinstance(total, int) and isinstance(with_algorithms, int):
+                    add_error(
+                        errors,
+                        bucket_total == total - with_algorithms,
+                        f"{label}.zero_algorithm_certificates bucket total mismatch",
+                    )
+
+    update_monitor = payload.get("update_monitor")
+    add_error(errors, isinstance(update_monitor, dict), "api/data-quality.json: update_monitor must be an object")
+    if isinstance(update_monitor, dict):
+        add_error(errors, update_monitor.get("schedule") == "0 2 * * 0", "api/data-quality.json: unexpected update schedule")
+        add_error(errors, update_monitor.get("latest_run_generated_at") == metadata.get("generated_at"), "api/data-quality.json: latest_run_generated_at mismatch")
+        add_error(errors, update_monitor.get("status") in {"pass", "warn"}, "api/data-quality.json: invalid update_monitor.status")
+        if require_data_quality_pass:
+            add_error(errors, update_monitor.get("status") == "pass", "api/data-quality.json: update_monitor.status must be pass")
+        checks = update_monitor.get("checks")
+        add_error(errors, isinstance(checks, list) and bool(checks), "api/data-quality.json: update_monitor.checks must be a non-empty list")
+        if isinstance(checks, list):
+            check_names = {
+                check.get("name")
+                for check in checks
+                if isinstance(check, dict)
+            }
+            for expected_check in ("html_cache_reuse_rate", "html_failures", "certificate_timeouts", "algorithm_misses", "algorithm_success_rate"):
+                add_error(errors, expected_check in check_names, f"api/data-quality.json: missing update monitor check {expected_check}")
+            if require_data_quality_pass:
+                for index, check in enumerate(checks):
+                    label = f"api/data-quality.json: update_monitor.checks[{index}]"
+                    if not isinstance(check, dict):
+                        errors.append(f"{label}: check must be an object")
+                        continue
+                    add_error(errors, check.get("status") == "pass", f"{label}: status must be pass")
+
+
+def validate_changes_feed(root: Path, metadata: Dict, errors: List[str]) -> None:
+    """Validate api/changes.json when the optional feed has been published."""
+    changes_path = root / "api" / "changes.json"
+    if not changes_path.exists():
+        return
+
+    payload = load_json(changes_path, errors)
+    if payload is None:
+        return
+
+    add_error(errors, isinstance(payload.get("metadata"), dict), "api/changes.json: metadata must be an object")
+    if isinstance(payload.get("metadata"), dict):
+        add_error(errors, payload.get("metadata") == metadata, "api/changes.json: embedded metadata does not match api/metadata.json")
+
+    max_runs = payload.get("max_runs")
+    total_runs = payload.get("total_runs")
+    runs = payload.get("runs")
+    add_error(errors, isinstance(max_runs, int) and max_runs > 0, "api/changes.json: max_runs must be a positive integer")
+    add_error(errors, isinstance(total_runs, int) and total_runs >= 0, "api/changes.json: total_runs must be a non-negative integer")
+    add_error(errors, isinstance(runs, list), "api/changes.json: runs must be a list")
+    if not isinstance(runs, list):
+        return
+
+    if isinstance(max_runs, int) and max_runs > 0:
+        add_error(errors, len(runs) <= max_runs, "api/changes.json: runs exceeds max_runs")
+    if isinstance(total_runs, int):
+        add_error(errors, total_runs >= len(runs), "api/changes.json: total_runs must be at least len(runs)")
+
+    previous_generated_at: Optional[str] = None
+    list_fields = ("added_active", "added_historical", "removed", "changed")
+    for index, entry in enumerate(runs):
+        label = f"api/changes.json: runs[{index}]"
+        add_error(errors, isinstance(entry, dict), f"{label}: entry must be an object")
+        if not isinstance(entry, dict):
+            continue
+
+        for field in ("generated_at", *list_fields, "counts"):
+            add_error(errors, field in entry, f"{label}: missing {field}")
+
+        generated_at = entry.get("generated_at")
+        add_error(errors, isinstance(generated_at, str) and bool(generated_at), f"{label}: generated_at must be a non-empty string")
+        if isinstance(generated_at, str) and previous_generated_at is not None:
+            add_error(errors, generated_at <= previous_generated_at, f"{label}: runs must be newest-first by generated_at")
+        if isinstance(generated_at, str):
+            previous_generated_at = generated_at
+
+        field_lengths: Dict[str, int] = {}
+        for field in list_fields:
+            value = entry.get(field)
+            add_error(errors, isinstance(value, list), f"{label}: {field} must be a list")
+            if not isinstance(value, list):
+                continue
+            field_lengths[field] = len(value)
+            for value_index, cert_number in enumerate(value):
+                add_error(
+                    errors,
+                    isinstance(cert_number, str) and cert_number.isdigit(),
+                    f"{label}: {field}[{value_index}] must be a numeric string",
+                )
+
+        counts = entry.get("counts")
+        add_error(errors, isinstance(counts, dict), f"{label}: counts must be an object")
+        if not isinstance(counts, dict):
+            continue
+        for field in list_fields:
+            count = counts.get(field)
+            add_error(errors, isinstance(count, int) and count >= 0, f"{label}: counts.{field} must be a non-negative integer")
+            if field in field_lengths and isinstance(count, int):
+                add_error(errors, count == field_lengths[field], f"{label}: counts.{field} does not match {field} length")
+
+
+def validate_examples_payload(root: Path, metadata: Dict, errors: List[str]) -> None:
+    """Validate api/examples.json includes all advertised example families."""
+    payload = load_json(root / "api" / "examples.json", errors)
+    if payload is None:
+        return
+
+    add_error(errors, payload.get("metadata") == metadata, "api/examples.json: embedded metadata does not match api/metadata.json")
+    add_error(errors, bool(payload.get("base_url")), "api/examples.json: missing base_url")
+    examples = payload.get("examples")
+    add_error(errors, isinstance(examples, dict), "api/examples.json: examples must be an object")
+    if not isinstance(examples, dict):
+        return
+    for key in ("curl", "python", "javascript", "agent"):
+        value = examples.get(key)
+        add_error(errors, isinstance(value, list) and bool(value), f"api/examples.json: examples.{key} must be a non-empty list")
+
+
+def expected_search_keys(certificate_entries: List[Dict], field: str) -> Dict[str, Set[int]]:
+    """Build expected search-index keys from certificate index entries."""
+    expected: Dict[str, Set[int]] = {}
+    for entry in certificate_entries:
+        cert_number = parse_certificate_number(entry)
+        if cert_number is None:
+            continue
+        if field == "algorithms":
+            keys = entry.get("algorithms") or []
+        else:
+            value = entry.get(field)
+            keys = [value] if value not in (None, "", [], {}) else []
+        for key in keys:
+            text = str(key).strip()
+            if not text:
+                continue
+            expected.setdefault(text, set()).add(cert_number)
+    return expected
+
+
+def validate_search_indexes(
+    root: Path,
+    metadata: Dict,
+    expected_datasets: Dict[int, str],
+    errors: List[str],
+) -> None:
+    """Validate split search indexes against api/certificates/index.json."""
+    certificate_index = load_json(root / "api" / "certificates" / "index.json", errors)
+    if certificate_index is None:
+        return
+    certificate_entries = certificate_index.get("certificates")
+    add_error(errors, isinstance(certificate_entries, list), "api/certificates/index.json: certificates must be a list for search index validation")
+    if not isinstance(certificate_entries, list):
+        return
+
+    entries_by_cert = {
+        parse_certificate_number(entry): entry
+        for entry in certificate_entries
+        if isinstance(entry, dict) and parse_certificate_number(entry) is not None
+    }
+
+    for index_name, field, relative_path in SEARCH_INDEX_FILES:
+        payload = load_json(root / relative_path, errors)
+        if payload is None:
+            continue
+
+        add_error(errors, payload.get("metadata") == metadata, f"{relative_path}: embedded metadata does not match api/metadata.json")
+        add_error(errors, payload.get("index") == index_name, f"{relative_path}: index name mismatch")
+        add_error(errors, payload.get("field") == field, f"{relative_path}: field mismatch")
+        keys = payload.get("keys")
+        add_error(errors, isinstance(keys, dict), f"{relative_path}: keys must be an object")
+        if not isinstance(keys, dict):
+            continue
+
+        expected = expected_search_keys(certificate_entries, field)
+        add_error(errors, payload.get("key_count") == len(expected), f"{relative_path}: key_count mismatch")
+        add_error(errors, payload.get("entry_count") == sum(len(values) for values in expected.values()), f"{relative_path}: entry_count mismatch")
+        add_error(errors, set(keys) == set(expected), f"{relative_path}: key set mismatch")
+
+        for key, records in keys.items():
+            label = f"{relative_path}: keys[{key!r}]"
+            add_error(errors, isinstance(records, list), f"{label}: value must be a list")
+            if not isinstance(records, list):
+                continue
+            found_certs: Set[int] = set()
+            for record_index, record in enumerate(records):
+                record_label = f"{label}[{record_index}]"
+                add_error(errors, isinstance(record, dict), f"{record_label}: record must be an object")
+                if not isinstance(record, dict):
+                    continue
+                cert_number = parse_certificate_number(record)
+                add_error(errors, cert_number is not None, f"{record_label}: missing numeric certificate_number")
+                if cert_number is None:
+                    continue
+                found_certs.add(cert_number)
+                expected_entry = entries_by_cert.get(cert_number)
+                add_error(errors, expected_entry is not None, f"{record_label}: certificate missing from certificate index")
+                add_error(errors, cert_number in expected_datasets, f"{record_label}: certificate missing from module rows")
+                add_error(errors, record.get("dataset") == expected_datasets.get(cert_number), f"{record_label}: dataset mismatch")
+                add_error(errors, record.get("path") == f"/api/certificates/{cert_number}.json", f"{record_label}: path mismatch")
+                if expected_entry:
+                    for copied_field in ("vendor_name", "module_name", "standard", "status", "algorithm_count"):
+                        add_error(errors, record.get(copied_field) == expected_entry.get(copied_field), f"{record_label}: {copied_field} mismatch")
+            add_error(errors, len(found_certs) == len(records), f"{label}: duplicate certificate references")
+            add_error(errors, found_certs == expected.get(key, set()), f"{label}: certificate set mismatch")
+
+
+def validate_docs_and_index(
+    root: Path,
+    metadata: Dict,
+    has_algorithms: bool,
+    errors: List[str],
+    require_current_schema: bool,
+) -> None:
+    """Validate API index, OpenAPI, and docs artifacts at a structural level."""
+    index = load_json(root / "api" / "index.json", errors)
+    if index:
+        for key in (
+            "total_modules",
+            "total_historical_modules",
+            "total_modules_in_process",
+            "total_certificates_with_algorithms",
+            "total_certificate_details",
+        ):
+            add_error(errors, index.get(key) == metadata.get(key), f"api/index.json: {key} mismatch")
+        endpoints = index.get("endpoints") or {}
+        add_error(errors, isinstance(endpoints, dict), "api/index.json: endpoints must be an object")
+        if isinstance(endpoints, dict):
+            add_error(errors, ("algorithms" in endpoints) == has_algorithms, "api/index.json: algorithms endpoint presence mismatch")
+            add_error(errors, endpoints.get("certificate_index") == "/api/certificates/index.json", "api/index.json: missing certificate_index endpoint")
+            expected_endpoints = {
+                "data_quality": "/api/data-quality.json",
+                "examples": "/api/examples.json",
+                "vendor_index": "/api/indexes/vendors.json",
+                "algorithm_index": "/api/indexes/algorithms.json",
+                "status_index": "/api/indexes/statuses.json",
+                "standard_index": "/api/indexes/standards.json",
+            }
+            for key, expected_path in expected_endpoints.items():
+                add_error(errors, endpoints.get(key) == expected_path, f"api/index.json: missing {key} endpoint")
+        features = index.get("features") or {}
+        if require_current_schema and isinstance(features, dict):
+            add_error(errors, features.get("algorithm_extraction_provenance") is True, "api/index.json: missing algorithm_extraction_provenance feature")
+            add_error(errors, features.get("extraction_metrics") is True, "api/index.json: missing extraction_metrics feature")
+            add_error(errors, features.get("json_schemas") is True, "api/index.json: missing json_schemas feature")
+            add_error(errors, features.get("certificate_index") is True, "api/index.json: missing certificate_index feature")
+            add_error(errors, features.get("data_quality_report") is True, "api/index.json: missing data_quality_report feature")
+            add_error(errors, features.get("consumer_examples") is True, "api/index.json: missing consumer_examples feature")
+            add_error(errors, features.get("search_indexes") is True, "api/index.json: missing search_indexes feature")
+            schemas = index.get("schemas")
+            add_error(errors, isinstance(schemas, dict), "api/index.json: schemas must be an object")
+            if isinstance(schemas, dict):
+                for key in ("data_quality", "examples", "search_index"):
+                    add_error(errors, key in schemas, f"api/index.json: missing {key} schema")
+
+    openapi = load_json(root / "openapi.json", errors)
+    if openapi:
+        paths = openapi.get("paths") or {}
+        for path in (
+            "/api/index.json",
+            "/api/metadata.json",
+            "/api/modules.json",
+            "/api/historical-modules.json",
+            "/api/modules-in-process.json",
+            "/api/certificates/index.json",
+            "/api/certificates/{certificate}.json",
+            "/api/data-quality.json",
+            "/api/examples.json",
+            "/api/indexes/vendors.json",
+            "/api/indexes/algorithms.json",
+            "/api/indexes/statuses.json",
+            "/api/indexes/standards.json",
+        ):
+            add_error(errors, path in paths, f"openapi.json: missing path {path}")
+        add_error(errors, ("/api/algorithms.json" in paths) == has_algorithms, "openapi.json: algorithms path presence mismatch")
+
+    for doc_path, required_text in (
+        ("README.md", "certificates/{certificate}.json"),
+        ("llms.txt", "api/metadata.json"),
+        ("llms-full.txt", "GET api/certificates/index.json"),
+        ("api/docs.md", "GET api/certificates/index.json"),
+        ("index.html", "api/certificates/index.json"),
+    ):
+        path = root / doc_path
+        try:
+            content = path.read_text(encoding="utf-8")
+        except Exception as exc:
+            errors.append(f"{doc_path}: failed to read: {exc}")
+            continue
+        add_error(errors, bool(content.strip()), f"{doc_path}: empty documentation file")
+        add_error(errors, required_text in content, f"{doc_path}: missing expected text {required_text!r}")
+        if require_current_schema and doc_path in {"llms.txt", "api/docs.md", "index.html"}:
+            add_error(errors, "api/schemas/index.schema.json" in content, f"{doc_path}: missing JSON Schema link")
+        if require_current_schema and doc_path in {"llms.txt", "llms-full.txt", "api/docs.md", "index.html"}:
+            for required_endpoint in ("api/data-quality.json", "api/examples.json", "api/indexes/vendors.json"):
+                add_error(errors, required_endpoint in content, f"{doc_path}: missing endpoint text {required_endpoint!r}")
+
+    if require_current_schema:
+        expected_schema_files = list(JSON_SCHEMA_FILES)
+        if has_algorithms:
+            expected_schema_files.append("api/schemas/algorithms.schema.json")
+        for relative_path in expected_schema_files:
+            schema = load_json(root / relative_path, errors)
+            if schema:
+                add_error(errors, schema.get("$schema") == "https://json-schema.org/draft/2020-12/schema", f"{relative_path}: missing JSON Schema draft marker")
+                add_error(errors, bool(schema.get("$id")), f"{relative_path}: missing $id")
+                add_error(errors, bool(schema.get("title")), f"{relative_path}: missing title")
+        if not has_algorithms:
+            add_error(errors, not (root / "api/schemas/algorithms.schema.json").exists(), "api/schemas/algorithms.schema.json exists despite zero algorithm coverage")
+
+
+def validate_api(
+    root: Path = Path("."),
+    require_current_schema: bool = False,
+    require_supported_algorithm_source: bool = False,
+    forbid_firecrawl_run_source: bool = False,
+    require_data_quality_pass: bool = False,
+) -> List[str]:
+    """Return a list of validation errors for generated API artifacts."""
+    errors: List[str] = []
+    root = root.resolve()
+
+    for relative_path in REQUIRED_TOP_LEVEL_FILES:
+        add_error(errors, (root / relative_path).exists(), f"{relative_path}: missing required artifact")
+
+    metadata = load_json(root / "api" / "metadata.json", errors)
+    modules_payload = load_json(root / "api" / "modules.json", errors)
+    historical_payload = load_json(root / "api" / "historical-modules.json", errors)
+    in_process_payload = load_json(root / "api" / "modules-in-process.json", errors)
+    if not all(isinstance(payload, dict) for payload in (metadata, modules_payload, historical_payload, in_process_payload)):
+        return errors
+
+    assert metadata is not None and modules_payload is not None and historical_payload is not None and in_process_payload is not None
+
+    for label, payload in (
+        ("api/modules.json", modules_payload),
+        ("api/historical-modules.json", historical_payload),
+        ("api/modules-in-process.json", in_process_payload),
+    ):
+        add_error(errors, payload.get("metadata") == metadata, f"{label}: embedded metadata does not match api/metadata.json")
+
+    modules = modules_payload.get("modules")
+    historical_modules = historical_payload.get("modules")
+    modules_in_process = in_process_payload.get("modules_in_process")
+    add_error(errors, isinstance(modules, list), "api/modules.json: modules must be a list")
+    add_error(errors, isinstance(historical_modules, list), "api/historical-modules.json: modules must be a list")
+    add_error(errors, isinstance(modules_in_process, list), "api/modules-in-process.json: modules_in_process must be a list")
+    if not isinstance(modules, list) or not isinstance(historical_modules, list) or not isinstance(modules_in_process, list):
+        return errors
+
+    add_error(errors, metadata.get("total_modules") == len(modules), "metadata: total_modules mismatch")
+    add_error(errors, metadata.get("total_historical_modules") == len(historical_modules), "metadata: total_historical_modules mismatch")
+    add_error(errors, metadata.get("total_modules_in_process") == len(modules_in_process), "metadata: total_modules_in_process mismatch")
+
+    active_datasets, active_algorithms = validate_module_rows(modules, "active", errors, require_current_schema)
+    historical_datasets, historical_algorithms = validate_module_rows(historical_modules, "historical", errors, require_current_schema)
+    overlapping_certs = sorted(set(active_datasets) & set(historical_datasets))
+    if overlapping_certs:
+        errors.append(f"active/historical modules: duplicate certificate numbers across datasets: {overlapping_certs[:5]}")
+
+    expected_datasets = {**active_datasets, **historical_datasets}
+    expected_algorithms = {**active_algorithms, **historical_algorithms}
+    add_error(errors, metadata.get("total_certificate_details") == len(expected_datasets), "metadata: total_certificate_details mismatch")
+
+    if require_current_schema:
+        add_error(errors, "algorithm_extraction_schema_version" in metadata, "metadata: missing algorithm_extraction_schema_version")
+        add_error(errors, "extraction_metrics" in metadata, "metadata: missing extraction_metrics")
+
+    require_supported_algorithm_source = require_supported_algorithm_source or forbid_firecrawl_run_source
+    if require_supported_algorithm_source:
+        add_error(
+            errors,
+            metadata.get("algorithm_source") != "firecrawl",
+            "metadata: algorithm_source uses unsupported source 'firecrawl'",
+        )
+
+    validate_certificate_details(
+        root / "api" / "certificates",
+        expected_datasets,
+        expected_algorithms,
+        errors,
+        require_current_schema,
+    )
+    validate_certificate_index(root, metadata, expected_datasets, expected_algorithms, errors)
+    validate_algorithms_summary(root, metadata, expected_algorithms, errors)
+    validate_data_quality_report(root, metadata, expected_datasets, expected_algorithms, errors, require_data_quality_pass)
+    validate_changes_feed(root, metadata, errors)
+    validate_examples_payload(root, metadata, errors)
+    validate_search_indexes(root, metadata, expected_datasets, errors)
+    validate_docs_and_index(
+        root,
+        metadata,
+        bool(expected_algorithms),
+        errors,
+        require_current_schema,
+    )
+
+    if require_supported_algorithm_source and metadata.get("total_certificates_with_algorithms", 0):
+        algorithms_metadata = load_json(root / "api" / "algorithms.json", errors)
+        if algorithms_metadata:
+            nested_metadata = algorithms_metadata.get("metadata") or {}
+            add_error(
+                errors,
+                nested_metadata.get("source") != "firecrawl",
+                "api/algorithms.json: metadata.source uses unsupported source 'firecrawl'",
+            )
+            add_error(
+                errors,
+                nested_metadata.get("algorithm_source") != "firecrawl",
+                "api/algorithms.json: metadata.algorithm_source uses unsupported source 'firecrawl'",
+            )
+
+    return errors
+
+
+def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
+    """Parse CLI arguments."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", default=".", help="Repository root containing generated API artifacts")
+    parser.add_argument(
+        "--require-current-schema",
+        action="store_true",
+        help="Require fields generated by the current scraper schema, including extraction provenance",
+    )
+    parser.add_argument(
+        "--require-supported-algorithm-source",
+        action="store_true",
+        help="Fail if current run-level metadata uses an unsupported algorithm extraction source",
+    )
+    parser.add_argument(
+        "--forbid-firecrawl-run-source",
+        action="store_true",
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--require-data-quality-pass",
+        action="store_true",
+        help="Fail if api/data-quality.json reports warning status or any warning monitor check",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    """CLI entry point."""
+    args = parse_args(argv)
+    errors = validate_api(
+        Path(args.root),
+        require_current_schema=args.require_current_schema,
+        require_supported_algorithm_source=(
+            args.require_supported_algorithm_source or args.forbid_firecrawl_run_source
+        ),
+        require_data_quality_pass=args.require_data_quality_pass,
+    )
+    if errors:
+        print("API artifact validation failed:")
+        for error in errors:
+            print(f"- {error}")
+        return 1
+
+    print("API artifact validation passed.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
