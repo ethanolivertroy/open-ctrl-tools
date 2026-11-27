@@ -135,21 +135,28 @@ async function requireAgentAuth(request, env) {
   );
 }
 
-const authCheck = `
-    // Require configured auth for all agent routes.
-    if (url.pathname === '/agents' || url.pathname.startsWith('/agents/')) {
-      const unauthorized = await requireAgentAuth(request, env);
-      if (unauthorized) return unauthorized;
-    }
-`;
-
 if (!entry.includes('Require configured auth for all agent routes')) {
-  entry = entry.replace(
-    `    // Agent manifest
-    if (url.pathname === '/agents' && request.method === 'GET') {`,
-    `${authCheck}
-    // Agent manifest
-    if (url.pathname === '/agents' && request.method === 'GET') {`,
+  const manifestPattern =
+    /^([ \t]*)\/\/ Agent manifest\r?\n\1if \(url\.pathname === '\/agents' && (?:request\.)?method === 'GET'\) \{/m;
+  entry = entry.replace(manifestPattern, (match, indent) =>
+    [
+      `${indent}// Require configured auth for all agent routes.`,
+      `${indent}if (url.pathname === '/agents' || url.pathname.startsWith('/agents/')) {`,
+      `${indent}  const unauthorized = await requireAgentAuth(request, env);`,
+      `${indent}  if (unauthorized) return unauthorized;`,
+      `${indent}}`,
+      '',
+      match,
+    ].join('\n'),
+  );
+}
+
+if (
+  !entry.includes('function requireAgentAuth(request, env)') ||
+  !entry.includes('Require configured auth for all agent routes')
+) {
+  throw new Error(
+    '[auth] Failed to patch dist/_entry.ts: expected Flue worker markers were not found',
   );
 }
 
