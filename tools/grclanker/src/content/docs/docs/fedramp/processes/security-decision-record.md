@@ -1,0 +1,135 @@
+---
+title: "Security Decision Record"
+description: "Official Consolidated Rules summary for the SDR FedRAMP process, including applicability and requirements."
+---
+
+> Generated from the official FedRAMP Consolidated Rules `2026.10.13.01`, last updated upstream on 2026-10-13. [Source details](#source)
+
+The Security Decision Record replaced a traditional System Security Plan with a persistently maintained, verified, and validated record of the security decisions made by the cloud service provider over the lifecycle of their cloud service offering.
+
+## At a Glance
+
+- Applies to: 20x and Rev5
+- 20x: required · Consolidated Rules for 2026 · obtain 2026-07-04 · grace through 2027-01-01
+- Rev5: required · Consolidated Rules for 2026 · obtain 2027-01-01 · grace through 2027-08-01
+- Requirements: 2 for 20x and Rev5, 2 for 20x only, 1 for Rev5 only
+- Status: `stable`
+- Short name: `SDR`
+- Official page: [https://www.fedramp.gov/2026/reference/security-decision-record/](https://www.fedramp.gov/2026/reference/security-decision-record/)
+
+## Rule Subsets
+
+- `CSF` · Rev5-Specific Provider Responsibilities: These rules apply to providers for FedRAMP Rev5 Certifications. · types: Rev5 · classes: B, C, D
+- `CSO` · General Provider Responsibilities: These rules apply to providers for FedRAMP Certifications of any type. · types: 20x, Rev5 · classes: B, C, D
+- `CSX` · 20x-Specific Provider Responsibilities: These rules apply to providers for FedRAMP 20x Certifications. · types: 20x · classes: B, C, D
+
+## Requirements for 20x and Rev5
+
+### `SDR-CSO-FRR` MUST: FedRAMP Rules
+
+Providers MUST supply a Security Decision Record, in both human-readable and JSON formats, that includes at least all of the following information for each applicable FedRAMP rule:
+
+Checklist items:
+- Explanation of how the rule is followed, or an explanation of the reason and resulting risk to customers for not following the rule.
+- Verification that the implementation is appropriate for the rule, or that the reason for not implementing is accepted by a senior official.
+- Validation that the implementation is in place and working as intended, or that the reason for not implementing is accepted by a senior official.
+- Independent verification.
+- Independent validation.
+- Any responses or clarifications to the comments in the independent verification or validation.
+- Rule-specific artifacts (if applicable).
+
+Terms: `Artifacts`, `Security Decision Record (SDR)`, `Validation`, `Verification`
+
+Affects: Providers
+
+Recent update (2026-06-24): Official launch of the FedRAMP Consolidated Rules for 2026.
+
+### `SDR-CSO-MTD` MUST: Security Decision Record Metadata
+
+Providers MUST also include the following basic metadata in their Security Decision Record:
+
+Checklist items:
+- Version
+- Date and time of last update
+- Source of update
+
+Terms: `Security Decision Record (SDR)`
+
+Affects: Providers
+
+Recent update (2026-06-24): Official launch of the FedRAMP Consolidated Rules for 2026.
+
+## Requirements for 20x only
+
+### `SDR-CSX-KMT` VARIES BY CLASS: Key Security Indicator Metrics
+
+Varies by certification class:
+
+- **Class A MAY:** Providers with 20x Class A Certifications MAY also include historical metrics in their Security Decision Record.
+- **Class B SHOULD:** Providers with 20x Class B Certifications SHOULD also include historical metrics in their Security Decision Record, supplying at least the following information for each applicable Key Security Indicator:
+- **Class C MUST:** Providers with 20x Class C Certifications MUST also include historical metrics in their Security Decision Record, supplying at least the following information for each applicable Key Security Indicator:
+- **Class D MUST:** Providers with 20x Class D Certifications MUST significantly supersede the minimum requirements for lower Classes, with specifics to be set during the 20x Phase 4 Pilot.
+
+Checklist items:
+- Class B: Summary of each metric over the past 30 days
+- Class B: Summary of metric up to the past year (where available)
+- Class C: Summary of each metric over the past 30 days
+- Class C: Summary of metric up to the past year (where available)
+- Class C: All daily metric data (including status of persistent validation) up to the past year (where available)
+
+Terms: `Initial Certification`, `Security Decision Record (SDR)`
+
+Affects: Providers
+
+Note: For initial FedRAMP Certification, providers will need to have mechanisms in place and agree to meet this requirement in the event the cloud service has not been operating with related metrics available for the required period prior to applying for initial certification.
+
+Updates:
+- 2026-10-08: Changed MUST to SHOULD for Class B, added note, clarified persistent validation status should be included.
+- 2026-06-24: Official launch of the FedRAMP Consolidated Rules for 2026.
+
+### `SDR-CSX-KSI` MUST: Key Security Indicators
+
+Providers MUST also include short and simple high-level summaries of at least the following for each applicable Key Security Indicator:
+
+Checklist items:
+- Explanation of measures (and their objectives) that demonstrate the Key Security Indicator, or an explanation of the reason and resulting risk to customers for not having measures available for that Key Security Indicator.
+- Explanation of the cycle for any measures that are implemented persistently (if applicable).
+- Verification that the measures demonstrate the Key Security Indicator, or that the reason for not having them is accepted.
+- Verification that the automation in place is accurate and sufficient to demonstrate appropriate measures for the Key Security Indicator, or that automation is not necessary for each measure.
+- Validation that the measures are accurately produced and are in place and working as intended, or that the reason for not having them is valid.
+
+Terms: `Persistently`, `Validation`, `Verification`
+
+Affects: Providers
+
+Recent update (2026-06-24): Official launch of the FedRAMP Consolidated Rules for 2026.
+
+## Requirements for Rev5 only
+
+### `SDR-CSF-CTF` MUST: Rev5 Controls
+
+Providers MUST also include short and simple high-level summaries of at least the following for each applicable Rev5 Control:
+
+Checklist items:
+- Any organization-defined parameter values.
+- Implementation status, one of Implemented, Partially Implemented, Planned, Alternative Implementation, or Not Applicable.
+- The mechanisms or activities that address the control, including inheritance from another cloud service offering if applicable.
+- The verification that is in place to ensure the implementation is appropriate for the control.
+- The validation that is in place to ensure the implementation is working as intended.
+- Independent verification.
+- Independent validation.
+- Any responses or clarifications to the comments in the independent verification or validation.
+- Control-specific artifacts (if applicable).
+
+Terms: `Artifacts`, `Cloud Service Offering`, `Validation`, `Verification`
+
+Affects: Providers
+
+Recent update (2026-06-24): Official launch of the FedRAMP Consolidated Rules for 2026.
+
+## Source
+
+- Generated from the official [FedRAMP/rules](https://github.com/FedRAMP/rules) GitHub repo.
+- Source path: [`fedramp-consolidated-rules.json`](https://github.com/FedRAMP/rules/blob/main/fedramp-consolidated-rules.json) on `main` at blob `4ed99953efa5`.
+- Consolidated Rules version: `2026.10.13.01` · upstream `last_updated`: `2026-10-13`.
+- Supporting narrative documentation is available from the official `FedRAMP/2026-markdown` repository.

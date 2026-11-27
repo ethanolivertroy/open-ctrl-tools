@@ -1,0 +1,1450 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import {
+  clearFedrampCachesForTests,
+  inspectFedrampOfficialSources,
+  loadFedrampCatalog,
+  normalizeFedrampApplicability,
+  normalizeFedrampConsolidatedRules,
+  resolveFedrampKsi,
+  resolveFedrampProcess,
+  resolveFedrampRequirement,
+  resolveFedrampSubject,
+  searchFedrampCatalog,
+} from "../dist/extensions/grc-tools/fedramp-source.js";
+import { buildFedrampDocsSnapshot } from "../dist/extensions/grc-tools/fedramp-docs.js";
+import {
+  persistentCachesEnabled,
+  runWithoutPersistentCaches,
+  setGrcFetchTimingForTests,
+} from "../dist/extensions/grc-tools/shared.js";
+import {
+  buildFedrampAdsSite,
+  buildFedrampAdsStarterBundle,
+  buildFedrampAdsPackagePlan,
+  resolveSecureOutputPath,
+  writeSecureTextFile,
+  buildFedrampArtifactPlan,
+  buildFedrampReadinessBrief,
+  generateFedrampAdsSite,
+  generateFedrampAdsStarterBundle,
+  inferFedrampArtifactSuggestions,
+  inferFedrampWorkstreams,
+  registerFedrampTools,
+} from "../dist/extensions/grc-tools/fedramp.js";
+import { assertNoPartialBundleOnWriteFailure, writeFailureTest } from "./helpers/atomic-output.mjs";
+import { renderAdsPublicSite } from "../dist/extensions/grc-tools/fedramp/ads-site.js";
+import { renderAdsStarterBundle } from "../dist/extensions/grc-tools/fedramp/ads-starter.js";
+
+function jsonResponse(payload) {
+  return new Response(JSON.stringify(payload), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+}
+
+const consolidatedRulesFixture = {
+  info: {
+    title: "FedRAMP Consolidated Rules for 2026",
+    description: "Fixture consolidated rules payload",
+    version: "2026.07.02.02",
+    last_updated: "2026-07-02",
+  },
+  FRD: {
+    data: {
+      all: {
+        "FRD-ACV": {
+          term: "Accepted Vulnerability",
+          alts: ["accepted vulnerability", "accepted vulnerabilities"],
+          definition: "A vulnerability the provider does not intend to remediate within the recommended period.",
+          updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+        },
+      },
+    },
+  },
+  FRR: {
+    CDS: {
+      info: {
+        name: "Certification Data Sharing",
+        short_name: "CDS",
+        web_name: "certification-data-sharing",
+        purpose: "Providers share certification data in human-readable and machine-readable form.",
+        status: "stable",
+        tag: "transparency",
+        subsets: {
+          CSO: {
+            name: "General Provider Responsibilities",
+            description: "Applies to all providers.",
+            applicability: {
+              types: ["20x", "Rev5"],
+              paths: ["Program", "Agency"],
+              classes: ["B", "C", "D"],
+              affects: ["Providers"],
+            },
+          },
+        },
+        "20x": {
+          subsets: {
+            TRC: {
+              name: "Trust Center Responsibilities",
+              description: "Applies to provider trust centers.",
+              applicability: {
+                types: ["20x"],
+                paths: ["Program"],
+                classes: ["B", "C"],
+                affects: ["Providers"],
+              },
+            },
+          },
+          effective: {
+            is: "required",
+            current_status: "Consolidated Rules for 2026",
+            date: {
+              obtain: "2026-01-05",
+              maintain: "2026-01-05",
+              grace: { default: "2026-07-01", until_next_assessment: false },
+            },
+          },
+        },
+        rev5: {
+          effective: {
+            is: "optional",
+            current_status: "Public Preview",
+            date: { optional_adoption: "2026-06-24" },
+          },
+        },
+      },
+      data: {
+        all: {
+          CSO: {
+            "CDS-CSO-PUB": {
+              name: "Public Information",
+              statement:
+                "Providers MUST publicly share up-to-date information about the cloud service offering in both human-readable and machine-readable formats.",
+              force: "MUST",
+              affects: ["Providers"],
+              terms: ["Cloud Service Offering", "Machine-Readable"],
+              following_information: ["Direct link to the FedRAMP Marketplace", "Service Model"],
+              updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+            },
+          },
+        },
+        "20x": {
+          TRC: {
+            "CDS-TRC-API": {
+              name: "Programmatic Access",
+              statement:
+                "Providers MUST provide documented programmatic access to all certification data.",
+              force: "MUST",
+              affects: ["Providers"],
+              terms: ["Certification data", "Machine-Readable"],
+              updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+            },
+          },
+        },
+        rev5: {
+          CSO: {
+            "CDS-CSO-BETA": {
+              name: "Rev5 Preview Adoption",
+              statement: "Rev5 providers SHOULD notify FedRAMP before adopting preview rules.",
+              force: "SHOULD",
+              affects: ["Providers"],
+              terms: ["Certification data"],
+              timeframe_type: "days",
+              timeframe_num: 7,
+              updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+            },
+          },
+        },
+      },
+    },
+    CCM: {
+      info: {
+        name: "Collaborative Continuous Monitoring",
+        short_name: "CCM",
+        web_name: "collaborative-continuous-monitoring",
+        purpose: "Providers and agencies review ongoing certification evidence.",
+        status: "stable",
+        effective: {
+          is: "required",
+          current_status: "Consolidated Rules for 2026",
+          date: { obtain: "2026-01-05", maintain: "2026-01-05" },
+        },
+        subsets: {
+          QTR: {
+            name: "Quarterly Review",
+            description: "Quarterly review requirements.",
+            applicability: {
+              types: ["20x", "Rev5"],
+              paths: ["Program", "Agency"],
+              classes: ["A", "B", "C", "D"],
+              affects: ["Providers"],
+            },
+          },
+        },
+      },
+      data: {
+        all: {
+          QTR: {
+            "CCM-QTR-MTG": {
+              name: "Quarterly Review Meeting",
+              varies_by_class: {
+                a: {
+                  statement: "Class A providers MAY host a quarterly review.",
+                  force: "MAY",
+                },
+                b: {
+                  statement: "Class B providers SHOULD host a quarterly review.",
+                  force: "SHOULD",
+                },
+                c: {
+                  statement: "Class C providers MUST host a quarterly review.",
+                  force: "MUST",
+                },
+                d: {
+                  statement: "Class D providers MUST host a quarterly review.",
+                  force: "MUST",
+                },
+              },
+              affects: ["Providers"],
+              updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+            },
+          },
+        },
+      },
+    },
+  },
+  KSI: {
+    CNA: {
+      id: "KSI-CNA",
+      name: "Cloud Native Architecture",
+      short_name: "CNA",
+      web_name: "cloud-native-architecture",
+      status: "stable",
+      indicators: {
+        "KSI-CNA-CDS": {
+          name: "Certification Data Sharing",
+          statement:
+            "Determine how certification data will be shared with all necessary parties in alignment with the CDS process.",
+          reference: "Certification Data Sharing",
+          reference_url: "https://www.fedramp.gov/2026/reference/certification-data-sharing/",
+          controls: ["ac-3", "au-2", "ra-5"],
+          terms: ["Certification data", "All Necessary Parties"],
+          updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+        },
+        "KSI-CNA-EIS": {
+          name: "Enforcing Intended State",
+          varies_by_class: {
+            b: { statement: "Optional automated enforcement is available for Class B." },
+            c: { statement: "Automated enforcement is required for Class C." },
+          },
+          controls: ["cm-3"],
+          updated: [{ date: "2026-06-24", comment: "Official consolidated rules launch." }],
+        },
+      },
+    },
+  },
+};
+
+test("normalizeFedrampConsolidatedRules flattens 2026 rules and preserves class variants", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+
+  assert.equal(catalog.info.version, "2026.07.02.02");
+  assert.equal(catalog.definitions.length, 1);
+  assert.equal(catalog.processes.length, 2);
+  assert.equal(catalog.requirements.length, 4);
+  assert.equal(catalog.ksiDomains.length, 1);
+  assert.equal(catalog.ksiIndicators.length, 2);
+  assert.equal(catalog.requirements.find((item) => item.id === "CDS-CSO-PUB")?.appliesTo, "both");
+  assert.equal(catalog.processes.find((item) => item.id === "CDS")?.labels.length, 2);
+  const classRule = catalog.requirements.find((item) => item.id === "CCM-QTR-MTG");
+  assert.equal(classRule?.primaryKeyWord, "VARIES BY CLASS");
+  assert.equal(classRule?.classVariants.length, 4);
+  assert.match(classRule?.statement ?? "", /Class C providers MUST/);
+  assert.equal(
+    catalog.ksiIndicators.find((item) => item.id === "KSI-CNA-EIS")?.classVariants.length,
+    2,
+  );
+});
+
+test("search and resolvers support current IDs, unique names, and legacy process aliases", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+
+  const fkaMatch = searchFedrampCatalog(catalog, "CDS-CSO-PUB", {
+    section: "requirement",
+    appliesTo: normalizeFedrampApplicability("any"),
+    limit: 10,
+  });
+  assert.equal(fkaMatch[0]?.id, "CDS-CSO-PUB");
+
+  assert.equal(resolveFedrampProcess(catalog, "certification-data-sharing").id, "CDS");
+  assert.equal(resolveFedrampProcess(catalog, "ADS").id, "CDS");
+  assert.equal(resolveFedrampRequirement(catalog, "CDS-CSO-PUB").id, "CDS-CSO-PUB");
+
+  const dualBaseline = structuredClone(consolidatedRulesFixture);
+  delete dualBaseline.FRR.CDS.data.all;
+  const dualCatalog = normalizeFedrampConsolidatedRules(dualBaseline);
+  const cds = dualCatalog.processes.find((item) => item.id === "CDS");
+  assert.deepEqual(cds?.applicability.slice().sort(), ["20x", "rev5"]);
+  const rev5Process = searchFedrampCatalog(dualCatalog, "Certification Data Sharing", {
+    section: "process",
+    appliesTo: "rev5",
+  });
+  assert.equal(rev5Process[0]?.id, "CDS");
+  assert.equal(rev5Process[0]?.appliesTo, "both");
+
+  const ksiMatch = resolveFedrampKsi(catalog, "KSI-CNA-EIS");
+  assert.equal(ksiMatch.kind, "indicator");
+  if (ksiMatch.kind === "indicator") {
+    assert.equal(ksiMatch.indicator.id, "KSI-CNA-EIS");
+  }
+});
+
+test("normalizeFedrampConsolidatedRules keeps requirement control mappings and notification rules", () => {
+  const fixture = structuredClone(consolidatedRulesFixture);
+  const rule = fixture.FRR.CDS.data.all.CSO["CDS-CSO-PUB"];
+  rule.controls = ["ac-18", "sc-8.1"];
+  rule.notification = [
+    {
+      party: "FedRAMP",
+      method: "form",
+      target: "https://help.fedramp.gov/hc/en-us/requests/new?ticket_form_id=51829466938011",
+      name: "[CSP] Notification of Changes",
+    },
+    { party: "Agency Customers", method: "varies" },
+    { method: "email", target: "info@fedramp.gov" },
+  ];
+
+  const catalog = normalizeFedrampConsolidatedRules(fixture);
+  const requirement = catalog.requirements.find((item) => item.id === "CDS-CSO-PUB");
+  const unmapped = catalog.requirements.find((item) => item.id === "CDS-TRC-API");
+
+  assert.deepEqual(requirement?.controls, ["ac-18", "sc-8.1"]);
+  assert.deepEqual(requirement?.notifications, [
+    {
+      party: "FedRAMP",
+      method: "form",
+      target: "https://help.fedramp.gov/hc/en-us/requests/new?ticket_form_id=51829466938011",
+      name: "[CSP] Notification of Changes",
+    },
+    { party: "Agency Customers", method: "varies", target: null, name: null },
+  ]);
+  assert.deepEqual(unmapped?.controls, []);
+  assert.deepEqual(unmapped?.notifications, []);
+  assert.equal(
+    searchFedrampCatalog(catalog, "sc-8.1", { section: "requirement" })[0]?.id,
+    "CDS-CSO-PUB",
+  );
+});
+
+test("loadFedrampCatalog writes cache and falls back to stale disk data if refresh fails", async () => {
+  const originalFetch = globalThis.fetch;
+  const homeDir = mkdtempSync(join(tmpdir(), "grclanker-fedramp-home-"));
+  const calls = [];
+
+  globalThis.fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    calls.push(url);
+
+    if (url === "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json") {
+      return jsonResponse(consolidatedRulesFixture);
+    }
+
+    if (url === "https://api.github.com/repos/FedRAMP/rules") {
+      return jsonResponse({
+        html_url: "https://github.com/FedRAMP/rules",
+        updated_at: "2026-04-13T17:52:17Z",
+        default_branch: "main",
+      });
+    }
+
+    if (
+      url ===
+      "https://api.github.com/repos/FedRAMP/rules/contents/fedramp-consolidated-rules.json?ref=main"
+    ) {
+      return jsonResponse({
+        sha: "abcdef1234567890abcdef1234567890abcdef12",
+        html_url:
+          "https://github.com/FedRAMP/rules/blob/main/fedramp-consolidated-rules.json",
+      });
+    }
+
+    return new Response("not found", { status: 404, statusText: "Not Found" });
+  };
+
+  clearFedrampCachesForTests();
+
+  try {
+    const live = await loadFedrampCatalog({ refresh: true, homeDir });
+    assert.equal(live.cacheStatus, "live");
+    assert.equal(live.provenance.blobSha, "abcdef1234567890abcdef1234567890abcdef12");
+    assert.ok(calls.some((url) => url.includes("fedramp-consolidated-rules.json")));
+
+    clearFedrampCachesForTests();
+    let rawAttempts = 0;
+    globalThis.fetch = async (input) => {
+      if (!String(input).startsWith("https://raw.githubusercontent.com/")) {
+        return new Response("not found", { status: 404, statusText: "Not Found" });
+      }
+      rawAttempts += 1;
+      throw new Error("network unavailable");
+    };
+    const waits = [];
+    setGrcFetchTimingForTests({ sleep: async (ms) => void waits.push(ms) });
+
+    const stale = await loadFedrampCatalog({ refresh: true, homeDir });
+    assert.equal(stale.cacheStatus, "stale");
+    assert.equal(
+      stale.notes[0],
+      "Serving stale FedRAMP cache because the live GitHub source could not be refreshed: " +
+        "Fetch failed: https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json " +
+        "(network unavailable) after 4 attempts",
+    );
+    assert.equal(stale.catalog.info.version, "2026.07.02.02");
+    assert.equal(rawAttempts, 4, "the catalog read is retried before the stale cache is served");
+    assert.deepEqual(waits, [1_000, 2_000, 4_000]);
+  } finally {
+    setGrcFetchTimingForTests();
+    globalThis.fetch = originalFetch;
+    clearFedrampCachesForTests();
+    rmSync(homeDir, { recursive: true, force: true });
+  }
+});
+
+test("loadFedrampCatalog and inspectFedrampOfficialSources keep caches in memory when persistent caches are disabled", async () => {
+  const originalFetch = globalThis.fetch;
+  const homeDir = join(mkdtempSync(join(tmpdir(), "grclanker-fedramp-nopersist-")), ".grclanker");
+  const fedrampStateDir = join(homeDir, ".state", "fedramp");
+
+  globalThis.fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    if (url === "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json") {
+      return jsonResponse(consolidatedRulesFixture);
+    }
+    return new Response("not found", { status: 404, statusText: "Not Found" });
+  };
+
+  clearFedrampCachesForTests();
+
+  try {
+    assert.equal(persistentCachesEnabled(), true);
+
+    const status = await runWithoutPersistentCaches(async () => {
+      assert.equal(persistentCachesEnabled(), false);
+      const catalog = await loadFedrampCatalog({ refresh: true, homeDir });
+      assert.equal(catalog.cacheStatus, "live");
+      return inspectFedrampOfficialSources({ refresh: true, homeDir });
+    });
+
+    assert.equal(status.cacheStatus, "live");
+    assert.equal(persistentCachesEnabled(), true);
+    assert.equal(existsSync(homeDir), false, "dry runs must not create the grclanker home");
+
+    clearFedrampCachesForTests();
+    await loadFedrampCatalog({ refresh: true, homeDir });
+    assert.equal(existsSync(join(fedrampStateDir, "catalog.json")), true);
+  } finally {
+    globalThis.fetch = originalFetch;
+    clearFedrampCachesForTests();
+    rmSync(join(homeDir, ".."), { recursive: true, force: true });
+  }
+});
+
+test("loadFedrampCatalog refetches instead of serving a cache written before requirement controls existed", async () => {
+  const originalFetch = globalThis.fetch;
+  const homeDir = mkdtempSync(join(tmpdir(), "grclanker-fedramp-schema-"));
+  const stateDir = join(homeDir, ".state", "fedramp");
+  const rawUrl = "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json";
+  const fixture = structuredClone(consolidatedRulesFixture);
+  fixture.FRR.CDS.data.all.CSO["CDS-CSO-PUB"].controls = ["ra-3"];
+  const previousShape = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  for (const requirement of previousShape.requirements) {
+    delete requirement.controls;
+    delete requirement.notifications;
+  }
+  mkdirSync(stateDir, { recursive: true });
+  writeFileSync(
+    join(stateDir, "catalog.json"),
+    JSON.stringify({
+      schemaVersion: 2,
+      fetchedAt: new Date().toISOString(),
+      catalog: previousShape,
+      provenance: {
+        org: "FedRAMP",
+        repo: "rules",
+        branch: "main",
+        repoUrl: "https://github.com/FedRAMP/rules",
+        path: "fedramp-consolidated-rules.json",
+        rawUrl,
+        blobSha: null,
+        fileHtmlUrl: null,
+        repoUpdatedAt: null,
+        version: "2026.07.02.02",
+        upstreamLastUpdated: "2026-07-02",
+      },
+    }),
+  );
+  let rulesFetches = 0;
+
+  globalThis.fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    if (url === rawUrl) {
+      rulesFetches += 1;
+      return jsonResponse(fixture);
+    }
+    return new Response("not found", { status: 404, statusText: "Not Found" });
+  };
+
+  clearFedrampCachesForTests();
+
+  try {
+    const loaded = await loadFedrampCatalog({ homeDir });
+    assert.equal(loaded.cacheStatus, "live");
+    assert.equal(rulesFetches, 1);
+    assert.deepEqual(
+      loaded.catalog.requirements.find((item) => item.id === "CDS-CSO-PUB")?.controls,
+      ["ra-3"],
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    clearFedrampCachesForTests();
+    rmSync(homeDir, { recursive: true, force: true });
+  }
+});
+
+test("fedramp_get_requirement shows notifications, control mappings, notes, and every update", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalHome = process.env.GRCLANKER_HOME;
+  const homeBase = mkdtempSync(join(tmpdir(), "grclanker-fedramp-tool-"));
+  const fixture = structuredClone(consolidatedRulesFixture);
+  const rule = fixture.FRR.CDS.data.all.CSO["CDS-CSO-PUB"];
+  rule.controls = ["ac-18", "sc-8.1"];
+  rule.notes = ["Agencies rely on this information.", "Keep both formats in sync."];
+  rule.notification = [
+    {
+      party: "FedRAMP",
+      method: "form",
+      target: "https://help.fedramp.gov/hc/en-us/requests/new?ticket_form_id=51829466938011",
+      name: "[CSP] Notification of Changes",
+    },
+  ];
+  rule.updated = [
+    { date: "2026-10-13", comment: "Updated control mappings." },
+    { date: "2026-06-24", comment: "Official consolidated rules launch." },
+  ];
+  const tools = new Map();
+  registerFedrampTools({ registerTool: (tool) => tools.set(tool.name, tool) });
+
+  process.env.GRCLANKER_HOME = homeBase;
+  globalThis.fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    if (url === "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json") {
+      return jsonResponse(fixture);
+    }
+    return new Response("not found", { status: 404, statusText: "Not Found" });
+  };
+
+  clearFedrampCachesForTests();
+
+  try {
+    const result = await tools
+      .get("fedramp_get_requirement")
+      .execute("call-1", { query: "CDS-CSO-PUB" });
+    const text = result.content[0].text;
+
+    assert.match(
+      text,
+      /\nNotifications:\n- Notify FedRAMP via form: \[CSP\] Notification of Changes \(https:\/\/help\.fedramp\.gov\/hc\/en-us\/requests\/new\?ticket_form_id=51829466938011\)\n\nMapped Rev5 controls: ac-18, sc-8\.1\n/,
+    );
+    assert.match(text, /\nNote: Agencies rely on this information\.\nKeep both formats in sync\.\n/);
+    assert.match(
+      text,
+      /\nUpdates:\n- 2026-10-13: Updated control mappings\.\n- 2026-06-24: Official consolidated rules launch\.\n/,
+    );
+    assert.doesNotMatch(text, /\u2014/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalHome === undefined) delete process.env.GRCLANKER_HOME;
+    else process.env.GRCLANKER_HOME = originalHome;
+    clearFedrampCachesForTests();
+    rmSync(homeBase, { recursive: true, force: true });
+  }
+});
+
+test("fedramp_search_frmr says a miss came from a stale catalog and why the refresh failed", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalHome = process.env.GRCLANKER_HOME;
+  const homeBase = mkdtempSync(join(tmpdir(), "grclanker-fedramp-search-"));
+  const grclankerHome = join(homeBase, ".grclanker");
+  const rawUrl = "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json";
+  const tools = new Map();
+  registerFedrampTools({ registerTool: (tool) => tools.set(tool.name, tool) });
+
+  process.env.GRCLANKER_HOME = grclankerHome;
+  globalThis.fetch = async (input) =>
+    String(input) === rawUrl
+      ? jsonResponse(consolidatedRulesFixture)
+      : new Response("not found", { status: 404, statusText: "Not Found" });
+  clearFedrampCachesForTests();
+
+  try {
+    assert.equal((await loadFedrampCatalog()).cacheStatus, "live");
+    const cachePath = join(grclankerHome, ".state", "fedramp", "catalog.json");
+    const payload = JSON.parse(readFileSync(cachePath, "utf8"));
+    payload.fetchedAt = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
+    writeFileSync(cachePath, JSON.stringify(payload));
+    clearFedrampCachesForTests();
+
+    globalThis.fetch = async () => new Response("unavailable", { status: 503, statusText: "Service Unavailable" });
+    setGrcFetchTimingForTests({ sleep: async () => {} });
+
+    const result = await tools.get("fedramp_search_frmr").execute("call-1", { query: "no-such-term" });
+    const text = result.content[0].text;
+
+    assert.equal(result.isError, undefined, text);
+    assert.match(text, /^No official FedRAMP Consolidated Rules matches found for "no-such-term"\.\n\nSource: /);
+    assert.match(text, /Consolidated Rules 2026\.07\.02\.02 · upstream 2026-07-02 · stale\n/);
+    assert.match(
+      text,
+      /\nNotes:\n- Serving stale FedRAMP cache because the live GitHub source could not be refreshed: Fetch failed: https:\/\/raw\.githubusercontent\.com\/FedRAMP\/rules\/main\/fedramp-consolidated-rules\.json \(503 Service Unavailable\) after 4 attempts(?:\n|$)/,
+    );
+    assert.equal(result.details.count, 0);
+    assert.equal(result.details.cache_status, "stale");
+    assert.match(result.details.notes[0], /^Serving stale FedRAMP cache because/);
+  } finally {
+    setGrcFetchTimingForTests();
+    globalThis.fetch = originalFetch;
+    if (originalHome === undefined) delete process.env.GRCLANKER_HOME;
+    else process.env.GRCLANKER_HOME = originalHome;
+    clearFedrampCachesForTests();
+    rmSync(homeBase, { recursive: true, force: true });
+  }
+});
+
+test("inspectFedrampOfficialSources reports rules as primary and narrative Markdown as supporting", async () => {
+  const originalFetch = globalThis.fetch;
+  const homeDir = mkdtempSync(join(tmpdir(), "grclanker-fedramp-sources-"));
+
+  globalThis.fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+
+    if (url === "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json") {
+      return jsonResponse(consolidatedRulesFixture);
+    }
+
+    if (url === "https://api.github.com/repos/FedRAMP/rules") {
+      return jsonResponse({
+        html_url: "https://github.com/FedRAMP/rules",
+        updated_at: "2026-04-13T17:52:17Z",
+        default_branch: "main",
+      });
+    }
+
+    if (
+      url ===
+      "https://api.github.com/repos/FedRAMP/rules/contents/fedramp-consolidated-rules.json?ref=main"
+    ) {
+      return jsonResponse({
+        sha: "abcdef1234567890abcdef1234567890abcdef12",
+        html_url:
+          "https://github.com/FedRAMP/rules/blob/main/fedramp-consolidated-rules.json",
+      });
+    }
+
+    if (url === "https://api.github.com/repos/FedRAMP/2026-markdown") {
+      return jsonResponse({
+        html_url: "https://github.com/FedRAMP/2026-markdown",
+        updated_at: "2026-07-02T15:15:27Z",
+        default_branch: "main",
+      });
+    }
+
+    if (url === "https://api.github.com/repos/FedRAMP/2026-markdown/contents/?ref=main") {
+      return jsonResponse([
+        { name: "README.md", type: "file" },
+        { name: "_sources.json", type: "file" },
+        { name: "providers", type: "dir" },
+      ]);
+    }
+
+    return new Response("not found", { status: 404, statusText: "Not Found" });
+  };
+
+  clearFedrampCachesForTests();
+
+  try {
+    const status = await inspectFedrampOfficialSources({ refresh: true, homeDir });
+    assert.equal(status.primary.version, "2026.07.02.02");
+    assert.equal(status.primary.repo, "rules");
+    assert.equal(status.secondary.repo, "2026-markdown");
+    assert.equal(status.secondary.state, "ready");
+    assert.deepEqual(status.notes, []);
+  } finally {
+    globalThis.fetch = originalFetch;
+    clearFedrampCachesForTests();
+    rmSync(homeDir, { recursive: true, force: true });
+  }
+});
+
+const docsSnapshotSources = {
+  primary: {
+    org: "FedRAMP",
+    repo: "rules",
+    branch: "main",
+    repoUrl: "https://github.com/FedRAMP/rules",
+    path: "fedramp-consolidated-rules.json",
+    rawUrl: "https://raw.githubusercontent.com/FedRAMP/rules/main/fedramp-consolidated-rules.json",
+    blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+    fileHtmlUrl: "https://github.com/FedRAMP/rules/blob/main/fedramp-consolidated-rules.json",
+    repoUpdatedAt: "2026-04-13T17:52:17Z",
+    version: "2026.07.02.02",
+    upstreamLastUpdated: "2026-07-02",
+  },
+  secondary: {
+    org: "FedRAMP",
+    repo: "2026-markdown",
+    branch: "main",
+    repoUrl: "https://github.com/FedRAMP/2026-markdown",
+    repoUpdatedAt: "2026-07-02T15:15:27Z",
+    state: "ready",
+    rootEntries: ["README.md", "_sources.json", "providers"],
+    notes: [],
+  },
+};
+
+test("buildFedrampDocsSnapshot is deterministic and includes provenance banners", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+
+  const first = buildFedrampDocsSnapshot(catalog, docsSnapshotSources);
+  const second = buildFedrampDocsSnapshot(catalog, docsSnapshotSources);
+
+  assert.deepEqual(first, second);
+  assert.ok(first.some((file) => file.path === "fedramp/index.md"));
+  assert.ok(first.some((file) => file.path === "fedramp/processes/certification-data-sharing.md"));
+  assert.ok(first.some((file) => file.path === "fedramp/ksi/cloud-native-architecture.md"));
+
+  const overview = first.find((file) => file.path === "fedramp/index.md")?.content ?? "";
+  assert.match(overview, /official FedRAMP GitHub organization/i);
+  assert.match(overview, /2026.07.02.02/);
+  assert.match(overview, /fedramp-consolidated-rules\.json/);
+});
+
+test("buildFedrampDocsSnapshot links the overview to the FedRAMP readiness guide", () => {
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(consolidatedRulesFixture),
+    docsSnapshotSources,
+  );
+  const overview = files.find((file) => file.path === "fedramp/index.md")?.content ?? "";
+
+  assert.match(overview, /\[FedRAMP Readiness guide\]\(\/docs\/guides\/fedramp-readiness\/\)/);
+});
+
+test("buildFedrampDocsSnapshot puts source lines and status on their own lines and each note in its own paragraph", () => {
+  const fixture = structuredClone(consolidatedRulesFixture);
+  fixture.FRR.CDS.data.all.CSO["CDS-CSO-PUB"].notes = [
+    "Agencies rely on this information.",
+    "Keep both formats in sync.",
+  ];
+
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(fixture),
+    docsSnapshotSources,
+  );
+  const page =
+    files.find((file) => file.path === "fedramp/processes/certification-data-sharing.md")
+      ?.content ?? "";
+
+  assert.match(page, /GitHub repo\.\n- Source path: /);
+  assert.match(page, /\n- Requirements: [^\n]+\n- Status: `stable`\n/);
+  assert.match(page, /\nNote: Agencies rely on this information\.\n\nKeep both formats in sync\.\n/);
+});
+
+test("buildFedrampDocsSnapshot leaves the H1 to the docs page title", () => {
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(consolidatedRulesFixture),
+    docsSnapshotSources,
+  );
+
+  for (const file of files) {
+    assert.doesNotMatch(file.content, /^# /m, file.path);
+  }
+});
+
+test("buildFedrampDocsSnapshot leads with each page's purpose and ends with its source", () => {
+  const fixture = structuredClone(consolidatedRulesFixture);
+  fixture.KSI.CNA.theme = "Cloud services are built to keep their intended state.";
+
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(fixture),
+    docsSnapshotSources,
+  );
+  const content = (path) => files.find((file) => file.path === path)?.content ?? "";
+  const versionNote =
+    "> Generated from the official FedRAMP Consolidated Rules `2026.07.02.02`, last updated upstream on 2026-07-02. [Source details](#source)";
+
+  assert.ok(
+    content("fedramp/processes/certification-data-sharing.md").includes(
+      [
+        `---\n\n${versionNote}`,
+        "Providers share certification data in human-readable and machine-readable form.",
+        "## At a Glance",
+      ].join("\n\n"),
+    ),
+  );
+  assert.match(
+    content("fedramp/processes/certification-data-sharing.md"),
+    /\n- Short name: `CDS`\n- Official page: \[[^\n]+\n\n/,
+  );
+  assert.ok(
+    content("fedramp/ksi/cloud-native-architecture.md").includes(
+      [
+        `---\n\n${versionNote}`,
+        "Cloud services are built to keep their intended state.",
+        "## At a Glance",
+        "- Applies to: 20x only\n- Indicators: 2\n- Status: `stable`\n- Domain ID: `KSI-CNA`",
+        "## Indicators",
+      ].join("\n\n"),
+    ),
+  );
+  assert.match(content("fedramp/ksis.md"), /define 1 key security indicator \(KSI\) domain for 20x\./);
+  assert.match(content("fedramp/processes.md"), /define 2 processes\./);
+
+  for (const file of files) {
+    assert.ok(file.content.includes(`---\n\n${versionNote}\n\n`), file.path);
+    assert.match(
+      file.content,
+      /\n## Source\n\n- Generated from the official \[FedRAMP\/rules\]\([^\n]+\n- Source path: [^\n]+ at blob `abcdef123456`\.\n- Consolidated Rules version: [^\n]+\n- Supporting narrative [^\n]+\n$/,
+      file.path,
+    );
+    assert.doesNotMatch(file.content, /^> Source path|Web slug|Requirements and Recommendations|Current Grounding/m, file.path);
+  }
+});
+
+test("buildFedrampDocsSnapshot titles process and KSI pages with their bare names", () => {
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(consolidatedRulesFixture),
+    docsSnapshotSources,
+  );
+  const title = (path) =>
+    files.find((file) => file.path === path)?.content.match(/^---\ntitle: (.*)\n/)?.[1];
+
+  assert.equal(title("fedramp/processes/certification-data-sharing.md"), '"Certification Data Sharing"');
+  assert.equal(title("fedramp/ksi/cloud-native-architecture.md"), '"Cloud Native Architecture"');
+});
+
+test("buildFedrampDocsSnapshot names requirement groups in words and skips empty ones", () => {
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(consolidatedRulesFixture),
+    docsSnapshotSources,
+  );
+  const content = (path) => files.find((file) => file.path === path)?.content ?? "";
+  const cdsPage = content("fedramp/processes/certification-data-sharing.md");
+
+  for (const index of ["fedramp/index.md", "fedramp/processes.md"]) {
+    assert.match(
+      content(index),
+      /\(\/docs\/fedramp\/processes\/certification-data-sharing\/\) · `CDS` · requirements: 1 for 20x and Rev5, 1 for 20x only, 1 for Rev5 only\n/,
+      index,
+    );
+    assert.match(
+      content(index),
+      /\(\/docs\/fedramp\/processes\/collaborative-continuous-monitoring\/\) · `CCM` · requirements: 1 for 20x and Rev5\n/,
+      index,
+    );
+  }
+  assert.match(cdsPage, /\n- Applies to: 20x and Rev5\n/);
+  assert.match(cdsPage, /\n- Requirements: 1 for 20x and Rev5, 1 for 20x only, 1 for Rev5 only\n/);
+  assert.match(
+    cdsPage,
+    /\n## Requirements for 20x and Rev5\n[\s\S]*\n## Requirements for 20x only\n[\s\S]*\n## Requirements for Rev5 only\n/,
+  );
+  for (const file of files) {
+    assert.doesNotMatch(file.content, /`both`|applies to `|^## (BOTH|20X|REV5)$/m, file.path);
+  }
+});
+
+test("buildFedrampDocsSnapshot renders notifications, control mappings, and every update", () => {
+  const fixture = structuredClone(consolidatedRulesFixture);
+  const rule = fixture.FRR.CDS.data.all.CSO["CDS-CSO-PUB"];
+  rule.controls = ["ac-18", "sc-8.1"];
+  rule.notification = [
+    {
+      party: "FedRAMP",
+      method: "form",
+      target: "https://help.fedramp.gov/hc/en-us/requests/new?ticket_form_id=51829466938011",
+      name: "[CSP] Notification of Changes",
+    },
+    { party: "FedRAMP", method: "email", target: "info@fedramp.gov", name: "info@fedramp.gov" },
+    {
+      party: "Provider",
+      method: "varies",
+      target: "varies by provider",
+      name: "The provider's security contact email or form.",
+    },
+    {
+      party: "All Necessary Parties",
+      method: "update",
+      target: "trust center",
+      name: "Provider's Trust Center or USDA Connect",
+    },
+    {
+      party: "Everyone",
+      method: "web",
+      target: "https://www.fedramp.gov/notices",
+      name: "FedRAMP Public Notices",
+    },
+  ];
+  rule.updated = [
+    { date: "2026-10-13", comment: "Updated control mappings." },
+    { date: "2026-06-24", comment: "Official consolidated rules launch." },
+  ];
+  fixture.KSI.CNA.indicators["KSI-CNA-CDS"].updated = [
+    { date: "2026-10-13", comment: "Updated control mappings." },
+    { date: "2026-06-24", comment: "Official consolidated rules launch." },
+  ];
+
+  const files = buildFedrampDocsSnapshot(
+    normalizeFedrampConsolidatedRules(fixture),
+    docsSnapshotSources,
+  );
+  const processPage =
+    files.find((file) => file.path === "fedramp/processes/certification-data-sharing.md")
+      ?.content ?? "";
+  const ksiPage =
+    files.find((file) => file.path === "fedramp/ksi/cloud-native-architecture.md")?.content ?? "";
+
+  assert.match(
+    processPage,
+    new RegExp(
+      [
+        "\\nNotifications:",
+        "- Notify FedRAMP via form: \\[CSP\\] Notification of Changes \\(https://help\\.fedramp\\.gov/hc/en-us/requests/new\\?ticket_form_id=51829466938011\\)",
+        "- Notify FedRAMP via email: info@fedramp\\.gov",
+        "- Notify Provider via the appropriate recipient-specific method: The provider's security contact email or form \\(varies by provider\\)",
+        "- Notify All Necessary Parties via an update: Provider's Trust Center or USDA Connect \\(trust center\\)",
+        "- Notify Everyone via the web: FedRAMP Public Notices \\(https://www\\.fedramp\\.gov/notices\\)",
+        "",
+        "Mapped Rev5 controls: `ac-18`, `sc-8\\.1`\\n",
+      ].join("\\n"),
+    ),
+  );
+  assert.match(
+    processPage,
+    /\nUpdates:\n- 2026-10-13: Updated control mappings\.\n- 2026-06-24: Official consolidated rules launch\.\n/,
+  );
+  assert.match(processPage, /\nRecent update \(2026-06-24\): Official consolidated rules launch\.\n/);
+  assert.match(
+    ksiPage,
+    /\nUpdates:\n- 2026-10-13: Updated control mappings\.\n- 2026-06-24: Official consolidated rules launch\.\n/,
+  );
+});
+
+test("readiness helper prioritizes official MUST items and infers provider-facing artifacts", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+  };
+
+  const brief = buildFedrampReadinessBrief(loaded, {
+    query: "CDS",
+    audience: "provider",
+    applies_to: "20x",
+    limit: 3,
+  });
+
+  assert.equal(brief.kind, "process");
+  assert.equal(brief.checklist.length, 2);
+  assert.equal(brief.checklist[0]?.id, "CDS-CSO-PUB");
+  assert.ok(
+    brief.artifactSuggestions.some((item) => item.toLowerCase().includes("machine-readable")),
+  );
+  assert.ok(
+    brief.workstreams.some((item) => item.toLowerCase().includes("programmatic access")),
+  );
+  assert.match(brief.text, /Priority checklist:/);
+  assert.match(brief.text, /Likely artifacts to have ready/i);
+});
+
+test("readiness helper links KSI indicators back to their process obligations", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+  };
+
+  const brief = buildFedrampReadinessBrief(loaded, {
+    query: "KSI-CNA-CDS",
+    audience: "provider",
+    applies_to: "20x",
+    limit: 2,
+  });
+
+  assert.equal(brief.kind, "ksi-indicator");
+  assert.equal(brief.linkedProcesses[0]?.id, "CDS");
+  assert.ok(brief.checklist.some((item) => item.id === "CDS-CSO-PUB"));
+  assert.match(brief.text, /Linked process:\s+Certification Data Sharing \[CDS\]/);
+});
+
+test("readiness and artifact plans share one resolved subject for processes, indicators, and domains", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = { catalog, provenance: { repo: "rules", path: "fixture.json", branch: "main", blobSha: "fixture", version: "test", upstreamLastUpdated: "2026-07-02" }, cacheStatus: "live" };
+  for (const query of ["ADS", catalog.ksiIndicators[0].id, catalog.ksiDomains[0].id]) {
+    const resolved = resolveFedrampSubject(catalog, query);
+    const brief = buildFedrampReadinessBrief(loaded, { query, audience: "provider", applies_to: "20x" });
+    const plan = buildFedrampArtifactPlan(loaded, { query, audience: "provider", applies_to: "20x" });
+    assert.equal(brief.kind, resolved.kind);
+    assert.equal(plan.kind, resolved.kind);
+    assert.deepEqual(brief.subject, resolved.subject);
+    assert.deepEqual(plan.subject, resolved.subject);
+    assert.deepEqual(brief.linkedProcesses, plan.linkedProcesses);
+    assert.deepEqual(brief.linkedIndicators, plan.linkedIndicators);
+  }
+});
+
+test("FedRAMP subject resolution preserves ambiguous process errors instead of choosing a KSI fallback", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const process = catalog.processes[0];
+  catalog.processes = [{ ...process, id: "ONE", name: "Shared process one" }, { ...process, id: "TWO", name: "Shared process two" }];
+  catalog.ksiDomains = [{ ...catalog.ksiDomains[0], name: "Shared process" }];
+  assert.throws(() => resolveFedrampSubject(catalog, "Shared process"), /FedRAMP process query .* matched multiple items/);
+});
+
+test("a readiness computation failure retains its original cause after a process is resolved", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const failure = new Error("source data could not be read");
+  Object.defineProperty(catalog, "requirements", { get() { throw failure; } });
+  assert.throws(() => buildFedrampReadinessBrief({ catalog }, { query: "CDS" }), (error) => error === failure);
+});
+
+test("artifact and workstream inference stays grounded in official requirement language", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const requirements = catalog.requirements;
+  const indicators = catalog.ksiIndicators;
+
+  const artifacts = inferFedrampArtifactSuggestions(["CDS"], requirements, indicators);
+  const workstreams = inferFedrampWorkstreams(["CDS"], requirements, indicators);
+
+  assert.ok(artifacts.some((item) => item.toLowerCase().includes("trust-center")));
+  assert.ok(workstreams.some((item) => item.toLowerCase().includes("certification data publishing")));
+  assert.ok(workstreams.some((item) => item.toLowerCase().includes("trust-center operations")));
+});
+
+test("artifact planner turns CDS into public and controlled package items", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+  };
+
+  const plan = buildFedrampArtifactPlan(loaded, {
+    query: "CDS",
+    audience: "trust-center",
+    applies_to: "20x",
+  });
+
+  assert.equal(plan.kind, "process");
+  assert.ok(plan.items.some((item) => item.name.includes("Human-readable authorization summary")));
+  assert.ok(plan.items.some((item) => item.name.includes("Machine-readable authorization data feed")));
+  assert.ok(plan.items.some((item) => item.name.includes("Controlled authorization-data API")));
+  assert.ok(plan.rollout.some((phase) => phase.phase === "foundation"));
+  assert.ok(plan.rollout.some((phase) => phase.phase === "access"));
+  assert.match(plan.text, /Public artifacts/i);
+  assert.match(plan.text, /Controlled-access artifacts/i);
+});
+
+test("artifact planner resolves KSI queries back to linked process artifacts", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+  };
+
+  const plan = buildFedrampArtifactPlan(loaded, {
+    query: "KSI-CNA-CDS",
+    audience: "provider",
+    applies_to: "20x",
+  });
+
+  assert.equal(plan.kind, "ksi-indicator");
+  assert.equal(plan.linkedProcesses[0]?.id, "CDS");
+  assert.ok(plan.items.some((item) => item.groundedBy.includes("CDS-CSO-PUB")));
+  assert.match(plan.text, /Linked process:\s+Certification Data Sharing \[CDS\]/);
+});
+
+test("CDS package planner groups artifacts into package layers", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+  };
+
+  const plan = buildFedrampAdsPackagePlan(loaded, {
+    audience: "trust-center",
+    applies_to: "20x",
+  });
+
+  assert.equal(plan.process.id, "CDS");
+  assert.ok(plan.publicItems.length >= 2);
+  assert.ok(plan.controlledItems.length >= 1);
+  assert.match(plan.text, /Public trust-center layer:/);
+  assert.match(plan.text, /Controlled authorization-data layer:/);
+  assert.match(plan.text, /Recommended rollout:/);
+});
+
+test("ADS presentation consumes a completed plan and provenance without a catalog and preserves generated scaffold bytes", () => {
+  const source = {
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+  const loaded = { ...source, catalog: normalizeFedrampConsolidatedRules(consolidatedRulesFixture) };
+  const args = {
+    audience: "trust-center",
+    applies_to: "20x",
+    provider_name: "Acme & Partners",
+    offering_name: "Cloud <Platform>",
+    primary_domain: "https://trust.example.test/",
+    support_email: "security@example.test",
+  };
+  const plan = buildFedrampAdsPackagePlan(loaded, args);
+  const site = renderAdsPublicSite(source, plan, args);
+  const starter = renderAdsStarterBundle(source, plan);
+  assert.equal(site.plan, plan);
+  assert.equal(starter.plan, plan);
+  assert.deepEqual(site, buildFedrampAdsSite(loaded, args));
+  assert.deepEqual(starter, buildFedrampAdsStarterBundle(loaded, args));
+  // Captured before presentation was extracted: paths, ordering, HTML escaping,
+  // machine-readable contracts, and every asset's exact bytes stay compatible.
+  const digest = (files) => createHash("sha256").update(JSON.stringify(files)).digest("hex");
+  assert.equal(digest(site.files), "a370ce6a5b2b14922df72adb687c96fe2d976552f26fe46680a5314b34ef83f8");
+  assert.equal(digest(starter.files), "62e38b6ff2bb8df6de0458c3937f5cc7fac83ae194d48f4e9500f880f136c8db");
+});
+
+test("CDS starter bundle builder includes trust-center and feed templates", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+
+  const bundle = buildFedrampAdsStarterBundle(loaded, {
+    audience: "trust-center",
+    applies_to: "20x",
+  });
+
+  assert.equal(bundle.bundleName, "ads-starter-bundle");
+  assert.ok(bundle.files.some((file) => file.path === "README.md"));
+  assert.ok(bundle.files.some((file) => file.path === "public/trust-center-summary.md"));
+  assert.ok(bundle.files.some((file) => file.path === "public/authorization-data.json"));
+  assert.ok(bundle.files.some((file) => file.path === "controlled/access-instructions.md"));
+  assert.ok(bundle.files.some((file) => file.path === "private/operating-runbook.md"));
+
+  const readme = bundle.files.find((file) => file.path === "README.md")?.content ?? "";
+  assert.match(readme, /Certification Data Sharing Starter Bundle/);
+  assert.match(readme, /public\/authorization-data\.json/);
+  assert.match(
+    readme,
+    /Hosting note:\n- Serve the public JSON files with `Content-Type: application\/json` and `X-Content-Type-Options: nosniff`, and enable CORS [^\n]+\(FRC-CSO-JSN\)\.\n/,
+  );
+});
+
+test("FedRAMP bundle writes reject paths outside the output root before creating them", async () => {
+  const root = mkdtempSync(join(tmpdir(), "grclanker-fedramp-path-"));
+  const outside = mkdtempSync(join(tmpdir(), "grclanker-fedramp-outside-"));
+  const linked = join(root, "linked");
+  symlinkSync(outside, linked, "dir");
+  const escaped = join(outside, "escape.txt");
+
+  assert.throws(() => resolveSecureOutputPath(root, join(root, "../escape.txt")), /path traversal detected/);
+  assert.throws(() => resolveSecureOutputPath(root, join(linked, "file.txt")), /Refusing to write through symlink/);
+  await assert.rejects(writeSecureTextFile(root, escaped, "secret"), /path traversal detected/);
+  assert.equal(existsSync(escaped), false);
+
+  const written = await writeSecureTextFile(root, join(root, "public", "authorization-data.json"), "{\"ok\":true}\n");
+  assert.equal(existsSync(written), true);
+  assert.equal(readFileSync(written, "utf8"), "{\"ok\":true}\n");
+});
+
+test("CDS starter bundle generator writes scaffold files under the requested root", async () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+  const outputRoot = mkdtempSync(join(tmpdir(), "grclanker-fedramp-bundle-"));
+
+  try {
+    const result = await generateFedrampAdsStarterBundle(loaded, outputRoot, {
+      audience: "trust-center",
+      applies_to: "20x",
+    });
+
+    assert.ok(result.outputDir.startsWith(realpathSync(outputRoot)));
+    assert.ok(existsSync(join(result.outputDir, "README.md")));
+    assert.ok(existsSync(join(result.outputDir, "public", "authorization-data.json")));
+    assert.ok(existsSync(join(result.outputDir, "controlled", "access-instructions.md")));
+    assert.ok(existsSync(join(result.outputDir, "private", "continuous-validation.md")));
+
+    const metadata = readFileSync(join(result.outputDir, "_source.json"), "utf8");
+    assert.match(metadata, /"process":/);
+    assert.match(metadata, /"CDS"/);
+  } finally {
+    rmSync(outputRoot, { recursive: true, force: true });
+  }
+});
+
+test("CDS site builder includes public pages, JSON artifacts, and cloud deploy notes", () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+
+  const site = buildFedrampAdsSite(loaded, {
+    audience: "trust-center",
+    applies_to: "20x",
+    provider_name: "Example Security",
+    offering_name: "Example Cloud",
+    primary_domain: "trust.example.com",
+    support_email: "trust@example.com",
+  });
+
+  assert.equal(site.bundleName, "ads-public-site");
+  assert.equal(site.metadata.baseUrl, "https://trust.example.com");
+  assert.equal(site.metadata.approvalStatus, "draft-unapproved");
+  assert.ok(site.files.some((file) => file.path === "index.html"));
+  assert.ok(site.files.some((file) => file.path === "APPROVAL_REQUIRED.md"));
+  assert.ok(site.files.some((file) => file.path === "services/index.html"));
+  assert.ok(site.files.some((file) => file.path === "access/index.html"));
+  assert.ok(site.files.some((file) => file.path === "history/index.html"));
+  assert.ok(site.files.some((file) => file.path === "authorization-data.json"));
+  assert.ok(site.files.some((file) => file.path === "service-inventory.json"));
+  assert.ok(site.files.some((file) => file.path === "query-index.json"));
+  assert.ok(site.files.some((file) => file.path === "trust-center.md"));
+  assert.ok(site.files.some((file) => file.path === "llms.txt"));
+  assert.ok(site.files.some((file) => file.path === "llms-full.txt"));
+  assert.ok(site.files.some((file) => file.path === "documentation/api/api.yaml"));
+  assert.ok(site.files.some((file) => file.path === "assets/site.css"));
+
+  const readme = site.files.find((file) => file.path === "README.md")?.content ?? "";
+  assert.match(readme, /AWS: upload the generated files to S3/i);
+  assert.match(readme, /Azure: upload the generated files to Azure Storage Static Website/i);
+  assert.match(readme, /GCP: upload the generated files to Cloud Storage/i);
+  assert.match(readme, /Approval status: draft-unapproved/i);
+  assert.match(readme, /Review and approve every public statement/i);
+  assert.match(
+    readme,
+    /\n- Serve the public JSON files with `Content-Type: application\/json` and `X-Content-Type-Options: nosniff`, and enable CORS [^\n]+\(FRC-CSO-JSN\)\.\n/,
+  );
+
+  const index = site.files.find((file) => file.path === "index.html")?.content ?? "";
+  assert.match(index, /Example Cloud Trust Center/);
+  assert.match(index, /authorization-data\.json/);
+  assert.match(index, /query-index\.json/);
+  assert.match(index, /llms\.txt/);
+  assert.match(index, /documentation\/api\/api\.yaml/);
+  assert.match(index, /Draft scaffold\. Review before publication\./);
+  assert.match(index, /noindex,nofollow,noarchive/);
+  assert.match(index, /public trust center/i);
+
+  const llms = site.files.find((file) => file.path === "llms.txt")?.content ?? "";
+  assert.match(llms, /Machine-readable resources/i);
+  assert.match(llms, /query-index\.json/);
+
+  const queryIndex = site.files.find((file) => file.path === "query-index.json")?.content ?? "";
+  assert.match(queryIndex, /"resources": \[/);
+  assert.match(queryIndex, /"llms-txt"/);
+  assert.match(queryIndex, /"openapi-yaml"/);
+  assert.match(queryIndex, /"draft-unapproved"/);
+
+  const openapi = site.files.find((file) => file.path === "documentation/api/api.yaml")?.content ?? "";
+  assert.match(openapi, /openapi: 3\.0\.3/);
+  assert.match(openapi, /\/authorization-data\.json:/);
+  assert.match(openapi, /\/llms\.txt:/);
+  assert.match(openapi, /requires human approval before publication/i);
+
+  const robots = site.files.find((file) => file.path === "robots.txt")?.content ?? "";
+  assert.match(robots, /Disallow: \//);
+
+  const approval = site.files.find((file) => file.path === "APPROVAL_REQUIRED.md")?.content ?? "";
+  assert.match(approval, /Approval Required Before Publication/);
+  assert.match(approval, /Reviewer: TODO/);
+  assert.match(
+    approval,
+    /\n- Confirm the host serves the public JSON files with `Content-Type: application\/json` and `X-Content-Type-Options: nosniff`, and allows cross-origin \(CORS\) reads \(FRC-CSO-JSN\)\.\n/,
+  );
+});
+
+test("CDS site generator writes a portable static trust-center bundle under the requested root", async () => {
+  const catalog = normalizeFedrampConsolidatedRules(consolidatedRulesFixture);
+  const loaded = {
+    catalog,
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+  const outputRoot = mkdtempSync(join(tmpdir(), "grclanker-fedramp-site-"));
+
+  try {
+    const result = await generateFedrampAdsSite(loaded, outputRoot, {
+      audience: "trust-center",
+      applies_to: "20x",
+      provider_name: "Example Security",
+      offering_name: "Example Cloud",
+      primary_domain: "trust.example.com",
+      support_email: "trust@example.com",
+    });
+
+    assert.ok(result.outputDir.startsWith(realpathSync(outputRoot)));
+    assert.equal(result.metadata.siteTitle, "Example Cloud Trust Center");
+    assert.ok(existsSync(join(result.outputDir, "index.html")));
+    assert.ok(existsSync(join(result.outputDir, "APPROVAL_REQUIRED.md")));
+    assert.ok(existsSync(join(result.outputDir, "services", "index.html")));
+    assert.ok(existsSync(join(result.outputDir, "access", "index.html")));
+    assert.ok(existsSync(join(result.outputDir, "history", "index.html")));
+    assert.ok(existsSync(join(result.outputDir, "authorization-data.json")));
+    assert.ok(existsSync(join(result.outputDir, "service-inventory.json")));
+    assert.ok(existsSync(join(result.outputDir, "query-index.json")));
+    assert.ok(existsSync(join(result.outputDir, "trust-center.md")));
+    assert.ok(existsSync(join(result.outputDir, "llms.txt")));
+    assert.ok(existsSync(join(result.outputDir, "llms-full.txt")));
+    assert.ok(existsSync(join(result.outputDir, "documentation", "api", "api.yaml")));
+    assert.ok(existsSync(join(result.outputDir, "assets", "site.css")));
+
+    const source = readFileSync(join(result.outputDir, "_source.json"), "utf8");
+    assert.match(source, /"bundle": "ads-public-site"/);
+    assert.match(source, /"primary_domain": "trust\.example\.com"/);
+    assert.match(source, /"approval_status": "draft-unapproved"/);
+
+    const llms = readFileSync(join(result.outputDir, "llms.txt"), "utf8");
+    assert.match(llms, /trust-center\.md/);
+    assert.match(llms, /llms-full\.txt/);
+    assert.match(llms, /documentation\/api\/api\.yaml/);
+
+    const robots = readFileSync(join(result.outputDir, "robots.txt"), "utf8");
+    assert.match(robots, /Disallow: \//);
+  } finally {
+    rmSync(outputRoot, { recursive: true, force: true });
+  }
+});
+
+writeFailureTest("CDS starter bundle and site generators leave nothing under the output root when a write fails partway", async () => {
+  const loaded = {
+    catalog: normalizeFedrampConsolidatedRules(consolidatedRulesFixture),
+    provenance: {
+      repo: "rules",
+      path: "fedramp-consolidated-rules.json",
+      branch: "main",
+      blobSha: "abcdef1234567890abcdef1234567890abcdef12",
+      version: "2026.07.02.02",
+      upstreamLastUpdated: "2026-07-02",
+    },
+    cacheStatus: "live",
+    notes: [],
+  };
+  const args = { audience: "trust-center", applies_to: "20x" };
+  const outputRoot = mkdtempSync(join(tmpdir(), "grclanker-fedramp-write-failure-"));
+
+  try {
+    await assertNoPartialBundleOnWriteFailure(outputRoot, () => generateFedrampAdsStarterBundle(loaded, outputRoot, args));
+    await assertNoPartialBundleOnWriteFailure(outputRoot, () => generateFedrampAdsSite(loaded, outputRoot, args));
+  } finally {
+    rmSync(outputRoot, { recursive: true, force: true });
+  }
+});

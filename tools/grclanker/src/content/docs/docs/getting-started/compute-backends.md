@@ -1,0 +1,709 @@
+---
+title: Compute Backends
+description: Configure host, sandbox-runtime, Docker, Parallels, Modal, or RunPod execution for grclanker and validate each backend with env list, env doctor, and smoke-test.
+---
+
+grclanker separates model choice from execution environment on purpose.
+
+Use `env doctor` and `env smoke-test` to verify the selected backend can actually execute the tool surface you expect.
+
+This page describes the `v0.1.5` release and `main`. The design behind it, including the backend matrix and the reasons for each backend, is in the [grclanker Compute Backends spec](/specs/grclanker-compute-backends/).
+
+The older `v0.0.1` bundle ships only `host`, `sandbox-runtime`, `docker`, and `parallels-vm`, plus `env doctor`, `env smoke-test`, and `env exec`. `env list`, `setup --compute`, per-run `--compute`, compute profiles, and the Modal and RunPod backends arrived in `v0.1.0`.
+
+## What a compute backend controls
+
+The compute backend is where tool execution happens.
+
+- `host`: Run directly in the current shell on this machine.
+- `sandbox-runtime`: Keep the runtime local, but wrap `bash`, `grep`, and `find` in a local sandbox and enforce matching filesystem policy for `read`, `write`, `edit`, and `ls`.
+- `docker`: Run `bash`, `read`, `write`, `edit`, `ls`, `grep`, and `find` inside a local container with the repo bind-mounted into it.
+- `parallels-vm`: Deploy a disposable Parallels sandbox from either a dedicated template or a stopped base VM, attach the repo share, and run the same tool surface inside that sandbox via `prlctl exec`.
+- `modal`: Run each `bash` command one-shot inside a fresh Modal container through the `modal shell` CLI, optionally with a GPU. File tools stay on the local workspace (see "One-shot backends" below).
+- `runpod-pod`: Copy the tracked files of the repo into a persistent RunPod pod you already own and run the tool surface over SSH.
+- `runpod-serverless`: Dispatch each `bash` command as a stateless job to a RunPod serverless endpoint that runs the grclanker worker contract. File tools stay on the local workspace.
+- `vercel-sandbox` and `cloudflare-sandbox`: Reserved kinds that fail fast today (see the backend matrix below).
+
+Model/provider settings still decide which LLM answers questions. Compute backend settings decide where code execution and file operations happen.
+
+## Backend matrix
+
+| Kind | Bucket | State | Runtime path | Snapshot / restore | GPU | Workspace staging | Artifact sync-back |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `host` | host | shipped | Pi's native local shell operations wrapped in the output redaction guard (the `createHostBackend` contract adapter is exercised by unit tests only) | no | no | in place | in place |
+| `sandbox-runtime` | sandboxed | shipped | contract adapter for bash, grep, and find; file tools stay local with the same FS policy | no | no | in place | in place |
+| `docker` | sandboxed | shipped | contract adapter over `docker run` | no | no | bind mount | bind mount |
+| `parallels-vm` | sandboxed | shipped | contract adapter (disposable clone, `prlctl exec`) | yes (`prlctl snapshot`, `prlctl snapshot-switch`), exercised by `env smoke-test` | no | shared folder | shared folder |
+| `modal` | gpu-burst | shipped (CLI) | contract adapter over `modal shell`, one-shot: bash only, file tools stay local | no | yes | `--add-local` copy per command | not available |
+| `runpod-pod` | persistent-remote | shipped | contract adapter over the REST API plus `ssh`/`scp` | no | yes | `scp` of the git index (tracked files minus the deny list) into a per-session directory | `scp` (manual) |
+| `runpod-serverless` | gpu-burst | shipped | contract adapter over the serverless HTTP API, one-shot: bash only, file tools stay local | no | yes | worker image must contain the workspace | artifact paths reported by the worker |
+| `vercel-sandbox` | sandboxed | stub | fails fast | no | no | no | no |
+| `cloudflare-sandbox` | sandboxed | stub | fails fast | no | no | no | no |
+
+`grclanker env list` lists every kind with its bucket, its readiness on this machine right now, and a one-line detail. The state, snapshot, GPU, and staging columns above are reference only and are not part of its output.
+
+## Choose the right backend
+
+- Use `host` when you want speed.
+- Use `sandbox-runtime` when you want local-first execution with policy.
+- Use `docker` when you want reproducible container isolation and easy reset.
+- Use `parallels-vm` when you want a full guest OS and coarse-grained isolation without risking one of your existing VMs.
+- Use `modal` or `runpod-serverless` when a step needs a GPU or more compute than the laptop has and does not need to write back into the repo.
+- Use `runpod-pod` when you want a persistent remote workstation with SSH that you can inspect and repair by hand.
+
+## Recommended operator flow
+
+1. Run `grclanker setup`.
+2. Pick the model/provider path you want.
+3. Pick the compute backend you want.
+4. Run `grclanker env doctor`.
+5. Run `grclanker env smoke-test`.
+6. Only then start relying on that backend for normal work.
+
+## Validate the backend
+
+These are the first commands to run after setup:
+
+```bash
+grclanker env list
+grclanker env doctor
+grclanker env smoke-test
+grclanker env exec -- pwd
+```
+
+`env list` prints every backend kind and marks the preferred backend. Each kind shows:
+
+- **Routing bucket:** `host`, `sandboxed`, `gpu-burst`, or `persistent-remote`.
+- **Readiness:** `ready`, `not detected`, `needs configuration`, or `not available`.
+
+Add `--json` for machine-readable output.
+
+Readiness for the remote kinds means credentials plus every local tool the adapter cannot work without:
+
+- `modal` needs the `modal` CLI.
+- `runpod-pod` needs `ssh`, `scp`, and `git` (git lists the tracked files that get staged).
+
+`env list`, `env doctor`, `env smoke-test`, `setup`, and the live smoke selector all use the same check. The message names the missing tool and why it is needed. For example: ``Install `git`; git is required to stage tracked files (runpod-pod uploads the git index of the workspace).``
+
+## Pick a backend per run
+
+```bash
+grclanker setup --compute docker
+grclanker investigate --compute docker
+grclanker audit --compute modal
+grclanker env smoke-test --compute runpod-serverless
+```
+
+- `setup --compute <kind>` saves the kind (and its default `computeProfile`) without running the interactive wizard. It refuses the `vercel-sandbox` and `cloudflare-sandbox` stubs.
+- `--compute <kind>` on `investigate`, `audit`, `assess`, or `validate` overrides the saved backend for that run only. grclanker passes the override to the in-process Pi extension through `GRCLANKER_COMPUTE_BACKEND_OVERRIDE`.
+- `--compute` is also accepted as an alias for `--backend` on `env exec` and `env smoke-test`.
+
+Useful targeted checks:
+
+```bash
+grclanker env smoke-test --backend docker
+grclanker env smoke-test --backend sandbox-runtime
+grclanker env smoke-test --backend parallels-vm
+grclanker env exec --backend docker -- pwd
+```
+
+`env doctor` answers "is this backend configured and detectable?"
+
+`env smoke-test` answers "can this backend actually run `bash`, file tools, and backend-native search right now?"
+
+On a one-shot backend (`modal`, `runpod-serverless`), the file tool and search probes are reported as skipped with the reason rather than as passed, because those tools are not offered there.
+
+That validation step is not optional once you move beyond `host`.
+
+## settings.json fields
+
+Backend preferences live in:
+
+```text
+~/.grclanker/agent/settings.json
+```
+
+Example:
+
+```json
+{
+  "computeBackend": "docker",
+  "computeProfile": "isolated-local",
+  "computeDefaults": {
+    "networkPolicy": "default",
+    "workspaceMountMode": "rw"
+  },
+  "dockerImage": "ubuntu:24.04",
+  "dockerWorkspacePath": "/workspace",
+  "parallelsSourceKind": "template",
+  "parallelsTemplateName": "grclanker-macos-template",
+  "parallelsClonePrefix": "grclanker-sandbox",
+  "parallelsWorkspacePath": "/media/psf/grclanker-workspace-repo",
+  "parallelsAutoStart": true,
+  "modalImage": "debian:bookworm-slim",
+  "modalGpu": "a10g",
+  "runpodWorkspacePath": "/workspace"
+}
+```
+
+Only the fields for the backend you use need to be set.
+
+- `computeProfile`: `local-host`, `isolated-local`, `gpu-burst`, or `persistent-remote`.
+  - Each profile maps to one routing bucket.
+  - `env list` and `env doctor` warn when the selected backend belongs to a different bucket than the profile.
+  - When unset, the profile is derived from the backend.
+- `computeDefaults.networkPolicy`: `"default"`, `"deny-all"`, or `{ "allowDomains": [...] }`.
+  - Docker honors `deny-all` with `--network none`.
+  - `sandbox-runtime` keeps using its own `sandbox.json` allowlist.
+  - Remote providers record the policy but cannot enforce it through their documented surfaces yet.
+- `computeDefaults.workspaceMountMode`: `"rw"` or `"ro"`.
+  - Docker appends `:ro` to the bind mount.
+  - Parallels passes `--mode ro` when it attaches the repo share (`prlctl set <clone> --shf-host-add <share> --path <repo> --mode ro`).
+  - Both paths read the same setting, so a read-only workspace means write, edit, and the smoke test's write probe fail inside the sandbox by design.
+
+## Host
+
+`host` is the default and requires no extra configuration.
+
+Use it when:
+
+- you want the fastest local iteration path
+- you trust the current repo and commands
+- you are still setting up the rest of the environment
+
+Select it without the wizard:
+
+```bash
+grclanker setup --compute host
+```
+
+Or run `grclanker setup`, answer yes to the advanced compute backend prompt, and choose `host`.
+
+## sandbox-runtime
+
+Use this when you want local execution with filesystem and network policy around the tool surface.
+
+The config merge order is:
+
+- **Global:** `~/.grclanker/sandbox.json`
+- **Project:** `.grclanker/sandbox.json` in the directory you launch grclanker from (usually the repo root)
+
+Project config is the right place for repo-specific rules.
+
+Example project config:
+
+```json
+{
+  "enabled": true,
+  "network": {
+    "allowedDomains": [
+      "github.com",
+      "api.github.com",
+      "registry.npmjs.org"
+    ]
+  },
+  "filesystem": {
+    "allowWrite": [".", "/tmp"],
+    "denyRead": ["~/.ssh", "~/.aws", "~/.gnupg"],
+    "denyWrite": [".env", ".env.*", "*.pem", "*.key"]
+  }
+}
+```
+
+Notes:
+
+- `bash`, `grep`, and `find` run through the sandbox wrapper.
+- `read`, `write`, `edit`, and `ls` are enforced against the same policy locally.
+- This is the fastest isolation path when you do not need a full container or VM.
+
+Verify it:
+
+```bash
+grclanker env smoke-test --backend sandbox-runtime
+```
+
+## Docker
+
+Use Docker when you want an isolated local container with a reproducible image.
+
+The main settings are:
+
+- `dockerImage`: The image to run.
+- `dockerWorkspacePath`: Where the host repo is mounted inside the container.
+
+The default documented path is:
+
+```json
+{
+  "computeBackend": "docker",
+  "dockerImage": "ubuntu:24.04",
+  "dockerWorkspacePath": "/workspace"
+}
+```
+
+What grclanker expects:
+
+- Docker Desktop or the Docker daemon is running
+- the configured image can run `bash`
+- the bind mount path is writeable in the container
+
+The current Docker adapter:
+
+- mounts the repo into the container
+- sets the container working directory to the matching repo path
+- runs with your current uid/gid when available, so file ownership does not come back as root-owned on the host
+
+Examples:
+
+```bash
+grclanker env doctor
+grclanker env smoke-test --backend docker
+grclanker env exec --backend docker -- pwd
+```
+
+Expected `pwd` output for the default config:
+
+```text
+/workspace
+```
+
+Notes:
+
+- grclanker prefers `rg` inside the container when it is available.
+- If `rg` is missing, backend search falls back to POSIX `grep` and `find`.
+- The smoke test validates `bash`, `read`, `write`, `edit`, `ls`, `find`, and `grep`.
+
+## Parallels
+
+Use Parallels when you want a full guest OS instead of a container, but you do not want grclanker touching one of your real working VMs directly.
+
+The main settings are:
+
+- `parallelsSourceKind`: `template` or `base-vm`.
+- `parallelsTemplateName`: The dedicated Parallels template grclanker should deploy sandboxes from.
+- `parallelsBaseVmName`: The exact stopped base VM grclanker should clone when you use the fallback path.
+- `parallelsClonePrefix`: Prefix used for disposable clone names.
+- `parallelsWorkspacePath`: Optional guest path override if your guest mounts the repo share somewhere custom.
+- `parallelsAutoStart`: Must be `true` so grclanker can boot the fresh clone it just created.
+
+The setup flow is intended to reduce guesswork:
+
+- it lists detected templates and VMs separately
+- it recommends templates first for Windows, Linux, and macOS sandbox automation
+- it lets you choose between `template` and `base-vm`
+- it lets you select a template or stopped base by number or exact name
+- it saves a disposable clone prefix
+- it defaults the guest workspace path to auto-detect instead of forcing you to guess
+
+Example:
+
+```json
+{
+  "computeBackend": "parallels-vm",
+  "parallelsSourceKind": "template",
+  "parallelsTemplateName": "grclanker-windows-template",
+  "parallelsClonePrefix": "grclanker-sandbox",
+  "parallelsWorkspacePath": "/media/psf/grclanker-workspace-repo",
+  "parallelsAutoStart": true
+}
+```
+
+How the disposable sandbox path works:
+
+1. grclanker deploys a fresh disposable sandbox from the configured source.
+2. If `parallelsSourceKind=template`, it uses `prlctl create <sandbox> --ostemplate <template>`.
+3. If `parallelsSourceKind=base-vm`, it clones a stopped base VM as a fallback path.
+4. It disables default host sharing on that sandbox, attaches only the current repo as a named shared folder, and boots the sandbox.
+5. It auto-detects the guest-visible mount path for that repo share unless you set `parallelsWorkspacePath`.
+6. It runs `bash`, `read`, `write`, `edit`, `ls`, `grep`, and `find` inside the sandbox.
+7. It deletes the sandbox on shutdown or after one-off `env exec` / `env smoke-test` runs.
+
+The disposable path is safer than the older direct-VM model because grclanker never executes inside the template or base image itself.
+
+Recommended guest strategy:
+
+- **Windows:** Use a dedicated Parallels template with Parallels Tools and guest login automation already working. However, grclanker’s current in-guest tool adapter still assumes a POSIX shell. Windows-native command support is not complete yet.
+- **Linux:** Use a dedicated Parallels template with Parallels Tools and shell access working.
+- **macOS:** Use a dedicated Parallels template if `prlctl exec` works reliably in that guest. If it does not, expect more friction than Windows/Linux and validate with `env smoke-test` before trusting it.
+
+Examples:
+
+```bash
+grclanker env doctor
+grclanker env smoke-test --backend parallels-vm
+grclanker env exec --backend parallels-vm -- pwd
+```
+
+Parallels is the right option when you want stronger isolation than Docker, or when the target environment needs to look like a full workstation or guest OS, but you still want the session to be disposable.
+
+Snapshot and rollback run through the contract adapter (`prlctl snapshot <clone> --name <name>` and `prlctl snapshot-switch <clone> --id {<uuid>}`).
+
+The adapter's snapshot handling:
+
+- It never synthesizes a snapshot id. It round-trips the id that `prlctl snapshot` printed back into `snapshot-switch --id` verbatim.
+- It accepts both the braced form seen in practice and a bare uuid. The Parallels command-line reference documents the flag without showing a concrete id form.
+- It only rolls back to snapshots it created in the same session.
+
+`grclanker env smoke-test --backend parallels-vm` is the CLI surface that exercises this path today. It snapshots the fresh clone after the bash probe, runs the tool probes, restores the snapshot, and reports `snapshot=ok` and `restore=ok`.
+
+The agent session does not yet snapshot per tool call. It still deletes the disposable clone on teardown.
+
+## Modal
+
+State: Shipped through the `modal` CLI. Modal exposes Sandbox lifecycle through its Python and JavaScript SDKs, so grclanker drives the documented CLI surface instead of adding an SDK dependency.
+
+Credentials: The modal CLI resolves its own credentials. grclanker accepts either source the CLI does, as documented at [modal.com/docs/reference/modal.config](https://modal.com/docs/reference/modal.config):
+
+- `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` in the environment, or
+- the profile that `modal setup` or `modal token set` writes to `.modal.toml` in your home directory. `MODAL_CONFIG_PATH` overrides the location.
+
+The profile file holds one table per profile with `token_id` and `token_secret`. grclanker picks the profile the way the client does:
+
+1. `MODAL_PROFILE`, if set.
+2. Otherwise, the table marked `active = true` by `modal profile activate` or `modal token set --activate`.
+3. Otherwise, `[default]`.
+
+Each key may also come from its environment variable on its own, so `MODAL_TOKEN_ID` in the environment plus `token_secret` in the profile is accepted.
+
+`grclanker env list`, `env doctor`, and the adapter's healthcheck report which source was found (`Found Modal CLI profile "default" in /home/you/.modal.toml.`) and never a token value.
+
+The profile file is read and parsed in two guarded steps that keep only the presence of `token_id` and `token_secret`. If a step fails:
+
+- A file that cannot be read is reported as `Unable to read Modal config file <path> (<code>)`, with the errno code only.
+- A malformed file is reported as `Unable to parse Modal config file: invalid TOML in <path> at line N (INVALID_TOML)`, so a token on the offending line never appears in the message.
+
+Optional settings: `MODAL_ENVIRONMENT` and `MODAL_PROFILE`.
+
+Setup:
+
+```bash
+pip install modal
+modal setup   # or: export MODAL_TOKEN_ID=... MODAL_TOKEN_SECRET=...
+grclanker setup --compute modal
+grclanker env smoke-test --backend modal
+```
+
+What runs where: Each `bash` call (and each user `!` command) becomes one `modal shell --no-pty --image <modalImage> --add-local <repo> [--gpu <modalGpu>] --cmd "<wrapper>"` invocation. The invocation follows the flags documented at [modal.com/docs/reference/cli/shell](https://modal.com/docs/reference/cli/shell).
+
+The repo is copied into the container at `/mnt/<repo-name>` for every command.
+
+`read`, `write`, `edit`, `ls`, `grep`, and `find` are not routed to Modal. The backend is one-shot, so they stay on the local workspace (see "One-shot backends").
+
+Command quoting: The modal client runs `shlex.split(f'/bin/bash -c "{cmd}"')` on the `--cmd` value, so a raw command containing double quotes would be re-split.
+
+grclanker therefore never passes the command itself. It passes a wrapper made only of characters shlex leaves alone: `f=$(mktemp) && printf %s <base64> | base64 -d > $f && bash $f; s=$?; rm -f $f; exit $s`.
+
+The real command travels as base64 and is decoded into a temp file inside the container. It runs with its own stdin, and its exit status is preserved.
+
+Limits:
+
+- Every command starts a fresh container, so state does not persist between commands and file writes are not synced back to the host.
+  - A file that `bash` writes on Modal is gone when the command ends.
+  - Edit the repo with the local file tools and let the next `bash` command pick the change up through `--add-local`.
+  - Treat Modal as a burst lane (analyzers, inference, validation) rather than a place where `bash` builds up state.
+- Snapshots are not exposed through the CLI, so `snapshot` and `restore` report "not supported".
+- Settings: `modalImage` (default `debian:bookworm-slim`), `modalGpu` (for example `a10g` or `a100:4`).
+
+## RunPod Serverless
+
+State: Shipped against the documented queue-based endpoint API.
+
+Credentials: `RUNPOD_API_KEY` and `RUNPOD_ENDPOINT_ID`.
+
+Requests, in order, with every field taken from [Send API requests](https://docs.runpod.io/serverless/endpoints/send-requests) and the [operation reference](https://docs.runpod.io/serverless/endpoints/operation-reference):
+
+- `GET https://api.runpod.ai/v2/{endpointId}/health` for `env doctor` style health checks.
+- `POST https://api.runpod.ai/v2/{endpointId}/run` with `{ "input": { "command", "cwd", "env" }, "policy": { "executionTimeout" } }`. The `authorization: Bearer <RUNPOD_API_KEY>` header follows the documented example.
+- `GET https://api.runpod.ai/v2/{endpointId}/status/{id}` polled every 2 seconds until `status` leaves `IN_QUEUE` / `IN_PROGRESS`.
+- `POST https://api.runpod.ai/v2/{endpointId}/cancel/{id}` if grclanker aborts or times out while waiting.
+
+Polling deadline: The loop always has a ceiling. It uses the tool's timeout when one is given, otherwise 600000 ms (the default `executionTimeout` RunPod documents for serverless jobs), plus a 60 second grace window so the endpoint can report `TIMED_OUT` itself first.
+
+When the deadline passes, the adapter cancels the job and raises an `ExecutionBackendTimeoutError` (message `runpod-serverless timed out after 600s: ...`).
+
+Worker contract: RunPod documents that `input` is defined by your worker, so grclanker defines a small one. Your handler:
+
+- receives `input.command`, `input.cwd`, and `input.env`
+- runs the command with `bash -lc`
+- returns `{ "exitCode": number, "stdout": string, "stderr": string, "artifacts": string[] }` as the job `output`
+
+The worker image must already contain the workspace at `runpodWorkspacePath` (default `/workspace`). Serverless jobs cannot receive files.
+
+What runs where: Only `bash` (and user `!` commands) is dispatched as a job. The backend is one-shot, so `read`, `write`, `edit`, `ls`, `grep`, and `find` stay on the local workspace (see "One-shot backends"). Local edits are not uploaded to the worker, and nothing a job writes persists to the next job.
+
+Limits:
+
+- No workspace upload.
+- No snapshots.
+- Artifact sync-back is limited to the paths the worker reports.
+- Results expire after 30 minutes per the RunPod docs.
+
+## RunPod Pod
+
+State: Shipped for pods you already created. grclanker never creates, stops, or deletes pods. It only reads pod metadata and works inside a per-session directory that it removes on teardown.
+
+Credentials: `RUNPOD_API_KEY` and `RUNPOD_POD_ID`, plus an SSH key that the pod accepts.
+
+Prerequisites on the machine running grclanker:
+
+- `ssh`: Every command runs over SSH.
+- `scp`: The staged workspace is uploaded with it.
+- `git`: The staged set is the git index, so `git ls-files` must run.
+
+`env list` and `env doctor` report the backend as `not detected` until all three are on PATH, naming the missing one. The live smoke skips it for the same reason.
+
+Requests: `GET https://rest.runpod.io/v1/pods/{podId}` with `Authorization: Bearer <RUNPOD_API_KEY>`, reading `desiredStatus`, `publicIp`, and `portMappings["22"]` as documented at [Find a Pod by ID](https://docs.runpod.io/api-reference/pods/GET/pods/podId).
+
+RunPod marks REST API v1 as deprecated with retirement on 2026-11-15 ([API overview](https://docs.runpod.io/api-reference/overview)). The base URL lives in one constant so the v2 move is a one-line change.
+
+What is staged: Exactly the files in the git index of the workspace (`git -C <repo> ls-files --cached -z`), minus a fixed deny list. They are copied with their current working-tree content and file modes.
+
+Nothing else leaves the machine. These are never uploaded:
+
+- untracked files
+- everything `.gitignore` ignores
+- the `.git` directory itself
+- symlinks
+- submodule contents
+
+A tracked file whose path matches the deny list is excluded even though it is tracked.
+
+The deny list (`RUNPOD_STAGING_DENYLIST` in `cli/pi/backends/runpod.ts`) mirrors every secret name in the repository's `.gitignore` and AGENTS.md:
+
+- The whole `.env*` family: `.env`, `.envrc`, `.env.local`, `.env.production`, `.environment`, and any other name starting with `.env`, as a file or a directory.
+- `.dev.vars*` except the committed `.dev.vars.example` template file. The exemption applies to that one file name only, in any casing, never to a directory of that name, so a tracked `.dev.vars.example/token` stays local.
+- `.okta.yaml`, `credentials.json`, `*.credentials.json`, `client_secret.json`, `*client_secret*.json`, `*client-secret*.json`, `service-account.json`, `*service-account*.json`, and `*.sa.json`.
+- Any `export/`, `oscal-workspace/`, or `.secrets/` directory at any depth.
+- Key material: `*.pem`, `*.key`, `*.p12`, `*.pfx`, `*.p8`, `*.ppk`, `*.jks`, and `*.keystore`.
+- `id_rsa`, `id_dsa`, `id_ecdsa`, and `id_ed25519`.
+
+Matching is case-insensitive, stricter than git's default ignore rules, because the list is a safety net. A name that merely contains `env` (`environment.md`, `config/envelope.ts`) is not affected. Public key halves (`id_ed25519.pub`) still stage.
+
+Run `git add` on a new file that should reach the pod. A workspace that is not inside a git work tree is refused with a clear error (`git ls-files exited 128 ... runpod-pod stages tracked files only`) rather than copied blindly. `git` must be on PATH.
+
+What runs where: `stageWorkspace` runs these steps:
+
+1. Lists the index.
+2. Copies the planned files into a private temp directory.
+3. Runs `ssh ... mkdir -p -- <runpodWorkspacePath>/<sessionId>`.
+4. Runs `scp -r <temp>/. root@<publicIp>:<runpodWorkspacePath>/<sessionId>`.
+5. Removes the temp directory whether or not the upload succeeded.
+
+If the copy fails, the adapter removes the remote directory it just created before raising.
+
+The temp directory's removal never changes the outcome of the upload. If the local delete fails (a file lock, a filesystem error):
+
+- A successful upload still returns the staged, tracked session. The remnant is reported as a one-line warning on stderr (`The local staging copy <temp> could not be removed (<code>); delete it by hand.`, path and errno code only).
+- A failed upload keeps its own error with that line appended.
+
+The staging detail reports the counts (`copied 42 tracked files (2 sensitive paths excluded, 0 non-regular or missing entries skipped)`).
+
+Every command runs as `ssh -p <port> root@<publicIp> "cd -- <cwd> && <command>"`.
+
+Teardown removes the session directory (`rm -rf -- <runpodWorkspacePath>/<sessionId>`), checking the exit code. The session is untracked only after `rm -rf` exits 0. Otherwise the removal is retried and then reported with the pod id, the path, and the delete command (see "Session lifecycle and teardown").
+
+Session ids are validated at the adapter boundary (letters, digits, `.`, `_`, `-`, no `..`), so no caller can turn the removal into a traversal.
+
+The pod must expose TCP port 22 publicly.
+
+Limits: No snapshots through the API. Sync-back means copying the session directory back with `scp` yourself.
+
+## Vercel Sandbox and Cloudflare Sandbox
+
+State: Stubs. Both kinds exist in settings and `env list`, but selecting them fails fast:
+
+- Vercel Sandbox is exposed through the `@vercel/sandbox` SDK and the Vercel CLI ([vercel.com/docs/vercel-sandbox](https://vercel.com/docs/vercel-sandbox)). grclanker does not add that dependency yet.
+- Cloudflare Sandbox is exposed through the `@cloudflare/sandbox` Workers SDK running inside a deployed Worker ([developers.cloudflare.com/sandbox](https://developers.cloudflare.com/sandbox/)). There is no public HTTP lifecycle API for a CLI to call directly.
+
+`env list` reports both as `not available`.
+
+## Troubleshooting
+
+- If `env doctor` says Docker is unavailable, make sure the daemon is running, not just the CLI.
+- If `env smoke-test --backend docker` fails immediately, check the image name and confirm the image can run `bash`.
+- If Parallels fails before sandbox creation, confirm either `parallelsTemplateName` exists in `prlctl list -a -t` or `parallelsBaseVmName` points at a stopped VM. Also confirm `parallelsAutoStart` is `true`.
+- If Parallels fails after the sandbox starts, confirm the template/base image has Parallels Tools plus `prlctl exec` guest access working. Set `parallelsWorkspacePath` if your guest does not mount shared folders at one of the common auto-detected paths.
+- If `sandbox-runtime` blocks something unexpectedly, inspect both `~/.grclanker/sandbox.json` and `.grclanker/sandbox.json` in the directory you launched from. `env doctor` prints both paths as `sandbox.global` and `sandbox.project`.
+- If you want to switch back to a simpler path, run `grclanker setup --compute host`.
+
+## The ExecutionBackend contract
+
+The rest of this page explains how the adapters work and how contributors test them. You do not need it to choose, configure, or validate a backend.
+
+Every adapter implements one TypeScript interface in `cli/pi/execution-backend.ts`:
+
+```ts
+interface ExecutionBackend {
+  readonly kind: ExecutionBackendKind;
+  readonly capabilities: { snapshot: boolean; restore: boolean; gpu: boolean; stageWorkspace: boolean; artifactSync: boolean; interactive: boolean; oneShot: boolean };
+  healthcheck(): Promise<void>;
+  stageWorkspace(input: { localPath: string; sessionId: string; mountMode?: "ro" | "rw" }): Promise<{ remotePath: string; detail: string; warnings?: string[] }>;
+  exec(request: ExecutionRequest): Promise<ExecutionResult>;
+  snapshot(sessionId: string): Promise<string>;
+  restore(sessionId: string, snapshotId: string): Promise<void>;
+  teardown(sessionId: string): Promise<void>;
+}
+```
+
+Adapters that do not support an operation throw a clear "does not support" error instead of pretending.
+
+A successful `stageWorkspace` may carry `warnings`. These are non-fatal, already scrubbed conditions, such as a local staging copy that could not be deleted. The runtime prints them to stderr while treating the session exactly like one without them.
+
+Every adapter takes an injected command runner or `fetch`, which is how the unit tests exercise Docker, Parallels, Modal, and RunPod without touching real binaries or the network.
+
+### Session lifecycle and teardown
+
+Every shipped backend except `host` stages a session lazily on the first command and owns a teardown. The `vercel-sandbox` and `cloudflare-sandbox` stubs fail fast instead and never stage a session.
+
+Cleanup paths:
+
+- `grclanker env smoke-test` and `grclanker env exec` await that teardown after the run, on success and on failure. The teardown tries to remove the RunPod pod session directory or Parallels clone before the command returns. If the RunPod removal fails, the command reports the remnant (see [Confirmed removal](#confirmed-removal)).
+- The interactive agent session tears every active backend session down on `session_shutdown` through `shutdownComputeSessions`, regardless of which backend `settings.json` prefers.
+  - A run started with a per-run `--compute runpod-pod` override is therefore cleaned up even when the saved preference is `host`.
+  - The sandbox-runtime reset still runs only when that backend is preferred.
+- As a last resort, a synchronous `process.on("exit")` hook runs each adapter's `teardownSync`: a blocking `ssh rm -rf` for RunPod pods, and `prlctl stop --kill` and `prlctl delete` for Parallels.
+  - Node cannot await asynchronous work in exit handlers, so this hook is only a fallback for hard exits, not the primary cleanup path.
+
+#### Confirmed removal
+
+A session is untracked only when its removal is confirmed.
+
+The command runner resolves with the exit code rather than rejecting, so the RunPod pod adapter inspects the result of every `rm -rf` it issues: the normal teardown and the cleanup after a failed `scp`.
+
+- Exit code 0 untracks the session.
+- Anything else is retried once and then raised as an `ExecutionBackendCleanupError`.
+  - The error names the pod id, the remote path, and the exact `ssh ... rm -rf` command to run by hand, with the remote's stderr scrubbed.
+  - The session stays in the adapter's staged set and in the runtime registry (`activeComputeSessionCount()` still counts it).
+  - The next teardown, whether from `env exec`, `env smoke-test`, or the `session_shutdown` sweep, therefore retries the removal instead of returning early.
+
+How cleanup failures are reported:
+
+- On the success path of `env exec` and `env smoke-test`, the cleanup failure is the command's result.
+- When the run itself failed, its own error stays primary and the cleanup failure is appended to it (`Cleanup also failed: ...`).
+- The shutdown sweep tears down every registered session, keeps the ones that failed, and raises a `ComputeSessionTeardownError` listing them. Pi shows that error as an extension error.
+- A partial upload left behind by a failed `scp` whose removal also failed is reported the same way (`The workspace copy failed (...) and the partial upload could not be removed (...)`) and keeps the session tracked.
+- The synchronous exit hook cannot retry, so it inspects the exit code and writes the remnant's location and delete command to stderr.
+
+### One-shot backends
+
+`modal` and `runpod-serverless` set `capabilities.oneShot`. Every `exec` on them runs in a fresh container or a stateless job, so a file written by one execution does not exist for the next one.
+
+The runtime therefore offers only `bash` (and the user's `!` commands) on a one-shot backend. `read`, `write`, `edit`, `ls`, `grep`, and `find` are not routed through it. They fall back to the host-local tools, which operate on the local workspace and keep their state there.
+
+The system prompt note spells out the consequence for agents:
+
+- A file written by `bash` on a one-shot backend is gone afterwards.
+- On Modal, local edits are what the next `bash` command sees. The workspace is copied in per command with `--add-local`.
+- On RunPod serverless, local edits are not uploaded at all, because the worker image has to contain the workspace.
+
+On a one-shot backend, `env smoke-test` prints:
+
+- `tool_adapter=skipped (one-shot backend, stateful file operations not offered)`
+- `tool_find=skipped` and `tool_grep=skipped`, with the same reason
+
+It never prints `tool_write=ok` or `tool_read=ok`. It verifies only that a single execution can write and read back its own file (`tool_one_shot_round_trip=ok`).
+
+### Credential hygiene in output
+
+Every adapter routes its output through one redaction guard before anything is streamed, returned, printed, or persisted. Command output is untrusted text: a container, VM, worker, or pod can echo its own environment, and the host shell inherits yours.
+
+Redaction rules:
+
+- Exact values of `RUNPOD_API_KEY`, `MODAL_TOKEN_ID`, `MODAL_TOKEN_SECRET`, `VERCEL_TOKEN`, and `CLOUDFLARE_API_TOKEN` from your environment are replaced with `[REDACTED]`.
+  - Token values stored in the Modal CLI profile (`~/.modal.toml`) never enter grclanker's output at all. The profile loader records only whether `token_id` and `token_secret` are present (see "Modal").
+- Format-based patterns catch the same credentials when they arrive from the remote without being set locally:
+  - `Bearer <token>` headers
+  - RunPod keys (`rpa_...`)
+  - Modal token ids and secrets (`ak-...`, `as-...`)
+  - `NAME=value` assignments of those variables (quoted or not)
+  - PEM private key blocks, from `-----BEGIN ... PRIVATE KEY-----` through `-----END ...-----`, replaced with `[REDACTED PRIVATE KEY]`
+- Generic shapes that carry credentials without announcing a provider:
+  - In any `scheme://...` URL, the userinfo, every query value, and the fragment are replaced (`https://x/callback?access_token=[REDACTED]&state=[REDACTED]`). The path and parameter names stay so the URL is still recognizable, and a URL without a query is untouched.
+  - `Cookie:` and `Set-Cookie:` header values
+  - Credential-named fields in header, assignment, or JSON form (`X-Api-Key: v`, `session_id=v`, `"token": "v"`, also `api_key`, `access_token`, `refresh_token`, `client_secret`, `password`, `sid`, `signature`, and similar names), with values of four or more characters
+
+Query values are redacted regardless of name because a session token does not label itself, so a `curl -v` of a URL with a harmless query also shows `[REDACTED]` values in bash output.
+
+#### Streamed output
+
+Streamed output is scrubbed per completed line, so a credential split across two chunks is still caught. The trailing partial line is held until the next newline or the end of the command.
+
+The stream is the only channel the bash tool and `env exec` surface, so the sink also refuses to flush through an open PEM block. From a `-----BEGIN ... PRIVATE KEY-----` marker onward, output is held until the matching `END` marker arrives.
+
+That hold is what stops a line-at-a-time producer from leaking the header and body one line at a time. Such producers include a tty-attached `docker exec -t`, a script that flushes per line, and a slow remote. A line that ends in `Bearer` is held for the token on the next line for the same reason.
+
+A block whose `END` never arrives (a truncated key file, a command killed by its timeout mid-key, or a held buffer that reaches the 256 KiB cap) is flushed at that point. In the flushed output, the `BEGIN` marker and the contiguous run of body-shaped lines after it are replaced by `[REDACTED PRIVATE KEY: unterminated block, body withheld]`.
+
+- Body-shaped lines are base64 with 16 or more characters, plus a trailing base64 fragment cut off by the end of the output.
+- When nothing followed the marker, the replacement is `[REDACTED PRIVATE KEY: unterminated block]`.
+- The replacement names the withholding because that truncation would otherwise be invisible in the stream.
+
+Ordinary output after the body survives. A short line such as `ok` or a log line is not body shaped and ends the run, so `cat` of a truncated key followed by `done` streams as `[REDACTED PRIVATE KEY: unterminated block, body withheld]` then `done`.
+
+The cap exists so a never-closed block cannot pin memory. A block still open at 256 KiB is not a real key (those are a few KB), and only its body-shaped lines are withheld.
+
+#### Error messages
+
+Error messages have their own choke point. Thrown errors do not pass through the output guard: the bash tool rethrows them to the agent, and `env exec` prints them.
+
+Every `ExecutionBackendError` therefore scrubs its message in its constructor with `redactErrorMessage`. Every adapter error (`prlctl`, `ssh`, and `scp` stderr quoted into a failure, the file tools' failing remote command, RunPod job errors) is constructed through it, and `env exec` applies it again to whatever it re-throws.
+
+The scrub applies the same values and patterns as command output, plus these rules:
+
+- An HTML document anywhere in the message is replaced wholesale with `[HTML document withheld (N chars)]`.
+- A truncated PEM block is neutralized.
+
+A provider body that is not JSON is never quoted into an error message at all.
+
+- RunPod responses go through one `readJson` that reports a non-JSON body (a gateway's 502 page, a login page returned with HTTP 200) as `failed with HTTP 502 from api.runpod.ai/v2/<endpoint>/health: non-JSON text/html body (166 bytes) withheld`. The message carries status, endpoint, content type, and length, and nothing from the page.
+- A 200 with a non-JSON body becomes the same kind of typed error instead of a raw `SyntaxError` quoting body characters.
+- A JSON error body contributes only its message-bearing fields (`error`, `message`, `detail`, `reason`, and similar), scrubbed by the constructor. Other fields are named, never serialized (`JSON body with keys upstream, session`).
+- A `FAILED` job's `error` is summarized the same way.
+
+#### Covered surfaces
+
+`env exec` scrubs the command line it echoes.
+
+The redaction covers:
+
+- `env smoke-test`
+- `env exec`
+- the agent's bash tool on every backend, including `host`
+- the RunPod serverless worker output that `/status` returns
+- every error the adapters throw
+
+`env list` and `env doctor` print variable names only, never values. Session records in `compute-sessions.ts` hold teardown handles, not credentials.
+
+File operations are the one deliberate exception. `read`, `edit`, `write`, `ls`, `grep`, and `find` on a non-host backend fetch file content through the same adapter with `redactOutput: false`.
+
+The reason is the edit round trip: Pi's edit tool reads a file and writes it back, and a redaction marker must never be written into a file.
+
+`grep`, `find`, and `ls` never write anything back, but they inherit the exception. That way, file content reads the same whether it reaches the model through `read`, a grep match, a directory listing, or a find result. Their failure text is still scrubbed.
+
+### Deadlines and caps are never reported as success
+
+Every loop in the backends that can stop early says why:
+
+- The RunPod serverless status poll raises `ExecutionBackendTimeoutError` (`runpod-serverless timed out after Ns: ...`) when its deadline passes, after cancelling the job. An aborted request raises an explicit `aborted` error. Any terminal status other than `COMPLETED` (`FAILED`, `CANCELLED`, `TIMED_OUT`) raises with that status.
+- The Parallels mount wait raises `ExecutionBackendTimeoutError` (`parallels-vm timed out after Ns: could not locate the repo share ... before the mount deadline. Tried: ...`) and destroys the clone it created.
+- Backend `grep` returns `matchLimitReached: true` when more matches exist than the limit. Backend `find` returns exactly the limit so Pi's find tool prints its results-limit warning.
+
+The adapters never call the RunPod pod or endpoint list APIs or `prlctl snapshot-list`, so there is no paginated listing that could stop on a missing total. `env list` enumerates every kind.
+
+## Live smoke
+
+```bash
+npm --prefix cli run test:compute-backends:live
+```
+
+The script runs `env doctor`, then `env smoke-test --backend <kind>` for every non-host backend that `env list` reports as available:
+
+- Docker daemon
+- `prlctl`
+- `modal` with `MODAL_TOKEN_*` or a `~/.modal.toml` profile
+- `RUNPOD_API_KEY` with `RUNPOD_ENDPOINT_ID`
+- `RUNPOD_API_KEY` with `RUNPOD_POD_ID`, plus `ssh`, `scp`, and `git` on PATH
+
+The selection is `selectLiveSmokeCandidates` in `cli/pi/env.ts`, the same readiness the list command uses.
+
+It exits 0 with a skip message when nothing is available. Set `GRCLANKER_LIVE_BACKENDS=docker,modal` to restrict the run, or include `sandbox-runtime` to exercise the local sandbox.

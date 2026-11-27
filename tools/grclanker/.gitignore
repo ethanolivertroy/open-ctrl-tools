@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+cli/.cache/
+cli/dist/
+cli/release/
+
+# Cursor Agent SDK local state (sessions, traces, evals)
+.agent-serve/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+.source/
+*.tsbuildinfo
+
+# Cloudflare
+.wrangler/
+.dev.vars*
+!.dev.vars.example
+
+# Generated evidence and local workspaces
+export/
+oscal-workspace/
+
+# Environment
+.env
+.env.*
+.envrc
+.secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+.vercel
+
+# Claude Code
+.agents/
+.claude/
+.firecrawl/
+.factory/
+skills-lock.json
+grclanker-local/
+
+# Local auth and tenant credentials
+.okta.yaml
+credentials.json
+client_secret.json
+*client_secret*.json
+*client-secret*.json
+service-account.json
+service-account-*.json
+*service-account*.json
+*.credentials.json
+*.sa.json
+
+# Internal docs (mascots, design refs, marketing)
+/docs/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
+
+# Interrupted generated snapshots and staged CLI builds
+src/content/docs/docs/.fedramp.snapshot-transaction.json
+src/content/docs/docs/.fedramp.snapshot-transaction.json.lock.sqlite*
+src/content/docs/docs/.fedramp.stage-*/
+cli/.dist.snapshot-transaction.json
+cli/.dist.snapshot-transaction.json.lock.sqlite*
+cli/.dist.stage-*/

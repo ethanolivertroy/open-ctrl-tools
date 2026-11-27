@@ -1,0 +1,385 @@
+---
+title: Google Cloud Platform
+description: Read-only GCP security inspector covering IAM, logging, organization guardrails, data protection, and network security with multi-framework mappings.
+---
+
+The GCP integration implements the [GCP Security Inspector spec](/specs/gcp-sec-inspector/) as native grclanker tools. It inspects an organization (or a single project) through documented Google Cloud REST APIs and scores 23 controls.
+
+Every finding maps to FedRAMP, CMMC 2.0, SOC 2, CIS GCP, PCI-DSS, DISA STIG, IRAP, and ISMAP. Every request is read-only.
+
+## What it inspects
+
+- **IAM:** privileged bindings, service account key age and count, cross-project service account access, default service account privilege.
+- **Logging and detection:** Admin Activity and Data Access audit visibility, log sinks, log bucket retention, Security Command Center visibility (reported for context, never scored).
+- **Organization guardrails:** domain-restricted sharing, service account key constraints, serial port and Shielded VM policies, OS Login, Binary Authorization, instance hardening.
+- **Data protection:** uniform bucket-level access, public IAM exposure, KMS rotation, CMEK on buckets and disks, Cloud DNS DNSSEC, API key restrictions, VPC Service Controls.
+- **Network security:** internet-open firewall rules on administrative ports, VPC flow logs, Private Google Access, Cloud NAT and external IPs, load balancer SSL policies, Cloud Armor coverage.
+
+## Setup and authentication
+
+### Scope
+
+| Variable | Purpose |
+|----------|---------|
+| `GCP_ORGANIZATION_ID` (alias `GCP_ORG_ID`) | Organization to inventory. Projects are enumerated through Cloud Asset Inventory under this organization. |
+| `GCP_PROJECT_ID`, `GOOGLE_CLOUD_PROJECT`, or `GCLOUD_PROJECT` | Single-project fallback when no organization is configured, or a focus project for effective org policy reads. When none is set, the `project_id` of the credential file the chain below loads is used, but only if that file is a service account key; an access token (argument or environment) means no file is loaded, so set a project variable or `organization_id` in that case. |
+
+Every tool also accepts `organization_id` and `project_id` arguments that take precedence over the environment.
+
+### Credentials
+
+The credential chain is evaluated in this order:
+
+1. `access_token` argument, then `GCP_ACCESS_TOKEN` (also `GOOGLE_OAUTH_ACCESS_TOKEN` or `GOOGLE_ACCESS_TOKEN`)
+2. `credentials_file` argument, then `GCP_CREDENTIALS_FILE`, then `GOOGLE_APPLICATION_CREDENTIALS`
+3. The Application Default Credentials file:
+   - `~/.config/gcloud/application_default_credentials.json`, honoring `CLOUDSDK_CONFIG`
+   - `%APPDATA%\gcloud\application_default_credentials.json` on Windows
+4. `gcloud auth print-access-token`
+
+Credential files may be a service account key (`type: service_account`) or an authorized user ADC file (`type: authorized_user`).
+
+- **Service account key:** Exchanged with the documented OAuth 2.0 service account JWT flow. An RS256 assertion is signed with `node:crypto` and posted to the key's `token_uri` with `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer` and the `https://www.googleapis.com/auth/cloud-platform` scope.
+- **Authorized user file:** Uses the refresh token grant.
+
+No SDK or extra dependency is required.
+
+```bash
+export GCP_ORGANIZATION_ID=123456789012
+export GCP_CREDENTIALS_FILE=/path/to/audit-sa-key.json
+```
+
+### Required IAM roles
+
+Grant the audit principal these roles at the organization node so every project is covered:
+
+| Role | Surfaces |
+|------|----------|
+| `roles/cloudasset.viewer` | Project inventory, IAM policy search, CryptoKey assets |
+| `roles/iam.securityReviewer` | Service accounts and keys |
+| `roles/logging.viewer` | Audit entries, sinks, log buckets, logging settings |
+| `roles/orgpolicy.policyViewer` | Effective organization policies |
+| `roles/resourcemanager.organizationViewer` | Organization metadata |
+| `roles/compute.viewer` | Firewalls, subnetworks, routers, instances, disks, SSL policies, proxies, backend services, project metadata |
+| A role carrying `storage.buckets.list` (a custom read-only role is recommended) | Bucket inventory |
+| `roles/dns.reader` | Managed zones |
+| `roles/serviceusage.apiKeysViewer` | API keys |
+| `roles/accesscontextmanager.policyReader` | Access policies and service perimeters |
+| `roles/binaryauthorization.policyViewer` | Binary Authorization policy |
+| `roles/securitycenter.findingsViewer` | Security Command Center visibility (optional) |
+
+### Enabled APIs
+
+The projects you inventory must have the relevant APIs enabled:
+
+- `cloudasset`
+- `cloudresourcemanager`
+- `iam`
+- `logging`
+- `compute`
+- `storage`
+- `dns`
+- `apikeys`
+- `accesscontextmanager`
+- `binaryauthorization`
+- `cloudkms`
+- `securitycenter` (optional)
+
+When an API is disabled in a project, the dependent finding is rendered `manual` for that project, never `pass`.
+
+## Run it
+
+After setup, start `grclanker` and ask in plain words. The agent calls the matching tools, for example:
+
+```text
+Check whether my GCP credentials can read everything grclanker needs.
+Run the GCP assessments and list the failing findings first.
+Export a GCP audit bundle.
+```
+
+For a posture readout or a framework mapping, use the [assess](/docs/workflows/assess/) or [audit](/docs/workflows/audit/) workflow, for example `grclanker assess "our GCP organization"`. Both start with `gcp_check_access`, then run the assessments or `gcp_export_audit_bundle`.
+
+## Tools
+
+| Tool | Purpose | Notable arguments |
+|------|---------|-------------------|
+| `gcp_check_access` | Probe the core surfaces and report which are readable. When every probe is refused for its credentials (a 401, or a token exchange refused with 401, `invalid_grant`, `invalid_client`, `deleted_client`, or `disabled_client`), the status is `failed` and the next step names the access token or credentials file settings to fix. Otherwise, including when a probe returns 403 or runs out of retries, the status is `healthy` when at least seven of the ten probes are readable and `limited` when fewer are. A probe that ran out of retries adds a note that the check is incomplete (see [Retries and timeouts](#retries-and-timeouts)). | `organization_id`, `project_id`, `access_token`, `credentials_file` |
+| `gcp_assess_identity` | Controls 1, 2, 13, 14 | `stale_days` (90), `max_keys` (200), `project_limit` |
+| `gcp_assess_logging_detection` | Control 5 plus Security Command Center visibility | `max_findings` (200), `project_limit` |
+| `gcp_assess_org_guardrails` | Controls 6, 8, 11, 12, 23 | `max_assets` (2000), `project_limit` |
+| `gcp_assess_data_protection` | Controls 3, 7, 15, 16, 17, 20, 21 | `max_assets` (2000), `project_limit` |
+| `gcp_assess_network_security` | Controls 4, 9, 10, 18, 19, 22 | `max_assets` (2000), `project_limit` |
+| `gcp_export_audit_bundle` | Run everything and write the shared bundle layout | `output_dir` (`./export/gcp`) plus every option above |
+
+### Project cap
+
+`project_limit` (alias `max_projects`, default 20) caps how many projects are inventoried. When the cap truncates the inventory, every dependent finding is downgraded to `warn` with seen and total counts, so a partial view can never pass.
+
+## Status semantics
+
+| Status | Meaning |
+|--------|---------|
+| `pass` | Every inventoried resource satisfied the check and every inventory the finding depends on was complete (no cap, no truncated page, no denied project, no unreadable dependent inventory). |
+| `warn` | A violation on a lower-impact check, a partial inventory (project cap, truncated page, denied or API-disabled project, a dependent inventory unreadable in part or in whole), items missing a required date, or a dry-run or unresolved configuration. |
+| `fail` | A documented violation was found in a complete inventory. |
+| `manual` | The inventory the finding scores was forbidden, errored, or ran out of retries (see [Retries and timeouts](#retries-and-timeouts)), the inventory was empty where emptiness is not compliant by intent, the API is disabled, or the control is outside the configured scope. The summary names the dataset, the endpoint, and the evidence to collect. |
+
+Emptiness passes only for two findings:
+
+- `GCP-IAM-02`: No user-managed keys across a non-empty set of service accounts whose key lists were all readable.
+- `GCP-DATA-06`: No API keys in projects where the API Keys API answered.
+
+`GCP-DATA-07` fails on emptiness (no access policy means no perimeter). Every other finding renders `manual` on an empty inventory.
+
+## Control coverage
+
+Verdicts on unread, partial, or truncated data follow the rules in [How the tools handle evidence](#how-the-tools-handle-evidence).
+
+| # | Control | Tool | Finding | Semantics |
+|---|---------|------|---------|-----------|
+| 1 | Service Account Key Rotation | `gcp_assess_identity` | `GCP-IAM-02`, `GCP-IAM-03` | fail when a user-managed key exceeds `stale_days`; undated keys warn; user-managed keys present warn |
+| 2 | Overprivileged IAM Roles | `gcp_assess_identity` | `GCP-IAM-01` | fail on owner/editor-style bindings; unused permission analysis is not evaluated |
+| 3 | Public Resource Exposure | `gcp_assess_data_protection` | `GCP-DATA-02` | fail when any IAM policy in scope binds `allUsers` or `allAuthenticatedUsers` |
+| 4 | VPC Firewall Rules | `gcp_assess_network_security` | `GCP-NET-01` | fail on enabled ingress rules from `0.0.0.0/0` or `::/0` allowing TCP 22 or 3389 (or all ports) |
+| 5 | Audit Logging Configuration | `gcp_assess_logging_detection` | `GCP-LOG-01` to `GCP-LOG-04` | Admin Activity entries (warn), Data Access entries (fail), at least one enabled sink per project with `disabled: true` sinks excluded and named in evidence (fail), configurable log bucket retention below 90 days (fail); `GCP-LOG-05` is visibility only |
+| 6 | Organization Policy Constraints | `gcp_assess_org_guardrails` | `GCP-ORG-01` to `GCP-ORG-04` | organization visibility, `iam.allowedPolicyMemberDomains`, `iam.disableServiceAccountKeyCreation`, `iam.disableServiceAccountKeyUpload` |
+| 7 | KMS Key Rotation | `gcp_assess_data_protection` | `GCP-DATA-03` | fail when an `ENCRYPT_DECRYPT` key lacks `rotationPeriod` or `nextRotationTime`, or rotates slower than 365 days; overdue rotation warns |
+| 8 | Binary Authorization | `gcp_assess_org_guardrails` | `GCP-ORG-07` | fail unless `defaultAdmissionRule` and every `clusterAdmissionRules`, `kubernetesNamespaceAdmissionRules`, `kubernetesServiceAccountAdmissionRules`, and `istioServiceIdentityAdmissionRules` entry has `evaluationMode` `REQUIRE_ATTESTATION` or `ALWAYS_DENY`; dry-run enforcement warns; attestors are not evaluated |
+| 9 | VPC Flow Logs | `gcp_assess_network_security` | `GCP-NET-02` | fail when an eligible subnetwork has neither `logConfig.enable=true` nor `enableFlowLogs=true` |
+| 10 | Cloud NAT Configuration | `gcp_assess_network_security` | `GCP-NET-04` | warn when a subnetwork is not covered by a Cloud NAT in its network and region (`sourceSubnetworkIpRangesToNat`, with `LIST_OF_SUBNETWORKS` covering only the listed `subnetworks[]`) or instances carry IPv4 `accessConfigs` or IPv6 `ipv6AccessConfigs` |
+| 11 | OS Login Enforcement | `gcp_assess_org_guardrails` | `GCP-ORG-06` | pass only when every sampled project with Compute Engine sets `enable-oslogin=TRUE` in `commonInstanceMetadata` and no instance overrides it; an existing project or instance without it fails and is named even when `constraints/compute.requireOsLogin` is enforced, because the constraint protects new projects and blocks future disabling but never enables OS Login on existing resources; the constraint is reported in the summary and warns the finding when it is unreadable; 2FA is not evaluated |
+| 12 | Serial Port Disabled | `gcp_assess_org_guardrails` | `GCP-ORG-05`, `GCP-ORG-08` | org policy `compute.disableSerialPortAccess` plus instance `serial-port-enable` metadata |
+| 13 | Default Service Account Usage | `gcp_assess_identity` | `GCP-IAM-05` | fail when a default compute or App Engine service account holds an owner/editor-style role |
+| 14 | Cross-Project Access | `gcp_assess_identity` | `GCP-IAM-04` | warn on service account bindings that cross project boundaries |
+| 15 | Uniform Bucket-Level Access | `gcp_assess_data_protection` | `GCP-DATA-01` | fail when `iamConfiguration.uniformBucketLevelAccess.enabled` is not true |
+| 16 | Customer-Managed Encryption Keys | `gcp_assess_data_protection` | `GCP-DATA-04` | warn when buckets lack `encryption.defaultKmsKeyName` or disks lack `diskEncryptionKey.kmsKeyName` |
+| 17 | DNS Security (DNSSEC) | `gcp_assess_data_protection` | `GCP-DATA-05` | fail when a public managed zone has `dnssecConfig.state` other than `on` or signs with `rsasha1` |
+| 18 | Load Balancer SSL Policies | `gcp_assess_network_security` | `GCP-NET-05` | fail when an HTTPS proxy has no SSL policy, `minTlsVersion` below `TLS_1_2`, or the `COMPATIBLE` profile; `CUSTOM` warns; policies are matched by full global or regional path, never by bare name |
+| 19 | Cloud Armor WAF | `gcp_assess_network_security` | `GCP-NET-06` | warn when an external `HTTP`, `HTTPS`, `HTTP2`, or `H2C` backend service has no `securityPolicy` |
+| 20 | API Key Restrictions | `gcp_assess_data_protection` | `GCP-DATA-06` | fail when a key lacks `restrictions.apiTargets` or an application restriction |
+| 21 | VPC Service Controls | `gcp_assess_data_protection` | `GCP-DATA-07` | fail when no access policy exists; warn when no perimeter is enforced with resources and restricted services |
+| 22 | Private Google Access | `gcp_assess_network_security` | `GCP-NET-03` | warn when an eligible subnetwork lacks `privateIpGoogleAccess=true` |
+| 23 | Shielded VM Configuration | `gcp_assess_org_guardrails` | `GCP-ORG-05`, `GCP-ORG-08` | org policy `compute.requireShieldedVm` plus instance `shieldedInstanceConfig` (Secure Boot, vTPM, integrity monitoring) |
+
+## Framework mappings
+
+Every finding carries the spec mapping table entries for its controls. The export bundle writes one report per framework under `compliance/frameworks/`:
+
+| Report | Framework |
+|--------|-----------|
+| `fedramp.md` | FedRAMP / NIST 800-53 |
+| `cmmc.md` | CMMC 2.0 Level 2 |
+| `soc2.md` | SOC 2 Trust Services Criteria |
+| `cis_gcp.md` | CIS Google Cloud Platform Benchmark |
+| `pci_dss.md` | PCI-DSS 4.0 |
+| `disa_stig.md` | DISA STIG SRG |
+| `irap.md` | IRAP / ISM |
+| `ismap.md` | ISMAP |
+
+## Export bundle layout
+
+```
+<org-or-project>-audit/
+  QUICK_REFERENCE.md
+  README.md
+  metadata.json
+  core_data/            projected snapshots: identifiers plus the documented fields each control reads;
+                        a denied or never-collected dataset is a {status, endpoint, error, data: null} marker, never []
+  analysis/             findings.json, category_summaries.json, one JSON and markdown per category
+  compliance/           executive_summary.md, unified_compliance_matrix.md, frameworks/<framework>.md
+  _errors.log           only when collection partially failed
+<org-or-project>-audit.zip
+```
+
+Reruns allocate `-2`, `-3`, and so on. The zip name derives from the allocated directory, so nothing is overwritten. Output paths are resolved with traversal and symlink-parent protection.
+
+## Live smoke test
+
+```bash
+npm --prefix cli run test:gcp:live
+```
+
+The script prints a skip message and exits 0 when no credential hint exists: none of `GCP_ACCESS_TOKEN`, `GOOGLE_OAUTH_ACCESS_TOKEN`, `GOOGLE_ACCESS_TOKEN`, `GCP_CREDENTIALS_FILE`, `GOOGLE_APPLICATION_CREDENTIALS`, `GCP_ORGANIZATION_ID`, `GCP_ORG_ID`, `GCP_PROJECT_ID`, `GOOGLE_CLOUD_PROJECT`, or `GCLOUD_PROJECT` is set and no ADC file exists.
+
+Otherwise it runs `gcp_check_access` and stops with exit code 1 unless the status is `healthy`. When the status is `healthy`, it runs every assess tool with a small project and asset cap.
+
+## Limitations and manual controls
+
+- All 23 spec controls have automated findings. These sub-aspects are not evaluated and remain manual:
+  - Unused permission analysis (control 2)
+  - Unused firewall rules (control 4)
+  - Binary Authorization attestor configuration (control 8)
+  - OS Login 2FA (control 11)
+- Security Command Center is visibility only. `GCP-LOG-05` never scores a control, and the findings feed is sampled, not exhaustive.
+- KMS keys are read from Cloud Asset Inventory (`cloudkms.googleapis.com/CryptoKey`) rather than per-location Cloud KMS list calls. As a result, the Cloud Asset API must be enabled and the asset feed reflects its documented freshness.
+- Public exposure relies on the Cloud Asset Inventory IAM policy search at organization scope (`policy:(allUsers OR allAuthenticatedUsers)`). The search covers every asset type CAI indexes. Object ACLs on non-uniform buckets are not inspected.
+- Compute `aggregatedList` responses that report `unreachables[]` or a scope with `warning.code` `UNREACHABLE` mark the inventory as partial. Every compute-backed finding then downgrades to `warn` and names the unreachable scopes.
+- Effective organization policies are computed against the first inventoried project.
+  - When the project cap truncates the inventory, or the project inventory itself is unreadable while a project ID is configured, org-policy findings are downgraded to `warn` and name the project inventory endpoint.
+  - An unreadable constraint renders its finding `manual`.
+- Security Command Center visibility (`GCP-LOG-05`) is `manual` when the source list is unreadable, and `warn` when the findings feed is unreadable or truncated. The findings count is then rendered as `null`, never as zero.
+- Single-project scope (no organization ID) renders `GCP-ORG-01` and `GCP-DATA-07` as `manual` because organization metadata and access policies are organization resources.
+
+## How the tools handle evidence
+
+This section is reference for reviewing findings and bundles: how unread, partial, or truncated data limits a verdict, how the tools page through the API and report incomplete listings, and how credentials are kept out of findings, bundles, and error text. You don't need it to set up or run the integration.
+
+### Pagination
+
+Every paginated list follows `nextPageToken` until the API stops returning one. A list that exits early for any other reason is recorded as truncated, so the findings that depend on it can't pass:
+
+- The per-list item cap was reached.
+- The cursor repeated itself.
+- The page budget of 250 pages was spent.
+
+The summary then reads `N seen, total unknown`.
+
+### Retries and timeouts
+
+Every Google API request and token exchange gets at most 4 attempts: the first and up to 3 retries.
+
+- **Retried:** A 429, 500, 502, 503, or 504 response, a request that got no response (a DNS, TLS, or connection failure), and an attempt still unanswered after 30 seconds, which is abandoned. Any other status, 401 and 403 included, is final on the first answer.
+- **Wait:** The `Retry-After` value when the response carries one, as delta-seconds or an HTTP date, and otherwise 1, 2, then 4 seconds.
+- **Long waits:** A `Retry-After` above 30 seconds ends the retries at once instead of stalling the run. The error names the wait the server asked for: `503 Service Unavailable (the server asked to retry after 120 s, more than the 30 s limit)`.
+
+When the retries run out, the read is unreadable, never an empty or partial inventory:
+
+- Its error names the last status or failure and the attempt count (see [Error text](#error-text)).
+- The findings that depend on it follow [Unreadable inventories](#unreadable-inventories), and their summaries carry the attempt count: `Partial view: service accounts unreadable for 1 of 1 projects (prod-audit) via iam.googleapis.com/v1/projects/{project}/serviceAccounts (429 Too Many Requests after 4 attempts)`.
+- A list that fails on a later page fails as a whole. The pages read before it are dropped, so they are never reported as the inventory.
+- In `gcp_check_access`, the probe is `not_readable` and a note says the check is incomplete: `This check is incomplete: the probes for projects ran out of retries without an answer (each surface records its last error), so whether that surface is readable is unknown.` The status thresholds count readable probes only, so the status can still be `healthy` beside that note. The next step says to wait for Google Cloud, or to restore network access to the Google Cloud APIs when a request never got a response, and recommends a grant only for the probes that were refused.
+
+### Unreadable inventories
+
+Every finding also tracks each inventory it depends on. When any of them is unreadable (403, 401, an error, or a read whose retries ran out), for the whole scope or for one project, the finding drops below `pass`. This happens even if its primary inventory was read completely.
+
+- The finding is `manual` when the unreadable inventory is the one the finding scores, and `warn` otherwise.
+- The summary names the dataset and the endpoint, for example:
+  - `Partial view: Cloud Routers unreadable for 1 of 2 projects (second-project) via compute.googleapis.com/compute/v1/projects/{project}/aggregated/routers (403 Forbidden)`
+- `evidence.unreadable_inventories` lists every entry with its scope and error.
+
+A count or list that would have been derived from an unreadable inventory is rendered as `null`, never as zero or an empty list.
+
+- The rule holds whether that inventory is the one the finding scores or a dependent one.
+- The same rule applies to the assessment-level `summary` counters: `sampled_projects` is `null` when the project inventory itself was unreadable.
+- A summary sentence names the unreadable dataset instead of counting it: `instance overrides could not be checked because Compute Engine instances were unreadable`, never `none of 0 instances overrides it`.
+
+### Collection-status fields
+
+The collection-status fields follow the same rule. These fields are `null` whenever the scan they describe was denied or never ran:
+
+- On a finding: `evidence.truncated`, `denied_projects`, and `unreachable_scopes`.
+- In the assessment summaries: `projects_truncated`, `sources_truncated`, and `findings_truncated`.
+
+`false`, `0`, or `[]` is written only when that scan ran to completion, so no status ever says complete about a call that did not happen.
+
+A read that was skipped because its upstream discovery failed is recorded with `status: "not_collected"` rather than `"unreadable"`. Its wording names the upstream call with the status that call actually returned. For example, with no project to resolve an effective org policy against, GCP-ORG-02 through GCP-ORG-05 read:
+
+`effective org policy constraints/iam.allowedPolicyMemberDomains not collected for the scope (cloudresourcemanager.googleapis.com/v1/projects/{project}:getEffectiveOrgPolicy was not called): no project could be enumerated because project inventory was unreadable via cloudasset.googleapis.com/v1/{scope}:searchAllResources (403 Forbidden)`
+
+An HTTP status is never attributed to an endpoint that was not requested.
+
+In `core_data/`, a dataset that was denied or never collected is written as a `{status, dataset, endpoint, scope, error, data: null}` marker in place of the rows, never as `[]`. The same entry appears in the snapshot's `unreadable_inventories`.
+
+### Projected snapshots
+
+Snapshots and finding evidence never contain whole API resources. Each collected object is projected to its identifiers and the documented fields the verdict reads. For example, a Compute instance becomes its name, the resolved `enable-oslogin` and `serial-port-enable` flags, and the three `shieldedInstanceConfig` booleans.
+
+As a result, these are never written:
+
+- Metadata values such as `startup-script` or `ssh-keys`
+- Labels, annotations, descriptions, and filters
+- API key `keyString` values
+- IAP client secrets
+- Disk `rawKey` material
+
+A regression test seeds a distinct fake secret into every collected object and exports a bundle. It asserts that none of those secrets appears in any file under the output directory or in any entry of the zip.
+
+### Error text
+
+Error text follows the same rule as snapshots and finding evidence. A failed request is described by its HTTP status, method, and endpoint (without the query string), plus one of these:
+
+- The documented `google.rpc.Status` fields: `error.status`, a scrubbed `error.message`, and each `error.details[]` entry's `@type` name and `reason`.
+- For any other body, `non-JSON error body (<content type>; N bytes)`.
+
+The body itself is never copied into an error.
+
+A retried request names its attempt count after the status: `429 Too Many Requests after 4 attempts: RESOURCE_EXHAUSTED: Quota exceeded for quota metric 'Read requests'. (GET https://iam.googleapis.com/v1/projects/prod-audit/serviceAccounts)`. A request that never got a response reads `GET <endpoint> failed before a response arrived after 4 attempts: <reason>`, where the reason is the scrubbed transport error or `TimeoutError: the request did not complete within 30 s`.
+
+A 2xx whose body is not a JSON object is an unreadable surface, never an empty inventory:
+
+- An HTML page renders `200 OK: non-JSON response body (<content type>; N bytes) (GET <endpoint>)`.
+- An empty or whitespace body renders `200 OK: empty response body (<content type>; N bytes) (GET <endpoint>)`.
+
+Dependent findings are then manual or warn, and the access probe reports the surface not readable. Every surface this client reads documents a JSON object body. The proto3 JSON mapping encodes an all-default response and `google.protobuf.Empty` as `{}`.
+
+### Error scrubbing
+
+Every error string is built at one point, `GcpApiError`, and scrubbed there. `describeError` covers anything thrown outside the client. The scrub removes:
+
+- The configured credentials and exchanged token, by exact match.
+- `Bearer` and `Basic` values.
+- `ya29.`, `AIza`, `GOCSPX-`, and `1//` shapes.
+- JWT assertions.
+- `Cookie` and `Set-Cookie` values.
+- Credential name-value pairs (api key, access, refresh, and id tokens, client secret, private key, password, session).
+- Embedded URL query strings and fragments.
+- In error text only, bare 16+ character runs with a digit or mixed case that are not made of words.
+  - Identifiers in snake_case, camelCase, and PascalCase, such as `PreconditionFailure` and `LocalizedMessage`, survive.
+
+Credential files follow the same rule:
+
+- A malformed service account or ADC file is reported as `invalid JSON in <path>`.
+- A read failure is reported as `unable to read <path> (<code>)` with the Node system error code.
+
+The parser or filesystem message is never reported, since V8 quotes the characters around a fault. For a broken `private_key` line, those characters are key material.
+
+The bundle writer applies the same rules once more to every file, `.md` files and `_errors.log` included. This pass runs without the long-token rule so project IDs, key names, and resource names survive as evidence.
+
+### Leak tests
+
+A regression walk fails every `GCP_INVENTORIES` surface in turn with:
+
+- A `502 text/html` page carrying bearer, session-cookie, and API-key canaries.
+- A `403` whose `error.message` embeds a tokenised URL.
+- A `500` whose message carries a long token.
+- A thrown network error carrying request headers.
+
+It asserts that no canary reaches any finding, summary, `unreadable_inventories` entry, `core_data` marker, errors array, bundle file, zip entry, or thrown error while every failure is still disclosed with its status, endpoint, and content type and length or documented fields.
+
+A second export plants a shapeless configured token and an `AIza` key in the organization display name. It asserts that neither reaches any bundle file or zip entry, which binds the writer's second layer.
+
+## Endpoint reference
+
+| Endpoint | Documentation | Fields read |
+|----------|---------------|-------------|
+| `POST oauth2.googleapis.com/token` (JWT bearer, refresh token) | [Service account flow](https://developers.google.com/identity/protocols/oauth2/service-account#httprest), [Refresh token](https://developers.google.com/identity/protocols/oauth2/web-server#offline) | `access_token`, `expires_in` |
+| `GET cloudresourcemanager/v1/organizations/{org}` | [organizations.get](https://docs.cloud.google.com/resource-manager/reference/rest/v1/organizations/get) | `name`, `displayName` |
+| `POST cloudresourcemanager/v1/projects/{p}:getEffectiveOrgPolicy` | [getEffectiveOrgPolicy](https://docs.cloud.google.com/resource-manager/reference/rest/v1/projects/getEffectiveOrgPolicy), [Policy](https://docs.cloud.google.com/resource-manager/reference/rest/v1/Policy) | `booleanPolicy.enforced`, `listPolicy.allValues`, `listPolicy.allowedValues`, `listPolicy.deniedValues`, `restoreDefault` |
+| `GET cloudasset/v1/{scope}:searchAllResources` | [searchAllResources](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/TopLevel/searchAllResources) | `assetTypes`, `pageSize` (500 max), `pageToken`; `results[].name` (project identifier parsed from the [documented full resource name](https://cloud.google.com/asset-inventory/docs/resource-name-format)), `results[].displayName`, `results[].state` |
+| `GET cloudasset/v1/{scope}:searchAllIamPolicies` | [searchAllIamPolicies](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/TopLevel/searchAllIamPolicies), [Query syntax](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) | `query`, `pageSize` (500 max), `pageToken`; `results[].resource`, `results[].assetType`, `results[].policy.bindings[].role`, `results[].policy.bindings[].members[]` |
+| `GET cloudasset/v1/{parent}/assets` | [assets.list](https://cloud.google.com/asset-inventory/docs/reference/rest/v1/assets/list), [Asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types) | `contentType=RESOURCE`, `assetTypes`, `pageSize` (1000 max), `pageToken`; `assets[].resource.data` |
+| `GET iam/v1/projects/{p}/serviceAccounts` | [serviceAccounts.list](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts/list) | `pageSize` (100 max); `accounts[].email` |
+| `GET iam/v1/projects/{p}/serviceAccounts/{sa}/keys?keyTypes=USER_MANAGED` | [keys.list](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts.keys/list) | `keys[].name`, `keys[].validAfterTime`, `keys[].disabled` |
+| `GET logging/v2/projects/{p}/settings` | [getSettings](https://cloud.google.com/logging/docs/reference/v2/rest/v2/projects/getSettings) | readability probe only; the Settings resource is stored in the snapshot |
+| `GET logging/v2/projects/{p}/sinks` | [sinks.list](https://cloud.google.com/logging/docs/reference/v2/rest/v2/projects.sinks/list), [LogSink](https://cloud.google.com/logging/docs/reference/v2/rest/v2/projects.sinks#LogSink) | `sinks[].name`, `destination`, `disabled` (a sink with `disabled: true` exports nothing and does not count toward coverage) |
+| `GET logging/v2/projects/{p}/locations/-/buckets` | [buckets.list](https://cloud.google.com/logging/docs/reference/v2/rest/v2/projects.locations.buckets/list) | `buckets[].name`, `buckets[].retentionDays` |
+| `POST logging/v2/entries:list` | [entries.list](https://cloud.google.com/logging/docs/reference/v2/rest/v2/entries/list) | `resourceNames`, `filter`, `orderBy`, `pageSize`; `entries[]` |
+| `GET securitycenter/v1/organizations/{org}/sources` | [sources.list](https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources/list) | `sources[]` |
+| `GET securitycenter/v1/organizations/{org}/sources/-/findings` | [findings.list](https://cloud.google.com/security-command-center/docs/reference/rest/v1/organizations.sources.findings/list) | `pageSize` (1000 max); `listFindingsResults[]` |
+| `GET storage/v1/b?project={p}` | [buckets.list](https://cloud.google.com/storage/docs/json_api/v1/buckets/list), [Bucket](https://cloud.google.com/storage/docs/json_api/v1/buckets) | `maxResults` (1000 max); `items[].name`, `items[].iamConfiguration.uniformBucketLevelAccess.enabled`, `items[].encryption.defaultKmsKeyName` |
+| CryptoKey via `assets.list` | [CryptoKey](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys#CryptoKey) | `name`, `purpose`, `rotationPeriod`, `nextRotationTime`, `primary.state` |
+| `GET compute/v1/projects/{p}/global/firewalls` | [firewalls.list](https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/list) | `maxResults` (500 max); `items[].name`, `direction`, `disabled`, `sourceRanges[]`, `allowed[].IPProtocol`, `allowed[].ports[]`, `network` |
+| `GET compute/v1/projects/{p}/aggregated/subnetworks` | [subnetworks.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/aggregatedList) | `unreachables[]`, `items{}.warning.code`; `items{}.subnetworks[].name`, `selfLink`, `region`, `network`, `purpose`, `logConfig.enable`, `enableFlowLogs`, `privateIpGoogleAccess` |
+| `GET compute/v1/projects/{p}/aggregated/routers` | [routers.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList) | `unreachables[]`, `items{}.warning.code`; `items{}.routers[].network`, `region`, `nats[].sourceSubnetworkIpRangesToNat`, `nats[].subnetworks[].name` |
+| `GET compute/v1/projects/{p}/aggregated/sslPolicies` | [sslPolicies.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/aggregatedList), [SSL policy concepts](https://cloud.google.com/load-balancing/docs/ssl-policies-concepts) | `unreachables[]`, `items{}.warning.code`; `items{}.sslPolicies[].name`, `selfLink`, `region`, `minTlsVersion`, `profile`, `customFeatures[]` (kept in evidence for manual review of `CUSTOM` profiles) |
+| `GET compute/v1/projects/{p}/aggregated/targetHttpsProxies` | [targetHttpsProxies.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/aggregatedList) | `unreachables[]`, `items{}.warning.code`; `items{}.targetHttpsProxies[].name`, `sslPolicy` |
+| `GET compute/v1/projects/{p}/aggregated/backendServices` | [backendServices.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/aggregatedList) | `unreachables[]`, `items{}.warning.code`; `items{}.backendServices[].name`, `loadBalancingScheme`, `protocol`, `securityPolicy` |
+| `GET compute/v1/projects/{p}/aggregated/disks` | [disks.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/disks/aggregatedList) | `unreachables[]`, `items{}.warning.code`; `items{}.disks[].name`, `diskEncryptionKey.kmsKeyName` |
+| `GET compute/v1/projects/{p}/aggregated/instances` | [instances.aggregatedList](https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList) | `items{}.instances[].name`, `metadata.items[]`, `shieldedInstanceConfig.enableSecureBoot`, `enableVtpm`, `enableIntegrityMonitoring`, `networkInterfaces[].accessConfigs[]`, `networkInterfaces[].ipv6AccessConfigs[]`; `unreachables[]`, `items{}.warning.code` |
+| `GET compute/v1/projects/{p}` | [projects.get](https://cloud.google.com/compute/docs/reference/rest/v1/projects/get), [OS Login metadata](https://cloud.google.com/compute/docs/oslogin/set-up-oslogin), [Serial console metadata](https://cloud.google.com/compute/docs/troubleshooting/troubleshooting-using-serial-console) | `commonInstanceMetadata.items[].key`, `commonInstanceMetadata.items[].value` (`enable-oslogin`, `serial-port-enable`) |
+| `GET dns/v1/projects/{p}/managedZones` | [managedZones.list](https://cloud.google.com/dns/docs/reference/rest/v1/managedZones/list) | `managedZones[].name`, `visibility`, `dnssecConfig.state`, `dnssecConfig.defaultKeySpecs[].algorithm` |
+| `GET apikeys/v2/projects/{p}/locations/global/keys` | [keys.list](https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys/list) | `keys[].name`, `displayName`, `deleteTime`, `restrictions.apiTargets[]`, `restrictions.browserKeyRestrictions`, `serverKeyRestrictions`, `androidKeyRestrictions`, `iosKeyRestrictions` |
+| `GET accesscontextmanager/v1/accessPolicies?parent=organizations/{org}` | [accessPolicies.list](https://cloud.google.com/access-context-manager/docs/reference/rest/v1/accessPolicies/list) | `accessPolicies[].name` |
+| `GET accesscontextmanager/v1/{policy}/servicePerimeters` | [servicePerimeters.list](https://cloud.google.com/access-context-manager/docs/reference/rest/v1/accessPolicies.servicePerimeters/list) | `servicePerimeters[].name`, `status.resources[]`, `status.restrictedServices[]`, `spec` |
+| `GET binaryauthorization/v1/projects/{p}/policy` | [projects.getPolicy](https://cloud.google.com/binary-authorization/docs/reference/rest/v1/projects/getPolicy) | `evaluationMode` and `enforcementMode` on `defaultAdmissionRule` and on every entry of `clusterAdmissionRules`, `kubernetesNamespaceAdmissionRules`, `kubernetesServiceAccountAdmissionRules`, `istioServiceIdentityAdmissionRules` |

@@ -44,6 +44,7 @@ jobs:
       wilma: ${{ steps.filter.outputs.wilma }}
       controlbot: ${{ steps.filter.outputs.controlbot }}
       drata_cli: ${{ steps.filter.outputs.drata_cli }}
+      grclanker: ${{ steps.filter.outputs.grclanker }}
       mesh_security_trainer: ${{ steps.filter.outputs.mesh_security_trainer }}
       nist_cmvp_api: ${{ steps.filter.outputs.nist_cmvp_api }}
       pi_kevin: ${{ steps.filter.outputs.pi_kevin }}
@@ -57,22 +58,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          FILES_LIST=$(mktemp)
+          trap 'rm -f "$FILES_LIST"' EXIT
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            FILES=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+            git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}" > "$FILES_LIST"
           elif [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ] || [ -z "${{ github.event.before }}" ]; then
-            FILES=$(git ls-files)
+            git ls-files > "$FILES_LIST"
           else
-            FILES=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}")
+            git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" > "$FILES_LIST"
           fi
 
           RUN_ALL=false
-          if printf '%s\n' "$FILES" | grep -qE '^\.github/workflows/ci\.yml$'; then
+          if grep -qE '^\.github/workflows/ci\.yml$' "$FILES_LIST"; then
             RUN_ALL=true
           fi
 
           has_match() {
             local pattern="$1"
-            if [ "$RUN_ALL" = "true" ] || printf '%s\n' "$FILES" | grep -qE "$pattern"; then
+            if [ "$RUN_ALL" = "true" ] || grep -qE "$pattern" "$FILES_LIST"; then
               echo "true"
             else
               echo "false"
@@ -88,13 +91,14 @@ jobs:
           echo "wilma=$(has_match '^auditors/wilma/')" >> "$GITHUB_OUTPUT"
           echo "controlbot=$(has_match '^tools/controlbot/')" >> "$GITHUB_OUTPUT"
           echo "drata_cli=$(has_match '^tools/drata-cli/')" >> "$GITHUB_OUTPUT"
+          echo "grclanker=$(has_match '^tools/grclanker/')" >> "$GITHUB_OUTPUT"
           echo "mesh_security_trainer=$(has_match '^tools/mesh-security-trainer/')" >> "$GITHUB_OUTPUT"
           echo "nist_cmvp_api=$(has_match '^tools/nist-cmvp-api/')" >> "$GITHUB_OUTPUT"
           echo "pi_kevin=$(has_match '^tools/pi-kevin/')" >> "$GITHUB_OUTPUT"
 
           GO_DIRS=()
           for dir in auditors/go-go-okta-inspector auditors/gws-inspector-py tools/cmvp-tui tools/fedramp-browser tools/oscal-cli; do
-            if [ "$RUN_ALL" = "true" ] || printf '%s\n' "$FILES" | grep -qE "^${dir}/"; then
+            if [ "$RUN_ALL" = "true" ] || grep -qE "^${dir}/" "$FILES_LIST"; then
               GO_DIRS+=("$dir")
             fi
           done
@@ -278,6 +282,45 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+
+  grclanker-cli:
+    name: tools/grclanker (CLI)
+    needs: changes
+    if: needs.changes.outputs.grclanker == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: tools/grclanker/cli
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/grclanker/cli/package-lock.json
+      - run: npm ci
+      - run: npm run verify
+
+  grclanker-site:
+    name: tools/grclanker (Site)
+    needs: changes
+    if: needs.changes.outputs.grclanker == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: tools/grclanker
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/grclanker/package-lock.json
+      - run: npm ci
+      - run: npm run test:site
+      - run: npm run build
 
   mesh-security-trainer:
     name: tools/mesh-security-trainer

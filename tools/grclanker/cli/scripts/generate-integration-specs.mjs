@@ -1,0 +1,669 @@
+import { readdir, readFile } from "node:fs/promises";
+import { commitFileTransaction, recoverFileTransaction } from "../core/atomic-files.ts";
+import { dirname, relative, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  SHARED_COLLECTION_STATES,
+  SHARED_INTEGRATION_CONTRACT_VERSION,
+  SHARED_INTEGRATION_REQUIREMENTS,
+  SHARED_REDACTION_RULES,
+} from "../dist/extensions/grc-tools/hardening/contract.js";
+import { collectDefinedGrcTools, renderVerdictCondition, verdictConditionPaths } from "../dist/extensions/grc-tools/spec-model.js";
+import { PUBLISHED_INTEGRATION_SPECS } from "../dist/extensions/grc-tools/spec-registry.js";
+
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+export const repoRoot = resolve(scriptDir, "../..");
+export const sharedContractPath = resolve(repoRoot, "specs/integration-contract.md");
+export const llmsPath = resolve(repoRoot, "public/llms.txt");
+const snapshotJournalPath = resolve(repoRoot, "cli/.cache/integration-specs-transaction.json");
+const generatedMarker = "<!-- generated integration spec -->";
+const llmsCatalogStart = "<!-- generated integration registry start -->";
+const llmsCatalogEnd = "<!-- generated integration registry end -->";
+const canonicalRepository = "ethanolivertroy/grclanker";
+const canonicalCloneLine = `- Clone all specs: git clone https://github.com/${canonicalRepository}.git`;
+const reservedHeading = /^#{1,6}\s+(?:Tools|Authentication|API surfaces|Checks|Pagination|Hardening|Export layout)\b/im;
+const frameworkColumns = [
+  ["fedramp", "FedRAMP"],
+  ["cmmc", "CMMC"],
+  ["soc2", "SOC 2"],
+  ["cis", "CIS"],
+  ["pci_dss", "PCI-DSS"],
+  ["disa_stig", "DISA STIG"],
+  ["irap", "IRAP"],
+  ["ismap", "ISMAP"],
+];
+
+function escapeCode(value) {
+  return String(value).replaceAll("|", "\\|").replaceAll("\n", " ");
+}
+
+// Bare URLs in prose are API endpoints and defaults, not pages to visit, so
+// they render as code instead of being autolinked on GitHub and the site.
+const BARE_URL = /(?<!\]\(|<)\bhttps?:\/\/[\w{][^\s`()<>|'"]*?(?=[.,;:]?(?:[\s`()<>|'"]|$))/g;
+
+function codeUrls(text) {
+  return String(text).replace(BARE_URL, (url) => `\`${url}\``);
+}
+
+function escapeCell(value) {
+  return codeUrls(escapeCode(value));
+}
+
+function listCell(values) {
+  return values.length > 0 ? values.map((value) => `\`${escapeCode(value)}\``).join(", ") : "None";
+}
+
+function bullets(values) {
+  return values.map((value) => `- ${value}`).join("\n");
+}
+
+function formatFrontmatter(spec) {
+  const { identity } = spec;
+  return [
+    "---",
+    `slug: ${JSON.stringify(identity.slug)}`,
+    `name: ${JSON.stringify(identity.displayName)}`,
+    `vendor: ${JSON.stringify(identity.vendor)}`,
+    `category: ${JSON.stringify(identity.category)}`,
+    'language: "language-neutral"',
+    'status: "generated"',
+    `version: ${JSON.stringify(identity.version)}`,
+    `last_updated: ${JSON.stringify(identity.lastUpdated)}`,
+    'source_repo: "https://github.com/ethanolivertroy/grclanker"',
+    `implementation_kind: ${JSON.stringify(identity.kind)}`,
+    "---",
+  ].join("\n");
+}
+
+function parameterRows(definition) {
+  const schema = definition.parameters ?? {};
+  const properties = schema.properties ?? {};
+  const required = new Set(schema.required ?? []);
+  return Object.entries(properties).map(([name, property]) => {
+    const type = Array.isArray(property.anyOf)
+      ? property.anyOf.map((entry) => entry.type).filter(Boolean).join(" or ")
+      : property.type ?? "value";
+    return `| \`${escapeCode(name)}\` | ${escapeCell(type)} | ${required.has(name) ? "yes" : "no"} | ${escapeCell(property.description ?? "")} |`;
+  });
+}
+
+function renderTools(spec, tools) {
+  const lines = [
+    "## Tools",
+    "",
+    "| Tool | Purpose | Finding IDs | Result shape |",
+    "|---|---|---|---|",
+  ];
+  for (const { definition, contract } of tools) {
+    lines.push(`| \`${definition.name}\` | ${escapeCell(definition.description)} | ${listCell(contract.checkIds)} | ${escapeCell(contract.resultSchema ?? "Registered tool result")} |`);
+  }
+  lines.push("", "### Parameters", "");
+  for (const { definition } of tools) {
+    lines.push(`#### \`${definition.name}\``, "", "| Parameter | Kind | Required | Meaning |", "|---|---|---|---|");
+    const rows = parameterRows(definition);
+    lines.push(...(rows.length > 0 ? rows : ["| None |  |  |  |"]), "");
+  }
+  return lines.join("\n");
+}
+
+function renderAuthentication(spec) {
+  const auth = spec.authentication;
+  return [
+    "## Authentication",
+    "",
+    "Supported modes:",
+    "",
+    bullets(auth.modes.map(codeUrls)),
+    "",
+    "Credential precedence, highest first:",
+    "",
+    auth.credentialPrecedence.map((value, index) => `${index + 1}. ${codeUrls(value)}`).join("\n"),
+    "",
+    `Environment variables: ${listCell(auth.environmentVariables)}`,
+    "",
+    `Configuration locations: ${codeUrls(auth.configLocations.join(", ")) || "(none)"}`,
+    "",
+    `Credential and deployment variants: ${codeUrls(auth.variants.join(", "))}`,
+    "",
+    `Configuration fields: ${listCell(auth.configFields)}`,
+    "",
+    `Malformed configuration: ${codeUrls(auth.malformedConfigBehavior)}`,
+    ...(auth.refreshRequest ? ["", `Credential refresh: ${codeUrls(auth.refreshRequest)}`] : []),
+  ].join("\n");
+}
+
+function renderPermissions(spec) {
+  return [
+    "## Permissions",
+    "",
+    "| Kind | Permission, role, or plan | Unlocks | Notes |",
+    "|---|---|---|---|",
+    ...spec.permissions.map((entry) => `| ${escapeCell(entry.kind)} | \`${escapeCode(entry.value)}\` | ${listCell(entry.unlocks)} | ${escapeCell(entry.notes ?? "")} |`),
+  ].join("\n");
+}
+
+function renderSurfaces(spec) {
+  const surfaceTable = [
+    "## API surfaces",
+    "",
+    "| ID | Interface | Read operation | Service or client | IAM action | Intent | Projection stage | Fields consumed | Reference |",
+    "|---|---|---|---|---|---|---|---|---|",
+    ...spec.apiSurfaces.map((surface) => {
+      const operation = surface.kind === "rest" ? `${surface.method} ${surface.path}` : surface.operation;
+      return `| \`${surface.id}\` | ${surface.kind === "rest" ? "HTTP" : "service operation"} | \`${escapeCode(operation)}\` | ${escapeCell(surface.sdkService ?? surface.baseService)} | ${surface.iamAction ? `\`${escapeCode(surface.iamAction)}\`` : "N/A"} | ${escapeCell(surface.intent)} | ${escapeCell(surface.projectionStage)} | ${listCell(surface.fieldsConsumed)} | [Official documentation](${surface.documentationUrl}) |`;
+    }),
+  ];
+  const requestRows = spec.apiSurfaces.flatMap((surface) => {
+    const headers = surface.request.headers.map((header) => header.includes(";") ? `\`${header}\`` : header);
+    const base = [
+      `| \`${surface.id}\` | client | ${escapeCell(surface.request.clientRegion)} | yes |`,
+      `| \`${surface.id}\` | headers | ${escapeCell(headers.join("; ") || "None")} | yes |`,
+      `| \`${surface.id}\` | response | ${escapeCell(surface.request.responseShape)} | yes |`,
+    ];
+    return [
+      ...base,
+      ...surface.request.parameters.map((parameter) => `| \`${surface.id}\` | ${escapeCell(`${parameter.location}:${parameter.name}`)} | ${escapeCell(parameter.value)}${parameter.when ? `; ${escapeCell(parameter.when)}` : ""} | ${parameter.required ? "yes" : "no"} |`),
+    ];
+  });
+  return [
+    ...surfaceTable,
+    "",
+    "### Request construction",
+    "",
+    "| Surface | Input | Exact value or rule | Required |",
+    "|---|---|---|---|",
+    ...requestRows,
+  ].join("\n");
+}
+
+function renderPagination(spec) {
+  const rows = spec.pagination.map((entry) => [
+    `| ${listCell(entry.surfaceIds)} | ${listCell(entry.cursorFields)} | ${entry.pageSize ?? "service default"} | ${entry.itemCap ?? "caller limit"} | ${entry.pageCap ?? "none"}`,
+    `${escapeCell(entry.totalSemantics)} | ${escapeCell(entry.stopConditions.join("; "))} |`,
+  ].join(" | "));
+  return [
+    "## Pagination",
+    "",
+    "| Surfaces | Cursor or marker | Page size | Item cap | Page cap | Total semantics | Stop conditions |",
+    "|---|---|---|---|---|---|---|",
+    ...rows,
+  ].join("\n");
+}
+
+function renderRateLimits(spec) {
+  return [
+    "## Rate limits",
+    "",
+    "| Scope | Documented limit | Retry headers | Retryable statuses | Policy |",
+    "|---|---|---|---|---|",
+    ...spec.rateLimits.map((entry) => {
+      const statuses = [
+        ...entry.retryableStatuses,
+        ...(entry.retryableStatusRanges ?? []).map((range) => `${range.from}-${range.to}`),
+      ];
+      return `| ${escapeCell(entry.scope)} | ${escapeCell(entry.documentedLimit ?? "Not published")} | ${listCell(entry.retryHeaders)} | ${statuses.join(", ")} | ${escapeCell(entry.backoffPolicy)} |`;
+    }),
+  ].join("\n");
+}
+
+function renderChecks(spec) {
+  const checksByControl = new Map(spec.controls.map((control) => [
+    control.number,
+    spec.checks.filter((check) => check.controlNumbers.includes(control.number)),
+  ]));
+  const constantRows = spec.checks.flatMap((check) => Object.entries(check.criteria.constants)
+    .map(([name, value]) => `| \`${check.id}\` | \`${name}\` | ${escapeCell(Array.isArray(value) ? value.join(", ") : value)} |`));
+  const exampleRows = spec.checks.flatMap((check) => check.criteria.examples
+    .filter((example) => !example.facts)
+    .map((example) => `| \`${check.id}\` | ${example.kind} | ${escapeCell(example.input)} | ${example.expected} | ${escapeCell(example.reason)} |`));
+  const illustrativeExamples = exampleRows.length > 0
+    ? [
+      "### Illustrative criterion notes",
+      "",
+      "Examples are explanatory, not normative. The ordered first-match conditions above are the executable contract.",
+      "",
+      "| Finding | Case | Input condition | Expected | Reason |",
+      "|---|---|---|---|---|",
+      ...exampleRows,
+      "",
+    ]
+    : [];
+  const executableExampleRows = spec.checks.flatMap((check) => check.criteria.examples
+    .filter((example) => example.facts)
+    .map((example) => {
+      const facts = Object.entries(example.facts).map(([name, value]) => `\`${name}\` = ${JSON.stringify(value)}`);
+      return `| \`${check.id}\` | ${example.kind} | ${escapeCell(facts.join("; ") || "None")} | ${example.expected} | ${escapeCell(example.reason)} |`;
+    }));
+  const executableExamples = executableExampleRows.length > 0
+    ? [
+      "### Executable criterion examples",
+      "",
+      "Each example's facts are evaluated against the ordered rules above when the spec is built; the build fails if the first matching rule does not produce the expected status.",
+      "",
+      "| Finding | Case | Facts | Expected | Reason |",
+      "|---|---|---|---|---|",
+      ...executableExampleRows,
+      "",
+    ]
+    : [];
+  const derivedRows = spec.checks.flatMap((check) => Object.entries(check.derivedFacts)
+    .map(([name, derivation]) => {
+      const executable = check.derivedFactRules?.[name];
+      const rendered = executable
+        ? `${derivation} Computed as: ${renderVerdictCondition(executable.condition)}.`
+        : derivation;
+      return `| \`${check.id}\` | \`${name}\` | ${escapeCell(rendered)} |`;
+    }));
+  const primitiveRows = spec.checks.flatMap((check) => Object.entries(check.evidenceFieldDefinitions ?? {})
+    .map(([name, definition]) => `| \`${check.id}\` | \`${name}\` | ${escapeCell(definition)} |`));
+  return [
+    "## Checks",
+    "",
+    "### Control coverage",
+    "",
+    "| # | Control | Finding | Verdict semantics |",
+    "|---|---|---|---|",
+    ...spec.controls.map((control) => {
+      const checks = checksByControl.get(control.number) ?? [];
+      const semantics = checks.length > 0
+        ? `Evaluate the ordered first-match rules for ${checks.map((check) => check.id).join(", ")} below.`
+        : "No automated finding is published for this control.";
+      return `| ${control.number} | ${escapeCell(control.title)} | ${checks.map((check) => check.id).join(", ")} | ${escapeCell(semantics)} |`;
+    }),
+    "",
+    "### Finding notes",
+    "",
+    "These notes explain intent only. The ordered rule table is normative.",
+    "",
+    "| Finding | Severity | Owning tool | Sources | Evidence fields | Pass note | Warn note | Fail note | Manual note |",
+    "|---|---|---|---|---|---|---|---|---|",
+    ...spec.checks.map((check) => `| \`${check.id}\` | ${check.severity} | \`${check.owningTool}\` | ${listCell(check.sourceSurfaceIds)} | ${listCell(check.evidenceFields)} | ${escapeCell(check.criteria.pass)} | ${escapeCell(check.criteria.warn)} | ${escapeCell(check.criteria.fail)} | ${escapeCell(check.criteria.manual)} |`),
+    "",
+    "### Primitive decision inputs",
+    "",
+    "Every primitive is read from the named vendor surface or collector state before evidence lists are rendered or capped. Null and missing retain unavailable semantics; they are not empty inventories, false values, or zero counts.",
+    "",
+    "| Finding | Input | Portable definition |",
+    "|---|---|---|",
+    ...(primitiveRows.length > 0 ? primitiveRows : ["| None |  |  |"]),
+    "",
+    "### Ordered decision rules",
+    "",
+    "Rules are evaluated from lowest order number to highest. The first matching condition determines the finding status; later rules are not evaluated.",
+    "",
+    "A `matches` condition performs a regular-expression search; anchors are required for whole-value matching, and an `i` flag requests case-insensitive matching. A `ratio` condition divides the numerator by the denominator, applies the declared scale, and rounds to the declared decimal places by choosing the nearest value with exact half cases rounded toward positive infinity; a zero, null, or missing denominator does not match.",
+    "",
+    "| Finding | Order | Outcome | First-match condition | Explanatory note |",
+    "|---|---|---|---|---|",
+    ...spec.checks.flatMap((check) => check.criteria.rules.map((rule, index) =>
+      `| \`${check.id}\` | ${index + 1} | ${rule.status} | ${escapeCell(renderVerdictCondition(rule.condition))} | ${escapeCell(rule.note ?? "")} |`)),
+    "",
+    "### Derived decision facts",
+    "",
+    "| Finding | Input | Portable derivation |",
+    "|---|---|---|",
+    ...(derivedRows.length > 0 ? derivedRows : ["| None |  |  |"]),
+    "",
+    "### Criterion constants",
+    "",
+    "| Finding | Name | Value |",
+    "|---|---|---|",
+    ...(constantRows.length > 0 ? constantRows : ["| None |  |  |"]),
+    "",
+    ...executableExamples,
+    ...illustrativeExamples,
+    "### Compliance framework mappings",
+    "",
+    `| # | Control | ${frameworkColumns.map(([, label]) => label).join(" | ")} |`,
+    `|---|---|${frameworkColumns.map(() => "---").join("|")}|`,
+    ...spec.controls.map((control) => `| ${control.number} | ${escapeCell(control.title)} | ${frameworkColumns.map(([key]) => escapeCell(control.frameworks[key].join(", ") || "-")).join(" | ")} |`),
+  ].join("\n");
+}
+
+function renderCollectionStates(spec) {
+  const labels = [
+    ["complete", spec.collectionStates.complete],
+    ["truncated", spec.collectionStates.truncated],
+    ["unreadable", spec.collectionStates.unreadable],
+    ["denied", spec.collectionStates.denied],
+    ["not requested", spec.collectionStates.notRequested],
+    ["not configured", spec.collectionStates.notConfigured],
+  ];
+  return [
+    "## Collection states",
+    "",
+    "| State | Required rendering |",
+    "|---|---|",
+    ...labels.map(([state, text]) => `| ${state} | ${escapeCell(text)} |`),
+  ].join("\n");
+}
+
+function renderRedaction(spec) {
+  return [
+    "## Integration-specific scrubbing",
+    "",
+    `Shared contract version: ${spec.redaction.sharedContractVersion}.`,
+    "",
+    `Projection stage: ${spec.redaction.projectionStage}`,
+    "",
+    `Sensitive fields and values: ${spec.redaction.sensitiveFields.join(", ")}`,
+    "",
+    `Credential formats: ${spec.redaction.credentialFormats.join(", ")}`,
+    "",
+    `Reviewed benign exceptions: ${spec.redaction.benignExceptions.join(", ")}`,
+    "",
+    "Integration-specific rules:",
+    "",
+    bullets(spec.redaction.integrationRules),
+    "",
+    "Projected fields by surface:",
+    "",
+    "| Surface | Allowed fields |",
+    "|---|---|",
+    ...Object.entries(spec.redaction.projections).map(([surface, fields]) => `| \`${surface}\` | ${listCell(fields)} |`),
+  ].join("\n");
+}
+
+function renderExport(spec) {
+  return [
+    "## Export layout",
+    "",
+    "Required paths:",
+    "",
+    bullets(spec.output.files.map((path) => `\`${path}\``)),
+    "",
+    "Conditional paths:",
+    "",
+    bullets(spec.output.conditionalFiles.map((path) => `\`${path}\``)),
+    "",
+    "### Artifact schemas",
+    "",
+    "| Path | Format | Required when | Schema | Serialization |",
+    "|---|---|---|---|---|",
+    ...spec.output.artifacts.map((artifact) => `| \`${artifact.path}\` | ${artifact.format} | ${escapeCell(artifact.requiredWhen)} | ${escapeCell(artifact.schema)} | ${escapeCell(artifact.serialization)} |`),
+    "",
+    "### Record schemas",
+    "",
+    ...Object.entries(spec.output.recordSchemas).flatMap(([name, fields]) => [
+      `#### ${name}`,
+      "",
+      ...fields.map((field) => `- \`${field}\``),
+      "",
+    ]),
+    `JSON formatting: ${spec.output.jsonFormatting}`,
+    "",
+    `Overwrite policy: ${spec.output.overwritePolicy}`,
+    "",
+    `Path safety: ${spec.output.pathSafetyPolicy}`,
+    "",
+    `Archive pairing: ${spec.output.archivePairing}`,
+  ].join("\n");
+}
+
+export function validateNarrative(narrative, path) {
+  if (reservedHeading.test(narrative)) {
+    throw new Error(`${path} uses a heading reserved for generated content`);
+  }
+  if (/^---\s*$/m.test(narrative)) {
+    throw new Error(`${path} must not contain frontmatter`);
+  }
+}
+
+export function renderIntegrationSpec(entry, narrative, tools) {
+  const spec = entry.contract;
+  validateNarrative(narrative, entry.narrativePath);
+  return [
+    formatFrontmatter(spec),
+    "",
+    generatedMarker,
+    "> Generated from the executable integration registry, registered tool definitions, and the adjacent narrative source. Edit those sources, not this file.",
+    "",
+    `# ${spec.identity.displayName}`,
+    "",
+    spec.identity.summary,
+    "",
+    narrative.trim(),
+    "",
+    "## Shared integration contract",
+    "",
+    `This specification requires [shared integration contract version ${SHARED_INTEGRATION_CONTRACT_VERSION}](./integration-contract.md). The raw contract is available at https://raw.githubusercontent.com/ethanolivertroy/grclanker/main/specs/integration-contract.md.`,
+    ...(spec.knownGaps.length > 0 ? ["", "## Known runtime gaps", "", ...spec.knownGaps.map((gap) => `- ${gap}`)] : []),
+    "",
+    renderTools(spec, tools),
+    "",
+    renderAuthentication(spec),
+    "",
+    renderPermissions(spec),
+    "",
+    renderSurfaces(spec),
+    "",
+    renderPagination(spec),
+    "",
+    renderRateLimits(spec),
+    "",
+    renderChecks(spec),
+    "",
+    renderCollectionStates(spec),
+    "",
+    renderRedaction(spec),
+    "",
+    renderExport(spec),
+    "",
+  ].join("\n");
+}
+
+export function renderSharedContract() {
+  const sections = [
+    ["Collection and null semantics", SHARED_INTEGRATION_REQUIREMENTS.collection],
+    ["Pagination and truncation", SHARED_INTEGRATION_REQUIREMENTS.pagination],
+    ["Verdict integrity", SHARED_INTEGRATION_REQUIREMENTS.verdicts],
+    ["Credential and error scrubbing", SHARED_INTEGRATION_REQUIREMENTS.scrubbing],
+    ["Safe evidence bundles", SHARED_INTEGRATION_REQUIREMENTS.exports],
+  ];
+  return [
+    "---",
+    'slug: "integration-contract"',
+    'name: "Shared Integration Contract"',
+    'vendor: "grclanker"',
+    'category: "community-specs"',
+    'language: "language-neutral"',
+    'status: "generated"',
+    `version: ${JSON.stringify(SHARED_INTEGRATION_CONTRACT_VERSION)}`,
+    'last_updated: "2026-09-27"',
+    'source_repo: "https://github.com/ethanolivertroy/grclanker"',
+    "---",
+    "",
+    "<!-- generated shared integration contract -->",
+    "> Generated from the executable shared hardening vocabulary and credential scrubber contract. Edit those sources, not this file.",
+    "",
+    "# Shared integration contract",
+    "",
+    "Every portable integration implementation must reproduce these rules. Integration specifications list only additions and reviewed exceptions.",
+    "",
+    `Contract version: ${SHARED_INTEGRATION_CONTRACT_VERSION}`,
+    "",
+    ...sections.flatMap(([heading, requirements]) => [`## ${heading}`, "", ...requirements.map((requirement) => `- ${requirement}`), ""]),
+    "## Exact redaction rules",
+    "",
+    "| Rule | Match | Replacement | Must keep |",
+    "|---|---|---|---|",
+    ...SHARED_REDACTION_RULES.map((rule) => `| \`${rule.id}\` | ${escapeCell(rule.match)} | ${escapeCell(rule.replacement)} | ${escapeCell(rule.preserve)} |`),
+    "",
+    "## Collection-state vocabulary",
+    "",
+    SHARED_COLLECTION_STATES.map((state) => `- \`${state.replaceAll("_", " ")}\``).join("\n"),
+    "",
+  ].join("\n");
+}
+
+export function validateDecisionInputs(contract) {
+  for (const check of contract.checks) {
+    const available = new Set([...check.evidenceFields, ...Object.keys(check.criteria.constants)]);
+    for (const [name, derivation] of Object.entries(check.derivedFactRules ?? {})) {
+      if (!(name in check.derivedFacts)) {
+        throw new Error(`${check.id} executable derivation ${name} has no declared derived-fact description`);
+      }
+      for (const path of verdictConditionPaths(derivation.condition)) {
+        if (path === "$" || path.startsWith("$.")) continue;
+        const root = path.split(".")[0];
+        if (!available.has(root)) {
+          throw new Error(`${check.id} derived input ${name} references undeclared or forward decision input ${root}`);
+        }
+      }
+      available.add(name);
+    }
+    const declared = new Set([...available, ...Object.keys(check.derivedFacts)]);
+    for (const [index, rule] of check.criteria.rules.entries()) {
+      for (const path of verdictConditionPaths(rule.condition)) {
+        if (path === "$" || path.startsWith("$.")) continue;
+        const root = path.split(".")[0];
+        if (!declared.has(root)) {
+          throw new Error(`${check.id} rule ${index + 1} references undeclared decision input ${root}`);
+        }
+      }
+    }
+  }
+}
+
+function markdownSectionBounds(document, heading) {
+  const headingPattern = new RegExp(`^## ${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[ \\t]*\\r?$`, "m");
+  const match = headingPattern.exec(document);
+  if (!match) throw new Error(`public/llms.txt is missing the ## ${heading} section`);
+  const headingEnd = match.index + match[0].length;
+  const contentStart = document.indexOf("\n", headingEnd);
+  if (contentStart < 0) return { start: match.index, contentStart: document.length, end: document.length };
+  const nextHeadingPattern = /^## [^\n]+\r?$/gm;
+  nextHeadingPattern.lastIndex = contentStart + 1;
+  const next = nextHeadingPattern.exec(document);
+  return {
+    start: match.index,
+    contentStart: contentStart + 1,
+    end: next?.index ?? document.length,
+  };
+}
+
+function removeGeneratedCatalog(document) {
+  const start = document.indexOf(llmsCatalogStart);
+  if (start < 0) return document;
+  const endMarker = document.indexOf(llmsCatalogEnd, start);
+  if (endMarker < 0) throw new Error("public/llms.txt has an unterminated generated integration registry");
+  let removalStart = start;
+  let removalEnd = endMarker + llmsCatalogEnd.length;
+  if (document.slice(0, removalStart).endsWith("\r\n\r\n")) removalStart -= 2;
+  else if (document.slice(0, removalStart).endsWith("\n\n")) removalStart -= 1;
+  if (document.startsWith("\r\n", removalEnd)) removalEnd += 2;
+  else if (document.startsWith("\n", removalEnd)) removalEnd += 1;
+  return `${document.slice(0, removalStart)}${document.slice(removalEnd)}`;
+}
+
+export function renderLlmsCatalog(llms) {
+  const generatedCatalog = [
+    llmsCatalogStart,
+    "### Generated portable contracts",
+    "",
+    ...PUBLISHED_INTEGRATION_SPECS.map((entry) =>
+      `- [${entry.contract.identity.displayName}](https://raw.githubusercontent.com/${canonicalRepository}/main/${entry.outputPath}): ${entry.contract.identity.summary}`),
+    llmsCatalogEnd,
+  ].join("\n");
+  const publishedPaths = new Set(PUBLISHED_INTEGRATION_SPECS.map((entry) => entry.outputPath));
+  const catalogLine = /^- \[[^\]]+\]\(https?:\/\/[^)]+\/(specs\/[^)]+\.spec\.md)\):.*(?:\r?\n|$)/gm;
+  let updated = removeGeneratedCatalog(llms);
+  const specs = markdownSectionBounds(updated, "Specs");
+  const specsBody = updated.slice(specs.contentStart, specs.end).replace(catalogLine, (line, path) =>
+    publishedPaths.has(path) ? "" : line);
+  updated = `${updated.slice(0, specs.contentStart)}${specsBody}${updated.slice(specs.end)}`;
+
+  const cloneLinePattern = /^- Clone all specs: git clone https:\/\/github\.com\/[^/\s]+\/grclanker\.git[ \t]*$/gm;
+  const cloneMatches = [...updated.matchAll(cloneLinePattern)];
+  if (cloneMatches.length !== 1) {
+    throw new Error(`public/llms.txt must contain exactly one Clone all specs line; found ${cloneMatches.length}`);
+  }
+  updated = updated.replace(cloneLinePattern, canonicalCloneLine);
+
+  const updatedSpecs = markdownSectionBounds(updated, "Specs");
+  const specsPrefix = updated.slice(0, updatedSpecs.end).replace(/[ \t\r\n]+$/, "");
+  const afterSpecs = updated.slice(updatedSpecs.end);
+  return `${specsPrefix}\n\n${generatedCatalog}\n\n${afterSpecs}`;
+}
+
+export async function renderAllIntegrationSpecs() {
+  await recoverFileTransaction(snapshotJournalPath);
+  const outputs = new Map([[sharedContractPath, renderSharedContract()]]);
+  for (const entry of PUBLISHED_INTEGRATION_SPECS) {
+    const narrativePath = resolve(repoRoot, entry.narrativePath);
+    const narrative = await readFile(narrativePath, "utf8");
+    const tools = collectDefinedGrcTools(entry.registerTools);
+    const expectedNames = entry.contract.tools.map((tool) => tool.name).sort();
+    const actualNames = tools.map((tool) => tool.definition.name).sort();
+    if (JSON.stringify(expectedNames) !== JSON.stringify(actualNames)) {
+      throw new Error(`${entry.contract.identity.slug} registered tools do not match its published tool contracts`);
+    }
+    validateDecisionInputs(entry.contract);
+    outputs.set(resolve(repoRoot, entry.outputPath), renderIntegrationSpec(entry, narrative, tools));
+  }
+  const llms = await readFile(llmsPath, "utf8");
+  outputs.set(llmsPath, renderLlmsCatalog(llms));
+  return outputs;
+}
+
+async function generatedSpecPaths(specsDir = resolve(repoRoot, "specs")) {
+  const names = await readdir(specsDir);
+  const paths = names.filter((name) => name.endsWith(".spec.md")).map((name) => resolve(specsDir, name));
+  const generated = [];
+  for (const path of paths) {
+    if ((await readFile(path, "utf8")).includes(generatedMarker)) generated.push(path);
+  }
+  return generated;
+}
+
+export async function checkIntegrationSpecs() {
+  const outputs = await renderAllIntegrationSpecs();
+  const stale = [];
+  for (const [path, expected] of outputs) {
+    const actual = await readFile(path, "utf8").catch(() => undefined);
+    if (actual !== expected) stale.push(relative(repoRoot, path));
+  }
+  const expectedGenerated = new Set([...outputs.keys()].filter((path) => path.endsWith(".spec.md")));
+  for (const path of await generatedSpecPaths()) {
+    if (!expectedGenerated.has(path)) stale.push(relative(repoRoot, path));
+  }
+  return [...new Set(stale)].sort();
+}
+
+/** Publish all generated contracts, their catalog, and stale deletions as one recoverable set. */
+export async function writeIntegrationSpecSnapshot(outputs, {
+  specsDir = resolve(repoRoot, "specs"),
+  journalPath = snapshotJournalPath,
+  beforeCommit,
+} = {}) {
+  await recoverFileTransaction(journalPath);
+  const expectedGenerated = new Set([...outputs.keys()].filter((path) => path.endsWith(".spec.md")));
+  const replacements = [...outputs].map(([path, data]) => ({ path, data }));
+  for (const path of await generatedSpecPaths(specsDir)) {
+    if (!expectedGenerated.has(path)) replacements.push({ path, data: null });
+  }
+  await commitFileTransaction(replacements, { journalPath, beforeCommit });
+  return [...outputs.keys()];
+}
+
+export async function writeIntegrationSpecs() {
+  const outputs = await renderAllIntegrationSpecs();
+  return writeIntegrationSpecSnapshot(outputs);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (process.argv.includes("--check")) {
+    const stale = await checkIntegrationSpecs();
+    if (stale.length > 0) {
+      console.error("Generated integration specs are stale:");
+      for (const path of stale) console.error(`- ${path}`);
+      console.error("Run: npm --prefix cli run sync:integration-specs");
+      process.exitCode = 1;
+    } else {
+      console.log("Generated integration specs are current.");
+    }
+  } else {
+    const paths = await writeIntegrationSpecs();
+    for (const path of paths) console.log(`Wrote ${relative(repoRoot, path)}`);
+  }
+}

@@ -1,0 +1,127 @@
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { syncBundledAssets } from "../bootstrap/sync.js";
+import {
+  ensureGrclankerHome,
+  getGrclankerAgentDir,
+  getGrclankerSettingsPath,
+} from "../config/paths.js";
+import { assertEmbeddedPiBranding } from "./branding.js";
+import {
+  COMPUTE_BACKEND_OVERRIDE_ENV,
+  type GrclankerSettings,
+  applyComputeBackendOverride,
+  normalizeGrclankerSettings,
+  readGrclankerSettings,
+  resolveSkillDiscoveryMode,
+} from "./settings.js";
+import { resolveComputeBackend, type ComputeBackendKind } from "./compute.js";
+import { serializeInitialPrompt, type InitialPromptPayload } from "./prompt-envelope.js";
+import { ensureCliConfigured, runComputeSetup, runSetupWizard } from "./setup.js";
+import { readWorkflowPrompt } from "../core/workflow-prompt.js";
+
+function resolveExtensionEntrypoint(appRoot: string): string {
+  const compiledPath = resolve(appRoot, "dist", "extensions", "grc-tools.js");
+  if (existsSync(compiledPath)) {
+    return compiledPath;
+  }
+
+  return resolve(appRoot, "extensions", "grc-tools.ts");
+}
+
+/** Set Pi's config root before importing modules that cache paths at load time. */
+export function configurePiAgentDir(agentDir = getGrclankerAgentDir()): void {
+  process.env.GRCLANKER_CODING_AGENT_DIR = agentDir;
+}
+
+export function prepareCliRuntime(appRoot: string): {
+  agentDir: string;
+  settingsPath: string;
+} {
+  assertEmbeddedPiBranding(appRoot);
+  ensureGrclankerHome();
+
+  const agentDir = getGrclankerAgentDir();
+  syncBundledAssets(appRoot, agentDir);
+  const settingsPath = getGrclankerSettingsPath();
+  normalizeGrclankerSettings(settingsPath, resolve(appRoot, ".grclanker", "settings.json"));
+
+  return { agentDir, settingsPath };
+}
+
+export async function runCliSetup(appRoot: string, compute?: ComputeBackendKind): Promise<void> {
+  prepareCliRuntime(appRoot);
+  if (compute) {
+    await runComputeSetup(compute);
+    return;
+  }
+  await runSetupWizard(true);
+}
+
+export function buildCliLaunchArgs(
+  appRoot: string,
+  agentDir: string,
+  settings: GrclankerSettings,
+  initialPrompt?: InitialPromptPayload,
+  sessionArgs: string[] = [],
+): string[] {
+  const args: string[] = [];
+  // Pi silently falls back to a provider default when a saved hosted model is
+  // absent from its catalog. An explicit model keeps retired dated IDs on Pi's
+  // custom-ID path; Pi still applies its normal matching to shorthand IDs.
+  // Existing hosted sessions should still restore the model saved in the session.
+  if (
+    (settings.modelMode === "local" || (settings.modelMode === "hosted" && !sessionArgs.includes("--session"))) &&
+    typeof settings.defaultProvider === "string" && settings.defaultProvider.trim() &&
+    typeof settings.defaultModel === "string" && settings.defaultModel.trim()
+  ) {
+    args.push("--model", `${settings.defaultProvider.trim()}/${settings.defaultModel.trim()}`);
+  }
+  if (resolveSkillDiscoveryMode(settings) === "bundled-only") {
+    args.push("--no-skills");
+    args.push("--skill", resolve(agentDir, "skills"));
+  }
+  args.push("--extension", resolveExtensionEntrypoint(appRoot));
+  args.push("--prompt-template", resolve(appRoot, "prompts"));
+  args.push("--system-prompt", readFileSync(resolve(appRoot, ".grclanker", "SYSTEM.md"), "utf8"));
+
+  if (initialPrompt) {
+    args.push(serializeInitialPrompt(initialPrompt));
+  }
+
+  return args;
+}
+
+export async function launchCli(
+  appRoot: string,
+  workflow?: string,
+  compute?: ComputeBackendKind,
+  prompt?: string,
+  sessionArgs: string[] = [],
+): Promise<void> {
+  const workingDir = process.cwd();
+  const { agentDir, settingsPath } = prepareCliRuntime(appRoot);
+  if (!await ensureCliConfigured()) return;
+  if (compute) {
+    process.env[COMPUTE_BACKEND_OVERRIDE_ENV] = compute;
+  }
+  const settings = applyComputeBackendOverride(readGrclankerSettings(settingsPath), compute);
+  const initialPrompt = workflow
+    ? { kind: "workflow" as const, content: readWorkflowPrompt(appRoot, workflow, prompt) }
+    : prompt
+      ? { kind: "prompt" as const, content: prompt }
+      : undefined;
+  const args = [...sessionArgs, ...buildCliLaunchArgs(appRoot, agentDir, settings, initialPrompt, sessionArgs)];
+
+  configurePiAgentDir(agentDir);
+  process.env.GRCLANKER_COMPUTE_BACKEND = resolveComputeBackend(settings);
+  process.env.PI_SKIP_VERSION_CHECK ??= "1";
+  process.chdir(workingDir);
+
+  // Deliberately inline: pi resolves its agent directory from GRCLANKER_CODING_AGENT_DIR, honors
+  // PI_SKIP_VERSION_CHECK, and treats the process cwd as the project root as soon as its module
+  // graph and `main` start, so the environment and working directory above must be in place
+  // before the package is loaded. A top-level import would evaluate it first.
+  const { main } = await import("@earendil-works/pi-coding-agent");
+  await main(args);
+}

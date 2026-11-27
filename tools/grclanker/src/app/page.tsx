@@ -1,0 +1,351 @@
+import Link from 'next/link';
+import { HeroImage } from '../components/hero-image';
+import { HeroBrandRail, HeroImageBreak } from '../components/hero-images';
+import { HeroInstall } from '../components/hero-install';
+import { pageMetadata } from '../lib/metadata';
+import { imageSrcSet } from '../lib/responsive-images.mjs';
+import { loadSpecs } from '../lib/specs';
+
+export const metadata = pageMetadata({
+  title: 'grclanker: Put a Clanker on Your Compliance',
+  description:
+    'A GRC engineering assistant with 241 domain tools and independent Pi, Claude Code, OpenAI Agents SDK, Claude API, Claude Agent SDK, Codex SDK, and Cursor / Grok deployment guides.',
+  path: '/',
+});
+
+const terminalExamples = [
+  {
+    command: 'grclanker flue run --message "What is the CMVP certificate for BoringCrypto?"',
+    description: 'Find candidate CMVP records, then verify the module, version, environment, and certificate status.',
+  },
+  {
+    command: 'grclanker investigate "CVE-2024-3094"',
+    description:
+      'Start the investigation workflow with its subject filled in to trace KEV status, EPSS likelihood, and ransomware linkage.',
+  },
+  {
+    command: 'grclanker tools aws_check_access',
+    description: 'List every bundled tool, or show one tool’s group, description, and parameters before you run it.',
+  },
+];
+
+const workflowCards = [
+  {
+    command: '/investigate',
+    color: 'text-sapphire',
+    description: 'Trace crypto status, KEVs, EPSS, and ransomware linkage for a module, vendor, product, or CVE.',
+  },
+  {
+    command: '/audit',
+    color: 'text-yellow',
+    description:
+      'Map gathered evidence to the requested framework and classify each control as satisfied, partially satisfied, not satisfied, or unable to assess.',
+  },
+  {
+    command: '/assess',
+    color: 'text-peach',
+    description: 'Classify the subject as strong, mixed, at risk, or critical, then name the top risks and the next actions.',
+  },
+  {
+    command: '/validate',
+    color: 'text-green',
+    description:
+      'Report actively validated, previously validated but expired, in process, or not found in the searched catalog, with the matching module and scope.',
+  },
+];
+
+const deploymentCards = [
+  {
+    label: 'Pi Terminal CLI',
+    status: 'Release bundle or source',
+    href: '/docs/getting-started/pi-runtime/',
+    description: 'An interactive GRC engineer in your terminal, with local or hosted models and selectable compute backends.',
+  },
+  {
+    label: 'OpenAI Agents SDK',
+    status: 'Source adapter',
+    href: '/docs/getting-started/openai-agents-sdk/',
+    description: 'Build a TypeScript GRC agent with the OpenAI agent loop, selected native tools, and human approvals.',
+  },
+  {
+    label: 'Codex SDK',
+    status: 'Source example',
+    href: '/docs/getting-started/codex-sdk/',
+    description: 'Give Codex your GRC role and an explicit set of evidence tools through a local MCP server.',
+  },
+  {
+    label: 'Cursor / Grok Agent SDK',
+    status: 'Source project · local harness',
+    href: '/docs/getting-started/agent-sdk/',
+    description: 'Run the @grok/agent-sdk project with native GRC tools, workflow skills, and auditor and verifier personas.',
+  },
+  {
+    label: 'Claude Code',
+    status: 'Source · local MCP server',
+    href: '/docs/getting-started/claude-code/',
+    description: 'Add GRC tools, the grclanker role, and workflow slash commands to Claude Code with your own sign-in.',
+  },
+  {
+    label: 'Claude API Tool Runner',
+    status: 'Source adapter',
+    href: '/docs/getting-started/claude-api/',
+    description: 'Build a TypeScript GRC agent on the Anthropic API SDK tool runner, with selected native tools and human approvals.',
+  },
+  {
+    label: 'Claude Agent SDK',
+    status: 'Source adapter',
+    href: '/docs/getting-started/claude-agent-sdk/',
+    description: 'Run Claude with your GRC role, selected native tools over in-process MCP, reviewer subagents, and write approvals.',
+  },
+];
+
+function releaseFacts(integrationSpecCount: number) {
+  return [
+    {
+      label: '241 domain tools',
+      detail:
+        'Native checks, assessments, and evidence exports cover 35 vendor integrations, plus CMVP, KEV, EPSS, FedRAMP, SCF, and OSCAL tools. The v0.1.5 release bundle carries all of them.',
+    },
+    {
+      label: 'Release and source runtimes',
+      detail:
+        'The release includes Pi, Flue, and the experimental durable runtime. Source integrations add Claude Code, OpenAI Agents SDK, the Claude API tool runner, Claude Agent SDK, Codex SDK, and Cursor / Grok Agent SDK.',
+    },
+    {
+      label: 'Hardened evidence',
+      detail:
+        'Runtime adapters classify read effects, approval-gate writers, and redact credential-shaped arguments. Integration exports document sensitive-data handling and partial collection.',
+    },
+    {
+      label: `${integrationSpecCount} integration specs`,
+      detail:
+        'Every shipped vendor integration except Vanta has a repository spec that remains a reusable design record and build input.',
+    },
+  ];
+}
+
+const whatsNewCards = [
+  {
+    label: 'Cancel means stop',
+    color: 'text-sapphire',
+    detail:
+      'Cancelling first-run setup exits cleanly before opening Pi or downloading its search binaries. Run setup again whenever you are ready.',
+  },
+  {
+    label: 'Your model choice stays explicit',
+    color: 'text-yellow',
+    detail:
+      'Anthropic setup defaults to Claude Sonnet 4.6. New hosted sessions pass the saved provider and model to Pi; reopened sessions keep their saved model.',
+  },
+  {
+    label: 'One isolated runtime home',
+    color: 'text-peach',
+    detail:
+      'GRCLANKER_HOME now also controls the managed fd and rg binary cache, including the binary directory used by env exec. Settings, sessions, and search tools stay together.',
+  },
+  {
+    label: 'Claude runtime fixes',
+    color: 'text-green',
+    detail:
+      'Claude adapters handle streamed completion, interrupted tool turns, and write approvals more consistently, with separate boundaries for evidence reviewers.',
+  },
+  {
+    label: 'Evidence with its limits',
+    color: 'text-mauve',
+    detail:
+      'Workflow guidance keeps a search with no matches distinct from proof of absence, and asks for the module, environment, query scope, and collection gaps behind a conclusion.',
+  },
+  {
+    label: 'A clearer way to start',
+    color: 'text-blue',
+    detail:
+      'Platform-specific install commands, visible copy feedback, and separate hosted and local setup steps take you from installation to a first model response.',
+  },
+];
+
+export default function HomePage() {
+  const specs = loadSpecs();
+  const integrationSpecCount = specs.filter((spec) => spec.vendor !== 'grclanker').length;
+
+  return (
+    <>
+      <section className="relative overflow-hidden border-b border-surface0/60">
+        <div className="hero-backdrop absolute inset-0 w-full h-full">
+          <HeroImage
+            src="/hero/command-center.webp"
+            sources={[
+              { media: '(max-width: 479px)', srcSet: '/hero/command-center-crop-880.webp' },
+              { media: '(max-width: 767px)', srcSet: '/hero/command-center-crop-1500.webp' },
+            ]}
+            alt="Clanker command center"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-base/65 via-base/84 to-base pointer-events-none" />
+
+        <div className="relative z-10 max-w-content mx-auto px-6 pt-9 pb-18 md:pt-20 md:pb-24">
+          <section className="hero-stack">
+            <div className="max-w-4xl text-center hero-copy-block">
+              <h1 className="font-bold text-[1.875rem] sm:text-5xl lg:text-6xl text-text leading-[1.15] hero-text-shadow">
+                Your compliance evidence is scattered.
+                <br />
+                Put a clanker on it.
+              </h1>
+              <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg text-subtext1 leading-relaxed italic hero-copy-lede">
+                Gather security evidence and assess controls from your terminal.
+              </p>
+            </div>
+
+            <div className="hero-install-panel">
+              <HeroInstall />
+
+              <div className="hero-action-row">
+                <Link href="/docs/getting-started/quick-start/" className="hero-primary-link">
+                  Quick Start
+                </Link>
+                <Link href="/docs/getting-started/deployment/" className="hero-secondary-link">
+                  Compare Runtimes
+                </Link>
+              </div>
+
+              <p className="hero-support-copy">
+                The installer ships the v0.1.5 release bundle with all 241 domain tools and its own Node.js runtime.
+                To run unreleased changes,{' '}
+                <Link href="/docs/getting-started/installation/#install-from-source">build from source</Link> (Node 22.19
+                or newer).
+              </p>
+              <p className="hero-support-copy">
+                Need just the skills?{' '}
+                <Link href="/docs/getting-started/installation/#skills-only">Install the skills-only bundle</Link>.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+
+      <div className="max-w-content mx-auto px-6 pt-5 pb-8 md:pt-7 md:pb-10 space-y-8">
+        <HeroBrandRail />
+
+        <section className="viewscreen rounded-xl scanlines relative overflow-hidden hero-briefing">
+          <div className="relative z-10 p-5 md:p-6">
+            <div className="hero-briefing-top">
+              <div>
+                <h2 className="font-semibold text-sm tracking-widest uppercase text-blue">What You Ask → What It Does</h2>
+                <p className="text-subtext0 text-sm mt-1 italic">Start with public data, then connect your evidence sources.</p>
+              </div>
+              <div className="hero-briefing-version">v0.1.5 // released</div>
+            </div>
+
+            <div className="hero-briefing-grid">
+              <div className="hero-briefing-main">
+                <div className="hero-summary-list">
+                  {terminalExamples.map((item) => (
+                    <div key={item.command} className="hero-summary-item">
+                      <div className="hero-summary-command">{item.command}</div>
+                      <div className="hero-summary-copy">{item.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <aside className="hero-briefing-side" aria-label="Release details">
+                <p className="hero-briefing-kicker">Local-first when you want it. Hosted when you choose it.</p>
+
+                <div className="hero-fact-list">
+                  {releaseFacts(integrationSpecCount).map((item) => (
+                    <div key={item.label} className="hero-fact-row">
+                      <div className="hero-fact-label">{item.label}</div>
+                      <div className="hero-fact-body">{item.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section className="viewscreen rounded-xl scanlines relative overflow-hidden" aria-labelledby="deployment-heading">
+          <div className="relative z-10 p-5 md:p-6">
+            <h2 id="deployment-heading" className="font-semibold text-sm tracking-widest uppercase text-blue">
+              Choose Your GRC Engineer
+            </h2>
+            <p className="text-subtext0 text-sm mt-2 leading-relaxed">
+              Each deployment has its own complete guide, from installation to your first assessment. Connect your
+              evidence sources, map findings to controls, and prioritize the work your organization needs next.
+            </p>
+            <div className="workflow-grid">
+              {deploymentCards.map((item) => (
+                <Link key={item.href} href={item.href} className="workflow-row group focus-visible:outline-2 focus-visible:outline-blue">
+                  <div className="font-mono text-sm text-sapphire group-hover:underline">{item.label}</div>
+                  <div className="text-xs text-subtext1 mt-1">{item.status}</div>
+                  <div className="text-subtext0 text-sm mt-2 leading-relaxed">{item.description}</div>
+                </Link>
+              ))}
+            </div>
+            <p className="text-subtext0 text-sm mt-4">
+              Cursor and Grok use the same SDK package.{' '}
+              <Link href="/docs/getting-started/deployment/" className="text-blue underline underline-offset-2">Compare all runtimes</Link>,
+              including Flue and the experimental durable runtime.
+            </p>
+          </div>
+        </section>
+
+        <section className="viewscreen rounded-xl scanlines relative overflow-hidden" aria-labelledby="whats-new-heading">
+          <div className="relative z-10 p-5 md:p-6">
+            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 id="whats-new-heading" className="font-semibold text-sm tracking-widest uppercase text-blue">
+                  What's New in v0.1.5
+                </h2>
+                <p className="text-subtext0 text-sm mt-1 italic">
+                  Setup that stops when cancelled, isolated search binaries, explicit hosted models, and clearer
+                  evidence guidance. The tool surface is unchanged.
+                </p>
+              </div>
+              <Link href="/docs/changelog/" className="spec-action-btn spec-action-btn-primary self-start md:self-auto">
+                Full changelog
+              </Link>
+            </div>
+
+            <div className="workflow-grid">
+              {whatsNewCards.map((item) => (
+                <div key={item.label} className="workflow-row">
+                  <div className={`font-mono text-sm ${item.color}`}>{item.label}</div>
+                  <div className="text-subtext0 text-sm mt-2 leading-relaxed">{item.detail}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <HeroImageBreak />
+
+        <section className="viewscreen rounded-xl scanlines relative overflow-hidden">
+          <div className="relative z-10 p-5 md:p-6">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="font-semibold text-sm tracking-widest uppercase text-blue">Workflow Deck</h2>
+                <p className="text-subtext0 text-sm mt-1 italic">Four structured workflows. Pick one, stay on it.</p>
+              </div>
+              <div className="text-[0.6875rem] font-mono uppercase tracking-[0.16em] text-subtext0">
+                /investigate /audit /assess /validate
+              </div>
+            </div>
+
+            <div className="workflow-grid">
+              {workflowCards.map((item) => (
+                <div key={item.command} className="workflow-row">
+                  <div className={item.color}>{item.command}</div>
+                  <div className="text-subtext0 text-sm mt-2 leading-relaxed">{item.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
+}

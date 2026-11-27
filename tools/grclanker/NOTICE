@@ -1,0 +1,65 @@
+grclanker
+Copyright 2026 Ethan Troy
+
+This product includes software developed by Ethan Troy (https://github.com/ethanolivertroy).
+
+The durable terminal app (cli/durable/tui/) is adapted from Pi's coding agent
+(packages/coding-agent/ in https://github.com/earendil-works/pi): its
+experimental durable app in src/experimental/durable/ as of commit e6b9a6af5,
+the last version before Pi removed it, and parts of its interactive mode at
+v1.3.0. Used under the MIT License:
+
+MIT License
+
+Copyright (c) 2025 Mario Zechner
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Additional third-party components and public-domain materials:
+
+1. Helix Mono (`public/fonts/HelixMono-Regular.woff2`,
+   `public/fonts/HelixMono-Bold.woff2`, `public/fonts/HelixMono-Italic.woff2`,
+   `public/fonts/HelixMono-BoldItalic.woff2`):
+   Adapted from JetBrains Mono and distributed by HelixDB
+   (https://github.com/HelixDB/helix-mono, commit
+   `3b8e6d6292ded6948700b1d6169b0a3e128a1529`) under the SIL Open Font
+   License, Version 1.1. The full license text is included in
+   `public/fonts/OFL.txt`.
+
+2. Vendored `picomatch` (`cli/scripts/vendor/picomatch/`):
+   Based on `picomatch@4.0.7` (Copyright (c) 2017-present, Jon Schlinkert),
+   used under the MIT License (full text in
+   `cli/scripts/vendor/picomatch/LICENSE`), with local security backport
+   `4.0.7+grclanker.1` from `micromatch/picomatch#269`
+   (`0a8fd459730fe42bcddc9cee69a56e19cc5f53de`).
+
+3. NIST OSCAL v1.1.2 Assessment Results JSON Schema
+   (`cli/tests/fixtures/oscal/1.1.2/oscal_assessment-results_schema.json`):
+   Published by the National Institute of Standards and Technology
+   (https://github.com/usnistgov/OSCAL/releases/tag/v1.1.2, commit
+   `4f02dac6f698efda387cc5f55bc99581eaf494b6`). As a work of the U.S. federal
+   government, this schema is in the public domain (17 U.S.C. § 105 / CC0 1.0).
+
+4. FedRAMP Consolidated Rules and 20x Documentation
+   (`src/content/docs/docs/fedramp/`):
+   Synced from GSA FedRAMP (https://github.com/FedRAMP/rules and
+   https://github.com/FedRAMP/2026-markdown). As works of the U.S. federal
+   government, these materials are in the public domain (17 U.S.C. § 105).

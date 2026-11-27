@@ -1,0 +1,48 @@
+---
+title: Audit
+description: Map gathered evidence to a requested framework and classify control status.
+---
+
+`/audit` is the workflow rail for turning evidence into framework language. It loads the shipped `cli/prompts/audit.md` prompt.
+
+## Use it for
+
+- mapping vulnerability and cryptography evidence to controls
+- classifying each control as Satisfied, Partially Satisfied, Not Satisfied, or Unable to Assess
+- producing a control-by-control readout and remediation plan instead of a generic summary
+
+## Start it
+
+Inside a grclanker session, put the scope after the command:
+
+```text
+/audit Map our vulnerability evidence for the payments service to FedRAMP RA-5 and SI-2.
+```
+
+From the shell, `grclanker audit "<scope>"` opens a session that starts with the same prompt and the scope filled in. Run `grclanker audit` on its own to describe the scope in your first message instead.
+
+## What the prompt does
+
+1. Scope lock: confirms the target, the frameworks in scope, the evidence boundary (documentation, live configuration, or both), and the output format.
+2. Evidence collection:
+   - CMVP and KEV/EPSS lookups, plus the [FedRAMP source, readiness, and ADS tools](/docs/guides/fedramp-readiness/) when FedRAMP is in scope.
+   - For the platform in scope, the integration's `*_check_access` tool, then its `*_assess_*` tools or `*_export_audit_bundle`.
+   - Two integrations differ:
+     - For operator-side Google Workspace investigation or raw evidence collection with the `gws` CLI installed, the prompt starts with `gws_ops_check_cli`. It then uses `gws_ops_investigate_alerts`, `gws_ops_trace_admin_activity`, or `gws_ops_review_tokens`, or `gws_ops_collect_evidence_bundle` for a separate operator evidence bundle.
+     - Vanta has no assessment tools. A Vanta audit starts with `vanta_check_access`, then uses `vanta_list_audits` and `vanta_export_audit` to pull an offline evidence package.
+   - The [`scf_*` tools](/docs/guides/scf-crosswalks/) for control language and crosswalks, and the [`oscal_*` tools](/docs/guides/oscal-workspaces/) when the deliverable must become OSCAL.
+3. Control mapping: SC-13, SC-12, SI-2, and RA-5 where relevant to the agreed scope, each with one of the four classifications above and a source for the mapping.
+4. Prioritization by exploitability, compliance impact, operational blast radius, and remediation effort, using EPSS and KEV status where vulnerability data exists.
+
+## Output shape
+
+The prompt asks for:
+
+- an audit summary: what was assessed and the overall posture
+- control-by-control findings, each with its evidence
+- critical gaps, highest risk first
+- a remediation plan with concrete next actions and rough effort only when its assumptions can be stated
+
+When evidence is missing, it should say exactly what is missing and which artifact would close the gap. Missing evidence is not proof that a control is absent, and a public CVE match is not proof that an asset runs the affected product and version. Use Unable to Assess when the evidence cannot support a control outcome.
+
+The answer should separate observed facts, assumptions, missing evidence, and proposed actions. Crosswalks identify related requirements, not compliance; mappings and certificate supersession claims need retrieved support. If a source is uncertain after compaction or session restoration, look it up again before repeating the claim.

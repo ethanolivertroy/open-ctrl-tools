@@ -1,0 +1,210 @@
+---
+title: Flue Runtime
+description: Run all 241 grclanker domain tools under the Flue Framework.
+---
+
+grclanker ships as a Pi-based CLI. The same GRC agent can also run as a [Flue Framework](https://flueframework.com/) agent. Flue is itself built on Pi, so the full 241-tool domain registry and the shipped prompts carry over without changing what they do.
+
+## What the adapter maps
+
+The adapter lives in `cli/flue/` and is additive. Nothing in the Pi CLI path changes.
+
+| grclanker asset | Flue surface |
+| --- | --- |
+| 241 native domain tools from `cli/extensions/grc-tools/` | `useTool()` definitions built with `defineTool()` |
+| `cli/.grclanker/SYSTEM.md` | The agent function's returned instructions, plus a short Flue runtime note |
+| `cli/prompts/investigate.md`, `audit.md`, `assess.md`, `validate.md` | Skills named `investigate`, `audit`, `assess`, `validate` (activated through Flue's `activate_skill` tool) |
+| `cli/skills/crypto-validation/SKILL.md` | A skill named `crypto-validation` |
+| `cli/.grclanker/agents/auditor.md` and `verifier.md` | Subagents reachable through Flue's `task` tool, each mounting only the tools its persona allows |
+| Pi compute backends (`bash`, `read`, `write`, `edit`, `ls`, `find`, `grep`) | Not mapped. Flue's own `local()` sandbox provides file and shell tools instead |
+
+### Schemas and validation
+
+Tool parameters are declared with TypeBox JSON Schema in the Pi extension. Flue requires Valibot object schemas, so the adapter converts each schema at the boundary and Flue renders the model-facing JSON Schema from the Valibot version.
+
+Property names, required lists, types, descriptions, defaults, `pattern` constraints, and literal unions round-trip.
+
+Validation happens in two stages. First, Flue's runtime validates the raw model arguments against that rendered schema before the adapter or any normalizer sees them. A payload must therefore satisfy the declared schema as sent, after Flue's own type coercions.
+
+This first stage is also where `pattern` constraints are enforced. A Pi normalizer never gets the chance to repair alias keys, invalid enum values, or wrong-typed values (see [Limitations](#limitations)).
+
+Only then does the adapter run the tool's `prepareArguments` normalizer, drop any `null` sent for an optional property that does not accept `null` (as Pi 1.1 does), and check the result, which is the part that mirrors the Pi CLI. `cli/tests/flue.test.mjs` pins both stages against pi-ai's own `validateToolArguments` for every domain tool.
+
+### Tool results
+
+Pi tool results map onto Flue's result envelope: text content becomes the tool output, `terminate` is forwarded, and a Pi `errorResult()` becomes a Flue tool error the model can react to.
+
+## Run with the bundled runner
+
+No separate Flue install is needed, because the runner uses Flue's documented `start()` and `init()` APIs from `@flue/runtime`, which is a dependency of the CLI package.
+
+The runner uses the model saved by `grclanker setup`:
+
+- After a local-first setup, it needs no API key, only the running Ollama endpoint with its [context length](/docs/getting-started/setup#context-length) raised.
+- After a hosted setup, it needs that provider's key: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `GEMINI_API_KEY`.
+- With no setup at all, it uses `anthropic/claude-sonnet-4-6`, so it needs `ANTHROPIC_API_KEY`.
+
+```bash
+export ANTHROPIC_API_KEY=...
+grclanker flue run --message "Is BoringCrypto FIPS validated?"
+```
+
+A missing key ends the run with `grclanker flue run failed: Provider is not configured: <provider>`, after Flue's own error report. Set that provider's key, or set `GRCLANKER_FLUE_MODEL` to a provider and model you have a key for (see [Configuration](#configuration)).
+
+`grclanker flue --help` prints the options and environment variables.
+
+The runner ships in the `v0.1.5` release bundle. The older `v0.0.1` bundle predates the Flue adapter and answers `Unknown command: flue`.
+
+From a source checkout, with Node.js 22.19 or newer:
+
+```bash
+npm --prefix cli ci
+npm --prefix cli run build
+node cli/bin/grclanker.js flue run --message "Is BoringCrypto FIPS validated?"
+```
+
+Continue a conversation by reusing an id, or ask for a JSON envelope:
+
+```bash
+grclanker flue run --message "Now check KEV exposure for it" --id fips-review
+grclanker flue run --message "Summarize the findings" --id fips-review --json
+```
+
+### Output and redaction
+
+The reply prints to stdout. Tool activity and the conversation id print to stderr.
+
+Tool arguments in those stderr lines are redacted when either condition holds:
+
+- Their names look like credentials (`token`, `secret`, `password`, `private_key`, `api_key`, `credential`, `authorization`, `assertion`, Duo's `ikey` and `skey`).
+- The tool schema marks them `writeOnly`, `format: "password"`, or `sensitive`.
+
+Names shaped like thresholds, durations, counts, or file references (`max_keys`, `token_limit`, `stale_token_days`, `credentials_file`) stay visible.
+
+Tool error lines are treated the same way:
+
+- The payload that Pi's validation error echoes (`Received arguments:`) is withheld.
+- Only the field-level reasons print.
+- Any redacted value from the call is scrubbed if a tool's own message repeats it, in any of these forms:
+  - As is
+  - JSON-escaped
+  - URL-encoded as a URI component (`%20` for a space)
+  - URL-encoded as a form field, as in an echoed `application/x-www-form-urlencoded` body (`+` for a space, `~ ! ' ( )` percent-encoded, `*` left alone by both encodings)
+  - Base64 or base64url encoded
+  - Case-changed
+  - As a PEM re-flowed onto one line or quoted line by line
+
+API tokens and client secrets therefore never reach terminal scrollback or CI logs through these lines.
+
+Exit codes follow `flue run`: `0` completed, `1` failed, `130` aborted.
+
+The conversation database is different: Flue persists conversation records that include tool arguments, tool results, and user messages.
+
+`session.shell()` redacts environment values before persistence, and image data is stored through attachment references. Credentials embedded in commands, messages, or text results can still be retained, so treat `~/.grclanker/flue/conversations.db` like a credential store and use `--db :memory:` in CI.
+
+## Run with the official Flue CLI
+
+The agent module is `cli/flue/agent.ts`, a `'use agent'` module that exports one agent named `grclanker`.
+
+`@flue/cli` is a devDependency of the CLI package, so from a repo checkout, run these in the `cli/` directory after `npm install`, with Node.js 22.19 or newer:
+
+```bash
+npx flue run flue/agent.ts --message "Is BoringCrypto FIPS validated?"
+npx flue run flue/agent.ts --message "Any update?" --id fips-review
+```
+
+`flue run` loads the TypeScript module directly and has no `--db` option. It stores conversations in `node_modules/.cache/flue/run.db` unless a `flue.config.*` database entry says otherwise.
+
+That file can retain credentials embedded in commands, messages, text tool arguments, or text results, even though shell environment values are redacted and images use attachment references.
+
+The file is covered by the repository's `node_modules/` ignore rule, but it travels with any CI cache of `node_modules`. Delete `node_modules/.cache/flue` after a CI run or exclude it from the cache, and never share it.
+
+The same module can be mounted in a Flue application with `createAgentRouter()` if you want it behind HTTP.
+
+The CLI has to be installed next to the runtime it drives. `@flue/runtime` publishes import-only package exports, which defeats the CLI's single-copy resolver.
+
+A separately downloaded CLI (for example `npx @flue/cli run ...` in a checkout without the devDependency) therefore loads its own runtime copy. The agent's hooks then fail with `useModel() was called outside an agent function`.
+
+Keep the devDependency, or install `@flue/cli` into the same `node_modules` before running it.
+
+## Configuration
+
+| Setting | Effect |
+| --- | --- |
+| `GRCLANKER_FLUE_MODEL` | `provider/model` specifier, for example `anthropic/claude-sonnet-4-6`, `openai/gpt-5.5`, or `ollama/gemma4`. Without it, the `grclanker setup` provider and model are reused (hosted or local-first); with no setup at all, `anthropic/claude-sonnet-4-6` is used. |
+| Provider API keys | Read from the environment by the Flue runtime for hosted providers (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, and so on). `flue run` also loads a project `.env`. |
+| `GRCLANKER_FLUE_SANDBOX` | `local` (default) attaches Flue's local sandbox for the current directory. `none` runs with domain tools only. |
+| `--db <path>` | SQLite file for conversation records. Shell environment values are redacted and images use attachment references, but credentials in commands, messages, text arguments, or text results may persist. Defaults to `~/.grclanker/flue/conversations.db`; `:memory:` keeps nothing and is the right choice for CI. |
+| `GRCLANKER_HOME` | Honored as in the Pi CLI, both for reading settings and for the default database location. |
+
+## Local-first models
+
+The Flue runtime registers Pi's built-in hosted providers on its own. To keep grclanker's local-first path working, the agent module:
+
+1. Reads the custom providers `grclanker setup` wrote to `~/.grclanker/agent/models.json` (the Ollama entry, or any other provider with its own `models` list).
+2. Rebuilds each one with Pi's `createProvider()`.
+3. Registers each rebuilt provider with Flue's `setProvider()` at module scope, as the Flue Models guide prescribes for custom endpoints.
+
+These steps run whether the module is loaded by `grclanker flue run` or by `flue run`, so a local-first setup resolves to `ollama/gemma4` without any extra configuration.
+
+Rules for `models.json` entries:
+
+- Supported entries use the `openai-completions`, `openai-responses`, or `anthropic-messages` API with a `baseUrl` on the provider or model. Other APIs are skipped with a warning.
+- The `apiKey` may be a literal or an environment variable template such as `$OLLAMA_API_KEY`.
+- Entries whose `apiKey` runs a shell command (`!command`) are refused.
+- Model metadata defaults match the Pi CLI (`contextWindow` 128000, `maxTokens` 16384, zero cost).
+
+If a local-first setup has no usable entry, the adapter reports that instead of switching to a hosted provider silently.
+
+## Limitations
+
+- The Pi compute backends (`host`, `sandbox-runtime`, Docker, Parallels) do not apply. Use `GRCLANKER_FLUE_SANDBOX` to attach or skip Flue's local sandbox, or swap in another Flue sandbox adapter in your own agent module.
+- Flue's runtime validates the raw model arguments against the rendered JSON Schema before the adapter (and therefore any normalizer) sees them. It also coerces typed values on the way in, which the Pi CLI does not do.
+  - Payloads that a Pi normalizer would have repaired instead return a validation error naming the field, and the model retries:
+    - Alias keys standing in for a missing required argument
+    - Invalid enum values
+    - Wrong-typed or out-of-range values a normalizer would drop or clamp
+    - Scalars sent for array fields
+    - Non-integer numbers for integer fields
+    - Bare non-object payloads
+  - In the other direction, that check admits typed values the Pi CLI rejects:
+    - Numeric strings become numbers.
+    - `"true"` and `"false"` become booleans.
+    - Numbers and booleans become strings for string fields. A boolean sent for a `string | integer` union arrives as `"true"`.
+    - Non-string array items become strings. `[1]` arrives as `["1"]`.
+  - A `null` sent for an optional scalar is dropped before the adapter sees it, the same as in the Pi CLI.
+  - For typed values the Flue path is therefore at least as permissive as the Pi CLI and never stricter. It is stricter only where a normalizer would have repaired the payload.
+- Tool output reaches the model as a JSON string, because Flue JSON-serializes every tool `output`. Multi-line tables therefore arrive with escaped newlines and quotes rather than as raw text as under Pi.
+- Flue's conversation database persists conversation records, including tool arguments, tool results, and messages.
+  - The database does not store every payload verbatim. `session.shell()` replaces environment values with `<redacted>`, and image data is stored through attachment references.
+  - Credentials embedded in commands, messages, text arguments, or text results can still be retained.
+  - The public `start()` options expose no persistence redaction option.
+  - Use `--db :memory:` where persistence is not wanted, and keep `~/.grclanker/flue/conversations.db` and `node_modules/.cache/flue` out of CI caches and shared locations.
+- Value scrubbing in error lines has limits.
+  - Scrubbing recognizes a secret in the forms listed above, including both URL encodings, and base64 with or without padding or URL-encoded.
+  - Scrubbing recognizes nothing else a tool might derive from the secret: a hash, a fingerprint, a truncated prefix, another encoding, or a combination of them (base64 of the URL-encoded value, MIME-wrapped base64 with line breaks inside it, a PEM re-wrapped at a different column width).
+  - Values of four to seven characters are scrubbed only where they stand as a whole token. A four-digit passcode therefore disappears from `passcode 4711 rejected` but not from `sub_4711abc`.
+  - Values shorter than four characters are never scrubbed.
+  - Numeric secrets are scrubbed in the decimal form `JSON.stringify` prints.
+  - Free text inside `task` messages or sandbox `command` strings is printed truncated and cannot be classified by key.
+  - Key-based redaction on the `->` line is unaffected by any of this.
+- Node.js 22.19 or newer is required by `@flue/runtime` and `@flue/cli`. On Node 22, Flue's SQLite persistence prints an experimental-feature warning from Node itself.
+
+## Validate the adapter
+
+```bash
+npm --prefix cli run test:cli
+```
+
+`cli/tests/flue.test.mjs` covers:
+
+- The schema conversion
+- Tool bridging for all 241 tools
+- A differential check of argument handling against the Pi CLI's own `validateToolArguments` for every tool
+- Prompt loading
+- The hook-level render
+- The runner and command surface
+- Custom provider registration
+- Two end-to-end runs on the real Flue runtime: one with a faux model provider and one with a local-first provider against a mock OpenAI-compatible server
+
+No test makes a live model call.
