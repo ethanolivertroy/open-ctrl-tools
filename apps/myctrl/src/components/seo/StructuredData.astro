@@ -1,4 +1,6 @@
 ---
+import { REPO_URL } from '../../lib/site-links';
+
 interface Props {
   type: 'organization' | 'webpage' | 'breadcrumb';
   title?: string;
@@ -20,9 +22,7 @@ function generateSchema() {
         url: siteUrl,
         logo: `${siteUrl}/icon-512.png`,
         description: 'Your security compliance command center. Browse 120+ frameworks, get implementation guidance, explore crosswalks, and build AI-powered compliance workflows.',
-        sameAs: [
-          'https://github.com/ethanolivertroy/myctrl.tools'
-        ]
+        sameAs: [REPO_URL]
       };
 
     case 'webpage':

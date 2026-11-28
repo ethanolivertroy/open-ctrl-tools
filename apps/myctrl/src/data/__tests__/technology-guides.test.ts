@@ -13,7 +13,7 @@ describe('NIST CMVP API guide integration', () => {
     expect(guide).toBeDefined();
     expect(guide?.name).toBe('NIST CMVP API');
     expect(guide?.category).toBe('security-tools');
-    expect(guide?.officialUrl).toBe('https://hackidle.github.io/nist-cmvp-api/');
+    expect(guide?.officialUrl).toBe('https://ethanolivertroy.github.io/nist-cmvp-api/');
   });
 
   it('adds the CMVP API guide to the unified search index', () => {

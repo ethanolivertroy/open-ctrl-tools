@@ -7,6 +7,7 @@ import { KeyboardShortcutsProvider } from '../components/shortcuts/KeyboardShort
 import GrcLankerBootstrap from '../components/ai/GrcLankerBootstrap.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
 import ScrollReveal from '../components/ui/ScrollReveal.astro';
+import { REPO_URL } from '../lib/site-links';
 
 interface Props {
   title: string;
@@ -143,7 +144,7 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
         </div>
         <div class="flex items-center gap-5">
           <a href="https://ethantroy.dev" class="hover:text-foreground transition-colors">ethantroy.dev</a>
-          <a href="https://github.com/ethanolivertroy/open-ctrl-tools" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">GitHub</a>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">GitHub</a>
           <a href="/preferences" class="hover:text-foreground transition-colors">Preferences</a>
           <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">CC BY 4.0</a>
         </div>

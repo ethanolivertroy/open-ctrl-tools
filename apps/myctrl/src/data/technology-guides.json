@@ -8,7 +8,7 @@
       "description": "Enterprise identity and access management platform",
       "officialUrl": "https://developer.okta.com/docs/",
       "githubRepos": [
-        "ethanolivertroy/okta-inspector",
+        "ethanolivertroy/open-ctrl-tools/auditors/okta-inspector-py",
         "okta/okta-cli-client"
       ],
       "authoritativeSources": [
@@ -6918,39 +6918,39 @@
       "category": "security-tools",
       "vendor": "Ethan Troy",
       "description": "Unofficial static JSON API for NIST CMVP cryptographic module data, with weekly updates, algorithm summaries, OpenAPI, and llms.txt discovery.",
-      "officialUrl": "https://hackidle.github.io/nist-cmvp-api/",
+      "officialUrl": "https://ethanolivertroy.github.io/nist-cmvp-api/",
       "githubRepos": [
-        "hackIDLE/nist-cmvp-api"
+        "ethanolivertroy/open-ctrl-tools/tools/nist-cmvp-api"
       ],
       "authoritativeSources": [
         {
           "type": "community",
           "title": "NIST CMVP Data API Documentation",
-          "url": "https://hackidle.github.io/nist-cmvp-api/",
+          "url": "https://ethanolivertroy.github.io/nist-cmvp-api/",
           "summary": "Unofficial static JSON API for CMVP validated, historical, and in-process module data. The docs expose API discovery documents, module datasets, algorithm summaries, an OpenAPI spec, and llms.txt for agent and tool consumption.",
           "additionalUrls": [
             {
               "label": "API Index",
-              "url": "https://hackidle.github.io/nist-cmvp-api/api/index.json"
+              "url": "https://ethanolivertroy.github.io/nist-cmvp-api/api/index.json"
             },
             {
               "label": "Dataset Metadata",
-              "url": "https://hackidle.github.io/nist-cmvp-api/api/metadata.json"
+              "url": "https://ethanolivertroy.github.io/nist-cmvp-api/api/metadata.json"
             },
             {
               "label": "OpenAPI Spec",
-              "url": "https://hackidle.github.io/nist-cmvp-api/openapi.json"
+              "url": "https://ethanolivertroy.github.io/nist-cmvp-api/openapi.json"
             },
             {
               "label": "llms.txt",
-              "url": "https://hackidle.github.io/nist-cmvp-api/llms.txt"
+              "url": "https://ethanolivertroy.github.io/nist-cmvp-api/llms.txt"
             }
           ]
         },
         {
           "type": "community",
           "title": "NIST-CMVP-API GitHub Repository",
-          "url": "https://github.com/hackIDLE/nist-cmvp-api",
+          "url": "https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/tools/nist-cmvp-api",
           "summary": "Source repository for the scraper, generated API artifacts, and automation workflow. Use it to inspect schema generation, scheduled refreshes, validation checks, and change history."
         },
         {
@@ -6963,49 +6963,49 @@
       "commands": [
         {
           "description": "Fetch the API index to discover all published datasets",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/index.json | jq",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/index.json | jq",
           "type": "cli",
           "group": "Discovery"
         },
         {
           "description": "Check dataset freshness and feature flags",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/metadata.json | jq",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/metadata.json | jq",
           "type": "cli",
           "group": "Discovery"
         },
         {
           "description": "List active validated modules for a vendor",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Vendor Name\" | test(\"Microsoft\"; \"i\"))'",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Vendor Name\" | test(\"Microsoft\"; \"i\"))'",
           "type": "cli",
           "group": "Module Queries"
         },
         {
           "description": "Search validated modules by certificate number",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Certificate Number\" == \"5104\")'",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Certificate Number\" == \"5104\")'",
           "type": "cli",
           "group": "Module Queries"
         },
         {
           "description": "Inspect historical or revoked modules",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/historical-modules.json | jq '.modules[] | select(.status == \"Revoked\")'",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/historical-modules.json | jq '.modules[] | select(.status == \"Revoked\")'",
           "type": "cli",
           "group": "Module Queries"
         },
         {
           "description": "List modules currently in process",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/modules-in-process.json | jq '.modules[:20]'",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules-in-process.json | jq '.modules[:20]'",
           "type": "cli",
           "group": "Module Queries"
         },
         {
           "description": "Inspect algorithm usage statistics across certificates",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/algorithms.json | jq",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/algorithms.json | jq",
           "type": "cli",
           "group": "Algorithm Queries"
         },
         {
           "description": "Look up certificates that reference AES",
-          "command": "curl -s https://hackidle.github.io/nist-cmvp-api/api/algorithms.json | jq '.algorithms.AES'",
+          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/algorithms.json | jq '.algorithms.AES'",
           "type": "cli",
           "group": "Algorithm Queries"
         }

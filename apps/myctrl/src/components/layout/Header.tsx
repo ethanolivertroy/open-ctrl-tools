@@ -23,6 +23,7 @@ import { getRecentlyViewed } from '@/lib/storage/recently-viewed-store';
 import { useEdgeSwipe } from '@/hooks/useEdgeSwipe';
 import { requestOpenAIChat } from '@/lib/ai-chat-events';
 import { FRAMEWORK_CONFIGS } from '@/data/framework-configs';
+import { PARENT_PROJECT } from '@/lib/site-links';
 import { Mic } from 'lucide-react';
 
 interface HeaderProps {
@@ -152,7 +153,7 @@ export default function Header({ frameworkId }: HeaderProps) {
                 <span className="font-semibold tracking-tight">
                   myctrl<span className="text-primary">.tools</span>
                 </span>
-                <a href="https://www.hackidle.com/" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground font-normal tracking-normal hover:text-foreground transition-colors">by hackIDLE</a>
+                <a href={PARENT_PROJECT.url} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap text-xs text-muted-foreground font-normal tracking-normal hover:text-foreground transition-colors">by {PARENT_PROJECT.name}</a>
               </SheetTitle>
             </SheetHeader>
             <div className="overflow-y-auto flex-1 min-h-0 overscroll-contain scrollbar-thin" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -346,7 +347,8 @@ export default function Header({ frameworkId }: HeaderProps) {
           <a href="/" className="font-semibold text-lg tracking-tight">
             myctrl<span className="text-primary">.tools</span>
           </a>
-          <a href="https://www.hackidle.com/" target="_blank" rel="noopener noreferrer" className="ml-2 text-xs text-muted-foreground font-normal tracking-normal hover:text-foreground transition-colors">by hackIDLE</a>
+          {/* No room beside the icons on phones; the byline stays in the menu sheet there. */}
+          <a href={PARENT_PROJECT.url} target="_blank" rel="noopener noreferrer" className="hidden sm:inline ml-2 whitespace-nowrap text-xs text-muted-foreground font-normal tracking-normal hover:text-foreground transition-colors">by {PARENT_PROJECT.name}</a>
         </div>
 
         {/* Desktop Navigation Dropdowns - hidden on mobile */}

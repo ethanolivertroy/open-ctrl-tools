@@ -8,6 +8,7 @@ import { getFrameworkConfig } from '@/data/frameworks';
 import { slugify, hasFrameworkData } from '@/data/controls';
 import { getTechnologyById, getTechnologyPath, hasSubpages, getOverviewContent, getSectionCounts, AWS_RSC_DATA } from '@/data/technology-guides';
 import type { TechCommandType, TechnologyGuide, TechnologyCategoryMeta } from '@/data/types';
+import { loadGithubRepoCards } from '@/lib/github-repo-ref';
 
 interface Props {
   tech: TechnologyGuide;
@@ -72,32 +73,7 @@ const sectionData = isLandingPage
 const hasRscSections = tech.sections?.some((s) => s.rscServiceId && AWS_RSC_DATA[s.rscServiceId]) ?? false;
 
 // Fetch GitHub repo metadata at build time
-const githubRepoData = tech.githubRepos
-  ? await Promise.all(
-      tech.githubRepos.map(async (fullName) => {
-        const [owner, repo] = fullName.split('/');
-        try {
-          const res = await fetch(`https://api.github.com/repos/${fullName}`, {
-            headers: import.meta.env.GH_TOKEN
-              ? { Authorization: `token ${import.meta.env.GH_TOKEN}` }
-              : {},
-          });
-          if (!res.ok) return { owner, repo };
-          const data = await res.json();
-          return {
-            owner: data.owner.login,
-            repo: data.name,
-            description: data.description,
-            language: data.language,
-            stars: data.stargazers_count,
-            forks: data.forks_count,
-          };
-        } catch {
-          return { owner, repo };
-        }
-      })
-    )
-  : [];
+const githubRepoData = await loadGithubRepoCards(tech.githubRepos, import.meta.env.GH_TOKEN);
 ---
 
 <BaseLayout

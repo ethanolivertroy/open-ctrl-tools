@@ -719,7 +719,7 @@ export interface TechnologyGuide {
 
   relatedTechnologies?: string[];
 
-  /** GitHub repos to display as cards (owner/repo format) */
+  /** GitHub repos to display as cards: `owner/repo`, or `owner/repo/path` for a directory in a monorepo */
   githubRepos?: string[];
 
   tools?: TechnologyGuideTool[];

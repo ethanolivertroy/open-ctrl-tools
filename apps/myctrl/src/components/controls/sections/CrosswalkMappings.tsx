@@ -150,7 +150,7 @@ export function CrosswalkMappings({
       if (mappedFrameworkId === 'iso-23894') {
         return {
           name: 'INCITS/AI AI RMF to ISO 23894 Crosswalk',
-          url: 'https://airc.nist.gov/docs/AI_RMF_to_ISO_IEC_23894_Crosswalk.pdf',
+          url: 'https://airc.nist.gov/documents/3/ai-2025-00109_revised_ISO_IEC_23894_Crosswalk_to_the_NIST_AI_RMF.pdf',
         };
       }
     }
@@ -165,7 +165,7 @@ export function CrosswalkMappings({
       if (currentFrameworkId === 'iso-23894') {
         return {
           name: 'INCITS/AI AI RMF to ISO 23894 Crosswalk',
-          url: 'https://airc.nist.gov/docs/AI_RMF_to_ISO_IEC_23894_Crosswalk.pdf',
+          url: 'https://airc.nist.gov/documents/3/ai-2025-00109_revised_ISO_IEC_23894_Crosswalk_to_the_NIST_AI_RMF.pdf',
         };
       }
     }
