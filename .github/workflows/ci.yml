@@ -170,6 +170,7 @@ jobs:
       - run: python3 scripts/validate_mappings.py
       - run: npm run build
       - run: node scripts/qa_static_routes.mjs && node scripts/qa_internal_links.mjs
+      - run: npx wrangler deploy --dry-run
 
   github-security-audit:
     name: auditors/github-security-audit
