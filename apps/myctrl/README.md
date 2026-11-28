@@ -59,6 +59,18 @@ npm run dev
 
 See [`src/data/local/README.md`](./src/data/local/README.md) and [`src/data/local/crosswalks/README.md`](./src/data/local/crosswalks/README.md) for quick reminders.
 
+## Deployment (Cloudflare Workers Builds)
+
+Connect `ethanolivertroy/open-ctrl-tools` in **Cloudflare Dashboard → Workers & Pages → Builds** with:
+
+- **Path (Root directory):** `/apps/myctrl`
+- **Build watch paths (Include):** `apps/myctrl/*`
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
+- **Build variable:** `ONNXRUNTIME_NODE_INSTALL=skip` (skips downloading Linux CUDA binaries for `onnxruntime-node` during `npm ci`)
+
+You can verify Worker bundle sizing and Wrangler configuration locally before pushing with `npx wrangler deploy --dry-run`.
+
 ## License & Notices
 
 Code in `apps/myctrl` is licensed under the [MIT License](./LICENSE).
