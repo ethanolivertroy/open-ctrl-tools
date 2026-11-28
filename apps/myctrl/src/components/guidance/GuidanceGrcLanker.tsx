@@ -20,10 +20,6 @@ function getInitialStatusMessage(providerId: ProviderId, providerName: string): 
     return 'Connecting to Ollama...';
   }
 
-  if (providerId === 'transformers' || providerId === 'webllm' || providerId === 'chrome-ai') {
-    return `Preparing ${providerName}...`;
-  }
-
   return `Waiting for ${providerName} to respond...`;
 }
 

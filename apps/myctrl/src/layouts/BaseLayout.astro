@@ -1,13 +1,13 @@
 ---
 import '../styles/globals.css';
 import Header from '../components/layout/Header';
-import Sidebar from '../components/layout/Sidebar';
+import Sidebar, { type SidebarInitialData } from '../components/layout/Sidebar';
 import { CommandSearch } from '../components/search/CommandSearch';
 import { KeyboardShortcutsProvider } from '../components/shortcuts/KeyboardShortcutsProvider';
 import GrcLankerBootstrap from '../components/ai/GrcLankerBootstrap.astro';
 import StructuredData from '../components/seo/StructuredData.astro';
-import { AmbientParticles } from '../components/effects/AmbientParticles';
 import ScrollReveal from '../components/ui/ScrollReveal.astro';
+import { REPO_URL } from '../lib/site-links';
 
 interface Props {
   title: string;
@@ -15,8 +15,10 @@ interface Props {
   showSidebar?: boolean;
   frameworkId?: string;
   controlSlug?: string;
+  controlTitle?: string;
+  assessmentQuestions?: string[];
+  sidebarData?: SidebarInitialData;
   isHomepage?: boolean;
-  showAmbientParticles?: boolean;
 }
 
 declare const __BUILD_LAST_UPDATED__: string;
@@ -27,8 +29,10 @@ const {
   showSidebar = true,
   frameworkId,
   controlSlug,
+  controlTitle,
+  assessmentQuestions,
+  sidebarData,
   isHomepage = false,
-  showAmbientParticles = false,
 } = Astro.props;
 
 // Determine the keyboard shortcuts scope based on context
@@ -45,9 +49,6 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <link rel="preload" href="/fonts/GeistVariable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/GeistMonoVariable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="canonical" href={Astro.url} />
@@ -97,8 +98,8 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
         var valid = ['mocha', 'dracula', 'latte'];
         var legacyLight = ['zinc-light','gruvbox-light','solarized-light','earth-light','flexoki-light'];
         if (!theme || valid.indexOf(theme) === -1) {
-          // Migrate retired themes: light ones land on Latte, everything else Dracula
-          theme = legacyLight.indexOf(theme) !== -1 ? 'latte' : 'dracula';
+          // Migrate retired themes: light ones land on Latte, everything else Mocha
+          theme = legacyLight.indexOf(theme || '') !== -1 ? 'latte' : 'mocha';
           localStorage.setItem('theme', theme);
         }
         document.documentElement.setAttribute('data-theme', theme);
@@ -107,10 +108,8 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
     </script>
   </head>
   <body class="min-h-screen bg-background antialiased">
-    {/* Ambient floating particles on inner pages (homepage has its own WebGLBackground) */}
-    {!isHomepage && showAmbientParticles && (
-      <AmbientParticles client:only="react" />
-    )}
+    {/* Full-viewport backdrops (the homepage sky) sit behind all page content */}
+    <slot name="background" />
 
     <div class="relative z-10 flex min-h-screen flex-col">
       <!-- Header -->
@@ -122,7 +121,7 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
         {showSidebar && (
           <aside class="hidden lg:block w-80 border-r border-border shrink-0 bg-background">
             <div class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto scrollbar-thin py-6 px-4 overscroll-contain" style="-webkit-overflow-scrolling: touch;">
-              <Sidebar frameworkId={frameworkId} client:only="react" />
+              <Sidebar frameworkId={frameworkId} initialData={sidebarData} client:only="react" />
             </div>
           </aside>
         )}
@@ -135,7 +134,7 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
       </div>
     </div>
 
-    <!-- Minimal footer (mazehq-style) -->
+    <!-- Minimal footer -->
     <div class="h-px w-full bg-gradient-to-r from-transparent via-border/40 to-transparent"></div>
     <footer class="relative py-6 px-4">
       <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
@@ -145,7 +144,7 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
         </div>
         <div class="flex items-center gap-5">
           <a href="https://ethantroy.dev" class="hover:text-foreground transition-colors">ethantroy.dev</a>
-          <a href="https://github.com/ethanolivertroy/myctrl-tools-issues" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">GitHub</a>
+          <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">GitHub</a>
           <a href="/preferences" class="hover:text-foreground transition-colors">Preferences</a>
           <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="hover:text-foreground transition-colors">CC BY 4.0</a>
         </div>
@@ -153,21 +152,47 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
     </footer>
 
     {!isHomepage && (
-      <button
-        type="button"
-        id="grclanker-orb"
-        data-ai-chat-trigger
-        data-ai-framework-id={frameworkId ?? ''}
-        data-ai-control-slug={controlSlug ?? ''}
-        class="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-primary/40 bg-card text-sm font-semibold text-foreground shadow-lg transition hover:border-primary hover:bg-primary/10"
-        aria-label="Ask GRCLanker"
-        title="Ask GRCLanker (⌘J)"
-      >
-        GL
-      </button>
+      <div class="fixed bottom-4 right-4 z-40 flex items-center gap-2">
+        <button
+          type="button"
+          id="grclanker-voice-orb"
+          data-ai-chat-trigger
+          data-ai-tab="voice"
+          data-ai-voice-mode="copilot"
+          data-ai-framework-id={frameworkId ?? ''}
+          data-ai-control-slug={controlSlug ?? ''}
+          class="flex h-10 px-3 items-center justify-center gap-1.5 rounded-full border border-primary/40 bg-card text-xs font-mono text-primary shadow-lg transition hover:border-primary hover:bg-primary/10"
+          aria-label="Open GRCLanker Voice Copilot"
+          title="Voice Copilot (⌘⇧V)"
+        >
+          Voice
+        </button>
+        <button
+          type="button"
+          id="grclanker-orb"
+          data-ai-chat-trigger
+          data-ai-tab="chat"
+          data-ai-framework-id={frameworkId ?? ''}
+          data-ai-control-slug={controlSlug ?? ''}
+          class="flex h-12 w-12 items-center justify-center rounded-full border border-primary/40 bg-card text-sm font-semibold text-foreground shadow-lg transition hover:border-primary hover:bg-primary/10"
+          aria-label="Ask GRCLanker"
+          title="Ask GRCLanker (⌘J)"
+        >
+          GL
+        </button>
+      </div>
     )}
 
-    <GrcLankerBootstrap frameworkId={frameworkId} controlSlug={controlSlug} />
+    <GrcLankerBootstrap
+      frameworkId={frameworkId}
+      controlSlug={controlSlug}
+      controlTitle={controlTitle}
+      assessmentQuestions={assessmentQuestions}
+    />
+    <script>
+      import { initUiAgent } from '../lib/ui-agent';
+      initUiAgent();
+    </script>
 
     <!-- Command palette search - handles its own Cmd+K shortcut -->
     <CommandSearch client:only="react" contextFrameworkId={frameworkId} />

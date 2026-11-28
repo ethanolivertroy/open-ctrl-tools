@@ -5,17 +5,34 @@ import {
   getAllControls,
   slugify,
   getFrameworkConfig,
+  getFamilyName,
+  getLoadedFrameworkIds,
   isValidFramework,
   getRiskLists,
   getNeighborControls,
 } from '../../../data/controls';
+import { getCrossFrameworkMappings } from '../../../data/crosswalk';
+import { getTechnologiesForControl, getTechnologyPath } from '../../../data/technology-guides';
 
 export async function getStaticPaths() {
-  const paths: { params: { risklist: string; risk: string }; props: { risklistId: string; control: any; neighbors: any } }[] = [];
+  const paths: {
+    params: { risklist: string; risk: string };
+    props: {
+      risklistId: string;
+      control: any;
+      neighbors: any;
+      familyName: string;
+      crosswalkMappings: any[];
+      loadedFrameworkIds: string[];
+      relevantTechnologies: Array<{ id: string; name: string; path: string }>;
+    };
+  }[] = [];
+  const loadedFrameworkIds = getLoadedFrameworkIds();
 
   for (const config of getRiskLists()) {
     const controls = getAllControls(config.id);
     for (const control of controls) {
+      const techs = getTechnologiesForControl(control.control_id, config.id);
       paths.push({
         params: {
           risklist: config.id,
@@ -25,6 +42,14 @@ export async function getStaticPaths() {
           risklistId: config.id,
           control,
           neighbors: getNeighborControls(config.id, control.control_id),
+          familyName: getFamilyName(config.id, control.family),
+          crosswalkMappings: getCrossFrameworkMappings(control.control_id, config.id),
+          loadedFrameworkIds,
+          relevantTechnologies: techs.map((t) => ({
+            id: t.id,
+            name: t.name,
+            path: getTechnologyPath(t),
+          })),
         },
       });
     }
@@ -33,7 +58,15 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { risklistId, control, neighbors } = Astro.props;
+const {
+  risklistId,
+  control,
+  neighbors,
+  familyName,
+  crosswalkMappings,
+  loadedFrameworkIds,
+  relevantTechnologies,
+} = Astro.props;
 const controlSlug = Astro.params.risk;
 
 if (!control || !isValidFramework(risklistId)) {
@@ -45,6 +78,15 @@ const title = `${control.control_id}: ${control.title}`;
 const description = control.description.substring(0, 160);
 ---
 
-<BaseLayout title={title} description={description} showSidebar={true} frameworkId={risklistId} controlSlug={controlSlug}>
-  <ControlDetail control={control} frameworkId={risklistId} neighbors={neighbors} client:load />
+<BaseLayout title={title} description={description} showSidebar={true} frameworkId={risklistId} controlSlug={controlSlug} controlTitle={control.title}>
+  <ControlDetail
+    control={control}
+    frameworkId={risklistId}
+    neighbors={neighbors}
+    familyName={familyName}
+    crosswalkMappings={crosswalkMappings}
+    loadedFrameworkIds={loadedFrameworkIds}
+    relevantTechnologies={relevantTechnologies}
+    client:load
+  />
 </BaseLayout>

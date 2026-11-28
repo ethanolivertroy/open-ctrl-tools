@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from 'react';
 import { PROVIDERS, resolveStoredModelId, type ProviderId } from '@/lib/ai/providers';
-import type { TransformersProgress } from '@/lib/ai/transformers-client';
-import type { WebLLMProgress } from '@/lib/ai/webllm-client';
 import { resolveStoredGrokCredential } from '@/lib/services/xai-oauth-session';
 import { streamServerProviderResponse } from '@/lib/services/server-provider-client';
 import {
@@ -46,11 +44,6 @@ async function loadOllamaModelOptions(baseUrl: string): Promise<ProviderModelOpt
   return models.map((model) => ({ id: model.name, name: model.name }));
 }
 
-async function loadChromeAIAvailability() {
-  const { getChromeAIStatus } = await import('@/lib/ai/chrome-ai-client');
-  return getChromeAIStatus();
-}
-
 export function useProviderSetupState({
   providerId,
   isOpen,
@@ -67,9 +60,6 @@ export function useProviderSetupState({
   const [testError, setTestError] = useState<string | null>(null);
   const [hasExisting, setHasExisting] = useState(false);
   const [ollamaModels, setOllamaModels] = useState<ProviderModelOption[]>([]);
-  const [downloadStatus, setDownloadStatus] = useState<TransformersProgress | null>(null);
-  const [webllmStatus, setWebllmStatus] = useState<WebLLMProgress | null>(null);
-  const [chromeAIStatus, setChromeAIStatus] = useState<'available' | 'downloadable' | 'unavailable' | 'checking'>('checking');
   const [hasOAuth, setHasOAuth] = useState(false);
 
   const persistGrokOAuth = useCallback(async (tokens: ProviderOAuthTokens) => {
@@ -107,32 +97,6 @@ export function useProviderSetupState({
   const clearMaskedApiKey = useCallback(() => {
     setApiKey('');
     setMaskedKey(false);
-  }, []);
-
-  const downloadTransformersModel = useCallback(async () => {
-    try {
-      const { initTransformers } = await import('@/lib/ai/transformers-client');
-      await initTransformers(selectedModel, setDownloadStatus);
-    } catch {
-      // Error status is surfaced through the progress callback.
-    }
-  }, [selectedModel]);
-
-  const retryTransformersDownload = useCallback(() => {
-    setDownloadStatus(null);
-  }, []);
-
-  const downloadWebllmModel = useCallback(async () => {
-    try {
-      const { initWebLLM } = await import('@/lib/ai/webllm-client');
-      await initWebLLM(selectedModel, setWebllmStatus);
-    } catch {
-      // Error status is surfaced through the progress callback.
-    }
-  }, [selectedModel]);
-
-  const retryWebllmDownload = useCallback(() => {
-    setWebllmStatus(null);
   }, []);
 
   useEffect(() => {
@@ -186,14 +150,6 @@ export function useProviderSetupState({
           }
         }
       }
-
-      if (providerId === 'chrome-ai') {
-        setChromeAIStatus('checking');
-        const status = await loadChromeAIAvailability();
-        if (!cancelled) {
-          setChromeAIStatus(status);
-        }
-      }
     })();
 
     return () => {
@@ -230,47 +186,6 @@ export function useProviderSetupState({
     setTestError(null);
 
     try {
-      if (providerId === 'transformers' || providerId === 'webllm') {
-        const hasWebGPU = 'gpu' in navigator;
-        if (providerId === 'webllm' && !hasWebGPU) {
-          setTestStatus('error');
-          setTestError('WebGPU is required for WebLLM but not available in this browser.');
-          return;
-        }
-
-        setTestStatus('success');
-        return;
-      }
-
-      if (providerId === 'chrome-ai') {
-        const status = await loadChromeAIAvailability();
-        if (status === 'unavailable') {
-          setTestStatus('error');
-          setTestError('Chrome Built-in AI is not available. Enable both flags: chrome://flags/#optimization-guide-on-device-model AND chrome://flags/#prompt-api-for-gemini-nano-multimodal-input');
-          return;
-        }
-
-        setChromeAIStatus(status);
-        setTestStatus('success');
-        return;
-      }
-
-      if (providerId === 'cursor') {
-        const url = baseUrl || 'http://localhost:4646/v1';
-        const testKey = apiKey && !maskedKey
-          ? apiKey
-          : await getStoredProviderKey(providerId, apiKey, maskedKey).catch(() => null);
-        const { testCursorConnection } = await import('@/lib/ai/cursor-client');
-        try {
-          await testCursorConnection(url, testKey || undefined);
-          setTestStatus('success');
-        } catch (error) {
-          setTestStatus('error');
-          setTestError(error instanceof Error ? error.message : 'Could not reach the Cursor proxy.');
-        }
-        return;
-      }
-
       if (providerId === 'ollama') {
         const url = baseUrl || 'http://localhost:11434';
         const models = await loadOllamaModelOptions(url);
@@ -423,9 +338,6 @@ export function useProviderSetupState({
     testError,
     hasExisting,
     ollamaModels,
-    downloadStatus,
-    webllmStatus,
-    chromeAIStatus,
     hasOAuth,
     oauthStatus,
     oauthDevice,
@@ -443,9 +355,5 @@ export function useProviderSetupState({
     handleXaiOAuthStart,
     handleXaiOAuthCancel,
     handleXaiOAuthDisconnect,
-    downloadTransformersModel,
-    retryTransformersDownload,
-    downloadWebllmModel,
-    retryWebllmDownload,
   };
 }

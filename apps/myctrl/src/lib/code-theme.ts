@@ -7,68 +7,17 @@
  * the site's per-theme `color-scheme` and Pierre's light-dark() CSS).
  */
 
-import { registerCustomTheme } from '@pierre/diffs';
 import type { BundledLanguage, SupportedLanguages } from '@pierre/diffs';
-import type { Theme } from '@/lib/theme';
+import { normalizeTheme, type Theme } from '@/lib/theme';
 
-/**
- * Green-on-black theme matching the site's "neo-terminal" flavor.
- * Registered at module scope (module evaluation is already once-only);
- * registration just records a lazy loader, so the theme JSON is only
- * built if a block actually renders with it.
- */
-const NEO_TERMINAL_THEME_NAME = 'myctrl-neo-terminal';
-
-registerCustomTheme(NEO_TERMINAL_THEME_NAME, async () => ({
-  name: NEO_TERMINAL_THEME_NAME,
-  type: 'dark',
-  colors: {
-    'editor.background': '#0a0a0a',
-    'editor.foreground': '#00ff00',
-  },
-  tokenColors: [
-    { scope: ['comment'], settings: { foreground: '#006600', fontStyle: 'italic' } },
-    { scope: ['keyword', 'storage'], settings: { foreground: '#00ffff' } },
-    { scope: ['string'], settings: { foreground: '#00ff00' } },
-    { scope: ['constant.numeric', 'constant.language'], settings: { foreground: '#ffff00' } },
-    { scope: ['entity.name.type', 'support.type', 'support.class'], settings: { foreground: '#00ccff' } },
-    { scope: ['entity.name.function', 'support.function'], settings: { foreground: '#00e5e5' } },
-    { scope: ['variable', 'entity.name.tag'], settings: { foreground: '#00ff00' } },
-  ],
-}));
-
-/**
- * Site theme -> Shiki theme. Every value except the custom neo-terminal
- * entry is a Shiki bundled theme (https://shiki.style/themes).
- */
 const SHIKI_THEME_BY_SITE_THEME: Record<Theme, string> = {
   mocha: 'catppuccin-mocha',
-  macchiato: 'catppuccin-macchiato',
-  frappe: 'catppuccin-frappe',
-  latte: 'catppuccin-latte',
-  'neo-terminal': NEO_TERMINAL_THEME_NAME,
-  nord: 'nord',
   dracula: 'dracula',
-  zinc: 'min-dark',
-  'zinc-light': 'min-light',
-  'gruvbox-dark': 'gruvbox-dark-medium',
-  'gruvbox-light': 'gruvbox-light-medium',
-  'tokyo-night': 'tokyo-night',
-  'rose-pine': 'rose-pine',
-  'solarized-dark': 'solarized-dark',
-  'solarized-light': 'solarized-light',
-  kanagawa: 'kanagawa-wave',
-  'earth-light': 'gruvbox-light-soft',
-  'earth-dark': 'gruvbox-dark-soft',
+  latte: 'catppuccin-latte',
 };
 
-const DEFAULT_SHIKI_THEME = SHIKI_THEME_BY_SITE_THEME.mocha;
-
 export function shikiThemeForSiteTheme(siteTheme: string | null | undefined): string {
-  if (siteTheme && siteTheme in SHIKI_THEME_BY_SITE_THEME) {
-    return SHIKI_THEME_BY_SITE_THEME[siteTheme as Theme];
-  }
-  return DEFAULT_SHIKI_THEME;
+  return SHIKI_THEME_BY_SITE_THEME[normalizeTheme(siteTheme)];
 }
 
 /**

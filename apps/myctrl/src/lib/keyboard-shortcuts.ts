@@ -15,18 +15,19 @@ export const SHORTCUTS: ShortcutDefinition[] = [
   // Navigation (G + key chords)
   { id: 'go-home', keys: 'g h', description: 'Go to Home', category: 'navigation', scope: 'global' },
   { id: 'go-frameworks', keys: 'g f', description: 'Go to All Frameworks', category: 'navigation', scope: 'global' },
-  { id: 'go-graph', keys: 'g g', description: 'Go to Knowledge Graph', category: 'navigation', scope: 'global' },
   { id: 'go-compare', keys: 'g c', description: 'Go to Compare Tool', category: 'navigation', scope: 'global' },
-  { id: 'go-crosswalk', keys: 'g x', description: 'Go to Crosswalk Explorer', category: 'navigation', scope: 'global' },
+  { id: 'go-crosswalk', keys: 'g x', description: 'Go to Crosswalk Workbench', category: 'navigation', scope: 'global' },
+  { id: 'go-assess', keys: 'g a', description: 'Go to Assessments', category: 'navigation', scope: 'global' },
   { id: 'go-preferences', keys: 'g s', description: 'Go to Preferences', category: 'navigation', scope: 'global' },
   { id: 'go-guidance', keys: 'g t', description: 'Go to Guidance', category: 'navigation', scope: 'global' },
 
   // Actions
   { id: 'toggle-favorite', keys: 'f', description: 'Toggle favorite', category: 'actions', scope: 'framework' },
   { id: 'focus-notes', keys: 'n', description: 'Focus notes textarea', category: 'actions', scope: 'control' },
-  { id: 'open-search', keys: '/', description: 'Open search', category: 'actions', scope: 'global' },
-  { id: 'open-search-cmd', keys: 'Cmd+k', description: 'Go to Full Search', category: 'actions', scope: 'global' },
+  { id: 'open-search', keys: '/', description: 'Open command palette', category: 'actions', scope: 'global' },
+  { id: 'open-search-cmd', keys: 'Cmd+k', description: 'Toggle command palette', category: 'actions', scope: 'global' },
   { id: 'open-ai', keys: 'Cmd+j', description: 'Open GRCLanker', category: 'actions', scope: 'global' },
+  { id: 'open-voice', keys: 'Cmd+Shift+v', description: 'Open Voice Copilot', category: 'actions', scope: 'global' },
 
   // List Navigation
   { id: 'next-item', keys: 'j', description: 'Next item in list', category: 'list', scope: 'global' },
@@ -87,9 +88,9 @@ export function formatKeysForDisplay(keys: string): string[] {
 export const NAVIGATION_ROUTES: Record<string, string> = {
   h: '/',
   f: '/all',
-  g: '/graph',
+  a: '/assess',
   c: '/compare',
-  x: '/crosswalk',
+  x: '/crosswalk/visualize',
   s: '/preferences',
   t: '/guidance',
 };

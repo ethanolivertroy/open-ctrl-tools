@@ -8,6 +8,7 @@ import { getFrameworkConfig } from '@/data/frameworks';
 import { slugify, hasFrameworkData } from '@/data/controls';
 import { getTechnologyById, getTechnologyPath, hasSubpages, getOverviewContent, getSectionCounts, AWS_RSC_DATA } from '@/data/technology-guides';
 import type { TechCommandType, TechnologyGuide, TechnologyCategoryMeta } from '@/data/types';
+import { loadGithubRepoCards } from '@/lib/github-repo-ref';
 
 interface Props {
   tech: TechnologyGuide;
@@ -72,32 +73,7 @@ const sectionData = isLandingPage
 const hasRscSections = tech.sections?.some((s) => s.rscServiceId && AWS_RSC_DATA[s.rscServiceId]) ?? false;
 
 // Fetch GitHub repo metadata at build time
-const githubRepoData = tech.githubRepos
-  ? await Promise.all(
-      tech.githubRepos.map(async (fullName) => {
-        const [owner, repo] = fullName.split('/');
-        try {
-          const res = await fetch(`https://api.github.com/repos/${fullName}`, {
-            headers: import.meta.env.GH_TOKEN
-              ? { Authorization: `token ${import.meta.env.GH_TOKEN}` }
-              : {},
-          });
-          if (!res.ok) return { owner, repo };
-          const data = await res.json();
-          return {
-            owner: data.owner.login,
-            repo: data.name,
-            description: data.description,
-            language: data.language,
-            stars: data.stargazers_count,
-            forks: data.forks_count,
-          };
-        } catch {
-          return { owner, repo };
-        }
-      })
-    )
-  : [];
+const githubRepoData = await loadGithubRepoCards(tech.githubRepos, import.meta.env.GH_TOKEN);
 ---
 
 <BaseLayout
@@ -161,6 +137,46 @@ const githubRepoData = tech.githubRepos
         </div>
       </div>
     </header>
+
+    {/* Agent instructions: a prompt to hand to a coding agent */}
+    {tech.agentInstructions && (
+      <section class="space-y-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+          </svg>
+          <h2 class="text-lg sm:text-xl font-semibold">Agent Instructions</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">{tech.agentInstructions.summary}</p>
+        <div class="rounded-lg border border-primary/30 bg-card overflow-hidden">
+          <div class="flex items-center justify-between gap-2 px-3 sm:px-4 py-2 bg-muted/50 border-b border-border">
+            <span class="text-sm text-foreground">Prompt for your coding agent</span>
+            {tech.agentInstructions.skillUrl && (
+              <a
+                href={tech.agentInstructions.skillUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-medium text-primary hover:underline"
+              >
+                Read the skill &rarr;
+              </a>
+            )}
+          </div>
+          <div class="relative">
+            <StaticCode code={tech.agentInstructions.prompt} language="text" wrap />
+            <button
+              data-copy={tech.agentInstructions.prompt}
+              class="copy-btn absolute top-2 right-2 p-1.5 rounded bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+              title="Copy prompt"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    )}
 
     {/* Overview sources (items not claimed by any section, or all sources for monolithic) */}
     {sources.length > 0 && (

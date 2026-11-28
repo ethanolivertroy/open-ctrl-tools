@@ -1,14 +1,11 @@
 import {
-  getAllControls,
-  getAllFamilies,
+  getAssessmentAllControls as getAllControls,
+  getAssessmentAllFamilies as getAllFamilies,
+  getAssessmentFamilyName as getFamilyName,
   getBasePath,
-  getControlsByBaseline,
-  getControlsByDoDImpactLevel,
-  getControlsByImpactLevel,
-  getFamilyName,
-  hasFrameworkData,
+  hasAssessmentFrameworkData as hasFrameworkData,
   slugify,
-} from '@/data/controls';
+} from './assessment-data';
 import type {
   Control,
   CMMCLevel,
@@ -20,7 +17,41 @@ import {
   isCMMCControl,
   isDoDSRGControl,
   isFedRAMPControl,
+  isFedRampKSIControl,
 } from '@/data/types';
+
+function getControlsByBaseline(frameworkId: string, level: 'LOW' | 'MODERATE' | 'HIGH' | 'LI_SAAS'): Control[] {
+  return getAllControls(frameworkId).filter((c) => {
+    if (!isFedRAMPControl(c)) return false;
+    switch (level) {
+      case 'LOW': return c.baselines.low?.included;
+      case 'MODERATE': return c.baselines.moderate?.included;
+      case 'HIGH': return c.baselines.high?.included;
+      case 'LI_SAAS': return c.baselines.li_saas?.included;
+    }
+  });
+}
+
+function getControlsByImpactLevel(frameworkId: string, level: 'LOW' | 'MODERATE'): Control[] {
+  return getAllControls(frameworkId).filter((c) => {
+    if (!isFedRampKSIControl(c)) return false;
+    return level === 'LOW' ? c.impact_low : c.impact_moderate;
+  });
+}
+
+function getControlsByDoDImpactLevel(frameworkId: string, level: DoDImpactLevel): Control[] {
+  if (frameworkId !== 'dod-srg') return [];
+  return getAllControls(frameworkId).filter((c) => {
+    if (!isDoDSRGControl(c)) return false;
+    switch (level) {
+      case 'IL4_MOD': return c.impact_levels.il4_mod?.included;
+      case 'IL4_HIGH': return c.impact_levels.il4_high?.included;
+      case 'IL5': return c.impact_levels.il5?.included;
+      case 'IL6': return c.impact_levels.il6?.included;
+      default: return false;
+    }
+  });
+}
 
 export const ASSESSMENT_FRAMEWORK_IDS = [
   'fedramp-rev5',

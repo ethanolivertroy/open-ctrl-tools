@@ -11,7 +11,7 @@ import { getLegacyStoredApiKey, getProviderConfig } from '@/lib/storage/provider
 import type { ProviderConfigRecord } from '@/lib/storage-types';
 import { resolveStoredGrokCredential } from './xai-oauth-session';
 
-export type LocalProviderId = Extract<ProviderId, 'ollama' | 'transformers' | 'webllm' | 'chrome-ai' | 'cursor'>;
+export type LocalProviderId = Extract<ProviderId, 'ollama'>;
 
 export interface ResolvedProviderExecution {
   providerId: ProviderId;
@@ -106,72 +106,27 @@ export function getProviderSupportsStructuredOutput(
 }
 
 export async function generateLocalProviderText({
-  provider,
   prompt,
   systemPrompt = '',
   signal,
   model,
   baseUrl,
-  apiKey,
-  maxOutputTokens,
   timeoutMs,
   timeoutMessage,
   onChunk,
   onStatusMessage,
 }: GenerateLocalProviderTextOptions): Promise<string> {
-  switch (provider) {
-    case 'cursor': {
-      const { generateCursorText } = await import('@/lib/ai/cursor-client');
-      return generateCursorText({
-        baseUrl: baseUrl || getDefaultBaseUrl('cursor') || 'http://localhost:4646/v1',
-        model: model || getDefaultModelId('cursor'),
-        prompt,
-        systemPrompt,
-        apiKey,
-        signal,
-        onChunk,
-      });
-    }
-    case 'ollama':
-      return generateOllamaText({
-        baseUrl: baseUrl || getDefaultBaseUrl('ollama') || 'http://localhost:11434',
-        model: model || getDefaultModelId('ollama'),
-        prompt,
-        systemPrompt,
-        signal,
-        timeoutMs,
-        timeoutMessage,
-        onChunk,
-        onStatusMessage,
-      });
-    case 'transformers':
-      return generateTransformersText({
-        model: model || getDefaultModelId('transformers'),
-        prompt,
-        systemPrompt,
-        signal,
-        maxOutputTokens,
-        onChunk,
-        onStatusMessage,
-      });
-    case 'webllm':
-      return generateWebllmText({
-        model: model || getDefaultModelId('webllm'),
-        prompt,
-        systemPrompt,
-        signal,
-        onChunk,
-        onStatusMessage,
-      });
-    case 'chrome-ai':
-      return generateChromeAiText({
-        prompt,
-        systemPrompt,
-        signal,
-        onChunk,
-        onStatusMessage,
-      });
-  }
+  return generateOllamaText({
+    baseUrl: baseUrl || getDefaultBaseUrl('ollama') || 'http://localhost:11434',
+    model: model || getDefaultModelId('ollama'),
+    prompt,
+    systemPrompt,
+    signal,
+    timeoutMs,
+    timeoutMessage,
+    onChunk,
+    onStatusMessage,
+  });
 }
 
 async function generateOllamaText({
@@ -252,120 +207,6 @@ async function generateOllamaText({
       }, timeoutMs);
     }
   });
-}
-
-async function generateTransformersText({
-  model,
-  prompt,
-  systemPrompt,
-  signal,
-  maxOutputTokens,
-  onChunk,
-  onStatusMessage,
-}: {
-  model: string;
-  prompt: string;
-  systemPrompt: string;
-  signal?: AbortSignal;
-  maxOutputTokens?: number;
-  onChunk?: (content: string, chunk?: string) => void;
-  onStatusMessage?: (message: string | null) => void;
-}): Promise<string> {
-  throwIfAborted(signal);
-  const { initTransformers, streamGenerateText } = await import('@/lib/ai/transformers-client');
-
-  await initTransformers(model, (progress) => {
-    onStatusMessage?.(progress.message);
-  });
-
-  throwIfAborted(signal);
-
-  const text = await streamGenerateText(
-    prompt,
-    (content) => {
-      onStatusMessage?.(null);
-      onChunk?.(content);
-    },
-    (progress) => {
-      onStatusMessage?.(progress.message);
-    },
-    systemPrompt,
-    maxOutputTokens,
-  );
-
-  onStatusMessage?.(null);
-  return text;
-}
-
-async function generateWebllmText({
-  model,
-  prompt,
-  systemPrompt,
-  signal,
-  onChunk,
-  onStatusMessage,
-}: {
-  model: string;
-  prompt: string;
-  systemPrompt: string;
-  signal?: AbortSignal;
-  onChunk?: (content: string, chunk?: string) => void;
-  onStatusMessage?: (message: string | null) => void;
-}): Promise<string> {
-  throwIfAborted(signal);
-  const { initWebLLM, streamGenerateWebLLM } = await import('@/lib/ai/webllm-client');
-
-  await initWebLLM(model, (progress) => {
-    onStatusMessage?.(progress.message);
-  });
-
-  throwIfAborted(signal);
-
-  const text = await streamGenerateWebLLM(
-    systemPrompt,
-    prompt,
-    (content) => {
-      onStatusMessage?.(null);
-      onChunk?.(content);
-    },
-    (progress) => {
-      onStatusMessage?.(progress.message);
-    },
-  );
-
-  onStatusMessage?.(null);
-  return text;
-}
-
-async function generateChromeAiText({
-  prompt,
-  systemPrompt,
-  signal,
-  onChunk,
-  onStatusMessage,
-}: {
-  prompt: string;
-  systemPrompt: string;
-  signal?: AbortSignal;
-  onChunk?: (content: string, chunk?: string) => void;
-  onStatusMessage?: (message: string | null) => void;
-}): Promise<string> {
-  throwIfAborted(signal);
-  const { streamGenerateChromeAI } = await import('@/lib/ai/chrome-ai-client');
-
-  const text = await streamGenerateChromeAI(systemPrompt, prompt, (content) => {
-    const looksLikeStatus = content.startsWith('Downloading ') || content.startsWith('Loading ');
-    if (looksLikeStatus) {
-      onStatusMessage?.(content);
-      return;
-    }
-    onStatusMessage?.(null);
-    onChunk?.(content);
-  });
-
-  throwIfAborted(signal);
-  onStatusMessage?.(null);
-  return text;
 }
 
 export function throwIfAborted(signal?: AbortSignal): void {

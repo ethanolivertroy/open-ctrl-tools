@@ -70,6 +70,19 @@ const publicEndpoints: EndpointDoc[] = [
     ],
     example: `curl "https://myctrl.tools/api/v1/search?q=account+management&type=control&limit=5"`,
   },
+  {
+    method: 'POST',
+    path: '/api/voice/session',
+    summary: 'Mint ephemeral Realtime WebRTC or WebSocket session credentials for BYOK Speech-to-Speech.',
+    details: 'Accepts `{ provider: "openai" | "grok" | "gemini", apiKey?, voice? }` and returns short-lived client credentials (`ephemeralToken`, `wsUrl`) for direct WebRTC or WebSocket streaming.',
+    example: `curl -X POST "https://myctrl.tools/api/voice/session" -H "Content-Type: application/json" -d '{"provider":"openai","apiKey":"sk-..."}'`,
+  },
+  {
+    method: 'POST',
+    path: '/api/voice/openai-sdp',
+    summary: 'Exchange a browser WebRTC SDP offer for an OpenAI Realtime SDP answer using an ephemeral token.',
+    example: `curl -X POST "https://myctrl.tools/api/voice/openai-sdp" -H "Content-Type: application/json" -d '{"ephemeralToken":"ek_...","sdp":"v=0..."}'`,
+  },
 ];
 ---
 
@@ -110,11 +123,11 @@ const publicEndpoints: EndpointDoc[] = [
       <div class="rounded-xl border border-border p-5 space-y-3">
         <div class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">External Resource</div>
         <div class="space-y-2">
-          <h2 class="text-xl font-semibold tracking-tight">Upstream NIST CMVP API</h2>
+          <h2 class="text-xl font-semibold tracking-tight">NIST CMVP data</h2>
           <p class="text-sm text-muted-foreground">
-            The CMVP explorer uses an upstream static dataset that remains outside the supported myctrl.tools API contract.
+            The CMVP explorer reads an archived static dataset that is outside the supported myctrl.tools API contract. Build a current one yourself with the open-source pipeline.
           </p>
-          <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">View the upstream CMVP API guide</a>
+          <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">Build your own CMVP API</a>
         </div>
       </div>
     </section>
@@ -206,11 +219,11 @@ const publicEndpoints: EndpointDoc[] = [
     <section class="rounded-xl border border-border p-5 space-y-3">
       <div class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Upstream Resource</div>
       <div class="space-y-2">
-        <h2 class="text-xl font-semibold tracking-tight">Upstream NIST CMVP API</h2>
+        <h2 class="text-xl font-semibold tracking-tight">NIST CMVP data</h2>
         <p class="text-sm text-muted-foreground">
-          The upstream static CMVP dataset is documented separately so it stays clearly outside the myctrl.tools product API contract.
+          CMVP data is not part of the myctrl.tools product API. The pipeline that generates it is open source, with instructions a coding agent can follow.
         </p>
-        <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">View the upstream CMVP API guide</a>
+        <a href="/guidance/nist-cmvp-api" class="text-sm font-medium text-primary hover:underline">Build your own CMVP API</a>
       </div>
     </section>
   </div>

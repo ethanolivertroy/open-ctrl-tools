@@ -1,6 +1,10 @@
+import { githubRepoRefUrl } from '@/lib/github-repo-ref';
+
 interface GitHubRepoCardProps {
   owner: string;
   repo: string;
+  /** Directory inside the repository, for a project that lives in a monorepo. */
+  path?: string;
   description?: string | null;
   language?: string | null;
   stars?: number;
@@ -34,13 +38,19 @@ function formatCount(n: number): string {
 export function GitHubRepoCard({
   owner,
   repo,
+  path,
   description,
   language,
   stars,
   forks,
   className = '',
 }: GitHubRepoCardProps) {
-  const url = `https://github.com/${owner}/${repo}`;
+  const url = githubRepoRefUrl({ owner, repo, path });
+  // A monorepo project is named by its directory; the repository becomes context.
+  const segments = path ? path.split('/') : [];
+  const name = segments.length > 0 ? segments[segments.length - 1] : repo;
+  const prefix = segments.length > 0 ? `${[owner, repo, ...segments.slice(0, -1)].join('/')}/` : `${owner}/`;
+  const summary = description ?? (path ? `Part of the ${owner}/${repo} monorepo.` : null);
   const langColor = language ? (LANGUAGE_COLORS[language] ?? '#858585') : null;
 
   return (
@@ -55,16 +65,16 @@ export function GitHubRepoCard({
         <div className="flex items-center gap-2 min-w-0">
           <GitHubIcon className="w-5 h-5 text-muted-foreground shrink-0" />
           <span className="text-sm truncate">
-            <span className="text-muted-foreground">{owner}/</span>
-            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">{repo}</span>
+            <span className="text-muted-foreground">{prefix}</span>
+            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">{name}</span>
           </span>
         </div>
         <ExternalLinkIcon className="w-4 h-4 text-muted-foreground shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
 
       {/* Description */}
-      {description && (
-        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{description}</p>
+      {summary && (
+        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{summary}</p>
       )}
 
       {/* Stats row */}

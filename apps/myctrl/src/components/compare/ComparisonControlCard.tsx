@@ -5,7 +5,7 @@ import {
   isFedRAMPControl, isISO27001Control, isNIST171Control,
 } from '../../data/types';
 import { isEnhancement, parseParentControlId } from '../../lib/control-graph';
-import { slugify } from '../../data/controls';
+import { slugifyControlId as slugify } from '../../lib/slugify';
 import { CollapsibleSection } from './CollapsibleSection';
 import { Badge } from '../ui/badge';
 import {

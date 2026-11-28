@@ -106,7 +106,6 @@ export function generateUnifiedSearchIndex(): UnifiedSearchEntry[] {
   const pages: PageSearchEntry[] = [
     { type: 'page', title: 'Compare Frameworks', description: 'Compare security and compliance frameworks side-by-side', href: '/compare', tags: [] },
     { type: 'page', title: 'Compare Controls', description: 'Compare controls across multiple frameworks side-by-side', href: '/compare/controls', tags: [] },
-    { type: 'page', title: 'Knowledge Graph', description: 'Interactive force-directed graph of framework relationships', href: '/graph', tags: [] },
     { type: 'page', title: 'Preferences', description: 'Manage theme, favorites, notes, and all stored data', href: '/preferences', tags: [] },
     { type: 'page', title: 'Crosswalk Explorer', description: 'Browse cross-framework control mappings', href: '/crosswalk', tags: [] },
     { type: 'page', title: 'CMVP Explorer', description: 'Search CMVP cryptographic modules, certificates, standards, and algorithms', href: '/cmvp', tags: ['Federal', 'Cryptography'] },
@@ -116,7 +115,6 @@ export function generateUnifiedSearchIndex(): UnifiedSearchEntry[] {
     { type: 'page', title: 'All Frameworks', description: 'Browse all security and compliance frameworks', href: '/all', tags: [] },
     { type: 'page', title: 'US Federal Frameworks', description: 'NIST, FedRAMP, CMMC, and other US federal security frameworks', href: '/us-federal', tags: ['Federal'] },
     { type: 'page', title: 'AI Frameworks', description: 'AI risk management and governance frameworks', href: '/ai', tags: ['AI'] },
-    { type: 'page', title: 'Enterprise Frameworks', description: 'PCI-DSS, SOC 2, ISO 27001, and enterprise compliance frameworks', href: '/enterprise', tags: ['Enterprise'] },
     { type: 'page', title: 'Privacy Frameworks', description: 'HIPAA, GDPR, CCPA, and privacy regulation frameworks', href: '/privacy', tags: ['Privacy'] },
     { type: 'page', title: 'International Frameworks', description: 'Global security frameworks from Australia, Canada, UK, EU, and more', href: '/international', tags: ['International'] },
     { type: 'page', title: 'OWASP Risk Lists', description: 'OWASP Top 10 for Web, API, Mobile, LLM, and Smart Contract applications', href: '/owasp', tags: ['OWASP'] },

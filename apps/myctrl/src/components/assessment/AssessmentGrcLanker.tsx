@@ -192,16 +192,14 @@ export function AssessmentGrcLanker(props: AssessmentGrcLankerProps) {
             {action.label}
           </button>
         ))}
-        {onOpenAIView && (
           <Button
             size="sm"
             variant="outline"
             onClick={openWorkbench}
             className="h-7 px-2.5 text-xs"
           >
-            Open as workbench
+            Ask in GRCLanker
           </Button>
-        )}
       </div>
 
       {/* Response area */}

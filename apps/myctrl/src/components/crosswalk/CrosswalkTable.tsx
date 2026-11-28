@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { slugify } from '@/data/controls';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import { downloadFile } from '@/lib/export';
 import type { CrosswalkEntry } from '@/data/types';
 

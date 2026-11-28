@@ -14,8 +14,11 @@
 
 import type { ImplementationStatus } from './db';
 import { getBaselineControlIds, type FedRampBaseline } from './assessment-scoring';
-import { getLoadedBridgeData, getNistControlsForCSF } from '../data/crosswalk';
-import { getFrameworkData } from '../data/frameworks';
+import {
+  getAssessmentFrameworkData as getFrameworkData,
+  getLoadedBridgeData,
+  getNistControlsForCSF,
+} from './assessment-data';
 
 // === Types ===
 

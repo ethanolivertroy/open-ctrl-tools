@@ -2,15 +2,19 @@
 interface Props {
   frameworkId?: string;
   controlSlug?: string;
+  controlTitle?: string;
+  assessmentQuestions?: string[];
 }
 
-const { frameworkId, controlSlug } = Astro.props;
+const { frameworkId, controlSlug, controlTitle, assessmentQuestions } = Astro.props;
 ---
 
 <div
   id="myctrl-grclanker-root"
   data-framework-id={frameworkId ?? ''}
   data-control-slug={controlSlug ?? ''}
+  data-control-title={controlTitle ?? ''}
+  data-assessment-questions={assessmentQuestions ? JSON.stringify(assessmentQuestions) : ''}
 ></div>
 
 <script>

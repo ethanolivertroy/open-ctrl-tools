@@ -6,8 +6,6 @@ const SECTIONS = [
   { id: 'projects', label: 'Projects' },
   { id: 'notes', label: 'Control Notes' },
   { id: 'recent', label: 'Recently Viewed' },
-  { id: 'saved-views', label: 'Saved Views' },
-  { id: 'whiteboard', label: 'Whiteboards' },
   { id: 'api-key', label: 'AI Providers' },
   { id: 'ai-data', label: 'AI Data' },
   { id: 'grc-agent', label: 'GRCLanker' },

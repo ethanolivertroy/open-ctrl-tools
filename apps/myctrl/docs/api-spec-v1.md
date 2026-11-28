@@ -464,7 +464,7 @@ GET /api/v1/guidance/:technologySlug
   ],
 
   "related_technologies": ["azure-ad", "ping-identity"],
-  "github_repos": ["ethanolivertroy/okta-inspector"],
+  "github_repos": ["ethanolivertroy/open-ctrl-tools/auditors/okta-inspector-py"],
   "canonical_url": "https://myctrl.tools/guidance/okta",
   "data_version": "2026.03.17"
 }

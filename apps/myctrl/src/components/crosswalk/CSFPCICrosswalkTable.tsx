@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { slugify, hasFrameworkData } from '@/data/controls';
+import { loadFrameworkManifest } from '@/lib/client-framework-data';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import type { PCICrosswalkEntry } from '@/data/types';
 
 interface CSFPCICrosswalkTableProps {
@@ -30,7 +31,19 @@ function getUniquePCIFamilies(entries: PCICrosswalkEntry[]): string[] {
 }
 
 export function CSFPCICrosswalkTable({ entries }: CSFPCICrosswalkTableProps) {
-  const pciLoaded = hasFrameworkData('pci-dss-v4');
+  const [pciLoaded, setPciLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    loadFrameworkManifest()
+      .then((manifest) => {
+        if (!cancelled) setPciLoaded(manifest.loadedIds.includes('pci-dss-v4'));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const [search, setSearch] = React.useState('');
   const [csfFilter, setCsfFilter] = React.useState('');
   const [pciFilter, setPciFilter] = React.useState('');

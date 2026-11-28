@@ -8,9 +8,6 @@
  * CORS: User must set OLLAMA_ORIGINS=* or OLLAMA_ORIGINS=https://myctrl.tools
  */
 
-import type { View } from '@/lib/json-render/catalog';
-import { parseStructuredViewResponse } from './structured-view';
-
 export interface OllamaStreamCallbacks {
   onToken: (token: string) => void;
   onComplete: (fullText: string) => void;
@@ -87,30 +84,6 @@ export function streamOllamaResponse(
   })();
 
   return controller;
-}
-
-/**
- * Parse an Ollama text response into a View.
- * If the model produced valid JSON, parse it.
- * Otherwise, wrap the raw text in a TextBlock component.
- */
-export function parseOllamaResponse(text: string): View {
-  const result = parseStructuredViewResponse(text);
-  if (result.view) {
-    return result.view;
-  }
-
-  // Wrap plain text in a TextBlock
-  return {
-    title: 'AI Response',
-    components: [
-      {
-        type: 'TextBlock',
-        content: text,
-        variant: 'default',
-      },
-    ],
-  };
 }
 
 /**

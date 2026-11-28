@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
-  getCrosswalkStats,
   CATEGORY_COLORS,
-  type FrameworkNode,
-} from '../../data/crosswalk-stats';
+  loadCrosswalkStats,
+  type CrosswalkStats,
+} from '@/lib/client-framework-data';
 
 interface CellData {
   source: string;
@@ -16,9 +16,25 @@ interface CellData {
 export function CoverageMatrix() {
   const [hoveredCell, setHoveredCell] = useState<CellData | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [stats, setStats] = useState<CrosswalkStats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadCrosswalkStats()
+      .then((data) => {
+        if (!cancelled) setStats(data);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Unable to load crosswalk matrix');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const { nodes, matrix, maxCount } = useMemo(() => {
-    const stats = getCrosswalkStats();
+    if (!stats) return { nodes: [], matrix: {}, maxCount: 0 };
 
     // Sort nodes by category then name
     const sortedNodes = [...stats.nodes].sort((a, b) => {
@@ -38,7 +54,15 @@ export function CoverageMatrix() {
     }
 
     return { nodes: sortedNodes, matrix: stats.matrix, maxCount: max };
-  }, []);
+  }, [stats]);
+
+  if (error) {
+    return <div className="py-8 text-center text-sm text-destructive">{error}</div>;
+  }
+
+  if (!stats) {
+    return <div className="py-12 text-center text-sm text-muted-foreground font-mono">Loading coverage matrix…</div>;
+  }
 
   const getIntensity = (count: number): number => {
     if (count === 0) return 0;

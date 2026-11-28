@@ -213,10 +213,8 @@ export function CMVPPicker({
             <div className="flex items-center rounded-lg border border-dashed px-3 py-2 text-xs text-muted-foreground">
               {loading ? 'Searching CMVP data...' : `${results.length} shown / ${total.toLocaleString()} match${total === 1 ? '' : 'es'}`}
             </div>
-            <Button asChild variant="outline">
-              <a href="/cmvp" target="_blank" rel="noreferrer">
-                Open Explorer
-              </a>
+            <Button variant="outline" render={<a href="/cmvp" target="_blank" rel="noreferrer" />}>
+              Open Explorer
             </Button>
           </div>
 

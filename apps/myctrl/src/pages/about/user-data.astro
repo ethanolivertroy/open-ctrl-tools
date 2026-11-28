@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_SOURCE_URL } from '../../lib/site-links';
 
 const dataTypes = [
   {
@@ -112,7 +113,7 @@ const icons = {
           <div>
             <h2 class="text-xl font-bold mb-2">Privacy-First by Design</h2>
             <p class="text-foreground/90 leading-relaxed">
-              <strong>Everything is stored in your browser.</strong> Your favorites, notes, assessments, whiteboards, and preferences are saved locally using IndexedDB through Dexie, not on our servers. This means:
+              <strong>Everything is stored in your browser.</strong> Your favorites, notes, assessments, and preferences are saved locally using IndexedDB through Dexie, not on our servers. This means:
             </p>
           </div>
         </div>
@@ -203,7 +204,7 @@ const icons = {
             Open Preferences
           </a>
           <a
-            href="https://github.com/ethanolivertroy/myctrl.tools"
+            href={SITE_SOURCE_URL}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-colors"

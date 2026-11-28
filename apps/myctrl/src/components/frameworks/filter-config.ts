@@ -501,7 +501,7 @@ export const FILTER_CONFIGS: Record<string, FilterConfig> = {
     headingAccent: 'V2R4',
     subtitle: 'DoD Security Technical Implementation Guide for Kubernetes container orchestration',
     breadcrumbFrameworkLabel: 'Kubernetes STIG',
-    breadcrumbParent: { label: 'STIGs', href: '/stigs' },
+    breadcrumbParent: { label: 'US Federal', href: '/us-federal' },
     itemNoun: 'findings',
     showingPreposition: 'in',
     levels: [

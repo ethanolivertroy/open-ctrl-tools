@@ -98,7 +98,7 @@ export function ProjectsSection() {
                     <p className="text-sm text-muted-foreground">{project.description}</p>
                   )}
                   <p className="text-xs text-muted-foreground">
-                    {project.assessmentCount} assessment{project.assessmentCount !== 1 ? 's' : ''}, {project.noteCount} note{project.noteCount !== 1 ? 's' : ''}, {project.savedViewCount} view{project.savedViewCount !== 1 ? 's' : ''}, and {project.whiteboardCount} board{project.whiteboardCount !== 1 ? 's' : ''}
+                    {project.assessmentCount} assessment{project.assessmentCount !== 1 ? 's' : ''} and {project.noteCount} note{project.noteCount !== 1 ? 's' : ''}
                   </p>
                 </div>
 

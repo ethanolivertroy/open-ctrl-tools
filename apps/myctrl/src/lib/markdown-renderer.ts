@@ -442,6 +442,6 @@ Returns: Available cross-framework mapping pairs.
 
 Returns: Technology-specific security guidance with verification commands.
 
-User workspace data is not exposed through this API. Favorites, notes, assessments, whiteboards, and provider settings stay local to each browser through IndexedDB/Dexie.
+User workspace data is not exposed through this API. Favorites, notes, assessments, and provider settings stay local to each browser through IndexedDB/Dexie.
 `;
 }

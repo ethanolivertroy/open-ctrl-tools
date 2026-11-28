@@ -185,7 +185,12 @@ export function CMVPExplorer() {
 
           {metadata?.lastUpdated && (
             <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-              <span>Upstream refresh: {new Date(metadata.lastUpdated).toLocaleString()}</span>
+              <span>
+                Archived snapshot from {new Date(metadata.lastUpdated).toLocaleDateString()}, not live NIST data.{' '}
+                <a href="/guidance/nist-cmvp-api" className="font-medium text-primary hover:underline">
+                  Build a current dataset
+                </a>
+              </span>
               {metadata.features.algorithmExtraction && (
                 <Badge variant="outline" className="text-[11px]">
                   Algorithm extraction enabled

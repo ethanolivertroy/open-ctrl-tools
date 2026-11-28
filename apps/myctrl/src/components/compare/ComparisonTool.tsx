@@ -1,6 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
-import { FRAMEWORK_CONFIGS, getFrameworkData } from '../../data/frameworks';
-import { hasFrameworkCrosswalk, getFrameworkCrosswalkTargets } from '../../data/crosswalk';
+import { FRAMEWORK_CONFIGS } from '../../data/framework-configs';
+import {
+  loadCrosswalkIndex,
+  loadFrameworkManifest,
+  type CrosswalkIndexPayload,
+  type FrameworkManifestEntry,
+} from '../../lib/client-framework-data';
 import { downloadFile } from '../../lib/export';
 
 interface FrameworkInfo {
@@ -12,124 +17,118 @@ interface FrameworkInfo {
   families: Map<string, number>;
   familyLabel: string;
   itemLabel: string;
+  crosswalkTargets: string[];
 }
 
-// Get framework info with computed stats
-function getFrameworkInfo(frameworkId: string): FrameworkInfo | null {
-  try {
-    const config = FRAMEWORK_CONFIGS[frameworkId];
-    if (!config) return null;
-
-    const data = getFrameworkData(frameworkId);
-    const controls = (data as { controls: Array<{ family: string }> }).controls || [];
-
-    // Count controls by family
-    const families = new Map<string, number>();
-    for (const control of controls) {
-      const family = control.family || 'Other';
-      families.set(family, (families.get(family) || 0) + 1);
-    }
-
-    return {
-      id: frameworkId,
-      name: config.name,
-      version: config.version,
-      description: config.description,
-      controlCount: controls.length,
-      families,
-      familyLabel: config.familyLabel || 'Family',
-      itemLabel: config.itemLabel || 'controls',
-    };
-  } catch {
-    return null;
+function toFrameworkInfo(entry: FrameworkManifestEntry): FrameworkInfo {
+  const families = new Map<string, number>();
+  for (const f of entry.families) {
+    families.set(f.code, f.count);
   }
+  return {
+    id: entry.id,
+    name: entry.name,
+    version: entry.version,
+    description: entry.description,
+    controlCount: entry.controlCount,
+    families,
+    familyLabel: entry.familyLabel || 'Family',
+    itemLabel: entry.itemLabel || 'controls',
+    crosswalkTargets: entry.crosswalkTargets,
+  };
 }
-
-// Get frameworks that have data available
-const availableFrameworks = Object.entries(FRAMEWORK_CONFIGS)
-  .filter(([id]) => {
-    try {
-      const data = getFrameworkData(id);
-      return (data as { controls: unknown[] }).controls?.length > 0;
-    } catch {
-      return false;
-    }
-  })
-  .map(([id, config]) => ({
-    id,
-    name: config.name,
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name));
 
 export function ComparisonTool() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [manifestEntries, setManifestEntries] = useState<FrameworkManifestEntry[]>([]);
+  const [crosswalkIndex, setCrosswalkIndex] = useState<CrosswalkIndexPayload | null>(null);
 
-  // Parse URL params on mount
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([loadFrameworkManifest(), loadCrosswalkIndex()])
+      .then(([manifest, index]) => {
+        if (cancelled) return;
+        setManifestEntries(manifest.frameworks.filter((f) => f.loaded && f.controlCount > 0));
+        setCrosswalkIndex(index);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const frameworks = params.get('frameworks');
     if (frameworks) {
-      const ids = frameworks.split(',').filter(id => FRAMEWORK_CONFIGS[id]);
+      const ids = frameworks.split(',').filter((id) => id in FRAMEWORK_CONFIGS);
       if (ids.length > 0) {
         setSelectedIds(ids.slice(0, 3));
       }
     }
   }, []);
 
-  // Update URL when selection changes
   useEffect(() => {
+    const url = new URL(window.location.href);
     if (selectedIds.length > 0) {
-      const url = new URL(window.location.href);
       url.searchParams.set('frameworks', selectedIds.join(','));
-      window.history.replaceState({}, '', url.toString());
     } else {
-      const url = new URL(window.location.href);
       url.searchParams.delete('frameworks');
-      window.history.replaceState({}, '', url.toString());
     }
+    window.history.replaceState({}, '', url.toString());
   }, [selectedIds]);
 
-  // Get framework info for selected frameworks
+  const availableFrameworks = useMemo(() => {
+    return manifestEntries
+      .map((f) => ({ id: f.id, name: f.name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [manifestEntries]);
+
+  const entryById = useMemo(
+    () => new Map(manifestEntries.map((entry) => [entry.id, entry])),
+    [manifestEntries],
+  );
+
   const frameworks = useMemo(() => {
-    return selectedIds.map(id => getFrameworkInfo(id)).filter(Boolean) as FrameworkInfo[];
-  }, [selectedIds]);
+    return selectedIds
+      .map((id) => entryById.get(id))
+      .filter(Boolean)
+      .map((entry) => toFrameworkInfo(entry!));
+  }, [selectedIds, entryById]);
 
-  // Find crosswalk relationships between selected frameworks
   const crosswalkInfo = useMemo(() => {
     if (frameworks.length < 2) return null;
 
-    const pairs: Array<{ from: string; to: string; fromId: string; toId: string }> = [];
+    const bridgeIds = new Set(crosswalkIndex?.bridge.map(([id]) => id) ?? []);
+    const hasCrosswalk = (id: string, entryTargets: string[]) =>
+      entryTargets.length > 0 || bridgeIds.has(id);
 
+    const pairs: Array<{ from: string; to: string; fromId: string; toId: string }> = [];
     for (let i = 0; i < frameworks.length; i++) {
       for (let j = i + 1; j < frameworks.length; j++) {
         const fw1 = frameworks[i];
         const fw2 = frameworks[j];
 
-        // Check if these two specific frameworks have a crosswalk relationship
-        const fw1Targets = getFrameworkCrosswalkTargets(fw1.id);
-        if (fw1Targets.includes(fw2.id)) {
+        if (fw1.crosswalkTargets.includes(fw2.id)) {
           pairs.push({ from: fw1.name, to: fw2.name, fromId: fw1.id, toId: fw2.id });
-        } else {
-          // Check reverse direction
-          const fw2Targets = getFrameworkCrosswalkTargets(fw2.id);
-          if (fw2Targets.includes(fw1.id)) {
-            pairs.push({ from: fw2.name, to: fw1.name, fromId: fw2.id, toId: fw1.id });
-          } else if (hasFrameworkCrosswalk(fw1.id) && hasFrameworkCrosswalk(fw2.id)) {
-            // Both have crosswalks but not to each other — they may connect via CCF
-            pairs.push({ from: fw1.name, to: fw2.name, fromId: fw1.id, toId: fw2.id });
-          }
+        } else if (fw2.crosswalkTargets.includes(fw1.id)) {
+          pairs.push({ from: fw2.name, to: fw1.name, fromId: fw2.id, toId: fw1.id });
+        } else if (
+          hasCrosswalk(fw1.id, fw1.crosswalkTargets) &&
+          hasCrosswalk(fw2.id, fw2.crosswalkTargets)
+        ) {
+          pairs.push({ from: fw1.name, to: fw2.name, fromId: fw1.id, toId: fw2.id });
         }
       }
     }
 
     return pairs.length > 0 ? pairs : null;
-  }, [frameworks]);
+  }, [crosswalkIndex, frameworks]);
 
   const handleSelect = (index: number, frameworkId: string) => {
-    setSelectedIds(prev => {
+    setSelectedIds((prev) => {
       const next = [...prev];
       if (frameworkId === '') {
-        // Remove this slot
         next.splice(index, 1);
       } else if (index < next.length) {
         next[index] = frameworkId;
@@ -142,11 +141,10 @@ export function ComparisonTool() {
 
   const addSlot = () => {
     if (selectedIds.length < 3) {
-      setSelectedIds(prev => [...prev, '']);
+      setSelectedIds((prev) => [...prev, '']);
     }
   };
 
-  // Get all unique families across selected frameworks
   const allFamilies = useMemo(() => {
     const families = new Set<string>();
     for (const fw of frameworks) {
@@ -157,12 +155,11 @@ export function ComparisonTool() {
     return Array.from(families).sort();
   }, [frameworks]);
 
-  // Export comparison data
   const handleExport = (format: 'csv' | 'json') => {
     if (frameworks.length === 0) return;
 
     const date = new Date().toISOString().split('T')[0];
-    const filename = `comparison-${frameworks.map(f => f.id).join('-')}-${date}.${format}`;
+    const filename = `comparison-${frameworks.map((f) => f.id).join('-')}-${date}.${format}`;
 
     if (format === 'json') {
       const exportData = {
@@ -170,7 +167,7 @@ export function ComparisonTool() {
           exportDate: new Date().toISOString(),
           frameworkCount: frameworks.length,
         },
-        frameworks: frameworks.map(fw => ({
+        frameworks: frameworks.map((fw) => ({
           id: fw.id,
           name: fw.name,
           version: fw.version,
@@ -179,29 +176,27 @@ export function ComparisonTool() {
           familyCount: fw.families.size,
           families: Object.fromEntries(fw.families),
         })),
-        familyComparison: allFamilies.map(family => ({
+        familyComparison: allFamilies.map((family) => ({
           family,
-          ...Object.fromEntries(frameworks.map(fw => [fw.id, fw.families.get(family) || 0])),
+          ...Object.fromEntries(frameworks.map((fw) => [fw.id, fw.families.get(family) || 0])),
         })),
       };
       downloadFile(exportData, filename, 'application/json');
     } else {
-      // CSV format - family comparison table
-      const headers = ['Family', ...frameworks.map(fw => fw.name)];
+      const headers = ['Family', ...frameworks.map((fw) => fw.name)];
       const rows = [headers.join(',')];
 
       for (const family of allFamilies) {
         const row = [
           `"${family}"`,
-          ...frameworks.map(fw => fw.families.get(family) || 0),
+          ...frameworks.map((fw) => fw.families.get(family) || 0),
         ];
         rows.push(row.join(','));
       }
 
-      // Add summary row
       rows.push('');
-      rows.push(['Total Controls', ...frameworks.map(fw => fw.controlCount)].join(','));
-      rows.push(['Total Families', ...frameworks.map(fw => fw.families.size)].join(','));
+      rows.push(['Total Controls', ...frameworks.map((fw) => fw.controlCount)].join(','));
+      rows.push(['Total Families', ...frameworks.map((fw) => fw.families.size)].join(','));
 
       downloadFile(rows.join('\n'), filename, 'text/csv;charset=utf-8');
     }
@@ -209,7 +204,6 @@ export function ComparisonTool() {
 
   return (
     <div className="space-y-8">
-      {/* Framework Selectors */}
       <div className="flex flex-wrap gap-4">
         {selectedIds.map((id, index) => (
           <div key={index} className="flex-1 min-w-[200px] max-w-[300px]">
@@ -248,7 +242,6 @@ export function ComparisonTool() {
         )}
       </div>
 
-      {/* Quick Presets and Export */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">
           <span className="text-sm text-muted-foreground">Quick compare:</span>
@@ -282,7 +275,6 @@ export function ComparisonTool() {
           </button>
         </div>
 
-        {/* Export Buttons */}
         {frameworks.length > 0 && (
           <div className="flex gap-2">
             <button
@@ -307,16 +299,11 @@ export function ComparisonTool() {
         )}
       </div>
 
-      {/* Comparison Display */}
       {frameworks.length > 0 && (
         <div className="space-y-6">
-          {/* Overview Cards */}
           <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${frameworks.length}, 1fr)` }}>
             {frameworks.map((fw) => (
-              <div
-                key={fw.id}
-                className="p-4 rounded-lg border border-border bg-card"
-              >
+              <div key={fw.id} className="p-4 rounded-lg border border-border bg-card">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="px-2 py-0.5 text-xs font-mono bg-primary/10 text-primary rounded">
@@ -332,7 +319,11 @@ export function ComparisonTool() {
                   <div className="text-sm">
                     <span className="text-muted-foreground">{fw.families.size} </span>
                     <span className="text-muted-foreground">
-                      {fw.families.size === 1 ? fw.familyLabel : (fw.familyLabel.endsWith('y') ? fw.familyLabel.slice(0, -1) + 'ies' : fw.familyLabel + 's')}
+                      {fw.families.size === 1
+                        ? fw.familyLabel
+                        : fw.familyLabel.endsWith('y')
+                          ? fw.familyLabel.slice(0, -1) + 'ies'
+                          : fw.familyLabel + 's'}
                     </span>
                   </div>
                   <a
@@ -346,7 +337,6 @@ export function ComparisonTool() {
             ))}
           </div>
 
-          {/* Crosswalk Info */}
           {crosswalkInfo && crosswalkInfo.length > 0 && (
             <div className="p-4 rounded-lg border border-border bg-card/50">
               <h3 className="font-semibold mb-3 flex items-center gap-2">
@@ -374,12 +364,9 @@ export function ComparisonTool() {
             </div>
           )}
 
-          {/* Family Comparison Table */}
           {frameworks.length > 1 && allFamilies.length > 0 && (
             <div className="space-y-3">
-              <h3 className="font-semibold">
-                {frameworks[0].familyLabel} Breakdown
-              </h3>
+              <h3 className="font-semibold">{frameworks[0].familyLabel} Breakdown</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -423,7 +410,6 @@ export function ComparisonTool() {
         </div>
       )}
 
-      {/* Empty State */}
       {frameworks.length === 0 && (
         <div className="text-center py-12 text-muted-foreground">
           <svg className="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">

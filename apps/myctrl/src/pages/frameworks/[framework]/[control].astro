@@ -2,18 +2,145 @@
 export const prerender = false;
 
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { ControlDetailPageClient } from '../../../components/controls/ControlDetailPageClient';
+import { ControlDetail } from '../../../components/controls/ControlDetail';
+import { getFrameworkConfig, isValidFramework } from '@/data/framework-configs';
+import {
+  getCrosswalkIndexPayload,
+  getFrameworkJsonPayload,
+  getFrameworkManifestPayload,
+  type FrameworkDatasetPayload,
+} from '@/lib/api-static-data';
+import {
+  computeControlNeighbors,
+  getCrossFrameworkMappingsFromIndex,
+} from '@/lib/client-framework-data';
+import { slugifyControlId } from '@/lib/slugify';
 
-const frameworkId = Astro.params.framework;
-const controlSlug = Astro.params.control;
+const frameworkId = Astro.params.framework || '';
+const controlSlug = Astro.params.control || '';
+
+if (!frameworkId || !controlSlug || !isValidFramework(frameworkId)) {
+  Astro.response.status = 404;
+}
+
+const config = isValidFramework(frameworkId) ? getFrameworkConfig(frameworkId) : null;
+let dataset: FrameworkDatasetPayload | null = null;
+let control: FrameworkDatasetPayload['controls'][number] | undefined;
+let loadedFrameworkIds: string[] = [];
+let crosswalkMappings: ReturnType<typeof getCrossFrameworkMappingsFromIndex> = [];
+
+if (config) {
+  try {
+    const [loadedDataset, crosswalkIndex, manifest] = await Promise.all([
+      getFrameworkJsonPayload(Astro, frameworkId),
+      getCrosswalkIndexPayload(Astro),
+      getFrameworkManifestPayload(Astro),
+    ]);
+    dataset = loadedDataset;
+    loadedFrameworkIds = manifest.loadedIds;
+    const targetSlug = controlSlug.toLowerCase();
+    control = loadedDataset.controls.find(
+      (c) =>
+        slugifyControlId(c.control_id) === targetSlug ||
+        c.control_id.toLowerCase() === targetSlug,
+    );
+
+    if (control) {
+      crosswalkMappings = getCrossFrameworkMappingsFromIndex({
+        index: crosswalkIndex,
+        controlId: control.control_id,
+        frameworkId,
+        stigNistMappings: loadedDataset.stigNistMappings?.[control.control_id],
+      });
+    } else {
+      Astro.response.status = 404;
+    }
+  } catch {
+    Astro.response.status = 404;
+  }
+}
+
+const neighbors =
+  dataset && control ? computeControlNeighbors(dataset.controls, control.control_id) : undefined;
+const familyName =
+  dataset && control ? dataset.families[control.family] || control.family : '';
+
+const sidebarData =
+  dataset && config
+    ? {
+        frameworkId,
+        name: config.name,
+        version: config.version,
+        basePath: dataset.basePath,
+        loaded: true,
+        families: dataset.families,
+        controls: dataset.controls.map((c) => ({
+          control_id: c.control_id,
+          title: c.title,
+          family: c.family,
+        })),
+      }
+    : undefined;
+
+const title = control ? `${control.control_id}: ${control.title}` : `Control Not Found`;
+const description = control
+  ? control.description.replace(/\s+/g, ' ').trim().slice(0, 160)
+  : config
+    ? `Control ${controlSlug} in ${config.name}`
+    : 'Requested control was not found.';
+
+const flatQuestions = control?.assessment_questions
+  ? control.assessment_questions.flatMap((g) => g.questions).slice(0, 12)
+  : undefined;
 ---
 
 <BaseLayout
-  title="Control Detail"
-  description="Security and compliance control detail from the myctrl.tools framework library."
-  showSidebar={true}
+  title={title}
+  description={description}
+  showSidebar={Boolean(control)}
   frameworkId={frameworkId}
   controlSlug={controlSlug}
+  controlTitle={control?.title}
+  assessmentQuestions={flatQuestions}
+  sidebarData={sidebarData}
 >
-  <ControlDetailPageClient frameworkId={frameworkId} controlSlug={controlSlug} client:only="react" />
+  {control && config ? (
+    <ControlDetail
+      control={control}
+      frameworkId={frameworkId}
+      neighbors={neighbors}
+      familyName={familyName}
+      crosswalkMappings={crosswalkMappings}
+      loadedFrameworkIds={loadedFrameworkIds}
+      cloudImplementation={dataset?.cloudImplementations?.[control.control_id]}
+      relevantTechnologies={dataset?.relevantTechnologies?.[control.control_id]}
+      client:load
+    />
+  ) : (
+    <div class="max-w-xl mx-auto py-16 text-center space-y-4">
+      <p class="font-mono text-xs uppercase tracking-widest text-muted-foreground">404</p>
+      <h1 class="text-2xl font-bold tracking-tight">Control not found</h1>
+      <p class="text-sm text-muted-foreground">
+        {config
+          ? `No control matching "${controlSlug}" is loaded in ${config.name}.`
+          : `Unknown framework "${frameworkId}".`}
+      </p>
+      <div class="flex items-center justify-center gap-3 pt-2">
+        {config && (
+          <a
+            href={`/frameworks/${frameworkId}`}
+            class="px-4 py-2 text-sm font-medium rounded-md border border-border hover:bg-muted transition-colors"
+          >
+            Back to {config.name}
+          </a>
+        )}
+        <a
+          href="/search"
+          class="px-4 py-2 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          Search controls
+        </a>
+      </div>
+    </div>
+  )}
 </BaseLayout>

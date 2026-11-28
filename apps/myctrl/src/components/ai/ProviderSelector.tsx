@@ -111,7 +111,7 @@ export function ProviderSelector({
                           </span>
                         );
                       }
-                      if (info.isLocal && config.providerId !== 'chrome-ai') {
+                      if (info.isLocal) {
                         return (
                           <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-green-500/10 text-green-500 font-medium">
                             Local
@@ -120,11 +120,6 @@ export function ProviderSelector({
                       }
                       return null;
                     })()}
-                    {config.providerId === 'chrome-ai' && (
-                      <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-green-500/10 text-green-500 font-medium">
-                        Zero download
-                      </span>
-                    )}
                     {typeof model?.supportsStructuredOutput === 'boolean' && (
                       model.supportsStructuredOutput ? (
                         <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-500 font-medium">

@@ -89,6 +89,13 @@ export function useKeyboardShortcuts(
 
       const key = e.key.toLowerCase();
 
+      // Handle Cmd+Shift+V / Ctrl+Shift+V for Voice Copilot
+      if (key === 'v' && e.shiftKey && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        requestOpenAIChat({ tab: 'voice', voiceMode: 'copilot' });
+        return;
+      }
+
       // Handle Cmd+J / Ctrl+J for AI dialog
       if (key === 'j' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();

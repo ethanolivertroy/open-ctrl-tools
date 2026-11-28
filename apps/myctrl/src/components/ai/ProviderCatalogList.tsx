@@ -47,13 +47,11 @@ interface ProviderRowProps {
 
 function providerBadge(provider: ProviderConfig, config: ProviderConfigRecord | undefined, modelIsCloud: boolean) {
   if (provider.id === 'gemini') return { label: 'Free tier', className: 'bg-green-500/10 text-green-500' };
-  if (provider.id === 'chrome-ai') return { label: 'Zero download', className: 'bg-green-500/10 text-green-500' };
   if (provider.isLocal) {
     return modelIsCloud
       ? { label: 'Cloud', className: 'bg-purple-500/10 text-purple-500' }
       : { label: 'Local', className: 'bg-green-500/10 text-green-500' };
   }
-  if (provider.id === 'cursor') return { label: 'Via proxy', className: 'bg-muted text-muted-foreground' };
   if (provider.id === 'grok' && config?.oauth?.refreshToken) {
     return { label: 'X Premium', className: 'bg-sky-500/10 text-sky-500' };
   }
@@ -100,6 +98,11 @@ function ProviderRow({ provider, config, isDefault, onOpen, onSetDefault }: Prov
           {badge && (
             <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-medium ${badge.className}`}>
               {badge.label}
+            </span>
+          )}
+          {provider.supportsRealtimeVoice && (
+            <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">
+              Voice
             </span>
           )}
         </span>

@@ -138,10 +138,12 @@ export function AssessmentCryptoInventory({
             </CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button size="sm" variant="outline" asChild>
-              <a href="/cmvp" target="_blank" rel="noreferrer">
-                Open Explorer
-              </a>
+            <Button
+              size="sm"
+              variant="outline"
+              render={<a href="/cmvp" target="_blank" rel="noreferrer" />}
+            >
+              Open Explorer
             </Button>
             <Button
               size="sm"
@@ -292,10 +294,12 @@ function InventoryModuleEditor({
             )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" variant="outline" asChild>
-              <a href={detailHref}>
-                View Detail
-              </a>
+            <Button
+              size="sm"
+              variant="outline"
+              render={<a href={detailHref} />}
+            >
+              View Detail
             </Button>
             <Button
               size="sm"

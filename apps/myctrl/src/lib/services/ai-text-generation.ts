@@ -51,7 +51,7 @@ export async function generateTextWithProvider({
     providerConfig,
     modelOverride: defaultModel,
     baseUrlOverride: defaultBaseUrl,
-    includeApiKey: !isLocalProvider(provider) || provider === 'cursor',
+    includeApiKey: !isLocalProvider(provider),
   });
 
   if (isLocalProvider(provider)) {

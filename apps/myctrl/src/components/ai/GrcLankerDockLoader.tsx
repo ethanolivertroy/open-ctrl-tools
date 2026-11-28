@@ -13,9 +13,16 @@ type VaultComponent = typeof import('./ProviderVault')['ProviderVault'];
 interface GrcLankerDockLoaderProps {
   frameworkId?: string;
   controlSlug?: string;
+  controlTitle?: string;
+  assessmentQuestions?: string[];
 }
 
-export function GrcLankerDockLoader({ frameworkId, controlSlug }: GrcLankerDockLoaderProps) {
+export function GrcLankerDockLoader({
+  frameworkId,
+  controlSlug,
+  controlTitle,
+  assessmentQuestions,
+}: GrcLankerDockLoaderProps) {
   const [Dock, setDock] = React.useState<DockComponent | null>(null);
   const [Vault, setVault] = React.useState<VaultComponent | null>(null);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
@@ -92,6 +99,8 @@ export function GrcLankerDockLoader({ frameworkId, controlSlug }: GrcLankerDockL
         <Dock
           frameworkId={frameworkId}
           controlSlug={controlSlug}
+          controlTitle={controlTitle}
+          assessmentQuestions={assessmentQuestions}
           initialSettingsOpen={initialSettingsOpen}
         />
       ) : null}

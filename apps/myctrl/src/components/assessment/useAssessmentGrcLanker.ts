@@ -7,6 +7,8 @@ import type {
   AgentThreadMode,
 } from '@/lib/db';
 import type { AssessmentCryptoModule } from '@/lib/cmvp';
+import { requestOpenAIChat } from '@/lib/ai-chat-events';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import { clipConversationHistory } from '@/lib/ai/conversation';
 import {
   buildGrcLankerWorkbenchPrompt,
@@ -191,22 +193,33 @@ export function useAssessmentGrcLanker(props: AssessmentGrcLankerProps) {
   }, [assessmentId, clearOutput, controlId]);
 
   const openWorkbench = useCallback(() => {
-    if (!onOpenAIView) return;
-    onOpenAIView(
-      {
-        frameworkId,
-        controlId,
-        family,
-        assessmentId,
-        baseline,
-        systemName,
-      },
-      buildGrcLankerWorkbenchPrompt(grcLankerCtx, lastPrompt || customPrompt),
-    );
+    const prompt = buildGrcLankerWorkbenchPrompt(grcLankerCtx, lastPrompt || customPrompt);
+    if (onOpenAIView) {
+      onOpenAIView(
+        {
+          frameworkId,
+          controlId,
+          family,
+          assessmentId,
+          baseline,
+          systemName,
+        },
+        prompt,
+      );
+      return;
+    }
+    requestOpenAIChat({
+      prompt,
+      frameworkId,
+      controlSlug: slugify(controlId),
+      controlTitle,
+      newThread: true,
+    });
   }, [
     onOpenAIView,
     frameworkId,
     controlId,
+    controlTitle,
     family,
     assessmentId,
     baseline,

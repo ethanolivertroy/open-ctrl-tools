@@ -66,7 +66,9 @@ A monorepo of GRC engineering tools, cloud and identity auditors, agent skills, 
 This repository intentionally omits a root `package.json` or workspace file so Cloudflare Workers projects (`apps/myctrl`, `apps/trust-me-bro-center`, and `demos/flue-grc-engineer-demo`) stay self-contained with their own lockfiles and `wrangler.jsonc` configs:
 
 - **Deploy Button:** Point to a standalone Worker tree URL, such as `https://deploy.workers.cloudflare.com/?url=https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/apps/trust-me-bro-center`.
-- **Cloudflare Workers Builds:** Set **Root directory** to `apps/myctrl` or `apps/trust-me-bro-center` (or `demos/flue-grc-engineer-demo`) and **Build watch paths** to that directory (e.g. `apps/myctrl/*`) so changes in other packages do not trigger Worker rebuilds. For `apps/myctrl`, set **Build command** to `npm run build`, **Deploy command** to `npx wrangler deploy`, and add the build environment variable `ONNXRUNTIME_NODE_INSTALL=skip` so Linux x64 Workers Builds skips downloading CUDA binaries for `onnxruntime-node`.
+- **Cloudflare Workers Builds:** Set **Root directory** to `apps/myctrl` or `apps/trust-me-bro-center` (or `demos/flue-grc-engineer-demo`) and **Build watch paths** to that directory (e.g. `apps/myctrl/*`) so changes in other packages do not trigger Worker rebuilds. For `apps/myctrl`, set **Build command** to `npm run build` and **Deploy command** to `npx wrangler deploy`.
+
+`apps/myctrl` is built with Astro, React 19, `@ui-sdk/react` (including `@ui-sdk/react/agent` WebMCP tools), Tailwind CSS, Edge SSR control routes, a dependency-free WebGL2 particle sky on `/`, and GRCLanker Chat + Speech-to-Speech Voice (`/api/voice/session`).
 
 ## License
 

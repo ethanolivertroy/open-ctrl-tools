@@ -1,4 +1,4 @@
-import type { ControlNeighbors, ControlNeighbor } from '@/data/controls';
+import type { ControlNeighbors, ControlNeighbor } from '@/lib/client-framework-data';
 import type { NavigationScope } from '@/lib/storage/settings-store';
 
 interface ControlNavFooterProps {

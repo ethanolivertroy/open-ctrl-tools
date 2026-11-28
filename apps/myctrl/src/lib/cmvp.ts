@@ -1,4 +1,4 @@
-const DEFAULT_CMVP_API_BASE = 'https://hackidle.github.io/nist-cmvp-api/api';
+const DEFAULT_CMVP_API_BASE = 'https://ethanolivertroy.github.io/nist-cmvp-api/api';
 const CMVP_API_BASE = (import.meta.env.PUBLIC_CMVP_API_BASE_URL ?? DEFAULT_CMVP_API_BASE).replace(/\/+$/, '');
 const CMVP_CACHE_TTL_MS = 10 * 60 * 1000;
 

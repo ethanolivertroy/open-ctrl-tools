@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Mic, MessageSquare } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { CloudImplementation } from './CloudImplementation';
 import { FormattedDescription } from './FormattedDescription';
-import { slugify, getFrameworkConfig, getBasePath, getFamilyName, type ControlNeighbors } from '@/data/controls';
+import { getFrameworkConfig, getBasePath } from '@/data/framework-configs';
+import { slugifyControlId as slugify } from '@/lib/slugify';
+import type { ControlNeighbors, CrossFrameworkMapping } from '@/lib/client-framework-data';
 import { ControlNavFooter } from './ControlNavFooter';
 import { useSwipeNavigation } from '@/hooks/useSwipeNavigation';
 import {
@@ -13,10 +17,9 @@ import {
   setParameterOverrideEnabled,
 } from '@/lib/storage/settings-store';
 import { substituteParameters, getBestBaselineParams } from '@/lib/fedramp-param-substitution';
-import { getCloudImplementation } from '@/data/cloud-implementations';
-import { getTechnologiesForControl, getTechnologyPath } from '@/data/technology-guides';
+import type { CloudImplementation as CloudImplementationType } from '@/data/cloud-implementations';
+import { requestOpenAIChat } from '@/lib/ai-chat-events';
 import type { Control } from '@/data/types';
-import { AskAISection } from '@/components/ai/AskAISection';
 import {
   isNistControl,
   isPciControl,
@@ -28,13 +31,33 @@ import { FrameworkSections, FrameworkHeaderBadges, CrosswalkMappings } from './s
 import { ControlSection, SectionHeading } from './sections/ControlSection';
 import { KubernetesGuidanceSection, KubernetesExamplesSection } from './sections/shared';
 
+interface RelevantTechnology {
+  id: string;
+  name: string;
+  path: string;
+}
+
 interface ControlDetailProps {
   control: Control;
   frameworkId: string;
   neighbors?: ControlNeighbors;
+  familyName?: string;
+  crosswalkMappings?: CrossFrameworkMapping[];
+  loadedFrameworkIds?: string[];
+  cloudImplementation?: CloudImplementationType;
+  relevantTechnologies?: RelevantTechnology[];
 }
 
-export function ControlDetail({ control, frameworkId, neighbors }: ControlDetailProps) {
+export function ControlDetail({
+  control,
+  frameworkId,
+  neighbors,
+  familyName,
+  crosswalkMappings,
+  loadedFrameworkIds,
+  cloudImplementation,
+  relevantTechnologies,
+}: ControlDetailProps) {
   const config = getFrameworkConfig(frameworkId);
   const basePath = getBasePath(frameworkId);
 
@@ -92,7 +115,7 @@ export function ControlDetail({ control, frameworkId, neighbors }: ControlDetail
             }
             className="hover:text-foreground transition-colors"
           >
-            {control.family} — {getFamilyName(frameworkId, control.family)}
+            {control.family} — {familyName || control.family}
           </a>
           <span>/</span>
           {/* Show section for PCI-DSS */}
@@ -206,57 +229,55 @@ export function ControlDetail({ control, frameworkId, neighbors }: ControlDetail
       <FrameworkSections control={control} frameworkId={frameworkId} slot="after-kubernetes" />
 
       {/* Cross-Framework Mappings */}
-      <CrosswalkMappings control={control} frameworkId={frameworkId} />
+      <CrosswalkMappings
+        control={control}
+        frameworkId={frameworkId}
+        initialMappings={crosswalkMappings}
+        loadedFrameworkIds={loadedFrameworkIds}
+      />
 
       {/* Informative References (NIST CSF 2.0 only) */}
       <FrameworkSections control={control} frameworkId={frameworkId} slot="after-crosswalk" />
 
       {/* Cloud Implementation / Programmatic Queries (NIST, FedRAMP Rev 5, DoD SRG) */}
-      {(isNistControl(control) || isFedRAMPControl(control) || isDoDSRGControl(control)) && (() => {
-        const cloudImpl = getCloudImplementation(control.control_id);
-        return cloudImpl ? (
+      {(isNistControl(control) || isFedRAMPControl(control) || isDoDSRGControl(control)) &&
+        cloudImplementation && (
           <section className="space-y-4">
-            <CloudImplementation implementation={cloudImpl} />
+            <CloudImplementation implementation={cloudImplementation} />
           </section>
-        ) : null;
-      })()}
+        )}
 
       {/* Adobe CCF sections */}
       <FrameworkSections control={control} frameworkId={frameworkId} slot="after-cloud" />
 
       {/* Relevant Technologies */}
-      {(() => {
-        const techGuides = getTechnologiesForControl(control.control_id, frameworkId);
-        if (techGuides.length === 0) return null;
-
-        return (
-          <ControlSection title="Relevant Technologies">
-            <p className="text-sm text-muted-foreground">
-              Technology-specific guidance with authoritative sources and verification commands.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {techGuides.map((tech) => (
-                <a
-                  key={tech.id}
-                  href={getTechnologyPath(tech)}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-card hover:bg-muted/50 hover:border-primary/50 transition-all"
+      {relevantTechnologies && relevantTechnologies.length > 0 && (
+        <ControlSection title="Relevant Technologies">
+          <p className="text-sm text-muted-foreground">
+            Technology-specific guidance with authoritative sources and verification commands.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {relevantTechnologies.map((tech) => (
+              <a
+                key={tech.id}
+                href={tech.path}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-card hover:bg-muted/50 hover:border-primary/50 transition-all"
+              >
+                <span className="text-sm font-medium">{tech.name}</span>
+                <svg
+                  className="w-3.5 h-3.5 text-muted-foreground"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  <span className="text-sm font-medium">{tech.name}</span>
-                  <svg
-                    className="w-3.5 h-3.5 text-muted-foreground"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </a>
-              ))}
-            </div>
-          </ControlSection>
-        );
-      })()}
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            ))}
+          </div>
+        </ControlSection>
+      )}
 
       {/* Supplemental Guidance (NIST only) */}
       <FrameworkSections control={control} frameworkId={frameworkId} slot="after-technologies" />
@@ -325,20 +346,52 @@ export function ControlDetail({ control, frameworkId, neighbors }: ControlDetail
       {/* Update History (FedRAMP 20x KSI only) */}
       <FrameworkSections control={control} frameworkId={frameworkId} slot="after-assessment" />
 
-      {/* Ask AI Section */}
-      <AskAISection
-        frameworkId={frameworkId}
-        controlId={control.control_id}
-        quickQuestions={frameworkId === 'fedramp-20x-ksi' ? [
-          `Show assessment focus areas and CLI commands for ${control.control_id}`,
-          `Generate a trust center layout for ${control.control_id}`,
-          `How does ${control.control_id} map to NIST 800-53 controls?`,
-        ] : [
-          'How does this control map to other frameworks?',
-          'What evidence is needed for compliance?',
-          'Show related controls across frameworks',
-        ]}
-      />
+      {/* GRCLanker Actions */}
+      <ControlSection title="GRCLanker Assistant">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card/60 p-4">
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">
+              Need evidence ideas, crosswalk context, or assessor prep for {control.control_id}?
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Open GRCLanker chat or practice a live spoken mock audit interview for this control.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() =>
+                requestOpenAIChat({
+                  frameworkId,
+                  controlSlug: slugify(control.control_id),
+                  controlTitle: control.title,
+                  prompt: `Summarize what ${control.control_id} requires, typical evidence artifacts, and common gaps.`,
+                })
+              }
+            >
+              <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
+              Ask GRCLanker
+            </Button>
+            <Button
+              size="sm"
+              onClick={() =>
+                requestOpenAIChat({
+                  frameworkId,
+                  controlSlug: slugify(control.control_id),
+                  controlTitle: control.title,
+                  tab: 'voice',
+                  voiceMode: 'audit-interview',
+                  assessmentQuestions: control.assessment_questions?.flatMap((g) => g.questions).slice(0, 12),
+                })
+              }
+            >
+              <Mic className="w-3.5 h-3.5" aria-hidden="true" />
+              Mock Audit Interview
+            </Button>
+          </div>
+        </div>
+      </ControlSection>
 
       {/* Footer navigation */}
       {neighbors ? (
