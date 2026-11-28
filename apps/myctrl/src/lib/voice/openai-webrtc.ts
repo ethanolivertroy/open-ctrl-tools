@@ -5,7 +5,10 @@ import {
   parseRealtimeServerEvent,
 } from './protocol';
 import { executeVoiceTool, VOICE_TOOL_DESCRIPTORS } from './voice-tools';
+import { throwIfAborted } from './cancellation';
 import type { ActiveVoiceTransport, VoiceSessionStartOptions } from './types';
+
+type Cleanup = () => void | Promise<void>;
 
 export async function startOpenAIWebRtcSession(
   ephemeralToken: string,
@@ -25,14 +28,60 @@ export async function startOpenAIWebRtcSession(
     },
   });
 
+  // The microphone is live from here on. Each resource registers how to let go
+  // of itself, so a failure at any later step — a rejected SDP exchange, a
+  // cancelled start — releases everything acquired so far, not just some of it.
+  const cleanups: Cleanup[] = [() => stream.getTracks().forEach((t) => t.stop())];
+  let released = false;
+  const release = async () => {
+    if (released) return;
+    released = true;
+    for (const cleanup of cleanups.reverse()) {
+      try {
+        await cleanup();
+      } catch {
+        // Keep releasing the rest.
+      }
+    }
+  };
+
+  try {
+    return await connect(ephemeralToken, options, stream, cleanups, release);
+  } catch (err) {
+    await release();
+    throw err;
+  }
+}
+
+async function connect(
+  ephemeralToken: string,
+  options: VoiceSessionStartOptions,
+  stream: MediaStream,
+  cleanups: Cleanup[],
+  release: () => Promise<void>,
+): Promise<ActiveVoiceTransport> {
+  // The session may have been cancelled while the permission prompt was open.
+  throwIfAborted(options.signal);
+
   const pc = new RTCPeerConnection();
+  cleanups.push(() => pc.close());
+
   const remoteAudio = document.createElement('audio');
   remoteAudio.autoplay = true;
   remoteAudio.setAttribute('playsinline', 'true');
+  cleanups.push(() => {
+    remoteAudio.pause();
+    remoteAudio.srcObject = null;
+  });
 
   // Monitor local microphone RMS level for the waveform indicator.
   let audioCtx: AudioContext | null = null;
   let meterRaf = 0;
+  cleanups.push(async () => {
+    if (meterRaf) window.cancelAnimationFrame(meterRaf);
+    meterRaf = 0;
+    if (audioCtx) await audioCtx.close().catch(() => {});
+  });
   try {
     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     audioCtx = new AudioCtx();
@@ -69,6 +118,7 @@ export async function startOpenAIWebRtcSession(
   };
 
   const dc = pc.createDataChannel('oai-events');
+  cleanups.push(() => dc.close());
   const voice = getDefaultVoice('openai', options.voice);
   const instructions = buildVoiceInstructions({
     mode: options.mode,
@@ -186,6 +236,7 @@ export async function startOpenAIWebRtcSession(
 
   const sdpResp = await fetch('/api/voice/openai-sdp', {
     method: 'POST',
+    signal: options.signal,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       ephemeralToken,
@@ -195,8 +246,6 @@ export async function startOpenAIWebRtcSession(
 
   if (!sdpResp.ok) {
     const errJson = (await sdpResp.json().catch(() => ({}))) as { error?: string };
-    stream.getTracks().forEach((t) => t.stop());
-    pc.close();
     throw new Error(errJson.error || `OpenAI WebRTC exchange failed (${sdpResp.status})`);
   }
 
@@ -235,13 +284,7 @@ export async function startOpenAIWebRtcSession(
       });
     },
     stop: async () => {
-      if (meterRaf) window.cancelAnimationFrame(meterRaf);
-      if (audioCtx) await audioCtx.close().catch(() => {});
-      remoteAudio.pause();
-      remoteAudio.srcObject = null;
-      dc.close();
-      pc.close();
-      stream.getTracks().forEach((t) => t.stop());
+      await release();
       options.onInputLevel?.(0);
       options.onOutputLevel?.(0);
       options.onStateChange('idle');

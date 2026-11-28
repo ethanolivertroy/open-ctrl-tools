@@ -10,6 +10,7 @@ import { startOpenAIWebRtcSession } from './openai-webrtc';
 import { startGrokWebSocketSession } from './grok-ws';
 import { startGeminiLiveSession } from './gemini-live-ws';
 import { startBrowserSpeechSession } from './browser-speech';
+import { createAbortError, throwIfAborted } from './cancellation';
 
 export const VOICE_PROVIDER_PRIORITY: VoiceProviderId[] = ['openai', 'grok', 'gemini', 'browser'];
 
@@ -32,6 +33,22 @@ export async function selectPreferredVoiceProvider(): Promise<VoiceProviderId> {
 export async function startVoiceSession(
   options: VoiceSessionStartOptions,
 ): Promise<ActiveVoiceTransport> {
+  const transport = await connectVoiceTransport(options);
+
+  // Cancelled while it was connecting: the caller never received this
+  // transport, so nothing else can stop it (or its microphone). Stop it here.
+  if (options.signal?.aborted) {
+    await transport.stop().catch(() => {});
+    throw createAbortError();
+  }
+  return transport;
+}
+
+async function connectVoiceTransport(
+  options: VoiceSessionStartOptions,
+): Promise<ActiveVoiceTransport> {
+  throwIfAborted(options.signal);
+
   if (options.provider === 'browser') {
     return startBrowserSpeechSession(options);
   }
@@ -45,8 +62,10 @@ export async function startVoiceSession(
     resolvedApiKey = execution.apiKey;
   }
 
+  throwIfAborted(options.signal);
   const resp = await fetch('/api/voice/session', {
     method: 'POST',
+    signal: options.signal,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       provider: options.provider,
@@ -61,6 +80,7 @@ export async function startVoiceSession(
   }
 
   const session = (await resp.json()) as EphemeralVoiceSessionResponse;
+  throwIfAborted(options.signal);
 
   if (session.provider === 'openai') {
     if (!session.ephemeralToken) {

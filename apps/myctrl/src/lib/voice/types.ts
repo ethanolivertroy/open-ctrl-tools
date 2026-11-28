@@ -25,6 +25,11 @@ export interface VoiceSessionStartOptions {
   controlSlug?: string;
   controlTitle?: string;
   assessmentQuestions?: string[];
+  /**
+   * Aborts a session that is still connecting. Transports release whatever
+   * they have acquired (microphone, sockets) and reject with an AbortError.
+   */
+  signal?: AbortSignal;
   onStateChange: (state: VoiceConnectionState) => void;
   onTranscript: (entry: VoiceTranscriptEntry) => void;
   onToolActivity?: (label: string) => void;

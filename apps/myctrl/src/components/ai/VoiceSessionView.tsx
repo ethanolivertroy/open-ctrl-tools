@@ -66,6 +66,11 @@ export function VoiceSessionView({
   const [textTurn, setTextTurn] = React.useState('');
 
   const transportRef = React.useRef<ActiveVoiceTransport | null>(null);
+  // Set while a session is still connecting, so End (or unmount) can cancel it.
+  const pendingStartRef = React.useRef<AbortController | null>(null);
+  // Bumped whenever the current session is ended or replaced; callbacks from
+  // an older session compare against it and stay quiet.
+  const sessionIdRef = React.useRef(0);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
@@ -106,6 +111,11 @@ export function VoiceSessionView({
 
   React.useEffect(() => {
     return () => {
+      // Closing the view mid-connect must not leave a session (and the
+      // microphone) running with nothing left to stop it.
+      sessionIdRef.current += 1;
+      pendingStartRef.current?.abort();
+      pendingStartRef.current = null;
       void transportRef.current?.stop();
       transportRef.current = null;
     };
@@ -128,9 +138,25 @@ export function VoiceSessionView({
   }, []);
 
   const handleStart = async () => {
+    if (pendingStartRef.current) return;
+
+    const sessionId = ++sessionIdRef.current;
+    // Once ended or replaced, a session must not move the UI any more.
+    const live = () => sessionIdRef.current === sessionId;
+
+    // A session left behind in an error state still holds its resources.
+    const stale = transportRef.current;
+    transportRef.current = null;
+    void stale?.stop();
+
+    const pending = new AbortController();
+    pendingStartRef.current = pending;
+
     setError(null);
     setActiveTool(null);
     setMuted(false);
+    // Show the active controls straight away so End is available while connecting.
+    setConnState('connecting');
 
     try {
       const transport = await startVoiceSession({
@@ -141,32 +167,54 @@ export function VoiceSessionView({
         controlSlug,
         controlTitle,
         assessmentQuestions,
-        onStateChange: setConnState,
-        onTranscript: upsertTranscript,
-        onToolActivity: (toolName) => setActiveTool(toolName),
-        onInputLevel: setInputLevel,
-        onOutputLevel: setOutputLevel,
+        signal: pending.signal,
+        onStateChange: (state) => {
+          if (live()) setConnState(state);
+        },
+        onTranscript: (entry) => {
+          if (live()) upsertTranscript(entry);
+        },
+        onToolActivity: (toolName) => {
+          if (live()) setActiveTool(toolName);
+        },
+        onInputLevel: (level) => {
+          if (live()) setInputLevel(level);
+        },
+        onOutputLevel: (level) => {
+          if (live()) setOutputLevel(level);
+        },
         onError: (msg) => {
+          if (!live()) return;
           setError(msg);
           setConnState('error');
         },
       });
+      // startVoiceSession stops and rejects a transport that connected after
+      // cancellation, so reaching here means this session is still wanted.
       transportRef.current = transport;
     } catch (err) {
+      // A cancelled start is not an error: End already reset the view.
+      if (!live()) return;
       setConnState('error');
       setError(err instanceof Error ? err.message : 'Unable to start voice session.');
+    } finally {
+      if (pendingStartRef.current === pending) pendingStartRef.current = null;
     }
   };
 
   const handleStop = async () => {
-    if (transportRef.current) {
-      await transportRef.current.stop();
-      transportRef.current = null;
-    }
+    // Cancel a session that is still connecting as well as an established one.
+    sessionIdRef.current += 1;
+    pendingStartRef.current?.abort();
+    pendingStartRef.current = null;
+    const transport = transportRef.current;
+    transportRef.current = null;
+
     setActiveTool(null);
     setInputLevel(0);
     setOutputLevel(0);
     setConnState('idle');
+    await transport?.stop();
   };
 
   const handleToggleMute = () => {

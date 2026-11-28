@@ -76,6 +76,7 @@ export class PcmAudioDuplex {
   private nextPlaybackTime = 0;
   private activeSources = new Set<AudioBufferSourceNode>();
   private muted = false;
+  private released = false;
 
   async startCapture(options: {
     targetSampleRate: number;
@@ -86,7 +87,7 @@ export class PcmAudioDuplex {
       throw new Error('Microphone capture is not available in this browser context.');
     }
 
-    this.stream = await navigator.mediaDevices.getUserMedia({
+    const stream = await navigator.mediaDevices.getUserMedia({
       audio: {
         echoCancellation: true,
         noiseSuppression: true,
@@ -95,10 +96,22 @@ export class PcmAudioDuplex {
       },
     });
 
+    // stop() can land while the permission prompt is still open. The stream
+    // did not exist yet for it to release, so release it here instead.
+    if (this.released) {
+      for (const track of stream.getTracks()) track.stop();
+      throw new Error('Microphone capture was cancelled.');
+    }
+    this.stream = stream;
+
     const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     this.context = new AudioCtx();
     if (this.context.state === 'suspended') {
       await this.context.resume();
+    }
+    if (this.released || !this.context) {
+      await this.stop();
+      throw new Error('Microphone capture was cancelled.');
     }
 
     this.sourceNode = this.context.createMediaStreamSource(this.stream);
@@ -176,6 +189,7 @@ export class PcmAudioDuplex {
   }
 
   async stop(): Promise<void> {
+    this.released = true;
     this.stopPlayback();
     if (this.processorNode) {
       this.processorNode.onaudioprocess = null;

@@ -7,6 +7,7 @@ import {
   parseRealtimeServerEvent,
 } from './protocol';
 import { executeVoiceTool, VOICE_TOOL_DESCRIPTORS } from './voice-tools';
+import { raceAbort } from './cancellation';
 import type { ActiveVoiceTransport, VoiceSessionStartOptions } from './types';
 
 export async function startGrokWebSocketSession(
@@ -39,7 +40,9 @@ export async function startGrokWebSocketSession(
     }
   };
 
-  await new Promise<void>((resolve, reject) => {
+  // Until the session is handed back nobody else can stop it, so a failed,
+  // timed-out or cancelled connect has to close the socket and microphone itself.
+  const connected = new Promise<void>((resolve, reject) => {
     const timer = window.setTimeout(() => {
       reject(new Error('Timed out connecting to xAI Grok Voice socket.'));
     }, 10000);
@@ -89,6 +92,15 @@ export async function startGrokWebSocketSession(
       reject(new Error('Could not open xAI Grok Voice WebSocket connection.'));
     };
   });
+
+  try {
+    await raceAbort(connected, options.signal);
+  } catch (err) {
+    closed = true;
+    ws.close();
+    await duplex.stop();
+    throw err;
+  }
 
   ws.onmessage = (event) => {
     let parsed: unknown;

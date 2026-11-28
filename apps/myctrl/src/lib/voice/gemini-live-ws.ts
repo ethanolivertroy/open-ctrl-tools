@@ -8,6 +8,7 @@ import {
   parseGeminiServerMessage,
 } from './protocol';
 import { executeVoiceTool, VOICE_TOOL_DESCRIPTORS } from './voice-tools';
+import { raceAbort } from './cancellation';
 import type { ActiveVoiceTransport, VoiceSessionStartOptions } from './types';
 
 async function decodeWsData(data: unknown): Promise<string> {
@@ -56,7 +57,9 @@ export async function startGeminiLiveSession(
     }
   };
 
-  await new Promise<void>((resolve, reject) => {
+  // Until the session is handed back nobody else can stop it, so a failed,
+  // timed-out or cancelled connect has to close the socket and microphone itself.
+  const connected = new Promise<void>((resolve, reject) => {
     const timer = window.setTimeout(() => {
       reject(new Error('Timed out connecting to Gemini Live socket.'));
     }, 10000);
@@ -104,6 +107,15 @@ export async function startGeminiLiveSession(
       reject(new Error('Could not open Gemini Live WebSocket connection.'));
     };
   });
+
+  try {
+    await raceAbort(connected, options.signal);
+  } catch (err) {
+    closed = true;
+    ws.close();
+    await duplex.stop();
+    throw err;
+  }
 
   ws.onmessage = (event) => {
     void decodeWsData(event.data).then((text) => {
