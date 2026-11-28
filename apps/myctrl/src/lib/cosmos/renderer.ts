@@ -924,9 +924,10 @@ export function createCosmos(canvas: HTMLCanvasElement, options: CosmosOptions =
     if (destroyed || contextLost || mode !== 'drift' || document.hidden) return;
     rafId = requestAnimationFrame(step);
 
-    // Every frame on 60–90Hz displays, every other on 120Hz+; a quieter 24fps
-    // while the window is in the background.
-    const minInterval = focused ? 10 : 1000 / 24;
+    // Desktop: every frame on 60–90Hz displays, every other on 120Hz+.
+    // Phones: 30fps, which halves the GPU's work for a backdrop that mostly
+    // drifts. Either way, a quieter 24fps while the window is in the background.
+    const minInterval = !focused ? 1000 / 24 : isMobile ? 1000 / 31 : 10;
     if (lastFrameAt !== null && now - lastFrameAt < minInterval) return;
     const rawDt = lastFrameAt === null ? 1 / 60 : (now - lastFrameAt) / 1000;
     lastFrameAt = now;

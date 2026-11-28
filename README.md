@@ -68,7 +68,7 @@ This repository intentionally omits a root `package.json` or workspace file so C
 - **Deploy Button:** Point to a standalone Worker tree URL, such as `https://deploy.workers.cloudflare.com/?url=https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/apps/trust-me-bro-center`.
 - **Cloudflare Workers Builds:** Set **Root directory** to `apps/myctrl` or `apps/trust-me-bro-center` (or `demos/flue-grc-engineer-demo`) and **Build watch paths** to that directory (e.g. `apps/myctrl/*`) so changes in other packages do not trigger Worker rebuilds. For `apps/myctrl`, set **Build command** to `npm run build` and **Deploy command** to `npx wrangler deploy`.
 
-`apps/myctrl` is built with Astro, React 19, `@ui-sdk/react` (including `@ui-sdk/react/agent` WebMCP tools), Tailwind CSS, Edge SSR control routes, a lightweight 2D deep-space canvas on `/`, and GRCLanker Chat + Speech-to-Speech Voice (`/api/voice/session`).
+`apps/myctrl` is built with Astro, React 19, `@ui-sdk/react` (including `@ui-sdk/react/agent` WebMCP tools), Tailwind CSS, Edge SSR control routes, a dependency-free WebGL2 particle sky on `/`, and GRCLanker Chat + Speech-to-Speech Voice (`/api/voice/session`).
 
 ## License
 

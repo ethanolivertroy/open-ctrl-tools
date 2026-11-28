@@ -13,7 +13,7 @@ function currentTheme(): Theme {
   return normalizeTheme(document.documentElement.getAttribute('data-theme'));
 }
 
-/** Small telemetry bar in the hero: sky motion and colour theme. */
+/** Small telemetry bar in the hero: sky motion on every screen, colour theme from `sm` up. */
 export function SkyControls() {
   const skyMode = useSkyMode();
   const [activeTheme, setActiveTheme] = React.useState<Theme>('mocha');
@@ -35,13 +35,14 @@ export function SkyControls() {
     setActiveTheme(theme);
   };
 
+  // Roomier targets on touch screens, compact on desktop.
   const pill = (active: boolean) =>
-    `px-1.5 py-0.5 rounded transition-colors ${
+    `px-3 py-2 sm:px-1.5 sm:py-0.5 rounded transition-colors ${
       active ? 'bg-primary/15 text-primary font-medium' : 'hover:text-foreground'
     }`;
 
   return (
-    <div className="absolute bottom-4 right-4 z-20 hidden sm:flex items-center gap-3 rounded-lg border border-border/50 bg-background/75 backdrop-blur-md px-2.5 py-1 text-[11px] font-mono text-muted-foreground">
+    <div className="absolute bottom-4 left-4 sm:left-auto sm:right-4 z-20 flex items-center gap-3 rounded-lg border border-border/50 bg-background/75 backdrop-blur-md px-2 py-1 sm:px-2.5 text-xs sm:text-[11px] font-mono text-muted-foreground">
       <div className="flex items-center gap-1" role="group" aria-label="Sky motion">
         <span className="text-muted-foreground/70 mr-1">sky:</span>
         {SKY_MODES.map((mode) => (
@@ -57,9 +58,10 @@ export function SkyControls() {
         ))}
       </div>
 
-      <span className="h-3 w-px bg-border/60" aria-hidden="true" />
+      {/* Phones get the sky switch only; themes are a tap away in Preferences (the header gear). */}
+      <span className="hidden sm:block h-3 w-px bg-border/60" aria-hidden="true" />
 
-      <div className="flex items-center gap-1" role="group" aria-label="Color theme">
+      <div className="hidden sm:flex items-center gap-1" role="group" aria-label="Color theme">
         {THEMES.map((t) => (
           <button
             key={t.id}
