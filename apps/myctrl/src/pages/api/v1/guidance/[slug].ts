@@ -55,6 +55,12 @@ export const GET: APIRoute = withReadOnlyApi(async (context) => {
     description: guide.description,
     official_url: guide.officialUrl || null,
 
+    agent_instructions: guide.agentInstructions ? {
+      summary: guide.agentInstructions.summary,
+      prompt: guide.agentInstructions.prompt,
+      skill_url: guide.agentInstructions.skillUrl || null,
+    } : null,
+
     authoritative_sources: guide.authoritativeSources.map((s) => ({
       id: s.id || null,
       type: s.type,

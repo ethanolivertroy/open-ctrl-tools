@@ -696,6 +696,14 @@ export interface TechnologyGuidePlaybook {
   sections: TechnologyGuidePlaybookSection[];
 }
 
+/** A prompt a reader can hand to a coding agent to carry the guide out. */
+export interface TechnologyGuideAgentInstructions {
+  summary: string;
+  prompt: string;
+  /** The skill or runbook the prompt sends the agent to. */
+  skillUrl?: string;
+}
+
 // Main technology guide entry
 export interface TechnologyGuide {
   id: string;                           // URL slug: "okta"
@@ -725,6 +733,8 @@ export interface TechnologyGuide {
   tools?: TechnologyGuideTool[];
 
   playbook?: TechnologyGuidePlaybook;
+
+  agentInstructions?: TechnologyGuideAgentInstructions;
 
   // Optional subpage sections (view-based, not data duplication)
   sections?: TechnologyGuideSection[];

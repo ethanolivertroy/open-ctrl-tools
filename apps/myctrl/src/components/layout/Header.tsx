@@ -103,7 +103,7 @@ const MOBILE_ABOUT_LINKS: NavLink[] = [
 const DEVELOPER_LINKS: NavLink[] = [
   { href: '/developers', label: 'Developer Hub' },
   { href: '/developers/api', label: 'API Reference' },
-  { href: '/guidance/nist-cmvp-api', label: 'Upstream CMVP API' },
+  { href: '/guidance/nist-cmvp-api', label: 'Build a CMVP API' },
   { href: '/llms.txt', label: 'llms.txt' },
 ];
 

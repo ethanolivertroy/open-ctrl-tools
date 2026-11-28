@@ -6916,18 +6916,51 @@
       "id": "nist-cmvp-api",
       "name": "NIST CMVP API",
       "category": "security-tools",
-      "vendor": "Ethan Troy",
-      "description": "Unofficial static JSON API for NIST CMVP cryptographic module data, with weekly updates, algorithm summaries, OpenAPI, and llms.txt discovery.",
-      "officialUrl": "https://ethanolivertroy.github.io/nist-cmvp-api/",
+      "vendor": "open-ctrl-tools",
+      "description": "Open-source pipeline for building your own static JSON API of NIST CMVP cryptographic module data, with an agent skill that walks a coding agent through scraping, validating, and publishing it.",
+      "officialUrl": "https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/tools/nist-cmvp-api",
       "githubRepos": [
         "ethanolivertroy/open-ctrl-tools/tools/nist-cmvp-api"
       ],
+      "agentInstructions": {
+        "summary": "Paste this into a coding agent with shell access (Claude Code, Codex, Cursor, Pi, OpenCode). It follows the pipeline's skill to scrape NIST, validate the result, and serve it locally, and it will not publish anything without asking.",
+        "prompt": "Build me a current NIST CMVP JSON API in this workspace.\n\n1. Clone https://github.com/ethanolivertroy/open-ctrl-tools and read\n   tools/nist-cmvp-api/skills/nist-cmvp-pipeline/SKILL.md. Follow it.\n2. Run the credential-free checks first (ruff, pytest, pip-audit). Stop if they fail.\n3. Run a catalog-only smoke scrape (SKIP_ALGORITHMS=1), then the full scrape.\n4. Validate the output with validate_api.py and its three --require-* flags.\n5. Serve the api/ directory locally, then tell me the generated_at date and the\n   module counts from api/metadata.json.\n\nDo not publish, push, or deploy anything without asking me first.",
+        "skillUrl": "https://github.com/ethanolivertroy/open-ctrl-tools/blob/main/tools/nist-cmvp-api/skills/nist-cmvp-pipeline/SKILL.md"
+      },
       "authoritativeSources": [
         {
           "type": "community",
-          "title": "NIST CMVP Data API Documentation",
+          "title": "Agent skill: nist-cmvp-pipeline",
+          "url": "https://github.com/ethanolivertroy/open-ctrl-tools/blob/main/tools/nist-cmvp-api/skills/nist-cmvp-pipeline/SKILL.md",
+          "summary": "Step-by-step instructions a coding agent (Claude Code, Codex, Cursor, Pi, OpenCode) can follow to check the environment, scrape NIST, validate the output, and publish a mirror. CMVP data changes continuously, so generate it when you need it rather than relying on someone else's snapshot."
+        },
+        {
+          "type": "community",
+          "title": "NIST CMVP API pipeline",
+          "url": "https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/tools/nist-cmvp-api",
+          "summary": "MIT-licensed scraper, validator, Modal sharded runner, and GitHub Actions templates in open-ctrl-tools. A run writes validated, historical, and in-process module data, algorithm summaries, and per-certificate records as static JSON, plus an OpenAPI spec, JSON Schemas, and llms.txt.",
+          "additionalUrls": [
+            {
+              "label": "Weekly refresh workflow template",
+              "url": "https://github.com/ethanolivertroy/open-ctrl-tools/blob/main/tools/nist-cmvp-api/workflows/update-cmvp-api.yml.example"
+            },
+            {
+              "label": "Data freshness workflow template",
+              "url": "https://github.com/ethanolivertroy/open-ctrl-tools/blob/main/tools/nist-cmvp-api/workflows/data-freshness.yml.example"
+            }
+          ]
+        },
+        {
+          "type": "nist",
+          "title": "NIST Cryptographic Module Validation Program",
+          "url": "https://csrc.nist.gov/projects/cryptographic-module-validation-program",
+          "summary": "Official CMVP program and certificate catalog from NIST and CCCS. Use the NIST site as the authoritative source for validation status, certificate details, and security policy documents; an API you build with this pipeline is a convenience layer, not an official NIST service."
+        },
+        {
+          "type": "community",
+          "title": "Archived snapshot (30 August 2026)",
           "url": "https://ethanolivertroy.github.io/nist-cmvp-api/",
-          "summary": "Unofficial static JSON API for CMVP validated, historical, and in-process module data. The docs expose API discovery documents, module datasets, algorithm summaries, an OpenAPI spec, and llms.txt for agent and tool consumption.",
+          "summary": "A frozen copy of the generated API that is no longer refreshed. Useful for seeing the response shapes before you run the pipeline; do not rely on it for current validation status. The CMVP Explorer on this site reads this snapshot unless it is built with PUBLIC_CMVP_API_BASE_URL pointing at your own mirror.",
           "additionalUrls": [
             {
               "label": "API Index",
@@ -6946,68 +6979,76 @@
               "url": "https://ethanolivertroy.github.io/nist-cmvp-api/llms.txt"
             }
           ]
-        },
-        {
-          "type": "community",
-          "title": "NIST-CMVP-API GitHub Repository",
-          "url": "https://github.com/ethanolivertroy/open-ctrl-tools/tree/main/tools/nist-cmvp-api",
-          "summary": "Source repository for the scraper, generated API artifacts, and automation workflow. Use it to inspect schema generation, scheduled refreshes, validation checks, and change history."
-        },
-        {
-          "type": "nist",
-          "title": "NIST Cryptographic Module Validation Program",
-          "url": "https://csrc.nist.gov/projects/cryptographic-module-validation-program",
-          "summary": "Official CMVP program and certificate catalog from NIST and CCCS. Use the NIST site as the authoritative source for validation status, certificate details, and security policy documents; the API linked here is a convenience layer, not an official NIST service."
         }
       ],
       "commands": [
         {
-          "description": "Fetch the API index to discover all published datasets",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/index.json | jq",
+          "description": "Get the pipeline",
+          "command": "git clone https://github.com/ethanolivertroy/open-ctrl-tools\ncd open-ctrl-tools/tools/nist-cmvp-api",
           "type": "cli",
-          "group": "Discovery"
+          "group": "Set Up"
         },
         {
-          "description": "Check dataset freshness and feature flags",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/metadata.json | jq",
+          "description": "Run the credential-free checks before scraping",
+          "command": "python3.12 -m venv .venv && . .venv/bin/activate\npython -m pip install --require-hashes -r requirements-dev.lock\npython -m ruff check .\npython -m pytest test_scraper.py -q",
           "type": "cli",
-          "group": "Discovery"
+          "group": "Set Up",
+          "notes": "The hash-pinned locks target CPython 3.12 on Linux x86_64."
+        },
+        {
+          "description": "Install the scraping runtime in its own environment",
+          "command": "python3.12 -m venv .venv-run && . .venv-run/bin/activate\npython -m pip install --require-hashes -r requirements.lock",
+          "type": "cli",
+          "group": "Set Up"
+        },
+        {
+          "description": "Point generated docs and schemas at your own mirror (optional)",
+          "command": "export CMVP_PUBLIC_BASE_URL=\"https://<your-org>.github.io/<your-cmvp-repo>\"\nexport CMVP_REPO_URL=\"https://github.com/<your-org>/<your-cmvp-repo>\"",
+          "type": "config",
+          "group": "Generate"
+        },
+        {
+          "description": "Fast catalog-only smoke scrape (skips algorithm extraction)",
+          "command": "SKIP_ALGORITHMS=1 python -u scraper.py",
+          "type": "cli",
+          "group": "Generate"
+        },
+        {
+          "description": "Full scrape using the local PDF parser",
+          "command": "ALGORITHM_SOURCE=security_policy_pdf python -u scraper.py",
+          "type": "cli",
+          "group": "Generate",
+          "notes": "Drop the variable to use Crawl4AI, the default. The skill also covers sharded runs on Modal."
+        },
+        {
+          "description": "Validate the generated tree before using or publishing it",
+          "command": "python validate_api.py \\\n  --root . \\\n  --require-current-schema \\\n  --require-supported-algorithm-source \\\n  --require-data-quality-pass",
+          "type": "cli",
+          "group": "Validate"
+        },
+        {
+          "description": "Serve your data locally",
+          "command": "python3 -m http.server 8080",
+          "type": "cli",
+          "group": "Use Your Data"
+        },
+        {
+          "description": "Check when your dataset was generated",
+          "command": "curl -s http://localhost:8080/api/metadata.json | jq '{generated_at, total_modules, total_historical_modules}'",
+          "type": "cli",
+          "group": "Use Your Data"
         },
         {
           "description": "List active validated modules for a vendor",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Vendor Name\" | test(\"Microsoft\"; \"i\"))'",
+          "command": "curl -s http://localhost:8080/api/modules.json | jq '.modules[] | select(.\"Vendor Name\" | test(\"Microsoft\"; \"i\"))'",
           "type": "cli",
-          "group": "Module Queries"
+          "group": "Use Your Data"
         },
         {
-          "description": "Search validated modules by certificate number",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules.json | jq '.modules[] | select(.\"Certificate Number\" == \"5104\")'",
-          "type": "cli",
-          "group": "Module Queries"
-        },
-        {
-          "description": "Inspect historical or revoked modules",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/historical-modules.json | jq '.modules[] | select(.status == \"Revoked\")'",
-          "type": "cli",
-          "group": "Module Queries"
-        },
-        {
-          "description": "List modules currently in process",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/modules-in-process.json | jq '.modules[:20]'",
-          "type": "cli",
-          "group": "Module Queries"
-        },
-        {
-          "description": "Inspect algorithm usage statistics across certificates",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/algorithms.json | jq",
-          "type": "cli",
-          "group": "Algorithm Queries"
-        },
-        {
-          "description": "Look up certificates that reference AES",
-          "command": "curl -s https://ethanolivertroy.github.io/nist-cmvp-api/api/algorithms.json | jq '.algorithms.AES'",
-          "type": "cli",
-          "group": "Algorithm Queries"
+          "description": "Build myctrl.tools with its CMVP Explorer reading your mirror",
+          "command": "PUBLIC_CMVP_API_BASE_URL=\"https://<your-org>.github.io/<your-cmvp-repo>/api\" npm run build",
+          "type": "config",
+          "group": "Use Your Data"
         }
       ],
       "controlMappings": [
