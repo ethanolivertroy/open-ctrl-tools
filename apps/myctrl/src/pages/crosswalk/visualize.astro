@@ -1,138 +1,44 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { NetworkGraph } from '../../components/crosswalk/NetworkGraph';
-import { CoverageMatrix } from '../../components/crosswalk/CoverageMatrix';
-import { ControlExplorer } from '../../components/crosswalk/ControlExplorer';
+import { CrosswalkWorkbench } from '../../components/crosswalk/CrosswalkWorkbench';
+import { getCrosswalkStats } from '../../data/crosswalk-stats';
+
+export const prerender = true;
+
+const stats = getCrosswalkStats();
+const frameworkCount = stats.nodes.length;
+const totalRelationships = stats.edges.reduce((sum, edge) => sum + edge.mappingCount, 0);
 ---
 
-<BaseLayout title="Crosswalk Visualizer" showSidebar={false}>
-  <div class="max-w-6xl mx-auto space-y-8 py-12 px-4">
-    <!-- Header -->
-    <header class="space-y-4">
-      <div class="flex items-center gap-2 text-sm text-muted-foreground">
-        <a href="/" class="hover:text-foreground transition-colors">Home</a>
-        <span>/</span>
-        <a href="/crosswalk" class="hover:text-foreground transition-colors">Crosswalks</a>
-        <span>/</span>
-        <span class="text-foreground">Visualize</span>
+<BaseLayout
+  title="Crosswalk Workbench"
+  description="Interactive security framework coverage matrix and control crosswalk explorer."
+  showSidebar={false}
+>
+  <div class="container mx-auto px-4 py-8 max-w-7xl space-y-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/60 pb-6">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono">
+          CROSSWALK WORKBENCH
+        </div>
+        <h1 class="text-3xl font-semibold tracking-tight">
+          Cross-Framework Mapping &amp; Coverage
+        </h1>
+        <p class="text-sm text-muted-foreground max-w-2xl">
+          Inspect bi-directional control overlap across loaded security frameworks, inspect coverage percentages, or explore single-control mappings without loading heavyweight graph scripts upfront.
+        </p>
       </div>
 
-      <h1 class="text-3xl font-bold tracking-tight">
-        Crosswalk Visualizer
-      </h1>
-
-      <p class="text-muted-foreground max-w-2xl">
-        Explore the relationships between security frameworks. See how controls map across
-        different compliance standards.
-      </p>
-    </header>
-
-    <!-- Tabs -->
-    <div class="border-b border-border">
-      <nav class="flex gap-4" id="viz-tabs" role="tablist">
-        <button
-          class="tab-button px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors"
-          data-tab="network"
-          role="tab"
-          aria-selected="true"
-        >
-          Network Graph
-        </button>
-        <button
-          class="tab-button px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors"
-          data-tab="matrix"
-          role="tab"
-          aria-selected="false"
-        >
-          Coverage Matrix
-        </button>
-        <button
-          class="tab-button px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors"
-          data-tab="explorer"
-          role="tab"
-          aria-selected="false"
-        >
-          Control Explorer
-        </button>
-      </nav>
-    </div>
-
-    <!-- Tab Panels -->
-    <div class="tab-panels">
-      <div id="panel-network" class="tab-panel" role="tabpanel">
-        <NetworkGraph client:only="react" />
-      </div>
-
-      <div id="panel-matrix" class="tab-panel hidden" role="tabpanel">
-        <CoverageMatrix client:only="react" />
-      </div>
-
-      <div id="panel-explorer" class="tab-panel hidden" role="tabpanel">
-        <ControlExplorer client:only="react" />
+      <div class="flex items-center gap-3 font-mono text-xs text-muted-foreground">
+        <div class="px-3 py-1.5 rounded-lg border border-border bg-card/60">
+          <span class="text-foreground font-semibold">{frameworkCount}</span> mapped frameworks
+        </div>
+        <div class="px-3 py-1.5 rounded-lg border border-border bg-card/60">
+          <span class="text-foreground font-semibold">{totalRelationships.toLocaleString()}</span> mappings
+        </div>
       </div>
     </div>
 
-    <!-- Back link -->
-    <div class="pt-8 border-t border-border">
-      <a href="/crosswalk" class="text-sm text-primary hover:underline">
-        ← Back to crosswalk tables
-      </a>
-    </div>
+    <CrosswalkWorkbench client:load />
   </div>
 </BaseLayout>
-
-<style>
-  .tab-button {
-    color: hsl(var(--muted-foreground));
-    border-color: transparent;
-  }
-
-  .tab-button:hover {
-    color: hsl(var(--foreground));
-  }
-
-  .tab-button[aria-selected="true"] {
-    color: hsl(var(--primary));
-    border-color: hsl(var(--primary));
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.tab-button');
-    const panels = document.querySelectorAll('.tab-panel');
-
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const targetId = tab.getAttribute('data-tab');
-
-        // Update tab states
-        tabs.forEach((t) => {
-          t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
-        });
-
-        // Update panel visibility
-        panels.forEach((panel) => {
-          const panelId = panel.id.replace('panel-', '');
-          if (panelId === targetId) {
-            panel.classList.remove('hidden');
-          } else {
-            panel.classList.add('hidden');
-          }
-        });
-
-        // Update URL hash
-        window.history.replaceState(null, '', `#${targetId}`);
-      });
-    });
-
-    // Handle initial hash
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-      const targetTab = document.querySelector(`[data-tab="${hash}"]`);
-      if (targetTab) {
-        (targetTab as HTMLButtonElement).click();
-      }
-    }
-  });
-</script>

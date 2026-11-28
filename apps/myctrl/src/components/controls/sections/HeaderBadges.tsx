@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { BaselineBadges } from '../BaselineBadge';
 import { ImpactBadges } from '../ImpactBadges';
-import { slugify } from '@/data/controls';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import type { Control } from '@/data/types';
 import {
   isNistControl,

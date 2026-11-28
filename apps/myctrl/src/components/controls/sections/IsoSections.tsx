@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { slugify } from '@/data/controls';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import type { ISO27001Control, NistCSFControl } from '@/data/types';
 import { ControlSection } from './ControlSection';
 

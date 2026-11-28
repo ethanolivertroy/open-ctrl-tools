@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -21,23 +21,25 @@ import {
 import { getFavorites } from '@/lib/storage/favorites-store';
 import { getRecentlyViewed } from '@/lib/storage/recently-viewed-store';
 import { useEdgeSwipe } from '@/hooks/useEdgeSwipe';
+import { requestOpenAIChat } from '@/lib/ai-chat-events';
 import { FRAMEWORK_CONFIGS } from '@/data/framework-configs';
+import { Mic } from 'lucide-react';
 
 interface HeaderProps {
   frameworkId?: string;
   lastUpdated?: string;
 }
 
-// Popular frameworks for quick access
+// Popular loaded frameworks for quick access
 const POPULAR_FRAMEWORKS = [
   { id: 'nist-800-53-r5', label: 'NIST 800-53', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' },
-  { id: 'pci-dss-v4', label: 'PCI-DSS v4', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30' },
-  { id: 'soc2-tsc', label: 'SOC 2', color: 'bg-teal-500/10 text-teal-400 border-teal-500/30' },
-  { id: 'fedramp-rev5', label: 'FedRAMP', color: 'bg-red-500/10 text-red-400 border-red-500/30' },
-  { id: 'cis-controls-v8', label: 'CIS v8', color: 'bg-green-500/10 text-green-400 border-green-500/30' },
-  { id: 'iso-27001-2022', label: 'ISO 27001', color: 'bg-purple-500/10 text-purple-400 border-purple-500/30' },
-  { id: 'nist-csf-v2', label: 'NIST CSF', color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' },
+  { id: 'fedramp-rev5', label: 'FedRAMP Rev 5', color: 'bg-red-500/10 text-red-400 border-red-500/30' },
+  { id: 'fedramp-20x-ksi', label: 'FedRAMP 20x', color: 'bg-teal-500/10 text-teal-400 border-teal-500/30' },
+  { id: 'nist-csf-v2', label: 'NIST CSF 2.0', color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' },
   { id: 'cmmc-v2', label: 'CMMC v2', color: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30' },
+  { id: 'owasp-web-top10', label: 'OWASP Top 10', color: 'bg-purple-500/10 text-purple-400 border-purple-500/30' },
+  { id: 'owasp-llm-top10', label: 'OWASP LLM', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30' },
+  { id: 'eu-ai-act', label: 'EU AI Act', color: 'bg-green-500/10 text-green-400 border-green-500/30' },
 ];
 
 // Framework display name, from the canonical config registry
@@ -57,16 +59,14 @@ const COMPARE_LINKS: NavLink[] = [
 ];
 
 const CORE_TOOL_LINKS: NavLink[] = [
-  { href: '/assess', label: 'Gap Analysis', featured: true },
-  { href: '/graph', label: 'Knowledge Graph' },
-  { href: '/crosswalk', label: 'Crosswalk Explorer' },
+  { href: '/assess', label: 'Assessment Workbench', featured: true },
+  { href: '/crosswalk/visualize', label: 'Crosswalk Workbench' },
+  { href: '/crosswalk', label: 'Crosswalk Index' },
   { href: '/cmvp', label: 'CMVP Explorer' },
-  { href: '/whiteboard', label: 'Whiteboard' },
 ];
 
 const REFERENCE_TOOL_LINKS: NavLink[] = [
   { href: '/guidance', label: 'Technology Guidance' },
-  { href: '/stigs', label: 'DISA STIGs' },
   { href: '/search', label: 'Full Search' },
 ];
 
@@ -74,27 +74,23 @@ const REFERENCE_TOOL_LINKS: NavLink[] = [
 const MOBILE_BROWSE_LINKS: NavLink[] = [
   { href: '/all', label: 'All Frameworks' },
   { href: '/guidance', label: 'Technology Guidance' },
-  { href: '/stigs', label: 'DISA STIGs' },
-  { href: '/build', label: 'AI View Builder' },
 ];
 
 const MOBILE_CATEGORY_LINKS: NavLink[] = [
   { href: '/us-federal', label: 'Federal' },
   { href: '/ai', label: 'AI' },
-  { href: '/enterprise', label: 'Enterprise' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/international', label: 'International' },
   { href: '/owasp', label: 'OWASP' },
 ];
 
 const MOBILE_TOOL_LINKS: NavLink[] = [
-  { href: '/assess', label: 'Gap Analysis', featured: true },
+  { href: '/assess', label: 'Assessment Workbench', featured: true },
   { href: '/compare', label: 'Compare Frameworks' },
   { href: '/compare/controls', label: 'Compare Controls' },
-  { href: '/graph', label: 'Knowledge Graph' },
-  { href: '/crosswalk', label: 'Crosswalk Explorer' },
+  { href: '/crosswalk/visualize', label: 'Crosswalk Workbench' },
+  { href: '/crosswalk', label: 'Crosswalk Index' },
   { href: '/cmvp', label: 'CMVP Explorer' },
-  { href: '/whiteboard', label: 'Whiteboard' },
   { href: '/search', label: 'Full Search' },
 ];
 
@@ -144,11 +140,11 @@ export default function Header({ frameworkId }: HeaderProps) {
           open={mobileMenuOpen}
           onOpenChange={setMobileMenuOpen}
         >
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="lg:hidden mr-1 sm:mr-2">
-              <MenuIcon className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
+          <SheetTrigger
+            className={buttonVariants({ variant: 'ghost', size: 'icon', className: 'lg:hidden mr-1 sm:mr-2' })}
+          >
+            <MenuIcon className="h-5 w-5" />
+            <span className="sr-only">Toggle menu</span>
           </SheetTrigger>
           <SheetContent side="left" className="w-[85vw] max-w-80 p-0 bg-background/80 backdrop-blur-xl border-r-border/30 flex flex-col" style={{ WebkitBackdropFilter: 'blur(24px)' }}>
             <SheetHeader className="px-6 py-4 border-b border-dashed border-border/40 shrink-0">
@@ -357,49 +353,45 @@ export default function Header({ frameworkId }: HeaderProps) {
         <nav className="hidden lg:flex items-center gap-1 ml-4">
           {/* Frameworks Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-1">
-                Frameworks
-                <ChevronDownIcon className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger className={buttonVariants({ variant: 'ghost', className: 'gap-1' })}>
+              Frameworks
+              <ChevronDownIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuLabel>Browse by Category</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <a href="/us-federal" className="cursor-pointer">US Federal</a>
+              <DropdownMenuItem render={<a href="/us-federal" className="cursor-pointer" />}>
+                US Federal
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/ai" className="cursor-pointer">AI</a>
+              <DropdownMenuItem render={<a href="/ai" className="cursor-pointer" />}>
+                AI
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/privacy" className="cursor-pointer">Privacy</a>
+              <DropdownMenuItem render={<a href="/privacy" className="cursor-pointer" />}>
+                Privacy
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/international" className="cursor-pointer">International</a>
+              <DropdownMenuItem render={<a href="/international" className="cursor-pointer" />}>
+                International
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <a href="/all" className="cursor-pointer">All Frameworks</a>
+              <DropdownMenuItem render={<a href="/all" className="cursor-pointer" />}>
+                All Frameworks
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           {/* Tools Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-1 text-muted-foreground hover:text-foreground">
-                Tools
-                <ChevronDownIcon className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger className={buttonVariants({ variant: 'ghost', className: 'gap-1 text-muted-foreground hover:text-foreground' })}>
+              Tools
+              <ChevronDownIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-[14rem]">
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Compare</DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   {COMPARE_LINKS.map((link) => (
-                    <DropdownMenuItem key={link.href} asChild>
-                      <a href={link.href} className="cursor-pointer">{link.label}</a>
+                    <DropdownMenuItem key={link.href} render={<a href={link.href} className="cursor-pointer" />}>
+                      {link.label}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuSubContent>
@@ -407,15 +399,15 @@ export default function Header({ frameworkId }: HeaderProps) {
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Core Tools</DropdownMenuLabel>
               {CORE_TOOL_LINKS.map((link) => (
-                <DropdownMenuItem key={link.href} asChild>
-                  <a href={link.href} className="cursor-pointer">{link.label}</a>
+                <DropdownMenuItem key={link.href} render={<a href={link.href} className="cursor-pointer" />}>
+                  {link.label}
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Reference</DropdownMenuLabel>
               {REFERENCE_TOOL_LINKS.map((link) => (
-                <DropdownMenuItem key={link.href} asChild>
-                  <a href={link.href} className="cursor-pointer">{link.label}</a>
+                <DropdownMenuItem key={link.href} render={<a href={link.href} className="cursor-pointer" />}>
+                  {link.label}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -423,51 +415,51 @@ export default function Header({ frameworkId }: HeaderProps) {
 
           {/* Developers Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-1 text-muted-foreground hover:text-foreground">
-                Developers
-                <ChevronDownIcon className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger className={buttonVariants({ variant: 'ghost', className: 'gap-1 text-muted-foreground hover:text-foreground' })}>
+              Developers
+              <ChevronDownIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-[14rem]">
               <DropdownMenuLabel>Developer Resources</DropdownMenuLabel>
               {DEVELOPER_LINKS.map((link) => (
-                <DropdownMenuItem key={link.href} asChild>
-                  <a href={link.href} className="cursor-pointer">{link.label}</a>
+                <DropdownMenuItem key={link.href} render={<a href={link.href} className="cursor-pointer" />}>
+                  {link.label}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* AI Tools Dropdown */}
+          {/* AI Copilot Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-1 text-muted-foreground hover:text-foreground">
-                AI Tools
-                <ChevronDownIcon className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger className={buttonVariants({ variant: 'ghost', className: 'gap-1 text-muted-foreground hover:text-foreground' })}>
+              GRCLanker
+              <ChevronDownIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem asChild>
-                <a href="/build" className="cursor-pointer">AI View Builder</a>
+              <DropdownMenuItem onSelect={() => requestOpenAIChat({ tab: 'chat' })}>
+                Open Chat Copilot (⌘J)
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => requestOpenAIChat({ tab: 'voice', voiceMode: 'copilot' })}>
+                Voice Copilot (⌘⇧V)
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => requestOpenAIChat({ tab: 'voice', voiceMode: 'audit-interview' })}>
+                Mock Audit Interview
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           {/* About Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-1 text-muted-foreground hover:text-foreground">
-                About
-                <ChevronDownIcon className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger className={buttonVariants({ variant: 'ghost', className: 'gap-1 text-muted-foreground hover:text-foreground' })}>
+              About
+              <ChevronDownIcon className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem asChild>
-                <a href="/about" className="cursor-pointer">About myctrl.tools</a>
+              <DropdownMenuItem render={<a href="/about" className="cursor-pointer" />}>
+                About myctrl.tools
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/about/user-data" className="cursor-pointer">User Data &amp; Privacy</a>
+              <DropdownMenuItem render={<a href="/about/user-data" className="cursor-pointer" />}>
+                User Data &amp; Privacy
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -504,6 +496,18 @@ export default function Header({ frameworkId }: HeaderProps) {
         >
           <SearchIcon className="h-5 w-5" />
           <span className="sr-only">Search</span>
+        </Button>
+
+        {/* Quick Voice Copilot button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="ml-1 sm:ml-2 text-muted-foreground hover:text-primary"
+          onClick={() => requestOpenAIChat({ tab: 'voice', voiceMode: 'copilot' })}
+          title="Voice Copilot (⌘⇧V)"
+          aria-label="Open Voice Copilot"
+        >
+          <Mic className="h-4 w-4" />
         </Button>
 
         {/* Preferences link */}

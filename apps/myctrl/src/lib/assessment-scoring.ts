@@ -18,7 +18,10 @@ import {
 } from './assessment-frameworks';
 import fedrampData from '../data/fedramp-rev5.json';
 import ksiData from '../data/fedramp-20x-ksi.json';
-import { getFrameworkData, hasFrameworkData } from '../data/frameworks';
+import {
+  getAssessmentFrameworkData as getFrameworkData,
+  hasAssessmentFrameworkData as hasFrameworkData,
+} from './assessment-data';
 import type { Control } from '@/data/types';
 
 // === Types ===

@@ -15,6 +15,10 @@ export interface OpenAIChatDetail {
   prompt?: string;
   frameworkId?: string;
   controlSlug?: string;
+  controlTitle?: string;
+  tab?: 'chat' | 'voice';
+  voiceMode?: 'copilot' | 'audit-interview';
+  assessmentQuestions?: string[];
   newThread?: boolean;
 }
 

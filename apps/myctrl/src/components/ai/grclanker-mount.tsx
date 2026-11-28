@@ -5,6 +5,8 @@ import { GrcLankerDockLoader } from './GrcLankerDockLoader';
 interface MountOptions {
   frameworkId?: string;
   controlSlug?: string;
+  controlTitle?: string;
+  assessmentQuestions?: string[];
 }
 
 let root: Root | null = null;
@@ -19,12 +21,22 @@ function getOrCreateContainer() {
   return container;
 }
 
-export function mountGrcLankerDock({ frameworkId, controlSlug }: MountOptions = {}) {
+export function mountGrcLankerDock({
+  frameworkId,
+  controlSlug,
+  controlTitle,
+  assessmentQuestions,
+}: MountOptions = {}) {
   const container = getOrCreateContainer();
   if (!root) {
     root = createRoot(container);
   }
   root.render(
-    <GrcLankerDockLoader frameworkId={frameworkId} controlSlug={controlSlug} />,
+    <GrcLankerDockLoader
+      frameworkId={frameworkId}
+      controlSlug={controlSlug}
+      controlTitle={controlTitle}
+      assessmentQuestions={assessmentQuestions}
+    />,
   );
 }

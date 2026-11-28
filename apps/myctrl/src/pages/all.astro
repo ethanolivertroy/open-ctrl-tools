@@ -1,23 +1,37 @@
 ---
 import FrameworkCategoryPage from '../components/frameworks/FrameworkCategoryPage.astro';
-import { getStats, getFrameworks, getRiskLists } from '../data/controls';
+import FrameworkCard from '../components/cards/FrameworkCard.astro';
+import {
+  getStats,
+  getFrameworks,
+  getRiskLists,
+  hasFrameworkData,
+} from '../data/controls';
 
-const frameworks = getFrameworks().map(config => ({
+const allFrameworks = getFrameworks().map((config) => ({
   config,
   stats: getStats(config.id),
 }));
 
-const riskLists = getRiskLists().map(config => ({
+const allRiskLists = getRiskLists().map((config) => ({
   config,
   stats: getStats(config.id),
 }));
 
-const allEntries = [...frameworks, ...riskLists];
-const totalItems = allEntries.reduce((sum, { stats }) => sum + stats.total, 0);
-const loadedCount = allEntries.filter(({ stats }) => stats.total > 0).length;
+const loadedFrameworks = allFrameworks.filter(({ config }) => hasFrameworkData(config.id));
+const loadedRiskLists = allRiskLists.filter(({ config }) => hasFrameworkData(config.id));
+const externalDirectory = [...allFrameworks, ...allRiskLists].filter(
+  ({ config }) => !hasFrameworkData(config.id),
+);
+
+const totalItems = [...loadedFrameworks, ...loadedRiskLists].reduce(
+  (sum, { stats }) => sum + stats.total,
+  0,
+);
+const loadedCount = loadedFrameworks.length + loadedRiskLists.length;
 const description =
-  `Complete catalog of security frameworks and risk lists: ` +
-  `${totalItems.toLocaleString()} built-in items across ${loadedCount} open frameworks and risk lists (${allEntries.length} total catalog entries including external publisher directories).`;
+  `Browse ${loadedCount} built-in open frameworks and risk lists (${totalItems.toLocaleString()} indexed items), ` +
+  `plus ${externalDirectory.length} external publisher directories ready for BYO local overlays.`;
 ---
 
 <FrameworkCategoryPage
@@ -26,8 +40,8 @@ const description =
   heading="All Frameworks & Risk Lists"
   description={description}
   groups={[
-    { heading: 'Frameworks', frameworks },
-    { heading: 'Risk Lists', frameworks: riskLists },
+    { heading: 'Loaded Frameworks', frameworks: loadedFrameworks },
+    { heading: 'Loaded Risk Lists', frameworks: loadedRiskLists },
   ]}
 >
   <section slot="info" class="flex flex-wrap gap-3">
@@ -35,23 +49,50 @@ const description =
       U.S. Federal
     </a>
     <a href="/ai" class="badge-ai px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
-      AI & ML
-    </a>
-    <a href="/enterprise" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-teal-500/30 bg-teal-500/10 text-teal-700 dark:text-teal-400 hover:bg-teal-500/20 transition-colors">
-      Enterprise
+      AI &amp; ML
     </a>
     <a href="/owasp" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-400 hover:bg-red-500/20 transition-colors">
       OWASP
+    </a>
+    <a href="/privacy" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-400 hover:bg-purple-500/20 transition-colors">
+      Privacy
+    </a>
+    <a href="/international" class="px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border border-teal-500/30 bg-teal-500/10 text-teal-700 dark:text-teal-400 hover:bg-teal-500/20 transition-colors">
+      International
     </a>
     <span class="border-l border-border mx-1"></span>
     <a href="/public-domain" class="badge-public-domain px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
       Public Domain
     </a>
-    <a href="/proprietary" class="badge-proprietary px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
-      Proprietary
-    </a>
     <a href="/open-license" class="badge-open-license px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
       Open License
     </a>
+    <a href="/proprietary" class="badge-proprietary px-3 py-2.5 sm:py-1.5 text-sm font-mono rounded-lg border hover:opacity-80 transition-opacity">
+      Proprietary
+    </a>
   </section>
+
+  {externalDirectory.length > 0 && (
+    <section slot="footer" class="pt-6 border-t border-dashed border-border/50">
+      <details class="group rounded-xl border border-border/70 bg-card/40">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">
+          <div>
+            <h2 class="text-base font-semibold">
+              External Publisher Directory ({externalDirectory.length})
+            </h2>
+            <p class="text-xs text-muted-foreground mt-0.5">
+              Licensed or proprietary standards tracked with official publisher references and local BYO overlay support.
+            </p>
+          </div>
+          <span class="font-mono text-xs text-primary group-open:hidden">Show directory +</span>
+          <span class="font-mono text-xs text-primary hidden group-open:inline">Hide directory −</span>
+        </summary>
+        <div class="px-5 pb-5 grid gap-4 border-t border-border/50 pt-4">
+          {externalDirectory.map(({ config, stats }, i) => (
+            <FrameworkCard config={config} stats={stats} index={i} />
+          ))}
+        </div>
+      </details>
+    </section>
+  )}
 </FrameworkCategoryPage>

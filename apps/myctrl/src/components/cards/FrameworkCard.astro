@@ -87,9 +87,9 @@ const isTBD = config.tags?.includes('TBD');
               Meta-Framework
             </span>
           )}
-          {config.tags?.includes('TBD') && (
+          {config.tags?.includes('TBD') && !isLoaded && (
             <span class="badge-tbd px-2 py-1 text-xs font-mono rounded border">
-              Coming Soon
+              Directory
             </span>
           )}
 

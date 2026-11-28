@@ -51,9 +51,6 @@ export function ProviderSetup({
     testError,
     hasExisting,
     ollamaModels,
-    downloadStatus,
-    webllmStatus,
-    chromeAIStatus,
     hasOAuth,
     oauthStatus,
     oauthDevice,
@@ -71,10 +68,6 @@ export function ProviderSetup({
     handleXaiOAuthStart,
     handleXaiOAuthCancel,
     handleXaiOAuthDisconnect,
-    downloadTransformersModel,
-    retryTransformersDownload,
-    downloadWebllmModel,
-    retryWebllmDownload,
   } = useProviderSetupState({
     providerId,
     isOpen,
@@ -218,43 +211,6 @@ export function ProviderSetup({
             </div>
           )}
 
-          {providerId === 'cursor' && (
-            <details className="text-xs text-muted-foreground group">
-              <summary className="cursor-pointer select-none hover:text-foreground transition-colors font-medium">
-                Setup guide — how to connect your Cursor account
-              </summary>
-              <div className="mt-2 space-y-2 pl-1 border-l-2 border-border ml-1">
-                <div>
-                  <span className="font-medium text-foreground">1. Create an API key</span>
-                  <br />
-                  Generate a <code className="px-1 py-0.5 rounded bg-muted text-[11px] font-mono">crsr_...</code> key at{' '}
-                  <a
-                    href="https://cursor.com/dashboard"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    cursor.com/dashboard
-                  </a>{' '}
-                  → API Keys.
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">2. Run the bridge</span>
-                  <br />
-                  <code className="px-1.5 py-0.5 rounded bg-muted text-[11px] font-mono break-all">
-                    CURSOR_API_KEY=crsr_... npm run cursor-bridge
-                  </code>
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">3. Save</span>
-                  <br />
-                  Keep the default base URL (<code className="px-1 py-0.5 rounded bg-muted text-[11px] font-mono">http://localhost:4646/v1</code>),
-                  pick a model, and hit Test Connection.
-                </div>
-              </div>
-            </details>
-          )}
-
           {providerId === 'ollama' && (
             <div className="space-y-2">
               <label htmlFor="ollama-url" className="text-sm font-medium">
@@ -396,190 +352,6 @@ export function ProviderSetup({
               );
             })()}
           </div>
-
-          {providerId === 'transformers' && (
-            <div className="space-y-3">
-              {!downloadStatus && (
-                <button
-                  onClick={downloadTransformersModel}
-                  className="w-full px-4 py-3 rounded-lg border border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 transition-colors text-sm font-medium"
-                >
-                  Download Model
-                </button>
-              )}
-
-              {downloadStatus && downloadStatus.status === 'downloading' && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">{downloadStatus.message}</span>
-                    <span className="text-primary font-mono">
-                      {Math.round((downloadStatus.progress || 0) * 100)}%
-                    </span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-primary transition-all duration-300"
-                      style={{ width: `${(downloadStatus.progress || 0) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {downloadStatus && downloadStatus.status === 'loading' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">{downloadStatus.message}</span>
-                </div>
-              )}
-
-              {downloadStatus && downloadStatus.status === 'ready' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm text-green-500">Model ready — cached in browser</span>
-                </div>
-              )}
-
-              {downloadStatus && downloadStatus.status === 'error' && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                    <XCircle className="w-4 h-4 text-red-400" />
-                    <span className="text-sm text-red-400">{downloadStatus.message}</span>
-                  </div>
-                  <button
-                    onClick={retryTransformersDownload}
-                    className="text-xs text-primary hover:underline"
-                  >
-                    Try again
-                  </button>
-                </div>
-              )}
-
-              {downloadStatus && downloadStatus.status === 'generating' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">{downloadStatus.message}</span>
-                </div>
-              )}
-
-              <p className="text-xs text-muted-foreground">
-                Models are downloaded to your browser's cache (200-600MB). Subsequent visits use the
-                cached model instantly.
-              </p>
-            </div>
-          )}
-
-          {providerId === 'webllm' && (
-            <div className="space-y-3">
-              {!webllmStatus && (
-                <button
-                  onClick={downloadWebllmModel}
-                  className="w-full px-4 py-3 rounded-lg border border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 transition-colors text-sm font-medium"
-                >
-                  Download Model
-                </button>
-              )}
-
-              {webllmStatus && webllmStatus.status === 'downloading' && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground truncate mr-2">{webllmStatus.message}</span>
-                    <span className="text-primary font-mono shrink-0">
-                      {Math.round((webllmStatus.progress || 0) * 100)}%
-                    </span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-primary transition-all duration-300"
-                      style={{ width: `${(webllmStatus.progress || 0) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {webllmStatus && webllmStatus.status === 'loading' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">{webllmStatus.message}</span>
-                </div>
-              )}
-
-              {webllmStatus && webllmStatus.status === 'ready' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm text-green-500">Model ready — cached in browser</span>
-                </div>
-              )}
-
-              {webllmStatus && webllmStatus.status === 'error' && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                    <XCircle className="w-4 h-4 text-red-400" />
-                    <span className="text-sm text-red-400">{webllmStatus.message}</span>
-                  </div>
-                  <button
-                    onClick={retryWebllmDownload}
-                    className="text-xs text-primary hover:underline"
-                  >
-                    Try again
-                  </button>
-                </div>
-              )}
-
-              <p className="text-xs text-muted-foreground">
-                WebLLM models are 1-4GB. They run entirely in your browser via WebGPU and are cached
-                after first download.
-              </p>
-            </div>
-          )}
-
-          {providerId === 'chrome-ai' && (
-            <div className="space-y-3">
-              {chromeAIStatus === 'checking' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">Checking availability...</span>
-                </div>
-              )}
-
-              {chromeAIStatus === 'available' && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span className="text-sm text-green-500">Gemini Nano is available — zero download needed</span>
-                </div>
-              )}
-
-              {chromeAIStatus === 'downloadable' && (
-                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                  <p className="text-sm text-amber-400">
-                    Gemini Nano needs to download (~1.5GB one-time). Chrome will handle the download
-                    automatically on first use.
-                  </p>
-                </div>
-              )}
-
-              {chromeAIStatus === 'unavailable' && (
-                <div className="space-y-2">
-                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                    <p className="text-sm text-red-400">
-                      Chrome Built-in AI is not available in this browser.
-                    </p>
-                    <p className="text-xs text-red-400/70 mt-1">
-                      Requires Chrome 127+ with two flags enabled:
-                    </p>
-                    <ul className="text-xs text-red-400/70 mt-1 ml-4 list-disc space-y-0.5">
-                      <li>chrome://flags/#optimization-guide-on-device-model</li>
-                      <li>chrome://flags/#prompt-api-for-gemini-nano-multimodal-input</li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-
-              <p className="text-xs text-muted-foreground">
-                Uses Gemini Nano built into Chrome. No data leaves your device. Works best for text
-                Q&A.
-              </p>
-            </div>
-          )}
 
           {testStatus !== 'idle' && (
             <div

@@ -1,8 +1,14 @@
-import { useState, useMemo, useCallback } from 'react';
-import { getCrossFrameworkMappings, hasFrameworkCrosswalk } from '../../data/crosswalk';
-import { FRAMEWORK_CONFIGS, hasFrameworkData } from '../../data/frameworks';
-import { slugify } from '../../data/controls';
-import { CATEGORY_COLORS, type FrameworkCategory } from '../../data/crosswalk-stats';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { FRAMEWORK_CONFIGS } from '@/data/framework-configs';
+import {
+  CATEGORY_COLORS,
+  getCrossFrameworkMappingsFromIndex,
+  loadCrosswalkIndex,
+  loadFrameworkManifest,
+  type CrosswalkIndexPayload,
+  type FrameworkCategory,
+} from '@/lib/client-framework-data';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 
 interface Mapping {
   frameworkId: string;
@@ -10,7 +16,6 @@ interface Mapping {
   controlIds: string[];
 }
 
-// Sample controls for quick access
 const SAMPLE_CONTROLS = [
   { id: 'AC-1', framework: 'nist-800-53-r5', label: 'NIST AC-1' },
   { id: 'GV.OC-01', framework: 'nist-csf-v2', label: 'CSF GV.OC-01' },
@@ -37,59 +42,95 @@ export function ControlExplorer() {
   const [mappings, setMappings] = useState<Mapping[]>([]);
   const [searched, setSearched] = useState(false);
   const [error, setError] = useState('');
+  const [indexData, setIndexData] = useState<CrosswalkIndexPayload | null>(null);
+  const [loadedIds, setLoadedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([loadCrosswalkIndex(), loadFrameworkManifest()])
+      .then(([idx, manifest]) => {
+        if (cancelled) return;
+        setIndexData(idx);
+        setLoadedIds(new Set(manifest.loadedIds));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const frameworkOptions = useMemo(() => {
-    return Object.entries(FRAMEWORK_CONFIGS)
-      .filter(([id]) => hasFrameworkCrosswalk(id))
-      .map(([id, config]) => ({
-        id,
-        name: config.name,
-      }))
+    if (!indexData) {
+      return Object.entries(FRAMEWORK_CONFIGS)
+        .map(([id, cfg]) => ({ id, name: cfg.name }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }
+    const crosswalkIds = new Set<string>();
+    for (const [a, b] of indexData.pairs) {
+      crosswalkIds.add(a);
+      crosswalkIds.add(b);
+    }
+    for (const [fwId] of indexData.bridge) {
+      crosswalkIds.add(fwId);
+    }
+    return Array.from(crosswalkIds)
+      .filter((id) => id in FRAMEWORK_CONFIGS)
+      .map((id) => ({ id, name: FRAMEWORK_CONFIGS[id].name }))
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, []);
+  }, [indexData]);
+
+  const runLookup = useCallback(
+    async (cid: string, fwId: string) => {
+      setError('');
+      setSearched(true);
+      try {
+        const [idx, manifest] = await Promise.all([
+          indexData ? Promise.resolve(indexData) : loadCrosswalkIndex(),
+          loadedIds.size > 0 ? Promise.resolve(null) : loadFrameworkManifest(),
+        ]);
+        if (!indexData) setIndexData(idx);
+        if (manifest) setLoadedIds(new Set(manifest.loadedIds));
+        const results = getCrossFrameworkMappingsFromIndex({
+          index: idx,
+          controlId: cid.trim(),
+          frameworkId: fwId,
+        });
+        setMappings(results);
+      } catch {
+        setError('Error loading crosswalk index');
+        setMappings([]);
+      }
+    },
+    [indexData, loadedIds.size],
+  );
 
   const handleSearch = useCallback(() => {
     if (!controlId.trim()) {
       setError('Please enter a control ID');
       return;
     }
+    void runLookup(controlId, frameworkId);
+  }, [controlId, frameworkId, runLookup]);
 
-    setError('');
-    setSearched(true);
-
-    try {
-      const results = getCrossFrameworkMappings(controlId.trim(), frameworkId);
-      setMappings(results);
-    } catch (e) {
-      setError('Error fetching mappings');
-      setMappings([]);
-    }
-  }, [controlId, frameworkId]);
-
-  const handleSampleClick = useCallback((sample: typeof SAMPLE_CONTROLS[0]) => {
-    setControlId(sample.id);
-    setFrameworkId(sample.framework);
-    setError('');
-    setSearched(true);
-
-    try {
-      const results = getCrossFrameworkMappings(sample.id, sample.framework);
-      setMappings(results);
-    } catch (e) {
-      setError('Error fetching mappings');
-      setMappings([]);
-    }
-  }, []);
+  const handleSampleClick = useCallback(
+    (sample: (typeof SAMPLE_CONTROLS)[0]) => {
+      setControlId(sample.id);
+      setFrameworkId(sample.framework);
+      void runLookup(sample.id, sample.framework);
+    },
+    [runLookup],
+  );
 
   const sourceFrameworkName = FRAMEWORK_CONFIGS[frameworkId]?.name || frameworkId;
 
   return (
     <div className="space-y-6">
-      {/* Search form */}
       <div className="bg-muted/30 rounded-lg p-4 space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
-            <label htmlFor="explorer-framework" className="block text-sm font-medium mb-1">Framework</label>
+            <label htmlFor="explorer-framework" className="block text-sm font-medium mb-1">
+              Framework
+            </label>
             <select
               id="explorer-framework"
               value={frameworkId}
@@ -104,37 +145,38 @@ export function ControlExplorer() {
             </select>
           </div>
           <div className="flex-1">
-            <label htmlFor="explorer-control-id" className="block text-sm font-medium mb-1">Control ID</label>
-            <input
-              id="explorer-control-id"
-              type="text"
-              value={controlId}
-              onChange={(e) => setControlId(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder="e.g., AC-1, GV.OC-01, AC.L1-3.1.1"
-              className="w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          <div className="flex items-end">
-            <button
-              type="button"
-              onClick={handleSearch}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              Explore
-            </button>
+            <label htmlFor="explorer-control" className="block text-sm font-medium mb-1">
+              Control ID
+            </label>
+            <div className="flex gap-2">
+              <input
+                id="explorer-control"
+                type="text"
+                value={controlId}
+                onChange={(e) => setControlId(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="e.g., AC-1, GV.OC-01, AC.L1-3.1.1"
+                className="flex-1 px-3 py-2 bg-background border border-border rounded-md text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                type="button"
+                onClick={handleSearch}
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
+              >
+                Explore
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Quick samples */}
-        <div className="flex flex-wrap gap-2">
-          <span className="text-sm text-muted-foreground">Try:</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-muted-foreground">Try:</span>
           {SAMPLE_CONTROLS.map((sample) => (
             <button
-              type="button"
               key={`${sample.framework}-${sample.id}`}
+              type="button"
               onClick={() => handleSampleClick(sample)}
-              className="px-2 py-1 text-xs bg-background border border-border rounded hover:bg-muted transition-colors"
+              className="px-2 py-1 text-xs font-mono bg-background border border-border rounded hover:border-primary transition-colors"
             >
               {sample.label}
             </button>
@@ -142,14 +184,10 @@ export function ControlExplorer() {
         </div>
       </div>
 
-      {error && (
-        <div className="text-center text-destructive text-sm">{error}</div>
-      )}
+      {error && <div className="text-center text-destructive text-sm">{error}</div>}
 
-      {/* Results visualization */}
       {searched && !error && (
         <div className="space-y-4">
-          {/* Central node */}
           <div className="flex justify-center">
             <div
               className="px-4 py-3 rounded-lg border-2 border-primary bg-primary/10 text-center"
@@ -160,7 +198,6 @@ export function ControlExplorer() {
             </div>
           </div>
 
-          {/* Arrow */}
           {mappings.length > 0 && (
             <div className="flex justify-center">
               <svg className="w-6 h-8 text-muted-foreground" viewBox="0 0 24 32">
@@ -174,11 +211,11 @@ export function ControlExplorer() {
             </div>
           )}
 
-          {/* Mapped frameworks */}
           {mappings.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {mappings.map((mapping) => {
                 const category = getFrameworkCategory(mapping.frameworkId);
+                const targetLoaded = loadedIds.has(mapping.frameworkId);
                 return (
                   <div
                     key={mapping.frameworkId}
@@ -187,19 +224,24 @@ export function ControlExplorer() {
                   >
                     <div className="font-medium text-sm mb-2">{mapping.frameworkName}</div>
                     <div className="flex flex-wrap gap-1">
-                      {(() => {
-                        const targetLoaded = hasFrameworkData(mapping.frameworkId);
-                        return mapping.controlIds.slice(0, 10).map((cid) => (
-                          <a
-                            key={cid}
-                            href={targetLoaded ? `/frameworks/${mapping.frameworkId}/${slugify(cid)}` : `/frameworks/${mapping.frameworkId}`}
-                            className="px-2 py-0.5 text-xs font-mono bg-muted rounded hover:bg-muted/80 transition-colors"
-                            title={targetLoaded ? undefined : `${mapping.frameworkName} — view official source or load local overlay`}
-                          >
-                            {cid}
-                          </a>
-                        ));
-                      })()}
+                      {mapping.controlIds.slice(0, 10).map((cid) => (
+                        <a
+                          key={cid}
+                          href={
+                            targetLoaded
+                              ? `/frameworks/${mapping.frameworkId}/${slugify(cid)}`
+                              : `/frameworks/${mapping.frameworkId}`
+                          }
+                          className="px-2 py-0.5 text-xs font-mono bg-muted rounded hover:bg-muted/80 transition-colors"
+                          title={
+                            targetLoaded
+                              ? undefined
+                              : `${mapping.frameworkName} — view official source or load local overlay`
+                          }
+                        >
+                          {cid}
+                        </a>
+                      ))}
                       {mapping.controlIds.length > 10 && (
                         <span className="px-2 py-0.5 text-xs text-muted-foreground">
                           +{mapping.controlIds.length - 10} more
@@ -216,7 +258,6 @@ export function ControlExplorer() {
             </div>
           )}
 
-          {/* Link to control page */}
           {mappings.length > 0 && (
             <div className="text-center">
               <a
@@ -230,7 +271,6 @@ export function ControlExplorer() {
         </div>
       )}
 
-      {/* Instructions */}
       {!searched && (
         <div className="text-center text-muted-foreground py-8">
           <p>Select a framework and enter a control ID to explore its cross-framework mappings.</p>

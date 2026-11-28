@@ -695,6 +695,10 @@ export function isRiskList(frameworkId: string): boolean {
   return config?.type === 'risk-list';
 }
 
+export function getBasePath(frameworkId: string): '/frameworks' | '/risk-lists' {
+  return isRiskList(frameworkId) ? '/risk-lists' : '/frameworks';
+}
+
 /**
  * Get all configs with a specific license type
  */

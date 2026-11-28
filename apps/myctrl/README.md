@@ -26,11 +26,9 @@ Requires **Node.js `>=22.23.4`**.
 
 ```bash
 cd apps/myctrl
-npm ci --onnxruntime-node-install-cuda=skip
+npm install
 npm run dev
 ```
-
-*(Pass `--onnxruntime-node-install-cuda=skip` or set `ONNXRUNTIME_NODE_INSTALL_CUDA=skip` on Linux machines without CUDA so `onnxruntime-node` does not attempt an optional GPU tarball download.)*
 
 ### Useful Commands
 
@@ -67,7 +65,8 @@ Connect `ethanolivertroy/open-ctrl-tools` in **Cloudflare Dashboard → Workers 
 - **Build watch paths (Include):** `apps/myctrl/*`
 - **Build command:** `npm run build`
 - **Deploy command:** `npx wrangler deploy`
-- **Build variable:** `ONNXRUNTIME_NODE_INSTALL=skip` (skips downloading Linux CUDA binaries for `onnxruntime-node` during `npm ci`)
+
+Built with Astro, React 19, `@ui-sdk/react` (`@ui-sdk/react/agent` WebMCP tools), Tailwind CSS, Edge SSR control routes, and GRCLanker Chat + Speech-to-Speech voice (OpenAI Realtime WebRTC, xAI Grok Voice WebSocket, Gemini Live WebSocket, and free Browser Web Speech).
 
 You can verify Worker bundle sizing and Wrangler configuration locally before pushing with `npx wrangler deploy --dry-run`.
 

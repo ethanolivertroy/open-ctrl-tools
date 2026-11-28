@@ -8,6 +8,9 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Badge } from '@/components/ui/badge';
+import { applyTheme, THEMES, type Theme } from '@/lib/theme';
+import { requestOpenAIChat } from '@/lib/ai-chat-events';
+import { Mic, Palette, ArrowRight } from 'lucide-react';
 import type { FilterPreset } from '@/lib/db';
 import type { SearchEntry, FrameworkSearchEntry } from '@/data/types';
 import { getPresets, savePreset, deletePreset } from '@/lib/storage/filter-preset-store';
@@ -195,13 +198,17 @@ export function CommandSearch({ contextFrameworkId }: CommandSearchProps) {
     return Array.from(frameworks);
   }, [selectedCategories]);
 
-  // Listen for custom open-search event
+  // Listen for custom open-search / open-command-search events
   React.useEffect(() => {
     const handleOpenSearch = () => {
       openSearch();
     };
     document.addEventListener('open-search', handleOpenSearch);
-    return () => document.removeEventListener('open-search', handleOpenSearch);
+    window.addEventListener('open-command-search', handleOpenSearch);
+    return () => {
+      document.removeEventListener('open-search', handleOpenSearch);
+      window.removeEventListener('open-command-search', handleOpenSearch);
+    };
   }, [openSearch]);
 
   React.useEffect(() => {
@@ -210,13 +217,16 @@ export function CommandSearch({ contextFrameworkId }: CommandSearchProps) {
     }
   }, [ensureSearchResources, open]);
 
-  // Listen for Cmd+K / Ctrl+K (navigate to full search) and "/" (open popup)
+  // Listen for Cmd+K / Ctrl+K and "/" (open popup)
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      // Cmd+K or Ctrl+K → navigate to full search page
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        window.location.href = '/search';
+        if (open) {
+          setOpen(false);
+        } else {
+          openSearch();
+        }
       }
       // "/" key (when not in an input) - but not "?" (Shift+/)
       if (e.key === '/' && !e.shiftKey && !['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
@@ -544,12 +554,117 @@ export function CommandSearch({ contextFrameworkId }: CommandSearchProps) {
     downloadFile(exportData, filename, 'application/json');
   }, [query, selectedCategories, dedupedResults]);
 
+  const isCommandMode = query.trimStart().startsWith('>');
+  const commandQuery = isCommandMode ? query.trimStart().slice(1).trim().toLowerCase() : '';
+
+  const paletteCommands = React.useMemo(() => {
+    const base = [
+      {
+        id: 'voice-copilot',
+        label: 'Voice Copilot — Ask GRCLanker (⌘⇧V)',
+        group: 'AI & Voice',
+        kind: 'voice' as const,
+        run: () => {
+          setOpen(false);
+          setQuery('');
+          requestOpenAIChat({ tab: 'voice', voiceMode: 'copilot' });
+        },
+      },
+      {
+        id: 'voice-audit',
+        label: 'Mock Audit Interview — Voice Practice',
+        group: 'AI & Voice',
+        kind: 'voice' as const,
+        run: () => {
+          setOpen(false);
+          setQuery('');
+          requestOpenAIChat({ tab: 'voice', voiceMode: 'audit-interview' });
+        },
+      },
+      {
+        id: 'open-chat',
+        label: 'Open GRCLanker Chat (⌘J)',
+        group: 'AI & Voice',
+        kind: 'voice' as const,
+        run: () => {
+          setOpen(false);
+          setQuery('');
+          requestOpenAIChat({ tab: 'chat' });
+        },
+      },
+      ...THEMES.map((t) => ({
+        id: `theme-${t.value}`,
+        label: `Theme: ${t.label}`,
+        group: 'Appearance',
+        kind: 'theme' as const,
+        run: () => {
+          applyTheme(t.value as Theme);
+          try {
+            localStorage.setItem('theme', t.value);
+          } catch {
+            // Ignore storage errors
+          }
+          setOpen(false);
+          setQuery('');
+        },
+      })),
+      {
+        id: 'nav-assess',
+        label: 'Open Assessment Workbench',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/assess'),
+      },
+      {
+        id: 'nav-crosswalk',
+        label: 'Open Crosswalk Workbench',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/crosswalk/visualize'),
+      },
+      {
+        id: 'nav-compare',
+        label: 'Compare Frameworks',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/compare'),
+      },
+      {
+        id: 'nav-search',
+        label: 'Full Search Page',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/search'),
+      },
+      {
+        id: 'nav-preferences',
+        label: 'Preferences & Backup',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/preferences'),
+      },
+      {
+        id: 'nav-api',
+        label: 'Developer API Docs',
+        group: 'Navigation',
+        kind: 'nav' as const,
+        run: () => handleSelect('/developers/api'),
+      },
+    ];
+    if (!commandQuery) return base;
+    return base.filter(
+      (cmd) =>
+        cmd.label.toLowerCase().includes(commandQuery) ||
+        cmd.group.toLowerCase().includes(commandQuery),
+    );
+  }, [commandQuery]);
+
   // Check if current query has a direct match (for UI feedback)
   const directMatch = React.useMemo(() => {
-    if (!searchResources) return undefined;
+    if (isCommandMode || !searchResources) return undefined;
     if (!query.trim() || !looksLikeControlId(query)) return undefined;
     return findDirectMatch(query, searchResources.entries);
-  }, [query, searchResources]);
+  }, [isCommandMode, query, searchResources]);
   const hasDirectMatch = !!directMatch;
   const frameworkLabelMap = React.useMemo(() => {
     const map = new Map<string, string>();
@@ -741,8 +856,33 @@ export function CommandSearch({ contextFrameworkId }: CommandSearchProps) {
           </div>
         )}
 
-        {/* Framework search results */}
-        {frameworkResults.length > 0 && (
+        {isCommandMode ? (
+          paletteCommands.length > 0 && (
+            <CommandGroup heading="Commands">
+              {paletteCommands.map((cmd) => (
+                <CommandItem
+                  key={cmd.id}
+                  value={`cmd-${cmd.id} ${cmd.label}`}
+                  onSelect={() => cmd.run()}
+                  className="flex items-center gap-3 py-2"
+                >
+                  {cmd.kind === 'voice' ? (
+                    <Mic className="w-4 h-4 text-primary shrink-0" />
+                  ) : cmd.kind === 'theme' ? (
+                    <Palette className="w-4 h-4 text-primary shrink-0" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" />
+                  )}
+                  <span className="flex-1 text-sm">{cmd.label}</span>
+                  <span className="text-[11px] font-mono text-muted-foreground">{cmd.group}</span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )
+        ) : (
+          <>
+            {/* Framework search results */}
+            {frameworkResults.length > 0 && (
           <CommandGroup heading="Frameworks">
             {frameworkResults.map((fw) => (
               <CommandItem
@@ -847,6 +987,8 @@ export function CommandSearch({ contextFrameworkId }: CommandSearchProps) {
               </React.Fragment>
             ))}
           </CommandGroup>
+        )}
+          </>
         )}
       </CommandList>
 

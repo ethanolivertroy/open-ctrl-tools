@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
-import { slugify, getBasePath } from '@/data/controls';
+import { slugifyControlId as slugify } from '@/lib/slugify';
+import { getBasePath } from '@/data/framework-configs';
 import type { NistControl } from '@/data/types';
 import { ProseSection } from './ControlSection';
 

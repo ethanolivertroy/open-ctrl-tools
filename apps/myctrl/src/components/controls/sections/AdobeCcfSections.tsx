@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { slugify, getFrameworkConfig } from '@/data/controls';
+import { slugifyControlId as slugify } from '@/lib/slugify';
+import { getFrameworkConfig } from '@/data/framework-configs';
 import type { AdobeCCFControl } from '@/data/types';
 import { ControlSection } from './ControlSection';
 

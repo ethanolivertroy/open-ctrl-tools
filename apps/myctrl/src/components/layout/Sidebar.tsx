@@ -1,43 +1,58 @@
 import * as React from 'react';
 import {
-  getAllFamilies,
-  getAllControls,
-  getControlsByFamily,
-  getFamilyName,
-  slugify,
   getAllFrameworkIds,
-  getFrameworkConfig,
   getBasePath,
-  hasFrameworkData,
-} from '@/data/controls';
+  getFrameworkConfig,
+} from '@/data/framework-configs';
+import {
+  loadFrameworkDataset,
+  loadFrameworkManifest,
+} from '@/lib/client-framework-data';
+import { slugifyControlId as slugify } from '@/lib/slugify';
+
+export interface SidebarInitialData {
+  frameworkId: string;
+  name: string;
+  version: string;
+  basePath: string;
+  loaded: boolean;
+  families: Record<string, string>;
+  controls: Array<{ control_id: string; title: string; family: string }>;
+}
 
 interface SidebarProps {
   frameworkId?: string;
+  initialData?: SidebarInitialData;
 }
 
-// Quick-access navigation links shown above the framework controls
 const QUICK_NAV = [
   { href: '/all', label: 'All Frameworks' },
   { href: '/compare', label: 'Compare' },
   { href: '/crosswalk', label: 'Crosswalks' },
   { href: '/assess', label: 'Gap Analysis' },
-  { href: '/graph', label: 'Knowledge Graph' },
 ];
 
 const CATEGORY_PILLS = [
   { href: '/us-federal', label: 'Federal', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20' },
   { href: '/ai', label: 'AI', color: 'bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20' },
-  { href: '/enterprise', label: 'Enterprise', color: 'bg-teal-500/10 text-teal-400 border-teal-500/30 hover:bg-teal-500/20' },
   { href: '/privacy', label: 'Privacy', color: 'bg-pink-500/10 text-pink-400 border-pink-500/30 hover:bg-pink-500/20' },
   { href: '/international', label: 'Intl', color: 'bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20' },
   { href: '/owasp', label: 'OWASP', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30 hover:bg-orange-500/20' },
 ];
 
-export default function Sidebar({ frameworkId }: SidebarProps) {
-  const frameworkIds = getAllFrameworkIds();
+function sortFamilyCodes(codes: string[]): string[] {
+  return [...codes].sort((a, b) => {
+    const aNum = parseInt(a, 10);
+    const bNum = parseInt(b, 10);
+    if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
+    return a.localeCompare(b);
+  });
+}
 
-  // Use prop if provided (from Astro SSR), otherwise parse URL client-side
-  const [activeFramework, setActiveFramework] = React.useState<string>(() => {
+export default function Sidebar({ frameworkId, initialData }: SidebarProps) {
+  const frameworkIds = React.useMemo(() => getAllFrameworkIds(), []);
+
+  const [activeFramework] = React.useState<string>(() => {
     if (frameworkId && frameworkIds.includes(frameworkId)) {
       return frameworkId;
     }
@@ -49,32 +64,91 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
     return 'nist-800-53-r5';
   });
 
+  const [dataset, setDataset] = React.useState<SidebarInitialData | null>(() => {
+    if (initialData && initialData.frameworkId === activeFramework) {
+      return initialData;
+    }
+    return null;
+  });
   const [expandedFamily, setExpandedFamily] = React.useState<string | null>(null);
-  const [currentPath, setCurrentPath] = React.useState(() =>
-    typeof window !== 'undefined' ? window.location.pathname : ''
+  const [currentPath] = React.useState(() =>
+    typeof window !== 'undefined' ? window.location.pathname : '',
   );
 
   const [focusedIndex, setFocusedIndex] = React.useState(-1);
   const linkRefs = React.useRef<(HTMLAnchorElement | null)[]>([]);
   const activeControlRef = React.useRef<HTMLAnchorElement | null>(null);
 
+  React.useEffect(() => {
+    if (initialData && initialData.frameworkId === activeFramework) {
+      setDataset(initialData);
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const manifest = await loadFrameworkManifest();
+        const entry = manifest.frameworks.find((fw) => fw.id === activeFramework);
+        if (!entry || !entry.loaded) {
+          if (!cancelled) {
+            const cfg = getFrameworkConfig(activeFramework);
+            setDataset({
+              frameworkId: activeFramework,
+              name: cfg.name,
+              version: cfg.version,
+              basePath: getBasePath(activeFramework),
+              loaded: false,
+              families: {},
+              controls: [],
+            });
+          }
+          return;
+        }
+        const loaded = await loadFrameworkDataset(activeFramework);
+        if (!cancelled) {
+          setDataset({
+            frameworkId: activeFramework,
+            name: loaded.config.name,
+            version: loaded.config.version,
+            basePath: loaded.basePath,
+            loaded: true,
+            families: loaded.families,
+            controls: loaded.controls.map((c) => ({
+              control_id: c.control_id,
+              title: c.title,
+              family: c.family,
+            })),
+          });
+        }
+      } catch {
+        // Leave sidebar empty on transient fetch errors.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeFramework, initialData]);
+
   const toggleFamily = (family: string) => {
-    setExpandedFamily(expandedFamily === family ? null : family);
+    setExpandedFamily((prev) => (prev === family ? null : family));
   };
 
-  // Listen for J/K navigation events from keyboard shortcuts
   React.useEffect(() => {
     const handleNavigateList = (e: CustomEvent<{ direction: 'next' | 'prev' }>) => {
       const links = linkRefs.current.filter(Boolean) as HTMLAnchorElement[];
       if (links.length === 0) return;
 
-      setFocusedIndex(prev => {
-        let next: number;
-        if (e.detail.direction === 'next') {
-          next = prev < links.length - 1 ? prev + 1 : 0;
-        } else {
-          next = prev > 0 ? prev - 1 : links.length - 1;
-        }
+      setFocusedIndex((prev) => {
+        const next =
+          e.detail.direction === 'next'
+            ? prev < links.length - 1
+              ? prev + 1
+              : 0
+            : prev > 0
+              ? prev - 1
+              : links.length - 1;
         links[next]?.scrollIntoView({ block: 'nearest' });
         links[next]?.focus();
         return next;
@@ -87,39 +161,45 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
     };
   }, []);
 
-  const families = getAllFamilies(activeFramework);
   const config = getFrameworkConfig(activeFramework);
-  const basePath = getBasePath(activeFramework);
+  const basePath = dataset?.basePath || getBasePath(activeFramework);
+  const controlsList = dataset?.controls ?? [];
+  const familyNames = dataset?.families ?? {};
 
-  // Auto-expand the family containing the active control (only on initial mount)
+  const controlsByFamily = React.useMemo(() => {
+    const grouped = new Map<string, Array<{ control_id: string; title: string; family: string }>>();
+    for (const c of controlsList) {
+      const arr = grouped.get(c.family);
+      if (arr) arr.push(c);
+      else grouped.set(c.family, [c]);
+    }
+    return grouped;
+  }, [controlsList]);
+
+  const families = React.useMemo(
+    () => sortFamilyCodes(Array.from(controlsByFamily.keys())),
+    [controlsByFamily],
+  );
+
   const hasAutoExpanded = React.useRef(false);
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (hasAutoExpanded.current) return; // Only auto-expand once
+    if (typeof window === 'undefined' || hasAutoExpanded.current || families.length === 0) return;
+    const match = window.location.pathname.match(/\/(frameworks|risk-lists)\/[^\/]+\/([^\/]+)$/);
+    if (!match) return;
+    const slug = match[2];
 
-    const path = window.location.pathname;
-    // Extract control slug from path: /frameworks/nist-800-53-r5/ac-2 -> ac-2
-    const controlMatch = path.match(/\/(frameworks|risk-lists)\/[^\/]+\/([^\/]+)$/);
-    if (!controlMatch) return;
-
-    const controlSlug = controlMatch[2];
-
-    // Find which family this control belongs to
     for (const family of families) {
-      const controls = getControlsByFamily(activeFramework, family);
-      const foundControl = controls.find(c => slugify(c.control_id) === controlSlug);
-      if (foundControl) {
+      const controls = controlsByFamily.get(family) || [];
+      if (controls.some((c) => slugify(c.control_id) === slug)) {
         setExpandedFamily(family);
         hasAutoExpanded.current = true;
         break;
       }
     }
-  }, [activeFramework, families]);
+  }, [controlsByFamily, families]);
 
-  // Scroll the active control into view after expansion
   React.useEffect(() => {
     if (activeControlRef.current) {
-      // Small delay to allow the DOM to render after family expansion
       const timer = setTimeout(() => {
         activeControlRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }, 100);
@@ -127,16 +207,13 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
     }
   }, [expandedFamily]);
 
-  // Detect if all families have only 1 item (show flat list instead of dropdowns)
-  const isFlatList = families.every(f => getControlsByFamily(activeFramework, f).length === 1);
-  const allControls = isFlatList ? getAllControls(activeFramework) : [];
+  const isFlatList =
+    families.length > 0 && families.every((f) => (controlsByFamily.get(f)?.length ?? 0) === 1);
 
-  // Reset link refs when content changes
   let linkIndex = 0;
 
   return (
-    <nav className="space-y-1">
-      {/* Quick navigation links */}
+    <nav className="space-y-1" aria-label="Framework navigation">
       <div className="mb-3 pb-3 border-b border-border">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
           Navigate
@@ -169,7 +246,6 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
         </div>
       </div>
 
-      {/* Current framework header */}
       <div className="mb-4 pb-2 border-b border-border">
         <a
           href={`${basePath}/${activeFramework}`}
@@ -178,7 +254,7 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
           {config.name}
         </a>
         <span className="ml-2 text-xs text-muted-foreground">v{config.version}</span>
-        {!hasFrameworkData(activeFramework) && (
+        {dataset && !dataset.loaded && (
           <p className="text-xs text-muted-foreground mt-1">
             External reference — see official source or local overlay.
           </p>
@@ -186,9 +262,8 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
       </div>
 
       {isFlatList ? (
-        // Flat list for frameworks where each family has only 1 item (e.g., OWASP Top 10)
         <div className="space-y-0.5">
-          {allControls.map((control) => {
+          {controlsList.map((control) => {
             const href = `${basePath}/${activeFramework}/${slugify(control.control_id)}`;
             const isActive = currentPath === href;
             const idx = linkIndex++;
@@ -214,22 +289,22 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
           })}
         </div>
       ) : (
-        // Dropdown pattern for frameworks with multiple items per family (NIST, PCI)
         <>
           <div className="mb-4">
             <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              {config.familyLabel.endsWith('y') ? config.familyLabel.slice(0, -1) + 'ies' : config.familyLabel + 's'}
+              {config.familyLabel.endsWith('y')
+                ? config.familyLabel.slice(0, -1) + 'ies'
+                : config.familyLabel + 's'}
             </span>
           </div>
 
           {families.map((family) => {
-            const controls = getControlsByFamily(activeFramework, family);
+            const controls = controlsByFamily.get(family) || [];
             const isExpanded = expandedFamily === family;
-            const familyName = getFamilyName(activeFramework, family);
+            const familyName = familyNames[family] || family;
 
             return (
               <div key={family} className="space-y-1">
-                {/* Family header */}
                 <div className="flex items-center">
                   <a
                     href={`${basePath}/${activeFramework}/family/${family.toLowerCase()}`}
@@ -248,11 +323,14 @@ export default function Sidebar({ frameworkId }: SidebarProps) {
                     aria-label={isExpanded ? 'Collapse' : 'Expand'}
                   >
                     <span className="text-xs text-muted-foreground">{controls.length}</span>
-                    <ChevronIcon className={`h-4 w-4 text-muted-foreground transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                    <ChevronIcon
+                      className={`h-4 w-4 text-muted-foreground transition-transform ${
+                        isExpanded ? 'rotate-90' : ''
+                      }`}
+                    />
                   </button>
                 </div>
 
-                {/* Controls list */}
                 {isExpanded && (
                   <div className="ml-4 border-l border-border pl-2 space-y-0.5">
                     {controls.map((control) => {

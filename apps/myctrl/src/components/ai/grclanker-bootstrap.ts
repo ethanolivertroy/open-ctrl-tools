@@ -14,11 +14,25 @@ declare global {
 
 let mountPromise: Promise<typeof import('./grclanker-mount')> | null = null;
 
+function parseQuestionsAttr(raw: string | undefined | null): string[] | undefined {
+  if (!raw) return undefined;
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.filter((q): q is string => typeof q === 'string')
+      : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function getChatContext() {
   const root = document.getElementById('myctrl-grclanker-root');
   return {
     frameworkId: root?.dataset.frameworkId || undefined,
     controlSlug: root?.dataset.controlSlug || undefined,
+    controlTitle: root?.dataset.controlTitle || undefined,
+    assessmentQuestions: parseQuestionsAttr(root?.dataset.assessmentQuestions),
   };
 }
 
@@ -43,14 +57,44 @@ function getChatTriggerDetail(trigger: Element): OpenAIChatDetail | undefined {
   const prompt = trigger.getAttribute('data-ai-chat-prompt') || undefined;
   const frameworkId = trigger.getAttribute('data-ai-framework-id') || undefined;
   const controlSlug = trigger.getAttribute('data-ai-control-slug') || undefined;
+  const controlTitle = trigger.getAttribute('data-ai-control-title') || undefined;
+  const tabAttr = trigger.getAttribute('data-ai-tab');
+  const voiceModeAttr = trigger.getAttribute('data-ai-voice-mode');
   const newThreadAttr = trigger.getAttribute('data-ai-new-thread');
   const newThread = newThreadAttr ? newThreadAttr !== 'false' : undefined;
+  const assessmentQuestions = parseQuestionsAttr(
+    trigger.getAttribute('data-ai-assessment-questions'),
+  );
 
-  if (!prompt && !frameworkId && !controlSlug && newThread === undefined) {
+  const tab = tabAttr === 'chat' || tabAttr === 'voice' ? tabAttr : undefined;
+  const voiceMode =
+    voiceModeAttr === 'copilot' || voiceModeAttr === 'audit-interview'
+      ? voiceModeAttr
+      : undefined;
+
+  if (
+    !prompt &&
+    !frameworkId &&
+    !controlSlug &&
+    !controlTitle &&
+    !tab &&
+    !voiceMode &&
+    !assessmentQuestions &&
+    newThread === undefined
+  ) {
     return undefined;
   }
 
-  return { prompt, frameworkId, controlSlug, newThread };
+  return {
+    prompt,
+    frameworkId,
+    controlSlug,
+    controlTitle,
+    tab,
+    voiceMode,
+    assessmentQuestions,
+    newThread,
+  };
 }
 
 export function registerGrcLankerBootstrap() {

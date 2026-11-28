@@ -15,41 +15,20 @@ import { PROVIDERS, type ProviderId } from './providers';
 export function adaptPromptForProvider(
   baseSystemPrompt: string,
   providerId: ProviderId,
-  modelId?: string,
+  _modelId?: string,
 ): string {
   switch (providerId) {
     case 'openai':
     case 'grok':
-    case 'cursor':
-      // Cursor Composer models speak the OpenAI-compatible dialect via the proxy
       return adaptForOpenAI(baseSystemPrompt);
     case 'gemini':
       return adaptForGemini(baseSystemPrompt);
     case 'openrouter':
-      // OpenRouter routes to various models — use the strongest JSON instruction
       return adaptForOpenRouter(baseSystemPrompt);
     case 'ollama':
       return adaptForSmallModels(baseSystemPrompt);
-    case 'transformers': {
-      // Larger models (2B+) can attempt the simplified JSON schema
-      if (modelId) {
-        const provider = PROVIDERS[providerId];
-        const modelConfig = provider.models.find(m => m.id === modelId);
-        if (modelConfig?.supportsStructuredOutput) {
-          return adaptForSmallModels(baseSystemPrompt);
-        }
-      }
-      return TRANSFORMERS_SYSTEM_PROMPT;
-    }
-    case 'webllm':
-      // WebLLM runs 3-8B models — use the simplified 3-component JSON schema
-      return adaptForSmallModels(baseSystemPrompt);
-    case 'chrome-ai':
-      // Chrome AI (Gemini Nano) — plain text only, weak at structured output
-      return TRANSFORMERS_SYSTEM_PROMPT;
     case 'anthropic':
     default:
-      // Claude already works well with the base prompt
       return baseSystemPrompt;
   }
 }

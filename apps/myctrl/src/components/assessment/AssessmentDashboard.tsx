@@ -44,13 +44,11 @@ import { AssessmentControlList } from './AssessmentControlList';
 import { CrosswalkAutoFill } from './CrosswalkAutoFill';
 import { GapReportGenerator } from './GapReportGenerator';
 import { AssessmentCryptoInventory } from './AssessmentCryptoInventory';
-import { AssessmentSavedViews } from './AssessmentSavedViews';
-import { AssessmentWorkbenchLaunchers } from './AssessmentWorkbenchLaunchers';
 import { useAssessmentDashboardState } from './useAssessmentDashboardState';
 import { useAssessmentDashboardActions } from './useAssessmentDashboardActions';
 import { ActiveProjectSelect } from '@/components/projects/ActiveProjectSelect';
-import { AISlidePanel, useAISlidePanel } from '@/components/ai/AISlidePanel';
-import type { AIContext } from '@/lib/ai-data-context';
+import { requestOpenAIChat } from '@/lib/ai-chat-events';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import { loadAssessmentScoreSummary } from '@/lib/services/assessment-summary';
 
 // === Types ===
@@ -75,15 +73,6 @@ function getAssessmentLabel(a: Assessment): string {
   return getAssessmentScopeLabel(getFrameworkId(a), a.targetBaseline);
 }
 
-function buildAssessmentAIContext(a: Assessment): AIContext {
-  return {
-    frameworkId: getFrameworkId(a),
-    assessmentId: a.id,
-    baseline: normalizeAssessmentBaseline(getFrameworkId(a), a.targetBaseline),
-    systemName: a.systemName,
-  };
-}
-
 // === Main Component ===
 
 export function AssessmentDashboard() {
@@ -105,7 +94,6 @@ export function AssessmentDashboard() {
   const [score, setScore] = useState<BaselineScore | null>(null);
   const [allScores, setAllScores] = useState<{ low: BaselineScore; moderate: BaselineScore; high: BaselineScore } | null>(null);
   const [cryptoInventoryVersion, setCryptoInventoryVersion] = useState(0);
-  const assessmentAI = useAISlidePanel();
 
   // Refresh score when active assessment changes
   const refreshScore = useCallback(async () => {
@@ -343,12 +331,15 @@ export function AssessmentDashboard() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => assessmentAI.open(
-                buildAssessmentAIContext(activeAssessment),
-                `Show the latest gap assessment summary and priority gaps for ${activeAssessment.name}.`,
-              )}
+              onClick={() =>
+                requestOpenAIChat({
+                  frameworkId: getFrameworkId(activeAssessment),
+                  prompt: `Show the latest gap assessment summary and priority gaps for ${activeAssessment.name}.`,
+                  tab: 'chat',
+                })
+              }
             >
-              Open in AI Builder
+              Ask GRCLanker
             </Button>
             <Button variant="outline" size="sm" onClick={showAssessmentReport}>
               Generate Report
@@ -507,20 +498,6 @@ export function AssessmentDashboard() {
               </CardContent>
             </Card>
 
-            <AssessmentSavedViews
-              assessment={activeAssessment}
-              onOpenView={(savedView) => {
-                assessmentAI.open(buildAssessmentAIContext(activeAssessment), undefined, savedView.id);
-              }}
-            />
-
-            <AssessmentWorkbenchLaunchers
-              assessment={activeAssessment}
-              onOpenPrompt={(launchPrompt) => {
-                assessmentAI.open(buildAssessmentAIContext(activeAssessment), launchPrompt);
-              }}
-            />
-
             <AssessmentCryptoInventory
               assessmentId={activeAssessment.id}
               frameworkId={getFrameworkId(activeAssessment)}
@@ -537,14 +514,6 @@ export function AssessmentDashboard() {
             onApplied={handleCrosswalkApplied}
           />
         )}
-
-        <AISlidePanel
-          isOpen={assessmentAI.isOpen}
-          onClose={assessmentAI.close}
-          context={assessmentAI.context}
-          initialPrompt={assessmentAI.initialPrompt}
-          initialSavedViewId={assessmentAI.initialSavedViewId}
-        />
       </div>
     );
   }
@@ -573,15 +542,14 @@ export function AssessmentDashboard() {
           assessment={activeAssessment}
           onStatusChange={refreshScore}
           inventoryVersion={cryptoInventoryVersion}
-          onOpenAIView={assessmentAI.open}
+          onOpenAIView={(ctx, prompt) => {
+            requestOpenAIChat({
+              prompt,
+              frameworkId: ctx?.frameworkId || getFrameworkId(activeAssessment),
+              controlSlug: ctx?.controlId ? slugify(ctx.controlId) : undefined,
+            });
+          }}
           initialExpandedControlId={initialControlId}
-        />
-        <AISlidePanel
-          isOpen={assessmentAI.isOpen}
-          onClose={assessmentAI.close}
-          context={assessmentAI.context}
-          initialPrompt={assessmentAI.initialPrompt}
-          initialSavedViewId={assessmentAI.initialSavedViewId}
         />
       </div>
     );

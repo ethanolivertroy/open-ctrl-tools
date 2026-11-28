@@ -54,17 +54,6 @@ const sections = TECHNOLOGY_CATEGORIES.filter((category) => category.path).map((
           </p>
         </div>
       </div>
-
-      <div class="p-4 rounded-lg warning-banner">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 warning-banner-icon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <p class="text-sm warning-banner-text">
-            <strong>Under Construction:</strong> This guidance is being actively developed and verified. Content may change.
-          </p>
-        </div>
-      </div>
     </header>
 
     <section class="space-y-4">
@@ -84,20 +73,6 @@ const sections = TECHNOLOGY_CATEGORIES.filter((category) => category.path).map((
             count={section.count}
             highlights={section.highlights}
           />
-        ))}
-      </div>
-    </section>
-
-    <section class="pt-8 border-t border-border">
-      <h2 class="text-lg font-semibold mb-4">Coming Soon</h2>
-      <p class="text-sm text-muted-foreground mb-4">
-        More technology guides are being developed. Check back for:
-      </p>
-      <div class="flex flex-wrap gap-2">
-        {['HashiCorp Vault', 'Wiz', 'GitLab CI', 'Jenkins', 'Terraform', 'Cloudflare', 'New Relic', 'Sumo Logic'].map((name) => (
-          <span class="px-3 py-1.5 text-sm rounded-full bg-muted text-muted-foreground">
-            {name}
-          </span>
         ))}
       </div>
     </section>

@@ -70,6 +70,19 @@ const publicEndpoints: EndpointDoc[] = [
     ],
     example: `curl "https://myctrl.tools/api/v1/search?q=account+management&type=control&limit=5"`,
   },
+  {
+    method: 'POST',
+    path: '/api/voice/session',
+    summary: 'Mint ephemeral Realtime WebRTC or WebSocket session credentials for BYOK Speech-to-Speech.',
+    details: 'Accepts `{ provider: "openai" | "grok" | "gemini", apiKey?, voice? }` and returns short-lived client credentials (`ephemeralToken`, `wsUrl`) for direct WebRTC or WebSocket streaming.',
+    example: `curl -X POST "https://myctrl.tools/api/voice/session" -H "Content-Type: application/json" -d '{"provider":"openai","apiKey":"sk-..."}'`,
+  },
+  {
+    method: 'POST',
+    path: '/api/voice/openai-sdp',
+    summary: 'Exchange a browser WebRTC SDP offer for an OpenAI Realtime SDP answer using an ephemeral token.',
+    example: `curl -X POST "https://myctrl.tools/api/voice/openai-sdp" -H "Content-Type: application/json" -d '{"ephemeralToken":"ek_...","sdp":"v=0..."}'`,
+  },
 ];
 ---
 

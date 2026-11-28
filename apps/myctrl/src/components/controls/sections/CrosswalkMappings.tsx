@@ -1,16 +1,75 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { CompareButton } from '@/components/controls/CompareButton';
-import { slugify, getFrameworkConfig, hasFrameworkData } from '@/data/controls';
-import { getCrossFrameworkMappings, type CrossFrameworkMapping } from '@/data/crosswalk';
+import { getFrameworkConfig } from '@/data/framework-configs';
+import {
+  getCrossFrameworkMappingsFromIndex,
+  loadCrosswalkIndex,
+  loadFrameworkManifest,
+  type CrossFrameworkMapping,
+} from '@/lib/client-framework-data';
+import { slugifyControlId as slugify } from '@/lib/slugify';
 import type { Control } from '@/data/types';
 import { ControlSection } from './ControlSection';
 
+interface CrosswalkMappingsProps {
+  control: Control;
+  frameworkId: string;
+  initialMappings?: CrossFrameworkMapping[];
+  loadedFrameworkIds?: string[];
+}
+
 // Cross-Framework Mappings — cross-cutting section shown for any control with crosswalk data
-export function CrosswalkMappings({ control, frameworkId }: { control: Control; frameworkId: string }) {
+export function CrosswalkMappings({
+  control,
+  frameworkId,
+  initialMappings,
+  loadedFrameworkIds,
+}: CrosswalkMappingsProps) {
   const config = getFrameworkConfig(frameworkId);
   const [showDerived, setShowDerived] = useState(false);
-  const allMappings = getCrossFrameworkMappings(control.control_id, frameworkId);
+  const [allMappings, setAllMappings] = useState<CrossFrameworkMapping[]>(
+    () => initialMappings ?? [],
+  );
+  const [loadedSet, setLoadedSet] = useState<Set<string>>(
+    () => new Set(loadedFrameworkIds ?? []),
+  );
+
+  useEffect(() => {
+    if (initialMappings && loadedFrameworkIds) {
+      setAllMappings(initialMappings);
+      setLoadedSet(new Set(loadedFrameworkIds));
+      return;
+    }
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const [index, manifest] = await Promise.all([
+          loadCrosswalkIndex(),
+          loadFrameworkManifest(),
+        ]);
+        if (cancelled) return;
+        setLoadedSet(new Set(manifest.loadedIds));
+        if (!initialMappings) {
+          setAllMappings(
+            getCrossFrameworkMappingsFromIndex({
+              index,
+              controlId: control.control_id,
+              frameworkId,
+            }),
+          );
+        }
+      } catch {
+        // Keep initial mappings on fetch failure.
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [control.control_id, frameworkId, initialMappings, loadedFrameworkIds]);
+
   if (allMappings.length === 0) return null;
 
   const directMappings = allMappings.filter(m => !m.derived);
@@ -142,7 +201,7 @@ export function CrosswalkMappings({ control, frameworkId }: { control: Control; 
               </div>
               <div className="flex flex-wrap gap-2 items-center">
                 {(() => {
-                  const targetLoaded = hasFrameworkData(mappedFrameworkId);
+                  const targetLoaded = loadedSet.has(mappedFrameworkId);
                   return controlIds.map((controlId) => {
                     // Handle category/family-level mappings that don't have individual control pages
                     let href = targetLoaded

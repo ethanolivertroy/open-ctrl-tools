@@ -1,18 +1,29 @@
 import { useState, useMemo, useEffect } from 'react';
-import { FRAMEWORK_CONFIGS, getFrameworkData } from '../../data/frameworks';
-import { getAllControls, getControlBySlug, slugify, getFamilyName } from '../../data/controls';
-import { getCrossFrameworkMappings, hasCrossFrameworkMappings } from '../../data/crosswalk';
+import { FRAMEWORK_CONFIGS } from '../../data/framework-configs';
+import {
+  getCrossFrameworkMappingsFromIndex,
+  loadCrosswalkIndex,
+  loadFrameworkDataset,
+  loadFrameworkManifest,
+  type CrosswalkIndexPayload,
+  type FrameworkDatasetPayload,
+  type FrameworkManifestEntry,
+} from '../../lib/client-framework-data';
+import { slugifyControlId as slugify } from '../../lib/slugify';
 import { parseParentControlId } from '../../lib/control-graph';
 import { downloadFile } from '../../lib/export';
 import type { Control, FrameworkConfig } from '../../data/types';
 import {
-  isNistControl, isCISControl, isSTIGControl, isEUAIActControl,
-  isCMMCControl, isNIST171Control, isTXRAMPControl,
+  isNistControl,
+  isCISControl,
+  isSTIGControl,
+  isEUAIActControl,
+  isCMMCControl,
+  isNIST171Control,
+  isTXRAMPControl,
 } from '../../data/types';
 import { ComparisonControlCard } from './ComparisonControlCard';
 import { DiffView } from './DiffView';
-
-// --- Types ---
 
 interface ControlSlot {
   frameworkId: string;
@@ -23,41 +34,13 @@ interface ResolvedControl {
   slot: ControlSlot;
   control: Control;
   config: FrameworkConfig;
+  families: Record<string, string>;
 }
 
-// --- Data helpers ---
-
-const availableFrameworks = Object.entries(FRAMEWORK_CONFIGS)
-  .filter(([id]) => {
-    try {
-      const data = getFrameworkData(id);
-      return (data as { controls: unknown[] }).controls?.length > 0;
-    } catch {
-      return false;
-    }
-  })
-  .map(([id, config]) => ({ id, name: config.name }))
-  .sort((a, b) => a.name.localeCompare(b.name));
-
-function resolveControl(slot: ControlSlot): ResolvedControl | null {
-  if (!slot.frameworkId || !slot.controlSlug) return null;
-  try {
-    const config = FRAMEWORK_CONFIGS[slot.frameworkId];
-    if (!config) return null;
-    const control = getControlBySlug(slot.frameworkId, slot.controlSlug);
-    if (!control) return null;
-    return { slot, control, config };
-  } catch {
-    return null;
-  }
-}
-
-// Encode slot to URL segment
 function encodeSlot(slot: ControlSlot): string {
   return `${slot.frameworkId}:${slot.controlSlug}`;
 }
 
-// Decode URL segment to slot
 function decodeSlot(segment: string): ControlSlot {
   const idx = segment.indexOf(':');
   if (idx === -1) return { frameworkId: '', controlSlug: '' };
@@ -67,8 +50,6 @@ function decodeSlot(segment: string): ControlSlot {
   };
 }
 
-// --- Metadata extraction ---
-
 interface MetadataRow {
   label: string;
   values: (string | null)[];
@@ -77,23 +58,20 @@ interface MetadataRow {
 function getMetadataRows(resolved: ResolvedControl[]): MetadataRow[] {
   const rows: MetadataRow[] = [];
 
-  // Family
   rows.push({
     label: 'Family',
-    values: resolved.map(r => {
-      const name = getFamilyName(r.slot.frameworkId, r.control.family);
+    values: resolved.map((r) => {
+      const name = r.families[r.control.family] || r.control.family;
       return name !== r.control.family ? `${r.control.family} — ${name}` : r.control.family;
     }),
   });
 
-  // Framework-specific metadata
-  // Baselines (NIST)
-  if (resolved.some(r => isNistControl(r.control))) {
+  if (resolved.some((r) => isNistControl(r.control))) {
     rows.push({
       label: 'Baseline',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isNistControl(r.control)) return null;
-        const levels = [];
+        const levels: string[] = [];
         if (r.control.baseline_low) levels.push('Low');
         if (r.control.baseline_moderate) levels.push('Moderate');
         if (r.control.baseline_high) levels.push('High');
@@ -103,13 +81,12 @@ function getMetadataRows(resolved: ResolvedControl[]): MetadataRow[] {
     });
   }
 
-  // CIS Implementation Groups
-  if (resolved.some(r => isCISControl(r.control))) {
+  if (resolved.some((r) => isCISControl(r.control))) {
     rows.push({
       label: 'Implementation Group',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isCISControl(r.control)) return null;
-        const igs = [];
+        const igs: string[] = [];
         if (r.control.ig1) igs.push('IG1');
         if (r.control.ig2) igs.push('IG2');
         if (r.control.ig3) igs.push('IG3');
@@ -118,57 +95,52 @@ function getMetadataRows(resolved: ResolvedControl[]): MetadataRow[] {
     });
   }
 
-  // STIG Severity
-  if (resolved.some(r => isSTIGControl(r.control))) {
+  if (resolved.some((r) => isSTIGControl(r.control))) {
     rows.push({
       label: 'Severity',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isSTIGControl(r.control)) return null;
         return r.control.severity || 'Unknown';
       }),
     });
   }
 
-  // CMMC Level
-  if (resolved.some(r => isCMMCControl(r.control))) {
+  if (resolved.some((r) => isCMMCControl(r.control))) {
     rows.push({
       label: 'CMMC Level',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isCMMCControl(r.control)) return null;
         return `Level ${r.control.cmmc_level}`;
       }),
     });
   }
 
-  // EU AI Act Risk Tier
-  if (resolved.some(r => isEUAIActControl(r.control))) {
+  if (resolved.some((r) => isEUAIActControl(r.control))) {
     rows.push({
       label: 'Risk Tier',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isEUAIActControl(r.control)) return null;
         return r.control.risk_tier || 'Unknown';
       }),
     });
   }
 
-  // NIST 800-171 Requirement Type
-  if (resolved.some(r => isNIST171Control(r.control))) {
+  if (resolved.some((r) => isNIST171Control(r.control))) {
     rows.push({
       label: 'Requirement Type',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isNIST171Control(r.control)) return null;
         return r.control.requirement_type === 'basic' ? 'Basic' : 'Derived';
       }),
     });
   }
 
-  // TX-RAMP Levels
-  if (resolved.some(r => isTXRAMPControl(r.control))) {
+  if (resolved.some((r) => isTXRAMPControl(r.control))) {
     rows.push({
       label: 'TX-RAMP Level',
-      values: resolved.map(r => {
+      values: resolved.map((r) => {
         if (!isTXRAMPControl(r.control)) return null;
-        const levels = [];
+        const levels: string[] = [];
         if (r.control.level1) levels.push('Level 1');
         if (r.control.level2) levels.push('Level 2');
         return levels.length > 0 ? levels.join(', ') : 'None';
@@ -176,10 +148,9 @@ function getMetadataRows(resolved: ResolvedControl[]): MetadataRow[] {
     });
   }
 
-  // Related Controls
   rows.push({
     label: 'Related Controls',
-    values: resolved.map(r => {
+    values: resolved.map((r) => {
       const related = r.control.related_controls;
       if (!related || related.length === 0) return null;
       return related.join(', ');
@@ -189,18 +160,15 @@ function getMetadataRows(resolved: ResolvedControl[]): MetadataRow[] {
   return rows;
 }
 
-// Check if all non-null values in a row are identical
 function rowValuesMatch(values: (string | null)[]): boolean {
-  const nonNull = values.filter(v => v !== null);
+  const nonNull = values.filter((v) => v !== null);
   if (nonNull.length <= 1) return true;
-  return nonNull.every(v => v === nonNull[0]);
+  return nonNull.every((v) => v === nonNull[0]);
 }
 
-// Detect enhancement relationship
 function getEnhancementInfo(resolved: ResolvedControl[]): string | null {
   if (resolved.length !== 2) return null;
   const [a, b] = resolved;
-  // Same framework, one is enhancement of the other
   if (a.slot.frameworkId !== b.slot.frameworkId) return null;
 
   const parentA = parseParentControlId(a.control.control_id);
@@ -215,29 +183,42 @@ function getEnhancementInfo(resolved: ResolvedControl[]): string | null {
   return null;
 }
 
-// --- Component ---
-
 export function ControlComparisonTool() {
   const [slots, setSlots] = useState<ControlSlot[]>([
     { frameworkId: '', controlSlug: '' },
     { frameworkId: '', controlSlug: '' },
   ]);
+  const [manifestEntries, setManifestEntries] = useState<FrameworkManifestEntry[]>([]);
+  const [datasets, setDatasets] = useState<Record<string, FrameworkDatasetPayload>>({});
+  const [crosswalkIndex, setCrosswalkIndex] = useState<CrosswalkIndexPayload | null>(null);
 
-  // Parse URL on mount
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([loadFrameworkManifest(), loadCrosswalkIndex()])
+      .then(([manifest, index]) => {
+        if (cancelled) return;
+        setManifestEntries(manifest.frameworks.filter((f) => f.loaded && f.controlCount > 0));
+        setCrosswalkIndex(index);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const c = params.get('c');
     if (c) {
-      const decoded = c.split(',').map(decodeSlot).filter(s => s.frameworkId);
+      const decoded = c.split(',').map(decodeSlot).filter((s) => s.frameworkId);
       if (decoded.length >= 2) {
         setSlots(decoded.slice(0, 4));
       }
     }
   }, []);
 
-  // Update URL when slots change
   useEffect(() => {
-    const filled = slots.filter(s => s.frameworkId && s.controlSlug);
+    const filled = slots.filter((s) => s.frameworkId && s.controlSlug);
     const url = new URL(window.location.href);
     if (filled.length > 0) {
       url.searchParams.set('c', filled.map(encodeSlot).join(','));
@@ -247,50 +228,69 @@ export function ControlComparisonTool() {
     window.history.replaceState({}, '', url.toString());
   }, [slots]);
 
-  // Resolve controls
-  const resolved = useMemo(() => {
-    return slots.map(resolveControl).filter(Boolean) as ResolvedControl[];
-  }, [slots]);
+  useEffect(() => {
+    const needed = Array.from(
+      new Set(slots.map((s) => s.frameworkId).filter((id) => id && !(id in datasets))),
+    );
+    if (needed.length === 0) return;
 
-  // Metadata rows for comparison
+    let cancelled = false;
+    for (const fwId of needed) {
+      loadFrameworkDataset(fwId)
+        .then((payload) => {
+          if (cancelled) return;
+          setDatasets((prev) => ({ ...prev, [fwId]: payload }));
+        })
+        .catch(() => {});
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [slots, datasets]);
+
+  const availableFrameworks = useMemo(
+    () => manifestEntries.map((f) => ({ id: f.id, name: f.name })).sort((a, b) => a.name.localeCompare(b.name)),
+    [manifestEntries],
+  );
+
+  const resolved = useMemo(() => {
+    return slots
+      .map((slot): ResolvedControl | null => {
+        if (!slot.frameworkId || !slot.controlSlug) return null;
+        const dataset = datasets[slot.frameworkId];
+        const config = FRAMEWORK_CONFIGS[slot.frameworkId];
+        if (!dataset || !config) return null;
+        const control = dataset.controls.find(
+          (c) => slugify(c.control_id) === slot.controlSlug,
+        );
+        if (!control) return null;
+        return { slot, control, config, families: dataset.families };
+      })
+      .filter(Boolean) as ResolvedControl[];
+  }, [slots, datasets]);
+
   const metadataRows = useMemo(() => {
     if (resolved.length < 2) return [];
     return getMetadataRows(resolved);
   }, [resolved]);
 
-  // Enhancement info
   const enhancementInfo = useMemo(() => getEnhancementInfo(resolved), [resolved]);
 
-  // Cross-framework mappings
   const crossMappings = useMemo(() => {
-    return resolved.map(r => {
-      if (!hasCrossFrameworkMappings(r.control.control_id, r.slot.frameworkId)) return [];
-      try {
-        return getCrossFrameworkMappings(r.control.control_id, r.slot.frameworkId);
-      } catch {
-        return [];
-      }
+    if (!crosswalkIndex) return resolved.map(() => []);
+    return resolved.map((r) => {
+      const ds = datasets[r.slot.frameworkId];
+      return getCrossFrameworkMappingsFromIndex({
+        index: crosswalkIndex,
+        controlId: r.control.control_id,
+        frameworkId: r.slot.frameworkId,
+        stigNistMappings: ds?.stigNistMappings?.[r.control.control_id],
+      });
     });
-  }, [resolved]);
+  }, [resolved, crosswalkIndex, datasets]);
 
-  // Controls list per framework (for dropdowns)
-  const controlsByFramework = useMemo(() => {
-    const cache: Record<string, Control[]> = {};
-    for (const slot of slots) {
-      if (slot.frameworkId && !cache[slot.frameworkId]) {
-        try {
-          cache[slot.frameworkId] = getAllControls(slot.frameworkId);
-        } catch {
-          cache[slot.frameworkId] = [];
-        }
-      }
-    }
-    return cache;
-  }, [slots]);
-
-  // Group controls by family for the dropdown
   function getGroupedControls(frameworkId: string): Map<string, Control[]> {
-    const controls = controlsByFramework[frameworkId] || [];
+    const controls = datasets[frameworkId]?.controls || [];
     const grouped = new Map<string, Control[]>();
     for (const c of controls) {
       const family = c.family || 'Other';
@@ -300,12 +300,10 @@ export function ControlComparisonTool() {
     return grouped;
   }
 
-  // Handlers
   const updateSlot = (index: number, updates: Partial<ControlSlot>) => {
-    setSlots(prev => {
+    setSlots((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], ...updates };
-      // Reset control when framework changes
       if (updates.frameworkId !== undefined && updates.controlSlug === undefined) {
         next[index].controlSlug = '';
       }
@@ -315,28 +313,26 @@ export function ControlComparisonTool() {
 
   const removeSlot = (index: number) => {
     if (slots.length <= 2) {
-      setSlots(prev => {
+      setSlots((prev) => {
         const next = [...prev];
         next[index] = { frameworkId: '', controlSlug: '' };
         return next;
       });
     } else {
-      setSlots(prev => prev.filter((_, i) => i !== index));
+      setSlots((prev) => prev.filter((_, i) => i !== index));
     }
   };
 
   const addSlot = () => {
     if (slots.length < 4) {
-      setSlots(prev => [...prev, { frameworkId: '', controlSlug: '' }]);
+      setSlots((prev) => [...prev, { frameworkId: '', controlSlug: '' }]);
     }
   };
 
-  // Presets
   const applyPreset = (newSlots: ControlSlot[]) => {
     setSlots(newSlots);
   };
 
-  // Export
   const handleExport = (format: 'csv' | 'json') => {
     if (resolved.length < 2) return;
 
@@ -349,7 +345,7 @@ export function ControlComparisonTool() {
           exportDate: new Date().toISOString(),
           controlCount: resolved.length,
         },
-        controls: resolved.map(r => ({
+        controls: resolved.map((r) => ({
           frameworkId: r.slot.frameworkId,
           frameworkName: r.config.name,
           controlId: r.control.control_id,
@@ -361,7 +357,7 @@ export function ControlComparisonTool() {
         })),
         comparison: {
           enhancementRelationship: enhancementInfo,
-          metadata: metadataRows.map(row => ({
+          metadata: metadataRows.map((row) => ({
             field: row.label,
             values: row.values,
             allMatch: rowValuesMatch(row.values),
@@ -370,35 +366,42 @@ export function ControlComparisonTool() {
       };
       downloadFile(exportData, filename, 'application/json');
     } else {
-      const headers = ['Field', ...resolved.map(r => `${r.config.name} — ${r.control.control_id}`)];
+      const headers = ['Field', ...resolved.map((r) => `${r.config.name} — ${r.control.control_id}`)];
       const rows = [headers.join(',')];
 
-      rows.push(['Title', ...resolved.map(r => `"${r.control.title}"`)].join(','));
-      rows.push(['Family', ...resolved.map(r => `"${r.control.family}"`)].join(','));
-      rows.push(['Description', ...resolved.map(r => `"${r.control.description.replace(/"/g, '""').replace(/\r?\n|\r/g, ' ').slice(0, 500)}"`)].join(','));
+      rows.push(['Title', ...resolved.map((r) => `"${r.control.title}"`)].join(','));
+      rows.push(['Family', ...resolved.map((r) => `"${r.control.family}"`)].join(','));
+      rows.push(
+        [
+          'Description',
+          ...resolved.map(
+            (r) => `"${r.control.description.replace(/"/g, '""').replace(/\r?\n|\r/g, ' ').slice(0, 500)}"`,
+          ),
+        ].join(','),
+      );
 
       for (const row of metadataRows) {
-        rows.push([`"${row.label}"`, ...row.values.map(v => v ? `"${v}"` : '""')].join(','));
+        rows.push([`"${row.label}"`, ...row.values.map((v) => (v ? `"${v}"` : '""'))].join(','));
       }
 
       downloadFile(rows.join('\n'), filename, 'text/csv;charset=utf-8');
     }
   };
 
-  // Expand/collapse all sections state
   const [allExpanded, setAllExpanded] = useState<boolean | undefined>(undefined);
-
-  // View mode for 2-control comparisons: 'cards' or 'diff'
   const [viewMode, setViewMode] = useState<'cards' | 'diff'>('cards');
 
-  const gridCols = resolved.length <= 1 ? 'grid-cols-1' :
-    resolved.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
-    resolved.length === 3 ? 'grid-cols-1 md:grid-cols-3' :
-    'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
+  const gridCols =
+    resolved.length <= 1
+      ? 'grid-cols-1'
+      : resolved.length === 2
+        ? 'grid-cols-1 md:grid-cols-2'
+        : resolved.length === 3
+          ? 'grid-cols-1 md:grid-cols-3'
+          : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
 
   return (
     <div className="space-y-8">
-      {/* Control Selectors */}
       <div className="space-y-4">
         <div className="flex flex-wrap gap-4">
           {slots.map((slot, index) => (
@@ -419,7 +422,6 @@ export function ControlComparisonTool() {
                 </button>
               </div>
 
-              {/* Framework selector */}
               <select
                 value={slot.frameworkId}
                 onChange={(e) => updateSlot(index, { frameworkId: e.target.value })}
@@ -427,27 +429,38 @@ export function ControlComparisonTool() {
               >
                 <option value="">Select framework...</option>
                 {availableFrameworks.map((fw) => (
-                  <option key={fw.id} value={fw.id}>{fw.name}</option>
+                  <option key={fw.id} value={fw.id}>
+                    {fw.name}
+                  </option>
                 ))}
               </select>
 
-              {/* Control selector */}
               <select
                 value={slot.controlSlug}
                 onChange={(e) => updateSlot(index, { controlSlug: e.target.value })}
-                disabled={!slot.frameworkId}
+                disabled={!slot.frameworkId || !(slot.frameworkId in datasets)}
                 className="w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
               >
-                <option value="">Select control...</option>
-                {slot.frameworkId && Array.from(getGroupedControls(slot.frameworkId).entries()).map(([family, controls]) => (
-                  <optgroup key={family} label={getFamilyName(slot.frameworkId, family)}>
-                    {controls.map((c) => (
-                      <option key={c.control_id} value={slugify(c.control_id)}>
-                        {c.control_id} — {c.title}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
+                <option value="">
+                  {slot.frameworkId && !(slot.frameworkId in datasets)
+                    ? 'Loading controls...'
+                    : 'Select control...'}
+                </option>
+                {slot.frameworkId &&
+                  Array.from(getGroupedControls(slot.frameworkId).entries()).map(
+                    ([family, controls]) => (
+                      <optgroup
+                        key={family}
+                        label={datasets[slot.frameworkId]?.families[family] || family}
+                      >
+                        {controls.map((c) => (
+                          <option key={c.control_id} value={slugify(c.control_id)}>
+                            {c.control_id} — {c.title}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ),
+                  )}
               </select>
             </div>
           ))}
@@ -465,37 +478,42 @@ export function ControlComparisonTool() {
           )}
         </div>
 
-        {/* Presets and Export */}
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2">
             <span className="text-sm text-muted-foreground">Quick compare:</span>
             <button
               type="button"
-              onClick={() => applyPreset([
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2' },
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2-1' },
-              ])}
+              onClick={() =>
+                applyPreset([
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2' },
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2-1' },
+                ])
+              }
               className="px-2 py-1 text-xs bg-muted rounded hover:bg-muted/80 transition-colors"
             >
               AC-2 vs AC-2(1)
             </button>
             <button
               type="button"
-              onClick={() => applyPreset([
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2' },
-                { frameworkId: 'fedramp-rev5', controlSlug: 'ac-2' },
-              ])}
+              onClick={() =>
+                applyPreset([
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-2' },
+                  { frameworkId: 'fedramp-rev5', controlSlug: 'ac-2' },
+                ])
+              }
               className="px-2 py-1 text-xs bg-muted rounded hover:bg-muted/80 transition-colors"
             >
               NIST AC-2 vs FedRAMP AC-2
             </button>
             <button
               type="button"
-              onClick={() => applyPreset([
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-1' },
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'at-1' },
-                { frameworkId: 'nist-800-53-r5', controlSlug: 'au-1' },
-              ])}
+              onClick={() =>
+                applyPreset([
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'ac-1' },
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'at-1' },
+                  { frameworkId: 'nist-800-53-r5', controlSlug: 'au-1' },
+                ])
+              }
               className="px-2 py-1 text-xs bg-muted rounded hover:bg-muted/80 transition-colors"
             >
               Policy Controls: AC-1 vs AT-1 vs AU-1
@@ -527,7 +545,6 @@ export function ControlComparisonTool() {
         </div>
       </div>
 
-      {/* Enhancement Banner */}
       {enhancementInfo && (
         <div className="p-3 rounded-lg border border-primary/30 bg-primary/5 text-sm">
           <span className="font-medium text-primary">Enhancement Comparison:</span>{' '}
@@ -535,15 +552,13 @@ export function ControlComparisonTool() {
         </div>
       )}
 
-      {/* Comparison Display */}
       {resolved.length >= 2 && (
         <div className="space-y-6">
-          {/* View mode toggle + expand/collapse */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => setAllExpanded(prev => prev === true ? false : true)}
+                onClick={() => setAllExpanded((prev) => (prev === true ? false : true))}
                 aria-pressed={!!allExpanded}
                 className="px-3 py-1.5 text-xs border border-border rounded hover:bg-accent transition-colors"
               >
@@ -580,24 +595,27 @@ export function ControlComparisonTool() {
             )}
           </div>
 
-          {/* Control Cards or Diff View */}
           {viewMode === 'diff' && resolved.length === 2 ? (
-            <DiffView controlA={resolved[0].control} controlB={resolved[1].control} configA={resolved[0].config} configB={resolved[1].config} />
+            <DiffView
+              controlA={resolved[0].control}
+              controlB={resolved[1].control}
+              configA={resolved[0].config}
+              configB={resolved[1].config}
+            />
           ) : (
-          <div className={`grid gap-4 ${gridCols}`}>
-            {resolved.map((r, i) => (
-              <ComparisonControlCard
-                key={i}
-                control={r.control}
-                config={r.config}
-                frameworkId={r.slot.frameworkId}
-                allExpanded={allExpanded}
-              />
-            ))}
-          </div>
+            <div className={`grid gap-4 ${gridCols}`}>
+              {resolved.map((r, i) => (
+                <ComparisonControlCard
+                  key={i}
+                  control={r.control}
+                  config={r.config}
+                  frameworkId={r.slot.frameworkId}
+                  allExpanded={allExpanded}
+                />
+              ))}
+            </div>
           )}
 
-          {/* Metadata Comparison Table */}
           {metadataRows.length > 0 && (
             <div className="space-y-3">
               <h3 className="font-semibold">Metadata Comparison</h3>
@@ -617,16 +635,11 @@ export function ControlComparisonTool() {
                   </thead>
                   <tbody>
                     {metadataRows.map((row) => {
-                      const allNull = row.values.every(v => v === null);
+                      const allNull = row.values.every((v) => v === null);
                       if (allNull) return null;
                       const match = rowValuesMatch(row.values);
                       return (
-                        <tr
-                          key={row.label}
-                          className={`border-b border-border/50 ${
-                            !match ? 'bg-primary/5' : ''
-                          }`}
-                        >
+                        <tr key={row.label} className={`border-b border-border/50 ${!match ? 'bg-primary/5' : ''}`}>
                           <td className="py-2 pr-4 font-medium text-muted-foreground">
                             {row.label}
                             {!match && (
@@ -658,8 +671,7 @@ export function ControlComparisonTool() {
             </div>
           )}
 
-          {/* Cross-Framework Mappings */}
-          {crossMappings.some(m => m.length > 0) && (
+          {crossMappings.some((m) => m.length > 0) && (
             <div className="space-y-3">
               <h3 className="font-semibold">Cross-Framework Mappings</h3>
               <div className={`grid gap-4 ${gridCols}`}>
@@ -674,14 +686,19 @@ export function ControlComparisonTool() {
                             <span className="font-mono text-xs">
                               {mapping.controlIds.slice(0, 5).join(', ')}
                               {mapping.controlIds.length > 5 && (
-                                <span className="text-muted-foreground"> +{mapping.controlIds.length - 5} more</span>
+                                <span className="text-muted-foreground">
+                                  {' '}
+                                  +{mapping.controlIds.length - 5} more
+                                </span>
                               )}
                             </span>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-sm text-muted-foreground italic">No crosswalk mappings available</p>
+                      <p className="text-sm text-muted-foreground italic">
+                        No crosswalk mappings available
+                      </p>
                     )}
                   </div>
                 ))}
@@ -691,7 +708,6 @@ export function ControlComparisonTool() {
         </div>
       )}
 
-      {/* Empty State */}
       {resolved.length < 2 && (
         <div className="text-center py-12 text-muted-foreground">
           <svg className="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">

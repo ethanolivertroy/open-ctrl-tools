@@ -4,3 +4,9 @@
 /frameworks/scf-2025/* /crosswalk 301
 /frameworks/myctrl-ccf /crosswalk 301
 /frameworks/myctrl-ccf/* /crosswalk 301
+/whiteboard / 301
+/build / 301
+/graph /crosswalk/visualize 301
+/enterprise /all 301
+/stigs /frameworks/kubernetes-stig-v2r4 301
+/frameworks/cis-controls-v8/ig/* /frameworks/cis-controls-v8 301

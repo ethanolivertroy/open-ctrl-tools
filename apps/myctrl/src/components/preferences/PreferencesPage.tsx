@@ -5,13 +5,11 @@ import { FavoritesSection } from './FavoritesSection';
 import { ProjectsSection } from './ProjectsSection';
 import { ControlNotesSection } from './ControlNotesSection';
 import { RecentlyViewedSection } from './RecentlyViewedSection';
-import { SavedViewsSection } from './SavedViewsSection';
 import { ProvidersSection } from './ProvidersSection';
 import { AiDataSection } from './AiDataSection';
 import { NavigationSection } from './NavigationSection';
 import { FilterPresetsSection } from './FilterPresetsSection';
 import { StorageSection } from './StorageSection';
-import { WhiteboardSection } from './WhiteboardSection';
 import { GrcLankerSection } from './GrcLankerSection';
 
 interface FrameworkInfo {
@@ -56,10 +54,6 @@ export function PreferencesPage({ frameworkConfigs }: PreferencesPageProps) {
         <ControlNotesSection />
         <hr className="border-border" />
         <RecentlyViewedSection />
-        <hr className="border-border" />
-        <SavedViewsSection />
-        <hr className="border-border" />
-        <WhiteboardSection />
         <hr className="border-border" />
         <ProvidersSection />
         <hr className="border-border" />
