@@ -1,21 +1,43 @@
-const CACHE_NAME = 'myctrl-v4';
+const CACHE_NAME = 'myctrl-v5';
+const OFFLINE_URL = '/offline/';
 
+// Pages are listed at their canonical trailing-slash URL: the host redirects
+// `/all` to `/all/`, and a redirected response cannot be replayed for a
+// navigation. Every entry must exist — see service-worker-precache.test.ts.
 const PRECACHE_URLS = [
   '/',
-  '/all',
-  '/assess',
-  '/crosswalk/visualize',
-  '/compare',
-  '/guidance',
-  '/offline.html',
+  '/all/',
+  '/assess/',
+  '/crosswalk/visualize/',
+  '/compare/',
+  '/guidance/',
+  OFFLINE_URL,
   '/manifest.webmanifest',
   '/data/frameworks/manifest.json',
   '/data/crosswalk-stats.json',
 ];
 
+async function precache(cache, url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${url} responded ${response.status}`);
+  // Should a URL ever redirect anyway, store a clean copy that can be replayed.
+  const storable = response.redirected
+    ? new Response(await response.blob(), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+      })
+    : response;
+  await cache.put(url, storable);
+}
+
 self.addEventListener('install', (event) => {
+  // Each URL is cached on its own, so one failure cannot void the whole set
+  // (and with it the offline fallback) the way an atomic addAll would.
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS).catch(() => {})),
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => Promise.allSettled(PRECACHE_URLS.map((url) => precache(cache, url)))),
   );
   self.skipWaiting();
 });
@@ -53,7 +75,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/offline.html')),
+          caches.match(request).then((cached) => cached || caches.match(OFFLINE_URL)),
         ),
     );
     return;

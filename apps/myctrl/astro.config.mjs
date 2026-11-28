@@ -36,7 +36,7 @@ export default defineConfig({
     integrations: [
         react(),
         sitemap({
-            filter: (page) => !page.includes('/api/') && !page.includes('/data/'),
+            filter: (page) => !page.includes('/api/') && !page.includes('/data/') && !page.includes('/offline/'),
         }),
     ],
 
