@@ -3,19 +3,11 @@
   "name": "myctrl-tools",
   "compatibility_date": "2026-04-29",
   "compatibility_flags": ["nodejs_compat"],
-  "minify": true,
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist"
   },
-  // Placeholder KV namespace id; create your own before deploying:
-  // `npx wrangler kv namespace create SESSION` and paste the id below.
-  "kv_namespaces": [
-    {
-      "binding": "SESSION",
-      "id": "00000000000000000000000000000000"
-    }
-  ],
+  "keep_vars": true,
   "observability": {
     "enabled": true
   }
