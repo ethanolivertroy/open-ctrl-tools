@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SpaceCanvas } from '../components/hero/SpaceCanvas';
+import { CosmosBackground } from '../components/hero/CosmosBackground';
+import { SkyControls } from '../components/hero/SkyControls';
 import { HeroSearch } from '../components/hero/HeroSearch';
 import {
   getLoadedFrameworkIds,
@@ -129,12 +130,18 @@ const workbenches = [
   showSidebar={false}
   isHomepage={true}
 >
-  {/* Command-center hero over lightweight deep-space canvas */}
-  <section class="relative overflow-hidden border-b border-border/60 min-h-[540px] flex items-center">
-    <SpaceCanvas client:load />
+  {/* Deep-space backdrop: fixed behind the whole page, composed around the hero */}
+  <CosmosBackground client:idle slot="background" />
+
+  {/* Command-center hero; the planet rises beside the copy */}
+  <section
+    data-cosmos-anchor
+    class="relative min-h-[540px] lg:min-h-[min(44rem,calc(100svh-6rem))] flex items-center"
+  >
+    <SkyControls client:idle />
 
     <div class="relative z-10 container mx-auto px-4 py-16 md:py-24 max-w-6xl">
-      <div class="max-w-3xl space-y-6">
+      <div data-cosmos-copy class="max-w-3xl space-y-6">
         <div class="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/75 backdrop-blur-md px-3 py-1 text-xs font-mono text-muted-foreground">
           <span class="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true"></span>
           <span>
@@ -143,13 +150,13 @@ const workbenches = [
           </span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.08]">
+        <h1 class="cosmos-legible text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.08]">
           Security controls,{' '}
           <span class="text-primary">mapped &amp; searchable</span>{' '}
           without the bloat.
         </h1>
 
-        <p class="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+        <p class="cosmos-legible text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Instant navigation across NIST 800-53, FedRAMP 20x KSI, CSF 2.0, CMMC 2.0, OWASP ASVS, and the EU AI Act — paired with local-first assessments and speech-to-speech audit practice.
         </p>
 
@@ -237,7 +244,7 @@ const workbenches = [
               data-ai-chat-trigger
               data-ai-tab="voice"
               data-ai-voice-mode="copilot"
-              class="glass-card text-left group rounded-xl border border-primary/30 bg-primary/5 p-5 hover:border-primary/60 transition-all flex flex-col justify-between gap-4"
+              class="glass-card glass-card-accent text-left group rounded-xl border border-primary/30 p-5 hover:border-primary/60 transition-all flex flex-col justify-between gap-4"
             >
               <div class="space-y-2">
                 <span class="inline-block px-2 py-0.5 text-[11px] font-mono rounded border border-primary/30 bg-primary/10 text-primary">

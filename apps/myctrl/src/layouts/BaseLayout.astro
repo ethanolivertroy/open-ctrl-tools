@@ -107,6 +107,9 @@ const lastUpdated = __BUILD_LAST_UPDATED__;
     </script>
   </head>
   <body class="min-h-screen bg-background antialiased">
+    {/* Full-viewport backdrops (the homepage sky) sit behind all page content */}
+    <slot name="background" />
+
     <div class="relative z-10 flex min-h-screen flex-col">
       <!-- Header -->
       <Header frameworkId={frameworkId} lastUpdated={lastUpdated} client:load />

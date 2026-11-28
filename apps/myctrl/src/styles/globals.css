@@ -206,6 +206,22 @@
 }
 
 @layer components {
+  /* Copy that sits directly on the homepage sky: a soft halo in the page
+     colour keeps glyph edges clean when dust drifts behind them */
+  .cosmos-legible {
+    text-shadow:
+      0 0 0.3em var(--ctp-base),
+      0 0 0.9em color-mix(in srgb, var(--ctp-base) 80%, transparent);
+  }
+
+  /* Homepage sky without WebGL2: a still wash in the same colours */
+  .cosmos-fallback {
+    background:
+      radial-gradient(60% 55% at 78% 38%, color-mix(in srgb, var(--ctp-teal) 16%, transparent), transparent 70%),
+      radial-gradient(50% 50% at 18% 70%, color-mix(in srgb, var(--ctp-mauve) 13%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 55% 8%, color-mix(in srgb, var(--ctp-sapphire) 10%, transparent), transparent 70%);
+  }
+
   /* Subtle accent on hover */
   .glow-accent {
     transition: border-color 0.2s ease-in-out;
@@ -456,6 +472,13 @@
   [data-theme="latte"] .glass-card-thick {
     background: var(--ctp-mantle);
     border-color: color-mix(in srgb, var(--ctp-overlay0) 30%, transparent);
+  }
+
+  /* Accent surface: tinted with the primary colour but still opaque, so
+     whatever is behind the page never shows through the copy */
+  .glass-card.glass-card-accent,
+  [data-theme="latte"] .glass-card.glass-card-accent {
+    background: color-mix(in srgb, var(--ctp-mauve) 6%, var(--ctp-mantle));
   }
 
   /* Warning banner - theme adaptive */
